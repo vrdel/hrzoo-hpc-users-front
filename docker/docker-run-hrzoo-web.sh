@@ -11,8 +11,8 @@ docker run \
 -v $HOME:/mnt/ \
 -v $HOME/.ssh:/home/user/.ssh/ \
 -v /tmp/.X11-unix:/tmp/.X11-unix \
--h docker-hrzooweb-2 \
+-h docker-hrzooweb \
 --net host \
---name hrzoo-web-2 \
+--name hrzoo-web \
 --rm -ti \
-ipanema:5000/hrzoo-web-2:$TAG
+ipanema:5000/hrzoo-web:$TAG
