@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+import os
+import stat
+import argparse
+import random
+import sys
+import pwd
+
+# Removed '$' as it will be used as salt by auth.hashers
+# as part of token creation
+validchars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#%^&*(-_=+)'
+
+def main():
+    parser = argparse.ArgumentParser(description='Write SECRET_KEY to file')
+    parser.add_argument('-f', dest='outfile', help='SecretKeyFile from vpsrequest.conf', required=True)
+    args = parser.parse_args()
+
+    SECRET_KEY = ''.join([random.SystemRandom().choice(validchars) \
+                          for i in range(32)])
+
+    try:
+        secret = open(args.outfile, 'w')
+        secret.write(SECRET_KEY)
+        secret.close()
+
+    except Exception as e:
+        sys.stderr.write(repr(e) + '\n')
+        raise SystemExit(1)
+
+if __name__ == "__main__":
+    main()

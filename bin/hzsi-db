@@ -1,0 +1,55 @@
+#!/bin/bash
+
+SITEPACK=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
+PYTHON=$(which python)
+DJANGO_SETTINGS="export DJANGO_SETTINGS_MODULE=vpsrequest.settings"
+MANAGEPY=$SITEPACK/hrzoosignup/manage.py
+
+usage()
+{
+	printf "Usage: %s [argument]\n" $(basename $0) >&2
+	printf "       [-c]                                  - create database or apply new migrations\n" >&2
+	printf "       [-l]                                  - list migrations\n" >&2
+	printf "       [-u]                                  - create superuser\n" >&2
+	printf "       [-m]                                  - create new migrations\n" >&2
+	printf "       [-d]                                  - load data from file\n" >&2
+	exit 2
+}
+
+if [[ $# == 0 ]]
+then
+    usage
+fi
+
+while getopts 'clhumd:' OPTION
+do
+    case $OPTION in
+        c)
+            $DJANGO_SETTINGS && \
+            $PYTHON $MANAGEPY migrate
+            ;;
+        l)
+            $DJANGO_SETTINGS && \
+            $PYTHON $MANAGEPY showmigrations
+            ;;
+        u)
+            $DJANGO_SETTINGS && \
+            $PYTHON $MANAGEPY superuser
+             ;;
+        m)
+            $DJANGO_SETTINGS && \
+            $PYTHON $MANAGEPY makemigrations backend
+             ;;
+        d)
+            $DJANGO_SETTINGS && \
+            $PYTHON $MANAGEPY loaddata $OPTARG
+             ;;
+
+        h)
+            usage
+            ;;
+        ?)
+            usage
+            ;;
+    esac
+done
