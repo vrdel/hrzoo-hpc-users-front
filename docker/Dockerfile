@@ -4,7 +4,7 @@ RUN groupadd user -g 1000 && useradd -u 1000 -g 1000 user -m -d /home/user -s /b
 RUN dnf -y update; dnf clean all
 RUN dnf -y install epel-release && \
     dnf -y install \
-			procps-ng \
+      procps-ng \
       ack \
       ctags \
       fortune-mod \
@@ -14,15 +14,16 @@ RUN dnf -y install epel-release && \
       make \
       mc \
       net-tools \
-			ncurses-compat-libs \
+      ncurses-compat-libs \
       passwd \
       python3-devel \
-			python39 \
-			python39-mod_wsgi \
+      python39 \
+      python39-mod_wsgi \
       python3-pip \
       python3-setuptools \
       rpmdevtools \
       sudo \
+      telnet \
       the_silver_searcher \
       tree \
       tmux \

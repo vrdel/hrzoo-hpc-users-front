@@ -23,7 +23,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 VENV = '/opt/hrzoo-signup/'
 APP_PATH = os.path.abspath(os.path.split(__file__)[0])
-CONFIG_FILE = '{}/etc/hrzoosignup/hrzoosignup.conf'.format(VENV)
+CONFIG_FILE = '{}/etc/hrzoosignup/hzsi.conf'.format(VENV)
 
 try:
     config = ConfigParser()
@@ -32,7 +32,7 @@ try:
         raise ImproperlyConfigured('Unable to parse config file %s' % CONFIG_FILE)
 
     # General
-    DEBUG = bool(config.getboolean('GENERAL', 'Debug'))
+    DEBUG_OPTION = bool(config.getboolean('GENERAL', 'Debug'))
     RELATIVE_PATH = config.get('GENERAL', 'RelativePath')
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
@@ -73,9 +73,18 @@ except ImproperlyConfigured as e:
 SECRET_KEY = 'django-insecure-^%=4b@x)kd4mc=@de%8gyzabe_-z915iof%am@@p4ad6&i$ggg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG_OPTION
 
-ALLOWED_HOSTS = []
+if ',' in ALLOWED_HOSTS:
+    ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS.split(',')]
+else:
+    ALLOWED_HOSTS = [ALLOWED_HOSTS]
+
+try:
+    SECRET_KEY = open(SECRET_KEY_FILE, 'r').read()
+except FileNotFoundError as e:
+    print(SECRET_KEY_FILE + ': %s' % repr(e))
+    raise SystemExit(1)
 
 # Application definition
 
