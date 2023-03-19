@@ -16,6 +16,9 @@ hrzoosignup/frontend/dist
 hrzoosignup/frontend/dist-ssr
 hrzoosignup/frontend/*.local
 
+# npm cache
+.npm
+
 # Editor directories and files
 .idea
 .DS_Store
