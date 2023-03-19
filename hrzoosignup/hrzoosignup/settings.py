@@ -15,6 +15,56 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Config parse
+# -vrdel
+import os
+from configparser import ConfigParser, NoSectionError
+from django.core.exceptions import ImproperlyConfigured
+
+VENV = '/opt/hrzoo-signup/'
+APP_PATH = os.path.abspath(os.path.split(__file__)[0])
+CONFIG_FILE = '{}/etc/hrzoosignup/hrzoosignup.conf'.format(VENV)
+
+try:
+    config = ConfigParser()
+
+    if not config.read([CONFIG_FILE], encoding='utf-8'):
+        raise ImproperlyConfigured('Unable to parse config file %s' % CONFIG_FILE)
+
+    # General
+    DEBUG = bool(config.getboolean('GENERAL', 'Debug'))
+    RELATIVE_PATH = config.get('GENERAL', 'RelativePath')
+
+    ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
+    HOST_CERT = config.get('SECURITY', 'HostCert')
+    HOST_KEY = config.get('SECURITY', 'HostKey')
+    SECRET_KEY_FILE = config.get('SECURITY', 'SecretKeyFile')
+
+    SAML_METADATA = config.get('SAML2', 'Metadata')
+
+    DBNAME = config.get('DATABASE', 'Name')
+    DBUSER = config.get('DATABASE', 'User')
+    DBPASSWORD = config.get('DATABASE', 'Password')
+    DBHOST = config.get('DATABASE', 'Host')
+
+    SUPERUSER_NAME = config.get('SUPERUSER', 'Name')
+    SUPERUSER_PASS = config.get('SUPERUSER', 'Password')
+    SUPERUSER_EMAIL = config.get('SUPERUSER', 'Email')
+
+    PERMISSIONS_STAFF = config.get('PERMISSIONS', 'Staff')
+    PERMISSIONS_APPROVE = config.get('PERMISSIONS', 'Approve')
+
+    MAIL_SEND = config.getboolean('EMAIL', 'Send')
+    SRCE_SMTP = config.get('EMAIL', 'SrceSmtp')
+    ADMIN_MAIL = config.get('EMAIL', 'AdminMail')
+
+except NoSectionError as e:
+    print(e)
+    raise SystemExit(1)
+
+except ImproperlyConfigured as e:
+    print(e)
+    raise SystemExit(1)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -26,7 +76,6 @@ SECRET_KEY = 'django-insecure-^%=4b@x)kd4mc=@de%8gyzabe_-z915iof%am@@p4ad6&i$ggg
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -77,9 +126,12 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'NAME': 'app_data',
+        'ENGINE': 'django.db.backends.postgresql',
+        'USER': 'postgres_user',
+        'PASSWORD': 's3krit'
+    },
+
 }
 
 
