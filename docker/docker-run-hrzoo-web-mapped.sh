@@ -1,7 +1,7 @@
 #!/bin/bash
 
 IMAGE="ipanema:5000/hrzoo-web"
-VENV=/opt/hrzoosignup
+VENV=/opt/hrzoo-signup
 WORKDIR=$HOME/my_work/srce/git.hrzoo-hpc-users-front/hrzoo-hpc-users-front/
 SHELL="/bin/zsh"
 
@@ -18,12 +18,15 @@ docker run \
 -v $HOME/.ssh:/home/user/.ssh/ \
 -v $WORKDIR/hrzoosignup/frontend:/home/user/frontend \
 -v $WORKDIR/docker/pysitepkg:/home/user/pysitepkg \
--v $WORKDIR/hrzoosignup:$VENV/lib64/python3.9/site-packages
+-v $WORKDIR/hrzoosignup:$VENV/lib64/python3.9/site-packages/hrzoosignup \
 -v $WORKDIR/hrzoosignup/static:$VENV/share/hrzoosignup/static \
 -v $WORKDIR/bin/hzsi-db:$VENV/bin/hzsi-db \
 -v $WORKDIR/bin/hzsi-manage:$VENV/bin/hzsi-manage \
 -v $WORKDIR/bin/hzsi-genseckey:$VENV/bin/hzsi-genseckey \
 -v $WORKDIR/etc/:$VENV/etc/hrzoosignup/ \
+-v $WORKDIR/bin/hzsi-db:$VENV/bin/hzsi-db \
+-v $WORKDIR/bin/hzsi-manage:$VENV/bin/hzsi-manage \
+-v $WORKDIR/bin/hzsi-genseckey:$VENV/bin/hzsi-genseckey \
 -v /tmp/.X11-unix:/tmp/.X11-unix \
 -h docker-hrzooweb \
 --net host \

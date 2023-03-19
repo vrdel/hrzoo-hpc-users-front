@@ -2,7 +2,7 @@
 
 SITEPACK=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
 PYTHON=$(which python)
-DJANGO_SETTINGS="export DJANGO_SETTINGS_MODULE=vpsrequest.settings"
+DJANGO_SETTINGS="export DJANGO_SETTINGS_MODULE=hrzoosignup.settings"
 MANAGEPY=$SITEPACK/hrzoosignup/manage.py
 
 usage()
