@@ -135,10 +135,12 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'app_data',
+        'NAME': DBNAME,
+        'HOST': DBHOST,
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres_user',
-        'PASSWORD': 's3krit'
+        'USER': DBUSER,
+        'PASSWORD': DBPASSWORD,
+
     },
 
 }
