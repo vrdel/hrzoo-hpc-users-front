@@ -4,6 +4,10 @@ dist/
 *__pycache__*
 .ropeproject
 
+# project config
+secretkey
+hzsi.conf
+
 # Logs
 logs
 *.log
@@ -29,3 +33,4 @@ hrzoosignup/frontend/*.local
 *.njsproj
 *.sln
 *.sw?
+tags

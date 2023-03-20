@@ -190,3 +190,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # explicitly enabled
 # -vrdel
 SESSION_COOKIE_SECURE = True
+
+# custom user model
+# -vrdel
+AUTH_USER_MODEL = 'backend.User'
+
