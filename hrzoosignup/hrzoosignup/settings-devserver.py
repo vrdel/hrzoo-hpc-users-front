@@ -15,7 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Config parse
+# config parse
 # -vrdel
 import os
 from configparser import ConfigParser, NoSectionError
@@ -185,6 +185,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# explicitly enabled
+# explicitly disabled
 # -vrdel
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False

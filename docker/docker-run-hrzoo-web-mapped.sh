@@ -24,9 +24,6 @@ docker run \
 -v $WORKDIR/bin/hzsi-manage:$VENV/bin/hzsi-manage \
 -v $WORKDIR/bin/hzsi-genseckey:$VENV/bin/hzsi-genseckey \
 -v $WORKDIR/etc/:$VENV/etc/hrzoosignup/ \
--v $WORKDIR/bin/hzsi-db:$VENV/bin/hzsi-db \
--v $WORKDIR/bin/hzsi-manage:$VENV/bin/hzsi-manage \
--v $WORKDIR/bin/hzsi-genseckey:$VENV/bin/hzsi-genseckey \
 -v /tmp/.X11-unix:/tmp/.X11-unix \
 -h docker-hrzooweb \
 --net host \

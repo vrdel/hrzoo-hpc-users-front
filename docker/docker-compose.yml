@@ -1,0 +1,55 @@
+services:
+  web-hzsi:
+    env_file:
+      - .env
+    image: $IMAGE
+    command: /sbin/init
+    container_name: hzsi-r8
+    hostname: hzsi-web
+    tty: true
+    stdin_open: true
+    user: root
+    ports:
+      - "8000:8001"
+    depends_on:
+      - db-hzsi
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup
+      - $HOME:/mnt
+      - /dev/log:/dev/log
+      - /etc/localtime:/etc/localtime:ro
+      - ../docker/pysitepkg:/home/user/pysitepkg
+      - ../docker/syncsite.sh:/home/user/syncsite.sh
+      - ../docker/collectstatic.sh:/home/user/collectstatic.sh
+      - ../docker/run-django-server.sh:/home/user/run-django-server.sh
+      - ../:/home/user/hrzoosignup-source
+      - ../etc/:$VENV/etc/hrzoosignup
+      - ../bin/hzsi-db:$VENV/bin/hzsi-db
+      - ../bin/hzsi-manage:$VENV/bin/hzsi-manage
+      - ../bin/hzsi-genseckey:$VENV/bin/hzsi-genseckey
+    networks:
+      app_net:
+        ipv4_address: 172.19.0.12
+  db-hzsi:
+    env_file:
+      - .env
+    container_name: hzsi-postgres15
+    image: postgres:15
+    volumes:
+      - $PSQLDATA:/var/lib/postgresql/data
+    networks:
+      app_net:
+        ipv4_address: 172.19.0.13
+
+networks:
+  app_net:
+    driver: bridge
+    enable_ipv6: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.19.0.0/24
+          gateway: 172.19.0.1
