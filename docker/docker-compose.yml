@@ -30,6 +30,7 @@ services:
       - ../bin/hzsi-db:$VENV/bin/hzsi-db
       - ../bin/hzsi-manage:$VENV/bin/hzsi-manage
       - ../bin/hzsi-genseckey:$VENV/bin/hzsi-genseckey
+      - ../hrzoosignup/:$VENV/lib/python3.9/site-packages/hrzoosignup
     networks:
       app_net:
         ipv4_address: 172.19.0.12
