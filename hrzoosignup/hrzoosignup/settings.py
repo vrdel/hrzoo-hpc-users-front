@@ -69,8 +69,6 @@ except ImproperlyConfigured as e:
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^%=4b@x)kd4mc=@de%8gyzabe_-z915iof%am@@p4ad6&i$ggg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEBUG_OPTION
@@ -85,6 +83,9 @@ try:
 except FileNotFoundError as e:
     print(SECRET_KEY_FILE + ': %s' % repr(e))
     raise SystemExit(1)
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = SECRET_KEY_FILE
 
 # Application definition
 
