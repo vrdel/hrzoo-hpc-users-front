@@ -212,3 +212,16 @@ LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_SAMESITE = None
 
+STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
+STATIC_ROOT = '{}/share/hrzoosignup/static/'.format(VENV)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/bundles/')]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'POLL_INTERVAL': 0.1,
+        'BUNDLE_DIR_NAME': 'reactbundle/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json')
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+    }
+}
