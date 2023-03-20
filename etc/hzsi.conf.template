@@ -1,0 +1,36 @@
+[DEFAULT]
+VENV = /opt/hrzoo-signup/
+
+[GENERAL]
+Debug = True
+RelativePath = /
+
+[SECURITY]
+AllowedHosts = hzsi.local.dev
+HostCert = %(VENV)s/etc/hrzoosignup/cert.pem
+HostKey = %(VENV)s/etc/hrzoosignup/key.pem
+SecretKeyFile = %(VENV)s/etc/hrzoosignup/secretkey
+
+[SAML2]
+Metadata = %(VENV)s/etc/hrzoosignup/metadata.xml
+
+[SUPERUSER]
+Name = hzsi@srce.hr
+Password = testbed
+Email = hzsi@srce.hr
+
+[DATABASE]
+Host = db-hzsi
+Name = postgres
+User = postgres
+Password = postgres
+
+[PERMISSIONS]
+Staff = user1
+Approve = user2
+
+[EMAIL]
+TEMPLATE_DIR = %(VENV)s/etc/hrzoosignup/email_templates/
+Send = False
+SrceSmtp = smtp.srce.hr
+AdminMail = hpc@srce.hr

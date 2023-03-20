@@ -95,6 +95,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangosaml2',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_api_key',
+    'dj_rest_auth',
+    'webpack_loader',
     'frontend',
     'backend',
 ]
@@ -107,7 +113,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'djangosaml2.middleware.SamlSessionMiddleware'
 ]
+
 
 ROOT_URLCONF = 'hrzoosignup.urls'
 
@@ -194,4 +202,12 @@ SESSION_COOKIE_SECURE = True
 # custom user model
 # -vrdel
 AUTH_USER_MODEL = 'backend.User'
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'backend.auth.saml2.backends.SAML2Backend']
+# load SAML settings
+LOGIN_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
+LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
+# SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_SAMESITE = None
 
