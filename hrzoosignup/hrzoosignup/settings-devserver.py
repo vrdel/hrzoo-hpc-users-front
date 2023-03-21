@@ -123,7 +123,7 @@ ROOT_URLCONF = 'hrzoosignup.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['{}/templates/'.format(BASE_DIR)],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -203,8 +203,9 @@ SESSION_COOKIE_SECURE = False
 # custom user model
 # -vrdel
 AUTH_USER_MODEL = 'backend.User'
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
-                           'backend.auth.saml2.backends.SAML2Backend']
+#AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+#                           'backend.auth.saml2.backends.SAML2Backend']
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
 LOGIN_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
 LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
@@ -225,3 +226,4 @@ WEBPACK_LOADER = {
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
     }
 }
+SECURE_SSL_REDIRECT = False
