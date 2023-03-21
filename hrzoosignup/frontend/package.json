@@ -2,11 +2,15 @@
   "name": "hrzoofront",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "vitedev": "vite",
     "vitebuild": "vite build",
-    "vitepreview": "vite preview"
+    "vitepreview": "vite preview",
+    "build-devel": "webpack --config webpack.config.js --progress --colors --mode development",
+    "build-prod": "webpack --config webpack.config.js --progress --colors --mode production",
+    "watch": "webpack --config webpack.config.js --watch --mode development",
+    "test": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageDirectory coverage"
+
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",

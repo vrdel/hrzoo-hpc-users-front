@@ -6,6 +6,12 @@ devel-django-server:
 py-audit-view:
 	docker exec -t $(container_name) ./safety.sh
 
+vitedev:
+	docker exec -t $(container_name) cd /home/user/frontend && npm run vitedev
+
+vitebuild:
+	docker exec -t $(container_name) cd /home/user/frontend && npm run vitebuild
+
 js-audit-view:
 	docker exec -t $(container_name) cd /home/user/frontend && npm audit
 
