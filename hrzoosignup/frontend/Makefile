@@ -17,3 +17,6 @@ js-audit-view:
 
 js-audit-fix:
 	docker exec -t $(container_name) cd /home/user/frontend && npm audit fix
+
+npm:
+	docker exec -t $(container_name) cd /home/user/frontend && npm $(ARGS)
