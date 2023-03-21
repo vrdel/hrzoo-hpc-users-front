@@ -15,7 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Config parse
+# config parse
 # -vrdel
 import os
 from configparser import ConfigParser, NoSectionError
@@ -221,7 +221,7 @@ WEBPACK_LOADER = {
         'CACHE': not DEBUG,
         'POLL_INTERVAL': 0.1,
         'BUNDLE_DIR_NAME': 'reactbundle/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json')
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
         'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
     }
 }

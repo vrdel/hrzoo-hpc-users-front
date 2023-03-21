@@ -69,8 +69,6 @@ except ImproperlyConfigured as e:
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-^%=4b@x)kd4mc=@de%8gyzabe_-z915iof%am@@p4ad6&i$ggg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEBUG_OPTION
@@ -86,6 +84,9 @@ except FileNotFoundError as e:
     print(SECRET_KEY_FILE + ': %s' % repr(e))
     raise SystemExit(1)
 
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = SECRET_KEY_FILE
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -95,6 +96,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangosaml2',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_api_key',
+    'dj_rest_auth',
+    'webpack_loader',
     'frontend',
     'backend',
 ]
@@ -107,7 +114,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'djangosaml2.middleware.SamlSessionMiddleware'
 ]
+
 
 ROOT_URLCONF = 'hrzoosignup.urls'
 
@@ -135,10 +144,12 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'NAME': 'app_data',
+        'NAME': DBNAME,
+        'HOST': DBHOST,
         'ENGINE': 'django.db.backends.postgresql',
-        'USER': 'postgres_user',
-        'PASSWORD': 's3krit'
+        'USER': DBUSER,
+        'PASSWORD': DBPASSWORD,
+
     },
 
 }
@@ -188,3 +199,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # explicitly disabled
 # -vrdel
 SESSION_COOKIE_SECURE = False
+
+# custom user model
+# -vrdel
+AUTH_USER_MODEL = 'backend.User'
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'backend.auth.saml2.backends.SAML2Backend']
+# load SAML settings
+LOGIN_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
+LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
+# SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_SAMESITE = None
+
+STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
+STATIC_ROOT = '{}/share/hrzoosignup/static/'.format(VENV)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/bundles/')]
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'POLL_INTERVAL': 0.1,
+        'BUNDLE_DIR_NAME': 'reactbundle/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
+        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
+    }
+}
