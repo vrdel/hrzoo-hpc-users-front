@@ -4,7 +4,7 @@ services:
       - .env
     image: $IMAGE
     command: /sbin/init
-    container_name: hzsi-r8
+    container_name: hzsi-web
     hostname: hzsi-web
     tty: true
     stdin_open: true

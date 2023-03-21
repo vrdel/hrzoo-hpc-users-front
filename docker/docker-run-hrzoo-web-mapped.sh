@@ -27,9 +27,9 @@ docker run \
 -v $WORKDIR/hrzoosignup/frontend:/home/user/frontend \
 -v $WORKDIR/hrzoosignup/static:$VENV/share/hrzoosignup/static \
 -v $WORKDIR/hrzoosignup:$VENV/lib64/python3.9/site-packages/hrzoosignup \
--h docker-hrzooweb \
+-h docker-hzsiweb \
 --net host \
---name hrzoo-web \
+--name hzsi-web \
 --rm -ti \
 $IMG \
 $SH
