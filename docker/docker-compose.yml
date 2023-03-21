@@ -10,7 +10,8 @@ services:
     stdin_open: true
     user: root
     ports:
-      - "8000:8001"
+      - "8000:8000"
+      - "3000:3000"
     depends_on:
       - db-hzsi
     tmpfs:
