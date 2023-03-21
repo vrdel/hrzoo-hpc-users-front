@@ -22,7 +22,7 @@ devel-webpack-server:
 	docker exec -t $(container_name) bash -c 'cd /home/user/frontend && node_modules/.bin/webpack-dev-server --config webpack.devserver.config.js --progress'
 
 devel-webpack-server-hmr:
-	docker exec -t $(container_name) bash -c 'cd /home/user/frontend && node_modules/.bin/webpack-dev-server --config webpack.devserver.config.js --progress --hot'
+	docker exec -t $(container_name) bash -c 'cd /home/user/frontend; sudo killall webpack; node_modules/.bin/webpack-dev-server --config webpack.devserver.config.js --progress --hot'
 
 npm:
 	docker exec -t $(container_name) bash -c 'cd /home/user/frontend && npm $(ARGS)'
