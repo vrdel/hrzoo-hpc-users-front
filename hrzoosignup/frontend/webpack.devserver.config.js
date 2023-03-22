@@ -6,11 +6,11 @@ module.exports = {
   entry: "./src/main.jsx",
   mode: "development",
   output: {
-    publicPath: 'http://0.0.0.0:3000/',
+    publicPath: 'http://0.0.0.0:3001/',
   },
   devServer: {
     open: false,
-    port: 3000,
+    port: 3001,
     hot: false,
     liveReload: false,
     historyApiFallback: true,
