@@ -1,6 +1,8 @@
+import React from 'react'
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
+import djangoLogo from './assets/django-logo-positive.svg'
 import './App.css'
 
 function App() {
@@ -15,8 +17,11 @@ function App() {
         <a href="https://reactjs.org" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
+        <a href="https://djangoproject.org" target="_blank">
+          <img src={djangoLogo} className="logo django" alt="Django logo" />
+        </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Vite + React + Django</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

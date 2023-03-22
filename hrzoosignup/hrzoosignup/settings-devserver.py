@@ -199,6 +199,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # explicitly disabled
 # -vrdel
 SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
 # custom user model
 # -vrdel
