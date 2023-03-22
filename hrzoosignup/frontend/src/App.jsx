@@ -17,7 +17,7 @@ function App() {
         <a href="https://reactjs.org" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
-        <a href="https://djangoproject.org" target="_blank">
+        <a href="https://djangoproject.com" target="_blank">
           <img src={djangoLogo} className="logo django" alt="Django logo" />
         </a>
       </div>
