@@ -31,10 +31,10 @@ js-audit-fix:
 	docker exec -u user -t $(container_name) bash -c 'cd /home/user/frontend && npm audit fix'
 
 devel-webpack-server:
-	docker exec -u user -t $(container_name) bash -c 'cd /home/user/frontend && node_modules/.bin/webpack-dev-server --config webpack.devserver.config.js --progress'
+	docker exec -u user -t $(container_name) /home/user/run-frontdev-server.sh
 
 devel-webpack-server-hmr:
-	docker exec -u user -t $(container_name) bash -c 'cd /home/user/frontend; sudo killall webpack; node_modules/.bin/webpack-dev-server --config webpack.devserver.config.js --progress --hot'
+	docker exec -u user -t $(container_name) bash -c '/home/user/run-frontdev-server.sh --hot'
 
 npm:
 	docker exec -t $(container_name) bash -c 'cd /home/user/frontend && npm $(ARGS)'

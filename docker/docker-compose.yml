@@ -10,8 +10,8 @@ services:
     stdin_open: true
     user: root
     ports:
-      - "8000-8010:8000-8010"
-      - "3000-3010:3000-3010"
+      - "8001:8001"
+      - "3001:3001"
     depends_on:
       - db-hzsi
     tmpfs:
@@ -29,6 +29,7 @@ services:
       - ../docker/collectstatic.sh:/home/user/collectstatic.sh
       - ../docker/pysitepkg:/home/user/pysitepkg
       - ../docker/run-django-server.sh:/home/user/run-django-server.sh
+      - ../docker/run-frontdev-server.sh:/home/user/run-frontdev-server.sh
       - ../docker/syncsite.sh:/home/user/syncsite.sh
       - ../etc/:$VENV/etc/hrzoosignup
       - ../hrzoosignup/:$VENV/lib/python3.9/site-packages/hrzoosignup
