@@ -21,6 +21,7 @@
     "@hookform/resolvers": "^2.9.11",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^9.1.2",
+    "bootstrap": "^5.2.3",
     "css-loader": "^6.7.3",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.1.0",
