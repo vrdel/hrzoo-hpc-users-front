@@ -37,7 +37,7 @@ services:
       - ../hrzoosignup/static/:$VENV/usr/share/hrzoosignup/static
     networks:
       app_net:
-        ipv4_address: 172.19.0.12
+        ipv4_address: 172.20.0.12
   db-hzsi:
     env_file:
       - .env
@@ -47,7 +47,7 @@ services:
       - $PSQLDATA:/var/lib/postgresql/data
     networks:
       app_net:
-        ipv4_address: 172.19.0.13
+        ipv4_address: 172.20.0.13
 
 networks:
   app_net:
@@ -56,5 +56,5 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.19.0.0/24
-          gateway: 172.19.0.1
+        - subnet: 172.20.0.0/24
+          gateway: 172.20.0.1
