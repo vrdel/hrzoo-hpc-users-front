@@ -224,7 +224,6 @@ WEBPACK_LOADER = {
         'POLL_INTERVAL': 0.1,
         'BUNDLE_DIR_NAME': 'reactbundle/',
         'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
-        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
     }
 }
 SECURE_SSL_REDIRECT = False
