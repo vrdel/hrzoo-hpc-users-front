@@ -12,6 +12,7 @@ services:
     ports:
       - "8001:8001"
       - "3001:3001"
+      - "6899:6899"
     depends_on:
       - db-hzsi
     tmpfs:
