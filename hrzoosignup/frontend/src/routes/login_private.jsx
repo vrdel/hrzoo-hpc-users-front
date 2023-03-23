@@ -38,15 +38,15 @@ const LoginPrivate = () => {
     <Container>
       <Row className="login-first-row">
         <Col sm={{size: 4, offset: 4}}>
-          <Card>
+          <Card className="p-2">
             <CardHeader
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-              <h4 className="text-dark"><strong>Napredno računanje</strong></h4>
+              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="2x" />
+              <h5 className="text-dark"><strong>Napredno računanje</strong></h5>
             </CardHeader>
-            <CardBody>
+            <CardBody className="pt-5">
               <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
                 <FormGroup className="text-start">
                   <Label for="username">Korisničko ime: </Label>
@@ -84,7 +84,7 @@ const LoginPrivate = () => {
                     </p>
                   </Alert>
                 </FormGroup>
-                <div className="pt-3">
+                <div className="pt-5">
                 </div>
                 <FormGroup>
                   <Button color="success" type="submit" block className="mb-3">Prijava korisničkim imenom i lozinkom</Button>
