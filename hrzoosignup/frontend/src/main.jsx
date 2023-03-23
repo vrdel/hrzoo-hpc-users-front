@@ -9,8 +9,8 @@ import {
   RouterProvider
 } from 'react-router-dom';
 import Root from './routes/root';
-import LoginPublic from './routes/login_public';
-import LoginPrivate from './routes/login_private';
+import LoginPublic from './routes/login-public';
+import LoginPrivate from './routes/login-private';
 
 
 const router = createBrowserRouter([
