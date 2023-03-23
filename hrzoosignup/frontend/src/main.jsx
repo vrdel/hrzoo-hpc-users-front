@@ -10,6 +10,7 @@ import LoginPublic from './routes/login-public';
 import LoginPrivate from './routes/login-private';
 import MyRequests from './routes/my-requests';
 import NotFound from './routes/notfound';
+import DefaultPage from './ui/DefaultPage'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -18,10 +19,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter>
         <Routes>
           <Route path="ui" element={<Root />}>
-            <Route path="prijava-priv" element={<LoginPrivate/>}/>
-            <Route path="prijava" element={<LoginPublic/>}/>
-            <Route path="moji-zahtjevi" element={<MyRequests/>}/>
-            <Route path="*" element={<NotFound/>}/>
+            <Route path="prijava-priv" element={<LoginPrivate />}/>
+            <Route path="prijava" element={<LoginPublic />}/>
+            <Route element={<DefaultPage />}>
+              <Route path="moji-zahtjevi" element={<MyRequests />}/>
+            </Route>
+            <Route path="*" element={<NotFound />}/>
           </Route>
         </Routes>
       </BrowserRouter>
