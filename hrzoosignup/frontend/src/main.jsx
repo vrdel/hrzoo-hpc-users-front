@@ -3,36 +3,28 @@ import ReactDOM from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {
-  createBrowserRouter,
-  RouterProvider
+  Routes, Route, BrowserRouter
 } from 'react-router-dom';
 import Root from './routes/root';
 import LoginPublic from './routes/login-public';
 import LoginPrivate from './routes/login-private';
-
-
-const router = createBrowserRouter([
-  {
-    path: "ui/",
-    element: <Root/>,
-    children: [
-      {
-        path: "prijava",
-        element: <LoginPublic />,
-      },
-      {
-        path: "login",
-        element: <LoginPrivate />,
-      },
-    ]
-  }
-])
+import MyRequests from './routes/my-requests';
+import NotFound from './routes/notfound';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <HelmetProvider>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="ui" element={<Root />}>
+            <Route path="prijava-priv" element={<LoginPrivate/>}/>
+            <Route path="prijava" element={<LoginPublic/>}/>
+            <Route path="moji-zahtjevi" element={<MyRequests/>}/>
+            <Route path="*" element={<NotFound/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>
 )

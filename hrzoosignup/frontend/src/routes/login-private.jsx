@@ -32,6 +32,7 @@ const LoginPrivate = () => {
   });
 
   const onSubmit = (data) => {
+    alert(JSON.stringify(data, null, 2));
   }
 
   return (
