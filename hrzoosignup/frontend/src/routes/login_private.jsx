@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm, Controller } from "react-hook-form";
+import SrceLogoTiny from '../assets/srce-logo-e-mail-sig.png';
 import {
   Alert,
   Container,
@@ -43,7 +44,7 @@ const LoginPrivate = () => {
               className="d-sm-inline-flex align-items-center justify-content-around"
             >
               <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-              <h4 className="text-dark"><strong>HRZOO Prijava</strong></h4>
+              <h4 className="text-dark"><strong>Napredno računanje</strong></h4>
             </CardHeader>
             <CardBody>
               <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
@@ -92,7 +93,11 @@ const LoginPrivate = () => {
               </Form>
             </CardBody>
             <CardFooter id="hzsi-loginfooter">
-              Footer
+              <div className="text-center pt-3">
+                <a href="https://www.srce.unizg.hr/" target="_blank" rel="noopener noreferrer">
+                  <img src={SrceLogoTiny} id="srcelogo" alt="SRCE Logo"/>
+                </a>
+              </div>
             </CardFooter>
           </Card>
         </Col>
