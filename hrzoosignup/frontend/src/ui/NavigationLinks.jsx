@@ -5,11 +5,12 @@ import {
   NavLink,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import '../css/nav.css';
 
 
 const NavigationLinks = () => {
   return (
-    <Nav tabs id="hzsi-navlinks" className="d-flex justify-content-center border-left border-right border-top rounded-top sticky-top">
+    <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex justify-content-center sticky-top">
       <NavItem key='moji-zahtjevi' className='mt-1'>
         <NavLink
           tag={Link}
@@ -25,7 +26,7 @@ const NavigationLinks = () => {
           tag={Link}
           active={location.pathname.split('/')[2] === 'novi-zahtjev' ? true : false}
           className={location.pathname.split('/')[2] === 'novi-zahtjev' ? "text-white hzsi-bg-danger" : "text-dark"}
-          id={location.pathname.split('/')[2] === 'moji-zahtjevi' ? "hzsi-bg-danger" : ""}
+          id={location.pathname.split('/')[2] === 'novi-zahtjev' ? "hzsi-bg-danger" : ""}
           to='/ui/novi-zahtjev'>
           Novi zahtjev
         </NavLink>
@@ -35,7 +36,7 @@ const NavigationLinks = () => {
           tag={Link}
           active={location.pathname.split('/')[2] === 'iskoristenost-resursa' ? true : false}
           className={location.pathname.split('/')[2] === 'iskoristenost-resursa' ? "text-white" : "text-dark"}
-          id={location.pathname.split('/')[2] === 'moji-zahtjevi' ? "hzsi-bg-danger" : ""}
+          id={location.pathname.split('/')[2] === 'iskoristenost-resursa' ? "hzsi-bg-danger" : ""}
           to='/ui/iskoristenost-resursa'>
           Iskorištenost resursa
         </NavLink>
@@ -45,7 +46,7 @@ const NavigationLinks = () => {
           tag={Link}
           active={location.pathname.split('/')[2] === 'iskoristenost-resursa' ? true : false}
           className={location.pathname.split('/')[2] === 'iskoristenost-resursa' ? "text-white" : "text-dark"}
-          id={location.pathname.split('/')[2] === 'moji-zahtjevi' ? "hzsi-bg-danger" : ""}
+          id={location.pathname.split('/')[2] === 'iskoristenost-resursa' ? "hzsi-bg-danger" : ""}
           to='/ui/javni-kljucevi'>
           Javni ključevi
         </NavLink>

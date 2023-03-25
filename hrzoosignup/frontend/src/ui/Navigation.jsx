@@ -18,7 +18,6 @@ import '../css/nav.css';
 
 
 const Navigation = () => {
-
   const [popoverOpen, setPopoverOpen] = useState(false)
 
   return (
