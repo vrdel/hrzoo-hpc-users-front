@@ -15,18 +15,14 @@ const BasePage = () => {
       <Row>
         <Col>
           <Navigation />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
           <NavigationLinks />
         </Col>
       </Row>
       <Row id="hzsi-contentwrap" className="pt-3 pb-3 border-start border-end rounded">
         <BaseContent />
       </Row>
-      <Row className="mt-auto">
-        <Col className="bg-secondary bg-opacity-10 border-top mt-2">
+      <Row>
+        <Col>
           <Footer/>
         </Col>
       </Row>
