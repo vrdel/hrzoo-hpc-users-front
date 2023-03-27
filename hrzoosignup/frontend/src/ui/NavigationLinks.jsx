@@ -28,12 +28,12 @@ const NavigationLinks = () => {
           Novi zahtjev
         </NavLink>
       </NavItem>
-      <NavItem key='iskoristenost-resursa' className='mt-1'>
+      <NavItem key='clanstva' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/iskoristenost-resursa'>
-          Iskorištenost resursa
+          to='/ui/clanstva'>
+          Članstva
         </NavLink>
       </NavItem>
       <NavItem key='javni-kljucevi' className='mt-1'>
@@ -42,6 +42,14 @@ const NavigationLinks = () => {
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/javni-kljucevi'>
           Javni ključevi
+        </NavLink>
+      </NavItem>
+      <NavItem key='moji-podatci' className='mt-1'>
+        <NavLink
+          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          to='/ui/moji-podatci'>
+          Moji podatci
         </NavLink>
       </NavItem>
     </Nav>
