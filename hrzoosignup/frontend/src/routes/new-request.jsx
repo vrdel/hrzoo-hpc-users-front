@@ -1,27 +1,52 @@
-import React from 'react';
-import { CustomReactSelect } from '../ui/CustomReactSelect.jsx';
-
+import React, { useState, useEffect, useContext } from 'react';
+import { CustomReactSelect } from '../ui/CustomReactSelect';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Button } from 'reactstrap';
+import { SharedData } from '../main';
 
 const NewRequest = () => {
+  const [mainTitle, setMainTitle] = useState(undefined)
+  const [linkDisabled, setButtonDisabled] = useState(undefined)
+  const navigate = useNavigate()
+  const { linkTitles } = useContext(SharedData);
+
+  useEffect(() => {
+    setMainTitle(linkTitles[location.pathname])
+    if (location.pathname.endsWith('novi-zahtjev'))
+      setButtonDisabled(false)
+    else
+      setButtonDisabled(true)
+  }, [location.pathname])
+
   return (
-    <div>
-      <CustomReactSelect
-        label="Testing Select"
-        onChange={ e => {}}
-        options={[
-          {
-            label: 'foo',
-            value: '1'
-          },
-          {
-            label: 'bar',
-            value: '2'
-          }
-        ]}
-        value={'2'}
-      />
-      Novi zahtjev
-    </div>
+    <>
+      <div>
+        { mainTitle }
+      </div>
+      <div>
+        <CustomReactSelect
+          options={[
+            {
+              "label": 'Istraživački projekt',
+              "value": "Istraživački projekt"
+            }
+          ]}
+          value={{
+            "label": 'Istraživački projekt',
+            "value": 'Istraživački projekt'
+          }}
+        />
+      </div>
+      <Button
+        className="btn btn-success"
+        disabled={linkDisabled}
+        onClick={() => {
+          navigate('istrazivacki-projekt')
+        }}>
+        Nastavi
+      </Button>
+      <Outlet />
+    </>
   )
 };
 
