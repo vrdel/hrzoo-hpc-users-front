@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Navbar,
   NavbarBrand,
@@ -9,16 +9,18 @@ import {
   PopoverBody,
   Button,
 } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLaptopCode,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
-
+import { ModalContext } from './BasePage'
 
 const Navigation = () => {
   const [popoverOpen, setPopoverOpen] = useState(false)
+  const context = useContext(ModalContext)
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="border rounded d-flex justify-content-between pt-3 pb-3">
@@ -57,7 +59,12 @@ const Navigation = () => {
             size="sm"
             aria-label="Odjava"
             className='btn-danger'
-            onClick={() => {}}>
+            onClick={() => {
+              context.trigger.setAreYouSureModal(!context.options.areYouSureModal)
+              context.trigger.setModalTitle("Odjava")
+              context.trigger.setModalMsg("Da li ste sigurni da se želite odjaviti?")
+              context.trigger.setOnYes(true)
+            }}>
             <FontAwesomeIcon icon={faSignOutAlt} color="white" />
           </Button>
         </NavItem>

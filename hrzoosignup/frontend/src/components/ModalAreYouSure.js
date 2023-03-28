@@ -8,6 +8,7 @@ import {
 }
 from 'reactstrap';
 
+
 export const ModalAreYouSure = ({isOpen, toggle, title, msg, onYes}) => (
   <Modal isOpen={isOpen} toggle={toggle}>
     <ModalHeader toggle={toggle}>{title}</ModalHeader>
@@ -23,3 +24,5 @@ export const ModalAreYouSure = ({isOpen, toggle, title, msg, onYes}) => (
     </ModalFooter>
   </Modal>
 )
+
+export default ModalAreYouSure
