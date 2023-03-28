@@ -5,7 +5,6 @@ import '../css/footer.css';
 
 
 const Footer = () => {
-
   return (
     <div id="hzsi-footer" className="align-self-center border rounded pristupacnost">
       {
@@ -15,10 +14,13 @@ const Footer = () => {
           //</Link>
         //</div>
       }
-      <div className="text-center pt-1 pb-2">
+      <div className="text-center pt-1 mt-2 pb-2">
         <a href="https://www.srce.unizg.hr/" target="_blank" rel="noopener noreferrer">
           <img src={SrceBigLogo} id="srcelogo" alt="SRCE Logo"/>
         </a>
+      </div>
+      <div className="text-center pt-1 pb-2">
+        <p><small>Copyright © 2023 Sveučilišni računski centar (Srce)</small></p>
       </div>
     </div>
   )
