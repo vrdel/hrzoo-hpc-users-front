@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { CustomReactSelect } from '../components/CustomReactSelect';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Col, Row, Button, Label } from 'reactstrap';
-import { SharedData } from '../main';
+import { SharedData } from './root';
 import { PageTitle } from '../components/PageTitle';
 
 

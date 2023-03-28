@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from '../main';
+import { SharedData } from './root';
 import { Col, Row } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 
