@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navigation from './Navigation';
 import NavigationLinks from './NavigationLinks';
 import Footer from './Footer';
-import BaseContent from './BaseContent';
+import { Outlet } from 'react-router-dom';
+import '../css/content.css';
 
 
 const BasePage = () => {
@@ -19,11 +20,13 @@ const BasePage = () => {
         </Col>
       </Row>
       <Row id="hzsi-contentwrap" className="pt-3 pb-3 border-start border-end rounded">
-        <BaseContent />
+        <Col>
+          <Outlet />
+        </Col>
       </Row>
       <Row>
         <Col>
-          <Footer/>
+          <Footer />
         </Col>
       </Row>
     </Container>
