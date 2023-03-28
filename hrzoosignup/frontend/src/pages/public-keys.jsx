@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../main';
 import { Col, Row } from 'reactstrap';
-import { PageTitle } from '../ui/PageTitle';
+import { PageTitle } from '../components/PageTitle';
 
 
 const PublicKeys = () => {

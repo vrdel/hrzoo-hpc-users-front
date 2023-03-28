@@ -4,7 +4,7 @@ import {
   NavItem,
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
-import '../css/nav.css';
+import '../styles/nav.css';
 
 
 const NavigationLinks = () => {

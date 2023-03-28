@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { CustomReactSelect } from '../ui/CustomReactSelect';
+import { CustomReactSelect } from '../components/CustomReactSelect';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Col, Row, Button, Label } from 'reactstrap';
 import { SharedData } from '../main';
-import { PageTitle } from '../ui/PageTitle';
+import { PageTitle } from '../components/PageTitle';
 
 
 const NewRequest = () => {

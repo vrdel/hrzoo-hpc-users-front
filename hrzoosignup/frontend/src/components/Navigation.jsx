@@ -14,7 +14,7 @@ import {
   faLaptopCode,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
-import '../css/nav.css';
+import '../styles/nav.css';
 
 
 const Navigation = () => {

@@ -6,7 +6,7 @@ import Navigation from './Navigation';
 import NavigationLinks from './NavigationLinks';
 import Footer from './Footer';
 import { Outlet } from 'react-router-dom';
-import '../css/content.css';
+import '../styles/content.css';
 
 
 const BasePage = () => {

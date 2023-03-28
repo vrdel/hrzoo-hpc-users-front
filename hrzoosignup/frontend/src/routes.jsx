@@ -2,19 +2,19 @@ import React from 'react'
 import {
   Routes, Route, BrowserRouter
 } from 'react-router-dom';
-import BasePage from './ui/BasePage';
-import LoginPrivate from './routes/login-private';
-import LoginPublic from './routes/login-public';
-import MyRequests from './routes/my-requests';
-import NewRequest from './routes/new-request';
-import ResearchProjectRequest from './routes/new-requests/research-project';
-import GeneralRequest from './routes/new-requests/general';
-import NewRequestIndex from './routes/new-requests/index';
-import PublicKeys from './routes/public-keys';
-import Memberships from './routes/memberships';
-import MyInfo from './routes/my-info';
-import NotFound from './routes/notfound';
-import Root from './routes/root';
+import BasePage from './components/BasePage';
+import LoginPrivate from './pages/login-private';
+import LoginPublic from './pages/login-public';
+import MyRequests from './pages/my-requests';
+import NewRequest from './pages/new-request';
+import ResearchProjectRequest from './pages/new-requests/research-project';
+import GeneralRequest from './pages/new-requests/general';
+import NewRequestIndex from './pages/new-requests/index';
+import PublicKeys from './pages/public-keys';
+import Memberships from './pages/memberships';
+import MyInfo from './pages/my-info';
+import NotFound from './pages/notfound';
+import Root from './pages/root';
 
 
 const BaseRoutes = () => {

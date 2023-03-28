@@ -19,7 +19,7 @@ import {
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
-import '../css/login.css';
+import '../styles/login.css';
 
 
 const LoginPrivate = () => {

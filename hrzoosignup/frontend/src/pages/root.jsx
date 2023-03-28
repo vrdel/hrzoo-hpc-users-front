@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import HeadTitle from '../ui/HeadTitle';
+import HeadTitle from '../components/HeadTitle';
 
 
 const Root = () => {

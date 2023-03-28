@@ -1,7 +1,7 @@
 import React from 'react'
 import SrceBigLogo from '../assets/pravisrce.png';
 import { Link } from 'react-router-dom';
-import '../css/footer.css';
+import '../styles/footer.css';
 
 
 const Footer = () => {

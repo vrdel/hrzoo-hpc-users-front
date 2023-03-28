@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../main';
 import { Col, Row } from 'reactstrap';
-import { PageTitle } from '../ui/PageTitle';
+import { PageTitle } from '../components/PageTitle';
 
 
-const Memberships = () => {
+const MyRequests = () => {
   const { linkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
 
@@ -25,4 +25,4 @@ const Memberships = () => {
   )
 };
 
-export default Memberships;
+export default MyRequests;
