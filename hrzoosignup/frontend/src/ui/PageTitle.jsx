@@ -3,10 +3,10 @@ import { Col } from 'reactstrap';
 
 export const PageTitle = ({pageTitle}) => {
   return (
-    <Col className="ms-3 me-3 p-2 mb-2 rounded bg-light">
-      <h3>
+    <Col className="ms-3 me-3 mt-2 p-2 mb-2 rounded bg-light">
+      <h4>
         { pageTitle }
-      </h3>
+      </h4>
     </Col>
   )
 }
