@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { CustomReactSelect } from '../ui/CustomReactSelect';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Col, Row, Button } from 'reactstrap';
+import { Col, Row, Button, Label } from 'reactstrap';
 import { SharedData } from '../main';
 import { PageTitle } from '../ui/PageTitle';
 
 
 const NewRequest = () => {
   const [pageTitle, setPageTitle] = useState(undefined)
-  const [linkDisabled, setButtonDisabled] = useState(undefined)
+  const [buttonDisabled, setButtonDisabled] = useState(undefined)
+  const [selectedProject, setSelectedProject] = useState(undefined)
   const navigate = useNavigate()
-  const { linkTitles } = useContext(SharedData);
+  const { linkTitles, ProjectTypesToSelect } = useContext(SharedData);
 
   useEffect(() => {
     setPageTitle(linkTitles[location.pathname])
@@ -25,27 +26,31 @@ const NewRequest = () => {
       <Row>
         <PageTitle pageTitle={pageTitle}/>
       </Row>
-      <Row>
-        <Col>
-          <div>
-            <CustomReactSelect
-              options={[
-                {
-                  "label": 'Istraživački projekt',
-                  "value": "Istraživački projekt"
-                }
-              ]}
-              value={{
-                "label": 'Istraživački projekt',
-                "value": 'Istraživački projekt'
-              }}
-            />
-          </div>
+      <Row className="mb-2 ms-2 mt-4">
+        <Col className="d-inline-flex align-items-center">
+          <Label
+            className="fs-5"
+            htmlFor="projectType"
+            aria-label="projectType"
+          >
+            <strong>
+              Tip projekta:
+            </strong>
+          </Label>
+          <CustomReactSelect
+            className="ms-5 fs-5"
+            placeholder="Odaberi"
+            controlWidth="400px"
+            onChange={setSelectedProject}
+            isDisabled={buttonDisabled}
+            options={ProjectTypesToSelect}
+          />
           <Button
-            className="btn btn-success"
-            disabled={linkDisabled}
+            color="success"
+            className="ms-5 fs-5"
+            disabled={buttonDisabled}
             onClick={() => {
-              navigate('istrazivacki-projekt')
+              navigate(selectedProject.value)
             }}>
             Nastavi
           </Button>

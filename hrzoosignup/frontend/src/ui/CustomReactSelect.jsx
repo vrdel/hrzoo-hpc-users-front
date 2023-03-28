@@ -35,7 +35,7 @@ const DropdownIndicator = ({ ...props }) => {
 }
 
 
-export const CustomReactSelect = ({ forwardedRef=undefined, ...props}) => {
+export const CustomReactSelect = ({ forwardedRef=undefined, controlWidth=undefined, ...props}) => {
   const customStyles = {
     control: (provided,  state) => ({
       ...provided,
@@ -47,6 +47,7 @@ export const CustomReactSelect = ({ forwardedRef=undefined, ...props}) => {
       backgroundClip: 'padding-box',
       textShadow: 'none',
       textAlign: 'start',
+      width: controlWidth,
       textIndent: 0,
       borderColor: props.error ? '#dc3545' : props.isnew ? '#198754' : props.ismissing ? '#0d6efd' : state.selectProps.menuIsOpen ? '#66afe9' : '#ced4da',
       transition: 'border-color .15s ease-in-out, box-shadow .15s ease-in-out',
@@ -78,21 +79,6 @@ export const CustomReactSelect = ({ forwardedRef=undefined, ...props}) => {
     multiValue: (provided) => props.isDisabled ? { ...provided, backgroundColor: '#c4ccd4' } : provided,
     multiValueRemove: (provided) => props.isDisabled ? { ...provided, display: 'none' } : provided
   }
-
-  if (props.label)
-    return (
-      <>
-        <label id='aria-label' htmlFor='select'>{`${props.label}`}</label>
-        <Select
-          {...props}
-          inputId='select'
-          ref={ forwardedRef ? forwardedRef : null }
-          components={{IndicatorSeparator: null, DropdownIndicator}}
-          styles={customStyles}
-        />
-      </>
-    )
-
 
   return (
     <Select
