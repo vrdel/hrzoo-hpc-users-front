@@ -3,17 +3,26 @@ import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import {
   Col,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Row,
   Button,
   Label,
   Form,
+  FormGroup,
   InputGroup,
   Input,
   InputGroupText
 } from 'reactstrap';
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { SharedData } from '../root';
 import DatePicker from 'react-date-picker';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/datepicker.css';
@@ -204,7 +213,16 @@ const ResourceFields = ({control, errors}) => {
   )
 }
 
-const GeneralFields = ({control, errors}) => {
+
+const GeneralFields = ({control, errors, handleSubmit}) => {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "scientificDomain",
+  });
+
+  function onSubmit() {
+  }
+
   return (
     <>
       <Row>
@@ -216,8 +234,7 @@ const GeneralFields = ({control, errors}) => {
         <Col md={{size: 10, offset: 1}}>
           <Label
             htmlFor="requestName"
-            aria-label="requestName"
-            className="mr-2 text-right form-label">
+            aria-label="requestName">
             Naziv:
           </Label>
           <Controller
@@ -244,8 +261,7 @@ const GeneralFields = ({control, errors}) => {
         <Col md={{size: 10, offset: 1}}>
           <Label
             htmlFor="requestExplain"
-            aria-label="requestExplain"
-            className="mr-2 text-right form-label">
+            aria-label="requestExplain">
             Obrazloženje:
           </Label>
           <Controller
@@ -272,8 +288,7 @@ const GeneralFields = ({control, errors}) => {
         <Col md={{size: 5, offset: 1}}>
           <Label
             htmlFor="requestName"
-            aria-label="requestName"
-            className="mr-2 text-right form-label">
+            aria-label="requestName">
             Period korištenja:
           </Label>
         </Col>
@@ -305,9 +320,38 @@ const GeneralFields = ({control, errors}) => {
           />
         </Col>
       </Row>
+      <Row className="mt-3 d-flex align-items-center g-0">
+        <Col md={{size: 4, offset: 1}}>
+          <Label
+            htmlFor="scientificDomain"
+            aria-label="scientificDomain"
+            className="mt-2 text-right form-label">
+            Znanstveno područje:
+          </Label>
+          <Form onSubmit={handleSubmit(onSubmit)} className="mt-2 needs-validation">
+            <FormGroup>
+              {
+                fields.map((item, index) => (
+                  <Row key={item.id}>
+                    <Col key={item.id}>
+                      <Card key={item.id}>
+                        <CardHeader>
+                          Foobar
+                        </CardHeader>
+                        <CardBody>
+                          Foobar
+                        </CardBody>
+                      </Card>
+                    </Col>
+                  </Row>
+                ))
+              }
+            </FormGroup>
+          </Form>
+        </Col>
+      </Row>
     </>
   )
-
 }
 
 
@@ -319,7 +363,8 @@ const GeneralRequest = () => {
       startDate: '',
       endDate: '',
       requestResourceType: '',
-      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: ''
+      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: '',
+      scientificDomain: [{'name': '', 'percent': '', 'scientificfields': []}]
     }
   });
   const onSubmit = data => {
@@ -330,7 +375,7 @@ const GeneralRequest = () => {
     <>
       <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
         <RequestHorizontalRuler />
-        <GeneralFields control={control} errors={errors} />
+        <GeneralFields control={control} errors={errors} handleSubmit={handleSubmit} />
         <ResourceFields control={control} errors={errors} />
         <RequestHorizontalRuler />
         <Row className="mt-2 mb-2 text-center">
