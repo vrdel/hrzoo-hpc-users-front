@@ -20,7 +20,7 @@ import { ModalContext } from './BasePage'
 
 const Navigation = () => {
   const [popoverOpen, setPopoverOpen] = useState(false)
-  const context = useContext(ModalContext)
+  const modalContext = useContext(ModalContext)
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="border rounded d-flex justify-content-between pt-3 pb-3">
@@ -60,10 +60,10 @@ const Navigation = () => {
             aria-label="Odjava"
             className='btn-danger'
             onClick={() => {
-              context.trigger.setAreYouSureModal(!context.options.areYouSureModal)
-              context.trigger.setModalTitle("Odjava")
-              context.trigger.setModalMsg("Da li ste sigurni da se želite odjaviti?")
-              context.trigger.setOnYes(true)
+              modalContext.setAreYouSureModal(!modalContext.areYouSureModal)
+              modalContext.setModalTitle("Odjava")
+              modalContext.setModalMsg("Da li ste sigurni da se želite odjaviti?")
+              modalContext.setOnYes(true)
             }}>
             <FontAwesomeIcon icon={faSignOutAlt} color="white" />
           </Button>

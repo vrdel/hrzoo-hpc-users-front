@@ -25,44 +25,36 @@ const BasePage = () => {
 
   return (
     <Container fluid="xl" className="pt-1 d-flex flex-column">
-      <ModalAreYouSure
-        isOpen={areYouSureModal}
-        toggle={() => setAreYouSureModal(!areYouSureModal)}
-        title={modalTitle}
-        msg={modalMsg}
-        onYes={onYesCallback} />
-      <ToastContainer />
-      <Row>
-        <Col>
-          <ModalContext.Provider
-            value={{
-              options: {modalTitle, modalMsg, areYouSureModal, onYes},
-              trigger: {setAreYouSureModal, setModalTitle, setModalMsg, setOnYes}
-            }}
-          >
+      <ModalContext.Provider
+        value={{
+          setAreYouSureModal, setModalTitle,
+          setModalMsg, setOnYes, areYouSureModal
+        }}
+      >
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback} />
+        <ToastContainer />
+        <Row>
+          <Col>
             <Navigation />
             <NavigationLinks />
-          </ModalContext.Provider>
-        </Col>
-      </Row>
-      <Row id="hzsi-contentwrap" className="pt-3 pb-3 border-start border-end rounded">
-        <Col>
-          <ModalContext.Provider
-            value={{
-              options: {modalTitle, modalMsg, areYouSureModal, onYes},
-              trigger: {setAreYouSureModal, setModalTitle, setModalMsg, setOnYes},
-              callback: onYesCallback
-            }}
-          >
+          </Col>
+        </Row>
+        <Row id="hzsi-contentwrap" className="pt-3 pb-3 border-start border-end rounded">
+          <Col>
             <Outlet />
-          </ModalContext.Provider>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Footer />
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Footer />
+          </Col>
+        </Row>
+      </ModalContext.Provider>
     </Container>
   )
 }
