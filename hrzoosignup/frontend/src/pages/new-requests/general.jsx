@@ -1,26 +1,25 @@
 import React, { useState } from 'react'
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
+import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { Col, Row, Button, Label, Form  } from 'reactstrap';
-import { useForm, Controller, useWatch } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/datepicker.css';
 
 const GeneralRequest = () => {
-  const [fromDate, setFromDate] = useState(undefined)
-  const [toDate, setToDate] = useState(undefined)
-
   const { control, setValue, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       requestName: '',
       requestExplain: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      requestResourceType: ''
     }
   });
   const onSubmit = data => {
-    console.log('VRDEL DEBUG', data)
+    alert(JSON.stringify(data, null, 2));
   }
 
   return (
@@ -123,6 +122,37 @@ const GeneralRequest = () => {
                 />
               }
             />
+          </Col>
+        </Row>
+        <Row className="mt-5">
+          <Col>
+            <h4 className="ms-4 mb-3 mt-4">Resursi</h4><br/>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={{size: 10, offset: 1}}>
+            <Label
+              htmlFor="requestResourceType"
+              aria-label="requestResourceType"
+              className="mr-2 text-right form-label">
+              Tip resursa:
+            </Label>
+            <Controller
+              name="requestResourceType"
+              control={control}
+              rules={{required: true}}
+              render={ ({field}) =>
+                <CustomReactSelect
+                  {...field}
+                  id="requestResourceType"
+                  aria-label="requestResourceType"
+                  placeholder="Odaberi"
+                  controlWidth="300px"
+                />
+              }
+            />
+          </Col>
+          <Col>
           </Col>
         </Row>
         <RequestHorizontalRuler />
