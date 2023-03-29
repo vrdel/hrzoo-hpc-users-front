@@ -105,6 +105,7 @@ const GeneralRequest = () => {
               render={ ({field}) =>
                 <DatePicker
                   {...field}
+                  locale="hr-HR"
                   className="mt-2 me-3"
                 />
               }
@@ -117,6 +118,7 @@ const GeneralRequest = () => {
               render={ ({field}) =>
                 <DatePicker
                   {...field}
+                  locale="hr-HR"
                   className="ms-3"
                 />
               }
