@@ -321,7 +321,7 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
         </Col>
       </Row>
       <Row className="mt-3 d-flex align-items-center g-0">
-        <Col md={{size: 4, offset: 1}}>
+        <Col md={{size: 5, offset: 1}}>
           <Label
             htmlFor="scientificDomain"
             aria-label="scientificDomain"
@@ -335,8 +335,56 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
                   <Row key={item.id}>
                     <Col key={item.id}>
                       <Card key={item.id}>
-                        <CardHeader>
-                          Foobar
+                        <CardHeader className="d-inline-flex align-items-center">
+                          <Controller
+                            name={`scientificDomain.${index}.name`}
+                            control={control}
+                            rules={{required: true}}
+                            render={ ({field}) =>
+                              <CustomReactSelect
+                                {...field}
+                                id="scientificDomain"
+                                aria-label="scientificDomain"
+                                placeholder="Odaberi"
+                                controlWidth="300px"
+                                options={[{'label': 'foo', 'value': 'bar'}]}
+                              />
+                            }
+                          />
+                          <Controller
+                            name={`scientificDomain.${index}.percent`}
+                            control={control}
+                            rules={{required: true}}
+                            render={ ({field}) =>
+                              <InputGroup>
+                                <Controller
+                                  name="scientificDomainPercent"
+                                  aria-label="scientificDomainPercent"
+                                  control={control}
+                                  rules={{required: true}}
+                                  render={ ({field}) =>
+                                    <Input
+                                      {...field}
+                                      className="ms-1 form-control text-center"
+                                      placeholder="Udio"
+                                      type="number"
+                                    />
+                                  }
+                                />
+                                <InputGroupText>
+                                  %
+                                </InputGroupText>
+                              </InputGroup>
+                            }
+                          />
+                          <Button
+                            size="sm"
+                            color="danger"
+                            type="button"
+                            className="ms-2"
+                          >
+                            <FontAwesomeIcon icon={faTimes}/>
+                          </Button>
                         </CardHeader>
                         <CardBody>
                           Foobar
