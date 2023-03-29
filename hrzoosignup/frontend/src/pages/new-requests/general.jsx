@@ -68,9 +68,9 @@ const GeneralRequest = () => {
           </Label>
         </Col>
         <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
-          <DatePicker className="mt-2 me-3" onChange={setFromDate} />
+          <DatePicker className="mt-2 me-3" onChange={setFromDate} value={fromDate} />
           {'\u2212'}
-          <DatePicker className="ms-3" onChange={setFromDate} />
+          <DatePicker className="ms-3" onChange={setToDate} value={toDate} />
         </Col>
       </Row>
       <RequestHorizontalRuler />
