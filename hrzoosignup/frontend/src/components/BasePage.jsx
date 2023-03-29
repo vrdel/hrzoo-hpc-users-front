@@ -16,10 +16,10 @@ const BasePage = () => {
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
-  const [onYes, setOnYes] = useState('')
+  const [onYesCall, setOnYesCall] = useState(undefined)
 
   function onYesCallback() {
-    if (onYes)
+    if (onYesCall)
       console.log('VRDEL DEBUG', 'im ok')
   }
 
@@ -28,7 +28,7 @@ const BasePage = () => {
       <ModalContext.Provider
         value={{
           setAreYouSureModal, setModalTitle,
-          setModalMsg, setOnYes, areYouSureModal
+          setModalMsg, setOnYesCall, areYouSureModal
         }}
       >
         <ModalAreYouSure
