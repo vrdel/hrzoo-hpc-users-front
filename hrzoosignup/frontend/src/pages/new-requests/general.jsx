@@ -26,7 +26,8 @@ const GeneralRequest = () => {
       requestExplain: '',
       startDate: '',
       endDate: '',
-      requestResourceType: ''
+      requestResourceType: '',
+      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: ''
     }
   });
   const onSubmit = data => {
