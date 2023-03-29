@@ -4,7 +4,7 @@ import { Col, Row, Button, Label  } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
-
+import '../../styles/datepicker.css';
 
 const GeneralRequest = () => {
   const [fromDate, setFromDate] = useState(undefined)

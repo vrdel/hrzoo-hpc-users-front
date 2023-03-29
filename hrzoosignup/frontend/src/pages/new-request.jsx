@@ -33,7 +33,6 @@ const NewRequest = () => {
       <Row className="mb-2 ms-2 mt-4">
         <Col className="d-inline-flex align-items-center">
           <Label
-            className="fs-5"
             htmlFor="requestType"
             aria-label="requestType"
           >
@@ -42,7 +41,7 @@ const NewRequest = () => {
           <CustomReactSelect
             id="requestType"
             aria-label="requestType"
-            className="ms-5 fs-5"
+            className="ms-5"
             placeholder="Odaberi"
             controlWidth="400px"
             onChange={setSelectedProject}
@@ -52,7 +51,7 @@ const NewRequest = () => {
           />
           <Button
             color="success"
-            className="ms-5 fs-5"
+            className="ms-3"
             disabled={buttonDisabled}
             onClick={() => {
               navigate(selectedProject.value)
