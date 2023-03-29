@@ -11,14 +11,18 @@ const NewRequest = () => {
   const [buttonDisabled, setButtonDisabled] = useState(undefined)
   const [selectedProject, setSelectedProject] = useState(undefined)
   const navigate = useNavigate()
-  const { linkTitles, ProjectTypesToSelect } = useContext(SharedData);
+  const { linkTitles,
+    RequestTypesToSelect,
+    UrlToRequestType } = useContext(SharedData);
 
   useEffect(() => {
     setPageTitle(linkTitles[location.pathname])
     if (location.pathname.endsWith('novi-zahtjev'))
       setButtonDisabled(false)
-    else
+    else {
       setButtonDisabled(true)
+      setSelectedProject(UrlToRequestType[location.pathname])
+    }
   }, [location.pathname])
 
   return (
@@ -30,20 +34,21 @@ const NewRequest = () => {
         <Col className="d-inline-flex align-items-center">
           <Label
             className="fs-5"
-            htmlFor="projectType"
-            aria-label="projectType"
+            htmlFor="requestType"
+            aria-label="requestType"
           >
-            <strong>
-              Tip projekta:
-            </strong>
+            Tip zahtjeva:
           </Label>
           <CustomReactSelect
+            id="requestType"
+            aria-label="requestType"
             className="ms-5 fs-5"
             placeholder="Odaberi"
             controlWidth="400px"
             onChange={setSelectedProject}
             isDisabled={buttonDisabled}
-            options={ProjectTypesToSelect}
+            options={RequestTypesToSelect}
+            value={selectedProject}
           />
           <Button
             color="success"
