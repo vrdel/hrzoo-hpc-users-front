@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { Col, Row, Button, Label, Form  } from 'reactstrap';
 import { useForm, Controller } from "react-hook-form";
+import { SharedData } from '../root';
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/datepicker.css';
 
 const GeneralRequest = () => {
+  const { ResourceTypesToSelect } = useContext(SharedData);
   const { control, setValue, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       requestName: '',
@@ -130,7 +132,7 @@ const GeneralRequest = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={{size: 10, offset: 1}}>
+          <Col md={{size: 3, offset: 1}}>
             <Label
               htmlFor="requestResourceType"
               aria-label="requestResourceType"
@@ -144,10 +146,14 @@ const GeneralRequest = () => {
               render={ ({field}) =>
                 <CustomReactSelect
                   {...field}
+                  closeMenuOnSelect={false}
                   id="requestResourceType"
                   aria-label="requestResourceType"
                   placeholder="Odaberi"
+                  isMulti
                   controlWidth="300px"
+                  resourceTypeMultiValue={true}
+                  options={ResourceTypesToSelect}
                 />
               }
             />

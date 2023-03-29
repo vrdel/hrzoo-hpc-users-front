@@ -17,7 +17,7 @@ let cloudResource = {
   "value": "CLOUD"
 }
 
-export const RequestTypesToSelect = [
+export const ResourceTypesToSelect = [
   gpuResource,
   cpuResource,
   bigMemResource,

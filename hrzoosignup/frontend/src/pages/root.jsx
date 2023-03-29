@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import HeadTitle from '../components/HeadTitle';
 import { LinkTitles } from '../utils/link-titles';
 import { RequestTypesToSelect, UrlToRequestType } from '../utils/request-types';
+import { ResourceTypesToSelect } from '../utils/resource-types';
 
 
 export const SharedData = React.createContext()
@@ -14,7 +15,8 @@ const Root = () => {
       <SharedData.Provider value={{
         linkTitles: LinkTitles,
         RequestTypesToSelect: RequestTypesToSelect,
-        UrlToRequestType: UrlToRequestType
+        UrlToRequestType: UrlToRequestType,
+        ResourceTypesToSelect: ResourceTypesToSelect
       }}>
         <HeadTitle />
         <Outlet />

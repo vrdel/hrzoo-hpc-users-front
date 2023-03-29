@@ -35,7 +35,7 @@ const DropdownIndicator = ({ ...props }) => {
 }
 
 
-export const CustomReactSelect = ({ forwardedRef=undefined, controlWidth=undefined, ...props}) => {
+export const CustomReactSelect = ({ forwardedRef=undefined, resourceTypeMultiValue=undefined, controlWidth=undefined, ...props}) => {
   const customStyles = {
     control: (provided,  state) => ({
       ...provided,
@@ -80,12 +80,43 @@ export const CustomReactSelect = ({ forwardedRef=undefined, controlWidth=undefin
     multiValueRemove: (provided) => props.isDisabled ? { ...provided, display: 'none' } : provided
   }
 
-  return (
-    <Select
-      {...props}
-      ref={ forwardedRef ? forwardedRef : null }
-      components={{IndicatorSeparator: null, DropdownIndicator}}
-      styles={customStyles}
-    />
-  )
+  if (resourceTypeMultiValue) {
+    const MultiValueLabel = (props) => {
+      return (
+        <>
+          <components.MultiValueLabel {...props}/>
+        </>
+      )
+    }
+    let customStyles2 = {
+      multiValueLabel: (base) => ({
+        ...base,
+        backgroundColor: "#feb272",
+        color: "#303030",
+        fontSize: "16px",
+        fontWeight: "bold"
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+      })
+    }
+
+    return (
+      <Select
+        {...props}
+        ref={ forwardedRef ? forwardedRef : null }
+        components={{MultiValueLabel, IndicatorSeparator: null, DropdownIndicator}}
+        styles={{...customStyles, ...customStyles2}}
+      />
+    )
+  }
+  else
+    return (
+      <Select
+        {...props}
+        ref={ forwardedRef ? forwardedRef : null }
+        components={{IndicatorSeparator: null, DropdownIndicator}}
+        styles={customStyles}
+      />
+    )
 }
