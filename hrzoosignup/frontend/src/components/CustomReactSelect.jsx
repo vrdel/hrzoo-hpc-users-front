@@ -35,7 +35,9 @@ const DropdownIndicator = ({ ...props }) => {
 }
 
 
-export const CustomReactSelect = ({ forwardedRef=undefined, resourceTypeMultiValue=undefined, controlWidth=undefined, ...props}) => {
+export const CustomReactSelect = ({ forwardedRef=undefined,
+  resourceTypeMultiValue=undefined, scientificSoftwareMultiValue=undefined,
+  controlWidth=undefined, ...props} ) => {
   const customStyles = {
     control: (provided,  state) => ({
       ...provided,
@@ -79,22 +81,21 @@ export const CustomReactSelect = ({ forwardedRef=undefined, resourceTypeMultiVal
     multiValue: (provided) => props.isDisabled ? { ...provided, backgroundColor: '#c4ccd4' } : provided,
     multiValueRemove: (provided) => props.isDisabled ? { ...provided, display: 'none' } : provided
   }
+  const MultiValueLabel = (props) => {
+    return (
+      <>
+        <components.MultiValueLabel {...props}/>
+      </>
+    )
+  }
 
   if (resourceTypeMultiValue) {
-    const MultiValueLabel = (props) => {
-      return (
-        <>
-          <components.MultiValueLabel {...props}/>
-        </>
-      )
-    }
-    let customStyles2 = {
+    const customStyles2 = {
       multiValueLabel: (base) => ({
         ...base,
         backgroundColor: "#feb272",
         color: "#303030",
         fontSize: "16px",
-        fontWeight: "bold"
       }),
       multiValueRemove: (base) => ({
         ...base,
@@ -110,6 +111,30 @@ export const CustomReactSelect = ({ forwardedRef=undefined, resourceTypeMultiVal
       />
     )
   }
+
+  else if (scientificSoftwareMultiValue) {
+    const customStyles3 = {
+      multiValueLabel: (base) => ({
+        ...base,
+        backgroundColor: "#f1aeb5",
+        color: "#303030",
+        fontSize: "16px",
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+      })
+    }
+
+    return (
+      <Select
+        {...props}
+        ref={ forwardedRef ? forwardedRef : null }
+        components={{MultiValueLabel, IndicatorSeparator: null, DropdownIndicator}}
+        styles={{...customStyles, ...customStyles3}}
+      />
+    )
+  }
+
   else
     return (
       <Select
