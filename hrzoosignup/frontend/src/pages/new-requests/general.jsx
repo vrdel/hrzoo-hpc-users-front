@@ -82,7 +82,7 @@ const GeneralRequest = () => {
 
 
 const GeneralFields = () => {
-  const { control, setValue, errors } = useFormContext();
+  const { control, watch, setValue, errors } = useFormContext();
   const {
     fields: fields_domain,
     append: domain_append,
@@ -91,7 +91,13 @@ const GeneralFields = () => {
     control,
     name: "scientificDomain",
   });
-  const generalWatch = useWatch({control})
+  const watchFieldArray = watch("scientificDomain");
+  const controlledFieldsDomain = fields_domain.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index]
+    };
+  });
 
   return (
     <>
@@ -200,14 +206,14 @@ const GeneralFields = () => {
           </Label>
           <Row>
             {
-              fields_domain.map((item, index) => (
+              controlledFieldsDomain.map((item, index) => (
                 <>
                   <Col className="mb-3" md={{size: 5}}>
                     <ScientificDomain control={control} index={index}
                       item={item} remove={domain_remove} />
                   </Col>
                   {
-                    index === fields_domain.length - 1 &&
+                    index === controlledFieldsDomain.length - 1 &&
                       <Col md={{size: 3, offset: 1}}>
                         <AddNewScientificDomain append={domain_append} />
                       </Col>
@@ -252,7 +258,6 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
     control,
     name: `scientificDomain.${domain_index}.scientificfields`
   })
-
 
   return (
     <Card key={domain_item.id}>
@@ -371,6 +376,8 @@ const ScientificFields = ({domain_index, field_index}) => {
   const { control, setValue, getValues, errors } = useFormContext();
   const { mapDomainsToFields, listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
 
+  const selectedDomain = getValues(`scientificDomain.${domain_index}.name`)['value']
+
   return (
     <Controller
       name={`scientificDomain.${domain_index}.scientificfields.${field_index}.name`}
@@ -384,7 +391,7 @@ const ScientificFields = ({domain_index, field_index}) => {
           id="scientificDomain"
           onChange={(e) => setValue(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`, e)}
           value={getValues(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`)}
-          options={buildOptionsFromArray(mapDomainsToFields['TEHNIČKE ZNANOSTI'])}
+          options={buildOptionsFromArray(mapDomainsToFields[selectedDomain])}
           placeholder="Polje"
         />
       }
