@@ -2,20 +2,21 @@ import React, { useState, useContext } from 'react'
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import {
-  Col,
+  Button,
+  ButtonGroup,
   Card,
   CardBody,
-  ButtonGroup,
   CardFooter,
   CardHeader,
-  Row,
-  Button,
-  Label,
+  Col,
   Form,
+  FormFeedback,
   FormGroup,
-  InputGroup,
   Input,
-  InputGroupText
+  InputGroup,
+  InputGroupText,
+  Label,
+  Row,
 } from 'reactstrap';
 import {
   useForm,
@@ -60,8 +61,8 @@ const GeneralRequest = () => {
       ]
     }
   });
+
   const onSubmit = data => {
-    console.log('VRDEL DEBUG', 'foo im run')
     alert(JSON.stringify(data, null, 2));
   }
 
@@ -84,7 +85,7 @@ const GeneralRequest = () => {
 
 
 const GeneralFields = () => {
-  const { control, watch, setValue, errors } = useFormContext();
+  const { control, watch, formState: {errors} } = useFormContext();
   const {
     fields: fields_domain,
     append: domain_append,
@@ -125,15 +126,14 @@ const GeneralFields = () => {
                 {...field}
                 aria-label="requestName"
                 type="text"
-                className="form-control"
+                className={`form-control ${errors && errors.requestName ? "is-invalid" : ''}`}
                 rows="1"
-                required={true}
               />
             }
           />
           <ErrorMessage
             errors={errors}
-            name="web"
+            name="requestName"
             render={({ message }) =>
               <FormFeedback invalid className="end-0">
                 { message }
@@ -161,10 +161,18 @@ const GeneralFields = () => {
                 {...field}
                 aria-label="requestExplain"
                 type="text"
-                className="form-control"
+                className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
                 rows="3"
-                required={true}
               />
+            }
+          />
+          <ErrorMessage
+            errors={errors}
+            name="requestExplain"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
             }
           />
         </Col>
@@ -188,7 +196,8 @@ const GeneralFields = () => {
               <DatePicker
                 {...field}
                 locale="hr-HR"
-                className="mt-2 me-3"
+                required={true}
+                className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
               />
             }
           />
@@ -200,8 +209,9 @@ const GeneralFields = () => {
             render={ ({field}) =>
               <DatePicker
                 {...field}
+                required={true}
                 locale="hr-HR"
-                className="ms-3"
+                className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
               />
             }
           />
@@ -259,7 +269,7 @@ const AddNewScientificDomain = ({append}) => {
 const ScientificDomain = ({index: domain_index, item: domain_item, remove:
   domain_remove}) => {
   const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
-  const { control, setValue, getValues, errors } = useFormContext();
+  const { control, setValue, getValues, formState: {errors} } = useFormContext();
 
   const {
     fields: fields_scientificfields,
@@ -283,11 +293,23 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
               controlWidth="300px"
               forwardedRef={field.ref}
               id="scientificDomain"
+              error={errors && errors.scientificDomain
+                && errors.scientificDomain[domain_index]
+                && errors.scientificDomain[domain_index]['name'] ? true : false}
               onChange={(e) => setValue(`scientificDomain.${domain_index}.name`, e)}
               options={buildOptionsFromArray(listScientificDomain)}
               value={getValues(`scientificDomain.${domain_index}.name`)}
               placeholder="Područje"
             />
+          }
+        />
+        <ErrorMessage
+          errors={errors}
+          name={`scientificDomain.${domain_index}.name`}
+          render={({ message }) =>
+            <FormFeedback invalid className="end-0">
+              { message }
+            </FormFeedback>
           }
         />
         <InputGroup>
@@ -299,7 +321,9 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
             render={ ({field}) =>
               <Input
                 {...field}
-                className="ms-1 form-control text-center"
+                className={`ms-1 form-control text-center ${errors && errors.scientificDomain
+                  && errors.scientificDomain[domain_index]
+                  && errors.scientificDomain[domain_index]['percent'] ? "is-invalid" : ''}`}
                 placeholder="Udio"
                 type="number"
               />
@@ -334,7 +358,11 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
                     render={ ({field}) =>
                       <Input
                         {...field}
-                        className="ms-1 form-control text-center"
+                        className={`ms-1 form-control text-center ${errors && errors.scientificDomain
+                          && errors.scientificDomain[domain_index]
+                          && errors.scientificDomain[domain_index]['scientificfields']
+                          && errors.scientificDomain[domain_index]['scientificfields'][field_index]
+                          && errors.scientificDomain[domain_index]['scientificfields'][field_index]['percent'] ? "is-invalid" : ''}`}
                         placeholder="Udio"
                         type="number"
                       />
@@ -384,8 +412,8 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
 }
 
 const ScientificFields = ({domain_index, field_index}) => {
-  const { control, setValue, getValues, errors } = useFormContext();
-  const { mapDomainsToFields, listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
+  const { control, setValue, getValues, formState: {errors} } = useFormContext();
+  const { mapDomainsToFields, buildOptionsFromArray } = useContext(SharedData);
 
   const selectedDomain = getValues(`scientificDomain.${domain_index}.name`)['value']
 
@@ -400,6 +428,12 @@ const ScientificFields = ({domain_index, field_index}) => {
           controlWidth="300px"
           forwardedRef={field.ref}
           id="scientificDomain"
+          error={errors && errors.scientificDomain
+            && errors.scientificDomain[domain_index]
+            && errors.scientificDomain[domain_index]['scientificfields']
+            && errors.scientificDomain[domain_index]['scientificfields'][field_index]
+            && errors.scientificDomain[domain_index]['scientificfields'][field_index]['name']
+            ? true : false}
           onChange={(e) => setValue(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`, e)}
           value={getValues(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`)}
           options={buildOptionsFromArray(mapDomainsToFields[selectedDomain])}
