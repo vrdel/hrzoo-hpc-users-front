@@ -5,6 +5,7 @@ import {
   Col,
   Card,
   CardBody,
+  ButtonGroup,
   CardFooter,
   CardHeader,
   Row,
@@ -26,6 +27,230 @@ import {
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/datepicker.css';
+
+
+const GeneralRequest = () => {
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      requestName: '',
+      requestExplain: '',
+      startDate: '',
+      endDate: '',
+      requestResourceType: '',
+      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: '',
+      scientificDomain: [
+        {'name': '', 'percent': '', 'scientificfields': []},
+      ]
+    }
+  });
+  const onSubmit = data => {
+    alert(JSON.stringify(data, null, 2));
+  }
+
+  return (
+    <>
+      <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+        <RequestHorizontalRuler />
+        <GeneralFields control={control} errors={errors} handleSubmit={handleSubmit} />
+        <ResourceFields control={control} errors={errors} />
+        <RequestHorizontalRuler />
+        <Row className="mt-2 mb-2 text-center">
+          <Col>
+            <Button size="lg" color="success" id="submit-button" type="submit">Podnesi zahtjev</Button>
+          </Col>
+        </Row>
+      </Form>
+    </>
+  )
+};
+
+
+const GeneralFields = ({control, errors, handleSubmit}) => {
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "scientificDomain",
+  });
+
+  function onSubmit() {
+  }
+
+  return (
+    <>
+      <Row>
+        <Col>
+          <h4 className="ms-4 mb-3 mt-4">Opći dio</h4><br/>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={{size: 10, offset: 1}}>
+          <Label
+            htmlFor="requestName"
+            aria-label="requestName">
+            Naziv:
+          </Label>
+          <Controller
+            name="requestName"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <textarea
+                id="requestName"
+                {...field}
+                aria-label="requestName"
+                type="text"
+                className="form-control"
+                rows="1"
+                required={true}
+              />
+            }
+          />
+        </Col>
+        <Col>
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col md={{size: 10, offset: 1}}>
+          <Label
+            htmlFor="requestExplain"
+            aria-label="requestExplain">
+            Obrazloženje:
+          </Label>
+          <Controller
+            name="requestExplain"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <textarea
+                id="requestExplain"
+                {...field}
+                aria-label="requestExplain"
+                type="text"
+                className="form-control"
+                rows="3"
+                required={true}
+              />
+            }
+          />
+        </Col>
+        <Col>
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col md={{size: 5, offset: 1}}>
+          <Label
+            htmlFor="requestName"
+            aria-label="requestName">
+            Period korištenja:
+          </Label>
+        </Col>
+        <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
+          <Controller
+            name="startDate"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <DatePicker
+                {...field}
+                locale="hr-HR"
+                className="mt-2 me-3"
+              />
+            }
+          />
+          {'\u2212'}
+          <Controller
+            name="endDate"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <DatePicker
+                {...field}
+                locale="hr-HR"
+                className="ms-3"
+              />
+            }
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3 d-flex align-items-center g-0">
+        <Col md={{offset: 1}}>
+          <Label
+            htmlFor="scientificDomain"
+            aria-label="scientificDomain"
+            className="mt-2 text-right form-label">
+            Znanstveno područje:
+          </Label>
+          {
+            fields.map((item, index) => (
+              <Row key={item.id}>
+                <Col md={{size: 5}} key={item.id}>
+                  <Card key={item.id}>
+                    <CardHeader className="d-inline-flex align-items-center">
+                      <Controller
+                        name={`scientificDomain.${index}.name`}
+                        control={control}
+                        rules={{required: true}}
+                        render={ ({field}) =>
+                          <CustomReactSelect
+                            {...field}
+                            id="scientificDomain"
+                            aria-label="scientificDomain"
+                            placeholder="Odaberi"
+                            controlWidth="300px"
+                            options={[{'label': 'foo', 'value': 'bar'}]}
+                          />
+                        }
+                      />
+                      <InputGroup>
+                        <Controller
+                          name={`scientificDomain.${index}.percent`}
+                          aria-label="scientificDomainPercent"
+                          control={control}
+                          rules={{required: true}}
+                          render={ ({field}) =>
+                            <Input
+                              {...field}
+                              className="ms-1 form-control text-center"
+                              placeholder="Udio"
+                              type="number"
+                            />
+                          }
+                        />
+                        <InputGroupText>
+                          %
+                        </InputGroupText>
+                      </InputGroup>
+                      <Button
+                        size="sm"
+                        color="danger"
+                        type="button"
+                        className="ms-2"
+                        onClick={() => remove(index)}
+                      >
+                        <FontAwesomeIcon icon={faTimes}/>
+                      </Button>
+                    </CardHeader>
+                    <CardBody>
+                      Foobar
+                    </CardBody>
+                  </Card>
+                </Col>
+                {
+                  index === fields.length - 1 &&
+                    <Col sm={{size: 3, offset: 1}}>
+                      <Button outline color="secondary" onClick={() =>
+                        append({'name': '', 'percent': '', 'scientificfields': []})}>
+                        Dodaj novo znanstveno područje
+                      </Button>
+                    </Col>
+                }
+              </Row>
+            ))
+          }
+        </Col>
+      </Row>
+    </>
+  )
+}
 
 
 const ResourceFields = ({control, errors}) => {
@@ -213,228 +438,6 @@ const ResourceFields = ({control, errors}) => {
   )
 }
 
-
-const GeneralFields = ({control, errors, handleSubmit}) => {
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "scientificDomain",
-  });
-
-  function onSubmit() {
-  }
-
-  return (
-    <>
-      <Row>
-        <Col>
-          <h4 className="ms-4 mb-3 mt-4">Opći dio</h4><br/>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={{size: 10, offset: 1}}>
-          <Label
-            htmlFor="requestName"
-            aria-label="requestName">
-            Naziv:
-          </Label>
-          <Controller
-            name="requestName"
-            control={control}
-            rules={{required: true}}
-            render={ ({field}) =>
-              <textarea
-                id="requestName"
-                {...field}
-                aria-label="requestName"
-                type="text"
-                className="form-control"
-                rows="1"
-                required={true}
-              />
-            }
-          />
-        </Col>
-        <Col>
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col md={{size: 10, offset: 1}}>
-          <Label
-            htmlFor="requestExplain"
-            aria-label="requestExplain">
-            Obrazloženje:
-          </Label>
-          <Controller
-            name="requestExplain"
-            control={control}
-            rules={{required: true}}
-            render={ ({field}) =>
-              <textarea
-                id="requestExplain"
-                {...field}
-                aria-label="requestExplain"
-                type="text"
-                className="form-control"
-                rows="3"
-                required={true}
-              />
-            }
-          />
-        </Col>
-        <Col>
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col md={{size: 5, offset: 1}}>
-          <Label
-            htmlFor="requestName"
-            aria-label="requestName">
-            Period korištenja:
-          </Label>
-        </Col>
-        <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
-          <Controller
-            name="startDate"
-            control={control}
-            rules={{required: true}}
-            render={ ({field}) =>
-              <DatePicker
-                {...field}
-                locale="hr-HR"
-                className="mt-2 me-3"
-              />
-            }
-          />
-          {'\u2212'}
-          <Controller
-            name="endDate"
-            control={control}
-            rules={{required: true}}
-            render={ ({field}) =>
-              <DatePicker
-                {...field}
-                locale="hr-HR"
-                className="ms-3"
-              />
-            }
-          />
-        </Col>
-      </Row>
-      <Row className="mt-3 d-flex align-items-center g-0">
-        <Col md={{size: 5, offset: 1}}>
-          <Label
-            htmlFor="scientificDomain"
-            aria-label="scientificDomain"
-            className="mt-2 text-right form-label">
-            Znanstveno područje:
-          </Label>
-          <Form onSubmit={handleSubmit(onSubmit)} className="mt-2 needs-validation">
-            <FormGroup>
-              {
-                fields.map((item, index) => (
-                  <Row key={item.id}>
-                    <Col key={item.id}>
-                      <Card key={item.id}>
-                        <CardHeader className="d-inline-flex align-items-center">
-                          <Controller
-                            name={`scientificDomain.${index}.name`}
-                            control={control}
-                            rules={{required: true}}
-                            render={ ({field}) =>
-                              <CustomReactSelect
-                                {...field}
-                                id="scientificDomain"
-                                aria-label="scientificDomain"
-                                placeholder="Odaberi"
-                                controlWidth="300px"
-                                options={[{'label': 'foo', 'value': 'bar'}]}
-                              />
-                            }
-                          />
-                          <Controller
-                            name={`scientificDomain.${index}.percent`}
-                            control={control}
-                            rules={{required: true}}
-                            render={ ({field}) =>
-                              <InputGroup>
-                                <Controller
-                                  name="scientificDomainPercent"
-                                  aria-label="scientificDomainPercent"
-                                  control={control}
-                                  rules={{required: true}}
-                                  render={ ({field}) =>
-                                    <Input
-                                      {...field}
-                                      className="ms-1 form-control text-center"
-                                      placeholder="Udio"
-                                      type="number"
-                                    />
-                                  }
-                                />
-                                <InputGroupText>
-                                  %
-                                </InputGroupText>
-                              </InputGroup>
-                            }
-                          />
-                          <Button
-                            size="sm"
-                            color="danger"
-                            type="button"
-                            className="ms-2"
-                          >
-                            <FontAwesomeIcon icon={faTimes}/>
-                          </Button>
-                        </CardHeader>
-                        <CardBody>
-                          Foobar
-                        </CardBody>
-                      </Card>
-                    </Col>
-                  </Row>
-                ))
-              }
-            </FormGroup>
-          </Form>
-        </Col>
-      </Row>
-    </>
-  )
-}
-
-
-const GeneralRequest = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
-      requestName: '',
-      requestExplain: '',
-      startDate: '',
-      endDate: '',
-      requestResourceType: '',
-      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: '',
-      scientificDomain: [{'name': '', 'percent': '', 'scientificfields': []}]
-    }
-  });
-  const onSubmit = data => {
-    alert(JSON.stringify(data, null, 2));
-  }
-
-  return (
-    <>
-      <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
-        <RequestHorizontalRuler />
-        <GeneralFields control={control} errors={errors} handleSubmit={handleSubmit} />
-        <ResourceFields control={control} errors={errors} />
-        <RequestHorizontalRuler />
-        <Row className="mt-2 mb-2 text-center">
-          <Col>
-            <Button size="lg" color="success" id="submit-button" type="submit">Podnesi zahtjev</Button>
-          </Col>
-        </Row>
-      </Form>
-    </>
-  )
-};
 
 
 export default GeneralRequest;
