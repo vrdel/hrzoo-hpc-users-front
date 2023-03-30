@@ -179,23 +179,23 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
             className="mt-2 text-right form-label">
             Znanstveno područje:
           </Label>
-          {
-            fields.map((item, index) => (
-              <Row key={item.id}>
-                <Col md={{size: 5}} key={item.id}>
-                  <ScientificDomain control={control} index={index} item={item} remove={remove} />
-                </Col>
-                {
-                  index === fields.length - 1 &&
-                    <>
-                      <Col sm={{size: 3, offset: 1}}>
+          <Row>
+            {
+              fields.map((item, index) => (
+                <>
+                  <Col className="mb-3" md={{size: 5}} key={item.id}>
+                    <ScientificDomain control={control} index={index} item={item} remove={remove} />
+                  </Col>
+                  {
+                    index === fields.length - 1 &&
+                      <Col md={{size: 3, offset: 1}}>
                         <AddNewScientificDomain append={append} />
                       </Col>
-                    </>
-                }
-              </Row>
-            ))
-          }
+                  }
+                </>
+              ))
+            }
+          </Row>
         </Col>
       </Row>
     </>
