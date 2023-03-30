@@ -675,6 +675,41 @@ const ScientificSoftware = () => {
         </Col>
       </Row>
       <Row className="mt-3">
+        <Col md={{size: 10, offset: 1}}>
+          <Label
+            htmlFor="requestExplain"
+            aria-label="requestExplain">
+            Dodatne aplikacije koje će biti potrebno instalirati:
+          </Label>
+          <Controller
+            name="requestExplain"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <textarea
+                id="requestExplain"
+                {...field}
+                aria-label="requestExplain"
+                type="text"
+                className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
+                rows="3"
+              />
+            }
+          />
+          <ErrorMessage
+            errors={errors}
+            name="requestExplain"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
+        </Col>
+        <Col>
+        </Col>
+      </Row>
+      <Row className="mt-3">
         <Col sm={{offset: 1}}>
           <Label
             htmlFor="requestScientificSoftwareHelp"
