@@ -39,7 +39,15 @@ const GeneralRequest = () => {
       requestResourceType: '',
       nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: '',
       scientificDomain: [
-        {'name': '', 'percent': '', 'scientificfields': []},
+        {
+          'name': '',
+          'percent': '',
+          'scientificfields': [
+            {
+              'name': '', 'percent': ''
+            }
+          ]
+        },
       ]
     }
   });
@@ -183,7 +191,7 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
             {
               fields.map((item, index) => (
                 <>
-                  <Col className="mb-3" md={{size: 5}} key={item.id}>
+                  <Col className="mb-3" md={{size: 5}}>
                     <ScientificDomain control={control} index={index} item={item} remove={remove} />
                   </Col>
                   {
@@ -218,7 +226,7 @@ const ScientificDomain = ({control, index, item, remove}) => {
 
   return (
     <Card key={item.id}>
-      <CardHeader className="d-inline-flex align-items-center bg-white">
+      <CardHeader className="d-inline-flex align-items-center">
         <Controller
           name={`scientificDomain.${index}.name`}
           control={control}
@@ -230,7 +238,7 @@ const ScientificDomain = ({control, index, item, remove}) => {
               forwardedRef={field.ref}
               id="scientificDomain"
               options={buildOptionsFromArray(listScientificDomain)}
-              placeholder="Odaberi"
+              placeholder="Područje"
             />
           }
         />
@@ -257,20 +265,79 @@ const ScientificDomain = ({control, index, item, remove}) => {
           size="sm"
           color="danger"
           type="button"
-          className="ms-2"
+          className="ms-1"
           onClick={() => remove(index)}
         >
           <FontAwesomeIcon icon={faTimes}/>
         </Button>
       </CardHeader>
-      <CardBody>
-        Foobar
+      <CardBody >
+        <Row noGutters >
+          <Col className="d-inline-flex align-items-center">
+            <ScientificFields control={control} index={index} />
+            <InputGroup>
+              <Controller
+                name={`scientificDomain.${index}.scientificfields.0.name`}
+                aria-label="scientificField"
+                control={control}
+                rules={{required: true}}
+                render={ ({field}) =>
+                  <Input
+                    {...field}
+                    className="ms-1 form-control text-center"
+                    placeholder="Udio"
+                    type="number"
+                  />
+                }
+              />
+              <InputGroupText>
+                %
+              </InputGroupText>
+            </InputGroup>
+            <Button
+              size="sm"
+              color="danger"
+              className="ms-1"
+              type="button"
+              onClick={() => remove(index)}
+            >
+              <FontAwesomeIcon icon={faTimes}/>
+            </Button>
+          </Col>
+        </Row>
+        <Row noGutters>
+          <Col className="text-center">
+            <Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
+              append({'name': '', 'percent': '', 'scientificfields': []})}>
+              Dodaj novo znanstveno polje
+            </Button>
+          </Col>
+        </Row>
       </CardBody>
     </Card>
   )
 }
 
-const ScientificFields = () => {
+const ScientificFields = ({control, index}) => {
+  const { mapDomainsToFields, listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
+
+  return (
+    <Controller
+      name={`scientificDomain.${index}.name`}
+      control={control}
+      rules={{required: true}}
+      render={ ({field}) =>
+        <CustomReactSelect
+          aria-label="scientificDomain"
+          controlWidth="300px"
+          forwardedRef={field.ref}
+          id="scientificDomain"
+          options={buildOptionsFromArray(mapDomainsToFields['TEHNIČKE ZNANOSTI'])}
+          placeholder="Polje"
+        />
+      }
+    />
+  )
 }
 
 
