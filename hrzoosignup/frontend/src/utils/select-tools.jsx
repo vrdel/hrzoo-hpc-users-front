@@ -1,8 +1,11 @@
 export function buildOptionsFromArray(arr) {
-  return arr.map(
-    (e) => ({
-      "label": e,
-      "value": e
-    })
-  )
+  if (arr && arr.length > 0)
+    return arr.map(
+      (e) => ({
+        "label": e,
+        "value": e
+      })
+    )
+  else
+    return []
 }
