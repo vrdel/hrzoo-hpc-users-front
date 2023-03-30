@@ -189,10 +189,7 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
                   index === fields.length - 1 &&
                     <>
                       <Col sm={{size: 3, offset: 1}}>
-                        <Button outline color="secondary" onClick={() =>
-                          append({'name': '', 'percent': '', 'scientificfields': []})}>
-                          Dodaj novo znanstveno područje
-                        </Button>
+                        <AddNewScientificDomain append={append} />
                       </Col>
                     </>
                 }
@@ -202,6 +199,16 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
         </Col>
       </Row>
     </>
+  )
+}
+
+
+const AddNewScientificDomain = ({append}) => {
+  return (
+    <Button outline color="secondary" onClick={() =>
+      append({'name': '', 'percent': '', 'scientificfields': []})}>
+      Dodaj novo znanstveno područje
+    </Button>
   )
 }
 
