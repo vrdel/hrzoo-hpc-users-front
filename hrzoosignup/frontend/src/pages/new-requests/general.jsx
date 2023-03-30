@@ -27,6 +27,8 @@ import {
 } from "react-hook-form";
 import { SharedData } from '../root';
 import DatePicker from 'react-date-picker';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ErrorMessage } from '@hookform/error-message';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimes,
@@ -127,6 +129,15 @@ const GeneralFields = () => {
                 rows="1"
                 required={true}
               />
+            }
+          />
+          <ErrorMessage
+            errors={errors}
+            name="web"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
             }
           />
         </Col>
