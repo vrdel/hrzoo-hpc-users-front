@@ -218,19 +218,19 @@ const ScientificDomain = ({control, index, item, remove}) => {
 
   return (
     <Card key={item.id}>
-      <CardHeader className="d-inline-flex align-items-center">
+      <CardHeader className="d-inline-flex align-items-center bg-white">
         <Controller
           name={`scientificDomain.${index}.name`}
           control={control}
           rules={{required: true}}
           render={ ({field}) =>
             <CustomReactSelect
-              {...field}
-              id="scientificDomain"
               aria-label="scientificDomain"
-              placeholder="Odaberi"
               controlWidth="300px"
+              forwardedRef={field.ref}
+              id="scientificDomain"
               options={buildOptionsFromArray(listScientificDomain)}
+              placeholder="Odaberi"
             />
           }
         />
@@ -268,6 +268,9 @@ const ScientificDomain = ({control, index, item, remove}) => {
       </CardBody>
     </Card>
   )
+}
+
+const ScientificFields = () => {
 }
 
 
@@ -438,15 +441,15 @@ const ResourceFields = ({control, errors}) => {
             rules={{required: true}}
             render={ ({field}) =>
               <CustomReactSelect
-                {...field}
-                closeMenuOnSelect={false}
-                id="requestResourceType"
                 aria-label="requestResourceType"
-                placeholder="Odaberi"
-                isMulti
+                closeMenuOnSelect={false}
                 controlWidth="400px"
-                resourceTypeMultiValue={true}
+                forwardedRef={field.ref}
+                id="requestResourceType"
+                isMulti
                 options={ResourceTypesToSelect}
+                placeholder="Odaberi"
+                resourceTypeMultiValue={true}
               />
             }
           />
