@@ -242,7 +242,7 @@ const AddNewScientificDomain = ({append}) => {
 const ScientificDomain = ({index: domain_index, item: domain_item, remove:
   domain_remove}) => {
   const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
-  const { control, setValue, errors } = useFormContext();
+  const { control, setValue, getValues, errors } = useFormContext();
 
   const {
     fields: fields_scientificfields,
@@ -269,6 +269,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
               id="scientificDomain"
               onChange={(e) => setValue(`scientificDomain.${domain_index}.name`, e)}
               options={buildOptionsFromArray(listScientificDomain)}
+              value={getValues(`scientificDomain.${domain_index}.name`)}
               placeholder="Područje"
             />
           }
@@ -367,7 +368,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
 }
 
 const ScientificFields = ({domain_index, field_index}) => {
-  const { control, setValue, errors } = useFormContext();
+  const { control, setValue, getValues, errors } = useFormContext();
   const { mapDomainsToFields, listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
 
   return (
@@ -382,6 +383,7 @@ const ScientificFields = ({domain_index, field_index}) => {
           forwardedRef={field.ref}
           id="scientificDomain"
           onChange={(e) => setValue(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`, e)}
+          value={getValues(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`)}
           options={buildOptionsFromArray(mapDomainsToFields['TEHNIČKE ZNANOSTI'])}
           placeholder="Polje"
         />
