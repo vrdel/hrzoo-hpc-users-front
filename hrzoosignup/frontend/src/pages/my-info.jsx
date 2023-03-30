@@ -5,11 +5,11 @@ import { PageTitle } from '../components/PageTitle';
 
 
 const MyInfo = () => {
-  const { linkTitles } = useContext(SharedData);
+  const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
 
   useEffect(() => {
-    setPageTitle(linkTitles[location.pathname])
+    setPageTitle(LinkTitles[location.pathname])
   }, [location.pathname])
 
   return (

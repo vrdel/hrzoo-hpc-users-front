@@ -11,12 +11,12 @@ const NewRequest = () => {
   const [buttonDisabled, setButtonDisabled] = useState(undefined)
   const [selectedProject, setSelectedProject] = useState(undefined)
   const navigate = useNavigate()
-  const { linkTitles,
+  const { LinkTitles,
     RequestTypesToSelect,
     UrlToRequestType } = useContext(SharedData);
 
   useEffect(() => {
-    setPageTitle(linkTitles[location.pathname])
+    setPageTitle(LinkTitles[location.pathname])
     if (location.pathname.endsWith('novi-zahtjev'))
       setButtonDisabled(false)
     else {

@@ -214,6 +214,8 @@ const AddNewScientificDomain = ({append}) => {
 
 
 const ScientificDomain = ({control, index, item, remove}) => {
+  const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
+
   return (
     <Card key={item.id}>
       <CardHeader className="d-inline-flex align-items-center">
@@ -228,7 +230,7 @@ const ScientificDomain = ({control, index, item, remove}) => {
               aria-label="scientificDomain"
               placeholder="Odaberi"
               controlWidth="300px"
-              options={[{'label': 'foo', 'value': 'bar'}]}
+              options={buildOptionsFromArray(listScientificDomain)}
             />
           }
         />

@@ -1,87 +1,57 @@
 let naturalFields = [
-  {
-    "name": "Matematika"
-  },
-  {
-    "name": "Fizika"
-  },
-  {
-    "name": "Geologija"
-  },
-  {
-    "name": "Kemija"
-  },
-  {
-    "name": "Biologija"
-  },
-  {
-    "name": "Geofizika"
-  },
-  {
-    "name": "Interdisciplinarne prirodne znanosti"
-  }
+  "Matematika", "Fizika", "Geologija", "Kemija",
+  "Biologija", "Geofizika", "Interdisciplinarne prirodne znanosti"
 ]
-let naturalDomain = {
-  "name": "PRIRODNE ZNANOSTI",
-  "fields": naturalFields
-}
 
 let techFields = [
-  {
-    "name": "Arhitektura i urbanizam"
-  },
-  {
-    "name": "Brodogradnja"
-  },
-  {
-    "name": "Elektrotehnika"
-  },
-  {
-    "name": "Geodezija"
-  },
-  {
-    "name": "Građevinarstvo"
-  },
-  {
-    "name": "Grafička tehnologija"
-  },
-  {
-    "name": "Kemijsko inženjerstvo"
-  },
-  {
-    "name": "Metalurgija"
-  },
-  {
-    "name": "Računarstvo"
-  },
-  {
-    "name": "Rudarstvo, nafta i geološko inženjerstvo"
-  },
-  {
-    "name": "Strojarstvo"
-  },
-  {
-    "name": "Tehnologija prometa i transporta"
-  },
-  {
-    "name": "Tekstilna tehnologija"
-  },
-  {
-    "name": "Zrakoplovstvo, raketna i svemirska tehnika"
-  },
-  {
-    "name": "Temeljne tehničke znanosti"
-  },
-  {
-    "name": "Interdisciplinarne tehničke znanosti"
-  },
+  "Arhitektura i urbanizam", "Brodogradnja",
+  "Elektrotehnika", "Geodezija", "Građevinarstvo", "Grafička tehnologija",
+  "Kemijsko inženjerstvo", "Metalurgija", "Računarstvo", "Rudarstvo, nafta i geološko inženjerstvo",
+  "Strojarstvo", "Tehnologija prometa i transporta", "Tekstilna tehnologija",
+  "Zrakoplovstvo, raketna i svemirska tehnika", "Temeljne tehničke znanosti",
+  "Interdisciplinarne tehničke znanosti"
+]
+let bioMedFields = [
+  "Temeljne medicinske znanosti", "Kliničke medicinske znanosti",
+  "Javno zdravstvo i zdravstvena zaštita",
+  "Veterinarska medicina", "Dentalna medicina", "Farmacija"
+]
+let bioTechFields = [
+  "Poljoprivreda (agronomija)", "Šumarstvo", "Drvna tehnologija",
+  "Biotehnologija", "Prehrambena tehnologija", "Nutricionizam",
+  "Interdisciplinarne biotehničke znanosti"
+]
+let socialFields = [
+  "Ekonomija", "Pravo", "Politologija",
+  "Informacijske i komunikacijske znanosti",
+  "Sociologija", "Psihologija", "Pedagogija",
+  "Edukacijsko-rehabilitacijske znanosti",
+  "Logopedija", "Kineziologija", "Demografija",
+  "Socijalne djelatnosti", "Sigurnosne i obrambene znanosti",
+  "Interdisciplinarne društvene znanosti"
+]
+let humanitiesFields = [
+  "Filozofija", "Teologija", "Filologija", "Povijest", "Povijest umjetnosti",
+  "Znanost o umjetnosti", "Arheologija", "Etnologija i antropologija",
+  "Religijske znanosti (interdisciplinarno polje)", "Interdisciplinarne humanističke znanosti"
 ]
 
-let techDomain = {
-  "name": "TEHNICKE ZNANOSTI",
-  "fields": techFields
-}
 
-export const scientificDomains = {
-  naturalDomain, techDomain
+export const listScientificDomain = [
+  "PRIRODNE ZNANOSTI", "TEHNIČKE ZNANOSTI", "BIOMEDICINA I ZDRAVSTVO",
+  "BIOTEHNIČKE ZNANOSTI", "DRUŠTVENE ZNANOSTI", "HUMANISTIČKE ZNANOSTI",
+//  "UMJETNIČKO PODRUČJE", "INTERDISCIPLINARNA PODRUČJA ZNANOSTI",
+//  "INTERDISCIPLINARNA PODRUČJA UMJETNOSTI"
+]
+
+export const mapDomainsToFields = {
+  "PRIRODNE ZNANOSTI": naturalFields,
+  "TEHNIČKE ZNANOSTI": techFields,
+  "BIOMEDICINA I ZDRAVSTVO": bioMedFields,
+  "BIOTEHNIČKE ZNANOSTI": bioTechFields,
+  "DRUŠTVENE ZNANOSTI": socialFields,
+  "HUMANISTIČKE ZNANOSTI": humanitiesFields,
+//  "UMJETNIČKO PODRUČJE": [],
+//  "INTERDISCIPLINARNA PODRUČJA ZNANOSTI": [],
+//  "INTERDISCIPLINARNA PODRUČJA UMJETNOSTI": [],
 }
