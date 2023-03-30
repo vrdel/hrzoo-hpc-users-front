@@ -17,7 +17,14 @@ import {
   Input,
   InputGroupText
 } from 'reactstrap';
-import { useForm, Controller, useFieldArray, useFormContext } from "react-hook-form";
+import {
+  useForm,
+  Controller,
+  useFieldArray,
+  useWatch,
+  FormProvider,
+  useFormContext
+} from "react-hook-form";
 import { SharedData } from '../root';
 import DatePicker from 'react-date-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,7 +37,7 @@ import '../../styles/datepicker.css';
 
 
 const GeneralRequest = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const rhfMethods = useForm({
     defaultValues: {
       requestName: '',
       requestExplain: '',
@@ -52,15 +59,16 @@ const GeneralRequest = () => {
     }
   });
   const onSubmit = data => {
+    console.log('VRDEL DEBUG', 'foo im run')
     alert(JSON.stringify(data, null, 2));
   }
 
   return (
-    <>
-      <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+    <FormProvider {...rhfMethods}>
+      <Form onSubmit={rhfMethods.handleSubmit(onSubmit)} className="needs-validation">
         <RequestHorizontalRuler />
-        <GeneralFields control={control} errors={errors} handleSubmit={handleSubmit} />
-        <ResourceFields control={control} errors={errors} />
+        <GeneralFields />
+        <ResourceFields />
         <RequestHorizontalRuler />
         <Row className="mt-2 mb-2 text-center">
           <Col>
@@ -68,12 +76,13 @@ const GeneralRequest = () => {
           </Col>
         </Row>
       </Form>
-    </>
+    </FormProvider>
   )
 };
 
 
-const GeneralFields = ({control, errors}) => {
+const GeneralFields = () => {
+  const { control, setValue, errors } = useFormContext();
   const {
     fields: fields_domain,
     append: domain_append,
@@ -82,6 +91,7 @@ const GeneralFields = ({control, errors}) => {
     control,
     name: "scientificDomain",
   });
+  const generalWatch = useWatch({control})
 
   return (
     <>
@@ -229,9 +239,10 @@ const AddNewScientificDomain = ({append}) => {
 }
 
 
-const ScientificDomain = ({control, index: domain_index, item: domain_item,
+const ScientificDomain = ({index: domain_index, item: domain_item,
   remove: domain_remove}) => {
   const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
+  const { control, setValue, errors } = useFormContext();
 
   const {
     fields: fields_scientificfields,
@@ -256,6 +267,7 @@ const ScientificDomain = ({control, index: domain_index, item: domain_item,
               controlWidth="300px"
               forwardedRef={field.ref}
               id="scientificDomain"
+              onChange={(e) => setValue(`scientificDomain.${domain_index}.name`, e)}
               options={buildOptionsFromArray(listScientificDomain)}
               placeholder="Područje"
             />
@@ -290,66 +302,68 @@ const ScientificDomain = ({control, index: domain_index, item: domain_item,
           <FontAwesomeIcon icon={faTimes}/>
         </Button>
       </CardHeader>
-      <CardBody >
-        {
-          fields_scientificfields.map((field_item, field_index) => (
-            <Row noGutters key={field_item.id} className="mb-2" >
-              <Col className="d-inline-flex align-items-center">
-                <ScientificFields control={control} index={field_index} />
-                <InputGroup>
-                  <Controller
-                    name={`scientificfields.${field_index}.percent`}
-                    aria-label="scientificField"
-                    control={control}
-                    rules={{required: true}}
-                    render={ ({field}) =>
-                      <Input
-                        {...field}
-                        className="ms-1 form-control text-center"
-                        placeholder="Udio"
-                        type="number"
-                      />
-                    }
-                  />
-                  <InputGroupText>
-                    %
-                  </InputGroupText>
-                </InputGroup>
-                {
-                  field_index > 0 ?
-                    <Button
-                      size="sm"
-                      color="danger"
-                      className="ms-1"
-                      type="button"
-                      onClick={() => field_remove(field_index)}
-                    >
-                      <FontAwesomeIcon icon={faTimes}/>
-                    </Button>
-                  :
-                    <Button
-                      size="sm"
-                      color="white"
-                      className="ms-1 border-white"
-                      disabled={true}
-                      type="button"
-                    >
-                      <FontAwesomeIcon color="white" icon={faTimes}/>
-                    </Button>
-                }
-              </Col>
-            </Row>
-          ))
-        }
-        <Row noGutters>
-          <Col className="text-center">
-            <Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
-              field_append({'name': '', 'percent': ''})}>
-              Dodaj novo znanstveno polje
-            </Button>
-          </Col>
-        </Row>
-      </CardBody>
+      {
+      //<CardBody >
+        //{
+          //fields_scientificfields.map((field_item, field_index) => (
+            //<Row noGutters key={field_item.id} className="mb-2" >
+              //<Col className="d-inline-flex align-items-center">
+                //<ScientificFields control={control} index={field_index} />
+                //<InputGroup>
+                  //<Controller
+                    //name={`scientificfields.${field_index}.percent`}
+                    //aria-label="scientificField"
+                    //control={control}
+                    //rules={{required: true}}
+                    //render={ ({field}) =>
+                      //<Input
+                        //{...field}
+                        //className="ms-1 form-control text-center"
+                        //placeholder="Udio"
+                        //type="number"
+                      ///>
+                    //}
+                  ///>
+                  //<InputGroupText>
+                    //%
+                  //</InputGroupText>
+                //</InputGroup>
+                //{
+                  //field_index > 0 ?
+                    //<Button
+                      //size="sm"
+                      //color="danger"
+                      //className="ms-1"
+                      //type="button"
+                      //onClick={() => field_remove(field_index)}
+                    //>
+                      //<FontAwesomeIcon icon={faTimes}/>
+                    //</Button>
+                  //:
+                    //<Button
+                      //size="sm"
+                      //color="white"
+                      //className="ms-1 border-white"
+                      //disabled={true}
+                      //type="button"
+                    //>
+                      //<FontAwesomeIcon color="white" icon={faTimes}/>
+                    //</Button>
+                //}
+              //</Col>
+            //</Row>
+          //))
+        //}
+        //<Row noGutters>
+          //<Col className="text-center">
+            //<Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
+              //field_append({'name': '', 'percent': ''})}>
+              //Dodaj novo znanstveno polje
+            //</Button>
+          //</Col>
+        //</Row>
+      //</CardBody>
+      }
     </Card>
   )
 }
@@ -377,7 +391,8 @@ const ScientificFields = ({control, index}) => {
 }
 
 
-const ResourceFields = ({control, errors}) => {
+const ResourceFields = () => {
+  const { control, setValue, errors } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
 
   return (
@@ -552,6 +567,7 @@ const ResourceFields = ({control, errors}) => {
                 isMulti
                 options={ResourceTypesToSelect}
                 placeholder="Odaberi"
+                onChange={(e) => setValue('requestResourceType', e)}
                 resourceTypeMultiValue={true}
               />
             }
