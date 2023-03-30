@@ -239,8 +239,8 @@ const AddNewScientificDomain = ({append}) => {
 }
 
 
-const ScientificDomain = ({index: domain_index, item: domain_item,
-  remove: domain_remove}) => {
+const ScientificDomain = ({index: domain_index, item: domain_item, remove:
+  domain_remove}) => {
   const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
   const { control, setValue, errors } = useFormContext();
 
@@ -305,7 +305,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item,
       <CardBody >
         {
           fields_scientificfields.map((field_item, field_index) => (
-            <Row noGutters key={field_item.id} className="mb-2" >
+            <Row key={field_item.id} className="g-0 mb-2" >
               <Col className="d-inline-flex align-items-center">
                 <ScientificFields domain_index={domain_index} field_index={field_index} />
                 <InputGroup>
@@ -353,7 +353,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item,
             </Row>
           ))
         }
-        <Row noGutters>
+        <Row className="g-0">
           <Col className="text-center">
             <Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
               field_append({'name': '', 'percent': ''})}>
