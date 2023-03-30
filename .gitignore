@@ -17,7 +17,8 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-hrzoosignup/frontend/node_modules
+*node_modules*
+*reactbundle*
 hrzoosignup/frontend/dist
 hrzoosignup/frontend/dist-ssr
 hrzoosignup/frontend/*.local
