@@ -302,78 +302,77 @@ const ScientificDomain = ({index: domain_index, item: domain_item,
           <FontAwesomeIcon icon={faTimes}/>
         </Button>
       </CardHeader>
-      {
-      //<CardBody >
-        //{
-          //fields_scientificfields.map((field_item, field_index) => (
-            //<Row noGutters key={field_item.id} className="mb-2" >
-              //<Col className="d-inline-flex align-items-center">
-                //<ScientificFields control={control} index={field_index} />
-                //<InputGroup>
-                  //<Controller
-                    //name={`scientificfields.${field_index}.percent`}
-                    //aria-label="scientificField"
-                    //control={control}
-                    //rules={{required: true}}
-                    //render={ ({field}) =>
-                      //<Input
-                        //{...field}
-                        //className="ms-1 form-control text-center"
-                        //placeholder="Udio"
-                        //type="number"
-                      ///>
-                    //}
-                  ///>
-                  //<InputGroupText>
-                    //%
-                  //</InputGroupText>
-                //</InputGroup>
-                //{
-                  //field_index > 0 ?
-                    //<Button
-                      //size="sm"
-                      //color="danger"
-                      //className="ms-1"
-                      //type="button"
-                      //onClick={() => field_remove(field_index)}
-                    //>
-                      //<FontAwesomeIcon icon={faTimes}/>
-                    //</Button>
-                  //:
-                    //<Button
-                      //size="sm"
-                      //color="white"
-                      //className="ms-1 border-white"
-                      //disabled={true}
-                      //type="button"
-                    //>
-                      //<FontAwesomeIcon color="white" icon={faTimes}/>
-                    //</Button>
-                //}
-              //</Col>
-            //</Row>
-          //))
-        //}
-        //<Row noGutters>
-          //<Col className="text-center">
-            //<Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
-              //field_append({'name': '', 'percent': ''})}>
-              //Dodaj novo znanstveno polje
-            //</Button>
-          //</Col>
-        //</Row>
-      //</CardBody>
-      }
+      <CardBody >
+        {
+          fields_scientificfields.map((field_item, field_index) => (
+            <Row noGutters key={field_item.id} className="mb-2" >
+              <Col className="d-inline-flex align-items-center">
+                <ScientificFields domain_index={domain_index} field_index={field_index} />
+                <InputGroup>
+                  <Controller
+                    name={`scientificDomain.${domain_index}.scientificfields.${field_index}.percent`}
+                    aria-label="scientificField"
+                    control={control}
+                    rules={{required: true}}
+                    render={ ({field}) =>
+                      <Input
+                        {...field}
+                        className="ms-1 form-control text-center"
+                        placeholder="Udio"
+                        type="number"
+                      />
+                    }
+                  />
+                  <InputGroupText>
+                    %
+                  </InputGroupText>
+                </InputGroup>
+                {
+                  field_index > 0 ?
+                    <Button
+                      size="sm"
+                      color="danger"
+                      className="ms-1"
+                      type="button"
+                      onClick={() => field_remove(field_index)}
+                    >
+                      <FontAwesomeIcon icon={faTimes}/>
+                    </Button>
+                  :
+                    <Button
+                      size="sm"
+                      color="white"
+                      className="ms-1 border-white"
+                      disabled={true}
+                      type="button"
+                    >
+                      <FontAwesomeIcon color="white" icon={faTimes}/>
+                    </Button>
+                }
+              </Col>
+            </Row>
+          ))
+        }
+        <Row noGutters>
+          <Col className="text-center">
+            <Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
+              field_append({'name': '', 'percent': ''})}>
+              Dodaj novo znanstveno polje
+            </Button>
+          </Col>
+        </Row>
+      </CardBody>
     </Card>
   )
 }
 
-const ScientificFields = ({control, index}) => {
+const ScientificFields = ({domain_index, field_index}) => {
+  const { control, setValue, errors } = useFormContext();
   const { mapDomainsToFields, listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
 
   return (
     <Controller
-      name={`scientificDomain.${index}.name`}
+      name={`scientificDomain.${domain_index}.scientificfields.${field_index}.name`}
       control={control}
       rules={{required: true}}
       render={ ({field}) =>
@@ -382,6 +381,7 @@ const ScientificFields = ({control, index}) => {
           controlWidth="300px"
           forwardedRef={field.ref}
           id="scientificDomain"
+          onChange={(e) => setValue(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`, e)}
           options={buildOptionsFromArray(mapDomainsToFields['TEHNIČKE ZNANOSTI'])}
           placeholder="Polje"
         />
