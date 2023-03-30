@@ -5,6 +5,7 @@ import { LinkTitles } from '../config/link-titles';
 import { RequestTypesToSelect, UrlToRequestType } from '../config/request-types';
 import { ResourceTypesToSelect } from '../config/resource-types';
 import { listScientificDomain, mapDomainsToFields } from '../config/scientific-domain';
+import { listScientificSoftware } from '../config/scientific-software';
 import { buildOptionsFromArray } from '../utils/select-tools';
 
 
@@ -21,7 +22,8 @@ const Root = () => {
         ResourceTypesToSelect,
         listScientificDomain,
         mapDomainsToFields,
-        buildOptionsFromArray
+        buildOptionsFromArray,
+        listScientificSoftware
       }}>
         <HeadTitle />
         <Outlet />

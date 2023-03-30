@@ -58,7 +58,8 @@ const GeneralRequest = () => {
             }
           ]
         },
-      ]
+      ],
+      scientificSoftware: ''
     }
   });
 
@@ -71,6 +72,7 @@ const GeneralRequest = () => {
       <Form onSubmit={rhfMethods.handleSubmit(onSubmit)} className="needs-validation">
         <RequestHorizontalRuler />
         <GeneralFields />
+        <ScientificSoftware />
         <ResourceFields />
         <RequestHorizontalRuler />
         <Row className="mt-2 mb-2 text-center">
@@ -446,7 +448,7 @@ const ScientificFields = ({domain_index, field_index}) => {
 
 
 const ResourceFields = () => {
-  const { control, setValue, errors } = useFormContext();
+  const { control, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
 
   return (
@@ -632,6 +634,63 @@ const ResourceFields = () => {
   )
 }
 
+
+const ScientificSoftware = () => {
+  const { control, setValue, formState: {errors} } = useFormContext();
+  const { listScientificSoftware, buildOptionsFromArray } = useContext(SharedData);
+
+  return (
+    <>
+      <Row className="mt-5">
+        <Col>
+          <h4 className="ms-4 mb-3 mt-4">Znanstveni softver</h4><br/>
+        </Col>
+      </Row>
+      <Row className="mt-1">
+        <Col md={{size: 10, offset: 1}}>
+          <Label
+            htmlFor="requestScientificSoftware"
+            aria-label="requestScientificSoftware"
+            className="mr-2 text-right form-label">
+            Aplikacije koje će se koristiti:
+          </Label>
+          <Controller
+            name="requestScientificSoftware"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <CustomReactSelect
+                aria-label="requestScientificSoftware"
+                closeMenuOnSelect={false}
+                forwardedRef={field.ref}
+                id="requestResourceType"
+                isMulti
+                scientificSoftwareMultiValue={true}
+                options={buildOptionsFromArray(listScientificSoftware)}
+                placeholder="Popis aplikacija dostupnih na klasteru Supek"
+                onChange={(e) => setValue('requestScientificSoftware', e)}
+              />
+            }
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col sm={{offset: 1}}>
+          <Label
+            htmlFor="requestScientificSoftwareHelp"
+            aria-label="requestScientificSoftwareHelp"
+            className="mr-2 text-right form-label">
+            Potrebna pomoć pri instalaciji:
+          </Label>
+          <Input type="checkbox" className="ms-3 fw-bold"/>
+        </Col>
+        <div className="w-100"></div>
+        <Col sm={{offset: 1, size: 1}}>
+        </Col>
+      </Row>
+    </>
+  )
+}
 
 
 export default GeneralRequest;
