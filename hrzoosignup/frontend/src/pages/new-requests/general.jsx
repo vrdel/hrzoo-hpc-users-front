@@ -171,7 +171,7 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
           />
         </Col>
       </Row>
-      <Row className="mt-3 d-flex align-items-center g-0">
+      <Row className="mt-3 d-flex g-0">
         <Col md={{offset: 1}}>
           <Label
             htmlFor="scientificDomain"
@@ -183,65 +183,18 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
             fields.map((item, index) => (
               <Row key={item.id}>
                 <Col md={{size: 5}} key={item.id}>
-                  <Card key={item.id}>
-                    <CardHeader className="d-inline-flex align-items-center">
-                      <Controller
-                        name={`scientificDomain.${index}.name`}
-                        control={control}
-                        rules={{required: true}}
-                        render={ ({field}) =>
-                          <CustomReactSelect
-                            {...field}
-                            id="scientificDomain"
-                            aria-label="scientificDomain"
-                            placeholder="Odaberi"
-                            controlWidth="300px"
-                            options={[{'label': 'foo', 'value': 'bar'}]}
-                          />
-                        }
-                      />
-                      <InputGroup>
-                        <Controller
-                          name={`scientificDomain.${index}.percent`}
-                          aria-label="scientificDomainPercent"
-                          control={control}
-                          rules={{required: true}}
-                          render={ ({field}) =>
-                            <Input
-                              {...field}
-                              className="ms-1 form-control text-center"
-                              placeholder="Udio"
-                              type="number"
-                            />
-                          }
-                        />
-                        <InputGroupText>
-                          %
-                        </InputGroupText>
-                      </InputGroup>
-                      <Button
-                        size="sm"
-                        color="danger"
-                        type="button"
-                        className="ms-2"
-                        onClick={() => remove(index)}
-                      >
-                        <FontAwesomeIcon icon={faTimes}/>
-                      </Button>
-                    </CardHeader>
-                    <CardBody>
-                      Foobar
-                    </CardBody>
-                  </Card>
+                  <ScientificDomain control={control} index={index} item={item} remove={remove} />
                 </Col>
                 {
                   index === fields.length - 1 &&
-                    <Col sm={{size: 3, offset: 1}}>
-                      <Button outline color="secondary" onClick={() =>
-                        append({'name': '', 'percent': '', 'scientificfields': []})}>
-                        Dodaj novo znanstveno područje
-                      </Button>
-                    </Col>
+                    <>
+                      <Col sm={{size: 3, offset: 1}}>
+                        <Button outline color="secondary" onClick={() =>
+                          append({'name': '', 'percent': '', 'scientificfields': []})}>
+                          Dodaj novo znanstveno područje
+                        </Button>
+                      </Col>
+                    </>
                 }
               </Row>
             ))
@@ -249,6 +202,62 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
         </Col>
       </Row>
     </>
+  )
+}
+
+
+const ScientificDomain = ({control, index, item, remove}) => {
+  return (
+    <Card key={item.id}>
+      <CardHeader className="d-inline-flex align-items-center">
+        <Controller
+          name={`scientificDomain.${index}.name`}
+          control={control}
+          rules={{required: true}}
+          render={ ({field}) =>
+            <CustomReactSelect
+              {...field}
+              id="scientificDomain"
+              aria-label="scientificDomain"
+              placeholder="Odaberi"
+              controlWidth="300px"
+              options={[{'label': 'foo', 'value': 'bar'}]}
+            />
+          }
+        />
+        <InputGroup>
+          <Controller
+            name={`scientificDomain.${index}.percent`}
+            aria-label="scientificDomainPercent"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <Input
+                {...field}
+                className="ms-1 form-control text-center"
+                placeholder="Udio"
+                type="number"
+              />
+            }
+          />
+          <InputGroupText>
+            %
+          </InputGroupText>
+        </InputGroup>
+        <Button
+          size="sm"
+          color="danger"
+          type="button"
+          className="ms-2"
+          onClick={() => remove(index)}
+        >
+          <FontAwesomeIcon icon={faTimes}/>
+        </Button>
+      </CardHeader>
+      <CardBody>
+        Foobar
+      </CardBody>
+    </Card>
   )
 }
 
