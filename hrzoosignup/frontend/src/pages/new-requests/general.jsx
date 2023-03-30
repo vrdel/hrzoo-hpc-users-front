@@ -17,7 +17,7 @@ import {
   Input,
   InputGroupText
 } from 'reactstrap';
-import { useForm, Controller, useFieldArray } from "react-hook-form";
+import { useForm, Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { SharedData } from '../root';
 import DatePicker from 'react-date-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -73,14 +73,15 @@ const GeneralRequest = () => {
 };
 
 
-const GeneralFields = ({control, errors, handleSubmit}) => {
-  const { fields, append, remove } = useFieldArray({
+const GeneralFields = ({control, errors}) => {
+  const {
+    fields: fields_domain,
+    append: domain_append,
+    remove: domain_remove
+  } = useFieldArray({
     control,
     name: "scientificDomain",
   });
-
-  function onSubmit() {
-  }
 
   return (
     <>
@@ -189,15 +190,16 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
           </Label>
           <Row>
             {
-              fields.map((item, index) => (
+              fields_domain.map((item, index) => (
                 <>
                   <Col className="mb-3" md={{size: 5}}>
-                    <ScientificDomain control={control} index={index} item={item} remove={remove} />
+                    <ScientificDomain control={control} index={index}
+                      item={item} remove={domain_remove} />
                   </Col>
                   {
-                    index === fields.length - 1 &&
+                    index === fields_domain.length - 1 &&
                       <Col md={{size: 3, offset: 1}}>
-                        <AddNewScientificDomain append={append} />
+                        <AddNewScientificDomain append={domain_append} />
                       </Col>
                   }
                 </>
@@ -214,21 +216,38 @@ const GeneralFields = ({control, errors, handleSubmit}) => {
 const AddNewScientificDomain = ({append}) => {
   return (
     <Button outline color="secondary" onClick={() =>
-      append({'name': '', 'percent': '', 'scientificfields': []})}>
+      append({
+      'name': '',
+      'percent': '',
+      'scientificfields': [{
+        'name': '',
+        'percent': ''
+      }]})}>
       Dodaj novo znanstveno područje
     </Button>
   )
 }
 
 
-const ScientificDomain = ({control, index, item, remove}) => {
+const ScientificDomain = ({control, index: domain_index, item: domain_item,
+  remove: domain_remove}) => {
   const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
 
+  const {
+    fields: fields_scientificfields,
+    append: field_append,
+    remove: field_remove
+  } = useFieldArray({
+    control,
+    name: `scientificDomain.${domain_index}.scientificfields`
+  })
+
+
   return (
-    <Card key={item.id}>
+    <Card key={domain_item.id}>
       <CardHeader className="d-inline-flex align-items-center">
         <Controller
-          name={`scientificDomain.${index}.name`}
+          name={`scientificDomain.${domain_index}.name`}
           control={control}
           rules={{required: true}}
           render={ ({field}) =>
@@ -244,7 +263,7 @@ const ScientificDomain = ({control, index, item, remove}) => {
         />
         <InputGroup>
           <Controller
-            name={`scientificDomain.${index}.percent`}
+            name={`scientificDomain.${domain_index}.percent`}
             aria-label="scientificDomainPercent"
             control={control}
             rules={{required: true}}
@@ -266,49 +285,66 @@ const ScientificDomain = ({control, index, item, remove}) => {
           color="danger"
           type="button"
           className="ms-1"
-          onClick={() => remove(index)}
+          onClick={() => domain_remove(domain_index)}
         >
           <FontAwesomeIcon icon={faTimes}/>
         </Button>
       </CardHeader>
       <CardBody >
-        <Row noGutters >
-          <Col className="d-inline-flex align-items-center">
-            <ScientificFields control={control} index={index} />
-            <InputGroup>
-              <Controller
-                name={`scientificDomain.${index}.scientificfields.0.name`}
-                aria-label="scientificField"
-                control={control}
-                rules={{required: true}}
-                render={ ({field}) =>
-                  <Input
-                    {...field}
-                    className="ms-1 form-control text-center"
-                    placeholder="Udio"
-                    type="number"
+        {
+          fields_scientificfields.map((field_item, field_index) => (
+            <Row noGutters key={field_item.id} className="mb-2" >
+              <Col className="d-inline-flex align-items-center">
+                <ScientificFields control={control} index={field_index} />
+                <InputGroup>
+                  <Controller
+                    name={`scientificfields.${field_index}.percent`}
+                    aria-label="scientificField"
+                    control={control}
+                    rules={{required: true}}
+                    render={ ({field}) =>
+                      <Input
+                        {...field}
+                        className="ms-1 form-control text-center"
+                        placeholder="Udio"
+                        type="number"
+                      />
+                    }
                   />
+                  <InputGroupText>
+                    %
+                  </InputGroupText>
+                </InputGroup>
+                {
+                  field_index > 0 ?
+                    <Button
+                      size="sm"
+                      color="danger"
+                      className="ms-1"
+                      type="button"
+                      onClick={() => field_remove(field_index)}
+                    >
+                      <FontAwesomeIcon icon={faTimes}/>
+                    </Button>
+                  :
+                    <Button
+                      size="sm"
+                      color="white"
+                      className="ms-1 border-white"
+                      disabled={true}
+                      type="button"
+                    >
+                      <FontAwesomeIcon color="white" icon={faTimes}/>
+                    </Button>
                 }
-              />
-              <InputGroupText>
-                %
-              </InputGroupText>
-            </InputGroup>
-            <Button
-              size="sm"
-              color="danger"
-              className="ms-1"
-              type="button"
-              onClick={() => remove(index)}
-            >
-              <FontAwesomeIcon icon={faTimes}/>
-            </Button>
-          </Col>
-        </Row>
+              </Col>
+            </Row>
+          ))
+        }
         <Row noGutters>
           <Col className="text-center">
             <Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
-              append({'name': '', 'percent': '', 'scientificfields': []})}>
+              field_append({'name': '', 'percent': ''})}>
               Dodaj novo znanstveno polje
             </Button>
           </Col>
