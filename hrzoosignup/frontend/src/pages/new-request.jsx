@@ -4,6 +4,10 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { Col, Row, Button, Label } from 'reactstrap';
 import { SharedData } from './root';
 import { PageTitle } from '../components/PageTitle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowRight,
+} from '@fortawesome/free-solid-svg-icons';
 
 
 const NewRequest = () => {
@@ -56,6 +60,7 @@ const NewRequest = () => {
             onClick={() => {
               navigate(selectedProject.value)
             }}>
+            <FontAwesomeIcon icon={faArrowRight}/>{' '}
             Nastavi
           </Button>
         </Col>

@@ -33,6 +33,8 @@ import { ErrorMessage } from '@hookform/error-message';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimes,
+  faFile,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
@@ -77,7 +79,10 @@ const GeneralRequest = () => {
         <RequestHorizontalRuler />
         <Row className="mt-2 mb-2 text-center">
           <Col>
-            <Button size="lg" color="success" id="submit-button" type="submit">Podnesi zahtjev</Button>
+            <Button size="lg" color="success" id="submit-button" type="submit">
+              <FontAwesomeIcon icon={faFile}/>{' '}
+              Podnesi zahtjev
+            </Button>
           </Col>
         </Row>
       </Form>
@@ -254,7 +259,7 @@ const GeneralFields = () => {
 
 const AddNewScientificDomain = ({append}) => {
   return (
-    <Button outline color="secondary" onClick={() =>
+    <Button outline color="success" onClick={() =>
       append({
       'name': '',
       'percent': '',
@@ -262,7 +267,8 @@ const AddNewScientificDomain = ({append}) => {
         'name': '',
         'percent': ''
       }]})}>
-      Dodaj novo znanstveno područje
+      <FontAwesomeIcon icon={faPlus}/>{' '}
+      Novo znanstveno područje
     </Button>
   )
 }
@@ -402,9 +408,10 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
         }
         <Row className="g-0">
           <Col className="text-center">
-            <Button className="mt-3" size="sm" outline color="secondary" onClick={() =>
+            <Button className="mt-3" size="sm" outline color="success" onClick={() =>
               field_append({'name': '', 'percent': ''})}>
-              Dodaj novo znanstveno polje
+              <FontAwesomeIcon icon={faPlus}/>{' '}
+              Novo znanstveno polje
             </Button>
           </Col>
         </Row>

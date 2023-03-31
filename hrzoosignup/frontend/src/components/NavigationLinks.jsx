@@ -4,6 +4,14 @@ import {
   NavItem,
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFileSignature,
+  faBook,
+  faUsers,
+  faKey,
+  faCircleInfo
+} from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
 
 
@@ -17,6 +25,7 @@ const NavigationLinks = () => {
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/moji-zahtjevi'>
+          <FontAwesomeIcon icon={faBook} />{' '}
           Moji zahtjevi
         </NavLink>
       </NavItem>
@@ -25,6 +34,7 @@ const NavigationLinks = () => {
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/novi-zahtjev'>
+          <FontAwesomeIcon icon={faFileSignature} />{' '}
           Novi zahtjev
         </NavLink>
       </NavItem>
@@ -33,6 +43,7 @@ const NavigationLinks = () => {
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/clanstva'>
+          <FontAwesomeIcon icon={faUsers} />{' '}
           Članstva
         </NavLink>
       </NavItem>
@@ -41,6 +52,7 @@ const NavigationLinks = () => {
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/javni-kljucevi'>
+          <FontAwesomeIcon icon={faKey} />{' '}
           Javni ključevi
         </NavLink>
       </NavItem>
@@ -49,6 +61,7 @@ const NavigationLinks = () => {
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/moji-podatci'>
+          <FontAwesomeIcon icon={faCircleInfo} />{' '}
           Moji podatci
         </NavLink>
       </NavItem>
