@@ -19,8 +19,8 @@ const NavigationLinks = () => {
   const activeBgColor = '#b04c46';
 
   return (
-    <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex justify-content-center sticky-top">
-      <NavItem key='moji-zahtjevi' className='mt-1'>
+    <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex sticky-top">
+      <NavItem key='moji-zahtjevi' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
@@ -56,7 +56,7 @@ const NavigationLinks = () => {
           Javni ključevi
         </NavLink>
       </NavItem>
-      <NavItem key='moji-podatci' className='mt-1'>
+      <NavItem key='moji-podatci' className='mt-1 me-3 ms-auto'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}

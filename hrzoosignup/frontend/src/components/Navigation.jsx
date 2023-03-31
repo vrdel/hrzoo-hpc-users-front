@@ -42,7 +42,7 @@ const Navigation = () => {
             <span onClick ={() => setPopoverOpen(!popoverOpen)} id="userPopover">
               <Badge href="#" className="text-dark" color="light"
                 style={{fontSize: '100%', textDecoration: 'none'}}>
-                <strong>Username</strong>
+                <strong>Daniel</strong>
               </Badge>
             </span>
             <Popover placement="bottom" isOpen={popoverOpen}
