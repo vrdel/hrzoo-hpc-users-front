@@ -1,5 +1,5 @@
 import Cookies from 'universal-cookie';
-import { url_api_prefix } from './general';
+import { url_api_prefix } from '../config/general';
 
 
 async function isActiveSession() {
