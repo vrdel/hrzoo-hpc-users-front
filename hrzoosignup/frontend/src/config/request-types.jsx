@@ -1,4 +1,5 @@
-let prefix = "/ui"
+import { url_ui_prefix } from './general';
+
 let researchProject = {
     "label": "Istraživački projekt",
     "value": "istrazivacki-projekt"
@@ -21,7 +22,7 @@ export const RequestTypesToSelect = [
 
 
 export const UrlToRequestType = {
-  [prefix + '/novi-zahtjev/istrazivacki-projekt']: researchProject,
-  [prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
-  [prefix + '/novi-zahtjev/zavrsni-rad']: thesisProject
+  [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: researchProject,
+  [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
+  [url_ui_prefix + '/novi-zahtjev/zavrsni-rad']: thesisProject
 }
