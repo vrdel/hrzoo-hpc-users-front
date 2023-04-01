@@ -62,7 +62,7 @@ const Navigation = () => {
               modalContext.setAreYouSureModal(!modalContext.areYouSureModal)
               modalContext.setModalTitle("Odjava")
               modalContext.setModalMsg("Da li ste sigurni da se želite odjaviti?")
-              modalContext.setOnYesCall(true)
+              modalContext.setOnYesCall('dologout')
             }}>
             <FontAwesomeIcon icon={faSignOutAlt} color="white" />
           </Button>
