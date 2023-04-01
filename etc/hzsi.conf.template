@@ -19,6 +19,15 @@ Name = hzsi@srce.hr
 Password = testbed
 Email = hzsi@srce.hr
 
+[CRORIS]
+API_PersonLead = https://www.croris.hr/projekti-api/osoba/voditelj/oib/{persOib}
+API_PersonProject = https://www.croris.hr/projekti-api/osoba/projekt/{projectId}
+API_Project = https://www.croris.hr/projekti-api/projekt/{projectId}
+API_Person = https://www.croris.hr/projekti-api/osoba/{persId}
+Username = user
+Password = pass
+
+
 [DATABASE]
 Host = db-hzsi
 Name = postgres
