@@ -8,6 +8,8 @@ from rest_framework import status
 from backend import models
 from backend import serializers
 
+from django.core.cache import cache
+
 
 class IsSessionActive(APIView):
     def get(self, request):
@@ -22,6 +24,9 @@ class IsSessionActive(APIView):
             user = get_user_model().objects.get(id=self.request.user.id)
             serializer = serializers.UsersSerializer(user)
             userdetails.update(serializer.data)
+
+            # TODO: remove - testing only
+            cache.set(f'{user.username}_oib', open('./oib').readlines())
 
             return Response(
                 {'active': True, 'userdetails': userdetails})
