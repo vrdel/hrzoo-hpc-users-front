@@ -20,6 +20,7 @@ import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/login.css';
+import { doUserPassLogin } from '../api/login';
 
 
 const LoginPrivate = () => {
@@ -31,8 +32,18 @@ const LoginPrivate = () => {
     }
   });
 
+
+  async function doLogin(username, password) {
+    const session = await doUserPassLogin(username, password)
+
+    if (session.active)
+      console.log('VRDEL DEBUG', session)
+    else
+      setLoginFailedVisible(true)
+  }
+
   const onSubmit = (data) => {
-    alert(JSON.stringify(data, null, 2));
+    doLogin(data.username, data.password)
   }
 
   return (

@@ -21,6 +21,6 @@ class IsSessionActive(APIView):
 
         except get_user_model().DoesNotExist:
 
-            return Response({"error": "Wrong credentials" }, status=status.HTTP_404_NOT_FOUND)
+            return Response({"active": False", error": "Session not active" }, status=status.HTTP_403_FORBIDDEN)
 
 
