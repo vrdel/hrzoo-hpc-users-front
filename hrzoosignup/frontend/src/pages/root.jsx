@@ -7,6 +7,7 @@ import { ResourceTypesToSelect } from '../config/resource-types';
 import { listScientificDomain, mapDomainsToFields } from '../config/scientific-domain';
 import { listScientificSoftware } from '../config/scientific-software';
 import { buildOptionsFromArray } from '../utils/select-tools';
+import { AuthContextProvider } from '../utils/AuthContextProvider';
 
 
 export const SharedData = React.createContext()
@@ -26,7 +27,9 @@ const Root = () => {
         listScientificSoftware
       }}>
         <HeadTitle />
-        <Outlet />
+        <AuthContextProvider>
+          <Outlet />
+        </AuthContextProvider>
       </SharedData.Provider>
     </>
   )

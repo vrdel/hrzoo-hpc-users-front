@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm, Controller } from "react-hook-form";
 import SrceLogoTiny from '../assets/srce-logo-e-mail-sig.png';
@@ -20,7 +20,8 @@ import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/login.css';
-import { doUserPassLogin } from '../api/login';
+import { doUserPassLogin } from '../api/auth';
+import { AuthContext } from '../utils/AuthContextProvider';
 
 
 const LoginPrivate = () => {
@@ -31,13 +32,15 @@ const LoginPrivate = () => {
       password: ''
     }
   });
-
+  const { login } = useContext(AuthContext);
 
   async function doLogin(username, password) {
     const session = await doUserPassLogin(username, password)
 
-    if (session.active)
+    if (session.active) {
+      login(session.userdetails)
       console.log('VRDEL DEBUG', session)
+    }
     else
       setLoginFailedVisible(true)
   }
@@ -77,11 +80,11 @@ const LoginPrivate = () => {
                   <Label for="password">Lozinka: </Label>
                   <Controller
                     name="password"
-                    type="password"
                     control={control}
                     rules={{required: true}}
                     render={ ({field}) =>
                       <Input {...field}
+                        type="password"
                         className={`form-control ${errors.password} && "is-invalid"`}
                       />
                     }
