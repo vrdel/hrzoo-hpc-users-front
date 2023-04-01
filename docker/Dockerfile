@@ -12,6 +12,7 @@ RUN dnf -y install epel-release && \
       glibc-all-langpacks \
       iproute \
       make \
+      memcached \
       mc \
       net-tools \
       ncurses-compat-libs \
