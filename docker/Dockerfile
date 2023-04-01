@@ -22,6 +22,7 @@ RUN dnf -y install epel-release && \
       python3-pip \
       python3-setuptools \
       rpmdevtools \
+      rsync \
       sudo \
       telnet \
       the_silver_searcher \
