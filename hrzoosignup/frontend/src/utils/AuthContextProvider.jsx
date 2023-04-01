@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { defaultAuthnRedirect } from '../config/default-redirect';
+
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
@@ -16,7 +18,7 @@ export const AuthContextProvider = ( {children} ) => {
   const location = useLocation()
 
   function login(user) {
-    const origin = location.state?.from?.pathname || '/ui/novi-zahtjev'
+    const origin = location.state?.from?.pathname || defaultAuthnRedirect
     setIsLoggedIn(true)
     setUserdetails(user)
     navigate(origin)
@@ -27,7 +29,7 @@ export const AuthContextProvider = ( {children} ) => {
     setUserdetails("")
   }
 
-  const authContextValue = { isLoggedIn, userDetails, login, logout };
+  const authContextValue = { isLoggedIn, userDetails, login, logout }
 
   return (
     <AuthContext.Provider value={authContextValue}>

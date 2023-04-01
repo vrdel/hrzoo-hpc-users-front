@@ -10,6 +10,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/content.css';
 import { doLogout } from '../api/auth';
 import { AuthContext } from '../utils/AuthContextProvider';
+import { defaultUnAuthnRedirect} from '../config/default-redirect';
 
 export const ModalContext = React.createContext();
 
@@ -25,14 +26,14 @@ const BasePage = () => {
 
   function onYesCallback() {
     if (onYesCall == 'dologout') {
-      doLogout(() => navigate("/ui/prijava-priv"))
+      doLogout(() => navigate(defaultUnAuthnRedirect))
       doLogoutContext()
     }
   }
 
   useEffect(() => {
     if (!isLoggedIn)
-      navigate("/ui/prijava-priv", {replace: true, state: {"from": location}})
+      navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
   }, [isLoggedIn])
 
   return (

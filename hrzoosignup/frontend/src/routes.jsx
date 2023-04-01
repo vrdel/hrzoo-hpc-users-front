@@ -16,6 +16,7 @@ import MyInfo from './pages/my-info';
 import NotFound from './pages/notfound';
 import Root from './pages/root';
 import { AuthContext } from './utils/AuthContextProvider';
+import { defaultUnAuthnRedirect } from './config/default-redirect'
 
 
 const ProtectedRoute = ( {children} )  => {
@@ -23,7 +24,7 @@ const ProtectedRoute = ( {children} )  => {
   const { isLoggedIn } = useContext(AuthContext)
 
   if (!isLoggedIn)
-    navigate('/ui/prijava-priv')
+    navigate(defaultUnAuthnRedirect)
   else
     return children
 }

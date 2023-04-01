@@ -37,10 +37,8 @@ const LoginPrivate = () => {
   async function doLogin(username, password) {
     const session = await doUserPassLogin(username, password)
 
-    if (session.active) {
+    if (session.active)
       login(session.userdetails)
-      console.log('VRDEL DEBUG', session)
-    }
     else
       setLoginFailedVisible(true)
   }
