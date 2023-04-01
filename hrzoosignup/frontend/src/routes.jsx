@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
-  Routes, Route, BrowserRouter
+  Routes, Route, BrowserRouter, useNavigate
 } from 'react-router-dom';
 import BasePage from './components/BasePage';
 import LoginPrivate from './pages/login-private';
@@ -15,6 +15,18 @@ import Memberships from './pages/memberships';
 import MyInfo from './pages/my-info';
 import NotFound from './pages/notfound';
 import Root from './pages/root';
+import { AuthContext } from './utils/AuthContextProvider';
+
+
+const ProtectedRoute = ( {children} )  => {
+  const navigate = useNavigate()
+  const { isLoggedIn } = useContext(AuthContext)
+
+  if (!isLoggedIn)
+    navigate('/ui/prijava-priv')
+  else
+    return children
+}
 
 
 const BaseRoutes = () => {
@@ -25,16 +37,52 @@ const BaseRoutes = () => {
           <Route path="prijava-priv" element={<LoginPrivate />}/>
           <Route path="prijava" element={<LoginPublic />}/>
           <Route element={<BasePage />}>
-            <Route path="moji-zahtjevi" element={<MyRequests />}/>
-            <Route path="novi-zahtjev" element={<NewRequest />}>
-              <Route index element={<NewRequestIndex />}/>
-              <Route path="istrazivacki-projekt" element={<ResearchProjectRequest />}/>
-              <Route path="prakticna-nastava" element={<GeneralRequest />}/>
-              <Route path="zavrsni-rad" element={<GeneralRequest />}/>
+            <Route path="moji-zahtjevi" element={
+              <ProtectedRoute>
+                <MyRequests />
+              </ProtectedRoute>
+            }/>
+            <Route path="novi-zahtjev" element={
+              <ProtectedRoute>
+                <NewRequest />
+              </ProtectedRoute>
+            }>
+              <Route index element={
+                <ProtectedRoute>
+                  <NewRequestIndex />
+                </ProtectedRoute>
+              }/>
+              <Route path="istrazivacki-projekt" element={
+                <ProtectedRoute>
+                  <ResearchProjectRequest />
+                </ProtectedRoute>
+              }/>
+              <Route path="prakticna-nastava" element={
+                <ProtectedRoute>
+                  <GeneralRequest />
+                </ProtectedRoute>
+              }/>
+              <Route path="zavrsni-rad" element={
+                <ProtectedRoute>
+                  <GeneralRequest />
+                </ProtectedRoute>
+              }/>
             </Route>
-            <Route path="javni-kljucevi" element={<PublicKeys />}/>
-            <Route path="clanstva" element={<Memberships />}/>
-            <Route path="moji-podatci" element={<MyInfo />}/>
+            <Route path="javni-kljucevi" element={
+              <ProtectedRoute>
+                <PublicKeys />
+              </ProtectedRoute>
+            }/>
+            <Route path="clanstva" element={
+              <ProtectedRoute>
+                <Memberships />
+              </ProtectedRoute>
+            }/>
+            <Route path="moji-podatci" element={
+              <ProtectedRoute>
+                <MyInfo />
+              </ProtectedRoute>
+            }/>
           </Route>
           <Route path="*" element={<NotFound />}/>
         </Route>

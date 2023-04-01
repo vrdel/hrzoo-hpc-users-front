@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect,  useContext } from 'react'
 import { Row, Col, Container } from 'reactstrap'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,9 +19,8 @@ const BasePage = () => {
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
-  const { logout: doLogoutContext } = useContext(AuthContext)
-
-  let navigate = useNavigate()
+  const { logout: doLogoutContext, isLoggedIn } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   function onYesCallback() {
     if (onYesCall == 'dologout') {
@@ -29,6 +28,11 @@ const BasePage = () => {
       doLogoutContext()
     }
   }
+
+  useEffect(() => {
+    if (!isLoggedIn)
+      navigate("/ui/prijava-priv")
+  }, [isLoggedIn])
 
   return (
     <Container fluid="xl" className="pt-1 d-flex flex-column">
