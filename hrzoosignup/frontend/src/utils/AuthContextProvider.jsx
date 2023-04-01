@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
@@ -10,19 +10,21 @@ export const AuthContext = React.createContext({
 
 
 export const AuthContextProvider = ( {children} ) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userDetails, setUserdetails] = useState("");
-  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userDetails, setUserdetails] = useState("")
+  const navigate = useNavigate()
+  const location = useLocation()
 
   function login(user) {
-    setIsLoggedIn(true);
-    setUserdetails(user);
-    navigate('/ui/novi-zahtjev')
+    const origin = location.state?.from?.pathname || '/ui/novi-zahtjev'
+    setIsLoggedIn(true)
+    setUserdetails(user)
+    navigate(origin)
   }
 
   function logout() {
-    setIsLoggedIn(false);
-    setUserdetails("");
+    setIsLoggedIn(false)
+    setUserdetails("")
   }
 
   const authContextValue = { isLoggedIn, userDetails, login, logout };

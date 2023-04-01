@@ -6,7 +6,7 @@ import Navigation from './Navigation';
 import NavigationLinks from './NavigationLinks';
 import ModalAreYouSure from './ModalAreYouSure';
 import Footer from './Footer';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/content.css';
 import { doLogout } from '../api/auth';
 import { AuthContext } from '../utils/AuthContextProvider';
@@ -21,6 +21,7 @@ const BasePage = () => {
   const [onYesCall, setOnYesCall] = useState(undefined)
   const { logout: doLogoutContext, isLoggedIn } = useContext(AuthContext)
   const navigate = useNavigate()
+  const location = useLocation()
 
   function onYesCallback() {
     if (onYesCall == 'dologout') {
@@ -31,7 +32,7 @@ const BasePage = () => {
 
   useEffect(() => {
     if (!isLoggedIn)
-      navigate("/ui/prijava-priv")
+      navigate("/ui/prijava-priv", {replace: true, state: {"from": location}})
   }, [isLoggedIn])
 
   return (
