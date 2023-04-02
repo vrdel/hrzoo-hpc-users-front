@@ -46,6 +46,7 @@ class CroRISInfo(APIView):
             self.loop.run_until_complete(self.fetch_project_lead_info())
             self.loop.run_until_complete(self.fetch_project_associate_info())
             self.loop.run_until_complete(self.fetch_users_projects_lead())
+            self.loop.run_until_complete(self.close_session())
             self.loop.close()
 
             return Response({
@@ -142,11 +143,13 @@ class CroRISInfo(APIView):
 
         projects_associate_links = await self._fetch_data(settings.API_PERSON.replace("{persId}", str(persid)))
         projects_associate_links = json.loads(projects_associate_links)['_links'].get('projekt', None)
+        if not isinstance(projects_associate_links, list):
+            projects_associate_links = [projects_associate_links]
 
         skip_projects = self.dead_projects_lead + self.projects_lead_ids
         projects_associate_links = list(
             filter(lambda l: int(l['href'].split('/')[-1]) not in skip_projects,
-                   projects_associate_links))
+                projects_associate_links))
 
         for project in projects_associate_links:
             coros.append(self._fetch_data(project['href']))
@@ -213,3 +216,6 @@ class CroRISInfo(APIView):
                     }
                 )
             i += 1
+
+    async def close_session(self):
+        await self.session.close()
