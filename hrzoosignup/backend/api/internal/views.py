@@ -22,11 +22,13 @@ class CroRISInfo(APIView):
         self.person_info, \
         self.projects_lead_info, \
         self.projects_associate_info = None, None, None
+        self.projects_lead_users = {}
 
         self.dead_projects_associate, \
         self.dead_projects_lead, \
         self.projects_lead_ids, \
         self.projects_associate_ids = [], [], [], []
+
 
         self.loop = uvloop.new_event_loop()
         asyncio.set_event_loop(self.loop)
@@ -43,6 +45,7 @@ class CroRISInfo(APIView):
             self.loop.run_until_complete(self.fetch_person_lead(oib[0].strip()))
             self.loop.run_until_complete(self.fetch_project_lead_info())
             self.loop.run_until_complete(self.fetch_project_associate_info())
+            self.loop.run_until_complete(self.fetch_users_projects_lead())
             self.loop.close()
 
             return Response({
@@ -50,6 +53,7 @@ class CroRISInfo(APIView):
                     'person_info': self.person_info,
                     'projects_lead_info': self.projects_lead_info,
                     'projects_lead_ids': self.projects_lead_ids,
+                    'projects_lead_users': self.projects_lead_users,
                     'projects_associate_info': self.projects_associate_info,
                     'projects_associate_ids': self.projects_associate_ids,
                     'dead_projects_lead_ids': self.dead_projects_lead,
@@ -179,3 +183,33 @@ class CroRISInfo(APIView):
             parsed_projects.append(metadata)
 
         self.projects_associate_info = parsed_projects
+
+    async def fetch_users_projects_lead(self):
+        coros = []
+        project_users = []
+        persid = self.person_info['croris_id']
+
+        for pid in self.projects_lead_ids:
+            coros.append(self._fetch_data(settings.API_PERSONPROJECT.replace("{projectId}", str(pid))))
+
+        project_users = await asyncio.gather(*coros, loop=self.loop,
+                                             return_exceptions=True)
+
+        i = 0
+        for project in project_users:
+            project = json.loads(project)
+            pid = self.projects_lead_ids[i]
+            if pid not in self.projects_lead_users:
+                self.projects_lead_users[pid] = []
+            for user in project['_embedded']['osobe']:
+                if user['klasifikacija']['naziv'] == 'voditelj':
+                    continue
+                self.projects_lead_users[pid].append(
+                    {
+                        'first_name': user['ime'],
+                        'last_name': user['prezime'],
+                        'email': user['email'],
+                        'institution': user['ustanovaNaziv']
+                    }
+                )
+            i += 1
