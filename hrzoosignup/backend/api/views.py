@@ -26,7 +26,7 @@ class IsSessionActive(APIView):
             userdetails.update(serializer.data)
 
             # TODO: remove - testing only
-            cache.set(f'{user.username}_oib', open('./oib').readlines())
+            cache.set(f'{user.username}_oib', open('./oib').readlines(), 3600 * 5)
 
             return Response(
                 {'active': True, 'userdetails': userdetails})
