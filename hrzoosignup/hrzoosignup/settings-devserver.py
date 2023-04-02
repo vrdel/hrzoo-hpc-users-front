@@ -47,6 +47,13 @@ try:
     DBPASSWORD = config.get('DATABASE', 'Password')
     DBHOST = config.get('DATABASE', 'Host')
 
+    API_PERSONLEAD = config.get('CRORIS', 'API_PersonLead')
+    API_PERSONPROJECT = config.get('CRORIS', 'API_PersonProject')
+    API_PROJECT = config.get('CRORIS', 'API_Project')
+    API_PERSON = config.get('CRORIS', 'API_Person')
+    CRORIS_USER = config.get('CRORIS', 'Username')
+    CRORIS_PASSWORD = config.get('CRORIS', 'Password')
+
     SUPERUSER_NAME = config.get('SUPERUSER', 'Name')
     SUPERUSER_PASS = config.get('SUPERUSER', 'Password')
     SUPERUSER_EMAIL = config.get('SUPERUSER', 'Email')
