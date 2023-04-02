@@ -18,11 +18,15 @@ from aiohttp import client_exceptions, http_exceptions, ClientSession
 
 
 class CroRISInfo(APIView):
-    def get(self, request):
-        self.person_info, self.projects_lead_info = None, None
-        self.dead_projects = []
+    def __init__(self):
+        self.person_info, \
+        self.projects_lead_info, \
+        self.projects_associate_info = None, None, None
 
-        oib = cache.get('hzsi@srce.hr_oib')
+        self.dead_projects_associate, \
+        self.dead_projects_lead, \
+        self.projects_lead_ids, \
+        self.projects_associate_ids = [], [], [], []
 
         self.loop = uvloop.new_event_loop()
         asyncio.set_event_loop(self.loop)
@@ -32,17 +36,24 @@ class CroRISInfo(APIView):
         self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
                                       settings.CRORIS_PASSWORD)
 
+    def get(self, request):
+        oib = cache.get('hzsi@srce.hr_oib')
+
         if oib:
             self.loop.run_until_complete(self.fetch_person_lead(oib[0].strip()))
-            self.loop.run_until_complete(self.fetch_project_info())
+            self.loop.run_until_complete(self.fetch_project_lead_info())
+            self.loop.run_until_complete(self.fetch_project_associate_info())
             self.loop.close()
 
-        if self.person_info and self.projects_lead_info:
             return Response({
                 'data': {
-                    'projects_lead_info': self.projects_lead_info,
                     'person_info': self.person_info,
-                    'dead_projects': self.dead_projects
+                    'projects_lead_info': self.projects_lead_info,
+                    'projects_lead_ids': self.projects_lead_ids,
+                    'projects_associate_info': self.projects_associate_info,
+                    'projects_associate_ids': self.projects_associate_ids,
+                    'dead_projects_lead_ids': self.dead_projects_lead,
+                    'dead_projects_associate_ids': self.dead_projects_associate
                 },
                 'status': {
                     'code': status.HTTP_200_OK
@@ -64,9 +75,9 @@ class CroRISInfo(APIView):
                 return content
 
     async def fetch_person_lead(self, oib):
-        coros = [self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))]
-        self.person_info = await asyncio.gather(*coros, loop=self.loop, return_exceptions=True)
-        self.person_info = json.loads(self.person_info[0])
+        self.person_info = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
+
+        self.person_info = json.loads(self.person_info)
         project_links = self.person_info['_links'].get('projekt', None)
         self.person_info = {
             'first_name': self.person_info['ime'],
@@ -76,14 +87,17 @@ class CroRISInfo(APIView):
             'project_lead_links': project_links
         }
 
-    async def fetch_project_info(self):
+    async def fetch_project_lead_info(self):
         coros = []
         parsed_projects = []
 
         projects = self.person_info['project_lead_links']
         if projects:
-            for project in projects:
-                coros.append(self._fetch_data(project['href']))
+            if isinstance(projects, list):
+                for project in projects:
+                    coros.append(self._fetch_data(project['href']))
+            else:
+                coros.append(self._fetch_data(projects['href']))
 
             self.projects_lead_info = await asyncio.gather(*coros,
                                                            loop=self.loop,
@@ -97,10 +111,11 @@ class CroRISInfo(APIView):
                     today = datetime.datetime.today()
                     end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y')
                     if end_date <= today:
-                        self.dead_projects.append(project.get('id'))
+                        self.dead_projects_lead.append(project.get('id'))
                         continue
                 metadata['start'] = project.get('pocetak', None)
                 metadata['croris_id'] = project.get('id')
+                self.projects_lead_ids.append(metadata['croris_id'])
                 metadata['identifier'] = project.get('hrSifraProjekta', None)
                 titles = project['title']
                 for title in titles:
@@ -115,3 +130,52 @@ class CroRISInfo(APIView):
                 parsed_projects.append(metadata)
 
             self.projects_lead_info = parsed_projects
+
+    async def fetch_project_associate_info(self):
+        coros = []
+        parsed_projects = []
+        persid = self.person_info['croris_id']
+
+        projects_associate_links = await self._fetch_data(settings.API_PERSON.replace("{persId}", str(persid)))
+        projects_associate_links = json.loads(projects_associate_links)['_links'].get('projekt', None)
+
+        skip_projects = self.dead_projects_lead + self.projects_lead_ids
+        projects_associate_links = list(
+            filter(lambda l: int(l['href'].split('/')[-1]) not in skip_projects,
+                   projects_associate_links))
+
+        for project in projects_associate_links:
+            coros.append(self._fetch_data(project['href']))
+
+        self.projects_associate_info = await asyncio.gather(*coros,
+                                                            loop=self.loop,
+                                                            return_exceptions=True)
+
+        for project in self.projects_associate_info:
+            project = json.loads(project)
+            metadata = {}
+            metadata['end'] = project.get('kraj', None)
+            # projects may be outdated
+            if metadata['end']:
+                today = datetime.datetime.today()
+                end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y')
+                if end_date <= today:
+                    self.dead_projects_associate.append(project.get('id'))
+                    continue
+            metadata['start'] = project.get('pocetak', None)
+            metadata['croris_id'] = project.get('id')
+            self.projects_associate_ids.append(metadata['croris_id'])
+            metadata['identifier'] = project.get('hrSifraProjekta', None)
+            titles = project['title']
+            for title in titles:
+                if title['cfLangCode'] == 'hr':
+                    metadata['title'] = title['naziv']
+                    break
+            summaries = project['summary']
+            for summary in summaries:
+                if summary['cfLangCode'] == 'hr':
+                    metadata['summary'] = summary.get('naziv', '')
+                    break
+            parsed_projects.append(metadata)
+
+        self.projects_associate_info = parsed_projects
