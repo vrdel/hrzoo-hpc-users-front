@@ -55,7 +55,7 @@ class CroRISInfo(APIView):
                         'projects_associate_ids': self.projects_associate_ids,
                     },
                     'status': {
-                        'code': status.HTTP_200_OK
+                        'code': status.HTTP_200_OK,
                         'message': 'Successfully fetched the data from CroRIS'
                     }
                 })
