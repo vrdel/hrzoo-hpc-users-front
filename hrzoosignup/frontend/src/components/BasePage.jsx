@@ -29,7 +29,8 @@ const BasePage = ({isSessionActive=false}) => {
 
   const {status, data, error, isFetching} = useQuery({
       queryKey: ['croris-info'],
-      queryFn: fetchCroRIS
+      queryFn: fetchCroRIS,
+      staleTime: 15 * 60 * 1000
   })
 
   function onYesCallback() {
