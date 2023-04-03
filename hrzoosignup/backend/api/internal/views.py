@@ -76,6 +76,15 @@ class CroRISInfo(APIView):
                 }
             })
 
+        except (http_exceptions.HttpProcessingError) as exc:
+            return Response({
+                'status': {
+                    'code': status.HTTP_204_NO_CONTENT,
+                    'message': 'Could not parse data from CroRIS - {}'.format(repr(exc))
+                }
+            })
+
+
     async def _fetch_data(self, url):
         headers = {'Accept': 'application/json'}
         async with self.session.get(url, headers=headers, auth=self.auth) as response:
