@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import {
-  Routes, Route, BrowserRouter, useNavigate
+  Routes, Route, BrowserRouter
 } from 'react-router-dom';
 import BasePage from './components/BasePage';
 import LoginPrivate from './pages/login-private';
@@ -16,23 +16,27 @@ import MyInfo from './pages/my-info';
 import NotFound from './pages/notfound';
 import Root from './pages/root';
 import { isActiveSession } from './api/auth';
-import { useQuery } from '@tanstack/react-query';
 
 
 const BaseRoutes = () => {
-  const { status: sessionStatus, data: sessionData} = useQuery({
-    queryKey: ['sessionactive'],
-    queryFn: isActiveSession
-  })
+  const [sessionActive, setSessionActive] = useState(undefined)
 
-  if (sessionStatus == 'success' && sessionData) {
+  useEffect(() => {
+    async function fetchSessionState() {
+      let session = await isActiveSession()
+      setSessionActive(session.active)
+    }
+    fetchSessionState()
+  }, [sessionActive])
+
+  if (sessionActive !== undefined) {
     return (
       <BrowserRouter>
         <Routes>
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate />}/>
             <Route path="prijava" element={<LoginPublic />}/>
-            <Route element={<BasePage isSessionActive={sessionData.active} />}>
+            <Route element={<BasePage isSessionActive={sessionActive} />}>
               <Route path="moji-zahtjevi" element={
                 <MyRequests />
               }/>
