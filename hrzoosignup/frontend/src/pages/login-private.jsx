@@ -32,13 +32,13 @@ const LoginPrivate = () => {
       password: ''
     }
   });
-  const { login } = useContext(AuthContext);
+  const { login : doLoginContext } = useContext(AuthContext);
 
   async function doLogin(username, password) {
     const session = await doUserPassLogin(username, password)
 
     if (session.active)
-      login(session.userdetails)
+      doLoginContext(session.userdetails)
     else
       setLoginFailedVisible(true)
   }
