@@ -1,6 +1,6 @@
 import React, { useState, useEffect,  useContext } from 'react'
 import { Row, Col, Container } from 'reactstrap'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Navigation from './Navigation';
 import NavigationLinks from './NavigationLinks';
@@ -12,27 +12,25 @@ import { doLogout } from '../api/auth';
 import { fetchCroRIS } from '../api/croris';
 import { AuthContext } from '../utils/AuthContextProvider';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
-import { QueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 export const ModalContext = React.createContext();
 
 
 const BasePage = ({isSessionActive=false}) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [noToast, setNoToast] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const { logout: doLogoutContext, isLoggedIn } = useContext(AuthContext)
   const navigate = useNavigate()
   const location = useLocation()
-  const queryClient = new QueryClient()
 
-  const prefetchCroRisData = async() => {
-    await queryClient.prefetchQuery({
+  const {status, data, error, isFetching} = useQuery({
       queryKey: ['croris-info'],
       queryFn: fetchCroRIS
-    })
-  }
+  })
 
   function onYesCallback() {
     if (onYesCall == 'dologout') {
@@ -41,11 +39,22 @@ const BasePage = ({isSessionActive=false}) => {
     }
   }
 
+  if (status === 'success' && data) {
+    if (data['status']['code'] !== 200 && !noToast)
+      toast.error(
+        <p>
+          { JSON.stringify(data['status'], null, 2) }
+        </p>, {
+          autoClose: false,
+          toastId: 408,
+          onClose: () => setNoToast(true)
+        }
+      )
+  }
+
   useEffect(() => {
     if (!(isLoggedIn || isSessionActive))
       navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
-    else
-      prefetchCroRisData()
   }, [isSessionActive, isLoggedIn])
 
   if (isLoggedIn || isSessionActive)
@@ -63,7 +72,7 @@ const BasePage = ({isSessionActive=false}) => {
             title={modalTitle}
             msg={modalMsg}
             onYes={onYesCallback} />
-          <ToastContainer />
+          <ToastContainer theme='colored' />
           <Row>
             <Col>
               <Navigation />
