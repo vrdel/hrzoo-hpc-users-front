@@ -33,7 +33,7 @@ class CroRISInfo(APIView):
         self.loop = uvloop.new_event_loop()
         asyncio.set_event_loop(self.loop)
 
-        client_timeout = aiohttp.ClientTimeout(total=30)
+        client_timeout = aiohttp.ClientTimeout(total=10)
         self.session = ClientSession(timeout=client_timeout)
         self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
                                       settings.CRORIS_PASSWORD)
@@ -67,23 +67,21 @@ class CroRISInfo(APIView):
                     }
                 })
 
-        except (client_exceptions.ClientError,
-                client_exceptions.ServerTimeoutError, asyncio.TimeoutError) as exc:
+        except (client_exceptions.ServerTimeoutError, asyncio.TimeoutError) as exc:
             return Response({
                 'status': {
-                    'code': status.HTTP_204_NO_CONTENT,
+                    'code': status.HTTP_408_REQUEST_TIMEOUT,
                     'message': 'Could not get data from CroRIS - {}'.format(repr(exc))
                 }
             })
 
-        except (http_exceptions.HttpProcessingError) as exc:
+        except (client_exceptions.ClientError, http_exceptions.HttpProcessingError) as exc:
             return Response({
                 'status': {
-                    'code': status.HTTP_204_NO_CONTENT,
+                    'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
                     'message': 'Could not parse data from CroRIS - {}'.format(repr(exc))
                 }
             })
-
 
     async def _fetch_data(self, url):
         headers = {'Accept': 'application/json'}
