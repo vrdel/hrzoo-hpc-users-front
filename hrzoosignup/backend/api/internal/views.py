@@ -33,7 +33,7 @@ class CroRISInfo(APIView):
         self.loop = uvloop.new_event_loop()
         asyncio.set_event_loop(self.loop)
 
-        client_timeout = aiohttp.ClientTimeout(total=180)
+        client_timeout = aiohttp.ClientTimeout(total=30)
         self.session = ClientSession(timeout=client_timeout)
         self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
                                       settings.CRORIS_PASSWORD)
@@ -42,23 +42,16 @@ class CroRISInfo(APIView):
         oib = cache.get('hzsi@srce.hr_oib')
 
         if oib:
-            self.loop.run_until_complete(self.fetch_person_lead(oib[0].strip()))
-            self.loop.run_until_complete(self.fetch_project_lead_info())
-            self.loop.run_until_complete(self.fetch_project_associate_info())
-            self.loop.run_until_complete(self.fetch_users_projects_lead())
-            self.loop.run_until_complete(self.close_session())
+            self.loop.run_until_complete(self._fetch_serie(oib))
             self.loop.close()
 
             return Response({
                 'data': {
                     'person_info': self.person_info,
                     'projects_lead_info': self.projects_lead_info,
-                    'projects_lead_ids': self.projects_lead_ids,
                     'projects_lead_users': self.projects_lead_users,
                     'projects_associate_info': self.projects_associate_info,
                     'projects_associate_ids': self.projects_associate_ids,
-                    'dead_projects_lead_ids': self.dead_projects_lead,
-                    'dead_projects_associate_ids': self.dead_projects_associate
                 },
                 'status': {
                     'code': status.HTTP_200_OK
@@ -78,6 +71,13 @@ class CroRISInfo(APIView):
             content = await response.text()
             if content:
                 return content
+
+    async def _fetch_serie(self, oib):
+        await self.fetch_person_lead(oib[0].strip())
+        await self.fetch_project_lead_info()
+        await self.fetch_project_associate_info()
+        await self.fetch_users_projects_lead()
+        await self.close_session()
 
     async def fetch_person_lead(self, oib):
         self.person_info = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
