@@ -42,7 +42,7 @@ const BasePage = ({isSessionActive=false}) => {
   if (status === 'success' && data) {
     if (data['status']['code'] !== 200 && !noToast)
       toast.error(
-        <p>
+        <p className="font-monospace">
           { JSON.stringify(data['status'], null, 2) }
         </p>, {
           autoClose: false,

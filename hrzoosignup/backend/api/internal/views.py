@@ -62,7 +62,7 @@ class CroRISInfo(APIView):
             elif not oib:
                 return Response({
                     'status': {
-                        'code': status.HTTP_204_NO_CONTENT,
+                        'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
                         'message': 'Could not get authentication info from cache'
                     }
                 })
