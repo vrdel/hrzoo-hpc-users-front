@@ -41,27 +41,38 @@ class CroRISInfo(APIView):
     def get(self, request):
         oib = cache.get('hzsi@srce.hr_oib')
 
-        if oib:
-            self.loop.run_until_complete(self._fetch_serie(oib))
-            self.loop.close()
+        try:
+            if oib:
+                self.loop.run_until_complete(self._fetch_serie(oib))
+                self.loop.close()
 
-            return Response({
-                'data': {
-                    'person_info': self.person_info,
-                    'projects_lead_info': self.projects_lead_info,
-                    'projects_lead_users': self.projects_lead_users,
-                    'projects_associate_info': self.projects_associate_info,
-                    'projects_associate_ids': self.projects_associate_ids,
-                },
-                'status': {
-                    'code': status.HTTP_200_OK
-                }
-            })
-        elif not oib:
+                return Response({
+                    'data': {
+                        'person_info': self.person_info,
+                        'projects_lead_info': self.projects_lead_info,
+                        'projects_lead_users': self.projects_lead_users,
+                        'projects_associate_info': self.projects_associate_info,
+                        'projects_associate_ids': self.projects_associate_ids,
+                    },
+                    'status': {
+                        'code': status.HTTP_200_OK
+                        'message': 'Successfully fetched the data from CroRIS'
+                    }
+                })
+            elif not oib:
+                return Response({
+                    'status': {
+                        'code': status.HTTP_204_NO_CONTENT,
+                        'message': 'Could not get authentication info from cache'
+                    }
+                })
+
+        except (client_exceptions.ClientError,
+                client_exceptions.ServerTimeoutError, asyncio.TimeoutError) as exc:
             return Response({
                 'status': {
                     'code': status.HTTP_204_NO_CONTENT,
-                    'message': 'Could not get authentication info from cache'
+                    'message': 'Could not get data from CroRIS - {}'.format(repr(exc))
                 }
             })
 
