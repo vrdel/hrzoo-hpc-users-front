@@ -5,9 +5,11 @@ import { defaultAuthnRedirect } from '../config/default-redirect';
 
 export const AuthContext = React.createContext({
   isLoggedIn: false,
+  setIsLoggedIn: () => {},
   userDetails: null,
+  setUserdetails: () => {},
   login: () => {},
-  logout: () => {}
+  logout: () => {},
 });
 
 
@@ -29,7 +31,8 @@ export const AuthContextProvider = ( {children} ) => {
     setUserdetails("")
   }
 
-  const authContextValue = { isLoggedIn, userDetails, login, logout }
+  const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
+    setUserdetails, login, logout }
 
   return (
     <AuthContext.Provider value={authContextValue}>

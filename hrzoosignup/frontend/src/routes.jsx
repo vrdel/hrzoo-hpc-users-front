@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import {
   Routes, Route, BrowserRouter, useNavigate
 } from 'react-router-dom';
@@ -15,81 +15,61 @@ import Memberships from './pages/memberships';
 import MyInfo from './pages/my-info';
 import NotFound from './pages/notfound';
 import Root from './pages/root';
-import { AuthContext } from './utils/AuthContextProvider';
-import { defaultUnAuthnRedirect } from './config/default-redirect'
-
-
-const ProtectedRoute = ( {children} )  => {
-  const navigate = useNavigate()
-  const { isLoggedIn } = useContext(AuthContext)
-
-  if (!isLoggedIn)
-    navigate(defaultUnAuthnRedirect)
-  else
-    return children
-}
+import { isActiveSession } from './api/auth';
+import { useQuery } from '@tanstack/react-query';
 
 
 const BaseRoutes = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="ui" element={<Root />}>
-          <Route path="prijava-priv" element={<LoginPrivate />}/>
-          <Route path="prijava" element={<LoginPublic />}/>
-          <Route element={<BasePage />}>
-            <Route path="moji-zahtjevi" element={
-              <ProtectedRoute>
+  const { status: sessionStatus, data: sessionData} = useQuery({
+    queryKey: ['sessionactive'],
+    queryFn: isActiveSession
+  })
+
+  if (sessionStatus == 'success' && sessionData) {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="ui" element={<Root />}>
+            <Route path="prijava-priv" element={<LoginPrivate />}/>
+            <Route path="prijava" element={<LoginPublic />}/>
+            <Route element={<BasePage isSessionActive={sessionData.active} />}>
+              <Route path="moji-zahtjevi" element={
                 <MyRequests />
-              </ProtectedRoute>
-            }/>
-            <Route path="novi-zahtjev" element={
-              <ProtectedRoute>
+              }/>
+              <Route path="novi-zahtjev" element={
                 <NewRequest />
-              </ProtectedRoute>
-            }>
-              <Route index element={
-                <ProtectedRoute>
+              }>
+                <Route index element={
                   <NewRequestIndex />
-                </ProtectedRoute>
-              }/>
-              <Route path="istrazivacki-projekt" element={
-                <ProtectedRoute>
+                }/>
+                <Route path="istrazivacki-projekt" element={
                   <ResearchProjectRequest />
-                </ProtectedRoute>
-              }/>
-              <Route path="prakticna-nastava" element={
-                <ProtectedRoute>
+                }/>
+                <Route path="prakticna-nastava" element={
                   <GeneralRequest />
-                </ProtectedRoute>
-              }/>
-              <Route path="zavrsni-rad" element={
-                <ProtectedRoute>
+                }/>
+                <Route path="zavrsni-rad" element={
                   <GeneralRequest />
-                </ProtectedRoute>
+                }/>
+              </Route>
+              <Route path="javni-kljucevi" element={
+                <PublicKeys />
+              }/>
+              <Route path="clanstva" element={
+                <Memberships />
+              }/>
+              <Route path="moji-podatci" element={
+                <MyInfo />
               }/>
             </Route>
-            <Route path="javni-kljucevi" element={
-              <ProtectedRoute>
-                <PublicKeys />
-              </ProtectedRoute>
-            }/>
-            <Route path="clanstva" element={
-              <ProtectedRoute>
-                <Memberships />
-              </ProtectedRoute>
-            }/>
-            <Route path="moji-podatci" element={
-              <ProtectedRoute>
-                <MyInfo />
-              </ProtectedRoute>
-            }/>
+            <Route path="*" element={<NotFound />}/>
           </Route>
-          <Route path="*" element={<NotFound />}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  )
+        </Routes>
+      </BrowserRouter>
+    )
+  }
+  else
+    return false
 }
 
 export default BaseRoutes;

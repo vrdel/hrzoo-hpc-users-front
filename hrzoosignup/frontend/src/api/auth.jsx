@@ -2,7 +2,7 @@ import Cookies from 'universal-cookie';
 import { url_api_prefix } from '../config/general';
 
 
-async function isActiveSession() {
+export async function isActiveSession() {
   let response = await fetch(`${url_api_prefix}/api/v1/sessionactive`)
 
   if (response.ok)
@@ -12,7 +12,6 @@ async function isActiveSession() {
 }
 
 
-//export async function doLogout(history, onLogout) {
 export async function doLogout(onLogout) {
   let cookies = new Cookies();
 
@@ -29,9 +28,6 @@ export async function doLogout(onLogout) {
     }})
 
   onLogout()
-
-  //cookies.remove('alertDismiss')
-  //history.push('/ui/proxy')
 
   if (response.ok)
     setTimeout(() => {

@@ -12,12 +12,12 @@ import { doLogout } from '../api/auth';
 import { fetchCroRIS } from '../api/croris';
 import { AuthContext } from '../utils/AuthContextProvider';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient } from '@tanstack/react-query';
 
 export const ModalContext = React.createContext();
 
 
-const BasePage = () => {
+const BasePage = ({isSessionActive=false}) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
@@ -28,7 +28,6 @@ const BasePage = () => {
   const queryClient = new QueryClient()
 
   const prefetchCroRisData = async() => {
-    console.log('VRDEL DEBUG', 'im called')
     await queryClient.prefetchQuery({
       queryKey: ['croris-info'],
       queryFn: fetchCroRIS
@@ -43,14 +42,14 @@ const BasePage = () => {
   }
 
   useEffect(() => {
-    if (!isLoggedIn)
+    if (!(isLoggedIn || isSessionActive))
       navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
     else
       prefetchCroRisData()
-  }, [isLoggedIn])
+  }, [isSessionActive, isLoggedIn])
 
-  return (
-    <QueryClientProvider client={queryClient}>
+  if (isLoggedIn || isSessionActive)
+    return (
       <Container fluid="xl" className="pt-1 d-flex flex-column">
         <ModalContext.Provider
           value={{
@@ -83,8 +82,9 @@ const BasePage = () => {
           </Row>
         </ModalContext.Provider>
       </Container>
-    </QueryClientProvider>
-  )
+    )
+  else
+    return false
 }
 
 export default BasePage

@@ -19,7 +19,7 @@ class IsSessionActive(APIView):
             and self.request.auth is None):
             return Response(
                 {"active": False, "error": "Session not active" },
-                status=status.HTTP_403_FORBIDDEN)
+                status=status.HTTP_200_OK)
         else:
             user = get_user_model().objects.get(id=self.request.user.id)
             serializer = serializers.UsersSerializer(user)
@@ -29,6 +29,7 @@ class IsSessionActive(APIView):
             cache.set(f'{user.username}_oib', open('./oib').readlines(), 3600 * 5)
 
             return Response(
-                {'active': True, 'userdetails': userdetails})
+                {'active': True, 'userdetails': userdetails},
+                status=status.HTTP_200_OK)
 
 

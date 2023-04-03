@@ -15,23 +15,21 @@ export const SharedData = React.createContext()
 
 const Root = () => {
   return (
-    <>
-      <SharedData.Provider value={{
-        LinkTitles,
-        RequestTypesToSelect,
-        UrlToRequestType,
-        ResourceTypesToSelect,
-        listScientificDomain,
-        mapDomainsToFields,
-        buildOptionsFromArray,
-        listScientificSoftware
-      }}>
-        <HeadTitle />
-        <AuthContextProvider>
-          <Outlet />
-        </AuthContextProvider>
-      </SharedData.Provider>
-    </>
+    <SharedData.Provider value={{
+      LinkTitles,
+      RequestTypesToSelect,
+      UrlToRequestType,
+      ResourceTypesToSelect,
+      listScientificDomain,
+      mapDomainsToFields,
+      buildOptionsFromArray,
+      listScientificSoftware
+    }}>
+      <HeadTitle />
+      <AuthContextProvider>
+        <Outlet />
+      </AuthContextProvider>
+    </SharedData.Provider>
   )
 };
 
