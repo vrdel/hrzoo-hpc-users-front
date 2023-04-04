@@ -8,16 +8,27 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { useQuery } from '@tanstack/react-query';
+import { fetchCroRIS } from '../api/croris';
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const NewRequest = () => {
   const [pageTitle, setPageTitle] = useState(undefined)
   const [buttonDisabled, setButtonDisabled] = useState(undefined)
+  const [continueButtonDisabled, setContinueButtonDisabled] = useState(undefined)
   const [selectedProject, setSelectedProject] = useState(undefined)
   const navigate = useNavigate()
   const { LinkTitles,
     RequestTypesToSelect,
     UrlToRequestType } = useContext(SharedData);
+
+  const {status, data: croRisData} = useQuery({
+      queryKey: ['croris-info'],
+      queryFn: fetchCroRIS,
+      staleTime: 15 * 60 * 1000
+  })
 
   useEffect(() => {
     setPageTitle(LinkTitles[location.pathname])
@@ -48,7 +59,24 @@ const NewRequest = () => {
             className="ms-5"
             placeholder="Odaberi"
             controlWidth="400px"
-            onChange={setSelectedProject}
+            onChange={(e) => {
+              if (e.value !== 'istrazivacki-projekt')
+                setContinueButtonDisabled(false)
+              else if (status === 'success' &&
+                croRisData?.data?.person_info?.lead_status === true) {
+                toast.error(
+                  <span className="font-monospace text-dark">
+                    Nemate projekata prijavljenih u sustavu CroRIS
+                  </span>, {
+                    theme: 'light',
+                    toastId: 'newreq-no-croris',
+                    autoClose: 2500,
+                  }
+                )
+                setContinueButtonDisabled(true)
+              }
+              return setSelectedProject(e)
+            }}
             isDisabled={buttonDisabled}
             options={RequestTypesToSelect}
             value={selectedProject}
@@ -56,7 +84,7 @@ const NewRequest = () => {
           <Button
             color="success"
             className="ms-3"
-            disabled={buttonDisabled}
+            disabled={buttonDisabled || continueButtonDisabled}
             onClick={() => {
               navigate(selectedProject.value)
             }}>
