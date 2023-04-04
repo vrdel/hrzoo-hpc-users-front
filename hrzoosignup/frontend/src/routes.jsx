@@ -16,27 +16,23 @@ import MyInfo from './pages/my-info';
 import NotFound from './pages/notfound';
 import Root from './pages/root';
 import { isActiveSession } from './api/auth';
-
+import { useQuery } from '@tanstack/react-query';
 
 const BaseRoutes = () => {
-  const [sessionActive, setSessionActive] = useState(undefined)
+  const { status: sessionStatus, data: sessionData} = useQuery({
+    queryKey: ['sessionactive'],
+    queryFn: isActiveSession,
+    staleTime: 60 * 60 * 1000,
+  })
 
-  useEffect(() => {
-    async function fetchSessionState() {
-      let session = await isActiveSession()
-      setSessionActive(session.active)
-    }
-    fetchSessionState()
-  }, [sessionActive])
-
-  if (sessionActive !== undefined) {
+  if (sessionStatus == 'success' && sessionData) {
     return (
       <BrowserRouter>
         <Routes>
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate />}/>
             <Route path="prijava" element={<LoginPublic />}/>
-            <Route element={<BasePage isSessionActive={sessionActive} />}>
+            <Route element={<BasePage isSessionActive={sessionData.active} />}>
               <Route path="moji-zahtjevi" element={
                 <MyRequests />
               }/>

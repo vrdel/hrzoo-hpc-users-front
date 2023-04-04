@@ -4,11 +4,10 @@ export async function fetchCroRIS()
 {
   try {
     let response = await fetch(`${url_api_prefix}/api/v1/internal/croris-info/`)
-    if (response.ok) {
+    if (response.ok)
       return response.json()
-    }
   } catch (err) {
-    throw new Error(err)
+      throw new Error(err)
   }
 }
 
