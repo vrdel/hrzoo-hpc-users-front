@@ -32,7 +32,7 @@ const BaseRoutes = () => {
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate />}/>
             <Route path="prijava" element={<LoginPublic />}/>
-            <Route element={<BasePage isSessionActive={sessionData.active} />}>
+            <Route element={<BasePage sessionData={sessionData} />}>
               <Route path="moji-zahtjevi" element={
                 <MyRequests />
               }/>

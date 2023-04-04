@@ -17,13 +17,13 @@ import { useQuery } from '@tanstack/react-query';
 export const ModalContext = React.createContext();
 
 
-const BasePage = ({isSessionActive=false}) => {
+const BasePage = ({sessionData=undefined}) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [noToast, setNoToast] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
-  const { logout: doLogoutContext, isLoggedIn } = useContext(AuthContext)
+  const { logout: doLogoutContext, isLoggedIn, setUserdetails } = useContext(AuthContext)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -54,11 +54,13 @@ const BasePage = ({isSessionActive=false}) => {
   }
 
   useEffect(() => {
-    if (!(isLoggedIn || isSessionActive))
+    if (!(isLoggedIn || sessionData.active))
       navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
-  }, [isSessionActive, isLoggedIn])
+    else
+      setUserdetails(sessionData.userdetails)
+  }, [sessionData, isLoggedIn])
 
-  if (isLoggedIn || isSessionActive)
+  if (isLoggedIn || sessionData.active)
     return (
       <Container fluid="xl" className="pt-1 d-flex flex-column">
         <ModalContext.Provider
