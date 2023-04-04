@@ -10,25 +10,21 @@ class User(AbstractUser):
         _('hrEduPersonUniqueID - LDAP'),
         max_length=128,
         blank=True,
-        null=True,
     )
     person_institution = models.CharField(
         _('Institution - LDAP'),
         max_length=128,
         blank=True,
-        null=True
     )
     person_affiliation = models.CharField(
         _('Affiliation - LDAP'),
         max_length=64,
         blank=True,
-        null=True
     )
-    person_mail = models.CharField(
+    person_mail = models.EmailField(
         _('Email - LDAP'),
         max_length=64,
         blank=True,
-        null=True
     )
     croris_first_name = models.CharField(
         _("CroRIS first name"),
@@ -46,12 +42,23 @@ class User(AbstractUser):
     )
 
 
+class SSHPublicKey(models.Model):
+    name = models.CharField(
+        max_length=128,
+        blank=True
+    )
+    fingerprint = models.CharField(max_length=47)
+    public_key = models.TextField(
+        max_length=2000
+    )
+    users = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
 class State(models.Model):
     name =  models.CharField(
         _("Project state"),
         max_length=24,
         blank=True,
-        null=True
     )
 
 
@@ -102,7 +109,6 @@ class Project(models.Model):
         _("Extra software needed on project"),
         max_length=256,
         blank=True,
-        null=True
     )
     science_extrasoftware_help = models.BooleanField()
     resources_numbers = models.JSONField(
@@ -122,7 +128,6 @@ class Project(models.Model):
         _("CroRIS title"),
         max_length=512,
         blank=True,
-        null=True
     )
     croris_start = models.DateField(
         null=True,
@@ -135,7 +140,6 @@ class Project(models.Model):
     croris_identifier = models.CharField(
         _("CroRIS hrSifraProjekta"),
         max_length=48,
-        null=True,
         blank=True,
     )
     croris_id = models.PositiveBigIntegerField(
@@ -145,7 +149,6 @@ class Project(models.Model):
         _("CroRIS summary"),
         max_length=512,
         blank=True,
-        null=True
     )
     croris_collaborators = models.JSONField(
         _("CroRIS osobeResources -voditelj"),
@@ -167,7 +170,6 @@ class Project(models.Model):
         _("CroRIS tipProjekta"),
         max_length=128,
         blank=True,
-        null=True
     )
     states = models.ForeignKey(State, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, through='UserProject')
@@ -178,7 +180,6 @@ class Role(models.Model):
         _("Role name"),
         max_length=24,
         blank=True,
-        null=True
     )
 
 
@@ -187,6 +188,6 @@ class UserProject(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     role = models.OneToOneField(Role, on_delete=models.CASCADE)
     date_joined = models.DateField(
-        null=True,
         blank=True,
+        null=True,
     )
