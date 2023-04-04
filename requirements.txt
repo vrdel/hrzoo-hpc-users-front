@@ -13,7 +13,7 @@ cryptography==39.0.2
 decorator==5.1.1
 defusedxml==0.7.1
 dj-rest-auth==3.0.0
-Django==4.1.7
+Django==4.2
 django-webpack-loader==1.8.1
 djangorestframework==3.14.0
 djangorestframework-api-key==2.3.0
