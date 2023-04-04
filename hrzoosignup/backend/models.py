@@ -7,19 +7,25 @@ from django.utils.translation import gettext_lazy as _
 
 class User(AbstractUser):
     person_uniqueid = models.CharField(
-        _('hrEduPersonUniqueID'),
+        _('hrEduPersonUniqueID - LDAP'),
         max_length=128,
         blank=True,
         null=True,
     )
     person_institution = models.CharField(
-        _('Institution'),
+        _('Institution - LDAP'),
         max_length=128,
         blank=True,
         null=True
     )
     person_affiliation = models.CharField(
-        _('Affiliation'),
+        _('Affiliation - LDAP'),
+        max_length=64,
+        blank=True,
+        null=True
+    )
+    person_mail = models.CharField(
+        _('Email - LDAP'),
         max_length=64,
         blank=True,
         null=True
@@ -34,7 +40,7 @@ class User(AbstractUser):
         max_length=48,
         blank=True
     )
-    email = models.EmailField(
+    croris_mail = models.EmailField(
         _("CroRIS email address"),
         blank=True
     )

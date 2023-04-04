@@ -5,7 +5,22 @@ from backend import models
 
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('aaieduhr', 'institution', 'role', 'first_name', 'last_name',
-                  'username', 'is_active', 'is_superuser', 'is_staff', 'email',
-                  'date_joined', 'pk', 'id')
+        fields = (
+            'person_uniqueid',
+            'person_institution',
+            'person_affiliation',
+            'person_mail',
+            'croris_first_name',
+            'croris_last_name',
+            'croris_mail',
+            'first_name',
+            'last_name',
+            'is_staff',
+            'is_superuser',
+            'is_active',
+            'date_joined',
+            'last_login',
+            'username',
+            'pk',
+            'id')
         model = get_user_model()
