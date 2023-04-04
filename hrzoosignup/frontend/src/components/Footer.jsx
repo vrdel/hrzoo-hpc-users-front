@@ -20,7 +20,13 @@ const Footer = () => {
         </a>
       </div>
       <div className="text-center pt-1 pb-2">
-        <p><small>Copyright © 2023 Sveučilišni računski centar (Srce)</small></p>
+        <p>
+          <small>Copyright © 2023{' '}
+            <a href="https://www.srce.unizg.hr/" target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+              Sveučilišni računski centar (Srce)
+            </a>
+          </small>
+        </p>
       </div>
     </div>
   )
