@@ -8,6 +8,7 @@ import LoginPublic from './pages/login-public';
 import MyRequests from './pages/my-requests';
 import NewRequest from './pages/new-request';
 import ResearchProjectRequest from './pages/new-requests/research-project';
+import ResearchProjectRequestSelected from './pages/new-requests/research-project-selected';
 import GeneralRequest from './pages/new-requests/general';
 import NewRequestIndex from './pages/new-requests/index';
 import PublicKeys from './pages/public-keys';
@@ -44,6 +45,9 @@ const BaseRoutes = () => {
                 }/>
                 <Route path="istrazivacki-projekt" element={
                   <ResearchProjectRequest />
+                }/>
+                <Route path="istrazivacki-projekt/:projId" element={
+                  <ResearchProjectRequestSelected />
                 }/>
                 <Route path="prakticna-nastava" element={
                   <GeneralRequest />
