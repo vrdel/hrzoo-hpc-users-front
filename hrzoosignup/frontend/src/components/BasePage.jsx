@@ -57,7 +57,7 @@ const BasePage = ({sessionData=undefined}) => {
     if (!(isLoggedIn || sessionData.active))
       navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
     else
-      setUserdetails(sessionData.userdetails)
+      sessionData?.userdetails && setUserdetails(sessionData.userdetails)
   }, [sessionData, isLoggedIn])
 
   if (isLoggedIn || sessionData.active)

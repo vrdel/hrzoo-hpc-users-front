@@ -16,10 +16,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
 import { ModalContext } from './BasePage'
+import { AuthContext } from '../utils/AuthContextProvider';
+
 
 const Navigation = () => {
   const [popoverOpen, setPopoverOpen] = useState(false)
   const modalContext = useContext(ModalContext)
+  const { userDetails } = useContext(AuthContext)
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="border rounded d-flex justify-content-between pt-3 pb-3">
@@ -42,7 +45,7 @@ const Navigation = () => {
             <span onClick ={() => setPopoverOpen(!popoverOpen)} id="userPopover">
               <Badge href="#" className="text-dark" color="light"
                 style={{fontSize: '100%', textDecoration: 'none'}}>
-                <strong>Daniel</strong>
+                <strong>{userDetails?.first_name}</strong>
               </Badge>
             </span>
             <Popover placement="bottom" isOpen={popoverOpen}

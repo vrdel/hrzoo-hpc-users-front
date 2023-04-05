@@ -63,7 +63,7 @@ const NewRequest = () => {
               if (e.value !== 'istrazivacki-projekt')
                 setContinueButtonDisabled(false)
               else if (status === 'success' &&
-                croRisData?.data?.person_info?.lead_status === true) {
+                croRisData?.data?.person_info?.lead_status !== true) {
                 toast.error(
                   <span className="font-monospace text-dark">
                     Nemate projekata prijavljenih u sustavu CroRIS
