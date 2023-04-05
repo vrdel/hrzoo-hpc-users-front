@@ -63,6 +63,19 @@ const NewRequest = () => {
               if (e.value !== 'istrazivacki-projekt')
                 setContinueButtonDisabled(false)
               else if (status === 'success' &&
+                croRisData?.data?.status?.code !== 200) {
+                toast.error(
+                  <span className="font-monospace">
+                    Nema podataka iz sustava CroRIS
+                  </span>, {
+                    theme: 'light',
+                    toastId: 'newreq-no-croris-data',
+                    autoClose: 2500,
+                  }
+                )
+                setContinueButtonDisabled(true)
+              }
+              else if (status === 'success' &&
                 croRisData?.data?.person_info?.lead_status !== true) {
                 toast.error(
                   <span className="font-monospace text-dark">
