@@ -60,6 +60,7 @@ class CroRISInfo(APIView):
                     }
                 })
             elif not oib:
+                self.loop.run_until_complete(self.close_session())
                 return Response({
                     'status': {
                         'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -68,6 +69,7 @@ class CroRISInfo(APIView):
                 })
 
         except (client_exceptions.ServerTimeoutError, asyncio.TimeoutError) as exc:
+            self.loop.run_until_complete(self.close_session())
             return Response({
                 'status': {
                     'code': status.HTTP_408_REQUEST_TIMEOUT,
@@ -76,6 +78,7 @@ class CroRISInfo(APIView):
             })
 
         except (client_exceptions.ClientError, http_exceptions.HttpProcessingError) as exc:
+            self.loop.run_until_complete(self.close_session())
             return Response({
                 'status': {
                     'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
