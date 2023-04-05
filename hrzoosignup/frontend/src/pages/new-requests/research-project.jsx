@@ -9,7 +9,7 @@ import {
   Col,
   Label,
 } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../../api/croris';
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
@@ -167,9 +167,11 @@ const ResearchProjectRequest = () => {
                         <textarea
                           id="projectSummary"
                           className="form-control fst-italic"
-                          rows="6">
-                          { project.summary }
-                        </textarea>
+                          rows="6"
+                          defaultValue={
+                            project.summary
+                          }
+                        />
                       </Col>
                     </Row>
                     <Row className="p-2 text-center">
