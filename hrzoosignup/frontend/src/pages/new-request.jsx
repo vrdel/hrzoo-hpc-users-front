@@ -63,7 +63,7 @@ const NewRequest = () => {
               if (e.value !== 'istrazivacki-projekt')
                 setContinueButtonDisabled(false)
               else if (status === 'success' &&
-                croRisData?.data?.status?.code !== 200) {
+                croRisData?.status?.code !== 200) {
                 toast.error(
                   <span className="font-monospace">
                     Nema podataka iz sustava CroRIS

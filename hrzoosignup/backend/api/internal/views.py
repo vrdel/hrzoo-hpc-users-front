@@ -140,6 +140,8 @@ class CroRISInfo(APIView):
                         self.dead_projects_lead.append(project.get('id'))
                         continue
                 metadata['start'] = project.get('pocetak', None)
+                if 'tipProjekta' in project:
+                    metadata['type'] = project.get('tipProjekta').get('naziv', None)
                 metadata['croris_id'] = project.get('id')
                 self.projects_lead_ids.append(metadata['croris_id'])
                 metadata['identifier'] = project.get('hrSifraProjekta', None)
@@ -153,6 +155,20 @@ class CroRISInfo(APIView):
                     if summary['cfLangCode'] == 'hr':
                         metadata['summary'] = summary.get('naziv', '')
                         break
+
+                institute = project['ustanoveResources']
+                if institute and institute.get('_embedded', False):
+                    institute = institute['_embedded']['ustanove'][0]
+                    metadata['institute'] = {
+                        'class': institute['klasifikacija']['naziv'],
+                        'name': institute['naziv']
+                    }
+
+                finance = project['financijerResources']
+                if finance and finance.get('_embedded', False):
+                    finance = finance['_embedded']['financijeri'][0]
+                    metadata['finance'] = finance['entityNameHr']
+
                 parsed_projects.append(metadata)
 
             self.projects_lead_info = parsed_projects
