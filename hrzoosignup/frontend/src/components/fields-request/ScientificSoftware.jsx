@@ -37,7 +37,6 @@ const ScientificSoftware = () => {
           <Controller
             name="requestScientificSoftware"
             control={control}
-            rules={{required: true}}
             render={ ({field}) =>
               <CustomReactSelect
                 aria-label="requestScientificSoftware"
@@ -64,7 +63,6 @@ const ScientificSoftware = () => {
           <Controller
             name="requestScientificSoftwareExtra"
             control={control}
-            rules={{required: true}}
             render={ ({field}) =>
               <textarea
                 id="requestScientificSoftwareExtra"
