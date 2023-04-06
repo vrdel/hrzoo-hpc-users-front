@@ -91,22 +91,7 @@ const GeneralRequest = () => {
 
 
 const GeneralFields = () => {
-  const { control, watch, formState: {errors} } = useFormContext();
-  const {
-    fields: fields_domain,
-    append: domain_append,
-    remove: domain_remove
-  } = useFieldArray({
-    control,
-    name: "scientificDomain",
-  });
-  const watchFieldArray = watch("scientificDomain");
-  const controlledFieldsDomain = fields_domain.map((field, index) => {
-    return {
-      ...field,
-      ...watchFieldArray[index]
-    };
-  });
+  const { control, formState: {errors} } = useFormContext();
 
   return (
     <>
@@ -222,36 +207,59 @@ const GeneralFields = () => {
             }
           />
         </Col>
-      </Row>
-      <Row className="mt-3 d-flex g-0">
-        <Col md={{offset: 1}}>
-          <Label
-            htmlFor="scientificDomain"
-            aria-label="scientificDomain"
-            className="mt-2 text-right form-label">
-            Znanstveno područje:
-          </Label>
-          <Row>
-            {
-              controlledFieldsDomain.map((item, index) => (
-                <>
-                  <Col className="mb-3" md={{size: 5}}>
-                    <ScientificDomain control={control} index={index}
-                      item={item} remove={domain_remove} />
-                  </Col>
-                  {
-                    index === controlledFieldsDomain.length - 1 &&
-                      <Col md={{size: 3, offset: 1}}>
-                        <AddNewScientificDomain append={domain_append} />
-                      </Col>
-                  }
-                </>
-              ))
-            }
-          </Row>
-        </Col>
+        <RootAddNewScientificDomain />
       </Row>
     </>
+  )
+}
+
+const RootAddNewScientificDomain = () => {
+  const { control, watch, formState: {errors} } = useFormContext();
+  const {
+    fields: fields_domain,
+    append: domain_append,
+    remove: domain_remove
+  } = useFieldArray({
+    control,
+    name: "scientificDomain",
+  });
+  const watchFieldArray = watch("scientificDomain");
+  const controlledFieldsDomain = fields_domain.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index]
+    };
+  });
+
+  return (
+    <Row className="mt-3 d-flex g-0">
+      <Col md={{offset: 1}}>
+        <Label
+          htmlFor="scientificDomain"
+          aria-label="scientificDomain"
+          className="mt-2 text-right form-label">
+          Znanstveno područje:
+        </Label>
+        <Row>
+          {
+            controlledFieldsDomain.map((item, index) => (
+              <>
+                <Col className="mb-3" md={{size: 5}}>
+                  <ScientificDomain control={control} index={index}
+                    item={item} remove={domain_remove} />
+                </Col>
+                {
+                  index === controlledFieldsDomain.length - 1 &&
+                    <Col md={{size: 3, offset: 1}}>
+                      <AddNewScientificDomain append={domain_append} />
+                    </Col>
+                }
+              </>
+            ))
+          }
+        </Row>
+      </Col>
+    </Row>
   )
 }
 
