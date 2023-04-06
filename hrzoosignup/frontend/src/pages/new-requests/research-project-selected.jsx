@@ -95,6 +95,8 @@ const ResearchProjectRequestSelected = () => {
 
   const onSubmit = data => {
     data.requestName = projectTarget.title
+    data.startDate = projectTarget.start
+    data.endDate = projectTarget.end
     alert(JSON.stringify(data, null, 2));
   }
 
