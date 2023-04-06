@@ -2,28 +2,15 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import {
   useForm,
-  Controller,
-  useFieldArray,
   FormProvider,
-  useFormContext
 } from "react-hook-form";
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
-import { CustomReactSelect } from '../../components/CustomReactSelect';
 import {
   Badge,
   Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
   Col,
   Form,
-  FormFeedback,
-  FormGroup,
   Input,
-  InputGroup,
-  InputGroupText,
   Label,
   Row,
 } from 'reactstrap';
@@ -33,6 +20,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { fetchCroRIS } from '../../api/croris';
 import { useQuery } from '@tanstack/react-query';
+import ResourceFields from '../../components/fields-request/ResourceFields';
+import BaseNewScientificDomain from '../../components/fields-request/ScientificDomain';
+import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -116,6 +106,9 @@ const ResearchProjectRequestSelected = () => {
               />
             </Col>
           </Row>
+          <BaseNewScientificDomain />
+          <ScientificSoftware />
+          <ResourceFields />
           <Row>
             <RequestHorizontalRuler />
             <Row className="mt-2 mb-2 text-center">
