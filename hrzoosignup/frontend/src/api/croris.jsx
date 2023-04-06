@@ -7,7 +7,7 @@ export async function fetchCroRIS()
     if (response.ok)
       return response.json()
   } catch (err) {
-      throw new Error(err)
+    throw new Error(`Error fetching data from CroRIS: ${err.message}`)
   }
 }
 

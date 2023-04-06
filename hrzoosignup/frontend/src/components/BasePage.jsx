@@ -27,7 +27,7 @@ const BasePage = ({sessionData=undefined}) => {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const {status, data: croRisData, error, isFetching} = useQuery({
+  const {status, data: croRisData, error, failureReason, isFetching} = useQuery({
       queryKey: ['croris-info'],
       queryFn: fetchCroRIS,
       staleTime: 15 * 60 * 1000
@@ -52,6 +52,16 @@ const BasePage = ({sessionData=undefined}) => {
         }
       )
   }
+  else if (status === 'error')
+    toast.error(
+      <span className="font-monospace">
+        { failureReason.message }
+      </span>, {
+        autoClose: false,
+        toastId: 'basepage-no-croris',
+        onClose: () => setNoToast(true)
+      }
+    )
 
   useEffect(() => {
     if (!(isLoggedIn || sessionData.active))
