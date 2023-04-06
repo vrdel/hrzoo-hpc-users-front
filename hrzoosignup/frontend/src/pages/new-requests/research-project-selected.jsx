@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   useForm,
+  Controller,
+  useFormContext,
   FormProvider,
 } from "react-hook-form";
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
@@ -9,6 +11,7 @@ import {
   Badge,
   Button,
   Col,
+  FormFeedback,
   Form,
   Input,
   Label,
@@ -23,6 +26,8 @@ import { useQuery } from '@tanstack/react-query';
 import ResourceFields from '../../components/fields-request/ResourceFields';
 import BaseNewScientificDomain from '../../components/fields-request/ScientificDomain';
 import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
+import { ErrorMessage } from '@hookform/error-message';
+
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -138,6 +143,8 @@ const ResearchProjectRequestSelected = () => {
 
 
 const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
+  const { control, watch, formState: {errors} } = useFormContext();
+
   return (
     <>
       <Row>
@@ -205,6 +212,41 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
           <div className="p-2">
             <ExtractUsers projectUsers={[person_info, ...projectsLeadUsers]} />
           </div>
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col md={{size: 12}}>
+          <Label
+            htmlFor="requestExplain"
+            aria-label="requestExplain">
+            Obrazloženje:
+          </Label>
+          <Controller
+            name="requestExplain"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <textarea
+                id="requestExplain"
+                {...field}
+                aria-label="requestExplain"
+                type="text"
+                className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
+                rows="4"
+              />
+            }
+          />
+          <ErrorMessage
+            errors={errors}
+            name="requestExplain"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
+        </Col>
+        <Col>
         </Col>
       </Row>
     </>

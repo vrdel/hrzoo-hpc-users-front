@@ -144,7 +144,7 @@ const GeneralFields = () => {
                 aria-label="requestExplain"
                 type="text"
                 className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
-                rows="3"
+                rows="4"
               />
             }
           />
