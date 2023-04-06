@@ -49,7 +49,9 @@ const GeneralRequest = () => {
           ]
         },
       ],
-      scientificSoftware: ''
+      requestScientificSoftware: '',
+      requestScientificSoftwareExtra: '',
+      requestScientificSoftwareHelp: false
     }
   });
 

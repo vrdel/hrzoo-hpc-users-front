@@ -43,7 +43,7 @@ const ScientificSoftware = () => {
                 aria-label="requestScientificSoftware"
                 closeMenuOnSelect={false}
                 forwardedRef={field.ref}
-                id="requestResourceType"
+                id="requestScientificSoftware"
                 isMulti
                 scientificSoftwareMultiValue={true}
                 options={buildOptionsFromArray(listScientificSoftware)}
@@ -57,28 +57,28 @@ const ScientificSoftware = () => {
       <Row className="mt-3">
         <Col md={{size: 10, offset: 1}}>
           <Label
-            htmlFor="requestExplain"
-            aria-label="requestExplain">
+            htmlFor="requestScientificSoftwareExtra"
+            aria-label="requestScientificSoftwareExtra">
             Dodatne aplikacije koje će biti potrebno instalirati:
           </Label>
           <Controller
-            name="requestExplain"
+            name="requestScientificSoftwareExtra"
             control={control}
             rules={{required: true}}
             render={ ({field}) =>
               <textarea
-                id="requestExplain"
+                id="requestScientificSoftwareExtra"
                 {...field}
-                aria-label="requestExplain"
+                aria-label="requestScientificSoftwareExtra"
                 type="text"
-                className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
+                className={`form-control ${errors && errors.requestScientificSoftwareExtra ? "is-invalid" : ''}`}
                 rows="3"
               />
             }
           />
           <ErrorMessage
             errors={errors}
-            name="requestExplain"
+            name="requestScientificSoftwareExtra"
             render={({ message }) =>
               <FormFeedback invalid className="end-0">
                 { message }
@@ -97,7 +97,13 @@ const ScientificSoftware = () => {
             className="mr-2 text-right form-label">
             Potrebna pomoć pri instalaciji:
           </Label>
-          <Input type="checkbox" className="ms-3 fw-bold"/>
+          <Controller
+            name="requestScientificSoftwareHelp"
+            control={control}
+            render={ ({field}) =>
+              <Input {...field} type="checkbox" className="ms-3 fw-bold"/>
+            }
+          />
         </Col>
         <div className="w-100"></div>
         <Col sm={{offset: 1, size: 1}}>
