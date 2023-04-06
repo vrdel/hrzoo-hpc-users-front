@@ -27,6 +27,7 @@ import ResourceFields from '../../components/fields-request/ResourceFields';
 import BaseNewScientificDomain from '../../components/fields-request/ScientificDomain';
 import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
 import { ErrorMessage } from '@hookform/error-message';
+import { parse } from 'date-fns';
 
 
 
@@ -95,8 +96,9 @@ const ResearchProjectRequestSelected = () => {
 
   const onSubmit = data => {
     data.requestName = projectTarget.title
-    data.startDate = projectTarget.start
-    data.endDate = projectTarget.end
+    // data.startDate = projectTarget.start
+    data.startDate = parse(projectTarget.start, 'dd.MM.yyyy', new Date())
+    data.endDate = parse(projectTarget.end, 'dd.MM.yyyy', new Date())
     alert(JSON.stringify(data, null, 2));
   }
 
