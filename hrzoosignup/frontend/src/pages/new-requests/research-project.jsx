@@ -9,7 +9,7 @@ import {
   Col,
   Label,
 } from 'reactstrap';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../../api/croris';
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
@@ -75,7 +75,7 @@ const ResearchProjectRequest = () => {
                           Trajanje:
                         </Label>
                       </Col>
-                      <Col md={{size: 4}}>
+                      <Col md={{size: 3}}>
                         <Label
                           htmlFor="projectType"
                           aria-label="projectType"
@@ -83,7 +83,7 @@ const ResearchProjectRequest = () => {
                           Vrsta:
                         </Label>
                       </Col>
-                      <Col md={{size: 3}}>
+                      <Col md={{size: 4}}>
                         <Label
                           htmlFor="projectInstitution"
                           aria-label="projectInstitution"
@@ -96,7 +96,7 @@ const ResearchProjectRequest = () => {
 
                       <Col md={{size: 2}}>
                         <div className="p-2 fs-6">
-                          <Badge color="success">
+                          <Badge color="success" className="fw-normal">
                             { project.identifier }
                           </Badge>
                         </div>
@@ -106,14 +106,14 @@ const ResearchProjectRequest = () => {
                           { project.start } &minus; { project.end }
                         </div>
                       </Col>
-                      <Col md={{size: 4}}>
-                        <div className="p-2">
-                          <Badge color="primary">
+                      <Col md={{size: 3}}>
+                        <div className="p-2 fs-6">
+                          <Badge color="primary" className="fw-normal">
                             {project.type}
                           </Badge>
                         </div>
                       </Col>
-                      <Col md={{size: 3}}>
+                      <Col md={{size: 4}}>
                         <div className="p-2">
                           {project.institute.name}<br/>
                           <small>{project.institute.class}</small>
