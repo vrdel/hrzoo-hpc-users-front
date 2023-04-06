@@ -103,13 +103,15 @@ class CroRISInfo(APIView):
     async def fetch_person_lead(self, oib):
         self.person_info = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
 
+        # lead_status set from fetch_project_lead_info as projects might be
+        # dead
         self.person_info = json.loads(self.person_info)
         project_links = self.person_info['_links'].get('projekt', None)
         self.person_info = {
             'first_name': self.person_info['ime'],
             'last_name': self.person_info['prezime'],
             'croris_id': self.person_info['persId'],
-            'lead_status': project_links is not None,
+            'lead_status': False,
             'project_lead_links': project_links
         }
 
@@ -172,6 +174,9 @@ class CroRISInfo(APIView):
                 parsed_projects.append(metadata)
 
             self.projects_lead_info = parsed_projects
+
+            if self.projects_lead_info:
+                self.person_info['lead_status'] = True
 
     async def fetch_project_associate_info(self):
         coros = []
