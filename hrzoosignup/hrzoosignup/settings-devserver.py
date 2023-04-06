@@ -211,15 +211,16 @@ CSRF_COOKIE_SECURE = False
 # custom user model
 # -vrdel
 AUTH_USER_MODEL = 'backend.User'
-#AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
-#                           'backend.auth.saml2.backends.SAML2Backend']
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'backend.auth.saml2.backends.SAML2Backend']
+# AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
 LOGIN_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
 LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
-# SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
+SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_SAMESITE = None
+LOGIN_URL = '/saml2/login/'
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
 STATIC_ROOT = '{}/usr/share/hrzoosignup/static/'.format(VENV)
