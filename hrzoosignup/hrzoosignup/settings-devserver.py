@@ -205,7 +205,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # explicitly disabled
 # -vrdel
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
+SAML_SESSION_COOKIE_NAME = 'saml_session'
 CSRF_COOKIE_SECURE = False
 
 # custom user model
@@ -213,14 +214,22 @@ CSRF_COOKIE_SECURE = False
 AUTH_USER_MODEL = 'backend.User'
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
                            'backend.auth.saml2.backends.SAML2Backend']
+                           #'djangosaml2.backends.Saml2Backend']
 # AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
-LOGIN_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
-LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
+LOGIN_REDIRECT_URL = '{}/ui/moji-zahtjevi'.format(RELATIVE_PATH)
+LOGOUT_REDIRECT_URL = '{}/ui/prijava-priv'.format(RELATIVE_PATH)
 SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_SAMESITE = None
+# SESSION_COOKIE_SAMESITE = None
 LOGIN_URL = '/saml2/login/'
+SAML_ATTRIBUTE_MAPPING = {
+    'hrEduPersonUniqueID': ('username', ),
+    'mail': ('email', ),
+    'givenName': ('first_name', ),
+    'sn': ('last_name', ),
+}
+
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
 STATIC_ROOT = '{}/usr/share/hrzoosignup/static/'.format(VENV)

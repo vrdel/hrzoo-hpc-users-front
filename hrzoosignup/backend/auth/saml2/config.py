@@ -21,8 +21,9 @@ def get_saml_config(request):
         'debug': 1,
         'service': {
             'sp': {
-                'name': 'VPS Request',
+                'name': 'HRZOO Signup',
                 'want_assertions_signed': False,
+                'allow_unsolicited': True,
                 'want_response_signed': False,
                 'endpoints': {
                     'assertion_consumer_service': [
@@ -37,8 +38,8 @@ def get_saml_config(request):
                 'attribute_map_dir': '{}/saml2/attributemaps/'.format(get_python_lib()),
             },
         },
-        # 'key_file': settings.HOST_KEY,  # private part
-        # 'cert_file': settings.HOST_CERT,  # public part
+        'key_file': settings.HOST_KEY,  # private part
+        'cert_file': settings.HOST_CERT,  # public part
         'metadata': {
             'local': [settings.SAML_METADATA]
         }
