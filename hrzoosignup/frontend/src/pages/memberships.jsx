@@ -9,7 +9,7 @@ const Memberships = () => {
   const [pageTitle, setPageTitle] = useState(undefined);
 
   useEffect(() => {
-    setPageTitle(LinkTitles[location.pathname])
+    setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
 
   return (

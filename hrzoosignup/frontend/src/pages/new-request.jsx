@@ -31,7 +31,7 @@ const NewRequest = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles[location.pathname])
+    setPageTitle(LinkTitles(location.pathname))
     if (location.pathname.endsWith('novi-zahtjev'))
       setButtonDisabled(false)
     else {
