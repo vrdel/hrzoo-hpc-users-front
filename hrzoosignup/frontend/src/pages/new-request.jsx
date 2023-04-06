@@ -36,7 +36,7 @@ const NewRequest = () => {
       setButtonDisabled(false)
     else {
       setButtonDisabled(true)
-      setSelectedProject(UrlToRequestType[location.pathname])
+      setSelectedProject(UrlToRequestType(location.pathname))
     }
   }, [location.pathname])
 

@@ -21,8 +21,16 @@ export const RequestTypesToSelect = [
 ]
 
 
-export const UrlToRequestType = {
-  [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: researchProject,
-  [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
-  [url_ui_prefix + '/novi-zahtjev/zavrsni-rad']: thesisProject
+export function UrlToRequestType(loc) {
+  let url2buttonlabel = {
+    [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: researchProject,
+    [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
+    [url_ui_prefix + '/novi-zahtjev/zavrsni-rad']: thesisProject
+  }
+
+  if (loc.includes(url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt')
+    && loc.match(/[0-9]$/))
+    return researchProject
+
+  return url2buttonlabel[loc]
 }
