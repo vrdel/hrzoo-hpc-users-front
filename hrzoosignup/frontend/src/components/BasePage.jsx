@@ -33,13 +33,6 @@ const BasePage = ({sessionData=undefined}) => {
       staleTime: 15 * 60 * 1000
   })
 
-  function onYesCallback() {
-    if (onYesCall == 'dologout') {
-      doLogout(() => navigate(defaultUnAuthnRedirect))
-      doLogoutContext()
-    }
-  }
-
   if (status === 'success' && croRisData) {
     if (croRisData['status']['code'] !== 200 && !noToast)
       toast.error(
@@ -62,6 +55,13 @@ const BasePage = ({sessionData=undefined}) => {
         onClose: () => setNoToast(true)
       }
     )
+
+  function onYesCallback() {
+    if (onYesCall == 'dologout') {
+      doLogout(() => navigate(defaultUnAuthnRedirect))
+      doLogoutContext()
+    }
+  }
 
   useEffect(() => {
     if (!(isLoggedIn || sessionData.active))

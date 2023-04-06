@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import {
@@ -22,7 +22,6 @@ import {
   useForm,
   Controller,
   useFieldArray,
-  useWatch,
   FormProvider,
   useFormContext
 } from "react-hook-form";
@@ -42,7 +41,7 @@ import '../../styles/datepicker.css';
 
 
 const GeneralRequest = () => {
-  const rhfMethods = useForm({
+  const rhfProps = useForm({
     defaultValues: {
       requestName: '',
       requestExplain: '',
@@ -70,8 +69,8 @@ const GeneralRequest = () => {
   }
 
   return (
-    <FormProvider {...rhfMethods}>
-      <Form onSubmit={rhfMethods.handleSubmit(onSubmit)} className="needs-validation">
+    <FormProvider {...rhfProps}>
+      <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
         <RequestHorizontalRuler />
         <GeneralFields />
         <ScientificSoftware />
