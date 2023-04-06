@@ -46,7 +46,7 @@ const ScientificSoftware = () => {
                 isMulti
                 scientificSoftwareMultiValue={true}
                 options={buildOptionsFromArray(listScientificSoftware)}
-                placeholder="Popis aplikacija dostupnih na klasteru Supek"
+                placeholder="Odaberi"
                 onChange={(e) => setValue('requestScientificSoftware', e)}
               />
             }
