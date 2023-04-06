@@ -198,7 +198,9 @@ const GeneralFields = () => {
             }
           />
         </Col>
-        <BaseNewScientificDomain />
+        <Col className="ms-1">
+          <BaseNewScientificDomain />
+        </Col>
       </Row>
     </>
   )
