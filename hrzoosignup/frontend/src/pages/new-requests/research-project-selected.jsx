@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   useForm,
@@ -42,6 +42,8 @@ const ExtractUsers = ({projectUsers}) => {
 
 
 const ResearchProjectRequestSelected = () => {
+  const [projectTarget, setProjectTarget] = useState(undefined)
+
   const { projId } = useParams()
   const rhfProps = useForm({
     defaultValues: {
@@ -66,28 +68,36 @@ const ResearchProjectRequestSelected = () => {
     }
   });
 
-
   const {status, data: croRisProjects, error, isFetching} = useQuery({
       queryKey: ['croris-info'],
       queryFn: fetchCroRIS,
       staleTime: 15 * 60 * 1000
   })
 
+  useEffect(() => {
+    if (status ==='success'
+      && croRisProjects['status']['code'] === 200
+      && croRisProjects['data']) {
+
+      let projectsLead = croRisProjects['data']['projects_lead_info']
+      let projectTarget = projectsLead.filter(project =>
+        project['croris_id'] === Number(projId)
+      )
+
+      setProjectTarget(projectTarget[0])
+    }
+  }, [croRisProjects?.data?.projects_lead_info])
+
   const onSubmit = data => {
-    console.log('VRDEL DEBUG', data)
+    data.requestName = projectTarget.title
     alert(JSON.stringify(data, null, 2));
   }
 
-  if (status ==='success'
-    && croRisProjects['status']['code'] === 200
-    && croRisProjects['data'])
+  if (projectTarget)
   {
-    let projectsLead = croRisProjects['data']['projects_lead_info']
-    let projectTarget = projectsLead.filter(project =>
-      project['croris_id'] === Number(projId)
-    )
     let projectsLeadUsers = croRisProjects['data']['projects_lead_users'][projId]
     let person_info = croRisProjects['data']['person_info']
+
     return (
       <FormProvider {...rhfProps}>
         <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
@@ -100,7 +110,7 @@ const ResearchProjectRequestSelected = () => {
           <Row>
             <Col md={{size: 10, offset: 1}}>
               <GeneralInfo
-                project={projectTarget[0]}
+                project={projectTarget}
                 person_info={person_info}
                 projectsLeadUsers={projectsLeadUsers}
               />
