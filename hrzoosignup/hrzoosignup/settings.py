@@ -59,7 +59,6 @@ try:
     SUPERUSER_EMAIL = config.get('SUPERUSER', 'Email')
 
     PERMISSIONS_STAFF = config.get('PERMISSIONS', 'Staff')
-    PERMISSIONS_APPROVE = config.get('PERMISSIONS', 'Approve')
 
     MAIL_SEND = config.getboolean('EMAIL', 'Send')
     SRCE_SMTP = config.get('EMAIL', 'SrceSmtp')
@@ -84,6 +83,12 @@ if ',' in ALLOWED_HOSTS:
     ALLOWED_HOSTS = [h.strip() for h in ALLOWED_HOSTS.split(',')]
 else:
     ALLOWED_HOSTS = [ALLOWED_HOSTS]
+
+# have PERMISSIONS_STAFF as array usernames
+if ',' in PERMISSIONS_STAFF:
+    PERMISSIONS_STAFF = [u.strip() for u in PERMISSIONS_STAFF.split(',')]
+else:
+    PERMISSIONS_STAFF = [PERMISSIONS_STAFF]
 
 try:
     SECRET_KEY = open(SECRET_KEY_FILE, 'r').read()
