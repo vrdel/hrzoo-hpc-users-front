@@ -39,7 +39,7 @@ class CroRISInfo(APIView):
                                       settings.CRORIS_PASSWORD)
 
     def get(self, request):
-        oib = cache.get(f'{request.user.username}_oib')
+        oib = request.user.person_oib
 
         try:
             if oib:
@@ -94,7 +94,7 @@ class CroRISInfo(APIView):
                 return content
 
     async def _fetch_serie(self, oib):
-        await self.fetch_person_lead(oib[0].strip())
+        await self.fetch_person_lead(oib.strip())
         await self.fetch_project_lead_info()
         await self.fetch_project_associate_info()
         await self.fetch_users_projects_lead()
