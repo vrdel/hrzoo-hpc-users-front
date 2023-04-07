@@ -16,6 +16,17 @@ class User(AbstractUser):
         max_length=128,
         blank=True,
     )
+    person_organisation = models.CharField(
+        _('Organisation unit - LDAP'),
+        max_length=128,
+        blank=True,
+    )
+    person_oib = models.CharField(
+        _('OIB number - LDAP'),
+        max_length=11,
+        blank=True,
+        unique=True,
+    )
     person_affiliation = models.CharField(
         _('Affiliation - LDAP'),
         max_length=64,
