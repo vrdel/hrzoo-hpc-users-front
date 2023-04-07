@@ -131,8 +131,8 @@ const GeneralInfo = ({project}) => {
       <div className="w-100"></div>
 
       <Col md={{size: 2}}>
-        <div className="p-2 fs-6">
-          <Badge color="success" className="fw-normal">
+        <div className="p-2 fs-5">
+          <Badge color="primary" className="fw-normal">
             { project.identifier }
           </Badge>
         </div>
@@ -143,8 +143,8 @@ const GeneralInfo = ({project}) => {
         </div>
       </Col>
       <Col md={{size: 3}}>
-        <div className="p-2 fs-6">
-          <Badge color="primary" className="fw-normal">
+        <div className="p-2 fs-5">
+          <Badge color="dark" className="fw-normal">
             {project.type}
           </Badge>
         </div>

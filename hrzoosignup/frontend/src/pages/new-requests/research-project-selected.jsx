@@ -147,7 +147,7 @@ const ResearchProjectRequestSelected = () => {
 
 
 const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
-  const { control, watch, formState: {errors} } = useFormContext();
+  const { control, formState: {errors} } = useFormContext();
 
   return (
     <>
