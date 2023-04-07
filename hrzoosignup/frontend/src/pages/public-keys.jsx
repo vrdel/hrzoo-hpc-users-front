@@ -78,7 +78,7 @@ const PublicKeys = () => {
                       <td className="align-middle text-center">
                         { key.fingerprint }
                       </td>
-                      <td className="align-middle text-center">
+                      <td style={{maxWidth: '350px', overflow: 'hidden',  textOverflow: 'ellipsis', whiteSpace: 'nowrap'}} className="align-middle text-center">
                         { key.public_key}
                       </td>
                     </tr>
