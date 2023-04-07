@@ -226,12 +226,17 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # SESSION_COOKIE_SAMESITE = None
 LOGIN_URL = '/saml2/login/'
 SAML_ATTRIBUTE_MAPPING = {
-    'hrEduPersonUniqueID': ('username', ),
-    'mail': ('email', ),
+    'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
+    'mail': ('person_mail', ),
+    'o': ('person_institution', ),
+    'hrEduPersonOIB': ('person_oib', ),
+    'ou': ('person_organisation', ),
+    'hrEduPersonAffiliation': ('person_affiliation', ),
     'givenName': ('first_name', ),
     'sn': ('last_name', ),
 }
 SAML_CREATE_UNKNOWN_USER = True
+SAML_DJANGO_USER_MAIN_ATTRIBUTE = 'person_oib'
 
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
