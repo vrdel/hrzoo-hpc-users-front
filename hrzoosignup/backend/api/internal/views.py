@@ -248,6 +248,7 @@ class CroRISInfo(APIView):
                 self.projects_lead_users[pid] = []
             for user in project['_embedded']['osobe']:
                 if user['klasifikacija']['naziv'] == 'voditelj':
+                    self.person_info['email'] = user.get('email', '')
                     continue
                 self.projects_lead_users[pid].append(
                     {
