@@ -25,7 +25,6 @@ class User(AbstractUser):
         _('OIB number - LDAP'),
         max_length=11,
         blank=True,
-        unique=True,
     )
     person_affiliation = models.CharField(
         _('Affiliation - LDAP'),
