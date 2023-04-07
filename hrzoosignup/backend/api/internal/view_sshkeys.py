@@ -17,11 +17,11 @@ class SshKeys(APIView):
     permission_classes = (AllowAny,)
 
     def get(self, request):
-        serializer = SshKeysSerializer(SSHPublicKey.objects.filter(users=request.user.pk), many=True)
+        serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user=request.user.pk), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
-        request.data['users'] = request.user.pk
+        request.data['user'] = request.user.pk
         serializer = SshKeysSerializer(data=request.data)
 
         if serializer.is_valid():
