@@ -40,6 +40,7 @@ class CroRISInfo(APIView):
     def get(self, request):
         oib = request.user.person_oib
 
+        # we don't set HTTP error statuses on failed data fetchs
         try:
             if oib:
                 self.loop.run_until_complete(self._fetch_serie(oib))
