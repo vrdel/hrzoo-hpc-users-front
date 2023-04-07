@@ -205,8 +205,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # explicitly disabled
 # -vrdel
-SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = False
 SAML_SESSION_COOKIE_NAME = 'saml_session'
+SESSION_COOKIE_SAMESITE = False
+CSRF_COOKIE_SAMESITE = False
 CSRF_COOKIE_SECURE = False
 
 # custom user model
@@ -214,7 +216,7 @@ CSRF_COOKIE_SECURE = False
 AUTH_USER_MODEL = 'backend.User'
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
                            'backend.auth.saml2.backends.SAML2Backend']
-                           #'djangosaml2.backends.Saml2Backend']
+                           # 'djangosaml2.backends.Saml2Backend']
 # AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
 LOGIN_REDIRECT_URL = '{}/ui/moji-zahtjevi'.format(RELATIVE_PATH)
@@ -229,6 +231,7 @@ SAML_ATTRIBUTE_MAPPING = {
     'givenName': ('first_name', ),
     'sn': ('last_name', ),
 }
+SAML_CREATE_UNKNOWN_USER = True
 
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)

@@ -25,8 +25,7 @@ class IsSessionActive(APIView):
             serializer = serializers.UsersSerializer(user)
             userdetails.update(serializer.data)
 
-            # TODO: remove - testing only
-            cache.set(f'{user.username}_oib', open('./oib').readlines(), 3600 * 5)
+            cache.touch(f'{user.username}_oib', 3600 * 5)
 
             return Response(
                 {'active': True, 'userdetails': userdetails},

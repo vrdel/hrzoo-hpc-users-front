@@ -23,7 +23,8 @@ def get_saml_config(request):
             'sp': {
                 'name': 'HRZOO Signup',
                 'want_assertions_signed': False,
-                'allow_unsolicited': True,
+                'force_authn': False,
+                'name_id_format_allow_create': False,
                 'want_response_signed': False,
                 'endpoints': {
                     'assertion_consumer_service': [

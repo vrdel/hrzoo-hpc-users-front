@@ -39,7 +39,7 @@ class CroRISInfo(APIView):
                                       settings.CRORIS_PASSWORD)
 
     def get(self, request):
-        oib = cache.get('hzsi@srce.hr_oib')
+        oib = cache.get(f'{request.user.username}_oib')
 
         try:
             if oib:
