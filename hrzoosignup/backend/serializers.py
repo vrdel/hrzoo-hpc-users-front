@@ -9,6 +9,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'person_uniqueid',
             'person_institution',
             'person_affiliation',
+            'person_organisation',
             'person_mail',
             'croris_first_name',
             'croris_last_name',
