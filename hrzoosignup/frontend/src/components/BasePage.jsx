@@ -48,7 +48,7 @@ const BasePage = ({sessionData=undefined}) => {
   else if (status === 'error')
     toast.error(
       <span className="font-monospace">
-        { failureReason.message }
+        { failureReason?.message }
       </span>, {
         autoClose: false,
         toastId: 'basepage-no-croris',
