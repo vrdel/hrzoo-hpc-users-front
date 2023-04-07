@@ -61,7 +61,10 @@ class SSHPublicKey(models.Model):
     public_key = models.TextField(
         max_length=2000
     )
-    users = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('name', 'user')
 
 
 class State(models.Model):
