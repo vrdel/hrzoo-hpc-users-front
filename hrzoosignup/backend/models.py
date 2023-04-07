@@ -9,7 +9,6 @@ from cryptography.exceptions import UnsupportedAlgorithm
 from django.core.exceptions import ValidationError
 
 
-
 def validate_ssh_public_key(ssh_key):
     if isinstance(ssh_key, str):
         ssh_key = ssh_key.encode('utf-8')
@@ -18,6 +17,7 @@ def validate_ssh_public_key(ssh_key):
         serialization.load_ssh_public_key(ssh_key, backends.default_backend())
     except (ValueError, UnsupportedAlgorithm) as e:
         raise ValidationError('Invalid SSH public key.')
+
 
 
 class User(AbstractUser):

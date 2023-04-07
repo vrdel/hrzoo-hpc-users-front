@@ -48,6 +48,7 @@ class SshKeysSerializer(serializers.ModelSerializer):
             'user'
         )
         model = models.SSHPublicKey
+        read_only_fields=('fingerprint', )
 
     def validate_public_key(self, value):
         value = value.strip()
@@ -64,3 +65,8 @@ class SshKeysSerializer(serializers.ModelSerializer):
             )
         return value
 
+    def create(self, validated_data):
+        complete = dict()
+        complete['fingerprint'] = get_ssh_key_fingerprint(validated_data['public_key'])
+        complete.update({key: value for key, value in validated_data.items()})
+        return models.SSHPublicKey.objects.create(**complete)
