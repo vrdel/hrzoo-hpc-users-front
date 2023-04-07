@@ -25,3 +25,14 @@ class UsersSerializer(serializers.ModelSerializer):
             'pk',
             'id')
         model = get_user_model()
+
+
+class SshKeysSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+            'fingerprint',
+            'public_key',
+            'user'
+        )
+        model = models.SSHPublicKey
