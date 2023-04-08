@@ -74,7 +74,6 @@ const ResourceFields = () => {
               name="nSlotsCPU"
               aria-label="nSlotsCPU"
               control={control}
-              rules={{required: true}}
               render={ ({field}) =>
                 <Input
                   {...field}
@@ -94,7 +93,6 @@ const ResourceFields = () => {
               name="nSlotsGPU"
               aria-label="nSlotsGPU"
               control={control}
-              rules={{required: true}}
               render={ ({field}) =>
                 <Input
                   {...field}
@@ -114,7 +112,6 @@ const ResourceFields = () => {
               name="nRAM"
               aria-label="nRAM"
               control={control}
-              rules={{required: true}}
               render={ ({field}) =>
                 <Input
                   {...field}
@@ -134,7 +131,6 @@ const ResourceFields = () => {
               name="nTempGB"
               aria-label="nTempGB"
               control={control}
-              rules={{required: true}}
               render={ ({field}) =>
                 <Input
                   {...field}
@@ -154,7 +150,6 @@ const ResourceFields = () => {
               name="nDiskGB"
               aria-label="nDiskGB"
               control={control}
-              rules={{required: true}}
               render={ ({field}) =>
                 <Input
                   {...field}
@@ -180,7 +175,6 @@ const ResourceFields = () => {
           <Controller
             name="requestResourceType"
             control={control}
-            rules={{required: true}}
             render={ ({field}) =>
               <CustomReactSelect
                 aria-label="requestResourceType"
