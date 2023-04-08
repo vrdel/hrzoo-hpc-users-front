@@ -18,7 +18,6 @@ import '../styles/content.css';
 const PublicKeys = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
-  const [sshData, setSshData] = useState(undefined);
   const [showedKeys, setShowedKeys] = useState(undefined);
 
   const showKey = (keyid) => {
@@ -45,7 +44,6 @@ const PublicKeys = () => {
   })
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
-    setSshData(sshKeysData)
     if (sshKeysData?.length > 0)
       setValue('sshKeys', sshKeysData)
   }, [location.pathname, sshKeysData])
