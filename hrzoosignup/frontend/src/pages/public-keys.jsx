@@ -122,7 +122,7 @@ const PublicKeys = () => {
           title={modalTitle}
           msg={modalMsg}
           onYes={onYesCallback} />
-        <Row className="mt-4 ms-4 me-4 mb-3">
+        <Row className="mt-4 ms-4 me-4 mb-5">
           <Col>
             <Table responsive hover>
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
@@ -200,6 +200,16 @@ const PublicKeys = () => {
                 )}
               </tbody>
             </Table>
+          </Col>
+        </Row>
+        <Row className="mb-5 mt-5">
+          <Col className="d-flex justify-content-center">
+            <Button color="success" onClick={() => {
+                navigate('novi')
+            }}>
+              <FontAwesomeIcon icon={faKey}/>{' '}
+              Dodaj javni ključ
+            </Button>
           </Col>
         </Row>
       </>
