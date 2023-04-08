@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React from 'react'
 import {
   Routes, Route, BrowserRouter
 } from 'react-router-dom';
@@ -12,6 +12,7 @@ import ResearchProjectRequestSelected from './pages/new-requests/research-projec
 import GeneralRequest from './pages/new-requests/general';
 import NewRequestIndex from './pages/new-requests/index';
 import PublicKeys from './pages/public-keys';
+import NewPublicKey from './pages/public-keys-add';
 import Memberships from './pages/memberships';
 import MyInfo from './pages/my-info';
 import NotFound from './pages/notfound';
@@ -58,6 +59,9 @@ const BaseRoutes = () => {
               </Route>
               <Route path="javni-kljucevi" element={
                 <PublicKeys />
+              }/>
+              <Route path="javni-kljucevi/novi" element={
+                <NewPublicKey />
               }/>
               <Route path="clanstva" element={
                 <Memberships />

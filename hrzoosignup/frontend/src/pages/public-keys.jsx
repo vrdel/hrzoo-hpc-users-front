@@ -264,7 +264,7 @@ const PublicKeys = () => {
         <Row>
           <Col className="d-flex justify-content-center">
             <Button color="success" onClick={() => {
-                navigate('foobar')
+                navigate('novi')
             }}>
               <FontAwesomeIcon icon={faKey}/>{' '}
               Dodaj javni ključ
