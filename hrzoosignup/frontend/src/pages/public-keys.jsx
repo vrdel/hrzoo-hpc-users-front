@@ -1,6 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Row, Table, Form, Collapse, Button, InputGroup, Input, InputGroupText } from 'reactstrap';
+import {
+  Col,
+  Row,
+  Table,
+  Collapse,
+  Button,
+  InputGroup,
+  InputGroupText,
+  Placeholder
+} from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchSshKeys, deleteSshKey } from '../api/sshkeys';
@@ -29,21 +38,21 @@ const PublicKeys = () => {
 
   const queryClient = useQueryClient();
 
-  const showKey = (keyid) => {
+  const showKey = (keyname) => {
     let showed = new Object()
-    if (showedKeys === undefined && keyid) {
-      showed[keyid] = true
+    if (showedKeys === undefined && keyname) {
+      showed[keyname] = true
       setShowedKeys(showed)
     }
     else {
       showed = JSON.parse(JSON.stringify(showedKeys))
-      showed[keyid] = !showed[keyid]
+      showed[keyname] = !showed[keyname]
       setShowedKeys(showed)
     }
   }
-  const isShowed = (keyid) => {
+  const isShowed = (keyname) => {
     if (showedKeys !== undefined)
-      return showedKeys[keyid]
+      return showedKeys[keyname]
   }
 
   const {status, data: sshKeysData, error, isFetching} = useQuery({
@@ -56,6 +65,8 @@ const PublicKeys = () => {
     setPageTitle(LinkTitles(location.pathname))
     if (sshKeysData?.length > 0)
       setSshKeys(sshKeysData)
+    else if (sshKeysData?.length === 0)
+      setSshKeys(new Array())
   }, [location.pathname, sshKeysData])
 
 
@@ -125,14 +136,14 @@ const PublicKeys = () => {
                     Tip
                   </th>
                   <th className="fw-normal">
-                    Akcije
+                    Radnje
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-light">
                 { sshKeys.map((key, index) =>
                   <>
-                    <tr key={key.id}>
+                    <tr key={index}>
                       <td className="p-3 align-middle text-center">
                         { key.name }
                       </td>
@@ -143,7 +154,7 @@ const PublicKeys = () => {
                         { key.public_key.split(' ')[0] }
                       </td>
                       <td className="align-middle text-center">
-                        <Button size="sm" color="primary" onClick={() => showKey(index)}>
+                        <Button size="sm" color="primary" onClick={() => showKey(key.name)}>
                           <FontAwesomeIcon icon={faArrowDown} />
                         </Button>
                         <Button size="sm" className="ms-2" color="danger" onClick={() => {
@@ -159,7 +170,7 @@ const PublicKeys = () => {
                     </tr>
                     <tr>
                       <td  className="p-0 m-0" colSpan="4">
-                        <Collapse className="m-2 p-2" isOpen={isShowed(index)}>
+                        <Collapse className="m-2 p-2" isOpen={isShowed(key.name)}>
                           <Row>
                             <Col sm={{size: 11}}>
                               <InputGroup>
@@ -186,6 +197,62 @@ const PublicKeys = () => {
                     </tr>
                   </>
                 )}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </>
+    )
+  }
+  else if (status === "success" && sshKeys?.length === 0) {
+    return (
+      <>
+        <Row>
+          <PageTitle pageTitle={pageTitle}/>
+        </Row>
+        <Row className="mt-4 ms-4 me-4 mb-3">
+          <Col>
+            <Table responsive hover>
+              <thead id="hzsi-thead" className="table-active  align-middle text-center text-white">
+                <tr className="border-bottom border-2 border-dark">
+                  <th className="fw-normal">
+                    Ime ključa
+                  </th>
+                  <th className="fw-normal">
+                    Digitalni otisak ključa
+                  </th>
+                  <th className="fw-normal">
+                    Tip
+                  </th>
+                  <th className="fw-normal">
+                    Radnje
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-light">
+                {
+                  [...Array(6)].map((_, i) => (
+                    <tr key={i}>
+                      <td colSpan="4" className="m-0 p-0 bg-light border-0">
+                        <Placeholder size="lg" xs={12} color="light"/>
+                      </td>
+                    </tr>
+                  ))
+                }
+                <tr key="7">
+                  <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-3">
+                    Nemate javnih ključeva dodanih
+                  </td>
+                </tr>
+                {
+                  [...Array(6)].map((_, i) => (
+                    <tr key={i + 6}>
+                      <td colSpan="4" className="m-0 p-0 bg-light border-0">
+                        <Placeholder size="lg" xs={12} color="light"/>
+                      </td>
+                    </tr>
+                  ))
+                }
               </tbody>
             </Table>
           </Col>
