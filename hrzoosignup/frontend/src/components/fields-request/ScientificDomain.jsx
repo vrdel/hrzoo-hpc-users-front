@@ -53,6 +53,7 @@ const BaseNewScientificDomain = () => {
           aria-label="scientificDomain"
           className="mt-2 text-right form-label">
           Znanstveno područje:
+          <span className="ms-1 fw-bold text-danger">*</span>
         </Label>
         <Row>
           {

@@ -97,6 +97,7 @@ const GeneralFields = () => {
             htmlFor="requestName"
             aria-label="requestName">
             Naziv:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Controller
             name="requestName"
@@ -130,6 +131,7 @@ const GeneralFields = () => {
             htmlFor="requestExplain"
             aria-label="requestExplain">
             Obrazloženje:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Controller
             name="requestExplain"
@@ -163,6 +165,7 @@ const GeneralFields = () => {
             htmlFor="requestName"
             aria-label="requestName">
             Period korištenja:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
         </Col>
         <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
