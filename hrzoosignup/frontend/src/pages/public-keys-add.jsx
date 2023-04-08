@@ -15,7 +15,7 @@ import {
 } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchSshKeys, deleteSshKey } from '../api/sshkeys';
+import { addSshKey } from '../api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -28,54 +28,110 @@ import '../styles/content.css';
 import ModalAreYouSure from '../components/ModalAreYouSure';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
+import { toast } from 'react-toastify';
 
 
 const NewPublicKey = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  useEffect(() => {
+    setPageTitle(LinkTitles(location.pathname))
+  }, [location.pathname])
+
+  const queryClient = useQueryClient();
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
-      key_name: '',
+      name: '',
       public_key: ''
     }
   });
 
   const onSubmit = (data) => {
-    alert(JSON.stringify(data, null, 2));
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Dodavanje javnog ključa")
+    setModalMsg("Da li ste sigurni da želite dodati javni ključ?")
+    setOnYesCall('doaddsshkey')
+    setOnYesCallArg(data)
   }
 
-  useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+  function onYesCallback() {
+    if (onYesCall == 'doaddsshkey') {
+      doAdd(onYesCallArg)
+    }
+  }
+
+  const addMutation = useMutation({
+    mutationFn: (data) => {
+      return addSshKey(data)
+    },
+  })
+  const doAdd = (data) => addMutation.mutate(data, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('ssh-keys');
+      toast.success(
+        <span className="font-monospace text-dark">
+          Javni ključ uspješno dodan
+        </span>, {
+          toastId: 'sshkey-ok-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    },
+    onError: (error) => {
+      toast.error(
+        <span className="font-monospace text-dark">
+          Javni ključ nije bilo moguće dodati:{' '}
+          { error.message }
+        </span>, {
+          toastId: 'sshkey-fail-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+  })
 
   return (
     <>
       <Row>
         <PageTitle pageTitle={pageTitle}/>
       </Row>
+      <ModalAreYouSure
+        isOpen={areYouSureModal}
+        toggle={() => setAreYouSureModal(!areYouSureModal)}
+        title={modalTitle}
+        msg={modalMsg}
+        onYes={onYesCallback} />
       <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
         <Row>
           <Col className="mt-4" sm={{size: 3, offset: 1}}>
-            <Label for="key_name" className="fs-5 fw-bold">
+            <Label for="name" className="fs-5 fw-bold">
               Ime ključa:
             </Label>
             <InputGroup>
               <Controller
-                name="key_name"
+                name="name"
                 control={control}
                 rules={{required: true}}
                 render={ ({field}) =>
                   <Input
                     {...field}
                     placeholder="moj-laptop"
-                    className={`form-control fs-5 ${errors && errors.key_name && "is-invalid"}`}
+                    className={`form-control fs-5 ${errors && errors.name && "is-invalid"}`}
                   />
                 }
               />
               <ErrorMessage
                 errors={errors}
-                name="key_name"
+                name="name"
                 render={({ message }) =>
                   <FormFeedback className="end-0">
                     { message }

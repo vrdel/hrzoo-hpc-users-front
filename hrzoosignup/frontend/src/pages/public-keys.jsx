@@ -26,7 +26,6 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
 
-
 const PublicKeys = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
@@ -40,7 +39,6 @@ const PublicKeys = () => {
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
-
 
   const showKey = (keyname) => {
     let showed = new Object()
@@ -73,7 +71,6 @@ const PublicKeys = () => {
       setSshKeys(new Array())
   }, [location.pathname, sshKeysData])
 
-
   const deleteMutation = useMutation({
     mutationFn: (keyname) => {
       return deleteSshKey(keyname)
@@ -95,10 +92,10 @@ const PublicKeys = () => {
     onError: (error) => {
       toast.error(
         <span className="font-monospace text-dark">
-          Javni ključ nije bilo moguće izbrisati:
+          Javni ključ nije bilo moguće izbrisati:{' '}
           { error.message }
         </span>, {
-          toastId: 'sshkey-ok-delete',
+          toastId: 'sshkey-fail-delete',
           autoClose: 2500,
           delay: 500
         }
