@@ -84,8 +84,6 @@ const ScientificSoftware = () => {
             }
           />
         </Col>
-        <Col>
-        </Col>
       </Row>
       <Row className="mt-3">
         <Col sm={{offset: 1}}>

@@ -123,8 +123,6 @@ const GeneralFields = () => {
             }
           />
         </Col>
-        <Col>
-        </Col>
       </Row>
       <Row className="mt-3">
         <Col md={{size: 10, offset: 1}}>
@@ -157,8 +155,6 @@ const GeneralFields = () => {
               </FormFeedback>
             }
           />
-        </Col>
-        <Col>
         </Col>
       </Row>
       <Row className="mt-3">

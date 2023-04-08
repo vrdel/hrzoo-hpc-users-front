@@ -82,7 +82,7 @@ const NewPublicKey = () => {
         }
       )
       setTimeout(() => {
-        navigate(`/${url_ui_prefix}/javni-kljucevi`)
+        navigate(`${url_ui_prefix}/javni-kljucevi`)
       }, 1000)
     },
     onError: (error) => {
