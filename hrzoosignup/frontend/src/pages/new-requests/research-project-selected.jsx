@@ -130,7 +130,7 @@ const ResearchProjectRequestSelected = () => {
           <ResourceFields />
           <Row>
             <RequestHorizontalRuler />
-            <Row className="mt-2 mb-2 text-center">
+            <Row className="mt-2 mb-5 text-center">
               <Col>
                 <Button size="lg" color="success" id="submit-button" type="submit">
                   <FontAwesomeIcon icon={faFile}/>{' '}

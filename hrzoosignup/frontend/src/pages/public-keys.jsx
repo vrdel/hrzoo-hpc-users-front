@@ -261,9 +261,9 @@ const PublicKeys = () => {
             </Table>
           </Col>
         </Row>
-        <Row>
+        <Row className="mb-2 mt-3">
           <Col className="d-flex justify-content-center">
-            <Button color="success" onClick={() => {
+            <Button size="lg" color="success" onClick={() => {
                 navigate('novi')
             }}>
               <FontAwesomeIcon icon={faKey}/>{' '}
