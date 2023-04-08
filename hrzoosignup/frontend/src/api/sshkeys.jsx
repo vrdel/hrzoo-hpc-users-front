@@ -24,10 +24,7 @@ export async function deleteSshKey(name)
       })
     })
 
-    if (response.ok)
-      return response.json()
-
-    else if (!response.ok) {
+    if (!response.ok) {
       try {
         await response.json();
         error_msg = `${response.status} ${response.statusText} in DELETE`
@@ -54,10 +51,7 @@ export async function fetchSshKeys()
   try {
     let response = await fetch(`${url_api_prefix}/api/v1/internal/keys/`)
 
-    if (response.ok)
-      return response.json()
-
-    else if (!response.ok) {
+    if (!response.ok) {
       try {
         await response.json();
         error_msg = `${response.status} ${response.statusText} in GET`
