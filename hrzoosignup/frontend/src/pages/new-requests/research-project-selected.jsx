@@ -175,7 +175,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             disabled={true}
             className="form-control fs-5"
             defaultValue={project.title}
-            rows="1"
+            rows="2"
           />
         </Col>
         <Col md={{size: 2}}>
@@ -224,6 +224,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             htmlFor="requestExplain"
             aria-label="requestExplain">
             Obrazloženje:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Controller
             name="requestExplain"
