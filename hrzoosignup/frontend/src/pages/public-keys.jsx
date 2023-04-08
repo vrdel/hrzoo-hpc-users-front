@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
 import { Col, Row, Table, Form, Collapse, Button, InputGroup, Input, InputGroupText } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
-import { useQuery } from '@tanstack/react-query';
-import { fetchSshKeys } from '../api/sshkeys';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { fetchSshKeys, deleteSshKey } from '../api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -12,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useForm, Controller, useWatch, useFieldArray } from "react-hook-form";
 import '../styles/content.css';
+import ModalAreYouSure from '../components/ModalAreYouSure';
 
 
 
@@ -19,6 +20,11 @@ const PublicKeys = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const [showedKeys, setShowedKeys] = useState(undefined);
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const showKey = (keyid) => {
     let showed = new Object()
@@ -42,11 +48,33 @@ const PublicKeys = () => {
       queryFn: fetchSshKeys,
       staleTime: 15 * 60 * 1000
   })
+
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
     if (sshKeysData?.length > 0)
       setValue('sshKeys', sshKeysData)
   }, [location.pathname, sshKeysData])
+
+
+  const deleteMutation = useMutation({
+    mutationFn: (keyname) => {
+      return deleteSshKey(keyname)
+    },
+  })
+  const doDelete = (keyname) => deleteMutation.mutate(keyname, {
+    onSuccess: () => {
+      console.log('VRDEL DEBUG', 'deleted')
+    },
+    onError: () => {
+      console.log('VRDEL DEBUG', 'not deleted')
+    }
+  })
+
+  function onYesCallback() {
+    if (onYesCall == 'doremovesshkey') {
+      doDelete(onYesCallArg)
+    }
+  }
 
   const onSubmit = data => {
     JSON.stringify(data, null, 2)
@@ -70,7 +98,12 @@ const PublicKeys = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
-
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback} />
         <Row className="mt-4 ms-4 me-4 mb-3">
           <Col>
             <Form onSubmit={handleSubmit(() => {})} className="needs-validation">
@@ -108,7 +141,13 @@ const PublicKeys = () => {
                           <Button size="sm" color="primary" onClick={() => showKey(key.id)}>
                             <FontAwesomeIcon icon={faArrowDown} />
                           </Button>
-                          <Button size="sm" className="ms-2" color="danger" onClick={() => showKey(key.id)}>
+                          <Button size="sm" className="ms-2" color="danger" onClick={() => {
+                            setAreYouSureModal(!areYouSureModal)
+                            setModalTitle("Brisanje javnog ključa")
+                            setModalMsg("Da li ste sigurni da želite obrisati javni ključ?")
+                            setOnYesCall('doremovesshkey')
+                            setOnYesCallArg(key.name)
+                          }}>
                             <FontAwesomeIcon icon={faTimes} />
                           </Button>
                         </td>
