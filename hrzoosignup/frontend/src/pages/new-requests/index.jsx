@@ -40,6 +40,7 @@ const NewRequestIndex = () => {
             htmlFor="requestName"
             aria-label="requestName">
             Naziv:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <textarea
             id="requestName"
@@ -57,6 +58,7 @@ const NewRequestIndex = () => {
             htmlFor="requestExplain"
             aria-label="requestExplain">
             Obrazloženje:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <textarea
             id="requestExplain"
@@ -74,6 +76,7 @@ const NewRequestIndex = () => {
             htmlFor="requestName"
             aria-label="requestName">
             Period korištenja:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
         </Col>
         <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
@@ -99,6 +102,7 @@ const NewRequestIndex = () => {
             aria-label="scientificDomain"
             className="mt-2 text-right form-label">
             Znanstveno područje:
+            <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Row>
             <Col className="mb-3" md={{size: 5}}>
