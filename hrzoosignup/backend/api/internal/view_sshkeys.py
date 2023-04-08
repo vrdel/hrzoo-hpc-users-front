@@ -22,6 +22,19 @@ class SshKeys(APIView):
         serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user=request.user.pk), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def delete(self, request):
+        key_name = request.data['name']
+        user_keys = SSHPublicKey.objects.filter(user=request.user.pk)
+        user_key = user_keys.get(name=key_name)
+        user_key.delete()
+        ok_response = {
+            'status': {
+                'code': status.HTTP_204_NO_CONTENT,
+                'message': f'{key_name} successfully deleted'
+            }
+        }
+        return Response(ok_response, status=status.HTTP_204_NO_CONTENT)
+
     def post(self, request):
         request.data['user'] = request.user.pk
         serializer = SshKeysSerializer(data=request.data)

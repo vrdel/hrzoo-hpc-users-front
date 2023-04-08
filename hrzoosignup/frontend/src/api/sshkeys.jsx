@@ -51,6 +51,9 @@ export async function fetchSshKeys()
   try {
     let response = await fetch(`${url_api_prefix}/api/v1/internal/keys/`)
 
+    if (response.ok)
+      return await response.json()
+
     if (!response.ok) {
       try {
         await response.json();
