@@ -3,32 +3,27 @@ import { SharedData } from './root';
 import {
   Col,
   Row,
-  Table,
   Button,
   InputGroup,
   Input,
-  InputGroupText,
   Label,
-  Placeholder,
   Form,
   FormFeedback
 } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addSshKey } from '../api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faCopy,
-  faArrowDown,
-  faKey,
   faPlus,
-  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/content.css';
 import ModalAreYouSure from '../components/ModalAreYouSure';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { url_ui_prefix } from '../config/general';
 
 
 const NewPublicKey = () => {
@@ -44,7 +39,9 @@ const NewPublicKey = () => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
+
+  const navigate = useNavigate()
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -84,6 +81,9 @@ const NewPublicKey = () => {
           delay: 500
         }
       )
+      setTimeout(() => {
+        navigate(`/${url_ui_prefix}/javni-kljucevi`)
+      }, 1000)
     },
     onError: (error) => {
       toast.error(
@@ -175,7 +175,7 @@ const NewPublicKey = () => {
         </Row>
         <Row className='mt-5 mb-5'>
           <Col className="text-center">
-            <Button size="lg" className="mt-3" color="success" type="submit">
+            <Button className="mt-3" color="success" type="submit">
               <FontAwesomeIcon icon={faPlus}/>{' '}
               Dodaj
             </Button>
