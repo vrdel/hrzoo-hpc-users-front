@@ -23,6 +23,7 @@ const BasePage = ({sessionData=undefined}) => {
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
   const { logout: doLogoutContext, isLoggedIn, setUserdetails } = useContext(AuthContext)
   const navigate = useNavigate()
   const location = useLocation()
@@ -73,36 +74,36 @@ const BasePage = ({sessionData=undefined}) => {
   if (isLoggedIn || sessionData.active)
     return (
       <Container fluid="xl" className="pt-1 d-flex flex-column">
-        <ModalContext.Provider
-          value={{
-            setAreYouSureModal, setModalTitle,
-            setModalMsg, setOnYesCall, areYouSureModal
-          }}
-        >
-          <ModalAreYouSure
-            isOpen={areYouSureModal}
-            toggle={() => setAreYouSureModal(!areYouSureModal)}
-            title={modalTitle}
-            msg={modalMsg}
-            onYes={onYesCallback} />
-          <ToastContainer theme='colored' />
-          <Row>
-            <Col>
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback} />
+        <ToastContainer theme='colored' />
+        <Row>
+          <Col>
+            <ModalContext.Provider
+              value={{
+                setAreYouSureModal, setModalTitle, setModalMsg, setOnYesCall,
+                areYouSureModal, setOnYesCallArg
+              }}
+            >
               <Navigation />
               <NavigationLinks />
-            </Col>
-          </Row>
-          <Row id="hzsi-contentwrap" className="pt-3 pb-3 border-start border-end rounded">
-            <Col>
-              <Outlet />
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Footer />
-            </Col>
-          </Row>
-        </ModalContext.Provider>
+            </ModalContext.Provider>
+          </Col>
+        </Row>
+        <Row id="hzsi-contentwrap" className="pt-3 pb-3 border-start border-end rounded">
+          <Col>
+            <Outlet />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Footer />
+          </Col>
+        </Row>
       </Container>
     )
   else
