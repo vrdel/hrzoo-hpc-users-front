@@ -13,6 +13,7 @@ import {
 import { useForm, Controller, useWatch, useFieldArray } from "react-hook-form";
 import '../styles/content.css';
 import ModalAreYouSure from '../components/ModalAreYouSure';
+import { toast, ToastContainer } from 'react-toastify'
 
 
 
@@ -62,11 +63,23 @@ const PublicKeys = () => {
     },
   })
   const doDelete = (keyname) => deleteMutation.mutate(keyname, {
-    onSuccess: () => {
-      console.log('VRDEL DEBUG', 'deleted')
+    onSuccess: (e) => {
+      toast.success(
+        <span className="font-monospace">
+          Javni ključ uspješno izbrisan
+        </span>, {
+          toastId: 'sshkey-ok-delete',
+        }
+      )
     },
-    onError: () => {
-      console.log('VRDEL DEBUG', 'not deleted')
+    onError: (e) => {
+      toast.error(
+        <span className="font-monospace">
+          Javni ključ nije bilo moguće izbrisati: { e.message }
+        </span>, {
+          toastId: 'sshkey-fail-delete',
+        }
+      )
     }
   })
 
@@ -162,8 +175,8 @@ const PublicKeys = () => {
                                     Javni ključ:
                                   </InputGroupText>
                                   <textarea
-                                    className="form-control"
-                                    rows="3"
+                                    className="font-monospace form-control"
+                                    rows="5"
                                     placeholder={
                                       key.public_key
                                     }
@@ -171,7 +184,7 @@ const PublicKeys = () => {
                                 </InputGroup>
                               </Col>
                               <Col>
-                                <Button color="success">
+                                <Button size="sm" color="success">
                                   <FontAwesomeIcon icon={faCopy} />
                                 </Button>
                               </Col>
