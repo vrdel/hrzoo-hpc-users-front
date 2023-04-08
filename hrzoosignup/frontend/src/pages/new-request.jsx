@@ -97,7 +97,17 @@ const NewRequest = () => {
             className="ms-3"
             disabled={buttonDisabled || continueButtonDisabled}
             onClick={() => {
-              navigate(selectedProject.value)
+              if (!selectedProject)
+                toast.warn(
+                  <span className="font-monospace text-dark">
+                    Morate odabrati jedan tip zahtjeva da biste nastavili
+                  </span>, {
+                    toastId: 'newreq-no-croris-data',
+                    autoClose: 2500,
+                  }
+                )
+              else
+                navigate(selectedProject.value)
             }}>
             <FontAwesomeIcon icon={faArrowRight}/>{' '}
             Nastavi
