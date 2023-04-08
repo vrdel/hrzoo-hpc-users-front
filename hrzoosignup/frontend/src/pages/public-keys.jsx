@@ -17,11 +17,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
   faArrowDown,
+  faKey,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/content.css';
 import ModalAreYouSure from '../components/ModalAreYouSure';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -35,8 +37,10 @@ const PublicKeys = () => {
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
   const [sshKeys, setSshKeys] = useState(undefined)
+  const navigate = useNavigate();
 
   const queryClient = useQueryClient();
+
 
   const showKey = (keyname) => {
     let showed = new Object()
@@ -213,7 +217,7 @@ const PublicKeys = () => {
         <Row className="mt-4 ms-4 me-4 mb-3">
           <Col>
             <Table responsive hover>
-              <thead id="hzsi-thead" className="table-active  align-middle text-center text-white">
+              <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
                 <tr className="border-bottom border-2 border-dark">
                   <th className="fw-normal">
                     Ime ključa
@@ -231,30 +235,40 @@ const PublicKeys = () => {
               </thead>
               <tbody className="bg-light">
                 {
-                  [...Array(6)].map((_, i) => (
+                  [...Array(3)].map((_, i) => (
                     <tr key={i}>
                       <td colSpan="4" className="m-0 p-0 bg-light border-0">
-                        <Placeholder size="lg" xs={12} color="light"/>
+                        <Placeholder size="lg" xs={12} style={{backgroundColor: "rgba(255, 255, 255, 0)"}}/>
                       </td>
                     </tr>
                   ))
                 }
-                <tr key="7">
+                <tr key="4">
                   <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-3">
                     Nemate javnih ključeva dodanih
                   </td>
                 </tr>
                 {
-                  [...Array(6)].map((_, i) => (
+                  [...Array(3)].map((_, i) => (
                     <tr key={i + 6}>
                       <td colSpan="4" className="m-0 p-0 bg-light border-0">
-                        <Placeholder size="lg" xs={12} color="light"/>
+                        <Placeholder size="lg" xs={12} style={{backgroundColor: "rgba(255, 255, 255, 0)"}}/>
                       </td>
                     </tr>
                   ))
                 }
               </tbody>
             </Table>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex justify-content-center">
+            <Button color="success" onClick={() => {
+                navigate('foobar')
+            }}>
+              <FontAwesomeIcon icon={faKey}/>{' '}
+              Dodaj javni ključ
+            </Button>
           </Col>
         </Row>
       </>
