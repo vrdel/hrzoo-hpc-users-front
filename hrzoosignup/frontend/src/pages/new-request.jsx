@@ -65,10 +65,9 @@ const NewRequest = () => {
               else if (status === 'success' &&
                 croRisData?.status?.code !== 200) {
                 toast.error(
-                  <span className="font-monospace">
+                  <span className="font-monospace text-dark">
                     Nema podataka iz sustava CroRIS
                   </span>, {
-                    theme: 'light',
                     toastId: 'newreq-no-croris-data',
                     autoClose: 2500,
                   }
@@ -81,7 +80,6 @@ const NewRequest = () => {
                   <span className="font-monospace text-dark">
                     Nemate projekata prijavljenih u sustavu CroRIS
                   </span>, {
-                    theme: 'light',
                     toastId: 'newreq-no-croris',
                     autoClose: 2500,
                   }

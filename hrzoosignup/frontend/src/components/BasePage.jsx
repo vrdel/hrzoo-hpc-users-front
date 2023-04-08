@@ -40,17 +40,19 @@ const BasePage = ({sessionData=undefined}) => {
         <span className="font-monospace">
           { JSON.stringify(croRisData['status'], null, 2) }
         </span>, {
+          theme: 'colored',
           autoClose: false,
           toastId: 'basepage-no-croris',
           onClose: () => setNoToast(true)
         }
       )
   }
-  else if (status === 'error')
+  else if (status === 'error' && !noToast)
     toast.error(
       <span className="font-monospace">
         { failureReason?.message }
       </span>, {
+        theme: 'colored',
         autoClose: false,
         toastId: 'basepage-no-croris',
         onClose: () => setNoToast(true)
@@ -80,7 +82,7 @@ const BasePage = ({sessionData=undefined}) => {
           title={modalTitle}
           msg={modalMsg}
           onYes={onYesCallback} />
-        <ToastContainer theme='colored' />
+        <ToastContainer/>
         <Row>
           <Col>
             <ModalContext.Provider
