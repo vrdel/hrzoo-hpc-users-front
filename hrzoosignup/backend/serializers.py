@@ -15,6 +15,17 @@ def get_ssh_key_fingerprint(ssh_key):
     return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
 
 
+class UserProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'user',
+            'project',
+            'role',
+            'date_joined'
+        )
+        model = models.UserProject
+
+
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
@@ -67,45 +78,17 @@ class ProjectSerializer(serializers.ModelSerializer):
             'croris_lead',
             'croris_finance',
             'croris_type',
-            'states',
+            'state',
             'users'
         )
         model = models.Project
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class RoleSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            'name',
-            'reason',
-            'date_start',
-            'date_end',
-            'date_submitted',
-            'date_approved',
-            'approved_by',
-            'denied_by',
-            'science_software',
-            'science_extrasoftware',
-            'science_extrasoftware_help',
-            'resources_numbers',
-            'resources_type',
-            'is_active',
-            'date_extensions',
-            'croris_title',
-            'croris_start',
-            'croris_end',
-            'croris_identifier',
-            'croris_id',
-            'croris_summary',
-            'croris_collaborators',
-            'croris_lead',
-            'croris_finance',
-            'croris_type',
-            'state',
-            'users',
-            'project_type'
+            'name'
         )
-        model = models.Project
 
 
 class SshKeysSerializer(serializers.ModelSerializer):
