@@ -222,10 +222,10 @@ class Role(models.Model):
 class UserProject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    role = models.OneToOneField(Role, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
     date_joined = models.DateTimeField(
         blank=True,
         null=True,
     )
     class Meta:
-        unique_together = ['user', 'project']
+        unique_together = ['user', 'project', 'role']

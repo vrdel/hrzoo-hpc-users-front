@@ -12,7 +12,7 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    replaces = [('backend', '0001_initial'), ('backend', '0002_initial_user_project_role_state'), ('backend', '0003_user_croris_mail_user_person_mail_alter_user_email_and_more'), ('backend', '0004_alter_project_croris_identifier_and_more'), ('backend', '0005_user_person_oib_user_person_organisation'), ('backend', '0006_alter_user_person_oib'), ('backend', '0007_rename_users_sshpublickey_user_and_more'), ('backend', '0008_alter_sshpublickey_public_key'), ('backend', '0009_projecttype_remove_project_states_project_state_and_more'), ('backend', '0010_alter_project_croris_summary'), ('backend', '0011_alter_project_croris_end_alter_project_croris_start_and_more'), ('backend', '0012_alter_userproject_unique_together'), ('backend', '0013_alter_userproject_unique_together_and_more')]
+    initial = True
 
     dependencies = [
         ('auth', '0012_alter_user_first_name_max_length'),
