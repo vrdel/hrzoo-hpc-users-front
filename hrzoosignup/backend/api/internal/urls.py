@@ -9,5 +9,6 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('croris-info/', views.CroRISInfo.as_view(), name='crorisinfo'),
+    path('projects/', views.Projects.as_view(), name='projects'),
     path('keys/', views.SshKeys.as_view(), name='sshkeys'),
 ] + router.urls

@@ -39,6 +39,47 @@ class UsersSerializer(serializers.ModelSerializer):
         model = get_user_model()
 
 
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+            'reason',
+            'date_start',
+            'date_end',
+            'date_submitted',
+            'date_approved',
+            'approved_by',
+            'denied_by',
+            'science_field',
+            'science_software',
+            'science_extrasoftware',
+            'science_extrasoftware_help',
+            'resources_type',
+            'is_active',
+            'date_extensions',
+            'croris_title',
+            'croris_start',
+            'croris_end',
+            'croris_identifier',
+            'croris_id',
+            'croris_summary',
+            'croris_collaborators',
+            'croris_lead',
+            'croris_finance',
+            'croris_type',
+            'states',
+            'users'
+        )
+        model = models.Project
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+        )
+        model = models.Project
+
+
 class SshKeysSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
