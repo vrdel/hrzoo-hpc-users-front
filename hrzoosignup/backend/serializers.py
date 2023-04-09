@@ -26,6 +26,22 @@ class UserProjectSerializer(serializers.ModelSerializer):
         model = models.UserProject
 
 
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.State
+
+
+class ProjectTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.ProjectType
+
+
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
@@ -50,7 +66,21 @@ class UsersSerializer(serializers.ModelSerializer):
         model = get_user_model()
 
 
+class UsersSerializerFiltered(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'person_mail',
+            'first_name',
+            'last_name',
+        )
+        model = get_user_model()
+
+
 class ProjectSerializer(serializers.ModelSerializer):
+    users = UsersSerializerFiltered(many=True, read_only=True)
+    state = StateSerializer()
+    project_type = ProjectTypeSerializer()
+
     class Meta:
         fields = (
             'name',
@@ -80,7 +110,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'project_type',
             'croris_type',
             'state',
-            'users'
+            'users',
         )
         model = models.Project
 
