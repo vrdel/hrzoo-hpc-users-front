@@ -19,7 +19,6 @@ def validate_ssh_public_key(ssh_key):
         raise ValidationError('Invalid SSH public key.')
 
 
-
 class User(AbstractUser):
     person_uniqueid = models.CharField(
         _('hrEduPersonUniqueID - LDAP'),
@@ -85,6 +84,14 @@ class SSHPublicKey(models.Model):
 class State(models.Model):
     name =  models.CharField(
         _("Project state"),
+        max_length=24,
+        blank=True,
+    )
+
+
+class ProjectType(models.Model):
+    name =  models.CharField(
+        _("Project type"),
         max_length=24,
         blank=True,
     )
@@ -199,8 +206,9 @@ class Project(models.Model):
         max_length=128,
         blank=True,
     )
-    states = models.ForeignKey(State, on_delete=models.CASCADE)
+    state = models.ForeignKey(State, null=True, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, through='UserProject')
+    project_type = models.ForeignKey(ProjectType, null=True, on_delete=models.CASCADE)
 
 
 class Role(models.Model):
