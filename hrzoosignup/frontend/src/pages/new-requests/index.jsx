@@ -353,7 +353,6 @@ const NewRequestIndex = () => {
           <Input
             aria-label="requestResourceType"
             closeMenuOnSelect={false}
-            controlWidth="400px"
             disabled={true}
             id="requestResourceType"
             isMulti
