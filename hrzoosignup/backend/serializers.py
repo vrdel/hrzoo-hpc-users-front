@@ -76,6 +76,34 @@ class ProjectSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
+            'name',
+            'reason',
+            'date_start',
+            'date_end',
+            'date_submitted',
+            'date_approved',
+            'approved_by',
+            'denied_by',
+            'science_software',
+            'science_extrasoftware',
+            'science_extrasoftware_help',
+            'resources_numbers',
+            'resources_type',
+            'is_active',
+            'date_extensions',
+            'croris_title',
+            'croris_start',
+            'croris_end',
+            'croris_identifier',
+            'croris_id',
+            'croris_summary',
+            'croris_collaborators',
+            'croris_lead',
+            'croris_finance',
+            'croris_type',
+            'state',
+            'users',
+            'project_type'
         )
         model = models.Project
 
