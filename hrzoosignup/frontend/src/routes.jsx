@@ -48,13 +48,13 @@ const BaseRoutes = () => {
                   <ResearchProjectRequest />
                 }/>
                 <Route path="istrazivacki-projekt/:projId" element={
-                  <ResearchProjectRequestSelected />
+                  <ResearchProjectRequestSelected projectType="research-croris" />
                 }/>
                 <Route path="prakticna-nastava" element={
-                  <GeneralRequest />
+                  <GeneralRequest projectType="practical" />
                 }/>
                 <Route path="zavrsni-rad" element={
-                  <GeneralRequest />
+                  <GeneralRequest projectType="thesis" />
                 }/>
               </Route>
               <Route path="javni-kljucevi" element={

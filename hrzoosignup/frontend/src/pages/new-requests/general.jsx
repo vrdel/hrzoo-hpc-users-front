@@ -29,7 +29,7 @@ import 'react-calendar/dist/Calendar.css';
 import '../../styles/datepicker.css';
 
 
-const GeneralRequest = () => {
+const GeneralRequest = ({projectType}) => {
   const rhfProps = useForm({
     defaultValues: {
       requestName: '',
@@ -56,6 +56,7 @@ const GeneralRequest = () => {
   });
 
   const onSubmit = data => {
+    data['project_type'] = projectType
     alert(JSON.stringify(data, null, 2));
   }
 

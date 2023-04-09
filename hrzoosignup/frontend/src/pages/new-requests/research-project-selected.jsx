@@ -47,7 +47,7 @@ const ExtractUsers = ({projectUsers}) => {
 }
 
 
-const ResearchProjectRequestSelected = () => {
+const ResearchProjectRequestSelected = ({projectType}) => {
   const [projectTarget, setProjectTarget] = useState(undefined)
 
   const { projId } = useParams()
@@ -95,6 +95,7 @@ const ResearchProjectRequestSelected = () => {
   }, [croRisProjects?.data?.projects_lead_info])
 
   const onSubmit = data => {
+    data['project_type'] ='research-croris'
     data.requestName = projectTarget.title
     // data.startDate = projectTarget.start
     data.startDate = parse(projectTarget.start, 'dd.MM.yyyy', new Date())
