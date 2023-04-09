@@ -106,19 +106,19 @@ class Project(models.Model):
         _('reason'),
         max_length=1024,
     )
-    date_start = models.DateField(
+    date_start = models.DateTimeField(
         null=True,
         blank=True,
     )
-    date_end  = models.DateField(
+    date_end  = models.DateTimeField(
         null=True,
         blank=True,
     )
-    date_submitted  = models.DateField(
+    date_submitted  = models.DateTimeField(
         null=True,
         blank=True,
     )
-    date_approved = models.DateField(
+    date_approved = models.DateTimeField(
         null=True,
         blank=True,
     )
@@ -155,7 +155,7 @@ class Project(models.Model):
         null=True
     )
     is_active = models.BooleanField()
-    date_extensions = models.DateField(
+    date_extensions = models.DateTimeField(
         null=True,
         blank=True,
     )
@@ -164,11 +164,11 @@ class Project(models.Model):
         max_length=512,
         blank=True,
     )
-    croris_start = models.DateField(
+    croris_start = models.DateTimeField(
         null=True,
         blank=True,
     )
-    croris_end = models.DateField(
+    croris_end = models.DateTimeField(
         null=True,
         blank=True,
     )
@@ -223,7 +223,7 @@ class UserProject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     role = models.OneToOneField(Role, on_delete=models.CASCADE)
-    date_joined = models.DateField(
+    date_joined = models.DateTimeField(
         blank=True,
         null=True,
     )
