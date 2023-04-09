@@ -77,6 +77,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'croris_collaborators',
             'croris_lead',
             'croris_finance',
+            'project_type',
             'croris_type',
             'state',
             'users'

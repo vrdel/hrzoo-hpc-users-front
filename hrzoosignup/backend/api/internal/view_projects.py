@@ -57,6 +57,9 @@ class ProjectsResearch(APIView):
         request.data['state'] = state_obj.pk
         request.data['is_active'] = True
 
+        type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
+        request.data['project_type'] = type_obj.pk
+
         serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
