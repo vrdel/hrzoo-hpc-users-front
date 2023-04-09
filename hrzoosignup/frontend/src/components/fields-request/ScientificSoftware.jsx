@@ -29,25 +29,25 @@ const ScientificSoftware = () => {
       <Row className="mt-1">
         <Col md={{size: 10, offset: 1}}>
           <Label
-            htmlFor="requestScientificSoftware"
-            aria-label="requestScientificSoftware"
+            htmlFor="scientificSoftware"
+            aria-label="scientificSoftware"
             className="mr-2 text-right form-label">
             Aplikacije koje će se koristiti:
           </Label>
           <Controller
-            name="requestScientificSoftware"
+            name="scientificSoftware"
             control={control}
             render={ ({field}) =>
               <CustomReactSelect
-                aria-label="requestScientificSoftware"
+                aria-label="scientificSoftware"
                 closeMenuOnSelect={false}
                 forwardedRef={field.ref}
-                id="requestScientificSoftware"
+                id="scientificSoftware"
                 isMulti
                 scientificSoftwareMultiValue={true}
                 options={buildOptionsFromArray(listScientificSoftware)}
                 placeholder="Odaberi"
-                onChange={(e) => setValue('requestScientificSoftware', e)}
+                onChange={(e) => setValue('scientificSoftware', e)}
               />
             }
           />
@@ -56,27 +56,27 @@ const ScientificSoftware = () => {
       <Row className="mt-3">
         <Col md={{size: 10, offset: 1}}>
           <Label
-            htmlFor="requestScientificSoftwareExtra"
-            aria-label="requestScientificSoftwareExtra">
+            htmlFor="scientificSoftwareExtra"
+            aria-label="scientificSoftwareExtra">
             Dodatne aplikacije koje će biti potrebno instalirati:
           </Label>
           <Controller
-            name="requestScientificSoftwareExtra"
+            name="scientificSoftwareExtra"
             control={control}
             render={ ({field}) =>
               <textarea
-                id="requestScientificSoftwareExtra"
+                id="scientificSoftwareExtra"
                 {...field}
-                aria-label="requestScientificSoftwareExtra"
+                aria-label="scientificSoftwareExtra"
                 type="text"
-                className={`form-control ${errors && errors.requestScientificSoftwareExtra ? "is-invalid" : ''}`}
+                className={`form-control ${errors && errors.scientificSoftwareExtra ? "is-invalid" : ''}`}
                 rows="3"
               />
             }
           />
           <ErrorMessage
             errors={errors}
-            name="requestScientificSoftwareExtra"
+            name="scientificSoftwareExtra"
             render={({ message }) =>
               <FormFeedback invalid className="end-0">
                 { message }
@@ -88,13 +88,13 @@ const ScientificSoftware = () => {
       <Row className="mt-3">
         <Col sm={{offset: 1}}>
           <Label
-            htmlFor="requestScientificSoftwareHelp"
-            aria-label="requestScientificSoftwareHelp"
+            htmlFor="scientificSoftwareHelp"
+            aria-label="scientificSoftwareHelp"
             className="mr-2 text-right form-label">
             Potrebna pomoć pri instalaciji:
           </Label>
           <Controller
-            name="requestScientificSoftwareHelp"
+            name="scientificSoftwareHelp"
             control={control}
             render={ ({field}) =>
               <Input {...field} type="checkbox" className="ms-3 fw-bold"/>
