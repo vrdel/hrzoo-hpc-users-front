@@ -42,3 +42,34 @@ export async function addResearchProject(data)
   if (error_msg)
     throw new Error(`Error adding research project: ${error_msg}`)
 }
+
+
+
+export async function fetchNrProjects()
+{
+  let error_msg = ''
+
+  try {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/projects/`)
+
+    if (response.ok)
+      return await response.json()
+
+    if (!response.ok) {
+      try {
+        await response.json();
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+    }
+
+  }
+  catch (err) {
+    error_msg = `${err} in GET`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error fetching NRProjects data: ${error_msg}`)
+}
