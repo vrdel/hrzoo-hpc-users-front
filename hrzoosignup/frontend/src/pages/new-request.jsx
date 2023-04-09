@@ -11,7 +11,6 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../api/croris';
 import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
 
 
 const NewRequest = () => {

@@ -22,13 +22,14 @@ import {
   faFile,
 } from '@fortawesome/free-solid-svg-icons';
 import { fetchCroRIS } from '../../api/croris';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import ResourceFields from '../../components/fields-request/ResourceFields';
 import BaseNewScientificDomain from '../../components/fields-request/ScientificDomain';
 import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
 import { ErrorMessage } from '@hookform/error-message';
 import { parse } from 'date-fns';
-
+import { toast } from 'react-toastify'
+import { addResearchProject } from '../../api/projects';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -96,6 +97,39 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     }
   }, [croRisProjects?.data?.projects_lead_info])
 
+  const addMutation = useMutation({
+    mutationFn: (data) => {
+      return addResearchProject(data)
+    },
+  })
+
+  const doAdd = (data) => addMutation.mutate(data, {
+    onSuccess: () => {
+      //queryClient.invalidateQueries('my-projects');
+      toast.success(
+        <span className="font-monospace text-dark">
+          Zahtjev temeljem istraživačkog projekta je uspješno podnesen
+        </span>, {
+          toastId: 'researchproj-ok-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    },
+    onError: (error) => {
+      toast.error(
+        <span className="font-monospace text-dark">
+          Zahtjev nije bilo moguće podnijeti:
+          { error.message }
+        </span>, {
+          toastId: 'researchproj-fail-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+  })
+
   const onSubmit = data => {
     let dataToSend = new Object()
 
@@ -113,7 +147,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     dataToSend['date_start'] = parse(projectTarget.start, 'dd.MM.yyyy', new Date())
     dataToSend['name'] = projectTarget.title
     dataToSend['reason'] = data['requestExplain']
-    dataToSend['project_type'] ='research-croris'
+    dataToSend['project_type'] = projectType
     if (data.scientificSoftware)
       dataToSend['science_software'] = data.scientificSoftware.map(e => e.value)
     else
@@ -130,7 +164,8 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submitted'
-    //alert(JSON.stringify(dataToSend, null, 2));
+    doAdd(dataToSend)
+    // alert(JSON.stringify(dataToSend, null, 2));
   }
 
   if (projectTarget)
@@ -290,4 +325,3 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
 }
 
 export default ResearchProjectRequestSelected;
-
