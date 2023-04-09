@@ -227,3 +227,5 @@ class UserProject(models.Model):
         blank=True,
         null=True,
     )
+    class Meta:
+        unique_together = ['user', 'project']
