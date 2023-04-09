@@ -1,0 +1,23 @@
+[
+  {
+    "model": "backend.ProjectType",
+    "pk": 1,
+    "fields": {
+      "name": "research-croris"
+     }
+  },
+  {
+    "model": "backend.ProjectType",
+    "pk": 2,
+    "fields": {
+      "name": "thesis"
+     }
+  },
+  {
+    "model": "backend.ProjectType",
+    "pk": 3,
+    "fields": {
+      "name": "practical"
+     }
+  }
+]
