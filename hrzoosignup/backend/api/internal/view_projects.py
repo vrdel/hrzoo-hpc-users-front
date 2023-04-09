@@ -28,24 +28,48 @@ class ProjectsResearch(APIView):
         oib = request.user.person_oib
         # TODO: validate data picked up from frontend with the CroRIS cached
         # data
+
         croris_data = cache.get('{oib}_croris')
+        if croris_data:
+            lead_status = croris_data['person_info']['lead_status']
+            if not lead_status:
+                unauthz_response = {
+                    'status': {
+                        'code': status.HTTP_401_UNAUTHORIZED,
+                        'message': 'Not registered leader of any project in CroRIS'
+                    }
+                }
+                return Response(unauthz_response, status=status.HTTP_401_UNAUTHORIZED)
+
+            lead_projects = list(map(lambda p: p['croris_id'], croris_data['projects_lead_info']))
+            if int(request.data['croris_id']) not in lead_projects:
+                unauthz_response = {
+                    'status': {
+                        'code': status.HTTP_401_UNAUTHORIZED,
+                        'message': 'You are not registered leader of this project in CroRIS'
+                    }
+                }
+                return Response(unauthz_response, status=status.HTTP_401_UNAUTHORIZED)
+
+            project_leads = croris_data['projects_lead_info']
 
         state_obj = models.State.objects.get(name=request.data['state'])
         request.data['state'] = state_obj.pk
-
-        prtype_obj = models.ProjectType.objects.get(name=request.data['project_type'])
-        request.data['project_type'] = prtype_obj.pk
-
         request.data['is_active'] = True
-        request.data['users'] = request.user.pk
-        serializer = ProjectSerializer(data=request.data)
 
+        serializer = ProjectSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            project_ins = serializer.instance
+            role_obj = models.Role.objects.get(name='lead')
+            userproject_obj = models.UserProject(user=request.user,
+                                                 project=project_ins,
+                                                 role=role_obj,
+                                                 date_joined=datetime.datetime.now())
+            userproject_obj.save()
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            from pudb.remote import set_trace; set_trace(host='0.0.0.0')
-
             err_status = status.HTTP_400_BAD_REQUEST
             err_response = {
                 'status': {
