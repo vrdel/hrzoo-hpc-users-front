@@ -70,7 +70,9 @@ const ResearchProjectRequestSelected = ({projectType}) => {
           ]
         },
       ],
-      scientificSoftware: ''
+      scientificSoftware: '',
+      scientificSoftwareExtra: '',
+      scientificSoftwareHelp: ''
     }
   });
 
@@ -95,12 +97,40 @@ const ResearchProjectRequestSelected = ({projectType}) => {
   }, [croRisProjects?.data?.projects_lead_info])
 
   const onSubmit = data => {
-    data['project_type'] ='research-croris'
-    data.requestName = projectTarget.title
-    // data.startDate = projectTarget.start
-    data.startDate = parse(projectTarget.start, 'dd.MM.yyyy', new Date())
-    data.endDate = parse(projectTarget.end, 'dd.MM.yyyy', new Date())
-    alert(JSON.stringify(data, null, 2));
+    let dataToSend = new Object()
+
+    dataToSend['croris_collaborators'] = croRisProjects['data']['projects_lead_users'][projId]
+    dataToSend['croris_end'] = parse(projectTarget.end, 'dd.MM.yyyy', new Date())
+    dataToSend['croris_finance'] = projectTarget.finance
+    dataToSend['croris_id'] = projId
+    dataToSend['croris_identifier'] = projectTarget.identifier
+    dataToSend['croris_lead'] = `${croRisProjects['data']['person_info']['first_name']} ${croRisProjects['data']['person_info']['last_name']}`
+    dataToSend['croris_start'] = parse(projectTarget.start, 'dd.MM.yyyy', new Date())
+    dataToSend['croris_summary'] = projectTarget.summary
+    dataToSend['croris_title'] = projectTarget.title
+    dataToSend['croris_type'] = projectTarget.type
+    dataToSend['date_end'] = parse(projectTarget.end, 'dd.MM.yyyy', new Date())
+    dataToSend['date_start'] = parse(projectTarget.start, 'dd.MM.yyyy', new Date())
+    dataToSend['name'] = projectTarget.title
+    dataToSend['reason'] = data['requestExplain']
+    dataToSend['project_type'] ='research-croris'
+    if (data.scientificSoftware)
+      dataToSend['science_software'] = data.scientificSoftware.map(e => e.value)
+    else
+      dataToSend['science_software'] = []
+    dataToSend['science_extrasoftware'] = data['scientificSoftwareExtra']
+    dataToSend['science_extrasoftware_help'] = data['scientificSoftwareHelp']
+    dataToSend['science_field'] = data['scientificDomain']
+    dataToSend['resources_numbers'] = {
+      'nSlotsCPU': data['nSlotsCPU'],
+      'nSlotsGPU': data['nSlotsGPU'],
+      'nSlotsRAM': data['nRAM'],
+      'nTempGB': data['nTempGB'],
+      'nDiskGB': data['nDiskGB']
+    }
+    dataToSend['resources_type'] = data['requestResourceType']
+    dataToSend['state'] = 'submitted'
+    //alert(JSON.stringify(dataToSend, null, 2));
   }
 
   if (projectTarget)
