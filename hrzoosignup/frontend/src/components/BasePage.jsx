@@ -10,11 +10,16 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/content.css';
 import { doLogout } from '../api/auth';
 import { fetchCroRIS } from '../api/croris';
+import { fetchNrProjects } from '../api/projects';
 import { AuthContext } from '../utils/AuthContextProvider';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, QueryClient } from '@tanstack/react-query';
 
 export const ModalContext = React.createContext();
+
+const queryClient = new QueryClient()
+const issuesNrQuery = { queryKey: ['projects'], queryFn: fetchNrProjects}
+queryClient.prefetchQuery(issuesNrQuery)
 
 
 const BasePage = ({sessionData=undefined}) => {

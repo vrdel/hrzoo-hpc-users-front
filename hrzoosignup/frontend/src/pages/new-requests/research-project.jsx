@@ -12,6 +12,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../../api/croris';
+import { fetchNrProjects } from '../../api/projects';
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -43,9 +44,19 @@ const ResearchProjectRequest = () => {
   })
   const navigate = useNavigate()
 
-  if (status ==='success'
+  const {status: nrStatus, data: nrProjects} = useQuery({
+      queryKey: ['projects'],
+      queryFn: fetchNrProjects
+  })
+
+  function isAlreadySubmitted(projId) {
+    let existingProjectsIds = nrProjects.map(project => project['croris_identifier'])
+    return existingProjectsIds.indexOf(projId) !== -1
+  }
+
+  if (status === 'success' && nrStatus === 'success'
     && croRisProjects['status']['code'] === 200
-    && croRisProjects['data'])
+    && croRisProjects['data'] && nrProjects)
   {
     let projectsLead = croRisProjects['data']['projects_lead_info']
     let projectsLeadUsers = croRisProjects['data']['projects_lead_users']
@@ -58,33 +69,41 @@ const ResearchProjectRequest = () => {
           projectsLead.map((project, i) =>
             <Row className="mb-4" key={`row-${i}`}>
               <Col key={`col-${i}`}>
-                <Card className="ms-3 bg-success" key={`card-${i}`}>
-                  <CardHeader className="fs-5 text-white">
+                <Card className={isAlreadySubmitted(project.identifier)
+                  ? `ms-3 bg-secondary` : `ms-3 bg-success`}
+                  key={`card-${i}`}>
+                  <CardHeader className="d-flex fs-5 text-white justify-content-between align-items-center">
                     { project.title }
+                    { isAlreadySubmitted(project.identifier) && <Badge className="fs-5" color="success">prijavljen</Badge>}
                   </CardHeader>
-                  <CardBody className="mb-1 bg-white">
+                  <CardBody className={isAlreadySubmitted(project.identifier) ? "mb-1 bg-light": "mb-1 bg-white"}>
                     <Row>
-                      <GeneralInfo project={project} />
+                      <GeneralInfo project={project} isSubmitted={isAlreadySubmitted(project.identifier)} />
                       <div className="w-100"></div>
                       <Persons project={project} person_info={person_info} projectsLeadUsers={projectsLeadUsers} />
                       <div className="w-100"></div>
-                      <Finance project={project} />
+                      <Finance project={project}  />
                       <div className="w-100"></div>
-                      <Summary project={project} />
+                      <Summary project={project} isSubmitted={isAlreadySubmitted(project.identifier)} />
                     </Row>
-                    <Row className="p-2 text-center">
-                      <Col>
-                        <Button
-                          color="success"
-                          className="ms-3"
-                          onClick={() => {
-                            navigate(`/ui/novi-zahtjev/istrazivacki-projekt/${project.croris_id}`)
-                          }}>
-                          <FontAwesomeIcon icon={faArrowRight}/>{' '}
-                          Odaberi
-                        </Button>
-                      </Col>
-                    </Row>
+                    {
+                      !isAlreadySubmitted(project.identifier)
+                        ?
+                          <Row className="p-2 text-center">
+                            <Col>
+                              <Button
+                                color="success"
+                                className="ms-3"
+                                onClick={() => {
+                                  navigate(`/ui/novi-zahtjev/istrazivacki-projekt/${project.croris_id}`)
+                                }}>
+                                <FontAwesomeIcon icon={faArrowRight}/>{' '}
+                                Odaberi
+                              </Button>
+                            </Col>
+                          </Row>
+                        : ''
+                    }
                   </CardBody>
                 </Card>
               </Col>
@@ -97,7 +116,7 @@ const ResearchProjectRequest = () => {
 };
 
 
-const GeneralInfo = ({project}) => {
+const GeneralInfo = ({project, isSubmitted}) => {
   return (
     <>
       <Col className="text-left fw-bold" md={{size: 2}}>
@@ -132,7 +151,7 @@ const GeneralInfo = ({project}) => {
 
       <Col md={{size: 2}}>
         <div className="p-2 fs-5">
-          <Badge color="primary" className="fw-normal">
+          <Badge color={isSubmitted ? "secondary" : "primary"} className="fw-normal">
             { project.identifier }
           </Badge>
         </div>
@@ -144,7 +163,7 @@ const GeneralInfo = ({project}) => {
       </Col>
       <Col md={{size: 3}}>
         <div className="p-2 fs-5">
-          <Badge color="dark" className="fw-normal">
+          <Badge color={isSubmitted ? "secondary" : "dark"} className="fw-normal">
             {project.type}
           </Badge>
         </div>
@@ -203,7 +222,7 @@ const Finance = ({project}) => {
 }
 
 
-const Summary = ({project}) => {
+const Summary = ({project, isSubmitted}) => {
   return (
     <>
       <Col md={{size: 12}}>
@@ -219,6 +238,7 @@ const Summary = ({project}) => {
           id="projectSummary"
           className="form-control fst-italic"
           rows="6"
+          disabled={isSubmitted}
           defaultValue={
             project.summary
           }
