@@ -48,7 +48,7 @@ class CroRISInfo(APIView):
                 self.loop.close()
 
                 # frontend is calling every 15 min
-                # we set here eviction after 30 min
+                # we set here eviction after 20 min
                 cache.set('{oib}_croris', {
                         'person_info': self.person_info,
                         'projects_lead_info': self.projects_lead_info,

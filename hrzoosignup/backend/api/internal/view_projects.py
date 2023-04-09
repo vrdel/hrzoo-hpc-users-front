@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 from django.conf import settings
 from django.core.cache import cache
 
-from backend.serializers import ProjectSerializer
+from backend.serializers import ProjectSerializer, UserProjectSerializer
 from backend import models
 
 import json
@@ -56,6 +56,7 @@ class ProjectsResearch(APIView):
         state_obj = models.State.objects.get(name=request.data['state'])
         request.data['state'] = state_obj.pk
         request.data['is_active'] = True
+        request.data['date_submitted'] = datetime.datetime.now()
 
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
         request.data['project_type'] = type_obj.pk
@@ -84,11 +85,22 @@ class ProjectsResearch(APIView):
 
 
 class Projects(APIView):
-    # authentication_classes = (SessionAuthentication,)
-    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated, )
 
     def __init__(self):
         pass
 
     def post(self, request):
         pass
+
+    def get(self, request):
+        projects = list()
+
+        up_obj = models.UserProject.objects.filter(user=request.user.pk)
+        for up in up_obj:
+            projects.append(up.project)
+
+        serializer = ProjectSerializer(projects, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
