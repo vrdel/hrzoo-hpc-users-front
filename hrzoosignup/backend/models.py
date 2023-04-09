@@ -182,7 +182,7 @@ class Project(models.Model):
     )
     croris_summary =  models.CharField(
         _("CroRIS summary"),
-        max_length=512,
+        max_length=8192,
         blank=True,
     )
     croris_collaborators = models.JSONField(
