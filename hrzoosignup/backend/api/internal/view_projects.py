@@ -11,6 +11,7 @@ from django.conf import settings
 from django.core.cache import cache
 
 from backend.serializers import ProjectSerializer
+from backend import models
 
 import json
 import datetime
@@ -28,6 +29,12 @@ class ProjectsResearch(APIView):
         # TODO: validate data picked up from frontend with the CroRIS cached
         # data
         croris_data = cache.get('{oib}_croris')
+
+        state_obj = models.State.objects.get(name=request.data['state'])
+        request.data['state'] = state_obj.pk
+
+        prtype_obj = models.ProjectType.objects.get(name=request.data['project_type'])
+        request.data['project_type'] = prtype_obj.pk
 
         request.data['is_active'] = True
         request.data['users'] = request.user.pk
