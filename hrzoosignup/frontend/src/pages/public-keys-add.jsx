@@ -111,6 +111,8 @@ const NewPublicKey = () => {
         msg={modalMsg}
         onYes={onYesCallback} />
       <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+        <Row style={{minHeight: '60px'}}>
+        </Row>
         <Row>
           <Col className="mt-4" sm={{size: 3, offset: 1}}>
             <Label for="name" className="fs-5 fw-bold">
