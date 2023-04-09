@@ -1,0 +1,16 @@
+[
+  {
+    "model": "backend.Role",
+    "pk": 1,
+    "fields": {
+      "name": "lead"
+     }
+  },
+  {
+    "model": "backend.Role",
+    "pk": 2,
+    "fields": {
+      "name": "collaborator"
+     }
+  }
+]
