@@ -10,13 +10,10 @@ from backend.models import SSHPublicKey
 
 import json
 
-# TODO: dev only
-from rest_framework.permissions import AllowAny
-
 
 class SshKeys(APIView):
-    # authentication_classes = (SessionAuthentication,)
-    permission_classes = (AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user=request.user.pk), many=True)
