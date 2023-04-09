@@ -16,6 +16,7 @@ import { addSshKey } from '../api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlus,
+  faKey,
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/content.css';
 import ModalAreYouSure from '../components/ModalAreYouSure';
@@ -115,7 +116,7 @@ const NewPublicKey = () => {
         </Row>
         <Row>
           <Col className="mt-4" sm={{size: 3, offset: 1}}>
-            <Label for="name" className="fs-5 fw-bold">
+            <Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1 rounded" style={{backgroundColor: "#b04c46"}}>
               Ime ključa:
             </Label>
             <InputGroup>
@@ -141,9 +142,16 @@ const NewPublicKey = () => {
                 }
               />
             </InputGroup>
+            <Row style={{minHeight: '60px'}}>
+            </Row>
+            <Row>
+              <Col>
+                <FontAwesomeIcon icon={faKey} className="ms-5 text-light fa-10x"/>
+              </Col>
+            </Row>
           </Col>
           <Col className="ms-4" sm={{size: 7}}>
-            <Label className="mt-4 fs-5 fw-bold" for="public_key">
+            <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white rounded" style={{backgroundColor: "#b04c46"}} for="public_key">
               Javni ključ:
             </Label>
             <InputGroup>
