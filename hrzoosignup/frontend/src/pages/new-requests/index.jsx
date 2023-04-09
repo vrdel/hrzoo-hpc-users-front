@@ -1,5 +1,4 @@
 import React from 'react'
-import { CustomReactSelect } from '../../components/CustomReactSelect';
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -64,7 +63,7 @@ const NewRequestIndex = () => {
             id="requestExplain"
             aria-label="requestExplain"
             type="text"
-            disabled="true"
+            disabled={true}
             className="form-control"
             rows="4"
           />
@@ -196,11 +195,8 @@ const NewRequestIndex = () => {
           </Label>
           <Input
             aria-label="requestScientificSoftware"
-            closeMenuOnSelect={false}
             disabled={true}
             id="requestScientificSoftware"
-            isMulti
-            scientificSoftwareMultiValue={true}
             placeholder="Odaberi"
           />
         </Col>
@@ -352,10 +348,8 @@ const NewRequestIndex = () => {
           </Label>
           <Input
             aria-label="requestResourceType"
-            closeMenuOnSelect={false}
             disabled={true}
             id="requestResourceType"
-            isMulti
           />
         </Col>
       </Row>
