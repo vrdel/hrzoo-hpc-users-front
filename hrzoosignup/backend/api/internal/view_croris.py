@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from django.conf import settings
+from django.core.cache import cache
 
 import asyncio
 import uvloop
@@ -12,8 +13,8 @@ import aiohttp
 import json
 import datetime
 
-
 from aiohttp import client_exceptions, http_exceptions, ClientSession
+
 
 
 class CroRISInfo(APIView):
@@ -45,6 +46,15 @@ class CroRISInfo(APIView):
             if oib:
                 self.loop.run_until_complete(self._fetch_serie(oib))
                 self.loop.close()
+
+                cache.set('{oib}_croris', {
+                        'person_info': self.person_info,
+                        'projects_lead_info': self.projects_lead_info,
+                        'projects_lead_users': self.projects_lead_users,
+                        'projects_associate_info': self.projects_associate_info,
+                        'projects_associate_ids': self.projects_associate_ids,
+                    }
+                )
 
                 return Response({
                     'data': {
