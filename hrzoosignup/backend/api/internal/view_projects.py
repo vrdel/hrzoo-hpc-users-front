@@ -16,13 +16,45 @@ from backend import models
 import json
 import datetime
 
+class ProjectGeneral(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        state_obj = models.State.objects.get(name=request.data['state'])
+        request.data['state'] = state_obj.pk
+        request.data['is_active'] = True
+        request.data['date_submitted'] = datetime.datetime.now()
+
+        type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
+        request.data['project_type'] = type_obj.pk
+
+        serializer = ProjectSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            project_ins = serializer.instance
+            role_obj = models.Role.objects.get(name='lead')
+            userproject_obj = models.UserProject(user=request.user,
+                                                 project=project_ins,
+                                                 role=role_obj,
+                                                 date_joined=datetime.datetime.now())
+            userproject_obj.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            err_status = status.HTTP_400_BAD_REQUEST
+            err_response = {
+                'status': {
+                    'code': err_status,
+                    'message': json.dumps(serializer.errors)
+                }
+            }
+            return Response(err_response, status=err_status)
+
 
 class ProjectsResearch(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
-
-    def __init__(self):
-        pass
 
     def post(self, request):
         oib = request.user.person_oib
