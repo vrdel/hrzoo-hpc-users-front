@@ -57,6 +57,7 @@ class ProjectsResearch(APIView):
         request.data['state'] = state_obj.pk
         request.data['is_active'] = True
         request.data['date_submitted'] = datetime.datetime.now()
+        request.data['identifier'] = request.data['croris_identifier']
 
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
         request.data['project_type'] = type_obj.pk

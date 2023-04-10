@@ -153,7 +153,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     else
       dataToSend['science_software'] = []
     dataToSend['science_extrasoftware'] = data['scientificSoftwareExtra']
-    dataToSend['science_extrasoftware_help'] = data['scientificSoftwareHelp']
+    dataToSend['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
     dataToSend['science_field'] = data['scientificDomain']
     dataToSend['resources_numbers'] = {
       'nSlotsCPU': data['nSlotsCPU'],

@@ -79,6 +79,7 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
+            'identifier',
             'name',
             'reason',
             'date_start',

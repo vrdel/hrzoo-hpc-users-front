@@ -74,7 +74,7 @@ const MyRequests = () => {
                     Trajanje
                   </th>
                   <th className="fw-normal">
-                    Prijava
+                    Podnesen
                   </th>
                   <th className="fw-normal">
                     Tip
@@ -97,7 +97,7 @@ const MyRequests = () => {
                         </Tooltip>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        <Badge className="fw-normal" color="secondary">{ project.croris_identifier }</Badge>
+                        <Badge color="secondary">{ project.croris_identifier }</Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
                         <Link to={project.croris_identifier}>
@@ -120,7 +120,7 @@ const MyRequests = () => {
                         { convertToEuropean(project.date_submitted) }
                       </td>
                       <td className="align-middle text-center">
-                        <span className={`fw-normal badge ${TypeColor(project.project_type.name)}`} >
+                        <span className={`badge ${TypeColor(project.project_type.name)}`} >
                           { TypeString(project.project_type.name) }
                         </span>
                       </td>
@@ -153,6 +153,9 @@ const MyRequests = () => {
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
                 <tr className="border-bottom border-2 border-dark">
                   <th className="fw-normal">
+                    Stanje
+                  </th>
+                  <th className="fw-normal">
                     Šifra
                   </th>
                   <th className="fw-normal">
@@ -162,13 +165,10 @@ const MyRequests = () => {
                     Trajanje
                   </th>
                   <th className="fw-normal">
-                    Prijava
+                    Podnesen
                   </th>
                   <th className="fw-normal">
                     Tip
-                  </th>
-                  <th className="fw-normal">
-                    Radnje
                   </th>
                 </tr>
               </thead>
