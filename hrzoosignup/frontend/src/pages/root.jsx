@@ -7,7 +7,7 @@ import { ResourceTypesToSelect } from '../config/resource-types';
 import { listScientificDomain, mapDomainsToFields } from '../config/scientific-domain';
 import { listScientificSoftware } from '../config/scientific-software';
 import { buildOptionsFromArray } from '../utils/select-tools';
-import { AuthContextProvider } from '../utils/AuthContextProvider';
+import { AuthContextProvider } from '../components/AuthContextProvider';
 
 
 export const SharedData = React.createContext()

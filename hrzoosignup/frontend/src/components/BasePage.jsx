@@ -11,7 +11,7 @@ import '../styles/content.css';
 import { doLogout } from '../api/auth';
 import { fetchCroRIS } from '../api/croris';
 import { fetchNrProjects } from '../api/projects';
-import { AuthContext } from '../utils/AuthContextProvider';
+import { AuthContext } from '../components/AuthContextProvider.jsx';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
 import { useQuery, QueryClient } from '@tanstack/react-query';
 

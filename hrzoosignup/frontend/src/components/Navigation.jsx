@@ -16,7 +16,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
 import { ModalContext } from './BasePage'
-import { AuthContext } from '../utils/AuthContextProvider';
+import { AuthContext } from '../components/AuthContextProvider';
 
 
 const Navigation = () => {

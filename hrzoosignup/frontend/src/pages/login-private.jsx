@@ -21,7 +21,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/login.css';
 import { doUserPassLogin } from '../api/auth';
-import { AuthContext } from '../utils/AuthContextProvider';
+import { AuthContext } from '../components/AuthContextProvider.jsx';
 
 
 const LoginPrivate = () => {
