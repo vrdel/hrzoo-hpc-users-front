@@ -69,7 +69,7 @@ const GeneralRequest = ({projectType}) => {
       //queryClient.invalidateQueries('my-projects');
       toast.success(
         <span className="font-monospace text-dark">
-          Zahtjev temeljem istraživačkog projekta je uspješno podnesen
+          Zahtjev temeljem završnog rada/disertacije je uspješno podnesen
         </span>, {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
@@ -117,8 +117,8 @@ const GeneralRequest = ({projectType}) => {
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submitted'
-    // doAdd(dataToSend)
-    alert(JSON.stringify(data, null, 2));
+    doAdd(dataToSend)
+    // alert(JSON.stringify(dataToSend, null, 2));
   }
 
   return (
