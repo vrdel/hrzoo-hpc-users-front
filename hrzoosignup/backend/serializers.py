@@ -77,10 +77,6 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    users = UsersSerializerFiltered(many=True, read_only=True)
-    state = StateSerializer()
-    project_type = ProjectTypeSerializer()
-
     class Meta:
         fields = (
             'name',
@@ -113,6 +109,12 @@ class ProjectSerializer(serializers.ModelSerializer):
             'users',
         )
         model = models.Project
+
+
+class ProjectSerializerGet(ProjectSerializer):
+    users = UsersSerializerFiltered(many=True, read_only=True)
+    state = StateSerializer()
+    project_type = ProjectTypeSerializer()
 
 
 class RoleSerializer(serializers.ModelSerializer):
