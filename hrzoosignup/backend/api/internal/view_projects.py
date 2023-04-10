@@ -16,7 +16,7 @@ from backend import models
 import json
 import datetime
 
-class ProjectGeneral(APIView):
+class ProjectsGeneral(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
 
