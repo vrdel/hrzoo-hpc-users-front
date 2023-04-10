@@ -25,7 +25,7 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../utils/dates';
-import { StateIcons} from '../config/icon-states';
+import { StateIcons, StateString } from '../config/map-states';
 
 
 const MyRequests = () => {
@@ -106,7 +106,7 @@ const MyRequests = () => {
                           target={'Tooltip-' + index}
                           toggle={() => showTooltip(project.croris_identifier)}
                         >
-                          Tooltip Content!
+                          { StateString(project.state.name) }
                         </Tooltip>
                       </td>
                       <td className="p-3 align-middle text-center">
