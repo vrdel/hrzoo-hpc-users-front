@@ -6,7 +6,7 @@ import '../styles/footer.css';
 
 const Footer = () => {
   return (
-    <div id="hzsi-footer" className="align-self-center border rounded pristupacnost">
+    <div id="hzsi-footer" className="mt-2 shadow-sm align-self-center border rounded pristupacnost">
       {
         //<div className="text-center mt-2">
           //<Link to="/ui/izjava-pristupacnost">

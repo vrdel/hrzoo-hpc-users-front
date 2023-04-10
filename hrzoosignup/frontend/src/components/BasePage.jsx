@@ -101,7 +101,7 @@ const BasePage = ({sessionData=undefined}) => {
             </ModalContext.Provider>
           </Col>
         </Row>
-        <Row id="hzsi-contentwrap" className="pt-3 pb-3 border-start border-end rounded">
+        <Row id="hzsi-contentwrap" className="shadow-sm pt-3 pb-3 border-start border-end rounded">
           <Col>
             <Outlet />
           </Col>
