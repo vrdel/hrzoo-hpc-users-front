@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 from django.conf import settings
 from django.core.cache import cache
 
-from backend.serializers import ProjectSerializer, UserProjectSerializer
+from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
 from backend import models
 
 import json
@@ -101,6 +101,6 @@ class Projects(APIView):
         for up in up_obj:
             projects.append(up.project)
 
-        serializer = ProjectSerializer(projects, many=True)
+        serializer = ProjectSerializerGet(projects, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
