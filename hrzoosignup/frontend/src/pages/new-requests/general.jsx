@@ -26,7 +26,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import { toast } from 'react-toastify'
+import { addGeneralProject } from '../../api/projects';
 import '../../styles/datepicker.css';
+import { useMutation } from '@tanstack/react-query';
 
 
 const GeneralRequest = ({projectType}) => {
@@ -49,14 +52,72 @@ const GeneralRequest = ({projectType}) => {
           ]
         },
       ],
-      requestScientificSoftware: '',
-      requestScientificSoftwareExtra: '',
-      requestScientificSoftwareHelp: false
+      scientificSoftware: '',
+      scientificSoftwareExtra: '',
+      scientificSoftwareHelp: ''
     }
   });
 
+  const addMutation = useMutation({
+    mutationFn: (data) => {
+      return addGeneralProject(data)
+    },
+  })
+
+  const doAdd = (data) => addMutation.mutate(data, {
+    onSuccess: () => {
+      //queryClient.invalidateQueries('my-projects');
+      toast.success(
+        <span className="font-monospace text-dark">
+          Zahtjev temeljem istraživačkog projekta je uspješno podnesen
+        </span>, {
+          toastId: 'genproj-ok-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    },
+    onError: (error) => {
+      toast.error(
+        <span className="font-monospace text-dark">
+          Zahtjev nije bilo moguće podnijeti:
+          { error.message }
+        </span>, {
+          toastId: 'genproj-fail-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+  })
+
+
   const onSubmit = data => {
+    let dataToSend = new Object()
+
     data['project_type'] = projectType
+    dataToSend['date_end'] =  data['endDate']
+    dataToSend['date_start'] = data['startDate']
+    dataToSend['name'] = data['requestName']
+    dataToSend['reason'] = data['requestExplain']
+    dataToSend['project_type'] = projectType
+    if (data.scientificSoftware)
+      dataToSend['science_software'] = data.scientificSoftware.map(e => e.value)
+    else
+      dataToSend['science_software'] = []
+    dataToSend['science_extrasoftware'] = data['scientificSoftwareExtra']
+    dataToSend['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
+    dataToSend['science_field'] = data['scientificDomain']
+    dataToSend['resources_numbers'] = {
+      'nSlotsCPU': data['nSlotsCPU'],
+      'nSlotsGPU': data['nSlotsGPU'],
+      'nSlotsRAM': data['nRAM'],
+      'nTempGB': data['nTempGB'],
+      'nDiskGB': data['nDiskGB']
+    }
+    dataToSend['resources_type'] = data['requestResourceType']
+    dataToSend['state'] = 'submitted'
+    // doAdd(dataToSend)
     alert(JSON.stringify(data, null, 2));
   }
 
