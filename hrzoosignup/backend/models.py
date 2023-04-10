@@ -229,3 +229,7 @@ class UserProject(models.Model):
     )
     class Meta:
         unique_together = ['user', 'project', 'role']
+
+
+class ProjectCount(models.Model):
+    counter = models.IntegerField(null=True)
