@@ -1,0 +1,9 @@
+[
+  {
+    "model": "backend.ProjectCount",
+    "pk": 1,
+    "fields": {
+      "counter": 1
+     }
+  }
+]
