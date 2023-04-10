@@ -98,6 +98,11 @@ class ProjectType(models.Model):
 
 
 class Project(models.Model):
+    identifier = models.CharField(
+        _('identifier'),
+        max_length=32,
+        unique=True
+    )
     name = models.CharField(
         _('name'),
         max_length=256,

@@ -26,7 +26,7 @@ class ProjectsResearch(APIView):
 
     def post(self, request):
         oib = request.user.person_oib
-        # TODO: validate data picked up from frontend with the CroRIS cached
+        # TODO: validate date data picked up from frontend with the CroRIS cached
         # data
 
         croris_data = cache.get('{oib}_croris')
