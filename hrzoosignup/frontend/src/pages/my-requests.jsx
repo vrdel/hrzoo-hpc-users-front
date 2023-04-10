@@ -9,6 +9,7 @@ import {
   Collapse,
   Button,
   InputGroup,
+  Placeholder,
   InputGroupText,
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -100,6 +101,67 @@ const MyRequests = () => {
                       </td>
                     </tr>
                   )
+                }
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+      </>
+    )
+  else if (nrProjects?.length === 0)
+    return (
+      <>
+        <Row>
+          <PageTitle pageTitle={pageTitle}/>
+        </Row>
+        <Row className="mt-4 ms-1 me-1 mb-5">
+          <Col>
+            <Table responsive hover className="shadow-sm">
+              <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+                <tr className="border-bottom border-2 border-dark">
+                  <th className="fw-normal">
+                    Šifra
+                  </th>
+                  <th className="fw-normal">
+                    Naziv
+                  </th>
+                  <th className="fw-normal">
+                    Trajanje
+                  </th>
+                  <th className="fw-normal">
+                    Prijava
+                  </th>
+                  <th className="fw-normal">
+                    Tip
+                  </th>
+                  <th className="fw-normal">
+                    Radnje
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  [...Array(3)].map((_, i) => (
+                    <tr key={i}>
+                      <td colSpan="6" className="m-0 p-0 bg-light border-0">
+                        <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+                      </td>
+                    </tr>
+                  ))
+                }
+                <tr key="4">
+                  <td colSpan="6" className="table-light border-0 text-muted text-center p-3 fs-3">
+                    Nemate podnesenih zahtjeva
+                  </td>
+                </tr>
+                {
+                  [...Array(3)].map((_, i) => (
+                    <tr key={i + 6}>
+                      <td colSpan="6" className="m-0 p-0 bg-light border-0">
+                        <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+                      </td>
+                    </tr>
+                  ))
                 }
               </tbody>
             </Table>
