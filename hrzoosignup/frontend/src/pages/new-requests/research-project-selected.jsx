@@ -27,9 +27,9 @@ import ResourceFields from '../../components/fields-request/ResourceFields';
 import BaseNewScientificDomain from '../../components/fields-request/ScientificDomain';
 import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
 import { ErrorMessage } from '@hookform/error-message';
-import { parse } from 'date-fns';
 import { toast } from 'react-toastify'
 import { addResearchProject } from '../../api/projects';
+import { convertToIso8601 } from '../../utils/dates';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -134,17 +134,17 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     let dataToSend = new Object()
 
     dataToSend['croris_collaborators'] = croRisProjects['data']['projects_lead_users'][projId]
-    dataToSend['croris_end'] = parse(projectTarget.end, 'dd.MM.yyyy', new Date()), 'yyyy-MM-dd'
+    dataToSend['croris_end'] = convertToIso8601(projectTarget.end)
     dataToSend['croris_finance'] = projectTarget.finance
     dataToSend['croris_id'] = projId
     dataToSend['croris_identifier'] = projectTarget.identifier
     dataToSend['croris_lead'] = `${croRisProjects['data']['person_info']['first_name']} ${croRisProjects['data']['person_info']['last_name']}`
-    dataToSend['croris_start'] = parse(projectTarget.start, 'dd.MM.yyyy', new Date()), 'yyyy-MM-dd'
+    dataToSend['croris_start'] = convertToIso8601(projectTarget.start)
     dataToSend['croris_summary'] = projectTarget.summary
     dataToSend['croris_title'] = projectTarget.title
     dataToSend['croris_type'] = projectTarget.type
-    dataToSend['date_end'] = parse(projectTarget.end, 'dd.MM.yyyy', new Date())
-    dataToSend['date_start'] = parse(projectTarget.start, 'dd.MM.yyyy', new Date()), 'yyyy-MM-dd'
+    dataToSend['date_end'] =  convertToIso8601(projectTarget.end)
+    dataToSend['date_start'] = convertToIso8601(projectTarget.start)
     dataToSend['name'] = projectTarget.title
     dataToSend['reason'] = data['requestExplain']
     dataToSend['project_type'] = projectType
