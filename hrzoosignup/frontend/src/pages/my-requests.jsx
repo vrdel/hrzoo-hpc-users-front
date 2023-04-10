@@ -6,26 +6,20 @@ import {
   Col,
   Row,
   Table,
-  Collapse,
   Button,
-  InputGroup,
   Badge,
   Tooltip,
   Placeholder,
-  InputGroupText,
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fetchNrProjects } from '../api/projects';
 import { useQuery } from '@tanstack/react-query';
 import {
-  faCopy,
-  faArrowDown,
   faMagnifyingGlass,
-  faKey,
-  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../utils/dates';
 import { StateIcons, StateString } from '../config/map-states';
+import { TypeString, TypeColor } from '../config/map-projecttypes';
 
 
 const MyRequests = () => {
@@ -110,7 +104,7 @@ const MyRequests = () => {
                         </Tooltip>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        <Badge color="secondary">{ project.croris_identifier }</Badge>
+                        <Badge className="fw-normal" color="secondary">{ project.croris_identifier }</Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
                         { project.name}
@@ -131,8 +125,8 @@ const MyRequests = () => {
                         { convertToEuropean(project.date_submitted) }
                       </td>
                       <td className="align-middle text-center">
-                        <span className="badge" style={{backgroundColor: "#c00000"}}>
-                          { project.project_type.name }
+                        <span className={`fw-normal badge ${TypeColor(project.project_type.name)}`} >
+                          { TypeString(project.project_type.name) }
                         </span>
                       </td>
                       <td className="align-middle text-center">
