@@ -57,7 +57,7 @@ const NewRequest = () => {
           <CustomReactSelect
             id="requestType"
             aria-label="requestType"
-            className="ms-5"
+            className="ms-5 shadow-sm"
             placeholder="Odaberi"
             controlWidth="400px"
             onChange={(e) => {
