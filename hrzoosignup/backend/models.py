@@ -183,7 +183,8 @@ class Project(models.Model):
         blank=True,
     )
     croris_id = models.PositiveBigIntegerField(
-        _("CroRIS id")
+        _("CroRIS id"),
+        null=True
     )
     croris_summary =  models.CharField(
         _("CroRIS summary"),
