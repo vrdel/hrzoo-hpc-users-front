@@ -48,7 +48,9 @@ const NewRequest = () => {
         <Col className="d-inline-flex align-items-center">
           <Label
             htmlFor="requestType"
+            className="ps-2 pe-2 mt-1 pt-1 pb-1 text-white"
             aria-label="requestType"
+            style={{backgroundColor: "#b04c46"}}
           >
             Tip zahtjeva:
           </Label>
