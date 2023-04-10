@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../api/croris';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
 
 
 const NewRequest = () => {

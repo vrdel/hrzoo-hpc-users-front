@@ -10,6 +10,7 @@ import {
   Button,
   InputGroup,
   Badge,
+  Tooltip,
   Placeholder,
   InputGroupText,
 } from 'reactstrap';
@@ -24,6 +25,7 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../utils/dates';
+import { StateIcons} from '../config/icon-states';
 
 
 const MyRequests = () => {
@@ -34,6 +36,25 @@ const MyRequests = () => {
       queryKey: ['projects'],
       queryFn: fetchNrProjects
   })
+
+  const [tooltipOpened, setTooltipOpened] = useState(undefined);
+  const showTooltip = (toolid) => {
+    let showed = new Object()
+    if (tooltipOpened === undefined && toolid) {
+      showed[toolid] = true
+      setTooltipOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(tooltipOpened))
+      showed[toolid] = !showed[toolid]
+      setTooltipOpened(showed)
+    }
+
+  }
+  const isOpened = (toolid) => {
+    if (tooltipOpened !== undefined)
+      return tooltipOpened[toolid]
+  }
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
@@ -77,8 +98,16 @@ const MyRequests = () => {
                 {
                   nrProjects.map((project, index) =>
                     <tr key={index}>
-                      <td className="p-3 align-middle text-center">
-                        { project.state.name }
+                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
+                        { StateIcons(project.state.name) }
+                        <Tooltip
+                          placement='top'
+                          isOpen={isOpened(project.croris_identifier)}
+                          target={'Tooltip-' + index}
+                          toggle={() => showTooltip(project.croris_identifier)}
+                        >
+                          Tooltip Content!
+                        </Tooltip>
                       </td>
                       <td className="p-3 align-middle text-center">
                         <Badge color="secondary">{ project.croris_identifier }</Badge>
