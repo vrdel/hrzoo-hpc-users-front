@@ -89,18 +89,18 @@ const MyRequests = () => {
                         { StateIcons(project.state.name) }
                         <Tooltip
                           placement='top'
-                          isOpen={isOpened(project.croris_identifier)}
+                          isOpen={isOpened(project.identifier)}
                           target={'Tooltip-' + index}
-                          toggle={() => showTooltip(project.croris_identifier)}
+                          toggle={() => showTooltip(project.identifier)}
                         >
                           { StateString(project.state.name) }
                         </Tooltip>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        <Badge color="secondary">{ project.croris_identifier }</Badge>
+                        <Badge color="secondary">{ project.identifier }</Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        <Link to={project.croris_identifier}>
+                        <Link to={project.identifier }>
                           { project.name}
                         </Link>
                       </td>
