@@ -1,5 +1,9 @@
-import { parse, format } from 'date-fns';
+import { parse, format, formatISO, parseISO } from 'date-fns';
 
 export function convertToIso8601(ddmmyyyy) {
-  return format(parse(ddmmyyyy, 'dd.MM.yyyy', new Date()), 'yyyy-MM-dd')
+  return formatISO(parse(ddmmyyyy, 'dd.MM.yyyy', new Date()))
+}
+
+export function convertToEuropean(yyyymmdd) {
+  return format(parseISO(yyyymmdd), 'dd.MM.yyyy')
 }
