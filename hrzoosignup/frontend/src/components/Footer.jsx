@@ -1,6 +1,5 @@
 import React from 'react'
 import SrceBigLogo from '../assets/pravisrce.png';
-import { Link } from 'react-router-dom';
 import '../styles/footer.css';
 
 

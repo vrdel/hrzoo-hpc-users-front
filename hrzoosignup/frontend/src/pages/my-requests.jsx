@@ -9,6 +9,7 @@ import {
   Collapse,
   Button,
   InputGroup,
+  Badge,
   Placeholder,
   InputGroupText,
 } from 'reactstrap';
@@ -18,9 +19,11 @@ import { useQuery } from '@tanstack/react-query';
 import {
   faCopy,
   faArrowDown,
+  faMagnifyingGlass,
   faKey,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
+import { convertToEuropean } from '../utils/dates';
 
 
 const MyRequests = () => {
@@ -48,6 +51,9 @@ const MyRequests = () => {
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
                 <tr className="border-bottom border-2 border-dark">
                   <th className="fw-normal">
+                    Stanje
+                  </th>
+                  <th className="fw-normal">
                     Šifra
                   </th>
                   <th className="fw-normal">
@@ -72,23 +78,37 @@ const MyRequests = () => {
                   nrProjects.map((project, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
-                        { project.croris_identifier }
+                        { project.state.name }
                       </td>
-                      <td className="p-3 align-middle text-center font-monospace" style={{maxLength: '5'}}>
+                      <td className="p-3 align-middle text-center">
+                        <Badge color="secondary">{ project.croris_identifier }</Badge>
+                      </td>
+                      <td className="p-3 align-middle text-center">
                         { project.name}
                       </td>
-                      <td className="align-middle text-center">
-                        { project.date_start } { project.date_end}
+                      <td className="align-middle text-center fs-6 font-monospace">
+                        <Row>
+                          <Col>
+                            { convertToEuropean(project.date_start) }
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            { convertToEuropean(project.date_end)}
+                          </Col>
+                        </Row>
+                      </td>
+                      <td className="align-middle text-center fs-6 font-monospace">
+                        { convertToEuropean(project.date_submitted) }
                       </td>
                       <td className="align-middle text-center">
-                        { project.date_submitted }
+                        <span className="badge" style={{backgroundColor: "#c00000"}}>
+                          { project.project_type.name }
+                        </span>
                       </td>
                       <td className="align-middle text-center">
-                        { project.project_type.name }
-                      </td>
-                      <td className="align-middle text-center">
-                        <Button size="sm" color="primary">
-                          <FontAwesomeIcon icon={faCopy} />
+                        <Button color="light">
+                          <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </Button>
                       </td>
                     </tr>
@@ -97,7 +117,7 @@ const MyRequests = () => {
                 {
                   nrProjects.length < 5 && [...Array(5 - nrProjects.length)].map((_, i) =>
                     <tr key={i + 5}>
-                      <td colSpan="6" style={{height: '60px', minHeight: '60px'}}>
+                      <td colSpan="7" style={{height: '60px', minHeight: '60px'}}>
                       </td>
                     </tr>
                   )
