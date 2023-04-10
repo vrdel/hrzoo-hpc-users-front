@@ -116,7 +116,7 @@ const NewPublicKey = () => {
         </Row>
         <Row>
           <Col className="mt-4" sm={{size: 3, offset: 1}}>
-            <Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1 rounded" style={{backgroundColor: "#b04c46"}}>
+            <Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
               Ime ključa:
             </Label>
             <InputGroup>
@@ -128,7 +128,7 @@ const NewPublicKey = () => {
                   <Input
                     {...field}
                     placeholder="moj-laptop"
-                    className={`form-control fs-5 ${errors && errors.name && "is-invalid"}`}
+                    className={`form-control shadow-sm fs-5 ${errors && errors.name && "is-invalid"}`}
                   />
                 }
               />
@@ -146,12 +146,12 @@ const NewPublicKey = () => {
             </Row>
             <Row>
               <Col>
-                <FontAwesomeIcon icon={faKey} className="ms-5 text-light fa-10x"/>
+                <FontAwesomeIcon icon={faKey} className="ms-5 fa-10x" style={{color: "#f1f1f1"}}/>
               </Col>
             </Row>
           </Col>
           <Col className="ms-4" sm={{size: 7}}>
-            <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white rounded" style={{backgroundColor: "#b04c46"}} for="public_key">
+            <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
               Javni ključ:
             </Label>
             <InputGroup>
@@ -166,7 +166,7 @@ const NewPublicKey = () => {
                     aria-label="public_key"
                     type="text"
                     placeholder="ssh-rsa AAAAB3NzaC1yc2EAAAA... me@laptop"
-                    className={`font-monospace fs-5 form-control ${errors && errors.public_key ? "is-invalid" : ''}`}
+                    className={`shadow-sm bg-body rounded font-monospace fs-5 form-control ${errors && errors.public_key ? "is-invalid" : ''}`}
                     rows="12"
                   />
                 }

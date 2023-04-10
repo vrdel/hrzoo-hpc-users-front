@@ -124,7 +124,7 @@ const PublicKeys = () => {
           onYes={onYesCallback} />
         <Row className="mt-4 ms-4 me-4 mb-5">
           <Col>
-            <Table responsive hover>
+            <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
                 <tr className="border-bottom border-2 border-dark">
                   <th className="fw-normal">
@@ -141,7 +141,7 @@ const PublicKeys = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-light">
+              <tbody>
                 { sshKeys.map((key, index) =>
                   <>
                     <tr key={index}>
@@ -198,6 +198,14 @@ const PublicKeys = () => {
                     </tr>
                   </>
                 )}
+                {
+                  sshKeys.length < 5 && [...Array(5 - sshKeys.length)].map((e, i) =>
+                    <tr key={i + 5}>
+                      <td colSpan="4" style={{height: "40px"}}>
+                      </td>
+                    </tr>
+                  )
+                }
               </tbody>
             </Table>
           </Col>
@@ -223,7 +231,7 @@ const PublicKeys = () => {
         </Row>
         <Row className="mt-4 ms-4 me-4 mb-3">
           <Col>
-            <Table responsive hover>
+            <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
                 <tr className="border-bottom border-2 border-dark">
                   <th className="fw-normal">
@@ -240,7 +248,7 @@ const PublicKeys = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-light">
+              <tbody>
                 {
                   [...Array(3)].map((_, i) => (
                     <tr key={i}>
