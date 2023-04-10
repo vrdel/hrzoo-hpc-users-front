@@ -3,23 +3,19 @@ import { SharedData } from './root';
 import { PageTitle } from '../components/PageTitle';
 import '../styles/content.css';
 import {
+  Badge,
   Col,
+  Placeholder,
   Row,
   Table,
-  Button,
-  Badge,
   Tooltip,
-  Placeholder,
 } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fetchNrProjects } from '../api/projects';
 import { useQuery } from '@tanstack/react-query';
-import {
-  faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../utils/dates';
 import { StateIcons, StateString } from '../config/map-states';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
+import { Link } from 'react-router-dom';
 
 
 const MyRequests = () => {
@@ -83,9 +79,6 @@ const MyRequests = () => {
                   <th className="fw-normal">
                     Tip
                   </th>
-                  <th className="fw-normal">
-                    Radnje
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -107,7 +100,9 @@ const MyRequests = () => {
                         <Badge className="fw-normal" color="secondary">{ project.croris_identifier }</Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        { project.name}
+                        <Link to={project.croris_identifier}>
+                          { project.name}
+                        </Link>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         <Row>
@@ -129,18 +124,13 @@ const MyRequests = () => {
                           { TypeString(project.project_type.name) }
                         </span>
                       </td>
-                      <td className="align-middle text-center">
-                        <Button color="light">
-                          <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </Button>
-                      </td>
                     </tr>
                   )
                 }
                 {
                   nrProjects.length < 5 && [...Array(5 - nrProjects.length)].map((_, i) =>
                     <tr key={i + 5}>
-                      <td colSpan="7" style={{height: '60px', minHeight: '60px'}}>
+                      <td colSpan="6" style={{height: '60px', minHeight: '60px'}}>
                       </td>
                     </tr>
                   )
