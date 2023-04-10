@@ -26,6 +26,9 @@ class ProjectsGeneral(APIView):
         request.data['is_active'] = True
         request.data['date_submitted'] = datetime.datetime.now()
 
+        cobj = models.ProjectCount.objects.get()
+        request.data['identifier'] = 'NR-{}-{:03}'.format(datetime.datetime.now().strftime('%Y-%m'), cobj.counter)
+
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
         request.data['project_type'] = type_obj.pk
 
@@ -39,7 +42,8 @@ class ProjectsGeneral(APIView):
                                                  role=role_obj,
                                                  date_joined=datetime.datetime.now())
             userproject_obj.save()
-
+            cobj.counter += 1
+            cobj.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
