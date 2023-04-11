@@ -115,11 +115,67 @@ const MyInfo = () => {
         </Col>
       </Row>
 
+      <Row style={{height: "40px"}}>
+      </Row>
+
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            CroRIS:
+            Sustav CroRIS:
           </Label>
+        </Col>
+      </Row>
+      <Row className="mt-3 ms-2">
+        <Col className="ms-3" md={{size: 2}}>
+          <Label
+            htmlFor="dirName"
+            aria-label="dirName"
+            className="fs-5 fw-bold"
+          >
+            Ime
+          </Label>
+        </Col>
+        <Col className="ms-3" md={{size: 2}}>
+          <Label
+            htmlFor="dirLast"
+            aria-label="dirLastName"
+            className="fs-5 fw-bold"
+          >
+            Prezime
+          </Label>
+        </Col>
+        <Col className="ms-3" md={{size: 3}}>
+          <Label
+            htmlFor="dirUniqueId"
+            aria-label="dirUniqueId"
+            className="fs-5 fw-bold"
+          >
+            Korisnička oznaka
+          </Label>
+        </Col>
+        <Col className="ms-3" md={{size: 4}}>
+          <Label
+            htmlFor="dirEmail"
+            aria-label="dirEmail"
+            className="fs-5 fw-bold"
+          >
+            Email
+          </Label>
+        </Col>
+
+        <div className="w-100"></div>
+
+        <Col className="ms-3" md={{size: 2}}>
+          { userDetails.first_name }
+        </Col>
+        <Col className="ms-3" md={{size: 2}}>
+          { userDetails.last_name }
+        </Col>
+        <Col className="ms-3" md={{size: 3}}>
+          { userDetails.person_uniqueid }
+        </Col>
+        <Col className="ms-3" md={{size: 4}}>
+          { userDetails.person_mail }
         </Col>
       </Row>
     </>
