@@ -37,7 +37,7 @@ const BaseRoutes = () => {
             <Route path="prijava" element={<LoginPublic />}/>
             <Route element={<BasePage sessionData={sessionData} />}>
               {
-                sessionData?.userdetails?.is_staff &&
+                ( sessionData?.userdetails?.is_staff || sessionData?.userdetails?.is_superuser) &&
                 <Route path="upravljanje-zahtjevima" element={
                   <ControlRequests />
                 }/>
