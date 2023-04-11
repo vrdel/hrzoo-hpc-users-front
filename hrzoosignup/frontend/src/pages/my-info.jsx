@@ -9,70 +9,79 @@ import { useQuery } from '@tanstack/react-query';
 
 const TableCrorisProjects = ({leadData, associateData}) => {
   return (
-    <Table responsive hover className="shadow-sm">
-      <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-        <tr className="border-bottom border-2 border-dark">
-          <th className="fw-normal">
-            Naziv
-          </th>
-          <th className="fw-normal">
-            Uloga
-          </th>
-          <th className="fw-normal">
-            Trajanje
-          </th>
-          <th className="fw-normal">
-            Šifra
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          leadData && leadData.map((project, index) =>
-            <tr key={index}>
-              <td className="p-3 fw-bold align-middle text-center">
-                { project['title'] }
-              </td>
-              <td className="p-3 align-middle text-center">
-                <Badge className="fs-6 fw-normal" color="success">
-                  voditelj
-                </Badge>
-              </td>
-              <td className="align-middle text-center fs-6 font-monospace">
-                { project['start'] }<br/>{ project['end']}
-              </td>
-              <td className="align-middle text-center fs-6">
-                <Badge className="fs-6 fw-normal" color="secondary">
-                  { project['identifier'] }
-                </Badge>
-              </td>
+    <>
+      <Col md={{size: 12}}>
+        <Table responsive hover className="shadow-sm">
+          <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+            <tr className="border-bottom border-2 border-dark">
+              <th className="fw-normal">
+                Naziv
+              </th>
+              <th className="fw-normal">
+                Uloga
+              </th>
+              <th className="fw-normal">
+                Trajanje
+              </th>
+              <th className="fw-normal">
+                Šifra
+              </th>
             </tr>
-          )
-        }
-        {
-          associateData && associateData.map((project, index) =>
-            <tr key={index}>
-              <td className="p-3 fw-bold align-middle text-center">
-                { project['title'] }
-              </td>
-              <td className="p-3 align-middle text-center">
-                <Badge className="fs-6 fw-normal" color="primary">
-                  suradnik
-                </Badge>
-              </td>
-              <td className="align-middle text-center fs-6 font-monospace">
-                { project['start'] }<br/>{ project['end']}
-              </td>
-              <td className="align-middle text-center fs-6">
-                <Badge className="fs-6 fw-normal" color="secondary">
-                  { project['identifier'] }
-                </Badge>
-              </td>
-            </tr>
-          )
-        }
-      </tbody>
-    </Table>
+          </thead>
+          <tbody>
+            {
+              leadData && leadData.map((project, index) =>
+                <tr key={index}>
+                  <td className="p-3 fw-bold align-middle text-center">
+                    { project['title'] }
+                  </td>
+                  <td className="p-3 align-middle text-center">
+                    <Badge className="fs-6 fw-normal" color="success">
+                      voditelj
+                    </Badge>
+                  </td>
+                  <td className="align-middle text-center fs-6 font-monospace">
+                    { project['start'] }<br/>{ project['end']}
+                  </td>
+                  <td className="align-middle text-center fs-6">
+                    <Badge className="fs-6 fw-normal" color="secondary">
+                      { project['identifier'] }
+                    </Badge>
+                  </td>
+                </tr>
+              )
+            }
+            {
+              associateData && associateData.map((project, index) =>
+                <tr key={index}>
+                  <td className="p-3 fw-bold align-middle text-center">
+                    { project['title'] }
+                  </td>
+                  <td className="p-3 align-middle text-center">
+                    <Badge className="fs-6 fw-normal" color="primary">
+                      suradnik
+                    </Badge>
+                  </td>
+                  <td className="align-middle text-center fs-6 font-monospace">
+                    { project['start'] }<br/>{ project['end']}
+                  </td>
+                  <td className="align-middle text-center fs-6">
+                    <Badge className="fs-6 fw-normal" color="secondary">
+                      { project['identifier'] }
+                    </Badge>
+                  </td>
+                </tr>
+              )
+            }
+          </tbody>
+        </Table>
+      </Col>
+      <Col className="fst-italic d-flex justify-content-center align-items-center">
+        <small>
+          Aktivni projekti na kojima sudjelujete i koji su registrirani u sustavu CroRIS
+        </small>
+      </Col>
+    </>
   )
 }
 
@@ -260,16 +269,9 @@ const MyInfo = () => {
           </Col>
         </Row>
         <Row noGutters className="ms-2 me-3 mb-5 d-flex justify-content-center align-items-center">
-          <Col md={{size: 12}}>
-            <TableCrorisProjects
-              leadData={croRisProjects['data']['projects_lead_info']}
-              associateData={croRisProjects['data']['projects_associate_info']}/>
-          </Col>
-          <Col className="fst-italic d-flex justify-content-center align-items-center">
-            <small>
-              Aktivni projekti na kojima sudjelujete i koji su registrirani u sustavu CroRIS
-            </small>
-          </Col>
+          <TableCrorisProjects
+            leadData={croRisProjects['data']['projects_lead_info']}
+            associateData={croRisProjects['data']['projects_associate_info']}/>
         </Row>
       </>
     )
