@@ -3,6 +3,7 @@ import { SharedData } from './root';
 import { PageTitle } from '../components/PageTitle';
 import '../styles/content.css';
 import {
+  Button,
   Badge,
   Col,
   Placeholder,
@@ -15,7 +16,10 @@ import { useQuery } from '@tanstack/react-query';
 import { convertToEuropean } from '../utils/dates';
 import { StateIcons, StateString } from '../config/map-states';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
-import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faMagnifyingGlass,
+} from '@fortawesome/free-solid-svg-icons';
 
 
 const MyRequests = () => {
@@ -79,6 +83,9 @@ const MyRequests = () => {
                   <th className="fw-normal">
                     Tip
                   </th>
+                  <th className="fw-normal">
+                    Radnje
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -100,9 +107,7 @@ const MyRequests = () => {
                         <Badge color="secondary">{ project.identifier }</Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        <Link to={project.identifier }>
-                          { project.name}
-                        </Link>
+                        { project.name}
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         <Row>
@@ -124,13 +129,18 @@ const MyRequests = () => {
                           { TypeString(project.project_type.name) }
                         </span>
                       </td>
+                      <td className="align-middle text-center">
+                        <Button color="light">
+                          <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        </Button>
+                      </td>
                     </tr>
                   )
                 }
                 {
                   nrProjects.length < 5 && [...Array(5 - nrProjects.length)].map((_, i) =>
                     <tr key={i + 5}>
-                      <td colSpan="6" style={{height: '60px', minHeight: '60px'}}>
+                      <td colSpan="7" style={{height: '60px', minHeight: '60px'}}>
                       </td>
                     </tr>
                   )
@@ -169,6 +179,9 @@ const MyRequests = () => {
                   </th>
                   <th className="fw-normal">
                     Tip
+                  </th>
+                  <th className="fw-normal">
+                    Radnje
                   </th>
                 </tr>
               </thead>

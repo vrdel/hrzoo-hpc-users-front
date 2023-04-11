@@ -16,7 +16,7 @@ const NotFound = () => {
     <Container fluid className="pt-1 d-flex align-items-center justify-content-center" style={{minHeight: '100vh'}}>
       <Row>
         <Col>
-          <Card className="shadow-lg" style={{minHeight: '50vh'}}>
+          <Card className="shadow-sm" style={{minHeight: '50vh'}}>
             <CardHeader className="fs-2 bg-danger fw-bold text-center text-white">
               Griješka! SRCE mi se slama!
             </CardHeader>

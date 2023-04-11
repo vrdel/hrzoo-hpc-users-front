@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Nav,
   NavItem,
@@ -10,17 +10,32 @@ import {
   faBook,
   faUsers,
   faKey,
-  faCircleInfo
+  faCircleInfo,
+  faStamp
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
+import { AuthContext } from '../components/AuthContextProvider';
 
 
 const NavigationLinks = () => {
   const activeBgColor = '#b04c46';
+  const { userDetails } = useContext(AuthContext);
 
   return (
     <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex sticky-top">
-      <NavItem key='moji-zahtjevi' className='ms-3 mt-1'>
+      {
+        userDetails.is_staff &&
+        <NavItem key='upravljanje-zahtjevima' className='ms-3 mt-1'>
+          <NavLink
+            style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+            className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+            to='/ui/upravljanje-zahtjevima'>
+            <FontAwesomeIcon icon={faStamp} />{' '}
+            Upravljanje zahtjevima
+          </NavLink>
+        </NavItem>
+      }
+      <NavItem key='moji-zahtjevi' className={`${userDetails.is_staff ? 'mt-1' : 'ms-3 mt-1'}`}>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}

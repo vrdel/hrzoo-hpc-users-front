@@ -7,6 +7,7 @@ import LoginPrivate from './pages/login-private';
 import LoginPublic from './pages/login-public';
 import MyRequests from './pages/my-requests';
 import NewRequest from './pages/new-request';
+import ControlRequests from './pages/control-requests';
 import ResearchProjectRequest from './pages/new-requests/research-project';
 import ResearchProjectRequestSelected from './pages/new-requests/research-project-selected';
 import GeneralRequest from './pages/new-requests/general';
@@ -35,6 +36,12 @@ const BaseRoutes = () => {
             <Route path="prijava-priv" element={<LoginPrivate />}/>
             <Route path="prijava" element={<LoginPublic />}/>
             <Route element={<BasePage sessionData={sessionData} />}>
+              {
+                sessionData.userdetails.is_staff &&
+                <Route path="upravljanje-zahtjevima" element={
+                  <ControlRequests />
+                }/>
+              }
               <Route path="moji-zahtjevi" element={
                 <MyRequests />
               }/>

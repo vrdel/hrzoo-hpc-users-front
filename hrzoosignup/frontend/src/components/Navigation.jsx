@@ -33,7 +33,7 @@ const Navigation = () => {
       <Nav navbar className="m-1">
         <span className="pl-3 font-weight-bold text-center">
           <h2>
-            Zahtjev za korištenjem usluge Napredno računanje
+            Zahtjev za korištenje usluge Napredno računanje
           </h2>
         </span>
       </Nav>
