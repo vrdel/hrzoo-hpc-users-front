@@ -8,81 +8,121 @@ import { useQuery } from '@tanstack/react-query';
 
 
 const TableCrorisProjects = ({leadData, associateData}) => {
-  return (
-    <>
-      <Col md={{size: 12}}>
-        <Table responsive hover className="shadow-sm">
-          <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-            <tr className="border-bottom border-2 border-dark">
-              <th className="fw-normal">
-                Naziv
-              </th>
-              <th className="fw-normal">
-                Uloga
-              </th>
-              <th className="fw-normal">
-                Trajanje
-              </th>
-              <th className="fw-normal">
-                Šifra
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              leadData && leadData.map((project, index) =>
-                <tr key={index}>
-                  <td className="p-3 fw-bold align-middle text-center">
-                    { project['title'] }
-                  </td>
-                  <td className="p-3 align-middle text-center">
-                    <Badge className="fs-6 fw-normal" color="success">
-                      voditelj
-                    </Badge>
-                  </td>
-                  <td className="align-middle text-center fs-6 font-monospace">
-                    { project['start'] }<br/>{ project['end']}
-                  </td>
-                  <td className="align-middle text-center fs-6">
-                    <Badge className="fs-6 fw-normal" color="secondary">
-                      { project['identifier'] }
-                    </Badge>
-                  </td>
-                </tr>
-              )
-            }
-            {
-              associateData && associateData.map((project, index) =>
-                <tr key={index}>
-                  <td className="p-3 fw-bold align-middle text-center">
-                    { project['title'] }
-                  </td>
-                  <td className="p-3 align-middle text-center">
-                    <Badge className="fs-6 fw-normal" color="primary">
-                      suradnik
-                    </Badge>
-                  </td>
-                  <td className="align-middle text-center fs-6 font-monospace">
-                    { project['start'] }<br/>{ project['end']}
-                  </td>
-                  <td className="align-middle text-center fs-6">
-                    <Badge className="fs-6 fw-normal" color="secondary">
-                      { project['identifier'] }
-                    </Badge>
-                  </td>
-                </tr>
-              )
-            }
-          </tbody>
-        </Table>
-      </Col>
-      <Col className="fst-italic d-flex justify-content-center align-items-center">
-        <small>
-          Aktivni projekti na kojima sudjelujete i koji su registrirani u sustavu CroRIS
-        </small>
-      </Col>
-    </>
+  const CrorisTableHead = () => (
+    <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+      <tr className="border-bottom border-2 border-dark">
+        <th className="fw-normal">
+          Naziv
+        </th>
+        <th className="fw-normal">
+          Uloga
+        </th>
+        <th className="fw-normal">
+          Trajanje
+        </th>
+        <th className="fw-normal">
+          Šifra
+        </th>
+      </tr>
+    </thead>
   )
+
+  if ((leadData && leadData.length > 0) || (associateData && associateData.length > 0))
+    return (
+      <>
+        <Col md={{size: 12}}>
+          <Table responsive hover className="shadow-sm">
+            <CrorisTableHead />
+            <tbody>
+              {
+                leadData && leadData.map((project, index) =>
+                  <tr key={index}>
+                    <td className="p-3 fw-bold align-middle text-center">
+                      { project['title'] }
+                    </td>
+                    <td className="p-3 align-middle text-center">
+                      <Badge className="fs-6 fw-normal" color="success">
+                        voditelj
+                      </Badge>
+                    </td>
+                    <td className="align-middle text-center fs-6 font-monospace">
+                      { project['start'] }<br/>{ project['end']}
+                    </td>
+                    <td className="align-middle text-center fs-6">
+                      <Badge className="fs-6 fw-normal" color="secondary">
+                        { project['identifier'] }
+                      </Badge>
+                    </td>
+                  </tr>
+                )
+              }
+              {
+                associateData && associateData.map((project, index) =>
+                  <tr key={index}>
+                    <td className="p-3 fw-bold align-middle text-center">
+                      { project['title'] }
+                    </td>
+                    <td className="p-3 align-middle text-center">
+                      <Badge className="fs-6 fw-normal" color="primary">
+                        suradnik
+                      </Badge>
+                    </td>
+                    <td className="align-middle text-center fs-6 font-monospace">
+                      { project['start'] }<br/>{ project['end']}
+                    </td>
+                    <td className="align-middle text-center fs-6">
+                      <Badge className="fs-6 fw-normal" color="secondary">
+                        { project['identifier'] }
+                      </Badge>
+                    </td>
+                  </tr>
+                )
+              }
+            </tbody>
+          </Table>
+        </Col>
+        <Col className="fst-italic d-flex justify-content-center align-items-center">
+          <small>
+            Aktivni projekti na kojima sudjelujete i koji su registrirani u sustavu CroRIS
+          </small>
+        </Col>
+      </>
+    )
+  else
+    return (
+      <>
+        <Col md={{size: 12}}>
+          <Table responsive hover className="shadow-sm">
+            <CrorisTableHead />
+            <tbody>
+              {
+                [...Array(1)].map((_, i) => (
+                  <tr key={i}>
+                    <td colSpan="4" className="m-0 p-0 bg-light border-0">
+                      <Placeholder size="lg" xs={12} style={{height: '20px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+                    </td>
+                  </tr>
+                ))
+              }
+              <tr key="4">
+                <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-3">
+                  Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete
+                </td>
+              </tr>
+              {
+                [...Array(1)].map((_, i) => (
+                  <tr key={i + 6}>
+                    <td colSpan="6" className="m-0 p-0 bg-light border-0">
+                      <Placeholder size="lg" xs={12} style={{height: '20px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </Table>
+        </Col>
+      </>
+    )
 }
 
 
