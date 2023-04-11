@@ -125,14 +125,26 @@ class Projects(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated, )
 
-    def __init__(self):
-        pass
-
     def post(self, request):
         pass
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         projects = list()
+
+        if kwargs.get('specific', False):
+
+            req_type = kwargs.get('specific')
+            if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
+                serializer = ProjectSerializerGet(models.Project.objects.all(), many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            elif not (request.user.is_staff or request.user.is_superuser):
+                err_response = {
+                    'status': {
+                        'code': status.HTTP_401_UNAUTHORIZED,
+                        'message': 'HTTP_401_UNAUTHORIZED'
+                    }
+                }
+                return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
 
         up_obj = models.UserProject.objects.filter(user=request.user.pk)
         for up in up_obj:
