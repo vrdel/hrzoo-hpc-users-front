@@ -26,6 +26,7 @@ class ProjectsGeneral(APIView):
         request.data['is_active'] = True
         request.data['date_submitted'] = datetime.datetime.now()
 
+        # fixed project identifier in format NR-<year>-<month<-<count_posted>
         cobj = models.ProjectCount.objects.get()
         request.data['identifier'] = 'NR-{}-{:03}'.format(datetime.datetime.now().strftime('%Y-%m'), cobj.counter)
 
@@ -62,9 +63,9 @@ class ProjectsResearch(APIView):
 
     def post(self, request):
         oib = request.user.person_oib
+
         # TODO: validate date data picked up from frontend with the CroRIS cached
         # data
-
         croris_data = cache.get('{oib}_croris')
         if croris_data:
             lead_status = croris_data['person_info']['lead_status']
