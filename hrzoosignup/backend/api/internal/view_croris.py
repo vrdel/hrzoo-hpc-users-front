@@ -244,12 +244,15 @@ class CroRISInfo(APIView):
 
     async def extract_email_for_associate(self):
         if not self.person_info['lead_status']:
-            pid = self.projects_associate_ids[0]
-            fetched_project = await self._fetch_data(settings.API_PROJECT.replace("{projectId}", str(pid)))
-            project = json.loads(fetched_project)
-            for person in project['osobeResources']['_embedded']['osobe']:
-                if person['persId'] == self.person_info['croris_id']:
-                    self.person_info['email'] = person.get('email', '')
+            try:
+                pid = self.projects_associate_ids[0]
+                fetched_project = await self._fetch_data(settings.API_PROJECT.replace("{projectId}", str(pid)))
+                project = json.loads(fetched_project)
+                for person in project['osobeResources']['_embedded']['osobe']:
+                    if person['persId'] == self.person_info['croris_id']:
+                        self.person_info['email'] = person.get('email', '')
+            except (IndexError, ValueError) as exp:
+                pass
 
     async def fetch_users_projects_lead(self):
         coros = []
