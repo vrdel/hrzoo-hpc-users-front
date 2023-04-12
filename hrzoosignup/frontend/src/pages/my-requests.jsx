@@ -69,6 +69,9 @@ const MyRequests = () => {
                     Stanje
                   </th>
                   <th className="fw-normal">
+                    Tip
+                  </th>
+                  <th className="fw-normal">
                     Šifra
                   </th>
                   <th className="fw-normal">
@@ -79,9 +82,6 @@ const MyRequests = () => {
                   </th>
                   <th className="fw-normal">
                     Podnesen
-                  </th>
-                  <th className="fw-normal">
-                    Tip
                   </th>
                   <th className="fw-normal">
                     Radnje
@@ -103,10 +103,15 @@ const MyRequests = () => {
                           { StateString(project.state.name) }
                         </Tooltip>
                       </td>
+                      <td className="align-middle text-center">
+                        <span className={`badge ${TypeColor(project.project_type.name)}`} >
+                          { TypeString(project.project_type.name) }
+                        </span>
+                      </td>
                       <td className="p-3 align-middle text-center">
                         <Badge color="secondary">{ project.identifier }</Badge>
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle fw-bold text-center">
                         { project.name}
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
@@ -123,11 +128,6 @@ const MyRequests = () => {
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
-                      </td>
-                      <td className="align-middle text-center">
-                        <span className={`badge ${TypeColor(project.project_type.name)}`} >
-                          { TypeString(project.project_type.name) }
-                        </span>
                       </td>
                       <td className="align-middle text-center">
                         <Button color="light">
@@ -166,6 +166,9 @@ const MyRequests = () => {
                     Stanje
                   </th>
                   <th className="fw-normal">
+                    Tip
+                  </th>
+                  <th className="fw-normal">
                     Šifra
                   </th>
                   <th className="fw-normal">
@@ -176,9 +179,6 @@ const MyRequests = () => {
                   </th>
                   <th className="fw-normal">
                     Podnesen
-                  </th>
-                  <th className="fw-normal">
-                    Tip
                   </th>
                   <th className="fw-normal">
                     Radnje
