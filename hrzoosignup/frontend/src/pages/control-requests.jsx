@@ -116,10 +116,10 @@ export const ControlRequestsChange = () => {
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
                 <RequestHorizontalRuler />
                 <GeneralFields fieldsDisabled={disabledFields} />
+                <ScientificSoftware fieldsDisabled={disabledFields} />
                 <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
                   Editiraj zahtjev
                 </Button>
-                <ScientificSoftware />
               </Form>
             </FormProvider>
           </Col>

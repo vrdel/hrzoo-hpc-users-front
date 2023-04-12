@@ -27,8 +27,6 @@ import {
 import { ErrorMessage } from '@hookform/error-message';
 
 
-// TODO: take into account fieldsDisabled in child components
-
 const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
   const { control, watch, formState: {errors} } = useFormContext();
   const {
@@ -63,12 +61,12 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
               <>
                 <Col className="mb-3" md={{size: 5}}>
                   <ScientificDomain control={control} index={index}
-                    item={item} remove={domain_remove} />
+                    item={item} remove={domain_remove} fieldsDisabled={fieldsDisabled} />
                 </Col>
                 {
                   index === controlledFieldsDomain.length - 1 &&
                     <Col md={{size: 3, offset: 1}}>
-                      <AddNewScientificDomain append={domain_append} />
+                      <AddNewScientificDomain append={domain_append} fieldsDisabled={fieldsDisabled} />
                     </Col>
                 }
               </>
@@ -81,9 +79,9 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
 }
 
 
-const AddNewScientificDomain = ({append}) => {
+const AddNewScientificDomain = ({fieldsDisabled, append}) => {
   return (
-    <Button outline color="success" onClick={() =>
+    <Button disabled={fieldsDisabled} outline color="success" onClick={() =>
       append({
       'name': '',
       'percent': '',
@@ -97,7 +95,7 @@ const AddNewScientificDomain = ({append}) => {
   )
 }
 
-const ScientificDomain = ({index: domain_index, item: domain_item, remove:
+const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: domain_item, remove:
   domain_remove}) => {
   const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
@@ -129,6 +127,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
                 && errors.scientificDomain[domain_index]['name'] ? true : false}
               onChange={(e) => setValue(`scientificDomain.${domain_index}.name`, e)}
               options={buildOptionsFromArray(listScientificDomain)}
+              isDisabled={fieldsDisabled}
               value={getValues(`scientificDomain.${domain_index}.name`)}
               placeholder="Područje"
             />
@@ -156,6 +155,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
                   && errors.scientificDomain[domain_index]
                   && errors.scientificDomain[domain_index]['percent'] ? "is-invalid" : ''}`}
                 placeholder="Udio"
+                disabled={fieldsDisabled}
                 type="number"
               />
             }
@@ -168,6 +168,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
           size="sm"
           color="danger"
           type="button"
+          disabled={fieldsDisabled}
           className="ms-1"
           onClick={() => domain_remove(domain_index)}
         >
@@ -179,7 +180,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
           fields_scientificfields.map((field_item, field_index) => (
             <Row key={field_item.id} className="g-0 mb-2" >
               <Col className="d-inline-flex align-items-center">
-                <ScientificFields domain_index={domain_index} field_index={field_index} />
+                <ScientificFields fieldsDisabled={fieldsDisabled} domain_index={domain_index} field_index={field_index} />
                 <InputGroup>
                   <Controller
                     name={`scientificDomain.${domain_index}.scientificfields.${field_index}.percent`}
@@ -195,6 +196,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
                           && errors.scientificDomain[domain_index]['scientificfields'][field_index]
                           && errors.scientificDomain[domain_index]['scientificfields'][field_index]['percent'] ? "is-invalid" : ''}`}
                         placeholder="Udio"
+                        disabled={fieldsDisabled}
                         type="number"
                       />
                     }
@@ -209,6 +211,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
                       size="sm"
                       color="danger"
                       className="ms-1"
+                      disabled={fieldsDisabled}
                       type="button"
                       onClick={() => field_remove(field_index)}
                     >
@@ -231,7 +234,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
         }
         <Row className="g-0">
           <Col className="text-center">
-            <Button className="mt-3" size="sm" outline color="success" onClick={() =>
+            <Button disabled={fieldsDisabled} className="mt-3" size="sm" outline color="success" onClick={() =>
               field_append({'name': '', 'percent': ''})}>
               <FontAwesomeIcon icon={faPlus}/>{' '}
               Novo znanstveno polje
@@ -243,7 +246,7 @@ const ScientificDomain = ({index: domain_index, item: domain_item, remove:
   )
 }
 
-const ScientificFields = ({domain_index, field_index}) => {
+const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => {
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
   const { mapDomainsToFields, buildOptionsFromArray } = useContext(SharedData);
 
@@ -268,6 +271,7 @@ const ScientificFields = ({domain_index, field_index}) => {
             ? true : false}
           onChange={(e) => setValue(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`, e)}
           value={getValues(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`)}
+          isDisabled={fieldsDisabled}
           options={buildOptionsFromArray(mapDomainsToFields[selectedDomain])}
           placeholder="Polje"
         />

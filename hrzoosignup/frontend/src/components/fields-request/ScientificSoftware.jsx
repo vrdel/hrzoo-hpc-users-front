@@ -15,7 +15,7 @@ import { SharedData } from '../../pages/root';
 import { ErrorMessage } from '@hookform/error-message';
 
 
-const ScientificSoftware = () => {
+const ScientificSoftware = ({fieldsDisabled=false}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { listScientificSoftware, buildOptionsFromArray } = useContext(SharedData);
 
@@ -44,6 +44,7 @@ const ScientificSoftware = () => {
                 forwardedRef={field.ref}
                 id="scientificSoftware"
                 isMulti
+                isDisabled={fieldsDisabled}
                 scientificSoftwareMultiValue={true}
                 value={getValues(`scientificSoftware`)}
                 options={buildOptionsFromArray(listScientificSoftware)}
