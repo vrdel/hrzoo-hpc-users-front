@@ -14,6 +14,7 @@ import { fetchNrProjects } from '../api/projects';
 import { AuthContext } from '../components/AuthContextProvider.jsx';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
 import { useQuery, QueryClient } from '@tanstack/react-query';
+import HeadTitle from '../components/HeadTitle';
 
 export const ModalContext = React.createContext();
 
@@ -81,6 +82,7 @@ const BasePage = ({sessionData=undefined}) => {
   if (isLoggedIn || sessionData.active)
     return (
       <Container fluid="xl" className="pt-1 d-flex flex-column">
+        <HeadTitle />
         <ModalAreYouSure
           isOpen={areYouSureModal}
           toggle={() => setAreYouSureModal(!areYouSureModal)}

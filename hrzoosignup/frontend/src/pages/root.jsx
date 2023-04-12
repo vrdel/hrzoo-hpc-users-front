@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import HeadTitle from '../components/HeadTitle';
 import { LinkTitles } from '../config/link-titles';
 import { RequestTypesToSelect, UrlToRequestType } from '../config/request-types';
 import { ResourceTypesToSelect } from '../config/resource-types';
@@ -25,7 +24,6 @@ const Root = () => {
       buildOptionsFromArray,
       listScientificSoftware
     }}>
-      <HeadTitle />
       <AuthContextProvider>
         <Outlet />
       </AuthContextProvider>
