@@ -189,21 +189,21 @@ const MyRequests = () => {
                 {
                   [...Array(3)].map((_, i) => (
                     <tr key={i}>
-                      <td colSpan="6" className="m-0 p-0 bg-light border-0">
+                      <td colSpan="7" className="m-0 p-0 bg-light border-0">
                         <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
                       </td>
                     </tr>
                   ))
                 }
                 <tr key="4">
-                  <td colSpan="6" className="table-light border-0 text-muted text-center p-3 fs-3">
+                  <td colSpan="7" className="table-light border-0 text-muted text-center p-3 fs-3">
                     Nemate podnesenih zahtjeva
                   </td>
                 </tr>
                 {
                   [...Array(3)].map((_, i) => (
                     <tr key={i + 6}>
-                      <td colSpan="6" className="m-0 p-0 bg-light border-0">
+                      <td colSpan="7" className="m-0 p-0 bg-light border-0">
                         <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
                       </td>
                     </tr>
