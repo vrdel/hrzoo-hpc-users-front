@@ -37,6 +37,7 @@ export const ControlRequestsChange = () => {
   const [pageTitle, setPageTitle] = useState(undefined);
   const [projectTarget, setProjectTarget] = useState(undefined)
   const { projId } = useParams()
+  const [editMe, setEditMe] = useState(false)
 
   const queryClient = useQueryClient();
 
@@ -89,7 +90,6 @@ export const ControlRequestsChange = () => {
     }
   }, [location.pathname, nrProjects?.length])
 
-
   const onSubmit = data => {
     alert(JSON.stringify(data, null, 2));
   }
@@ -104,7 +104,10 @@ export const ControlRequestsChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
-                <GeneralFields />
+                <GeneralFields fieldsDisabled={editMe} />
+                <Button color="danger" onClick={() => setEditMe(!editMe)}>
+                  Editiraj zahtjev
+                </Button>
               </Form>
             </FormProvider>
           </Col>

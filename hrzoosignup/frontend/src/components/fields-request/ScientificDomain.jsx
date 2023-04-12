@@ -27,7 +27,9 @@ import {
 import { ErrorMessage } from '@hookform/error-message';
 
 
-const BaseNewScientificDomain = () => {
+// TODO: take into account fieldsDisabled in child components
+
+const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
   const { control, watch, formState: {errors} } = useFormContext();
   const {
     fields: fields_domain,

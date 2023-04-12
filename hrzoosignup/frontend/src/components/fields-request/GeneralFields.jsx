@@ -15,7 +15,7 @@ import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from './ScientificDomain';
 
 
-const GeneralFields = () => {
+const GeneralFields = ({fieldsDisabled=false}) => {
   const { control, formState: {errors} } = useFormContext();
 
   return (
@@ -43,6 +43,7 @@ const GeneralFields = () => {
                 {...field}
                 aria-label="requestName"
                 type="text"
+                disabled={fieldsDisabled}
                 className={`form-control ${errors && errors.requestName ? "is-invalid" : ''}`}
                 rows="1"
               />
@@ -77,6 +78,7 @@ const GeneralFields = () => {
                 {...field}
                 aria-label="requestExplain"
                 type="text"
+                disabled={fieldsDisabled}
                 className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
                 rows="4"
               />
@@ -111,6 +113,7 @@ const GeneralFields = () => {
               <DatePicker
                 {...field}
                 locale="hr-HR"
+                disabled={fieldsDisabled}
                 required={true}
                 className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
               />
@@ -125,6 +128,7 @@ const GeneralFields = () => {
               <DatePicker
                 {...field}
                 required={true}
+                disabled={fieldsDisabled}
                 locale="hr-HR"
                 className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
               />
@@ -132,7 +136,7 @@ const GeneralFields = () => {
           />
         </Col>
         <Col className="ms-1">
-          <BaseNewScientificDomain />
+          <BaseNewScientificDomain fieldsDisabled={fieldsDisabled} />
         </Col>
       </Row>
     </>
