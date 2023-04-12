@@ -5,6 +5,7 @@ import {
 import BasePage from './components/BasePage';
 import LoginPrivate from './pages/login-private';
 import LoginPublic from './pages/login-public';
+import LoginOffical from './pages/login-official';
 import MyRequests from './pages/my-requests';
 import NewRequest from './pages/new-request';
 import ControlRequests from './pages/control-requests';
@@ -35,6 +36,7 @@ const BaseRoutes = () => {
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate />}/>
             <Route path="prijava" element={<LoginPublic />}/>
+            <Route path="prijava-pub" element={<LoginOffical />}/>
             <Route element={<BasePage sessionData={sessionData} />}>
               {
                 ( sessionData?.userdetails?.is_staff || sessionData?.userdetails?.is_superuser) &&
