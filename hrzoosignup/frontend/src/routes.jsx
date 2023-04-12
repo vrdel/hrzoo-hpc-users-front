@@ -6,9 +6,9 @@ import BasePage from './components/BasePage';
 import LoginPrivate from './pages/login-private';
 import LoginPublic from './pages/login-public';
 import LoginOffical from './pages/login-official';
-import MyRequests from './pages/my-requests';
+import MyRequestsList from './pages/my-requests';
 import NewRequest from './pages/new-request';
-import ControlRequests from './pages/control-requests';
+import { ControlRequestsChange, ControlRequestsList } from './pages/control-requests';
 import ResearchProjectRequest from './pages/new-requests/research-project';
 import ResearchProjectRequestSelected from './pages/new-requests/research-project-selected';
 import GeneralRequest from './pages/new-requests/general';
@@ -40,12 +40,19 @@ const BaseRoutes = () => {
             <Route element={<BasePage sessionData={sessionData} />}>
               {
                 ( sessionData?.userdetails?.is_staff || sessionData?.userdetails?.is_superuser) &&
-                <Route path="upravljanje-zahtjevima" element={
-                  <ControlRequests />
-                }/>
+                  (
+                    <>
+                      <Route path="upravljanje-zahtjevima" element={
+                        <ControlRequestsList />
+                      }/>
+                      <Route path="upravljanje-zahtjevima/:projId" element={
+                        <ControlRequestsChange />
+                      }/>
+                    </>
+                  )
               }
               <Route path="moji-zahtjevi" element={
-                <MyRequests />
+                <MyRequestsList />
               }/>
               <Route path="novi-zahtjev" element={
                 <NewRequest />

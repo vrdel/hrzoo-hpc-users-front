@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Row, Table, Tooltip, Badge, Button } from 'reactstrap';
+import { Col, Row, Table, Tooltip, Button } from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../components/PageTitle';
 import { StateIcons, StateString } from '../config/map-states';
 import { fetchAllNrProjects } from '../api/projects';
@@ -23,9 +24,32 @@ function extractLeaderName(projectUsers) {
 }
 
 
-const ControlRequests = () => {
+export const ControlRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+
+  useEffect(() => {
+    setPageTitle(LinkTitles(location.pathname))
+  }, [location.pathname])
+
+  return (
+    <>
+      <Row>
+        <PageTitle pageTitle={pageTitle}/>
+      </Row>
+      <Row>
+        <Col>
+        </Col>
+      </Row>
+    </>
+  )
+};
+
+
+export const ControlRequestsList = () => {
+  const { LinkTitles } = useContext(SharedData);
+  const [pageTitle, setPageTitle] = useState(undefined);
+  const navigate = useNavigate()
 
   const {status, data: nrProjects, error, isFetching} = useQuery({
       queryKey: ['all-projects'],
@@ -60,7 +84,7 @@ const ControlRequests = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
-        <Row>
+        <Row className="mt-4">
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
@@ -121,7 +145,7 @@ const ControlRequests = () => {
                         { convertToEuropean(project.date_submitted) }
                       </td>
                       <td className="align-middle text-center">
-                        <Button color="light">
+                        <Button color="light" onClick={() => navigate(project.identifier)}>
                           <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </Button>
                       </td>
@@ -143,5 +167,3 @@ const ControlRequests = () => {
       </>
     )
 };
-
-export default ControlRequests;

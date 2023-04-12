@@ -22,7 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 
-const MyRequests = () => {
+const MyRequestsList = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
 
@@ -217,4 +217,4 @@ const MyRequests = () => {
     )
 };
 
-export default MyRequests;
+export default MyRequestsList;
