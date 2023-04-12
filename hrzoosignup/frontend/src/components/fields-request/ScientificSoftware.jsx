@@ -71,6 +71,7 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
                 {...field}
                 aria-label="scientificSoftwareExtra"
                 type="text"
+                disabled={fieldsDisabled}
                 className={`form-control ${errors && errors.scientificSoftwareExtra ? "is-invalid" : ''}`}
                 rows="3"
               />
@@ -99,7 +100,7 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
             name="scientificSoftwareHelp"
             control={control}
             render={ ({field}) =>
-              <Input {...field} type="checkbox" className="ms-3 fw-bold"/>
+              <Input {...field} disabled={fieldsDisabled} checked={getValues('scientificSoftwareHelp')} type="checkbox" className="ms-3 fw-bold"/>
             }
           />
         </Col>
