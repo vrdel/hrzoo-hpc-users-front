@@ -51,7 +51,7 @@ const LoginPrivate = () => {
     <Container>
       <Row className="login-first-row">
         <Col sm={{size: 4, offset: 4}}>
-          <Card className="p-2">
+          <Card className="shadow p-2">
             <CardHeader
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"
