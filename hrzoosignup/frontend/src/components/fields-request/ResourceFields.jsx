@@ -15,8 +15,8 @@ import {
 } from "react-hook-form";
 
 
-const ResourceFields = () => {
-  const { control, setValue, formState: {errors} } = useFormContext();
+const ResourceFields = ({fieldsDisabled=false}) => {
+  const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
 
   return (
@@ -77,6 +77,7 @@ const ResourceFields = () => {
               render={ ({field}) =>
                 <Input
                   {...field}
+                  disabled={fieldsDisabled}
                   className="form-control text-center"
                   type="number"
                 />
@@ -97,6 +98,7 @@ const ResourceFields = () => {
                 <Input
                   {...field}
                   className="form-control text-center"
+                  disabled={fieldsDisabled}
                   type="number"
                 />
               }
@@ -115,6 +117,7 @@ const ResourceFields = () => {
               render={ ({field}) =>
                 <Input
                   {...field}
+                  disabled={fieldsDisabled}
                   className="form-control text-center"
                   type="number"
                 />
@@ -135,6 +138,7 @@ const ResourceFields = () => {
                 <Input
                   {...field}
                   className="form-control text-center"
+                  disabled={fieldsDisabled}
                   type="number"
                 />
               }
@@ -153,6 +157,7 @@ const ResourceFields = () => {
               render={ ({field}) =>
                 <Input
                   {...field}
+                  disabled={fieldsDisabled}
                   className="form-control text-center"
                   type="number"
                 />
@@ -183,8 +188,10 @@ const ResourceFields = () => {
                 forwardedRef={field.ref}
                 id="requestResourceType"
                 isMulti
+                isDisabled={fieldsDisabled}
                 options={ResourceTypesToSelect}
                 placeholder="Odaberi"
+                value={getValues('requestResourceType')}
                 onChange={(e) => setValue('requestResourceType', e)}
                 resourceTypeMultiValue={true}
               />

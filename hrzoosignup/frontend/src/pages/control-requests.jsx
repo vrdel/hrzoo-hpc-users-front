@@ -98,6 +98,11 @@ export const ControlRequestsChange = () => {
       )))
       rhfProps.setValue('scientificSoftwareExtra', targetProject.science_extrasoftware)
       rhfProps.setValue('scientificSoftwareHelp', targetProject.science_extrasoftware_help)
+      rhfProps.setValue('nSlotsCPU', targetProject.resources_numbers.nSlotsCPU)
+      rhfProps.setValue('nSlotsGPU', targetProject.resources_numbers.nSlotsGPU)
+      rhfProps.setValue('nRAM', targetProject.resources_numbers.nRAM)
+      rhfProps.setValue('nTempGB', targetProject.resources_numbers.nTempGB)
+      rhfProps.setValue('nDiskGB', targetProject.resources_numbers.nDiskGB)
     }
   }, [location.pathname, nrProjects?.length])
 
@@ -122,7 +127,7 @@ export const ControlRequestsChange = () => {
                   Editiraj zahtjev
                 </Button>
                 <ScientificSoftware fieldsDisabled={disabledFields} />
-                <ResourceFields />
+                <ResourceFields fieldsDisabled={disabledFields} />
               </Form>
             </FormProvider>
           </Col>
