@@ -72,13 +72,13 @@ const ControlRequests = () => {
                     Tip
                   </th>
                   <th className="fw-normal">
-                    Šifra
-                  </th>
-                  <th className="fw-normal">
                     Naziv
                   </th>
                   <th className="fw-normal">
                     Voditelj
+                  </th>
+                  <th className="fw-normal">
+                    Završetak
                   </th>
                   <th className="fw-normal">
                     Podnesen
@@ -108,14 +108,14 @@ const ControlRequests = () => {
                           { TypeString(project.project_type.name) }
                         </span>
                       </td>
-                      <td className="p-3 align-middle text-center">
-                        <Badge color="secondary">{ project.identifier }</Badge>
-                      </td>
                       <td className="p-3 align-middle fw-bold text-center">
                         { project.name}
                       </td>
-                      <td className="p-3 align-middle fw-bold text-center">
+                      <td className="p-3 align-middle text-center">
                         { extractLeaderName(project.userproject_set) }
+                      </td>
+                      <td className="align-middle text-center fs-6 font-monospace">
+                        { convertToEuropean(project.date_end) }
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
