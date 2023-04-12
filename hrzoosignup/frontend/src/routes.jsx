@@ -8,7 +8,7 @@ import LoginPublic from './pages/login-public';
 import LoginOffical from './pages/login-official';
 import MyRequestsList from './pages/my-requests';
 import NewRequest from './pages/new-request';
-import { ControlRequestsChange, ControlRequestsList } from './pages/control-requests';
+import { ManageRequestsChange, ManageRequestsList } from './pages/manage-requests';
 import ResearchProjectRequest from './pages/new-requests/research-project';
 import ResearchProjectRequestSelected from './pages/new-requests/research-project-selected';
 import GeneralRequest from './pages/new-requests/general';
@@ -43,10 +43,10 @@ const BaseRoutes = () => {
                   (
                     <>
                       <Route path="upravljanje-zahtjevima" element={
-                        <ControlRequestsList />
+                        <ManageRequestsList />
                       }/>
                       <Route path="upravljanje-zahtjevima/:projId" element={
-                        <ControlRequestsChange />
+                        <ManageRequestsChange />
                       }/>
                     </>
                   )

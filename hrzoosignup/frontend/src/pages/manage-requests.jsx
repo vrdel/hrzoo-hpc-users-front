@@ -40,7 +40,7 @@ function extractLeaderName(projectUsers) {
 }
 
 
-export const ControlRequestsChange = () => {
+export const ManageRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const [projectTarget, setProjectTarget] = useState(undefined)
@@ -202,7 +202,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields}) => {
 }
 
 
-export const ControlRequestsList = () => {
+export const ManageRequestsList = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const navigate = useNavigate()
