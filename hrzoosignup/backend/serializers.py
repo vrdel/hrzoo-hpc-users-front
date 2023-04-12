@@ -15,7 +15,64 @@ def get_ssh_key_fingerprint(ssh_key):
     return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
 
 
+class RoleSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.Role
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'identifier',
+            'name',
+            'reason',
+            'date_start',
+            'date_end',
+            'date_submitted',
+            'date_approved',
+            'approved_by',
+            'denied_by',
+            'science_field',
+            'science_software',
+            'science_extrasoftware',
+            'science_extrasoftware_help',
+            'resources_type',
+            'is_active',
+            'date_extensions',
+            'croris_title',
+            'croris_start',
+            'croris_end',
+            'croris_identifier',
+            'croris_id',
+            'croris_summary',
+            'croris_collaborators',
+            'croris_lead',
+            'croris_finance',
+            'project_type',
+            'croris_type',
+            'state',
+            'users',
+            'userproject_set'
+        )
+        model = models.Project
+
+
+class UsersSerializerFiltered(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'person_mail',
+            'first_name',
+            'last_name',
+        )
+        model = get_user_model()
+
+
 class UserProjectSerializer(serializers.ModelSerializer):
+    role = RoleSerializer()
+    user = UsersSerializerFiltered()
     class Meta:
         fields = (
             'user',
@@ -66,63 +123,11 @@ class UsersSerializer(serializers.ModelSerializer):
         model = get_user_model()
 
 
-class UsersSerializerFiltered(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'person_mail',
-            'first_name',
-            'last_name',
-        )
-        model = get_user_model()
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'identifier',
-            'name',
-            'reason',
-            'date_start',
-            'date_end',
-            'date_submitted',
-            'date_approved',
-            'approved_by',
-            'denied_by',
-            'science_field',
-            'science_software',
-            'science_extrasoftware',
-            'science_extrasoftware_help',
-            'resources_type',
-            'is_active',
-            'date_extensions',
-            'croris_title',
-            'croris_start',
-            'croris_end',
-            'croris_identifier',
-            'croris_id',
-            'croris_summary',
-            'croris_collaborators',
-            'croris_lead',
-            'croris_finance',
-            'project_type',
-            'croris_type',
-            'state',
-            'users',
-        )
-        model = models.Project
-
-
 class ProjectSerializerGet(ProjectSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
     state = StateSerializer()
     project_type = ProjectTypeSerializer()
-
-
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name'
-        )
+    userproject_set = UserProjectSerializer(many=True, read_only=True)
 
 
 class SshKeysSerializer(serializers.ModelSerializer):
