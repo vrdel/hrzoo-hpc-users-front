@@ -13,6 +13,16 @@ import {
 import { convertToEuropean } from '../utils/dates';
 
 
+function extractLeaderName(projectUsers) {
+  let target = projectUsers.filter(user => (
+    user['role']['name'] === 'lead'
+  ))
+  target = target[0]
+
+  return target.user.first_name + ' ' + target.user.last_name
+}
+
+
 const ControlRequests = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
@@ -105,7 +115,7 @@ const ControlRequests = () => {
                         { project.name}
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
-                        { project.name }
+                        { extractLeaderName(project.userproject_set) }
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
