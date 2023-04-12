@@ -12,6 +12,7 @@ import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../utils/dates';
+import { useParams } from 'react-router-dom';
 
 
 function extractLeaderName(projectUsers) {
@@ -27,22 +28,38 @@ function extractLeaderName(projectUsers) {
 export const ControlRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const { projId } = useParams()
+
+  const {status, data: nrProjects, error, isFetching} = useQuery({
+      queryKey: ['all-projects'],
+      queryFn: fetchAllNrProjects
+  })
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
 
-  return (
-    <>
-      <Row>
-        <PageTitle pageTitle={pageTitle}/>
-      </Row>
-      <Row>
-        <Col>
-        </Col>
-      </Row>
-    </>
-  )
+  if (nrProjects?.length > 0) {
+
+    let targetProject = nrProjects.filter(project => (
+      project['identifier'] === projId
+    ))
+
+    console.log('VRDEL DEBUG', targetProject)
+
+    return (
+      <>
+        <Row>
+          <PageTitle pageTitle={pageTitle}/>
+        </Row>
+        <Row>
+          <Col>
+            { projId }
+          </Col>
+        </Row>
+      </>
+    )
+  }
 };
 
 
