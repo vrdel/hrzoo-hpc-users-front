@@ -133,7 +133,6 @@ class Projects(APIView):
         projects = list()
 
         if kwargs.get('specific', False):
-
             req_type = kwargs.get('specific')
             if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
                 serializer = ProjectSerializerGet(models.Project.objects.all(), many=True)
