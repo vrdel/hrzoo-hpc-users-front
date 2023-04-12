@@ -26,36 +26,36 @@ class RoleSerializer(serializers.ModelSerializer):
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            'identifier',
-            'name',
-            'reason',
-            'date_start',
-            'date_end',
-            'date_submitted',
-            'date_approved',
             'approved_by',
+            'croris_collaborators',
+            'croris_end',
+            'croris_finance',
+            'croris_id',
+            'croris_identifier',
+            'croris_lead',
+            'croris_start',
+            'croris_summary',
+            'croris_title',
+            'croris_type',
+            'date_approved',
+            'date_end',
+            'date_extensions',
+            'date_start',
+            'date_submitted',
             'denied_by',
-            'science_field',
-            'science_software',
+            'identifier',
+            'is_active',
+            'name',
+            'project_type',
+            'reason',
+            'resources_numbers',
+            'resources_type',
             'science_extrasoftware',
             'science_extrasoftware_help',
-            'resources_type',
-            'is_active',
-            'date_extensions',
-            'croris_title',
-            'croris_start',
-            'croris_end',
-            'croris_identifier',
-            'croris_id',
-            'croris_summary',
-            'croris_collaborators',
-            'croris_lead',
-            'croris_finance',
-            'project_type',
-            'croris_type',
+            'science_field',
+            'science_software',
             'state',
             'users',
-            'userproject_set'
         )
         model = models.Project
 
@@ -123,11 +123,47 @@ class UsersSerializer(serializers.ModelSerializer):
         model = get_user_model()
 
 
-class ProjectSerializerGet(ProjectSerializer):
+class ProjectSerializerGet(serializers.ModelSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
     state = StateSerializer()
     project_type = ProjectTypeSerializer()
     userproject_set = UserProjectSerializer(many=True, read_only=True)
+
+    class Meta:
+        fields = (
+            'approved_by',
+            'croris_collaborators',
+            'croris_end',
+            'croris_finance',
+            'croris_id',
+            'croris_identifier',
+            'croris_lead',
+            'croris_start',
+            'croris_summary',
+            'croris_title',
+            'croris_type',
+            'date_approved',
+            'date_end',
+            'date_extensions',
+            'date_start',
+            'date_submitted',
+            'denied_by',
+            'identifier',
+            'is_active',
+            'name',
+            'project_type',
+            'reason',
+            'resources_numbers',
+            'resources_type',
+            'science_extrasoftware',
+            'science_extrasoftware_help',
+            'science_field',
+            'science_software',
+            'state',
+            'users',
+            'userproject_set'
+        )
+        model = models.Project
 
 
 class SshKeysSerializer(serializers.ModelSerializer):
