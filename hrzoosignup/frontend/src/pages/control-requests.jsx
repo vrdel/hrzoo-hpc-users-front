@@ -6,7 +6,7 @@ import { Col, Label, Row, Table, Tooltip, Button, Form } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../components/PageTitle';
 import { StateIcons, StateString } from '../config/map-states';
-import { fetchAllNrProjects } from '../api/projects';
+import { fetchAllNrProjects, fetchNrSpecificProject } from '../api/projects';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import ScientificSoftware from '../components/fields-request/ScientificSoftware';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
@@ -42,14 +42,9 @@ export const ControlRequestsChange = () => {
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
 
-  const queryClient = useQueryClient();
-
-  const {status, data: nrProjects, error, isFetching} = useQuery({
-      queryKey: ['all-projects'],
-      queryFn: fetchAllNrProjects,
-      initialData: () => queryClient.getQueryData(['all-projects'])?.filter(
-        project => (project['identifier'] === projId)
-      )
+  const {status, data: nrProject, error, isFetching} = useQuery({
+      queryKey: ['change-project', projId],
+      queryFn: () => fetchNrSpecificProject(projId),
   })
 
   const rhfProps = useForm({
@@ -78,40 +73,37 @@ export const ControlRequestsChange = () => {
   });
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-    if (status === 'success' && nrProjects.length > 0) {
-      let targetProject = nrProjects.filter(project => (
-        project['identifier'] === projId
-      ))
-      targetProject = targetProject[0]
-      setProjectTarget(targetProject)
-      rhfProps.setValue('requestName', targetProject.name)
-      rhfProps.setValue('requestExplain', targetProject.reason)
-      rhfProps.setValue('startDate', targetProject.date_start)
-      rhfProps.setValue('endDate', targetProject.date_end)
-      rhfProps.setValue('scientificDomain', targetProject.science_field)
-      rhfProps.setValue('scientificSoftware', targetProject.science_software.map(e => (
+    if (status === 'success' && nrProject) {
+      rhfProps.setValue('requestName', nrProject.name)
+      rhfProps.setValue('requestExplain', nrProject.reason)
+      rhfProps.setValue('startDate', nrProject.date_start)
+      rhfProps.setValue('endDate', nrProject.date_end)
+      rhfProps.setValue('scientificDomain', nrProject.science_field)
+      rhfProps.setValue('scientificSoftware', nrProject.science_software.map(e => (
         {
           'label' : e,
           'value' : e
         }
       )))
-      rhfProps.setValue('scientificSoftwareExtra', targetProject.science_extrasoftware)
-      rhfProps.setValue('scientificSoftwareHelp', targetProject.science_extrasoftware_help)
-      rhfProps.setValue('nSlotsCPU', targetProject.resources_numbers.nSlotsCPU)
-      rhfProps.setValue('nSlotsGPU', targetProject.resources_numbers.nSlotsGPU)
-      rhfProps.setValue('nRAM', targetProject.resources_numbers.nRAM)
-      rhfProps.setValue('nTempGB', targetProject.resources_numbers.nTempGB)
-      rhfProps.setValue('nDiskGB', targetProject.resources_numbers.nDiskGB)
-      rhfProps.setValue('requestResourceType', targetProject.resources_type)
+      rhfProps.setValue('scientificSoftwareExtra', nrProject.science_extrasoftware)
+      rhfProps.setValue('scientificSoftwareHelp', nrProject.science_extrasoftware_help)
+      rhfProps.setValue('nSlotsCPU', nrProject.resources_numbers.nSlotsCPU)
+      rhfProps.setValue('nSlotsGPU', nrProject.resources_numbers.nSlotsGPU)
+      rhfProps.setValue('nRAM', nrProject.resources_numbers.nSlotsRAM)
+      rhfProps.setValue('nTempGB', nrProject.resources_numbers.nTempGB)
+      rhfProps.setValue('nDiskGB', nrProject.resources_numbers.nDiskGB)
+      rhfProps.setValue('requestResourceType', nrProject.resources_type)
     }
-  }, [location.pathname, nrProjects?.length])
+
+    console.log('VRDEL DEBUG', nrProject)
+    setPageTitle(LinkTitles(location.pathname))
+  }, [location.pathname, nrProject])
 
   const onSubmit = data => {
     alert(JSON.stringify(data, null, 2));
   }
 
-  if (projectTarget) {
+  if (nrProject) {
     return (
       <>
         <Row>

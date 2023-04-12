@@ -117,6 +117,37 @@ export async function fetchNrProjects()
 }
 
 
+export async function fetchNrSpecificProject(projId)
+{
+  let error_msg = ''
+
+  try {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/projects/${projId}`)
+
+    if (response.ok)
+      return await response.json()
+
+    if (!response.ok) {
+      try {
+        await response.json();
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+    }
+
+  }
+  catch (err) {
+    error_msg = `${err} in ${projId} GET`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error fetching NRProject ${projId} data: ${error_msg}`)
+}
+
+
+
 export async function fetchAllNrProjects()
 {
   let error_msg = ''
