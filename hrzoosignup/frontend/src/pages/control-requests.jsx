@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import RequestHorizontalRuler from '../components/RequestHorizontalRuler';
+import RequestHorizontalRuler, { RequestHorizontalRulerRed } from '../components/RequestHorizontalRuler';
 import GeneralFields from '../components/fields-request/GeneralFields';
 import { SharedData } from './root';
 import { Col, Label, Row, Table, Tooltip, Button, Form } from 'reactstrap';
@@ -12,6 +12,11 @@ import ScientificSoftware from '../components/fields-request/ScientificSoftware'
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faSave,
+  faCog,
+  faTimes,
+  faFile,
+  faCheck,
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../utils/dates';
@@ -113,14 +118,14 @@ export const ControlRequestsChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
-                <RequestHorizontalRuler />
                 <GeneralFields fieldsDisabled={disabledFields} />
                 <ScientificSoftware fieldsDisabled={disabledFields} />
-                <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
-                  Editiraj zahtjev
-                </Button>
-                <ScientificSoftware fieldsDisabled={disabledFields} />
                 <ResourceFields fieldsDisabled={disabledFields} />
+                <Row style={{height: '50px'}}>
+                </Row>
+                <RequestHorizontalRulerRed />
+                <ProcessRequest disabledFields={disabledFields} setDisabledFields={setDisabledFields} />
+
               </Form>
             </FormProvider>
           </Col>
@@ -129,6 +134,72 @@ export const ControlRequestsChange = () => {
     )
   }
 };
+
+
+const ProcessRequest = ({disabledFields, setDisabledFields}) => {
+  const { control, formState: {errors} } = useFormContext();
+
+  return (
+    <>
+      <Row>
+        <Col md={{size: 10}}>
+          <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
+            Obrada:
+          </span>
+        </Col>
+        <Col>
+          <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
+            Editiraj zahtjev
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-left" md={{size: 10}}>
+          <Label
+            htmlFor="projectTitle"
+            aria-label="projectTitle">
+          </Label>
+        </Col>
+      </Row>
+      <Row style={{'height': '100px'}}/>
+      <Row className="mt-2 mb-5 text-center">
+        <Col>
+          <FontAwesomeIcon className="fa-5x text-success" style={{color: '#00ff00'}} icon={faCheck}/>{' '}
+          <br/>
+          <p className="fs-3">
+            Prihvati
+          </p>
+          <Button style={{height: '50px', width: '50px'}} outline color="success"/>
+        </Col>
+        <Col>
+          <FontAwesomeIcon className="fa-5x text-warning" style={{color: '#00ff00'}} icon={faCog}/>{' '}
+          <br/>
+          <p className="fs-3">
+            Obrada
+          </p>
+          <Button style={{height: '50px', width: '50px'}} outline color="success"/>
+        </Col>
+        <Col>
+          <FontAwesomeIcon className="fa-5x text-danger" style={{color: '#ff0000'}} icon={faTimes}/>{' '}
+          <br/>
+          <p className="fs-3">
+            Odbij
+          </p>
+          <Button style={{height: '50px', width: '50px'}} outline color="success"/>
+        </Col>
+      </Row>
+      <Row style={{'height': '100px'}}/>
+      <Row className="mt-5 mb-5 text-center">
+        <Col>
+          <Button size="lg" color="success" id="submit-button" type="submit">
+            <FontAwesomeIcon icon={faSave}/>{' '}
+            Spremi promjene
+          </Button>
+        </Col>
+      </Row>
+    </>
+  )
+}
 
 
 export const ControlRequestsList = () => {
