@@ -103,6 +103,7 @@ export const ControlRequestsChange = () => {
       rhfProps.setValue('nRAM', targetProject.resources_numbers.nRAM)
       rhfProps.setValue('nTempGB', targetProject.resources_numbers.nTempGB)
       rhfProps.setValue('nDiskGB', targetProject.resources_numbers.nDiskGB)
+      rhfProps.setValue('requestResourceType', targetProject.resources_type)
     }
   }, [location.pathname, nrProjects?.length])
 
