@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import GeneralFields from '../components/fields-request/GeneralFields';
 import { SharedData } from './root';
 import { Col, Label, Row, Table, Tooltip, Button, Form } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
@@ -44,9 +45,10 @@ export const ControlRequestsChange = () => {
       queryFn: fetchAllNrProjects,
       initialData: () => queryClient.getQueryData(['all-projects'])?.filter(
         project => (project['identifier'] === projId)
-      )})
+      )
+  })
 
-  const { control, setValue, handleSubmit, formState: { errors } } = useForm({
+  const rhfProps = useForm({
     defaultValues: {
       requestName: '',
       requestExplain: '',
@@ -79,7 +81,11 @@ export const ControlRequestsChange = () => {
       ))
       targetProject = targetProject[0]
       setProjectTarget(targetProject)
-      setValue('requestName', targetProject.name)
+      rhfProps.setValue('requestName', targetProject.name)
+      rhfProps.setValue('requestExplain', targetProject.reason)
+      rhfProps.setValue('startDate', targetProject.date_start)
+      rhfProps.setValue('endDate', targetProject.date_end)
+      rhfProps.setValue('scientificDomain', targetProject.science_field)
     }
   }, [location.pathname, nrProjects?.length])
 
@@ -96,30 +102,11 @@ export const ControlRequestsChange = () => {
         </Row>
         <Row>
           <Col>
-            <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
-              <Label
-                htmlFor="requestName"
-                aria-label="requestName">
-                Naziv:
-                <span className="ms-1 fw-bold text-danger">*</span>
-              </Label>
-              <Controller
-                name="requestName"
-                control={control}
-                rules={{required: true}}
-                render={ ({field}) =>
-                  <textarea
-                    id="requestName"
-                    {...field}
-                    aria-label="requestName"
-                    disabled={true}
-                    type="text"
-                    className={`form-control ${errors && errors.requestName ? "is-invalid" : ''}`}
-                    rows="1"
-                  />
-                }
-              />
-            </Form>
+            <FormProvider {...rhfProps}>
+              <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
+                <GeneralFields />
+              </Form>
+            </FormProvider>
           </Col>
         </Row>
       </>
