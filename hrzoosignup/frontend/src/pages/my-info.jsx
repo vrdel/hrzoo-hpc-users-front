@@ -83,7 +83,7 @@ const TableCrorisProjects = ({leadData, associateData}) => {
         </Col>
         <Col className="fst-italic d-flex justify-content-center align-items-center">
           <small>
-            Aktivni projekti na kojima sudjelujete i koji su registrirani u sustavu CroRIS
+            Aktivni projekti registrirani u sustavu CroRIS na kojima sudjelujete
           </small>
         </Col>
       </>
