@@ -53,23 +53,23 @@ const LoginOfficial = () => {
       <Row>
         <Col>
           <div style={{'height': '130px'}}/>
-          <Card className="shadow" style={{minHeight: '55vh', width: '70vh'}}>
+          <Card className="shadow" style={{height: '600px', width: '650px'}}>
             <CardHeader
               id='hzsi-loginheader'
-              className="d-sm-inline-flex align-items-center justify-content-center "
+              className="p-5 d-sm-inline-flex align-items-center justify-content-center "
             >
               <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
               <h2 className="ms-5 text-dark"><strong>Napredno računanje</strong></h2>
             </CardHeader>
             <CardBody className="pt-5">
 
-              <p className="fs-4 mb-5 mt-2 text-center">
-                Prijavom u sustav potvrđujete da prihvaćate Pravila korištenja usluge{' '}
+              <p className="fs-4 mb-4 text-center">
+                Prijavom u sustav potvrđujete da prihvaćate{' '}
                 <a href="https://www.srce.unizg.hr/napredno-racunanje/pravila" target="_blank" rel="noopener noreferrer">
-                  Napredno računanje
+                  Pravila korištenja usluge Napredno računanje
                 </a>
               </p>
-              <a className="btn mt-2 fs-3 btn-success btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava putem AAI@EduHR</a>
+              <a className="btn mt-5 fs-3 btn-success btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava putem AAI@EduHR</a>
             </CardBody>
             <CardFooter id="hzsi-loginfooter" style={{height: "100px"}}>
               <div className="text-center pt-3">
