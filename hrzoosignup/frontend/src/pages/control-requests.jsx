@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Row, Table, Tooltip, Button } from 'reactstrap';
+import { Col, Label, Row, Table, Tooltip, Button, Form } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../components/PageTitle';
 import { StateIcons, StateString } from '../config/map-states';
 import { fetchAllNrProjects } from '../api/projects';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -13,6 +13,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../utils/dates';
 import { useParams } from 'react-router-dom';
+import {
+  useForm,
+  Controller,
+  useFormContext,
+  FormProvider,
+} from "react-hook-form";
 
 
 function extractLeaderName(projectUsers) {
@@ -28,25 +34,61 @@ function extractLeaderName(projectUsers) {
 export const ControlRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const [projectTarget, setProjectTarget] = useState(undefined)
   const { projId } = useParams()
+
+  const queryClient = useQueryClient();
 
   const {status, data: nrProjects, error, isFetching} = useQuery({
       queryKey: ['all-projects'],
-      queryFn: fetchAllNrProjects
-  })
+      queryFn: fetchAllNrProjects,
+      initialData: () => queryClient.getQueryData(['all-projects'])?.filter(
+        project => (project['identifier'] === projId)
+      )})
+
+  const { control, setValue, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: {
+      requestName: '',
+      requestExplain: '',
+      startDate: '',
+      endDate: '',
+      requestResourceType: '',
+      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: '',
+      scientificDomain: [
+        {
+          'name': '',
+          'percent': '',
+          'scientificfields': [
+            {
+              'name': '', 'percent': ''
+            }
+          ]
+        },
+      ],
+      scientificSoftware: '',
+      scientificSoftwareExtra: '',
+      scientificSoftwareHelp: ''
+    }
+  });
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+    if (status === 'success' && nrProjects.length > 0) {
+      let targetProject = nrProjects.filter(project => (
+        project['identifier'] === projId
+      ))
+      targetProject = targetProject[0]
+      setProjectTarget(targetProject)
+      setValue('requestName', targetProject.name)
+    }
+  }, [location.pathname, nrProjects?.length])
 
-  if (nrProjects?.length > 0) {
 
-    let targetProject = nrProjects.filter(project => (
-      project['identifier'] === projId
-    ))
+  const onSubmit = data => {
+    alert(JSON.stringify(data, null, 2));
+  }
 
-    console.log('VRDEL DEBUG', targetProject)
-
+  if (projectTarget) {
     return (
       <>
         <Row>
@@ -54,7 +96,30 @@ export const ControlRequestsChange = () => {
         </Row>
         <Row>
           <Col>
-            { projId }
+            <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+              <Label
+                htmlFor="requestName"
+                aria-label="requestName">
+                Naziv:
+                <span className="ms-1 fw-bold text-danger">*</span>
+              </Label>
+              <Controller
+                name="requestName"
+                control={control}
+                rules={{required: true}}
+                render={ ({field}) =>
+                  <textarea
+                    id="requestName"
+                    {...field}
+                    aria-label="requestName"
+                    disabled={true}
+                    type="text"
+                    className={`form-control ${errors && errors.requestName ? "is-invalid" : ''}`}
+                    rows="1"
+                  />
+                }
+              />
+            </Form>
           </Col>
         </Row>
       </>
