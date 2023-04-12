@@ -22,6 +22,7 @@ import {
   useFormContext,
   FormProvider,
 } from "react-hook-form";
+import ResourceFields from '../components/fields-request/ResourceFields';
 
 
 function extractLeaderName(projectUsers) {
@@ -120,6 +121,8 @@ export const ControlRequestsChange = () => {
                 <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
                   Editiraj zahtjev
                 </Button>
+                <ScientificSoftware fieldsDisabled={disabledFields} />
+                <ResourceFields />
               </Form>
             </FormProvider>
           </Col>
