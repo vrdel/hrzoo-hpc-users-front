@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import RequestHorizontalRuler from '../components/RequestHorizontalRuler';
 import GeneralFields from '../components/fields-request/GeneralFields';
 import { SharedData } from './root';
 import { Col, Label, Row, Table, Tooltip, Button, Form } from 'reactstrap';
@@ -7,6 +8,7 @@ import { PageTitle } from '../components/PageTitle';
 import { StateIcons, StateString } from '../config/map-states';
 import { fetchAllNrProjects } from '../api/projects';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import ScientificSoftware from '../components/fields-request/ScientificSoftware';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -37,7 +39,7 @@ export const ControlRequestsChange = () => {
   const [pageTitle, setPageTitle] = useState(undefined);
   const [projectTarget, setProjectTarget] = useState(undefined)
   const { projId } = useParams()
-  const [editMe, setEditMe] = useState(false)
+  const [disabledFields, setDisabledFields] = useState(true)
 
   const queryClient = useQueryClient();
 
@@ -87,6 +89,14 @@ export const ControlRequestsChange = () => {
       rhfProps.setValue('startDate', targetProject.date_start)
       rhfProps.setValue('endDate', targetProject.date_end)
       rhfProps.setValue('scientificDomain', targetProject.science_field)
+      rhfProps.setValue('scientificSoftware', targetProject.science_software.map(e => (
+        {
+          'label' : e,
+          'value' : e
+        }
+      )))
+      rhfProps.setValue('scientificSoftwareExtra', targetProject.science_extrasoftware)
+      rhfProps.setValue('scientificSoftwareHelp', targetProject.science_extrasoftware_help)
     }
   }, [location.pathname, nrProjects?.length])
 
@@ -104,10 +114,12 @@ export const ControlRequestsChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
-                <GeneralFields fieldsDisabled={editMe} />
-                <Button color="danger" onClick={() => setEditMe(!editMe)}>
+                <RequestHorizontalRuler />
+                <GeneralFields fieldsDisabled={disabledFields} />
+                <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
                   Editiraj zahtjev
                 </Button>
+                <ScientificSoftware />
               </Form>
             </FormProvider>
           </Col>

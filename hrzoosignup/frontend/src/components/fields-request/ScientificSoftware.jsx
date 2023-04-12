@@ -8,7 +8,7 @@ import {
 } from 'reactstrap';
 import {
   Controller,
-  useFormContext
+  useFormContext,
 } from "react-hook-form";
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { SharedData } from '../../pages/root';
@@ -16,7 +16,7 @@ import { ErrorMessage } from '@hookform/error-message';
 
 
 const ScientificSoftware = () => {
-  const { control, setValue, formState: {errors} } = useFormContext();
+  const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { listScientificSoftware, buildOptionsFromArray } = useContext(SharedData);
 
   return (
@@ -45,6 +45,7 @@ const ScientificSoftware = () => {
                 id="scientificSoftware"
                 isMulti
                 scientificSoftwareMultiValue={true}
+                value={getValues(`scientificSoftware`)}
                 options={buildOptionsFromArray(listScientificSoftware)}
                 placeholder="Odaberi"
                 onChange={(e) => setValue('scientificSoftware', e)}
