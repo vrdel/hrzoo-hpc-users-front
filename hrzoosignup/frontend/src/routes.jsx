@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Routes, Route, BrowserRouter
 } from 'react-router-dom';
@@ -23,14 +23,28 @@ import Root from './pages/root';
 import { isActiveSession } from './api/auth';
 import { useQuery } from '@tanstack/react-query';
 
+
+const ProtectedRoute = ({isPrivileged, children}) => {
+  if (isPrivileged)
+    return children
+}
+
+
 const BaseRoutes = () => {
+  const [ isPrivileged, setIsPrivileged] = useState(undefined)
   const { status: sessionStatus, data: sessionData} = useQuery({
     queryKey: ['sessionactive'],
     queryFn: isActiveSession,
     staleTime: 60 * 60 * 1000,
   })
 
-  if (sessionStatus == 'success' && sessionData) {
+  useEffect(() => {
+    if (sessionStatus === 'success' && sessionData.userdetails)
+      if (sessionData.userdetails.is_staff || sessionData.userdetails.is_superuser)
+        setIsPrivileged(true)
+  }, [sessionStatus])
+
+  if (sessionStatus === 'success' && sessionData) {
     return (
       <BrowserRouter>
         <Routes>
@@ -39,19 +53,16 @@ const BaseRoutes = () => {
             <Route path="prijava" element={<LoginPublic />}/>
             <Route path="prijava-pub" element={<LoginOffical />}/>
             <Route element={<BasePage sessionData={sessionData} />}>
-              {
-                ( sessionData?.userdetails?.is_staff || sessionData?.userdetails?.is_superuser) &&
-                  (
-                    <>
-                      <Route path="upravljanje-zahtjevima" element={
-                        <ManageRequestsList />
-                      }/>
-                      <Route path="upravljanje-zahtjevima/:projId" element={
-                        <ManageRequestsChange />
-                      }/>
-                    </>
-                  )
-              }
+              <Route path="upravljanje-zahtjevima" element={
+                <ProtectedRoute isPrivileged={isPrivileged}>
+                  <ManageRequestsList />
+                </ProtectedRoute>
+              }/>
+              <Route path="upravljanje-zahtjevima/:projId" element={
+                <ProtectedRoute isPrivileged={isPrivileged}>
+                  <ManageRequestsChange />
+                </ProtectedRoute>
+              }/>
               <Route path="moji-zahtjevi" element={
                 <MyRequestsList />
               }/>
