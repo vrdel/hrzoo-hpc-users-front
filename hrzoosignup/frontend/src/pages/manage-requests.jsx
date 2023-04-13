@@ -15,6 +15,9 @@ import {
   faSave,
   faCog,
   faTimes,
+  faTimer,
+  faTimeline,
+  faCalendarXmark,
   faFile,
   faCheck,
   faMagnifyingGlass,
@@ -45,7 +48,9 @@ function ToggleState(request_state, which) {
     {
       'submitted': false,
       'approved': false,
-      'denied': false
+      'denied': false,
+      'extended': false,
+      'expired': false
     }
   )
   newState[which] = !old
@@ -117,7 +122,9 @@ export const ManageRequestsChange = () => {
         {
           'submitted': false,
           'approved': false,
-          'denied': false
+          'denied': false,
+          'extended': false,
+          'expired': false
         }
       )
       newState[nrProject.state.name] = true,
@@ -169,7 +176,6 @@ export const ManageRequestsChange = () => {
 const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState}) => {
   const { control, formState: {errors} } = useFormContext();
 
-  console.log('VRDEL DEBUG', requestState)
   return (
     <>
       <Row>
@@ -194,51 +200,81 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
       </Row>
       <Row style={{'height': '100px'}}/>
       <Row className="mt-2 mb-5 text-center">
-        <Col>
-          <FontAwesomeIcon className="fa-5x text-success" style={{color: '#00ff00'}} icon={faCheck}/>{' '}
+        <Col md={{size:1}}>
+        </Col>
+        <Col md={{size:2}}>
+          <FontAwesomeIcon className="fa-4x text-success" style={{color: '#00ff00'}} icon={faCheck}/>{' '}
           <br/>
-          <p className="fs-4">
-            Prihvati
+          <p className="fs-5">
+            Odobren
           </p>
           <Button
-            style={{height: '50px', width: '50px'}}
+            style={{height: '30px', width: '30px'}}
             outline={!requestState['approved']}
             onClick={() =>
               setRequestState(ToggleState(requestState, 'approved'))}
             color="success"
           />
         </Col>
-        <Col>
+        <Col md={{size: 2}}>
           <FontAwesomeIcon
-            className="fa-5x text-warning"
-            style={{color: '#00ff00'}}
+            className="fa-4x text-warning"
             icon={faCog}/>{' '}
           <br/>
-          <p className="fs-4">
+          <p className="fs-5">
             Obrada
           </p>
           <Button
-            style={{height: '50px', width: '50px'}}
+            style={{height: '30px', width: '30px'}}
             outline={!requestState['submitted']}
             onClick={() =>
               setRequestState(ToggleState(requestState, 'submitted'))}
             color="success"
           />
         </Col>
-        <Col>
+        <Col md={{size: 2}}>
           <FontAwesomeIcon
-            className="fa-5x text-danger"
-            style={{color: '#ff0000'}}
+            className="fa-4x text-warning"
+            icon={faTimeline}/>{' '}
+          <br/>
+          <p className="fs-5">
+            Produljenje
+          </p>
+          <Button
+            outline={!requestState['extended']}
+            style={{height: '30px', width: '30px'}}
+            onClick={() =>
+              setRequestState(ToggleState(requestState, 'extended'))}
+            color="success"/>
+        </Col>
+        <Col md={{size: 2}}>
+          <FontAwesomeIcon
+            className="fa-4x text-danger"
             icon={faTimes}/>{' '}
           <br/>
-          <p className="fs-4">
-            Odbij
+          <p className="fs-5">
+            Odbijen
           </p>
           <Button
             outline={!requestState['denied']}
-            style={{height: '50px', width: '50px'}}
+            style={{height: '30px', width: '30px'}}
             onClick={() =>
               setRequestState(ToggleState(requestState, 'denied'))}
+            color="success"/>
+        </Col>
+        <Col md={{size: 2}}>
+          <FontAwesomeIcon
+            className="fa-4x text-danger"
+            icon={faCalendarXmark}/>{' '}
+          <br/>
+          <p className="fs-5">
+            Istekao
+          </p>
+          <Button
+            outline={!requestState['expired']}
+            style={{height: '30px', width: '30px'}}
+            onClick={() =>
+              setRequestState(ToggleState(requestState, 'expired'))}
             color="success"/>
         </Col>
       </Row>
