@@ -255,7 +255,7 @@ const NewRequestIndex = () => {
         <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
           HPC
         </Col>
-        <Col md={{size: 2, offset: 1}}>
+        <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
           <Label
             htmlFor="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
@@ -263,7 +263,7 @@ const NewRequestIndex = () => {
             Prosječan broj procesorskih jezgri po poslu:
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="HPCnSlotsGPU"
             aria-label="HPCnSlotsGPU"
@@ -271,7 +271,7 @@ const NewRequestIndex = () => {
             Prosječan broj grafičkih procesora po poslu:
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="HPCnRAM"
             aria-label="HPCnRAM"
@@ -279,7 +279,7 @@ const NewRequestIndex = () => {
             Prosječna količina radne memorije po poslu (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="HPCnTempGB"
             aria-label="HPCnTempGB"
@@ -287,7 +287,7 @@ const NewRequestIndex = () => {
             Prosječna količina privremenog prostora po poslu (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="HPCnDiskGB"
             aria-label="HPCnDiskGB"
@@ -362,7 +362,7 @@ const NewRequestIndex = () => {
         <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col md={{size: 2, offset: 1}}>
+        <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
           <Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
@@ -370,7 +370,7 @@ const NewRequestIndex = () => {
             Broj virtualnih poslužitelja:
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
@@ -378,7 +378,7 @@ const NewRequestIndex = () => {
             Ukupna količina virtualnih procesorskih jezgara:
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
@@ -386,7 +386,7 @@ const NewRequestIndex = () => {
             Ukupna količina radne memorije (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
@@ -394,7 +394,7 @@ const NewRequestIndex = () => {
             Maksimalna količina radne memorije po poslužitelju (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
@@ -465,7 +465,7 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col md={{size: 2, offset: 1}}>
+        <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
           <Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
@@ -473,7 +473,7 @@ const NewRequestIndex = () => {
             Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
