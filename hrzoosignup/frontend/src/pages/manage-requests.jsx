@@ -111,11 +111,11 @@ export const ManageRequestsChange = () => {
       )))
       rhfProps.setValue('scientificSoftwareExtra', nrProject.science_extrasoftware)
       rhfProps.setValue('scientificSoftwareHelp', nrProject.science_extrasoftware_help)
-      rhfProps.setValue('nSlotsCPU', nrProject.resources_numbers.nSlotsCPU)
-      rhfProps.setValue('nSlotsGPU', nrProject.resources_numbers.nSlotsGPU)
-      rhfProps.setValue('nRAM', nrProject.resources_numbers.nSlotsRAM)
-      rhfProps.setValue('nTempGB', nrProject.resources_numbers.nTempGB)
-      rhfProps.setValue('nDiskGB', nrProject.resources_numbers.nDiskGB)
+      rhfProps.setValue('HPCnSlotsCPU', nrProject.resources_numbers.HPCnSlotsCPU)
+      rhfProps.setValue('HPCnSlotsGPU', nrProject.resources_numbers.HPCnSlotsGPU)
+      rhfProps.setValue('HPCnRAM', nrProject.resources_numbers.HPCnSlotsRAM)
+      rhfProps.setValue('HPCnTempGB', nrProject.resources_numbers.HPCnTempGB)
+      rhfProps.setValue('HPCnDiskGB', nrProject.resources_numbers.HPCnDiskGB)
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
 
       let newState = new Object(
@@ -186,7 +186,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         </Col>
         <Col>
           <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
-            Editiraj zahtjev
+            Uredi zahtjev
           </Button>
         </Col>
       </Row>
@@ -198,11 +198,21 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </Label>
         </Col>
       </Row>
-      <Row style={{'height': '100px'}}/>
-      <Row className="mt-2 mb-5 text-center">
-        <Col md={{size:1}}>
+      <Row style={{'height': '80px'}}/>
+      <Row>
+        <Col md={{size: 1}}>
         </Col>
-        <Col md={{size:2}}>
+        <Col style={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
+          <span >
+            Stanja zahtjeva:
+          </span>
+        </Col>
+      </Row>
+      <Row style={{'height': '30px'}}/>
+      <Row className="mt-2 mb-5 text-center">
+        <Col md={{size: 1}}>
+        </Col>
+        <Col md={{size: 2}}>
           <FontAwesomeIcon className="fa-4x text-success" style={{color: '#00ff00'}} icon={faCheck}/>{' '}
           <br/>
           <p className="fs-5">
@@ -276,6 +286,12 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
             onClick={() =>
               setRequestState(ToggleState(requestState, 'expired'))}
             color="success"/>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="d-flex justify-content-center fst-italic">
+          <p className="fw-bold">Napomena:</p>&nbsp;
+          <p>Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen"</p>
         </Col>
       </Row>
       <Row style={{'height': '100px'}}/>

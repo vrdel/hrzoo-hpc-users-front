@@ -238,40 +238,40 @@ const NewRequestIndex = () => {
       <Row>
         <Col md={{size: 2, offset: 1}}>
           <Label
-            htmlFor="nSlotsCPU"
-            aria-label="nSlotsCPU"
+            htmlFor="HPCnSlotsCPU"
+            aria-label="HPCnSlotsCPU"
             className="mr-2 form-label text-center">
             Prosječan broj procesorskih jezgri po poslu:
           </Label>
         </Col>
         <Col md={{size: 2}}>
           <Label
-            htmlFor="nSlotsGPU"
-            aria-label="nSlotsGPU"
+            htmlFor="HPCnSlotsGPU"
+            aria-label="HPCnSlotsGPU"
             className="mr-2 form-label text-center">
             Prosječan broj grafičkih procesora po poslu:
           </Label>
         </Col>
         <Col md={{size: 2}}>
           <Label
-            htmlFor="nRAM"
-            aria-label="nRAM"
+            htmlFor="HPCnRAM"
+            aria-label="HPCnRAM"
             className="mr-2 form-label text-center">
             Prosječna količina radne memorije po poslu (GB):
           </Label>
         </Col>
         <Col md={{size: 2}}>
           <Label
-            htmlFor="nTempGB"
-            aria-label="nTempGB"
+            htmlFor="HPCnTempGB"
+            aria-label="HPCnTempGB"
             className="mr-2 form-label text-center">
             Prosječna količina privremenog prostora po poslu (GB):
           </Label>
         </Col>
         <Col md={{size: 2}}>
           <Label
-            htmlFor="nDiskGB"
-            aria-label="nDiskGB"
+            htmlFor="HPCnDiskGB"
+            aria-label="HPCnDiskGB"
             className="mr-2 form-label text-center">
             Ukupna količina spremišnog prostora po poslu (GB):
           </Label>
