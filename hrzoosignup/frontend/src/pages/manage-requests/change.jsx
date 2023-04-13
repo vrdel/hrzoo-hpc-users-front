@@ -26,18 +26,23 @@ import {
 import ResourceFields from '../../components/fields-request/ResourceFields';
 
 
+function setInitialState() {
+  let newState = new Object(
+    {
+      'submit': false,
+      'approve': false,
+      'deny': false,
+      'extend': false,
+      'expire': false
+    }
+  )
+  return newState
+}
+
 
 function ToggleState(request_state, which) {
   let old = request_state[which]
-  let newState = new Object(
-    {
-      'submitted': false,
-      'approved': false,
-      'denied': false,
-      'extended': false,
-      'expired': false
-    }
-  )
+  let newState = setInitialState()
   newState[which] = !old
   return JSON.parse(JSON.stringify(newState))
 }
@@ -46,7 +51,6 @@ function ToggleState(request_state, which) {
 export const ManageRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
-  const [ projectTarget, setProjectTarget ] = useState(undefined)
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
   const [ requestState, setRequestState ] = useState(undefined)
@@ -110,15 +114,7 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('CLOUDnIPs', nrProject.resources_numbers.CLOUDnIPs)
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
 
-      let newState = new Object(
-        {
-          'submitted': false,
-          'approved': false,
-          'denied': false,
-          'extended': false,
-          'expired': false
-        }
-      )
+      let newState = setInitialState()
       newState[nrProject.state.name] = true,
       setRequestState(newState)
     }

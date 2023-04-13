@@ -3,35 +3,35 @@
     "model": "backend.State",
     "pk": 1,
     "fields": {
-      "name": "approved"
+      "name": "approve"
      }
   },
   {
     "model": "backend.State",
     "pk": 2,
     "fields": {
-      "name": "submitted"
+      "name": "submit"
      }
   },
   {
     "model": "backend.State",
     "pk": 3,
     "fields": {
-      "name": "denied"
+      "name": "deny"
      }
   },
   {
     "model": "backend.State",
     "pk": 4,
     "fields": {
-      "name": "extended"
+      "name": "extend"
      }
   },
   {
     "model": "backend.State",
     "pk": 5,
     "fields": {
-      "name": "expired"
+      "name": "expire"
      }
   }
 ]
