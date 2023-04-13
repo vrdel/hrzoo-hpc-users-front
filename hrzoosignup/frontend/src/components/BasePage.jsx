@@ -10,10 +10,9 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/content.css';
 import { doLogout } from '../api/auth';
 import { fetchCroRIS } from '../api/croris';
-import { fetchNrProjects } from '../api/projects';
 import { AuthContext } from '../components/AuthContextProvider.jsx';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
-import { useQuery, QueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import HeadTitle from '../components/HeadTitle';
 
 export const ModalContext = React.createContext();

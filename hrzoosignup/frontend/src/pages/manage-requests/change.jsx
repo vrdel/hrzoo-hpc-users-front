@@ -26,6 +26,7 @@ import {
 import ResourceFields from '../../components/fields-request/ResourceFields';
 import { StateShortString } from '../../config/map-states';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
+import { toast } from 'react-toastify'
 
 
 function setInitialState() {
@@ -39,6 +40,17 @@ function setInitialState() {
     }
   )
   return newState
+}
+
+
+function findTrueState(request_state) {
+  let target = null
+
+  for (var state in request_state)
+    if (request_state[state] === true)
+      target = state
+
+  return target
 }
 
 
@@ -128,7 +140,28 @@ export const ManageRequestsChange = () => {
 
   const onSubmit = data => {
     data['requestState'] = requestState
-    alert(JSON.stringify(data, null, 2));
+    let whichState = findTrueState(data['requestState'])
+    if (whichState === 'approve' && !data['staff_requestResourceType'])
+      toast.error(
+        <span className="font-monospace">
+          Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
+        </span>, {
+          theme: 'colored',
+          autoClose: false,
+          toastId: 'manreq-change-no-reqtype',
+        }
+      )
+    if (nrProject.state.name === whichState)
+      toast.error(
+        <span className="font-monospace">
+          Stanje je nepromijenjeno.
+        </span>, {
+          theme: 'warning',
+          autoClose: false,
+          toastId: 'manreq-change-no-statechange',
+        }
+      )
+    //alert(JSON.stringify(data, null, 2));
   }
 
   if (nrProject && requestState) {
@@ -178,7 +211,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </span>
         </Col>
         <Col>
-          <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
+          <Button disabled={true} color="danger" onClick={() => setDisabledFields(!disabledFields)}>
             Uredi zahtjev
           </Button>
         </Col>
@@ -296,7 +329,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
             htmlFor="staff_comment"
             className="fw-bold mt-3 fs-5 form-label"
             aria-label="staff_comment">
-            Komentar koji će biti poslan u emailu uz generičku poruku:
+            Dodatan komentar voditelju u emailu uz generičku poruku:
           </Label>
           <Controller
             name="staff_comment"
@@ -307,7 +340,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
                 {...field}
                 aria-label="staff_comment"
                 type="text"
-                className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
+                className="form-control"
                 rows="5"
               />
             }
