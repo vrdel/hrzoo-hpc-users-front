@@ -18,10 +18,6 @@ import HeadTitle from '../components/HeadTitle';
 
 export const ModalContext = React.createContext();
 
-const queryClient = new QueryClient()
-const issuesNrQuery = { queryKey: ['projects'], queryFn: fetchNrProjects}
-queryClient.prefetchQuery(issuesNrQuery)
-
 
 const BasePage = ({sessionData=undefined}) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false)
