@@ -235,7 +235,26 @@ const NewRequestIndex = () => {
           <h4 className="ms-4 mb-3 mt-4">Resursi</h4><br/>
         </Col>
       </Row>
+      <Row className="mt-3">
+        <Col md={{size: 3, offset: 1}}>
+          <Label
+            htmlFor="requestResourceType"
+            aria-label="requestResourceType"
+            className="mr-2 text-right form-label">
+            Tip resursa:
+          </Label>
+          <Input
+            aria-label="requestResourceType"
+            disabled={true}
+            id="requestResourceType"
+          />
+        </Col>
+      </Row>
+      <Row style={{height: '50px'}}/>
       <Row>
+        <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
+          HPC
+        </Col>
         <Col md={{size: 2, offset: 1}}>
           <Label
             htmlFor="HPCnSlotsCPU"
@@ -273,7 +292,7 @@ const NewRequestIndex = () => {
             htmlFor="HPCnDiskGB"
             aria-label="HPCnDiskGB"
             className="mr-2 form-label text-center">
-            Ukupna količina spremišnog prostora po poslu (GB):
+            Ukupna količina spremišnog prostora potrebna za projekt (GB):
           </Label>
         </Col>
         <div className="w-100"></div>
@@ -338,19 +357,154 @@ const NewRequestIndex = () => {
           </InputGroup>
         </Col>
       </Row>
-      <Row className="mt-3">
-        <Col md={{size: 3, offset: 1}}>
+      <Row style={{height: '50px'}}/>
+      <Row>
+        <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
+          CLOUD
+        </Col>
+        <Col md={{size: 2, offset: 1}}>
           <Label
-            htmlFor="requestResourceType"
-            aria-label="requestResourceType"
-            className="mr-2 text-right form-label">
-            Tip resursa:
+            htmlFor="CLOUDnVM"
+            aria-label="CLOUDnVM"
+            className="mr-2 form-label text-center">
+            Broj virtualnih poslužitelja:
           </Label>
-          <Input
-            aria-label="requestResourceType"
-            disabled={true}
-            id="requestResourceType"
-          />
+        </Col>
+        <Col md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnSlotsCPU"
+            aria-label="CLOUDnSlotsCPU"
+            className="mr-2 form-label text-center">
+            Ukupna količina virtualnih procesorskih jezgara:
+          </Label>
+        </Col>
+        <Col md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnRAM"
+            aria-label="CLOUDnRAM"
+            className="mr-2 form-label text-center">
+            Ukupna količina radne memorije (GB):
+          </Label>
+        </Col>
+        <Col md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnRAMVM"
+            aria-label="CLOUDnRAMVM"
+            className="mr-2 form-label text-center">
+            Maksimalna količina radne memorije po poslužitelju (GB):
+          </Label>
+        </Col>
+        <Col md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnDiskGB"
+            aria-label="CLOUDnDiskGB"
+            className="mr-2 form-label text-center">
+            Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):
+          </Label>
+        </Col>
+        <div className="w-100"></div>
+        <Col md={{size: 2, offset: 1}}>
+          <InputGroup>
+            <Input
+              disabled={true}
+              className="form-control text-center"
+              type="number"
+            />
+            <InputGroupText>
+              VM
+            </InputGroupText>
+          </InputGroup>
+        </Col>
+        <Col md={{size: 2}}>
+          <InputGroup>
+            <Input
+              disabled={true}
+              className="form-control text-center"
+              type="number"
+            />
+            <InputGroupText>
+              CPU
+            </InputGroupText>
+          </InputGroup>
+        </Col>
+        <Col md={{size: 2}}>
+          <InputGroup>
+            <Input
+              disabled={true}
+              className="form-control text-center"
+              type="number"
+            />
+            <InputGroupText>
+              RAM
+            </InputGroupText>
+          </InputGroup>
+        </Col>
+        <Col md={{size: 2}}>
+          <InputGroup>
+            <Input
+              disabled={true}
+              className="form-control text-center"
+              type="number"
+            />
+            <InputGroupText>
+              RAM
+            </InputGroupText>
+          </InputGroup>
+        </Col>
+        <Col md={{size: 2}}>
+          <InputGroup>
+            <Input
+              disabled={true}
+              className="form-control text-center"
+              type="number"
+            />
+            <InputGroupText>
+              Disk
+            </InputGroupText>
+          </InputGroup>
+        </Col>
+      </Row>
+      <Row className="mt-5">
+        <Col md={{size: 2, offset: 1}}>
+          <Label
+            htmlFor="CLOUDnFastDiskGB"
+            aria-label="CLOUDnFastDiskGB"
+            className="mr-2 form-label text-center">
+            Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):
+          </Label>
+        </Col>
+        <Col md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnIPs"
+            aria-label="CLOUDnIPs"
+            className="mr-2 form-label text-center">
+            Broj javnih IPv4 adresa:
+          </Label>
+        </Col>
+        <div className="w-100"></div>
+        <Col md={{size: 2, offset: 1}}>
+          <InputGroup>
+            <Input
+              className="form-control text-center"
+              disabled={true}
+              type="number"
+            />
+            <InputGroupText>
+              Disk
+            </InputGroupText>
+          </InputGroup>
+        </Col>
+        <Col md={{size: 2}}>
+          <InputGroup>
+            <Input
+              disabled={true}
+              className="form-control text-center"
+              type="number"
+            />
+            <InputGroupText>
+              IP
+            </InputGroupText>
+          </InputGroup>
         </Col>
       </Row>
       <RequestHorizontalRuler />
