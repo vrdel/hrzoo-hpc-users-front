@@ -21,7 +21,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
   return (
     <>
       <Row>
-        <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
+        <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
         <Col className="d-flex align-items-center" md={{offset: 1, size: 2}}>
@@ -234,7 +234,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
 
   return (
     <Row>
-      <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
+      <Col className="fs-4 mb-3" md={{offset: 1}}>
         HPC
       </Col>
       <Col className="d-flex align-items-center" md={{offset: 1, size: 2}}>
