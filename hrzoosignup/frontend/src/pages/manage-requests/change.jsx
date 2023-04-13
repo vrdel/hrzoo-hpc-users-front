@@ -19,11 +19,11 @@ import {
 import { useParams } from 'react-router-dom';
 import {
   useForm,
-  Controller,
   useFormContext,
   FormProvider,
 } from "react-hook-form";
 import ResourceFields from '../../components/fields-request/ResourceFields';
+import { StateShortString } from '../../config/map-states';
 
 
 function setInitialState() {
@@ -149,8 +149,8 @@ export const ManageRequestsChange = () => {
                   setDisabledFields={setDisabledFields}
                   requestState={requestState}
                   setRequestState={setRequestState}
+                  initialProjectState={nrProject.state.name}
                 />
-
               </Form>
             </FormProvider>
           </Col>
@@ -161,7 +161,7 @@ export const ManageRequestsChange = () => {
 };
 
 
-const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState}) => {
+const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState, initialProjectState}) => {
   const { control, formState: {errors} } = useFormContext();
 
   return (
@@ -186,7 +186,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </Label>
         </Col>
       </Row>
-      <Row style={{'height': '80px'}}/>
+      <Row style={{'height': '10px'}}/>
       <Row>
         <Col md={{size: 1}}>
         </Col>
@@ -208,9 +208,9 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </p>
           <Button
             style={{height: '30px', width: '30px'}}
-            outline={!requestState['approved']}
+            outline={!requestState['approve']}
             onClick={() =>
-              setRequestState(ToggleState(requestState, 'approved'))}
+              setRequestState(ToggleState(requestState, 'approve'))}
             color="success"
           />
         </Col>
@@ -224,9 +224,9 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </p>
           <Button
             style={{height: '30px', width: '30px'}}
-            outline={!requestState['submitted']}
+            outline={!requestState['submit']}
             onClick={() =>
-              setRequestState(ToggleState(requestState, 'submitted'))}
+              setRequestState(ToggleState(requestState, 'submit'))}
             color="success"
           />
         </Col>
@@ -239,10 +239,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
             Produljenje
           </p>
           <Button
-            outline={!requestState['extended']}
+            outline={!requestState['extend']}
             style={{height: '30px', width: '30px'}}
             onClick={() =>
-              setRequestState(ToggleState(requestState, 'extended'))}
+              setRequestState(ToggleState(requestState, 'extend'))}
             color="success"/>
         </Col>
         <Col md={{size: 2}}>
@@ -254,10 +254,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
             Odbijen
           </p>
           <Button
-            outline={!requestState['denied']}
+            outline={!requestState['deny']}
             style={{height: '30px', width: '30px'}}
             onClick={() =>
-              setRequestState(ToggleState(requestState, 'denied'))}
+              setRequestState(ToggleState(requestState, 'deny'))}
             color="success"/>
         </Col>
         <Col md={{size: 2}}>
@@ -269,17 +269,19 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
             Istekao
           </p>
           <Button
-            outline={!requestState['expired']}
+            outline={!requestState['expire']}
             style={{height: '30px', width: '30px'}}
             onClick={() =>
-              setRequestState(ToggleState(requestState, 'expired'))}
+              setRequestState(ToggleState(requestState, 'expire'))}
             color="success"/>
         </Col>
       </Row>
       <Row>
         <Col className="d-flex justify-content-center fst-italic">
           <p className="fw-bold">Napomena:</p>&nbsp;
-          <p>Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen"</p>
+          <p>Inicijalno stanje zahtjeva: <span className="text-decoration-underline">{ StateShortString(initialProjectState) }</span><br/>
+            Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".
+          </p>
         </Col>
       </Row>
       <Row style={{'height': '100px'}}/>

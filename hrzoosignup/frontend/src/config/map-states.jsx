@@ -27,3 +27,15 @@ export function StateString(state_name) {
 
   return state2string[state_name]
 }
+
+export function StateShortString(state_name) {
+  let state2string = {
+    'submit': 'Obrada',
+    'approve': 'Odobren',
+    'deny': 'Odbijen',
+    'expire': 'Istekao',
+    'extend': 'Produljenje',
+  }
+
+  return state2string[state_name]
+}

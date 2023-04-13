@@ -119,10 +119,9 @@ const GeneralRequest = ({projectType}) => {
       'CLOUDnDiskGB': data['CLOUDnDiskGB'],
       'CLOUDnFastDiskGB': data['CLOUDnFastDiskGB'],
       'CLOUDnIPs': data['CLOUDnIPs'],
-
     }
     dataToSend['resources_type'] = data['requestResourceType']
-    dataToSend['state'] = 'submitted'
+    dataToSend['state'] = 'submit'
     doAdd(dataToSend)
     // alert(JSON.stringify(dataToSend, null, 2));
   }
