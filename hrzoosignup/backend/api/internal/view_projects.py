@@ -127,8 +127,19 @@ class Projects(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated, )
 
-    def post(self, request):
-        pass
+    def post(self, request, **kwargs):
+        req_type = kwargs.get('specific')
+        if (request.user.is_staff or request.user.is_superuser):
+            p_obj = models.Project.objects.get(identifier=req_type)
+            for (key, value) in request.data['requestState'].items():
+                if value == True:
+                    break
+            state = models.State.objects.get(name=key)
+            p_obj.state = state
+            p_obj.staff_comment = request.data.get('staff_comment')
+            p_obj.staff_resources_type = request.data.get('staff_resources_type')
+            serializer = ProjectSerializer(data=p_obj)
+
 
     def get(self, request, **kwargs):
         projects = list()

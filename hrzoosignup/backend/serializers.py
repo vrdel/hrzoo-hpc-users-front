@@ -159,6 +159,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'science_extrasoftware_help',
             'science_field',
             'science_software',
+            'staff_resources_type',
             'state',
             'users',
             'userproject_set'

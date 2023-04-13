@@ -4,8 +4,8 @@ import GeneralFields from '../../components/fields-request/GeneralFields';
 import { SharedData } from '../root';
 import { Col, Label, Row, Button, Form } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
-import { fetchNrSpecificProject } from '../../api/projects';
-import { useQuery } from '@tanstack/react-query';
+import { fetchNrSpecificProject, changeProject } from '../../api/projects';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -81,6 +81,13 @@ export const ManageRequestsChange = () => {
       queryFn: () => fetchNrSpecificProject(projId),
   })
 
+  const changeMutation = useMutation({
+    mutationFn: (data) => {
+      console.log('VRDEL DEBUG mutation', data, projId)
+      return changeProject(projId, data)
+    }
+  })
+
   const rhfProps = useForm({
     defaultValues: {
       requestName: '',
@@ -104,6 +111,7 @@ export const ManageRequestsChange = () => {
       scientificSoftwareExtra: '',
       scientificSoftwareHelp: '',
       staff_requestResourceType: '',
+      staff_comment: ''
     }
   });
 
@@ -141,7 +149,6 @@ export const ManageRequestsChange = () => {
       setRequestState(newState)
     }
 
-
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname, nrProject])
 
@@ -162,7 +169,7 @@ export const ManageRequestsChange = () => {
   const doChange = (data) => {
     data['requestState'] = requestState
     let whichState = findTrueState(data['requestState'])
-    if (whichState === 'approve' && !data['staff_requestResourceType'])
+    if (whichState === 'approve' && !data['staff_requestResourceType']) {
       toast.error(
         <span className="font-monospace">
           Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
@@ -172,7 +179,9 @@ export const ManageRequestsChange = () => {
           toastId: 'manreq-change-no-reqtype',
         }
       )
-    if (nrProject.state.name === whichState)
+      return null
+    }
+    if (nrProject.state.name === whichState) {
       toast.warn(
         <span className="font-monospace">
           Stanje je nepromijenjeno.
@@ -182,7 +191,17 @@ export const ManageRequestsChange = () => {
           toastId: 'manreq-change-no-statechange',
         }
       )
-    //alert(JSON.stringify(data, null, 2));
+      return null
+    }
+
+    changeMutation.mutate(data, {
+      onSuccess: () => {
+        console.log('VRDEL DEBUG OK', data, projId)
+      },
+      onError: () => {
+        console.log('VRDEL DEBUG ERROR', data, projId)
+      },
+    })
   }
 
   if (nrProject && requestState) {
