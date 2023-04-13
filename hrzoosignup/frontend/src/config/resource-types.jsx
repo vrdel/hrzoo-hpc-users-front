@@ -17,9 +17,21 @@ let cloudResource = {
   "value": "CLOUD"
 }
 
+let cloudBigMemResource = {
+  "label": "CLOUD-BIGMEM",
+  "value": "CLOUD-BIGMEM"
+}
+
+let cloudGpuResource = {
+  "label": "CLOUD-BIGMEM",
+  "value": "CLOUD-BIGMEM"
+}
+
 export const ResourceTypesToSelect = [
   gpuResource,
   cpuResource,
   bigMemResource,
-  cloudResource
+  cloudResource,
+  cloudGpuResource,
+  cloudBigMemResource,
 ]
