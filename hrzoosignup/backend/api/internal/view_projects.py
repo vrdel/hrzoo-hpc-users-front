@@ -46,7 +46,6 @@ class ProjectsGeneral(APIView):
             userproject_obj.save()
             cobj.counter += 1
             cobj.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
             err_response = {
@@ -138,7 +137,10 @@ class Projects(APIView):
             p_obj.state = state
             p_obj.staff_comment = request.data.get('staff_comment')
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
-            serializer = ProjectSerializer(data=p_obj)
+            p_obj.save()
+            serializer = ProjectSerializer(p_obj, data=request.data)
+            if serializer.is_valid():
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
     def get(self, request, **kwargs):
