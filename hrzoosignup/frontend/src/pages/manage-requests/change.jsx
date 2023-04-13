@@ -27,6 +27,7 @@ import ResourceFields from '../../components/fields-request/ResourceFields';
 import { StateShortString } from '../../config/map-states';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { toast } from 'react-toastify'
+import ModalAreYouSure from '../../components/ModalAreYouSure';
 
 
 function setInitialState() {
@@ -68,6 +69,12 @@ export const ManageRequestsChange = () => {
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
   const [ requestState, setRequestState ] = useState(undefined)
+
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const {status, data: nrProject, error, isFetching} = useQuery({
       queryKey: ['change-project', projId],
@@ -138,7 +145,21 @@ export const ManageRequestsChange = () => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname, nrProject])
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Obrada korisničkog zahtijeva")
+    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
+    setOnYesCall('dochangereq')
+    setOnYesCallArg(data)
+  }
+
+  function onYesCallback() {
+    if (onYesCall == 'dochangereq') {
+      doChange(onYesCallArg)
+    }
+  }
+
+  const doChange = (data) => {
     data['requestState'] = requestState
     let whichState = findTrueState(data['requestState'])
     if (whichState === 'approve' && !data['staff_requestResourceType'])
@@ -152,11 +173,11 @@ export const ManageRequestsChange = () => {
         }
       )
     if (nrProject.state.name === whichState)
-      toast.error(
+      toast.warn(
         <span className="font-monospace">
           Stanje je nepromijenjeno.
         </span>, {
-          theme: 'warning',
+          theme: 'colored',
           autoClose: false,
           toastId: 'manreq-change-no-statechange',
         }
@@ -170,6 +191,12 @@ export const ManageRequestsChange = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback} />
         <Row>
           <Col>
             <FormProvider {...rhfProps}>
@@ -200,7 +227,6 @@ export const ManageRequestsChange = () => {
 const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState, initialProjectState}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
-
 
   return (
     <>
