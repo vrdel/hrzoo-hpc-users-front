@@ -9,23 +9,9 @@ import { useQuery } from '@tanstack/react-query';
 import { TypeString, TypeColor } from '../../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSave,
-  faCog,
-  faTimes,
-  faTimer,
-  faTimeline,
-  faCalendarXmark,
-  faFile,
-  faCheck,
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean } from '../../utils/dates';
-import {
-  useForm,
-  Controller,
-  useFormContext,
-  FormProvider,
-} from "react-hook-form";
 
 
 function extractLeaderName(projectUsers) {
