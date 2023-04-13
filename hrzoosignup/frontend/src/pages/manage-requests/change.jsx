@@ -21,9 +21,11 @@ import {
   useForm,
   useFormContext,
   FormProvider,
+  Controller,
 } from "react-hook-form";
 import ResourceFields from '../../components/fields-request/ResourceFields';
 import { StateShortString } from '../../config/map-states';
+import { CustomReactSelect } from '../../components/CustomReactSelect';
 
 
 function setInitialState() {
@@ -81,7 +83,8 @@ export const ManageRequestsChange = () => {
       ],
       scientificSoftware: '',
       scientificSoftwareExtra: '',
-      scientificSoftwareHelp: ''
+      scientificSoftwareHelp: '',
+      staff_requestResourceType: '',
     }
   });
 
@@ -162,7 +165,9 @@ export const ManageRequestsChange = () => {
 
 
 const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState, initialProjectState}) => {
-  const { control, formState: {errors} } = useFormContext();
+  const { control, getValues, setValue, formState: {errors} } = useFormContext();
+  const { ResourceTypesToSelect } = useContext(SharedData);
+
 
   return (
     <>
@@ -190,7 +195,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
       <Row>
         <Col md={{size: 1}}>
         </Col>
-        <Col style={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
+        <Col md={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
           <span >
             Stanja zahtjeva:
           </span>
@@ -282,6 +287,35 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           <p>Inicijalno stanje zahtjeva: <span className="text-decoration-underline">{ StateShortString(initialProjectState) }</span><br/>
             Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".
           </p>
+        </Col>
+      </Row>
+      <Row className="mt-4">
+        <Col style={{width: '150px'}} md={{size: 1}}/>
+        <Col md={{size: 8}}>
+          <Label
+            htmlFor="staff_requestResourceType"
+            aria-label="staff_requestResourceType"
+            className="fw-bold mt-3 fs-5 text-right form-label">
+            Dodijeljeni tip resursa:
+          </Label>
+          <Controller
+            name="staff_requestResourceType"
+            control={control}
+            render={ ({field}) =>
+              <CustomReactSelect
+                aria-label="staff_requestResourceType"
+                closeMenuOnSelect={false}
+                forwardedRef={field.ref}
+                id="staff_requestResourceType"
+                isMulti
+                options={ResourceTypesToSelect}
+                placeholder="Odaberi"
+                value={getValues('staff_requestResourceType')}
+                onChange={(e) => setValue('staff_requestResourceType', e)}
+                resourceTypeMultiValue={true}
+              />
+            }
+          />
         </Col>
       </Row>
       <Row style={{'height': '100px'}}/>
