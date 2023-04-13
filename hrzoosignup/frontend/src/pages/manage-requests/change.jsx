@@ -14,7 +14,7 @@ import {
   faTimes,
   faTimeline,
   faCalendarXmark,
-  faCheck,
+  faCheckDouble,
 } from '@fortawesome/free-solid-svg-icons';
 import { useParams } from 'react-router-dom';
 import {
@@ -83,7 +83,11 @@ export const ManageRequestsChange = () => {
 
   const changeMutation = useMutation({
     mutationFn: (data) => {
-      console.log('VRDEL DEBUG mutation', data, projId)
+      data['identifier'] = projId
+      data['is_active'] = true
+      data['name'] = data['requestName']
+      data['reason'] = data['requestExplain']
+      data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
       return changeProject(projId, data)
     }
   })
@@ -194,12 +198,30 @@ export const ManageRequestsChange = () => {
       return null
     }
 
+
     changeMutation.mutate(data, {
       onSuccess: () => {
-        console.log('VRDEL DEBUG OK', data, projId)
+        toast.success(
+          <span className="font-monospace text-dark">
+            Zahtjev je uspješno promijenjen
+          </span>, {
+            toastId: 'manreq-ok-change',
+            autoClose: 2500,
+            delay: 500
+          }
+        )
       },
-      onError: () => {
-        console.log('VRDEL DEBUG ERROR', data, projId)
+      onError: (error) => {
+        toast.error(
+          <span className="font-monospace text-dark">
+            Zahtjev nije bilo moguće promijeniti:
+            { error.message }
+          </span>, {
+            toastId: 'manreq-ok-change',
+            autoClose: 2500,
+            delay: 500
+          }
+        )
       },
     })
   }
@@ -284,7 +306,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         <Col md={{size: 1}}>
         </Col>
         <Col md={{size: 2}}>
-          <FontAwesomeIcon className="fa-4x text-success" style={{color: '#00ff00'}} icon={faCheck}/>{' '}
+          <FontAwesomeIcon className="fa-4x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
           <br/>
           <p className="fs-5">
             Odobren
