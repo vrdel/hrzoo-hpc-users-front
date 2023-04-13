@@ -160,7 +160,13 @@ const ResearchProjectRequestSelected = ({projectType}) => {
       'HPCnSlotsGPU': data['HPCnSlotsGPU'],
       'HPCnSlotsRAM': data['HPCnRAM'],
       'HPCnTempGB': data['HPCnTempGB'],
-      'HPCnDiskGB': data['HPCnDiskGB']
+      'HPCnDiskGB': data['HPCnDiskGB'],
+      'CLOUDnVM': data['CLOUDnVM'],
+      'CLOUDnSlotsCPU': data['CLOUDnSlotsCPU'],
+      'CLOUDnRAMVM': data['CLOUDnRAMVM'],
+      'CLOUDnDiskGB': data['CLOUDnDiskGB'],
+      'CLOUDnFastDiskGB': data['CLOUDnFastDiskGB'],
+      'CLOUDnIPs': data['CLOUDnIPs'],
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submitted'
@@ -251,7 +257,6 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             </Badge>
           </div>
         </Col>
-
       </Row>
       <Row className="mt-3">
         <Col md={{size: 4}}>

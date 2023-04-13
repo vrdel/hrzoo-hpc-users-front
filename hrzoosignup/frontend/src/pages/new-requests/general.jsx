@@ -108,11 +108,18 @@ const GeneralRequest = ({projectType}) => {
     dataToSend['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
     dataToSend['science_field'] = data['scientificDomain']
     dataToSend['resources_numbers'] = {
-      'nSlotsCPU': data['nSlotsCPU'],
-      'nSlotsGPU': data['nSlotsGPU'],
-      'nSlotsRAM': data['nRAM'],
-      'nTempGB': data['nTempGB'],
-      'nDiskGB': data['nDiskGB']
+      'HPCnSlotsCPU': data['HPCnSlotsCPU'],
+      'HPCnSlotsGPU': data['HPCnSlotsGPU'],
+      'HPCnSlotsRAM': data['HPCnRAM'],
+      'HPCnTempGB': data['HPCnTempGB'],
+      'HPCnDiskGB': data['HPCnDiskGB'],
+      'CLOUDnVM': data['CLOUDnVM'],
+      'CLOUDnSlotsCPU': data['CLOUDnSlotsCPU'],
+      'CLOUDnRAMVM': data['CLOUDnRAMVM'],
+      'CLOUDnDiskGB': data['CLOUDnDiskGB'],
+      'CLOUDnFastDiskGB': data['CLOUDnFastDiskGB'],
+      'CLOUDnIPs': data['CLOUDnIPs'],
+
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submitted'
