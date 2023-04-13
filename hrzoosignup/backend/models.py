@@ -109,7 +109,7 @@ class Project(models.Model):
     )
     reason = models.CharField(
         _('reason'),
-        max_length=1024,
+        max_length=4096,
     )
     date_start = models.DateTimeField(
         null=True,
@@ -219,6 +219,30 @@ class Project(models.Model):
     state = models.ForeignKey(State, null=True, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, through='UserProject')
     project_type = models.ForeignKey(ProjectType, null=True, on_delete=models.CASCADE)
+
+
+class StaffComment(models.Model):
+    comment = models.CharField(
+        _("Staff comment on managing request"),
+        blank=True,
+        null=True
+    )
+    date = models.DateTimeField(
+        _("Datetime when comment is added"),
+        null=True,
+        blank=True
+    )
+    comment_by = models.JSONField(
+        _("JSONField with few details of staff that made comment"),
+        blank=True,
+        null=True
+    )
+    name =  models.CharField(
+        _("Project state when the comment was made"),
+        max_length=24,
+        blank=True,
+    )
+    project = models.ForeignKey(Project, null=True, on_delete=models.CASCADE)
 
 
 class Role(models.Model):
