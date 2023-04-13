@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import {
   Routes, Route, BrowserRouter
 } from 'react-router-dom';
@@ -22,29 +22,30 @@ import NotFound from './pages/notfound';
 import Root from './pages/root';
 import { isActiveSession } from './api/auth';
 import { useQuery } from '@tanstack/react-query';
+import { AuthContext } from './components/AuthContextProvider';
 
 
-const ProtectedRoute = ({isPrivileged, children}) => {
-  if (isPrivileged)
+const ProtectedRoute = ({sessionData, children}) => {
+  const { isLoggedIn, userDetails } = useContext(AuthContext)
+
+  if ((isLoggedIn || sessionData.active)
+    && (userDetails.is_staff || userDetails.is_superuser))
     return children
+  else
+    return (
+      <NotFound/>
+    )
 }
 
 
 const BaseRoutes = () => {
-  const [ isPrivileged, setIsPrivileged] = useState(undefined)
   const { status: sessionStatus, data: sessionData} = useQuery({
     queryKey: ['sessionactive'],
     queryFn: isActiveSession,
     staleTime: 60 * 60 * 1000,
   })
 
-  useEffect(() => {
-    if (sessionStatus === 'success' && sessionData.userdetails)
-      if (sessionData.userdetails.is_staff || sessionData.userdetails.is_superuser)
-        setIsPrivileged(true)
-  }, [sessionStatus])
-
-  if (sessionStatus === 'success' && sessionData) {
+  if (sessionStatus == 'success' && sessionData) {
     return (
       <BrowserRouter>
         <Routes>
@@ -54,12 +55,12 @@ const BaseRoutes = () => {
             <Route path="prijava-pub" element={<LoginOffical />}/>
             <Route element={<BasePage sessionData={sessionData} />}>
               <Route path="upravljanje-zahtjevima" element={
-                <ProtectedRoute isPrivileged={isPrivileged}>
+                <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsList />
                 </ProtectedRoute>
               }/>
               <Route path="upravljanje-zahtjevima/:projId" element={
-                <ProtectedRoute isPrivileged={isPrivileged}>
+                <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsChange />
                 </ProtectedRoute>
               }/>
