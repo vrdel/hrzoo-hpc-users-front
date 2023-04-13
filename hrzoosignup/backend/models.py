@@ -212,6 +212,10 @@ class Project(models.Model):
         max_length=128,
         blank=True,
     )
+    staff_resources_type = models.JSONField(
+        blank=True,
+        null=True
+    )
     state = models.ForeignKey(State, null=True, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, through='UserProject')
     project_type = models.ForeignKey(ProjectType, null=True, on_delete=models.CASCADE)
