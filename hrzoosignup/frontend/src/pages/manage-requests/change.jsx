@@ -289,6 +289,31 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </p>
         </Col>
       </Row>
+      <Row className="mt-3">
+        <Col style={{width: '150px'}} md={{size: 1}}/>
+        <Col md={{size: 9}}>
+          <Label
+            htmlFor="staff_comment"
+            className="fw-bold mt-3 fs-5 form-label"
+            aria-label="staff_comment">
+            Komentar koji će biti poslan u emailu uz generičku poruku:
+          </Label>
+          <Controller
+            name="staff_comment"
+            control={control}
+            render={ ({field}) =>
+              <textarea
+                id="staff_comment"
+                {...field}
+                aria-label="staff_comment"
+                type="text"
+                className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
+                rows="5"
+              />
+            }
+          />
+        </Col>
+      </Row>
       <Row className="mt-4">
         <Col style={{width: '150px'}} md={{size: 1}}/>
         <Col md={{size: 8}}>
