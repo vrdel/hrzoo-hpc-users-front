@@ -24,7 +24,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col md={{size: 2, offset: 1}}>
+        <Col className="d-flex align-items-center" md={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
@@ -32,7 +32,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             Broj virtualnih poslužitelja:
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
@@ -40,7 +40,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             Ukupna količina virtualnih procesorskih jezgara:
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
@@ -48,7 +48,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             Ukupna količina radne memorije (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
@@ -56,7 +56,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             Maksimalna količina radne memorije po poslužitelju (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
@@ -175,7 +175,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):
           </Label>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex align-items-center" md={{size: 2}}>
           <Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
@@ -237,7 +237,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
       <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
         HPC
       </Col>
-      <Col md={{size: 2, offset: 1}}>
+      <Col className="d-flex align-items-center" md={{offset: 1, size: 2}}>
         <Label
           htmlFor="HPCnSlotsCPU"
           aria-label="HPCnSlotsCPU"
@@ -245,7 +245,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           Prosječan broj procesorskih jezgri po poslu:
         </Label>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex align-items-center" md={{size: 2}}>
         <Label
           htmlFor="HPCnSlotsGPU"
           aria-label="HPCnSlotsGPU"
@@ -253,7 +253,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           Prosječan broj grafičkih procesora po poslu:
         </Label>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex align-items-center" md={{size: 2}}>
         <Label
           htmlFor="HPCnRAM"
           aria-label="HPCnRAM"
@@ -261,7 +261,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           Prosječna količina radne memorije po poslu (GB):
         </Label>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex align-items-center" md={{size: 2}}>
         <Label
           htmlFor="HPCnTempGB"
           aria-label="HPCnTempGB"
@@ -269,7 +269,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           Prosječna količina privremenog prostora po poslu (GB):
         </Label>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex align-items-center" md={{size: 2}}>
         <Label
           htmlFor="HPCnDiskGB"
           aria-label="HPCnDiskGB"
