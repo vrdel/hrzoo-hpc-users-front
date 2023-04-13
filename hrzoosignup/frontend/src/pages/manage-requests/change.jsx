@@ -16,7 +16,7 @@ import {
   faCalendarXmark,
   faCheckDouble,
 } from '@fortawesome/free-solid-svg-icons';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   useForm,
   useFormContext,
@@ -28,6 +28,7 @@ import { StateShortString } from '../../config/map-states';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { toast } from 'react-toastify'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
+import { url_ui_prefix } from '../../config/general';
 
 
 function setInitialState() {
@@ -75,6 +76,8 @@ export const ManageRequestsChange = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  const navigate = useNavigate()
 
   const {status, data: nrProject, error, isFetching} = useQuery({
       queryKey: ['change-project', projId],
@@ -207,7 +210,8 @@ export const ManageRequestsChange = () => {
           </span>, {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
-            delay: 500
+            delay: 500,
+            onClose: navigate(url_ui_prefix + '/upravljanje-zahtjevima')
           }
         )
       },
@@ -306,7 +310,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         <Col md={{size: 1}}>
         </Col>
         <Col md={{size: 2}}>
-          <FontAwesomeIcon className="fa-4x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
+          <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
           <br/>
           <p className="fs-5">
             Odobren
@@ -321,7 +325,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         </Col>
         <Col md={{size: 2}}>
           <FontAwesomeIcon
-            className="fa-4x text-warning"
+            className="fa-3x text-warning"
             icon={faCog}/>{' '}
           <br/>
           <p className="fs-5">
@@ -337,7 +341,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         </Col>
         <Col md={{size: 2}}>
           <FontAwesomeIcon
-            className="fa-4x text-warning"
+            className="fa-3x text-warning"
             icon={faTimeline}/>{' '}
           <br/>
           <p className="fs-5">
@@ -352,7 +356,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         </Col>
         <Col md={{size: 2}}>
           <FontAwesomeIcon
-            className="fa-4x text-danger"
+            className="fa-3x text-danger"
             icon={faTimes}/>{' '}
           <br/>
           <p className="fs-5">
@@ -367,7 +371,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         </Col>
         <Col md={{size: 2}}>
           <FontAwesomeIcon
-            className="fa-4x text-danger"
+            className="fa-3x text-danger"
             icon={faCalendarXmark}/>{' '}
           <br/>
           <p className="fs-5">
