@@ -116,6 +116,13 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('HPCnRAM', nrProject.resources_numbers.HPCnSlotsRAM)
       rhfProps.setValue('HPCnTempGB', nrProject.resources_numbers.HPCnTempGB)
       rhfProps.setValue('HPCnDiskGB', nrProject.resources_numbers.HPCnDiskGB)
+      rhfProps.setValue('CLOUDnVM', nrProject.resources_numbers.CLOUDnVM)
+      rhfProps.setValue('CLOUDnSlotsCPU', nrProject.resources_numbers.CLOUDnSlotsCPU)
+      rhfProps.setValue('CLOUDnRAM', nrProject.resources_numbers.CLOUDnRAM)
+      rhfProps.setValue('CLOUDnRAMVM', nrProject.resources_numbers.CLOUDnRAMVM)
+      rhfProps.setValue('CLOUDnDiskGB', nrProject.resources_numbers.CLOUDnDiskGB)
+      rhfProps.setValue('CLOUDnFastDiskGB', nrProject.resources_numbers.CLOUDnFastDiskGB)
+      rhfProps.setValue('CLOUDnIPs', nrProject.resources_numbers.CLOUDnIPs)
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
 
       let newState = new Object(

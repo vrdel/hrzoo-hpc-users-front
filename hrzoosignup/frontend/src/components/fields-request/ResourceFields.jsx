@@ -15,8 +15,8 @@ import {
 } from "react-hook-form";
 
 
-const CloudFields = ({fieldsDisabled=false}) => {
-  const { control, getValues, setValue, formState: {errors} } = useFormContext();
+export const CloudFields = ({fieldsDisabled=false}) => {
+  const { control, formState: {errors} } = useFormContext();
 
   return (
     <>
@@ -229,7 +229,7 @@ const CloudFields = ({fieldsDisabled=false}) => {
   )
 }
 
-const HpcFields = ({fieldsDisabled=false}) => {
+export const HpcFields = ({fieldsDisabled=false}) => {
   const { control, formState: {errors} } = useFormContext();
 
   return (
@@ -384,7 +384,7 @@ const HpcFields = ({fieldsDisabled=false}) => {
 }
 
 
-const ResourceFields = ({fieldsDisabled=false}) => {
+export const ResourceFields = ({fieldsDisabled=false}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
 
