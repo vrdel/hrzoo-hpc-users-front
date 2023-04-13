@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from './root';
+import { SharedData } from '../root';
 import {
   Col,
   Row,
@@ -10,21 +10,21 @@ import {
   Form,
   FormFeedback
 } from 'reactstrap';
-import { PageTitle } from '../components/PageTitle';
+import { PageTitle } from '../../components/PageTitle';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addSshKey } from '../api/sshkeys';
+import { addSshKey } from '../../api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlus,
   faKey,
 } from '@fortawesome/free-solid-svg-icons';
-import '../styles/content.css';
-import ModalAreYouSure from '../components/ModalAreYouSure';
+import '../../styles/content.css';
+import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { url_ui_prefix } from '../config/general';
+import { url_ui_prefix } from '../../config/general';
 
 
 const NewPublicKey = () => {
