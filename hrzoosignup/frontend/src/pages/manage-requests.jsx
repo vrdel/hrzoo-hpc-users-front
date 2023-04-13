@@ -39,13 +39,27 @@ function extractLeaderName(projectUsers) {
   return target.user.first_name + ' ' + target.user.last_name
 }
 
+function ToggleState(request_state, which) {
+  let old = request_state[which]
+  let newState = new Object(
+    {
+      'submitted': false,
+      'approved': false,
+      'denied': false
+    }
+  )
+  newState[which] = !old
+  return JSON.parse(JSON.stringify(newState))
+}
+
 
 export const ManageRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
-  const [projectTarget, setProjectTarget] = useState(undefined)
+  const [ projectTarget, setProjectTarget ] = useState(undefined)
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
+  const [ requestState, setRequestState ] = useState(undefined)
 
   const {status, data: nrProject, error, isFetching} = useQuery({
       queryKey: ['change-project', projId],
@@ -98,17 +112,28 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('nTempGB', nrProject.resources_numbers.nTempGB)
       rhfProps.setValue('nDiskGB', nrProject.resources_numbers.nDiskGB)
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
+
+      let newState = new Object(
+        {
+          'submitted': false,
+          'approved': false,
+          'denied': false
+        }
+      )
+      newState[nrProject.state.name] = true,
+      setRequestState(newState)
     }
 
-    console.log('VRDEL DEBUG', nrProject)
+
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname, nrProject])
 
   const onSubmit = data => {
+    data['requestState'] = requestState
     alert(JSON.stringify(data, null, 2));
   }
 
-  if (nrProject) {
+  if (nrProject && requestState) {
     return (
       <>
         <Row>
@@ -124,7 +149,12 @@ export const ManageRequestsChange = () => {
                 <Row style={{height: '50px'}}>
                 </Row>
                 <RequestHorizontalRulerRed />
-                <ProcessRequest disabledFields={disabledFields} setDisabledFields={setDisabledFields} />
+                <ProcessRequest
+                  disabledFields={disabledFields}
+                  setDisabledFields={setDisabledFields}
+                  requestState={requestState}
+                  setRequestState={setRequestState}
+                />
 
               </Form>
             </FormProvider>
@@ -136,9 +166,10 @@ export const ManageRequestsChange = () => {
 };
 
 
-const ProcessRequest = ({disabledFields, setDisabledFields}) => {
+const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState}) => {
   const { control, formState: {errors} } = useFormContext();
 
+  console.log('VRDEL DEBUG', requestState)
   return (
     <>
       <Row>
@@ -166,26 +197,49 @@ const ProcessRequest = ({disabledFields, setDisabledFields}) => {
         <Col>
           <FontAwesomeIcon className="fa-5x text-success" style={{color: '#00ff00'}} icon={faCheck}/>{' '}
           <br/>
-          <p className="fs-3">
+          <p className="fs-4">
             Prihvati
           </p>
-          <Button style={{height: '50px', width: '50px'}} outline color="success"/>
+          <Button
+            style={{height: '50px', width: '50px'}}
+            outline={!requestState['approved']}
+            onClick={() =>
+              setRequestState(ToggleState(requestState, 'approved'))}
+            color="success"
+          />
         </Col>
         <Col>
-          <FontAwesomeIcon className="fa-5x text-warning" style={{color: '#00ff00'}} icon={faCog}/>{' '}
+          <FontAwesomeIcon
+            className="fa-5x text-warning"
+            style={{color: '#00ff00'}}
+            icon={faCog}/>{' '}
           <br/>
-          <p className="fs-3">
+          <p className="fs-4">
             Obrada
           </p>
-          <Button style={{height: '50px', width: '50px'}} outline color="success"/>
+          <Button
+            style={{height: '50px', width: '50px'}}
+            outline={!requestState['submitted']}
+            onClick={() =>
+              setRequestState(ToggleState(requestState, 'submitted'))}
+            color="success"
+          />
         </Col>
         <Col>
-          <FontAwesomeIcon className="fa-5x text-danger" style={{color: '#ff0000'}} icon={faTimes}/>{' '}
+          <FontAwesomeIcon
+            className="fa-5x text-danger"
+            style={{color: '#ff0000'}}
+            icon={faTimes}/>{' '}
           <br/>
-          <p className="fs-3">
+          <p className="fs-4">
             Odbij
           </p>
-          <Button style={{height: '50px', width: '50px'}} outline color="success"/>
+          <Button
+            outline={!requestState['denied']}
+            style={{height: '50px', width: '50px'}}
+            onClick={() =>
+              setRequestState(ToggleState(requestState, 'denied'))}
+            color="success"/>
         </Col>
       </Row>
       <Row style={{'height': '100px'}}/>
