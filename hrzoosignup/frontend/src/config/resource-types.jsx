@@ -23,8 +23,8 @@ let cloudBigMemResource = {
 }
 
 let cloudGpuResource = {
-  "label": "CLOUD-BIGMEM",
-  "value": "CLOUD-BIGMEM"
+  "label": "CLOUD-GPU",
+  "value": "CLOUD-GPU"
 }
 
 export const ResourceTypesToSelect = [

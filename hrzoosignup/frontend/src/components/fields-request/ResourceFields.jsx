@@ -409,7 +409,7 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
               <CustomReactSelect
                 aria-label="requestResourceType"
                 closeMenuOnSelect={false}
-                controlWidth="400px"
+                controlWidth="600px"
                 forwardedRef={field.ref}
                 id="requestResourceType"
                 isMulti
