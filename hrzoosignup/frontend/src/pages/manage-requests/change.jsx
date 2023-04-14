@@ -167,20 +167,6 @@ export const ManageRequestsChange = () => {
   }, [location.pathname, nrProject])
 
   const onSubmit = (data) => {
-    setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Obrada korisničkog zahtijeva")
-    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
-    setOnYesCall('dochangereq')
-    setOnYesCallArg(data)
-  }
-
-  function onYesCallback() {
-    if (onYesCall == 'dochangereq') {
-      doChange(onYesCallArg)
-    }
-  }
-
-  const doChange = (data) => {
     data['requestState'] = requestState
     let whichState = findTrueState(data['requestState'])
     if (whichState === 'approve' && !data['staff_requestResourceType']) {
@@ -208,7 +194,20 @@ export const ManageRequestsChange = () => {
       return null
     }
 
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Obrada korisničkog zahtijeva")
+    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
+    setOnYesCall('dochangereq')
+    setOnYesCallArg(data)
+  }
 
+  function onYesCallback() {
+    if (onYesCall == 'dochangereq') {
+      doChange(onYesCallArg)
+    }
+  }
+
+  const doChange = (data) => {
     changeMutation.mutate(data, {
       onSuccess: () => {
         toast.success(
