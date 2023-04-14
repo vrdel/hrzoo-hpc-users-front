@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Table, Tooltip, Button } from 'reactstrap';
+import { Col, Row, Badge, Table, Tooltip, Button } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../components/PageTitle';
 import { StateIcons, StateString } from '../../config/map-states';
@@ -77,6 +77,9 @@ export const ManageRequestsList = () => {
                     Naziv
                   </th>
                   <th className="fw-normal">
+                    Šifra
+                  </th>
+                  <th className="fw-normal">
                     Voditelj
                   </th>
                   <th className="fw-normal">
@@ -113,16 +116,21 @@ export const ManageRequestsList = () => {
                         <br/>
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle fw-bold text-center">
                         { project.name}
+                      </td>
+                      <td className="align-middle text-center">
+                        <Badge color="secondary" className="fw-normal">
+                          { project.identifier }
+                        </Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
                         { extractLeaderName(project.userproject_set) }
                       </td>
                       <td className="align-middle text-center">
-                        <small>
+                        <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
                           { TypeString(project.project_type.name) }
-                        </small>
+                        </span>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_start) }
