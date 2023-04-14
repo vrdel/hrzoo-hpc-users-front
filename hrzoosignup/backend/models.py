@@ -123,7 +123,7 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    date_approved = models.DateTimeField(
+    date_changed = models.DateTimeField(
         null=True,
         blank=True,
     )
@@ -160,10 +160,6 @@ class Project(models.Model):
         null=True
     )
     is_active = models.BooleanField()
-    date_extensions = models.DateTimeField(
-        null=True,
-        blank=True,
-    )
     croris_title =  models.CharField(
         _("CroRIS title"),
         max_length=512,
