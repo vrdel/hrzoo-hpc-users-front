@@ -135,7 +135,15 @@ class Projects(APIView):
                     break
             state = models.State.objects.get(name=key)
             p_obj.state = state
-            p_obj.staff_comment = request.data.get('staff_comment')
+            if request.data.get('staff_comment'):
+                comment = request.data.get('staff_comment')
+                sc = models.StaffComment(
+                    comment=comment,
+                    date=datetime.datetime.now(),
+                    state=state.name,
+                    comment_by=json.dumps(self.request.user)
+                )
+                p_obj.staff_comment = sc
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
             p_obj.save()
             serializer = ProjectSerializer(p_obj, data=request.data)
