@@ -23,6 +23,7 @@ class ProjectsGeneral(APIView):
 
     def post(self, request):
         state_obj = models.State.objects.get(name=request.data['state'])
+
         request.data['state'] = state_obj.pk
         request.data['is_active'] = True
         request.data['date_submitted'] = datetime.datetime.now()
@@ -46,6 +47,9 @@ class ProjectsGeneral(APIView):
             userproject_obj.save()
             cobj.counter += 1
             cobj.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         else:
             err_status = status.HTTP_400_BAD_REQUEST
             err_response = {
@@ -135,17 +139,24 @@ class Projects(APIView):
                     break
             state = models.State.objects.get(name=key)
             p_obj.state = state
-            if request.data.get('staff_comment'):
-                comment = request.data.get('staff_comment')
-                sc = models.StaffComment(
-                    comment=comment,
-                    date=datetime.datetime.now(),
-                    state=state.name,
-                    comment_by=json.dumps(self.request.user)
-                )
-                p_obj.staff_comment = sc
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
             p_obj.save()
+            if request.data.get('staff_comment'):
+                comment = request.data.get('staff_comment')
+                sc = models.StaffComment.objects.create(
+                    comment=comment,
+                    date=datetime.datetime.now(),
+                    project_state=state.name,
+                    project_id = p_obj.pk,
+                    comment_by={
+                        'first_name': self.request.user.first_name,
+                        'last_name': self.request.user.last_name,
+                        'person_uniqueid': self.request.user.person_uniqueid,
+                        'username': self.request.user.username,
+                    }
+                )
+                p_obj.staff_comment = sc
+                sc.save()
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
                 return Response(serializer.data, status=status.HTTP_201_CREATED)

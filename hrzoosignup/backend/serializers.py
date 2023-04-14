@@ -123,11 +123,23 @@ class UsersSerializer(serializers.ModelSerializer):
         model = get_user_model()
 
 
+class StaffComment(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'comment',
+            'date',
+            'comment_by',
+            'project_state'
+        )
+        model = models.StaffComment
+
+
 class ProjectSerializerGet(serializers.ModelSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
     state = StateSerializer()
     project_type = ProjectTypeSerializer()
     userproject_set = UserProjectSerializer(many=True, read_only=True)
+    staffcomment_set = StaffComment(many=True, read_only=True)
 
     class Meta:
         fields = (
@@ -162,7 +174,8 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'staff_resources_type',
             'state',
             'users',
-            'userproject_set'
+            'userproject_set',
+            'staffcomment_set'
         )
         model = models.Project
 
