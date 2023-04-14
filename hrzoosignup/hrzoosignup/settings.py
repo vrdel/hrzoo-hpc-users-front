@@ -108,7 +108,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'djangosaml2',
+    'invitations',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_framework_api_key',
@@ -117,6 +119,8 @@ INSTALLED_APPS = [
     'frontend',
     'backend',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
