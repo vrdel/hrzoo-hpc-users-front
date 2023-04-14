@@ -141,7 +141,7 @@ class Projects(APIView):
             p_obj.state = state
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
             p_obj.save()
-            if request.data.get('staff_comment'):
+            if request.data.get('staff_comment') and state.name == 'deny':
                 comment = request.data.get('staff_comment')
                 sc = models.StaffComment.objects.create(
                     comment=comment,
@@ -150,7 +150,7 @@ class Projects(APIView):
                     project_id = p_obj.pk,
                     comment_by={
                         'first_name': self.request.user.first_name,
-                        'last_name': self.request.user.last_name,
+
                         'person_uniqueid': self.request.user.person_uniqueid,
                         'username': self.request.user.username,
                     }
