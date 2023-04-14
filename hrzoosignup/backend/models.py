@@ -225,7 +225,8 @@ class StaffComment(models.Model):
     comment = models.CharField(
         _("Staff comment on managing request"),
         blank=True,
-        null=True
+        null=True,
+        max_length=4096,
     )
     date = models.DateTimeField(
         _("Datetime when comment is added"),
@@ -237,7 +238,7 @@ class StaffComment(models.Model):
         blank=True,
         null=True
     )
-    name =  models.CharField(
+    project_state = models.CharField(
         _("Project state when the comment was made"),
         max_length=24,
         blank=True,
