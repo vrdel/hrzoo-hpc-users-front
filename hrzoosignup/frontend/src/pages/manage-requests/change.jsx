@@ -212,7 +212,7 @@ export const ManageRequestsChange = () => {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
             delay: 500,
-            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/moji-zahtjevi')}, 1500)
+            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
           }
         )
       },
