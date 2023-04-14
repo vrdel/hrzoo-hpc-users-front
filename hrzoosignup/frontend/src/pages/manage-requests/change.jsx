@@ -156,7 +156,8 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
       rhfProps.setValue('staff_requestResourceType', nrProject.staff_resources_type)
 
-      if (nrProject.staffcomment_set?.length > 0) {
+      if (nrProject.staffcomment_set?.length > 0
+        && nrProject.state.name === 'deny') {
         let lenPr = nrProject.staffcomment_set.length
         let last = nrProject.staffcomment_set[lenPr - 1]
         rhfProps.setValue('staff_comment', last.comment)
@@ -174,12 +175,11 @@ export const ManageRequestsChange = () => {
   const onSubmit = (data) => {
     data['requestState'] = requestState
     let whichState = findTrueState(data['requestState'])
-    if (whichState === 'approve' && !data['staff_requestResourceType']) {
+    if (whichState === 'approve' && data['staff_requestResourceType']?.length === 0) {
       toast.error(
         <span className="font-monospace">
           Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
         </span>, {
-          theme: 'colored',
           autoClose: false,
           toastId: 'manreq-change-no-reqtype',
         }
@@ -284,7 +284,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </span>
         </Col>
         <Col>
-          <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
+          <Button disabled={true} color="danger" onClick={() => setDisabledFields(!disabledFields)}>
             Uredi zahtjev
           </Button>
         </Col>
