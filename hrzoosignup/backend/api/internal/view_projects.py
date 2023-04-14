@@ -140,25 +140,26 @@ class Projects(APIView):
             state = models.State.objects.get(name=key)
             p_obj.state = state
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
-            p_obj.save()
-            if request.data.get('staff_comment') and state.name == 'deny':
-                comment = request.data.get('staff_comment')
-                sc = models.StaffComment.objects.create(
-                    comment=comment,
-                    date=datetime.datetime.now(),
-                    project_state=state.name,
-                    project_id = p_obj.pk,
-                    comment_by={
-                        'first_name': self.request.user.first_name,
-
-                        'person_uniqueid': self.request.user.person_uniqueid,
-                        'username': self.request.user.username,
-                    }
-                )
-                p_obj.staff_comment = sc
-                sc.save()
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
+                p_obj.date_changed = datetime.datetime.now()
+                p_obj.save()
+                if request.data.get('staff_comment') and state.name == 'deny':
+                    comment = request.data.get('staff_comment')
+                    sc = models.StaffComment.objects.create(
+                        comment=comment,
+                        date=datetime.datetime.now(),
+                        project_state=state.name,
+                        project_id = p_obj.pk,
+                        comment_by={
+                            'first_name': self.request.user.first_name,
+
+                            'person_uniqueid': self.request.user.person_uniqueid,
+                            'username': self.request.user.username,
+                        }
+                    )
+                    p_obj.staff_comment = sc
+                    sc.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
