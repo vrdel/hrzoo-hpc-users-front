@@ -71,7 +71,7 @@ export const ManageRequestsList = () => {
                     Stanje
                   </th>
                   <th className="fw-normal">
-                    Tip
+                    Podnesen
                   </th>
                   <th className="fw-normal">
                     Naziv
@@ -80,10 +80,10 @@ export const ManageRequestsList = () => {
                     Voditelj
                   </th>
                   <th className="fw-normal">
-                    Završetak
+                    Tip
                   </th>
                   <th className="fw-normal">
-                    Podnesen
+                    Trajanje
                   </th>
                   <th className="fw-normal">
                     Promjena
@@ -108,24 +108,26 @@ export const ManageRequestsList = () => {
                           { StateString(project.state.name) }
                         </Tooltip>
                       </td>
-                      <td className="align-middle text-center">
-                        <span className={`badge ${TypeColor(project.project_type.name)}`} >
-                          { TypeString(project.project_type.name) }
-                        </span>
+                      <td className="align-middle text-center fs-6 font-monospace">
+                        { convertToEuropean(project.date_submitted) }
+                        <br/>
+                        { convertTimeToEuropean(project.date_submitted) }
                       </td>
-                      <td className="p-3 align-middle fw-bold text-center">
+                      <td className="p-3 align-middle text-center">
                         { project.name}
                       </td>
                       <td className="p-3 align-middle text-center">
                         { extractLeaderName(project.userproject_set) }
                       </td>
-                      <td className="align-middle text-center fs-6 font-monospace">
-                        { convertToEuropean(project.date_end) }
+                      <td className="align-middle text-center">
+                        <small>
+                          { TypeString(project.project_type.name) }
+                        </small>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
-                        { convertToEuropean(project.date_submitted) }
+                        { convertToEuropean(project.date_start) }
                         <br/>
-                        { convertTimeToEuropean(project.date_submitted) }
+                        { convertToEuropean(project.date_end) }
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { project.date_changed && convertToEuropean(project.date_changed) }
