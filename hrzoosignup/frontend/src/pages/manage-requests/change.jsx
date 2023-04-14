@@ -67,9 +67,10 @@ function ToggleState(request_state, which) {
 export const ManageRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const [commentDisabled, setCommentDisabled] = useState(undefined);
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
-  const [ requestState, setRequestState ] = useState(undefined)
+  const [requestState, setRequestState] = useState(undefined)
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -150,6 +151,12 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('CLOUDnFastDiskGB', nrProject.resources_numbers.CLOUDnFastDiskGB)
       rhfProps.setValue('CLOUDnIPs', nrProject.resources_numbers.CLOUDnIPs)
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
+      if (nrProject.staffcomment_set?.length > 0) {
+        let lenPr = nrProject.staffcomment_set.length
+        let last = nrProject.staffcomment_set[lenPr - 1]
+        rhfProps.setValue('staff_comment', last.comment)
+      }
+      setCommentDisabled(true)
 
       let newState = setInitialState()
       newState[nrProject.state.name] = true,
@@ -258,6 +265,8 @@ export const ManageRequestsChange = () => {
                   requestState={requestState}
                   setRequestState={setRequestState}
                   initialProjectState={nrProject.state.name}
+                  commentDisabled={commentDisabled}
+                  setCommentDisabled={setCommentDisabled}
                 />
               </Form>
             </FormProvider>
@@ -269,7 +278,7 @@ export const ManageRequestsChange = () => {
 };
 
 
-const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState, initialProjectState}) => {
+const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState, initialProjectState, commentDisabled, setCommentDisabled}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
 
@@ -318,8 +327,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           <Button
             style={{height: '30px', width: '30px'}}
             outline={!requestState['approve']}
-            onClick={() =>
-              setRequestState(ToggleState(requestState, 'approve'))}
+            onClick={() => {
+              setCommentDisabled(true)
+              setRequestState(ToggleState(requestState, 'approve'))
+            }}
             color="success"
           />
         </Col>
@@ -334,8 +345,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           <Button
             style={{height: '30px', width: '30px'}}
             outline={!requestState['submit']}
-            onClick={() =>
-              setRequestState(ToggleState(requestState, 'submit'))}
+            onClick={() => {
+              setCommentDisabled(true)
+              setRequestState(ToggleState(requestState, 'submit'))
+            }}
             color="success"
           />
         </Col>
@@ -350,8 +363,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           <Button
             outline={!requestState['extend']}
             style={{height: '30px', width: '30px'}}
-            onClick={() =>
-              setRequestState(ToggleState(requestState, 'extend'))}
+            onClick={() => {
+              setCommentDisabled(true)
+              setRequestState(ToggleState(requestState, 'extend'))
+            }}
             color="success"/>
         </Col>
         <Col md={{size: 2}}>
@@ -365,8 +380,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           <Button
             outline={!requestState['deny']}
             style={{height: '30px', width: '30px'}}
-            onClick={() =>
-              setRequestState(ToggleState(requestState, 'deny'))}
+            onClick={() => {
+              setCommentDisabled(false)
+              setRequestState(ToggleState(requestState, 'deny'))
+            }}
             color="success"/>
         </Col>
         <Col md={{size: 2}}>
@@ -380,8 +397,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           <Button
             outline={!requestState['expire']}
             style={{height: '30px', width: '30px'}}
-            onClick={() =>
-              setRequestState(ToggleState(requestState, 'expire'))}
+            onClick={() => {
+              setCommentDisabled(true)
+              setRequestState(ToggleState(requestState, 'expire'))
+            }}
             color="success"/>
         </Col>
       </Row>
@@ -391,31 +410,6 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           <p>Inicijalno stanje zahtjeva: <span className="text-decoration-underline">{ StateShortString(initialProjectState) }</span><br/>
             Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".
           </p>
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col style={{width: '150px'}} md={{size: 1}}/>
-        <Col md={{size: 9}}>
-          <Label
-            htmlFor="staff_comment"
-            className="fw-bold mt-3 fs-5 form-label"
-            aria-label="staff_comment">
-            Dodatan komentar voditelju u emailu uz generičku poruku:
-          </Label>
-          <Controller
-            name="staff_comment"
-            control={control}
-            render={ ({field}) =>
-              <textarea
-                id="staff_comment"
-                {...field}
-                aria-label="staff_comment"
-                type="text"
-                className="form-control"
-                rows="5"
-              />
-            }
-          />
         </Col>
       </Row>
       <Row className="mt-4">
@@ -442,6 +436,32 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
                 value={getValues('staff_requestResourceType')}
                 onChange={(e) => setValue('staff_requestResourceType', e)}
                 resourceTypeMultiValue={true}
+              />
+            }
+          />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col style={{width: '150px'}} md={{size: 1}}/>
+        <Col md={{size: 9}}>
+          <Label
+            htmlFor="staff_comment"
+            className="fw-bold mt-3 fs-5 form-label"
+            aria-label="staff_comment">
+            Dodatan komentar o odbijanju zahtjeva:
+          </Label>
+          <Controller
+            name="staff_comment"
+            control={control}
+            render={ ({field}) =>
+              <textarea
+                id="staff_comment"
+                {...field}
+                aria-label="staff_comment"
+                disabled={commentDisabled}
+                type="text"
+                className="form-control"
+                rows="5"
               />
             }
           />

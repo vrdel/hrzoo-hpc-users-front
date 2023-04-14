@@ -113,16 +113,16 @@ export async function changeProject(projectId, data)
     if (!response.ok) {
       try {
         let json = await response.json();
-        error_msg = `${response.status} ${response.statusText} in PATCH: ${json?.status?.message}`
+        error_msg = `${response.status} ${response.statusText} in POST: ${json?.status?.message}`
       }
       catch (err1) {
-        error_msg = `${response.status} ${response.statusText} in PATCH`
+        error_msg = `${response.status} ${response.statusText} in POST`
       }
 
     }
   }
   catch (err) {
-    error_msg = `${err} in PATCH`;
+    error_msg = `${err} in POST`;
   }
 
   if (error_msg)
