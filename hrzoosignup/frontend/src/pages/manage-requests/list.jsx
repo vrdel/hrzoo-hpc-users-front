@@ -128,9 +128,9 @@ export const ManageRequestsList = () => {
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
-                        { convertToEuropean(project.date_changed) }
+                        { project.date_changed && convertToEuropean(project.date_changed) }
                         <br/>
-                        { convertTimeToEuropean(project.date_changed) }
+                        { project.date_changed && convertTimeToEuropean(project.date_changed) }
                       </td>
                       <td className="align-middle text-center">
                         <Button color="light" onClick={() => navigate(project.identifier)}>
