@@ -7,3 +7,7 @@ export function convertToIso8601(ddmmyyyy) {
 export function convertToEuropean(yyyymmdd) {
   return format(parseISO(yyyymmdd), 'dd.MM.yyyy')
 }
+
+export function convertTimeToEuropean(yyyymmdd) {
+  return format(parseISO(yyyymmdd), 'H:mm')
+}
