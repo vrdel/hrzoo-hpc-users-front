@@ -92,6 +92,7 @@ export const ManageRequestsChange = () => {
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
+      data['staff_resources_type'] = data['staff_requestResourceType']
       return changeProject(projId, data)
     }
   })
@@ -151,6 +152,8 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('CLOUDnFastDiskGB', nrProject.resources_numbers.CLOUDnFastDiskGB)
       rhfProps.setValue('CLOUDnIPs', nrProject.resources_numbers.CLOUDnIPs)
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
+      rhfProps.setValue('staff_requestResourceType', nrProject.staff_resources_type)
+
       if (nrProject.staffcomment_set?.length > 0) {
         let lenPr = nrProject.staffcomment_set.length
         let last = nrProject.staffcomment_set[lenPr - 1]
@@ -181,18 +184,6 @@ export const ManageRequestsChange = () => {
       )
       return null
     }
-    if (nrProject.state.name === whichState) {
-      toast.warn(
-        <span className="font-monospace">
-          Stanje je nepromijenjeno.
-        </span>, {
-          theme: 'colored',
-          autoClose: false,
-          toastId: 'manreq-change-no-statechange',
-        }
-      )
-      return null
-    }
 
     setAreYouSureModal(!areYouSureModal)
     setModalTitle("Obrada korisničkog zahtijeva")
@@ -208,6 +199,7 @@ export const ManageRequestsChange = () => {
   }
 
   const doChange = (data) => {
+    // alert(JSON.stringify(data, null, 2))
     changeMutation.mutate(data, {
       onSuccess: () => {
         toast.success(
@@ -216,7 +208,7 @@ export const ManageRequestsChange = () => {
           </span>, {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
-            delay: 500,
+            delay: 1000,
             onClose: () => navigate(url_ui_prefix + '/upravljanje-zahtjevima')
           }
         )
@@ -229,7 +221,7 @@ export const ManageRequestsChange = () => {
           </span>, {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
-            delay: 500
+            delay: 1000
           }
         )
       },
@@ -290,7 +282,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </span>
         </Col>
         <Col>
-          <Button disabled={true} color="danger" onClick={() => setDisabledFields(!disabledFields)}>
+          <Button color="danger" onClick={() => setDisabledFields(!disabledFields)}>
             Uredi zahtjev
           </Button>
         </Col>
