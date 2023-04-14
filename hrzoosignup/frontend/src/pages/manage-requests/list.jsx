@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
-import { convertToEuropean } from '../../utils/dates';
+import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 
 
 function extractLeaderName(projectUsers) {
@@ -86,6 +86,9 @@ export const ManageRequestsList = () => {
                     Podnesen
                   </th>
                   <th className="fw-normal">
+                    Promjena
+                  </th>
+                  <th className="fw-normal">
                     Radnje
                   </th>
                 </tr>
@@ -121,6 +124,13 @@ export const ManageRequestsList = () => {
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
+                        <br/>
+                        { convertTimeToEuropean(project.date_submitted) }
+                      </td>
+                      <td className="align-middle text-center fs-6 font-monospace">
+                        { convertToEuropean(project.date_changed) }
+                        <br/>
+                        { convertTimeToEuropean(project.date_changed) }
                       </td>
                       <td className="align-middle text-center">
                         <Button color="light" onClick={() => navigate(project.identifier)}>
@@ -133,7 +143,7 @@ export const ManageRequestsList = () => {
                 {
                   nrProjects.length < 5 && [...Array(5 - nrProjects.length)].map((_, i) =>
                     <tr key={i + 5}>
-                      <td colSpan="7" style={{height: '60px', minHeight: '60px'}}>
+                      <td colSpan="8" style={{height: '60px', minHeight: '60px'}}>
                       </td>
                     </tr>
                   )

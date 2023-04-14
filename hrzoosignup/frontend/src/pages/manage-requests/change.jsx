@@ -441,7 +441,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
             htmlFor="staff_comment"
             className="fw-bold mt-3 fs-5 form-label"
             aria-label="staff_comment">
-            Dodatan komentar o odbijanju zahtjeva:
+            Dodatni komentar o odbijanju zahtjeva:
           </Label>
           <Controller
             name="staff_comment"
