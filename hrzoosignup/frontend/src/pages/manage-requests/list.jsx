@@ -144,4 +144,20 @@ export const ManageRequestsList = () => {
         </Row>
       </>
     )
+  else if (nrProjects?.length === 0) {
+    return (
+      <>
+        <Row>
+          <PageTitle pageTitle={pageTitle}/>
+        </Row>
+        <Row className="mt-3 mb-5 align-items-center">
+          <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center mt-5 p-3 fs-3"
+            style={{height: "300px"}} md={{offset: 1, size: 10}}>
+            Nema podnesenih zahtjeva
+          </Col>
+        </Row>
+      </>
+    )
+  }
+
 };
