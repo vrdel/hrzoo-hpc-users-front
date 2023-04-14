@@ -126,7 +126,7 @@ const PublicKeys = () => {
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                <tr className="border-bottom border-2 border-dark">
+                <tr className="border-bottom border-1 border-dark">
                   <th className="fw-normal">
                     Ime ključa
                   </th>
@@ -233,7 +233,7 @@ const PublicKeys = () => {
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                <tr className="border-bottom border-2 border-dark">
+                <tr className="border-bottom border-1 border-dark">
                   <th className="fw-normal">
                     Ime ključa
                   </th>

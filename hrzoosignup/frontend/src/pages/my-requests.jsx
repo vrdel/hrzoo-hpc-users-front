@@ -13,7 +13,7 @@ import {
 } from 'reactstrap';
 import { fetchNrProjects } from '../api/projects';
 import { useQuery } from '@tanstack/react-query';
-import { convertToEuropean } from '../utils/dates';
+import { convertToEuropean, convertTimeToEuropean } from '../utils/dates';
 import { StateIcons, StateString } from '../config/map-states';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -64,7 +64,7 @@ const MyRequestsList = () => {
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                <tr className="border-bottom border-2 border-dark">
+                <tr className="border-bottom border-1 border-dark">
                   <th className="fw-normal">
                     Stanje
                   </th>
@@ -128,6 +128,8 @@ const MyRequestsList = () => {
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
+                        <br/>
+                        { convertTimeToEuropean(project.date_submitted) }
                       </td>
                       <td className="align-middle text-center">
                         <Button color="light">
@@ -161,7 +163,7 @@ const MyRequestsList = () => {
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                <tr className="border-bottom border-2 border-dark">
+                <tr className="border-bottom border-1 border-dark">
                   <th className="fw-normal">
                     Stanje
                   </th>
