@@ -175,7 +175,8 @@ export const ManageRequestsChange = () => {
   const onSubmit = (data) => {
     data['requestState'] = requestState
     let whichState = findTrueState(data['requestState'])
-    if (whichState === 'approve' && data['staff_requestResourceType']?.length === 0) {
+    if (whichState === 'approve'
+      && (!data['staff_requestResourceType'] || data['staff_requestResourceType'].length === 0)) {
       toast.error(
         <span className="font-monospace">
           Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
@@ -210,8 +211,8 @@ export const ManageRequestsChange = () => {
           </span>, {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
-            delay: 1000,
-            onClose: () => navigate(url_ui_prefix + '/upravljanje-zahtjevima')
+            delay: 500,
+            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/moji-zahtjevi')}, 1500)
           }
         )
       },

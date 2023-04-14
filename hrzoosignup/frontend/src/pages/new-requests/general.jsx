@@ -29,9 +29,13 @@ import { toast } from 'react-toastify'
 import { addGeneralProject } from '../../api/projects';
 import '../../styles/datepicker.css';
 import { useMutation } from '@tanstack/react-query';
+import { url_ui_prefix } from '../../config/general';
+import { useNavigate } from 'react-router-dom';
 
 
 const GeneralRequest = ({projectType}) => {
+  const navigate = useNavigate()
+
   const rhfProps = useForm({
     defaultValues: {
       requestName: '',
@@ -72,7 +76,8 @@ const GeneralRequest = ({projectType}) => {
         </span>, {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
-          delay: 500
+          delay: 500,
+          onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/moji-zahtjevi')}, 1500)
         }
       )
     },
