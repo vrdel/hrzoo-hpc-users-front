@@ -28,8 +28,9 @@ import { StateShortString } from '../../config/map-states';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { toast } from 'react-toastify'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
+import { RenderStateIcon } from '../../components/RenderState.jsx';
 import { url_ui_prefix } from '../../config/general';
-
+import { findTrueState } from '../../utils/reqstate';
 
 function setInitialState() {
   let newState = new Object(
@@ -43,6 +44,7 @@ function setInitialState() {
   )
   return newState
 }
+
 
 
 export const MyRequestChange = () => {
@@ -228,12 +230,22 @@ export const MyRequestChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
+                <Row>
+                  <Col md={{offset: 1, size: 8}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span >
+                      Stanje zahtjeva:
+                    </span>
+                  </Col>
+                </Row>
+                <Row>
+                  <RenderStateIcon reqState={requestState} />
+                </Row>
+                <RequestHorizontalRulerRed />
                 <GeneralFields fieldsDisabled={disabledFields} />
                 <ScientificSoftware fieldsDisabled={disabledFields} />
                 <ResourceFields fieldsDisabled={disabledFields} />
                 <Row style={{height: '50px'}}>
                 </Row>
-                <RequestHorizontalRulerRed />
               </Form>
             </FormProvider>
           </Col>
