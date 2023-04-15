@@ -312,7 +312,7 @@ class ProjectCount(models.Model):
 
 
 # picked from invitations.model and overriden it as I didn't like
-# uniqueness on
+# uniqueness on email
 class CustomInvitation(AbstractBaseInvitation):
     email = models.EmailField(
         verbose_name=_("e-mail address"),

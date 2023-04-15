@@ -1,31 +1,41 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { SharedData } from './root';
 import { Col, Row } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { AuthContext } from '../components/AuthContextProvider.jsx';
+import { defaultUnAuthnRedirect} from '../config/default-redirect';
 
 
-const EmailInvitation = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
+
+
+const EmailInvitation = ({sessionData=undefined}) => {
+  const navigate = useNavigate()
   const { inviteKey } = useParams()
+  const { isLoggedIn, setUserdetails } = useContext(AuthContext)
+  const location = useLocation()
+
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-    console.log('VRDEL DEBUG', inviteKey)
-  }, [location.pathname])
+    if (!(isLoggedIn || sessionData.active))
+      navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
+    else
+      sessionData?.userdetails && setUserdetails(sessionData.userdetails)
+  }, [sessionData, isLoggedIn])
 
-  return (
-    <>
-      <Row>
-        <PageTitle pageTitle={pageTitle}/>
-      </Row>
-      <Row>
-        <Col>
-        </Col>
-      </Row>
-    </>
-  )
+  if (isLoggedIn || sessionData.active)
+    return (
+      <>
+        <Row>
+          <PageTitle pageTitle='Prijava putem pozivnog koda'/>
+        </Row>
+        <Row>
+          <Col>
+            { inviteKey }
+          </Col>
+        </Row>
+      </>
+    )
 };
 
 export default EmailInvitation;

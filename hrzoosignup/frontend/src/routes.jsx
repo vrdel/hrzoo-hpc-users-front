@@ -54,6 +54,9 @@ const BaseRoutes = () => {
             <Route path="prijava-priv" element={<LoginPrivate />}/>
             <Route path="prijava" element={<LoginPublic />}/>
             <Route path="prijava-pub" element={<LoginOffical />}/>
+            <Route path="prijava-email/:inviteKey" element={
+              <EmailInvitation sessionData={sessionData} />
+            }/>
             <Route element={<BasePage sessionData={sessionData} />}>
               <Route path="upravljanje-zahtjevima" element={
                 <ProtectedRoute sessionData={sessionData}>
@@ -98,9 +101,6 @@ const BaseRoutes = () => {
               }/>
               <Route path="moji-podatci" element={
                 <MyInfo />
-              }/>
-              <Route path="prijava-email/:inviteKey" element={
-                <EmailInvitation />
               }/>
             </Route>
             <Route path="*" element={<NotFound />}/>
