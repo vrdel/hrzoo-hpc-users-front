@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Col, Row } from 'reactstrap';
+import { Col, Row, Button } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useParams } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -16,14 +16,10 @@ const EmailInvitation = ({sessionData=undefined}) => {
   const location = useLocation()
 
   useEffect(() => {
-    async function handleInvite() {
-      return await fetchInvite(inviteKey)
-    }
     if (!(isLoggedIn || sessionData.active))
       navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
     else {
       sessionData?.userdetails && setUserdetails(sessionData.userdetails)
-      handleInvite()
     }
   }, [sessionData, isLoggedIn])
 
@@ -35,7 +31,9 @@ const EmailInvitation = ({sessionData=undefined}) => {
         </Row>
         <Row>
           <Col>
-            { inviteKey }
+            <Button color="success" onClick={() => fetchInvite(inviteKey)}>
+              Klikni za potvrdu
+            </Button>
           </Col>
         </Row>
       </>
