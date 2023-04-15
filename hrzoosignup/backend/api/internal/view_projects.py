@@ -171,17 +171,9 @@ class Projects(APIView):
             if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
                 serializer = ProjectSerializerGet(models.Project.objects.all(), many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            elif (request.user.is_staff or request.user.is_superuser):
+            else:
                 serializer = ProjectSerializerGet(models.Project.objects.get(identifier=req_type))
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            elif not (request.user.is_staff or request.user.is_superuser):
-                err_response = {
-                    'status': {
-                        'code': status.HTTP_401_UNAUTHORIZED,
-                        'message': 'HTTP_401_UNAUTHORIZED'
-                    }
-                }
-                return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
 
         up_obj = models.UserProject.objects.filter(user=request.user.pk)
         for up in up_obj:

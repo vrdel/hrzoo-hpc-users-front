@@ -1,0 +1,244 @@
+import React, { useContext, useState, useEffect } from 'react';
+import { RequestHorizontalRulerRed } from '../../components/RequestHorizontalRuler';
+import GeneralFields from '../../components/fields-request/GeneralFields';
+import { SharedData } from '../root';
+import { Col, Label, Row, Button, Form } from 'reactstrap';
+import { PageTitle } from '../../components/PageTitle';
+import { fetchNrSpecificProject, changeProject } from '../../api/projects';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faSave,
+  faCog,
+  faTimes,
+  faTimeline,
+  faCalendarXmark,
+  faCheckDouble,
+} from '@fortawesome/free-solid-svg-icons';
+import { useParams, useNavigate } from 'react-router-dom';
+import {
+  useForm,
+  useFormContext,
+  FormProvider,
+  Controller,
+} from "react-hook-form";
+import ResourceFields from '../../components/fields-request/ResourceFields';
+import { StateShortString } from '../../config/map-states';
+import { CustomReactSelect } from '../../components/CustomReactSelect';
+import { toast } from 'react-toastify'
+import ModalAreYouSure from '../../components/ModalAreYouSure';
+import { url_ui_prefix } from '../../config/general';
+
+
+function setInitialState() {
+  let newState = new Object(
+    {
+      'submit': false,
+      'approve': false,
+      'deny': false,
+      'extend': false,
+      'expire': false
+    }
+  )
+  return newState
+}
+
+
+export const MyRequestChange = () => {
+  const { LinkTitles } = useContext(SharedData);
+  const [pageTitle, setPageTitle] = useState(undefined);
+  const [commentDisabled, setCommentDisabled] = useState(undefined);
+  const { projId } = useParams()
+  const [disabledFields, setDisabledFields] = useState(true)
+  const [requestState, setRequestState] = useState(undefined)
+
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  const navigate = useNavigate()
+
+  const {status, data: nrProject, error, isFetching} = useQuery({
+      queryKey: ['change-project', projId],
+      queryFn: () => fetchNrSpecificProject(projId),
+  })
+
+  const changeMutation = useMutation({
+    mutationFn: (data) => {
+      data['identifier'] = projId
+      data['is_active'] = true
+      data['name'] = data['requestName']
+      data['reason'] = data['requestExplain']
+      data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
+      data['staff_resources_type'] = data['staff_requestResourceType']
+      return changeProject(projId, data)
+    }
+  })
+
+  const rhfProps = useForm({
+    defaultValues: {
+      requestName: '',
+      requestExplain: '',
+      startDate: '',
+      endDate: '',
+      requestResourceType: '',
+      HPCnSlotsCPU: '', HPCnSlotsGPU: '', HPCnRAM: '', HPCnTempGB: '', HPCnDiskGB: '',
+      CLOUDnVM: '', CLOUDnSlotsCPU: '', CLOUDnRAM: '', CLOUDnRAMVM: '',
+      CLOUDnFastDiskGB: '', CLOUDnDiskGB: '', CLOUDnIPs: '',
+      scientificDomain: [
+        {
+          'name': '',
+          'percent': '',
+          'scientificfields': [
+            {
+              'name': '', 'percent': ''
+            }
+          ]
+        },
+      ],
+      scientificSoftware: '',
+      scientificSoftwareExtra: '',
+      scientificSoftwareHelp: '',
+      staff_requestResourceType: '',
+      staff_comment: ''
+    }
+  });
+
+  useEffect(() => {
+    if (status === 'success' && nrProject) {
+      rhfProps.setValue('requestName', nrProject.name)
+      rhfProps.setValue('requestExplain', nrProject.reason)
+      rhfProps.setValue('startDate', nrProject.date_start)
+      rhfProps.setValue('endDate', nrProject.date_end)
+      rhfProps.setValue('scientificDomain', nrProject.science_field)
+      rhfProps.setValue('scientificSoftware', nrProject.science_software.map(e => (
+        {
+          'label' : e,
+          'value' : e
+        }
+      )))
+      rhfProps.setValue('scientificSoftwareExtra', nrProject.science_extrasoftware)
+      rhfProps.setValue('scientificSoftwareHelp', nrProject.science_extrasoftware_help)
+      rhfProps.setValue('HPCnSlotsCPU', nrProject.resources_numbers.HPCnSlotsCPU)
+      rhfProps.setValue('HPCnSlotsGPU', nrProject.resources_numbers.HPCnSlotsGPU)
+      rhfProps.setValue('HPCnRAM', nrProject.resources_numbers.HPCnSlotsRAM)
+      rhfProps.setValue('HPCnTempGB', nrProject.resources_numbers.HPCnTempGB)
+      rhfProps.setValue('HPCnDiskGB', nrProject.resources_numbers.HPCnDiskGB)
+      rhfProps.setValue('CLOUDnVM', nrProject.resources_numbers.CLOUDnVM)
+      rhfProps.setValue('CLOUDnSlotsCPU', nrProject.resources_numbers.CLOUDnSlotsCPU)
+      rhfProps.setValue('CLOUDnRAM', nrProject.resources_numbers.CLOUDnRAM)
+      rhfProps.setValue('CLOUDnRAMVM', nrProject.resources_numbers.CLOUDnRAMVM)
+      rhfProps.setValue('CLOUDnDiskGB', nrProject.resources_numbers.CLOUDnDiskGB)
+      rhfProps.setValue('CLOUDnFastDiskGB', nrProject.resources_numbers.CLOUDnFastDiskGB)
+      rhfProps.setValue('CLOUDnIPs', nrProject.resources_numbers.CLOUDnIPs)
+      rhfProps.setValue('requestResourceType', nrProject.resources_type)
+      rhfProps.setValue('staff_requestResourceType', nrProject.staff_resources_type)
+
+      if (nrProject.staffcomment_set?.length > 0
+        && nrProject.state.name === 'deny') {
+        let lenPr = nrProject.staffcomment_set.length
+        let last = nrProject.staffcomment_set[lenPr - 1]
+        rhfProps.setValue('staff_comment', last.comment)
+      }
+      setCommentDisabled(true)
+
+      let newState = setInitialState()
+      newState[nrProject.state.name] = true,
+      setRequestState(newState)
+    }
+
+    setPageTitle(LinkTitles(location.pathname))
+  }, [location.pathname, nrProject])
+
+  const onSubmit = (data) => {
+    data['requestState'] = requestState
+    let whichState = findTrueState(data['requestState'])
+    if (whichState === 'approve'
+      && (!data['staff_requestResourceType'] || data['staff_requestResourceType'].length === 0)) {
+      toast.error(
+        <span className="font-monospace">
+          Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
+        </span>, {
+          autoClose: false,
+          toastId: 'manreq-change-no-reqtype',
+        }
+      )
+      return null
+    }
+
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Obrada korisničkog zahtijeva")
+    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
+    setOnYesCall('dochangereq')
+    setOnYesCallArg(data)
+  }
+
+  function onYesCallback() {
+    if (onYesCall == 'dochangereq') {
+      doChange(onYesCallArg)
+    }
+  }
+
+  const doChange = (data) => {
+    // alert(JSON.stringify(data, null, 2))
+    changeMutation.mutate(data, {
+      onSuccess: () => {
+        toast.success(
+          <span className="font-monospace text-dark">
+            Zahtjev je uspješno promijenjen
+          </span>, {
+            toastId: 'manreq-ok-change',
+            autoClose: 2500,
+            delay: 500,
+            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
+          }
+        )
+      },
+      onError: (error) => {
+        toast.error(
+          <span className="font-monospace text-dark">
+            Zahtjev nije bilo moguće promijeniti:
+            { error.message }
+          </span>, {
+            toastId: 'manreq-ok-change',
+            autoClose: 2500,
+            delay: 1000
+          }
+        )
+      },
+    })
+  }
+
+  if (nrProject && requestState) {
+    return (
+      <>
+        <Row>
+          <PageTitle pageTitle={pageTitle}/>
+        </Row>
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback} />
+        <Row>
+          <Col>
+            <FormProvider {...rhfProps}>
+              <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
+                <GeneralFields fieldsDisabled={disabledFields} />
+                <ScientificSoftware fieldsDisabled={disabledFields} />
+                <ResourceFields fieldsDisabled={disabledFields} />
+                <Row style={{height: '50px'}}>
+                </Row>
+                <RequestHorizontalRulerRed />
+              </Form>
+            </FormProvider>
+          </Col>
+        </Row>
+      </>
+    )
+  }
+};

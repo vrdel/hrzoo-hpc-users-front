@@ -7,6 +7,7 @@ import LoginPrivate from './pages/login-private';
 import LoginPublic from './pages/login-public';
 import LoginOffical from './pages/login-official';
 import MyRequestsList from './pages/my-requests/list';
+import { MyRequestChange } from './pages/my-requests/change';
 import NewRequest from './pages/new-request';
 import { ManageRequestsChange } from './pages/manage-requests/change';
 import { ManageRequestsList } from './pages/manage-requests/list';
@@ -70,6 +71,9 @@ const BaseRoutes = () => {
               }/>
               <Route path="moji-zahtjevi" element={
                 <MyRequestsList />
+              }/>
+              <Route path="moji-zahtjevi/:projId" element={
+                <MyRequestChange />
               }/>
               <Route path="novi-zahtjev" element={
                 <NewRequest />

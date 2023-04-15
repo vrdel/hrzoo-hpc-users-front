@@ -1,37 +1,36 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Badge, Table, Tooltip, Button } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../components/PageTitle';
-import { StateIcons, StateString } from '../../config/map-states';
-import { fetchAllNrProjects } from '../../api/projects';
+import '../../styles/content.css';
+import {
+  Button,
+  Badge,
+  Col,
+  Placeholder,
+  Row,
+  Table,
+  Tooltip,
+} from 'reactstrap';
+import { fetchNrProjects } from '../../api/projects';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
+import { StateIcons, StateString } from '../../config/map-states';
 import { TypeString, TypeColor } from '../../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
-import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 
 
-function extractLeaderName(projectUsers) {
-  let target = projectUsers.filter(user => (
-    user['role']['name'] === 'lead'
-  ))
-  target = target[0]
-
-  return target.user.first_name + ' ' + target.user.last_name
-}
-
-
-export const ManageRequestsList = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
+const MyRequestsList = () => {
+  const { LinkTitles } = useContext(SharedData)
+  const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
 
   const {status, data: nrProjects, error, isFetching} = useQuery({
-      queryKey: ['all-projects'],
-      queryFn: fetchAllNrProjects
+      queryKey: ['projects'],
+      queryFn: fetchNrProjects
   })
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
@@ -46,6 +45,7 @@ export const ManageRequestsList = () => {
       showed[toolid] = !showed[toolid]
       setTooltipOpened(showed)
     }
+
   }
   const isOpened = (toolid) => {
     if (tooltipOpened !== undefined)
@@ -62,7 +62,7 @@ export const ManageRequestsList = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
-        <Row className="mt-4">
+        <Row className="mt-4 ms-1 me-1 mb-5">
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
@@ -80,16 +80,10 @@ export const ManageRequestsList = () => {
                     Šifra
                   </th>
                   <th className="fw-normal">
-                    Voditelj
-                  </th>
-                  <th className="fw-normal">
                     Tip
                   </th>
                   <th className="fw-normal">
                     Trajanje
-                  </th>
-                  <th className="fw-normal">
-                    Promjena
                   </th>
                   <th className="fw-normal">
                     Radnje
@@ -119,13 +113,8 @@ export const ManageRequestsList = () => {
                       <td className="p-3 align-middle fw-bold text-center">
                         { project.name}
                       </td>
-                      <td className="align-middle text-center">
-                        <Badge color="secondary" className="fw-normal">
-                          { project.identifier }
-                        </Badge>
-                      </td>
                       <td className="p-3 align-middle text-center">
-                        { extractLeaderName(project.userproject_set) }
+                        <Badge className="fw-normal" color="secondary">{ project.identifier }</Badge>
                       </td>
                       <td className="align-middle text-center">
                         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
@@ -133,14 +122,16 @@ export const ManageRequestsList = () => {
                         </span>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
-                        { convertToEuropean(project.date_start) }
-                        <br/>
-                        { convertToEuropean(project.date_end) }
-                      </td>
-                      <td className="align-middle text-center fs-6 font-monospace">
-                        { project.date_changed && convertToEuropean(project.date_changed) }
-                        <br/>
-                        { project.date_changed && convertTimeToEuropean(project.date_changed) }
+                        <Row>
+                          <Col>
+                            { convertToEuropean(project.date_start) }
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col>
+                            { convertToEuropean(project.date_end)}
+                          </Col>
+                        </Row>
                       </td>
                       <td className="align-middle text-center">
                         <Button color="light" onClick={() => navigate(project.identifier)}>
@@ -153,7 +144,7 @@ export const ManageRequestsList = () => {
                 {
                   nrProjects.length < 5 && [...Array(5 - nrProjects.length)].map((_, i) =>
                     <tr key={i + 5}>
-                      <td colSpan="8" style={{height: '60px', minHeight: '60px'}}>
+                      <td colSpan="7" style={{height: '60px', minHeight: '60px'}}>
                       </td>
                     </tr>
                   )
@@ -164,19 +155,70 @@ export const ManageRequestsList = () => {
         </Row>
       </>
     )
-  else if (nrProjects?.length === 0) {
+  else if (nrProjects?.length === 0)
     return (
       <>
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
-        <Row className="mt-3 mb-5 align-items-center">
-          <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center mt-5 p-3 fs-3"
-            style={{height: "300px"}} md={{offset: 1, size: 10}}>
-            Nema podnesenih zahtjeva
+        <Row className="mt-4 ms-1 me-1 mb-5">
+          <Col>
+            <Table responsive hover className="shadow-sm">
+              <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+                <tr className="border-bottom border-1 border-dark">
+                  <th className="fw-normal">
+                    Stanje
+                  </th>
+                  <th className="fw-normal">
+                    Tip
+                  </th>
+                  <th className="fw-normal">
+                    Šifra
+                  </th>
+                  <th className="fw-normal">
+                    Naziv
+                  </th>
+                  <th className="fw-normal">
+                    Trajanje
+                  </th>
+                  <th className="fw-normal">
+                    Podnesen
+                  </th>
+                  <th className="fw-normal">
+                    Radnje
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  [...Array(3)].map((_, i) => (
+                    <tr key={i}>
+                      <td colSpan="7" className="m-0 p-0 bg-light border-0">
+                        <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+                      </td>
+                    </tr>
+                  ))
+                }
+                <tr key="4">
+                  <td colSpan="7" className="table-light border-0 text-muted text-center p-3 fs-3">
+                    Nemate podnesenih zahtjeva
+                  </td>
+                </tr>
+                {
+                  [...Array(3)].map((_, i) => (
+                    <tr key={i + 6}>
+                      <td colSpan="7" className="m-0 p-0 bg-light border-0">
+                        <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </Table>
           </Col>
         </Row>
       </>
     )
-  }
 };
+
+export default MyRequestsList;
