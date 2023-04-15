@@ -138,6 +138,11 @@ class Projects(APIView):
                 if value == True:
                     break
             state = models.State.objects.get(name=key)
+            # TODO:
+            # update writing rest of fields so that we can enable "editing" on
+            # frontend side
+            p_obj.reason = request.data['reason']
+            p_obj.resources_type = request.data['resources_type']
             p_obj.state = state
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
             if state.name == 'deny':
