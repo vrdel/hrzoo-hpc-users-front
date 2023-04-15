@@ -200,7 +200,8 @@ class Projects(APIView):
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
 
-        up_obj = models.UserProject.objects.filter(user=request.user.pk)
+        role_obj = models.Role.objects.get(name='lead')
+        up_obj = models.UserProject.objects.filter(user=request.user.pk).filter(role=role_obj.pk)
         for up in up_obj:
             projects.append(up.project)
 
