@@ -76,6 +76,7 @@ except ImproperlyConfigured as e:
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEBUG_OPTION
 
@@ -154,6 +155,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 
+
+INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'daniel.vrcic@gmail.com@'
+EMAIL_HOST_PASSWORD = 'yktsrnlzxvlvaxyz'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_TIMEOUT = 15
+
+#INVITATIONS_CONFIRMATION_URL_NAME = 'ui:prijava-email'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

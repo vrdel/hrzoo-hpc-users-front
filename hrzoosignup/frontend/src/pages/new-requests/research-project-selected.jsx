@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   useForm,
   Controller,
@@ -50,6 +50,7 @@ const ExtractUsers = ({projectUsers}) => {
 
 const ResearchProjectRequestSelected = ({projectType}) => {
   const [projectTarget, setProjectTarget] = useState(undefined)
+  const navigate = useNavigate()
 
   const { projId } = useParams()
   const rhfProps = useForm({
@@ -112,7 +113,8 @@ const ResearchProjectRequestSelected = ({projectType}) => {
         </span>, {
           toastId: 'researchproj-ok-add',
           autoClose: 2500,
-          delay: 500
+          delay: 500,
+          onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/moji-zahtjevi')}, 1500)
         }
       )
     },
