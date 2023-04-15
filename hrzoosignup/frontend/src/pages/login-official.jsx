@@ -1,6 +1,5 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import SrceLogoTiny from '../assets/srce-logo-e-mail-sig.png';
 import {
   Col,
   Container,
@@ -8,7 +7,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
 } from 'reactstrap';
 import {
   faLaptopCode,
