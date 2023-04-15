@@ -1,7 +1,5 @@
 .image-background {
   background-image: url('../assets/login-background.png');
-  width: 100vh; /* Adjust the width and height as needed */
-  height: 100vh; /* Adjust the width and height as needed */
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Prevent the background image from repeating */
   background-size: cover; /* Resize the background image to cover the entire container */
