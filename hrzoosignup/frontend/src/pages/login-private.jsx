@@ -49,6 +49,7 @@ const LoginPrivate = () => {
     <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
       <Row className="login-first-row">
         <Col>
+          <Row style={{'height': '110px'}}/>
           <Card className="shadow-lg p-2" style={{height: '475px', width: '450px'}}>
             <CardHeader
               id='hzsi-loginheader'
