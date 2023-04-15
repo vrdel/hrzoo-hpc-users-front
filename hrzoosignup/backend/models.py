@@ -148,16 +148,18 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    approved_by = models.CharField(
-        _("Approved by"),
-        max_length=128,
-        blank=True
+    approved_by = models.JSONField(
+        _("JSONField with few details of staff that approved request"),
+        blank=True,
+        null=True
     )
-    denied_by = models.CharField(
-        _("Approved by"),
-        max_length=128,
-        blank=True
+
+    denied_by = models.JSONField(
+        _("JSONField with few details of staff that denied request"),
+        blank=True,
+        null=True
     )
+
     science_field = models.JSONField(
         blank=True,
         null=True
