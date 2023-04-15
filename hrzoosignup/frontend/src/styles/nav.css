@@ -5,3 +5,12 @@
 #hzsi-navlinks {
   background-color: white;
 }
+
+#hzsi-navlinks-dropdown {
+  text-decoration: none;
+}
+
+#hzsi-navlinks-dropdown:hover {
+  background-color: #e8e9ea;
+  text-decoration: none;
+}
