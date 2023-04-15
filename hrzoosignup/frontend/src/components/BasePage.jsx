@@ -10,7 +10,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/content.css';
 import { doLogout } from '../api/auth';
 import { fetchCroRIS } from '../api/croris';
-import { AuthContext } from '../components/AuthContextProvider.jsx';
+import { AuthContext } from '../components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
 import { useQuery } from '@tanstack/react-query';
 import HeadTitle from '../components/HeadTitle';
