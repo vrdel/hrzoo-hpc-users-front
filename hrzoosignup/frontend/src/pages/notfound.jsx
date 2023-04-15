@@ -17,15 +17,14 @@ const NotFound = () => {
       <Row>
         <Col>
           <Card className="shadow-sm" style={{minHeight: '50vh'}}>
-            <CardHeader className="fs-2 bg-danger fw-bold text-center text-white">
-              Griješka! SRCE mi se slama!
+            <CardHeader className="bg-danger fw-bold text-center text-white">
+              <h2 style={{'textShadow': "1px 1px 2px #000000"}}>
+                GREŠKA, SRCE mi se slama!
+              </h2>
             </CardHeader>
             <CardBody className="p-5 mb-3">
               <img src={SrceBroken} id="srcebrokenlogo" alt="SRCE Broken Logo"/>
             </CardBody>
-            <CardFooter className="bg-danger text-white fw-bold text-center fs-4">
-              Nemoj više!
-            </CardFooter>
           </Card>
         </Col>
       </Row>
