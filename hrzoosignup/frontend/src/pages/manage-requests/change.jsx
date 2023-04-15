@@ -91,6 +91,7 @@ export const ManageRequestsChange = () => {
       data['is_active'] = true
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
+      data['resources_type'] = data['requestResourceType']
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
       data['staff_resources_type'] = data['staff_requestResourceType']
       return changeProject(projId, data)
@@ -279,12 +280,15 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
   return (
     <>
       <Row>
-        <Col md={{size: 10}}>
+        <Col md={{size: 9}} className="me-0">
           <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
             Obrada:
           </span>
         </Col>
-        <Col>
+        <Col md={{size: 3}} className="d-inline-flex align-items-center justify-content-start">
+          <Button disabled={true} color="secondary" className="me-1" onClick={() => setDisabledFields(!disabledFields)}>
+            Obriši zahtjev
+          </Button>
           <Button disabled={true} color="danger" onClick={() => setDisabledFields(!disabledFields)}>
             Uredi zahtjev
           </Button>
@@ -304,7 +308,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
         </Col>
         <Col md={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
           <span >
-            Stanja zahtjeva:
+            Stanje zahtjeva:
           </span>
         </Col>
       </Row>
