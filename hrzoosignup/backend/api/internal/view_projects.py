@@ -140,6 +140,20 @@ class Projects(APIView):
             state = models.State.objects.get(name=key)
             p_obj.state = state
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
+            if state.name == 'deny':
+                p_obj.denied_by = {
+                    'first_name': self.request.user.first_name,
+                    'last_name': self.request.user.last_name,
+                    'person_uniqueid': self.request.user.person_uniqueid,
+                    'username': self.request.user.username
+                }
+            if state.name == 'approve':
+                p_obj.approved_by = {
+                    'first_name': self.request.user.first_name,
+                    'last_name': self.request.user.last_name,
+                    'person_uniqueid': self.request.user.person_uniqueid,
+                    'username': self.request.user.username
+                }
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
                 p_obj.date_changed = datetime.datetime.now()
@@ -153,7 +167,7 @@ class Projects(APIView):
                         project_id = p_obj.pk,
                         comment_by={
                             'first_name': self.request.user.first_name,
-
+                            'last_name': self.request.user.last_name,
                             'person_uniqueid': self.request.user.person_uniqueid,
                             'username': self.request.user.username,
                         }
