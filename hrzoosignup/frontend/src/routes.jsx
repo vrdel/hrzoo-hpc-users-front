@@ -6,7 +6,7 @@ import BasePage from './components/BasePage';
 import LoginPrivate from './pages/login-private';
 import LoginPublic from './pages/login-public';
 import LoginOffical from './pages/login-official';
-import MyRequestsList from './pages/my-requests';
+import MyRequestsList from './pages/my-requests/list';
 import NewRequest from './pages/new-request';
 import { ManageRequestsChange } from './pages/manage-requests/change';
 import { ManageRequestsList } from './pages/manage-requests/list';
