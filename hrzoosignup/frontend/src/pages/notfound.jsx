@@ -6,7 +6,6 @@ import {
   Card,
   CardBody,
   CardHeader,
-  CardFooter
 } from 'reactstrap'
 import SrceBroken from '../assets/srce-broken.png';
 
@@ -16,9 +15,9 @@ const NotFound = () => {
     <Container fluid className="pt-1 d-flex align-items-center justify-content-center" style={{minHeight: '100vh'}}>
       <Row>
         <Col>
-          <Card className="shadow-sm" style={{minHeight: '50vh'}}>
+          <Card className="shadow" style={{minHeight: '50vh'}}>
             <CardHeader className="bg-danger fw-bold text-center text-white">
-              <h2 style={{'textShadow': "1px 1px 2px #000000"}}>
+              <h2 style={{'textShadow': "1px 1px 2px #404040"}}>
                 GREŠKA, SRCE mi se slama!
               </h2>
             </CardHeader>

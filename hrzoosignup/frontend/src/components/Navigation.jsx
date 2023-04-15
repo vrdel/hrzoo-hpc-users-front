@@ -17,6 +17,7 @@ import {
 import '../styles/nav.css';
 import { ModalContext } from './BasePage'
 import { AuthContext } from '../components/AuthContextProvider';
+import UserDetailsPopover from '../components/UserDetailsPopover';
 
 
 const Navigation = () => {
@@ -51,7 +52,7 @@ const Navigation = () => {
             <Popover placement="bottom" isOpen={popoverOpen}
               target="userPopover" toggle={() => setPopoverOpen(!popoverOpen)}>
               <PopoverBody>
-                User details
+                <UserDetailsPopover />
               </PopoverBody>
             </Popover>
           </>
