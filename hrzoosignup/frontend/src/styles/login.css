@@ -1,3 +1,9 @@
+.image-background {
+  background-image: url('../assets/login-background.png');
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
 .bodyreact {
   background-color: #ecf0f5;
 }

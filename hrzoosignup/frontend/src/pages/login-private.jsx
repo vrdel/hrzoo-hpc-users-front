@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm, Controller } from "react-hook-form";
-import SrceLogoTiny from '../assets/srce-logo-e-mail-sig.png';
 import {
   Alert,
   Container,
@@ -13,7 +12,6 @@ import {
   CardBody,
   Input,
   Label,
-  CardFooter,
   Form,
   FormGroup } from 'reactstrap';
 import {
@@ -21,7 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/login.css';
 import { doUserPassLogin } from '../api/auth';
-import { AuthContext } from '../components/AuthContextProvider.jsx';
+import { AuthContext } from '../components/AuthContextProvider';
 
 
 const LoginPrivate = () => {
@@ -48,16 +46,16 @@ const LoginPrivate = () => {
   }
 
   return (
-    <Container>
+    <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
       <Row className="login-first-row">
-        <Col sm={{size: 4, offset: 4}}>
-          <Card className="shadow p-2">
+        <Col>
+          <Card className="shadow-lg p-2" style={{height: '475px', width: '450px'}}>
             <CardHeader
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="2x" />
-              <h5 className="text-dark"><strong>Napredno računanje</strong></h5>
+              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
+              <h4 className="text-dark"><strong>Napredno računanje</strong></h4>
             </CardHeader>
             <CardBody className="pt-5">
               <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
@@ -105,13 +103,6 @@ const LoginPrivate = () => {
                 </FormGroup>
               </Form>
             </CardBody>
-            <CardFooter id="hzsi-loginfooter">
-              <div className="text-center pt-3">
-                <a href="https://www.srce.unizg.hr/" target="_blank" rel="noopener noreferrer">
-                  <img src={SrceLogoTiny} id="srcelogo" alt="SRCE Logo"/>
-                </a>
-              </div>
-            </CardFooter>
           </Card>
         </Col>
       </Row>
