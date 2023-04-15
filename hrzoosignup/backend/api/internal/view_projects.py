@@ -166,14 +166,25 @@ class Projects(APIView):
     def get(self, request, **kwargs):
         projects = list()
 
-        if kwargs.get('specific', False):
-            req_type = kwargs.get('specific')
-            if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
-                serializer = ProjectSerializerGet(models.Project.objects.all(), many=True)
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                serializer = ProjectSerializerGet(models.Project.objects.get(identifier=req_type))
-                return Response(serializer.data, status=status.HTTP_200_OK)
+        try:
+            if kwargs.get('specific', False):
+                req_type = kwargs.get('specific')
+                if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
+                    serializer = ProjectSerializerGet(models.Project.objects.all(), many=True)
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+                else:
+                    serializer = ProjectSerializerGet(models.Project.objects.get(identifier=req_type))
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+
+        except models.Project.DoesNotExist as exc:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_404_NOT_FOUND,
+                    'message': 'Project not found'
+                }
+            }
+            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
 
         up_obj = models.UserProject.objects.filter(user=request.user.pk)
         for up in up_obj:
