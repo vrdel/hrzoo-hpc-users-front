@@ -23,14 +23,27 @@ class Invites(APIView):
     def get(self, request, **kwargs):
         user = request.user.pk
 
+        # hardcoding it here as
+        # INVITATIONS_CONFIRMATION_URL_NAME did not help
+        # -vrdel
         ret = requests.get('{}://{}/invitations/accept-invite/{}'.format(
             request.scheme,
             request.get_host(),
             kwargs['invitekey'],
         ))
-        ret.raise_for_status()
-        print(ret)
-        return Response()
+        try:
+            res = ret.raise_for_status()
+        except requests.exceptions.HTTPError as ex:
+            if ex.response.status_code == 410:
+                return Response({
+                    'status': {
+                        'code': status.HTTP_410_GONE,
+                        'message': 'Invitation code already used'
+                    }},
+                    status=status.HTTP_410_GONE
+                )
+
+        return Response(status.HTTP_200_OK)
 
     def post(self, request):
         request.data['user'] = request.user.pk

@@ -310,10 +310,12 @@ class UserProject(models.Model):
 class ProjectCount(models.Model):
     counter = models.IntegerField(null=True)
 
-
 # picked from invitations.model and overriden it as I didn't like
-# uniqueness on email
+# uniqueness on email as we'll need to send multiple project invitations
+# on the same email. also added relation to project.
+# -vrdel
 class CustomInvitation(AbstractBaseInvitation):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     email = models.EmailField(
         verbose_name=_("e-mail address"),
         max_length=254,
@@ -369,4 +371,3 @@ class CustomInvitation(AbstractBaseInvitation):
     def __str__(self):
         return f"Invite: {self.email}"
 
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
