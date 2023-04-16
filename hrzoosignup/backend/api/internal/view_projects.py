@@ -213,3 +213,50 @@ class Projects(APIView):
         serializer = ProjectSerializerGet(projects, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ProjectsRole(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request, **kwargs):
+        projects = list()
+
+        try:
+            if kwargs.get('targetrole', False):
+                role = kwargs.get('targetrole')
+                role_obj = models.Role.objects.get(name=role)
+                up_obj = models.UserProject.objects.filter(user=request.user.pk).filter(role=role_obj.pk)
+                for up in up_obj:
+                    projects.append(up.project)
+
+                serializer = ProjectSerializerGet(projects, many=True)
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+            else:
+                err_response = {
+                    'status': {
+                        'code': status.HTTP_400_BAD_REQUEST,
+                        'message': 'Role needed'
+                    }
+                }
+                return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
+        except models.Project.DoesNotExist as exc:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_404_NOT_FOUND,
+                    'message': 'Project not found'
+                }
+            }
+            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
+        except models.Role.DoesNotExist as exc:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_404_NOT_FOUND,
+                    'message': 'Role not found'
+                }
+            }
+            return Response(err_response, status=status.HTTP_404_NOT_FOUND)

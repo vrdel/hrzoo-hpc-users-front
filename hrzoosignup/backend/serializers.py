@@ -99,6 +99,7 @@ class ProjectTypeSerializer(serializers.ModelSerializer):
 
 
 class UsersSerializer(serializers.ModelSerializer):
+    userproject_set = UserProjectSerializer(many=True, read_only=True)
     class Meta:
         fields = (
             'person_uniqueid',
@@ -118,7 +119,9 @@ class UsersSerializer(serializers.ModelSerializer):
             'last_login',
             'username',
             'pk',
-            'id')
+            'id',
+            'userproject_set'
+        )
         model = get_user_model()
 
 
