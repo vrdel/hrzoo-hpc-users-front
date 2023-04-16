@@ -65,18 +65,18 @@ const BriefProjectInfo = ({project}) => {
       </Col>
       <Col md={{size: 2}}>
         <Label
+          htmlFor="projectTime"
+          aria-label="projectTime"
+          className="mr-1">
+          Odobren:
+        </Label>
+      </Col>
+      <Col md={{size: 2}}>
+        <Label
           htmlFor="projectType"
           aria-label="projectType"
           className="mr-1">
           Tip:
-        </Label>
-      </Col>
-      <Col md={{size: 4}}>
-        <Label
-          htmlFor="projectInstitution"
-          aria-label="projectInstitution"
-          className="mr-1">
-          Ustanova:
         </Label>
       </Col>
 
@@ -95,14 +95,14 @@ const BriefProjectInfo = ({project}) => {
         </div>
       </Col>
       <Col md={{size: 2}}>
+        <div className="p-2 fs-5 font-monospace">
+          { convertToEuropean(project.date_changed) }
+        </div>
+      </Col>
+      <Col md={{size: 2}}>
         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
           { TypeString(project.project_type.name) }
         </span>
-      </Col>
-      <Col md={{size: 4}}>
-        <div className="p-2">
-          {project.institute}<br/>
-        </div>
       </Col>
     </>
   )
