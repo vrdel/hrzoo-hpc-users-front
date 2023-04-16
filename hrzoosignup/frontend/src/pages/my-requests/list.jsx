@@ -11,7 +11,7 @@ import {
   Table,
   Tooltip,
 } from 'reactstrap';
-import { fetchNrProjects } from '../../api/projects';
+import { fetchNrProjectsLead } from '../../api/projects';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
@@ -29,8 +29,8 @@ const MyRequestsList = () => {
   const navigate = useNavigate()
 
   const {status, data: nrProjects, error, isFetching} = useQuery({
-      queryKey: ['projects'],
-      queryFn: fetchNrProjects
+      queryKey: ['projects-lead'],
+      queryFn: fetchNrProjectsLead
   })
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);

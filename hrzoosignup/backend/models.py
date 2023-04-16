@@ -372,4 +372,3 @@ class CustomInvitation(AbstractBaseInvitation):
 
     def __str__(self):
         return f"Invite: {self.email}"
-
