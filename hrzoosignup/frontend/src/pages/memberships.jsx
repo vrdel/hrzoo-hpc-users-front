@@ -9,6 +9,35 @@ import { GeneralInfo, Persons, Finance, Summary } from '../components/GeneralPro
 import { convertToEuropean, convertTimeToEuropean } from '../utils/dates';
 
 
+export const BriefSummary = ({project, isSubmitted}) => {
+  return (
+    <>
+      <Col md={{size: 12}}>
+        <Label
+          htmlFor="projectSummary"
+          aria-label="projectSummary"
+          className="mr-1 mt-2 form-label">
+          Opis:
+        </Label>
+      </Col>
+      <Col md={{size: 12}} className="mb-3">
+        <textarea
+          id="projectSummary"
+          className="form-control fst-italic"
+          rows="3"
+          disabled={isSubmitted}
+          defaultValue={
+            project.project_type.name === 'research-croris' ?
+              project.croris_summary
+            :
+              project.reason
+          }
+        />
+      </Col>
+    </>
+  )
+}
+
 const BriefProjectInfo = ({project}) => {
   return (
     <>
@@ -96,6 +125,9 @@ const Memberships = () => {
                     <CardBody className="border-0 bg-light">
                       <Row>
                         <BriefProjectInfo project={project} />
+                      </Row>
+                      <Row>
+                        <BriefSummary project={project}/>
                       </Row>
                     </CardBody>
                   </Card>
