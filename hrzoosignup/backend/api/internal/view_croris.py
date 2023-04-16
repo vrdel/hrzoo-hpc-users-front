@@ -279,7 +279,7 @@ class CroRISInfo(APIView):
                     {
                         'first_name': user['ime'],
                         'last_name': user['prezime'],
-                        'email': user['email'],
+                        'email': user.get('email', ''),
                         'institution': user['ustanovaNaziv']
                     }
                 )
