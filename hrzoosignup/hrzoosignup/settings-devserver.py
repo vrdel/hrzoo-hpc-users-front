@@ -161,8 +161,8 @@ INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER =
-EMAIL_HOST_PASSWORD =
+EMAIL_HOST_USER = 'user'
+EMAIL_HOST_PASSWORD = 'pass'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_TIMEOUT = 15
@@ -240,7 +240,7 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
                            # 'djangosaml2.backends.Saml2Backend']
 # AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
-LOGIN_REDIRECT_URL = '{}/ui/moji-zahtjevi'.format(RELATIVE_PATH)
+LOGIN_REDIRECT_URL = '{}/ui/saml2-login-redirect'.format(RELATIVE_PATH)
 LOGOUT_REDIRECT_URL = '{}/ui/prijava-priv'.format(RELATIVE_PATH)
 SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -250,14 +250,14 @@ SAML_ATTRIBUTE_MAPPING = {
     'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
     'mail': ('person_mail', ),
     'o': ('person_institution', ),
-#    'hrEduPersonOIB': ('person_oib', ),
+    'hrEduPersonOIB': ('person_oib', ),
     'ou': ('person_organisation', ),
     'hrEduPersonAffiliation': ('person_affiliation', ),
     'givenName': ('first_name', ),
     'sn': ('last_name', ),
 }
 SAML_CREATE_UNKNOWN_USER = True
-# SAML_DJANGO_USER_MAIN_ATTRIBUTE = 'person_oib'
+SAML_DJANGO_USER_MAIN_ATTRIBUTE = 'person_oib'
 
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)

@@ -160,8 +160,8 @@ INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER =
-EMAIL_HOST_PASSWORD =
+EMAIL_HOST_USER = 'user'
+EMAIL_HOST_PASSWORD = 'pass'
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_TIMEOUT = 15
@@ -234,7 +234,7 @@ AUTH_USER_MODEL = 'backend.User'
 #                           'backend.auth.saml2.backends.SAML2Backend']
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
-LOGIN_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
+LOGIN_REDIRECT_URL = '{}/ui/saml2-login-redirect'.format(RELATIVE_PATH)
 LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
 # SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True

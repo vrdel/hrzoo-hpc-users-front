@@ -16,6 +16,7 @@ import ResearchProjectRequestSelected from './pages/new-requests/research-projec
 import GeneralRequest from './pages/new-requests/general';
 import NewRequestIndex from './pages/new-requests/index';
 import EmailInvitation from './pages/email-invite';
+import Saml2LoginRedirect from './pages/saml2-login-redirect';
 import PublicKeys from './pages/public-keys/list';
 import NewPublicKey from './pages/public-keys/add';
 import Memberships from './pages/memberships';
@@ -63,6 +64,9 @@ const BaseRoutes = () => {
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsList />
                 </ProtectedRoute>
+              }/>
+              <Route path="saml2-login-redirect" element={
+                <Saml2LoginRedirect sessionData={sessionData} />
               }/>
               <Route path="upravljanje-zahtjevima/:projId" element={
                 <ProtectedRoute sessionData={sessionData}>

@@ -32,10 +32,10 @@ export async function doLogout(onLogout) {
 
   cookies.remove('saml_session')
 
-  if (response.ok)
-    setTimeout(() => {
-      window.location = defaultLogoutRedirect
-    }, 50)
+  //if (response.ok)
+    //setTimeout(() => {
+      //window.location = defaultLogoutRedirect
+    //}, 50)
 }
 
 
