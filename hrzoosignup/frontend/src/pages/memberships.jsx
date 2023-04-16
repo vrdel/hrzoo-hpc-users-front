@@ -218,7 +218,7 @@ const UsersTableGeneral = ({project}) => {
               <Row className="mt-4">
                 <Col className="d-flex justify-content-center">
                   <Collapse isOpen={isOpen}>
-                    <Card className="p-3" style={{maxWidth: '660px'}}>
+                    <Card className="p-4" style={{maxWidth: '680px'}}>
                       <CardTitle>
                         <h5>
                           Upis email adresa novih suradnika
