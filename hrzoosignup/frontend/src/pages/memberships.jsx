@@ -53,6 +53,14 @@ const BriefProjectInfo = ({project}) => {
           Trajanje:
         </Label>
       </Col>
+      <Col md={{size: 2}}>
+        <Label
+          htmlFor="projectType"
+          aria-label="projectType"
+          className="mr-1 fw-bold">
+          Tip:
+        </Label>
+      </Col>
       <Col md={{size: 4}}>
         <Label
           htmlFor="projectInstitution"
@@ -75,6 +83,11 @@ const BriefProjectInfo = ({project}) => {
         <div className="p-2 fs-5 font-monospace">
           { convertToEuropean(project.date_start) } &minus; { convertToEuropean(project.date_end) }
         </div>
+      </Col>
+      <Col md={{size: 2}}>
+        <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
+          { TypeString(project.project_type.name) }
+        </span>
       </Col>
       <Col md={{size: 4}}>
         <div className="p-2">
@@ -118,9 +131,6 @@ const Memberships = () => {
                     <CardHeader className="d-flex border-0 justify-content-between">
                       <span className="fs-5 text-dark fw-bold">
                         { project?.name }
-                      </span>
-                      <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
-                        { TypeString(project.project_type.name) }
                       </span>
                     </CardHeader>
                     <CardBody className="border-0 bg-light">
