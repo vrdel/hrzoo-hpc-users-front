@@ -7,15 +7,11 @@ import {
   Button,
   Col,
   Form,
-  FormFeedback,
-  Label,
   Row,
 } from 'reactstrap';
 import {
   useForm,
-  Controller,
   FormProvider,
-  useFormContext
 } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ErrorMessage } from '@hookform/error-message';
@@ -43,7 +39,9 @@ const GeneralRequest = ({projectType}) => {
       startDate: '',
       endDate: '',
       requestResourceType: '',
-      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: '',
+      HPCnSlotsCPU: '', HPCnSlotsGPU: '', HPCnRAM: '', HPCnTempGB: '', HPCnDiskGB: '',
+      CLOUDnVM: '', CLOUDnSlotsCPU: '', CLOUDnRAM: '', CLOUDnRAMVM: '',
+      CLOUDnFastDiskGB: '', CLOUDnDiskGB: '', CLOUDnIPs: '',
       scientificDomain: [
         {
           'name': '',
@@ -94,7 +92,6 @@ const GeneralRequest = ({projectType}) => {
       )
     }
   })
-
 
   const onSubmit = data => {
     let dataToSend = new Object()

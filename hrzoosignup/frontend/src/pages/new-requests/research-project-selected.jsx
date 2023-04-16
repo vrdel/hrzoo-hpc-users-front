@@ -61,7 +61,9 @@ const ResearchProjectRequestSelected = ({projectType}) => {
       startDate: '',
       endDate: '',
       requestResourceType: '',
-      nSlotsCPU: '', nSlotsGPU: '', nRAM: '', nTempGB: '', nDiskGB: '',
+      HPCnSlotsCPU: '', HPCnSlotsGPU: '', HPCnRAM: '', HPCnTempGB: '', HPCnDiskGB: '',
+      CLOUDnVM: '', CLOUDnSlotsCPU: '', CLOUDnRAM: '', CLOUDnRAMVM: '',
+      CLOUDnFastDiskGB: '', CLOUDnDiskGB: '', CLOUDnIPs: '',
       scientificDomain: [
         {
           'name': '',
