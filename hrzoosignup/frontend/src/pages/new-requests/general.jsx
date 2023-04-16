@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import ResourceFields from '../../components/fields-request/ResourceFields';
 import GeneralFields from '../../components/fields-request/GeneralFields';
@@ -27,9 +27,12 @@ import '../../styles/datepicker.css';
 import { useMutation } from '@tanstack/react-query';
 import { url_ui_prefix } from '../../config/general';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../components/AuthContextProvider';
 
 
 const GeneralRequest = ({projectType}) => {
+  const { userDetails } = useContext(AuthContext)
+
   const navigate = useNavigate()
 
   const rhfProps = useForm({
@@ -101,6 +104,7 @@ const GeneralRequest = ({projectType}) => {
     dataToSend['date_start'] = data['startDate']
     dataToSend['name'] = data['requestName']
     dataToSend['reason'] = data['requestExplain']
+    dataToSend['institute'] = userDetails.person_institution
     dataToSend['project_type'] = projectType
     if (data.scientificSoftware)
       dataToSend['science_software'] = data.scientificSoftware.map(e => e.value)
