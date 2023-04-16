@@ -223,6 +223,13 @@ export const MyRequestChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
+                <Row>
+                  <Col md={{size: 9}} className="mt-4 me-0">
+                    <span className="ps-2 pe-2 pt-1 pb-1 fs-5 text-white ms-4 mb-4 mt-3" style={{backgroundColor: "#b04c46"}}>
+                      Obrada:
+                    </span>
+                  </Col>
+                </Row>
                 <Row className="mt-4">
                   <Col md={{offset: 1, size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span >
@@ -236,7 +243,7 @@ export const MyRequestChange = () => {
                   </Col>
                   <Col md={{size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span >
-                      Obrađen:
+                      Vrijeme:
                     </span>
                   </Col>
                   <Col md={{size: 4}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
