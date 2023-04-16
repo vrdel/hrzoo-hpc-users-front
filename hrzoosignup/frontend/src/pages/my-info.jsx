@@ -57,16 +57,36 @@ const CroRisInfo = ({croRisProjects}) => {
         <div className="w-100"></div>
 
         <Col className="ms-3" md={{size: 2}}>
-          { croRisProjects['person_info']['first_name'] }
+          {
+            croRisProjects['person_info']['first_name'] ?
+              croRisProjects['person_info']['first_name']
+            :
+              '\u2212'
+          }
         </Col>
         <Col className="ms-3" md={{size: 2}}>
-          { croRisProjects['person_info']['last_name'] }
+          {
+            croRisProjects['person_info']['last_name'] ?
+              croRisProjects['person_info']['first_name']
+            :
+              '\u2212'
+          }
         </Col>
         <Col className="ms-3" md={{size: 3}}>
-          { croRisProjects['person_info']['croris_id'] }
+          {
+            croRisProjects['person_info']['croris_id'] ?
+              croRisProjects['person_info']['first_name']
+            :
+              '\u2212'
+          }
         </Col>
         <Col className="ms-3" md={{size: 4}}>
-          { croRisProjects['person_info']['email'] }
+          {
+            croRisProjects['person_info']['email'] ?
+              croRisProjects['person_info']['email']
+            :
+              '\u2212'
+          }
         </Col>
       </Row>
       <Row noGutters className="mt-5 ms-3 me-3">
@@ -135,16 +155,36 @@ const InstituteInfo = () => {
         <div className="w-100"></div>
 
         <Col className="ms-3" md={{size: 2}}>
-          { userDetails.first_name }
+          {
+            userDetails.first_name ?
+              userDetails.first_name
+            :
+              '\u2212'
+          }
         </Col>
         <Col className="ms-3" md={{size: 2}}>
-          { userDetails.last_name }
+          {
+            userDetails.last_name ?
+              userDetails.last_name
+            :
+              '\u2212'
+          }
         </Col>
         <Col className="ms-3" md={{size: 3}}>
-          { userDetails.person_uniqueid }
+          {
+            userDetails.person_uniqueid ?
+              userDetails.person_uniqueid
+            :
+              '\u2212'
+          }
         </Col>
         <Col className="ms-3" md={{size: 4}}>
-          { userDetails.person_mail }
+          {
+            userDetails.person_mail ?
+              userDetails.person_mail
+            :
+              '\u2212'
+          }
         </Col>
       </Row>
 
@@ -174,10 +214,20 @@ const InstituteInfo = () => {
         <div className="w-100"></div>
 
         <Col className="ms-3" md={{size: 2}}>
-          { userDetails.person_affiliation }
+          {
+            userDetails.person_affiliation ?
+              userDetails.person_affiliation
+            :
+              '\u2212'
+          }
         </Col>
         <Col className="ms-3" md={{size: 6}}>
-          { userDetails.person_institution }
+          {
+            userDetails.person_institution ?
+              userDetails.person_institution
+            :
+              '\u2212'
+          }
         </Col>
       </Row>
     </>
