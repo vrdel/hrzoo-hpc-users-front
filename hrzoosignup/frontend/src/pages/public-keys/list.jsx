@@ -171,13 +171,13 @@ const PublicKeys = () => {
                   { sshKeys.map((key, index) =>
                     <>
                       <tr key={index}>
-                        <td className="p-3 align-middle text-center">
+                        <td className="p-3 align-middle fs-5 text-center">
                           { key.name }
                         </td>
-                        <td className="p-3 align-middle text-center font-monospace" style={{maxLength: '5'}}>
+                        <td className="p-3 align-middle fs-5 text-center font-monospace" style={{maxLength: '5'}}>
                           { key.fingerprint }
                         </td>
-                        <td className="align-middle text-center">
+                        <td className="align-middle fs-5 text-center">
                           { key.public_key.split(' ')[0] }
                         </td>
                         <td className="align-middle text-center">
@@ -227,7 +227,7 @@ const PublicKeys = () => {
                   {
                     sshKeys.length < 5 && [...Array(5 - sshKeys.length)].map((e, i) =>
                       <tr key={i + 5}>
-                        <td colSpan="4" style={{height: "40px"}}>
+                        <td colSpan="4" style={{height: "50px"}}>
                         </td>
                       </tr>
                     )

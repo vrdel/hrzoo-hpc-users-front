@@ -110,6 +110,9 @@ const BriefProjectInfo = ({project}) => {
 
 
 const UsersTableGeneral = ({project}) => {
+  const lead = extractUsers(project.userproject_set, 'lead')[0]
+  const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
+
   return (
     <Row className="mt-4 ms-4 me-4 mb-5">
       <Col>
@@ -137,17 +140,42 @@ const UsersTableGeneral = ({project}) => {
             <>
               <tr>
                 <td className="p-3 align-middle text-center">
-                  Fooooooo
+                  { lead['user'].first_name }
                 </td>
-                <td className="p-3 align-middle text-center font-monospace" style={{maxLength: '5'}}>
-                </td>
-                <td className="align-middle text-center">
-                </td>
-                <td className="align-middle text-center">
+                <td className="p-3 align-middle text-center">
+                  { lead['user'].last_name }
                 </td>
                 <td className="align-middle text-center">
+                  Voditelj
+                </td>
+                <td className="align-middle text-center">
+                  { lead['user'].person_mail }
+                </td>
+                <td className="align-middle text-center">
+                  Da
                 </td>
               </tr>
+              {
+                alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
+                  <tr key={`row-${i}`}>
+                    <td className="p-3 align-middle text-center">
+                      { user['user'].first_name }
+                    </td>
+                    <td className="p-3 align-middle text-center">
+                      { user['user'].last_name }
+                    </td>
+                    <td className="align-middle text-center">
+                      Suradnik
+                    </td>
+                    <td className="align-middle text-center">
+                      { user['user'].person_mail }
+                    </td>
+                    <td className="align-middle text-center">
+                      Da
+                    </td>
+                  </tr>
+                ))
+              }
             </>
           </tbody>
         </Table>
@@ -158,14 +186,11 @@ const UsersTableGeneral = ({project}) => {
 
 
 const UsersTableCroris = ({project}) => {
-
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   let oibsJoined = new Set()
   alreadyJoined.forEach(user => oibsJoined.add(user['user']['person_oib']))
-
-  console.log('VRDEL DEBUG', collaborators)
 
   return (
     <Row className="mt-4 ms-4 me-4 mb-5">
