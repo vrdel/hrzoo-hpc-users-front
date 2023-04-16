@@ -1,12 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Row, Card, CardHeader, CardBody, Label, Badge, Table } from 'reactstrap';
+import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody, Label,
+  Badge, Table, Button } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNrProjects } from '../api/projects';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { GeneralInfo, Persons, Finance, Summary } from '../components/GeneralProjectInfo';
 import { convertToEuropean, convertTimeToEuropean } from '../utils/dates';
+import { AuthContext } from '../components/AuthContextProvider';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faUsers,
+} from '@fortawesome/free-solid-svg-icons';
 
 
 function extractUsers(projectUsers, role) {
@@ -121,75 +127,115 @@ const BriefProjectInfo = ({project}) => {
 const UsersTableGeneral = ({project}) => {
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
+  const { userDetails } = useContext(AuthContext);
+  const amILead = lead['user']['person_oib'] === userDetails.person_oib
+
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <Row className="mt-4 ms-4 me-4 mb-5">
-      <Col>
-        <Table responsive hover className="shadow-sm bg-white">
-          <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-            <tr className="border-bottom border-1 border-dark">
-              <th className="fw-normal">
-                Ime
-              </th>
-              <th className="fw-normal">
-                Prezime
-              </th>
-              <th className="fw-normal">
-                Uloga
-              </th>
-              <th className="fw-normal">
-                Email
-              </th>
-              <th className="fw-normal">
-                Prijavljen
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <>
-              <tr>
-                <td className="p-3 align-middle text-center">
-                  { lead['user'].first_name }
-                </td>
-                <td className="p-3 align-middle text-center">
-                  { lead['user'].last_name }
-                </td>
-                <td className="align-middle text-center">
-                  Voditelj
-                </td>
-                <td className="align-middle text-center">
-                  { lead['user'].person_mail }
-                </td>
-                <td className="align-middle text-center">
-                  Da
-                </td>
+    <>
+      <Row className={amILead ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
+        <Col>
+          <Table responsive hover className="shadow-sm bg-white">
+            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+              <tr className="border-bottom border-1 border-dark">
+                <th className="fw-normal">
+                  Ime
+                </th>
+                <th className="fw-normal">
+                  Prezime
+                </th>
+                <th className="fw-normal">
+                  Uloga
+                </th>
+                <th className="fw-normal">
+                  Email
+                </th>
+                <th className="fw-normal">
+                  Prijavljen
+                </th>
               </tr>
-              {
-                alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
-                  <tr key={`row-${i}`}>
-                    <td className="p-3 align-middle text-center">
-                      { user['user'].first_name }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      { user['user'].last_name }
-                    </td>
-                    <td className="align-middle text-center">
-                      Suradnik
-                    </td>
-                    <td className="align-middle text-center">
-                      { user['user'].person_mail }
-                    </td>
-                    <td className="align-middle text-center">
-                      Da
-                    </td>
-                  </tr>
-                ))
-              }
-            </>
-          </tbody>
-        </Table>
-      </Col>
-    </Row>
+            </thead>
+            <tbody>
+              <>
+                <tr>
+                  <td className="p-3 align-middle text-center">
+                    { lead['user'].first_name }
+                  </td>
+                  <td className="p-3 align-middle text-center">
+                    { lead['user'].last_name }
+                  </td>
+                  <td className="align-middle text-center">
+                    Voditelj
+                  </td>
+                  <td className="align-middle text-center">
+                    { lead['user'].person_mail }
+                  </td>
+                  <td className="align-middle text-center">
+                    Da
+                  </td>
+                </tr>
+                {
+                  alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
+                    <tr key={`row-${i}`}>
+                      <td className="p-3 align-middle text-center">
+                        { user['user'].first_name }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { user['user'].last_name }
+                      </td>
+                      <td className="align-middle text-center">
+                        Suradnik
+                      </td>
+                      <td className="align-middle text-center">
+                        { user['user'].person_mail }
+                      </td>
+                      <td className="align-middle text-center">
+                        Da
+                      </td>
+                    </tr>
+                  ))
+                }
+              </>
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+      {
+        amILead &&
+          <Row className="mt-3 mb-5">
+            <Col>
+              <Row>
+                <Col className="d-flex justify-content-center">
+                  <Button size="lg" color="success" onClick={toggle}>
+                    <FontAwesomeIcon icon={faUsers}/>{' '}
+                    Pozovi suradnike
+                  </Button>
+                </Col>
+              </Row>
+              <Row className="mt-4">
+                <Col className="d-flex justify-content-center">
+                  <Collapse isOpen={isOpen}>
+                    <Card className="p-3" style={{maxWidth: '550px'}}>
+                      <CardTitle>
+                        <h5>
+                          Upis email adresa novih suradnika
+                        </h5>
+                      </CardTitle>
+                      <CardBody>
+                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                        terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
+                        labore wes anderson cred nesciunt sapiente ea proident.
+                      </CardBody>
+                    </Card>
+                  </Collapse>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+      }
+    </>
   )
 }
 
