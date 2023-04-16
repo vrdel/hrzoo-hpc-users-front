@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody, Label,
-  Badge, Table, Button } from 'reactstrap';
+import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody, CardFooter,
+  Label, Badge, Table, Button, Form } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery } from '@tanstack/react-query';
+import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { GeneralInfo, Persons, Finance, Summary } from '../components/GeneralProjectInfo';
@@ -12,6 +13,7 @@ import { AuthContext } from '../components/AuthContextProvider';
 import { CustomCreatableSelect } from '../components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faPaperPlane,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -134,6 +136,15 @@ const UsersTableGeneral = ({project}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
+    defaultValues: {
+      collaboratorEmails: '',
+    }
+  });
+  const onSubmit = data => {
+    alert(JSON.stringify(data, null, 2));
+  }
+
   return (
     <>
       <Row className={amILead ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
@@ -205,38 +216,55 @@ const UsersTableGeneral = ({project}) => {
       </Row>
       {
         amILead &&
-          <Row className="mt-3 mb-5">
-            <Col>
-              <Row>
-                <Col className="d-flex justify-content-center">
-                  <Button size="lg" color="success" onClick={toggle}>
-                    <FontAwesomeIcon icon={faUsers}/>{' '}
-                    Pozovi suradnike
-                  </Button>
-                </Col>
-              </Row>
-              <Row className="mt-4">
-                <Col className="d-flex justify-content-center">
-                  <Collapse isOpen={isOpen}>
-                    <Card className="p-4" style={{maxWidth: '680px'}}>
-                      <CardTitle>
-                        <h5>
-                          Upis email adresa novih suradnika
-                        </h5>
-                      </CardTitle>
-                      <CardBody>
-                        <CustomCreatableSelect
-                          controlWidth="600px"
-                          placeholder="korisnik1@email.hr ENTER/TAB korisnik2@email.hr..."
-                          fontSize="18px"
-                        />
-                      </CardBody>
-                    </Card>
-                  </Collapse>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
+          <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+            <Row className="mt-3 mb-5">
+              <Col>
+                <Row>
+                  <Col className="d-flex justify-content-center">
+                    <Button size="lg" color="success" onClick={toggle}>
+                      <FontAwesomeIcon icon={faUsers}/>{' '}
+                      Pozovi suradnike
+                    </Button>
+                  </Col>
+                </Row>
+                <Row className="mt-4">
+                  <Col className="d-flex justify-content-center">
+                    <Collapse isOpen={isOpen}>
+                      <Card className="p-4" style={{maxWidth: '680px'}}>
+                        <CardTitle>
+                          <h5>
+                            Upis email adresa novih suradnika
+                          </h5>
+                        </CardTitle>
+                        <CardBody className="mb-4">
+                          <Controller
+                            name="collaboratorEmails"
+                            control={control}
+                            render={ ({field}) =>
+                              <CustomCreatableSelect
+                                name="collaboratorEmails"
+                                forwardedRef={field.ref}
+                                controlWidth="600px"
+                                placeholder="korisnik1@email.hr ENTER/TAB korisnik2@email.hr..."
+                                fontSize="18px"
+                                onChange={(e) => setValue('collaboratorEmails', e)}
+                              />
+                            }
+                          />
+                        </CardBody>
+                        <CardFooter className="d-flex bg-white mt-2 mb-1 align-items-center justify-content-center">
+                          <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                            <FontAwesomeIcon icon={faPaperPlane}/>{' '}
+                            Posalji poveznice za prijavu
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    </Collapse>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Form>
       }
     </>
   )
