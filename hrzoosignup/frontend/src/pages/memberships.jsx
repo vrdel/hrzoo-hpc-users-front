@@ -113,7 +113,7 @@ const Memberships = () => {
             projectsApproved.map((project, i) =>
               <Row className="mb-5" key={`row-${i}`}>
                 <Col key={`col-${i}`}>
-                  <Card className="ms-3 border-0 bg-light shadow-sm" key={`card-${i}`}>
+                  <Card className="ms-3 border-0 bg-light me-3 shadow-sm" key={`card-${i}`}>
                     <CardHeader className="d-flex border-0 justify-content-between">
                       <span className="fs-5 text-dark fw-bold">
                         { project?.name }
