@@ -128,6 +128,11 @@ class Project(models.Model):
         _('name'),
         max_length=256,
     )
+    institute = models.CharField(
+        _('institution of project leader'),
+        max_length=128,
+        blank=True,
+    )
     reason = models.CharField(
         _('reason'),
         max_length=4096,
@@ -153,13 +158,11 @@ class Project(models.Model):
         blank=True,
         null=True
     )
-
     denied_by = models.JSONField(
         _("JSONField with few details of staff that denied request"),
         blank=True,
         null=True
     )
-
     science_field = models.JSONField(
         blank=True,
         null=True
@@ -225,6 +228,11 @@ class Project(models.Model):
         max_length=256,
         blank=True,
         null=True
+    )
+    croris_institute = models.CharField(
+        _('CroRIS institute'),
+        max_length=128,
+        blank=True,
     )
     croris_type = models.CharField(
         _("CroRIS tipProjekta"),
