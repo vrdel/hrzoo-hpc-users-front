@@ -17,6 +17,15 @@ function extractUsers(projectUsers, role) {
   return users
 }
 
+function extractEmails(email) {
+  const emails = email.split(';')
+
+  if (emails.length > 0)
+    return emails.join(', ')
+  else
+    return email
+}
+
 
 export const BriefSummary = ({project, isSubmitted}) => {
   return (
@@ -231,7 +240,7 @@ const UsersTableCroris = ({project}) => {
                   Voditelj
                 </td>
                 <td className="align-middle text-center">
-                  { lead['user'].person_mail }
+                  { extractEmails(lead['user'].person_mail) }
                 </td>
                 <td className="align-middle text-center">
                   Da
@@ -253,7 +262,7 @@ const UsersTableCroris = ({project}) => {
                       Suradnik
                     </td>
                     <td className="align-middle text-center">
-                      { user['user'].person_mail }
+                      { extractEmails(user['user'].person_mail) }
                     </td>
                     <td className="align-middle text-center">
                       Da
@@ -279,7 +288,7 @@ const UsersTableCroris = ({project}) => {
                           Suradnik
                         </td>
                         <td className="align-middle text-center">
-                          { user.email }
+                          { extractEmails(user.email) }
                         </td>
                         <td className="align-middle text-center">
                           {
