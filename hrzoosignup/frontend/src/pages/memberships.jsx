@@ -9,6 +9,8 @@ import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { GeneralInfo, Persons, Finance, Summary } from '../components/GeneralProjectInfo';
 import { convertToEuropean, convertTimeToEuropean } from '../utils/dates';
 import { AuthContext } from '../components/AuthContextProvider';
+import CreatableSelect from '../components/CustomReactSelectCreatable';
+import { CustomCreatableSelect } from '../components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUsers,
@@ -224,9 +226,11 @@ const UsersTableGeneral = ({project}) => {
                         </h5>
                       </CardTitle>
                       <CardBody>
-                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
-                        terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
-                        labore wes anderson cred nesciunt sapiente ea proident.
+                        <CustomCreatableSelect
+                          controlWidth="500px"
+                          placeholder="korisnik1@email.hr ENTER korisnik2@email.hr..."
+                          fontSize="18px"
+                        />
                       </CardBody>
                     </Card>
                   </Collapse>

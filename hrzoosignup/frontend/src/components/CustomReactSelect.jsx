@@ -1,5 +1,6 @@
 import React from 'react';
 import Select, { components } from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 
 
 const CustomDropdownIndicator = (props) => {
@@ -35,7 +36,7 @@ const DropdownIndicator = ({ ...props }) => {
 }
 
 
-export const CustomReactSelect = ({ forwardedRef=undefined,
+export const CustomReactSelect = ({forwardedRef=undefined,
   resourceTypeMultiValue=undefined, scientificSoftwareMultiValue=undefined,
   activeReadOnlyResourceTypeMultiValue=undefined, controlWidth=undefined,
   ...props} ) => {
@@ -172,4 +173,73 @@ export const CustomReactSelect = ({ forwardedRef=undefined,
         styles={customStyles}
       />
     )
+}
+
+export const CustomCreatableSelect = ({controlWidth=undefined, fontSize="14px", forwardedRef=undefined, ...props})  => {
+  const customStyles = {
+    control: (provided,  state) => ({
+      ...provided,
+      margin: props.inputgroup ? '-1px' : 0,
+      backgroundColor: props.isDisabled ? '#e9ecef' : '#fff',
+      overflow: 'visible',
+      borderRadius: props.inputgroup ? '0 .25rem .25rem 0' : '.25rem',
+      fontSize: fontSize,
+      fontWeight: 400,
+      backgroundClip: 'padding-box',
+      textShadow: 'none',
+      width: controlWidth,
+      textAlign: 'start',
+      textIndent: 0,
+      borderColor: props.error ? '#dc3545' : props.isnew ? '#198754' : props.ismissing ? '#0d6efd' : state.selectProps.menuIsOpen ? '#66afe9' : '#ced4da',
+      transition: 'border-color .15s ease-in-out, box-shadow .15s ease-in-out',
+      boxShadow: state.selectProps.menuIsOpen ? '0 0 0 .2rem rgba(0, 123, 255, .25)' : 'none',
+      ':focus': {
+        outline: 0,
+      }
+    }),
+    option: (provided) => ({
+      ...provided,
+      padding: '.25rem 1.5rem',
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+      clear: 'both',
+      color: '#16181b',
+      backgroundColor: 'transparent',
+      ':hover:not(:active)': {
+        color: '#fff',
+        backgroundColor: '#4a90d9'
+      },
+      ':active': {
+        color: '#fff',
+        backgroundColor: '#5a6268'
+      },
+      ':focus': {
+        outline: '5px auto -webkit-focus-ring-color',
+      },
+    }),
+    multiValue: (provided) => props.isDisabled ? { ...provided, backgroundColor: '#c4ccd4' } : provided,
+    multiValueRemove: (provided) => props.isDisabled ? { ...provided, display: 'none' } : provided
+  }
+  const customStyles2 = {
+    multiValueLabel: (base) => ({
+      ...base,
+      backgroundColor: "#1aa179",
+      color: "#ffffff",
+      fontSize: fontSize,
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+    })
+  }
+
+  return (
+    <CreatableSelect
+      {...props}
+      ref={ forwardedRef ? forwardedRef : null }
+      components={{IndicatorSeparator: null, DropdownIndicator}}
+      isMulti
+      styles={{...customStyles, ...customStyles2}}
+    />
+  )
+
 }
