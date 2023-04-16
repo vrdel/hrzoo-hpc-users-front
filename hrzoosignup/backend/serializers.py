@@ -106,24 +106,25 @@ class UsersSerializer(serializers.ModelSerializer):
     userproject_set = UserProjectSerializer(many=True, read_only=True)
     class Meta:
         fields = (
-            'person_uniqueid',
-            'person_institution',
-            'person_affiliation',
-            'person_organisation',
-            'person_mail',
             'croris_first_name',
             'croris_last_name',
             'croris_mail',
+            'date_joined',
             'first_name',
-            'last_name',
+            'id',
+            'is_active',
             'is_staff',
             'is_superuser',
-            'is_active',
-            'date_joined',
             'last_login',
-            'username',
+            'last_name',
+            'person_affiliation',
+            'person_institution',
+            'person_mail',
+            'person_oib',
+            'person_organisation',
+            'person_uniqueid',
             'pk',
-            'id',
+            'username',
             'userproject_set'
         )
         model = get_user_model()
