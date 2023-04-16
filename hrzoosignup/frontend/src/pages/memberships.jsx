@@ -26,6 +26,7 @@ export const BriefSummary = ({project, isSubmitted}) => {
           className="form-control fst-italic"
           rows="3"
           disabled={isSubmitted}
+          style={{backgroundColor: "rgba(255, 255, 255, 0)"}}
           defaultValue={
             project.project_type.name === 'research-croris' ?
               project.croris_summary

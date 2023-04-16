@@ -149,6 +149,7 @@ export const Summary = ({project, isSubmitted}) => {
           id="projectSummary"
           className="form-control fst-italic"
           rows="6"
+          style={{backgroundColor: "rgba(255, 255, 255, 0)"}}
           disabled={isSubmitted}
           defaultValue={
             project.summary
