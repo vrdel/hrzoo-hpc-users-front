@@ -31,6 +31,7 @@ import { toast } from 'react-toastify'
 import { addResearchProject } from '../../api/projects';
 import { convertToIso8601 } from '../../utils/dates';
 import { url_ui_prefix } from '../../config/general';
+import ModalAreYouSure from '../../components/ModalAreYouSure';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -52,6 +53,12 @@ const ExtractUsers = ({projectUsers}) => {
 const ResearchProjectRequestSelected = ({projectType}) => {
   const [projectTarget, setProjectTarget] = useState(undefined)
   const navigate = useNavigate()
+
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const { projId } = useParams()
   const rhfProps = useForm({
@@ -135,6 +142,12 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     }
   })
 
+  function onYesCallback() {
+    if (onYesCall == 'doaddreq') {
+      doAdd(onYesCallArg)
+    }
+  }
+
   const onSubmit = data => {
     let dataToSend = new Object()
 
@@ -176,8 +189,14 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submit'
-    doAdd(dataToSend)
+    // doAdd(dataToSend)
     // alert(JSON.stringify(dataToSend, null, 2));
+
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Podnošenje novog korisničkog zahtijeva")
+    setModalMsg("Da li ste sigurni da želite podnijeti novi zahtjev?")
+    setOnYesCall('doaddreq')
+    setOnYesCallArg(dataToSend)
   }
 
   if (projectTarget)
@@ -186,39 +205,48 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     let person_info = croRisProjects['data']['person_info']
 
     return (
-      <FormProvider {...rhfProps}>
-        <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
-          <RequestHorizontalRuler />
-          <Row>
-            <Col>
-              <h4 className="ms-4 mb-3 mt-4">Opći dio</h4><br/>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={{size: 10, offset: 1}}>
-              <GeneralInfo
-                project={projectTarget}
-                person_info={person_info}
-                projectsLeadUsers={projectsLeadUsers}
-              />
-            </Col>
-          </Row>
-          <BaseNewScientificDomain />
-          <ScientificSoftware />
-          <ResourceFields />
-          <Row>
+      <>
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback}
+        />
+        <FormProvider {...rhfProps}>
+          <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
             <RequestHorizontalRuler />
-            <Row className="mt-2 mb-5 text-center">
+            <Row>
               <Col>
-                <Button size="lg" color="success" id="submit-button" type="submit">
-                  <FontAwesomeIcon icon={faFile}/>{' '}
-                  Podnesi zahtjev
-                </Button>
+                <h4 className="ms-4 mb-3 mt-4">Opći dio</h4><br/>
               </Col>
             </Row>
-          </Row>
-        </Form>
-      </FormProvider>
+            <Row>
+              <Col md={{size: 10, offset: 1}}>
+                <GeneralInfo
+                  project={projectTarget}
+                  person_info={person_info}
+                  projectsLeadUsers={projectsLeadUsers}
+                />
+              </Col>
+            </Row>
+            <BaseNewScientificDomain />
+            <ScientificSoftware />
+            <ResourceFields />
+            <Row>
+              <RequestHorizontalRuler />
+              <Row className="mt-2 mb-5 text-center">
+                <Col>
+                  <Button size="lg" color="success" id="submit-button" type="submit">
+                    <FontAwesomeIcon icon={faFile}/>{' '}
+                    Podnesi zahtjev
+                  </Button>
+                </Col>
+              </Row>
+            </Row>
+          </Form>
+        </FormProvider>
+      </>
     )
   }
 };

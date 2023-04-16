@@ -54,7 +54,7 @@ const ResearchProjectRequest = () => {
             <Row className="mb-4" key={`row-${i}`}>
               <Col key={`col-${i}`}>
                 <Card className={isAlreadySubmitted(project.identifier)
-                  ? `ms-3 bg-secondary` : `ms-3 bg-success`}
+                  ? `ms-3 mb-3 bg-secondary` : `ms-3 mb-4 bg-success`}
                   key={`card-${i}`}>
                   <CardHeader className="d-flex fs-5 text-white justify-content-between align-items-center">
                     { project.title }
