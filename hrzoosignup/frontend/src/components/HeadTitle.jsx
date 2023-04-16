@@ -6,7 +6,7 @@ const HeadTitle = () => {
   return (
     <Helmet>
       <title>
-        { `${ location.pathname } | HRZOO Prijava` }
+        { `Napredno računanje - Zahtjev | ${ location.pathname }` }
       </title>
     </Helmet>
   )
