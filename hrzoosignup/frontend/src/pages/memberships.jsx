@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Row, Card, CardHeader, CardBody, Label, Badge } from 'reactstrap';
+import { Col, Row, Card, CardHeader, CardBody, Label, Badge, Table } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNrProjects } from '../api/projects';
@@ -39,6 +39,7 @@ export const BriefSummary = ({project, isSubmitted}) => {
   )
 }
 
+
 const BriefProjectInfo = ({project}) => {
   return (
     <>
@@ -57,7 +58,7 @@ const BriefProjectInfo = ({project}) => {
         <Label
           htmlFor="projectType"
           aria-label="projectType"
-          className="mr-1 fw-bold">
+          className="mr-1">
           Tip:
         </Label>
       </Col>
@@ -99,6 +100,107 @@ const BriefProjectInfo = ({project}) => {
 }
 
 
+const UsersTableGeneral = ({project}) => {
+  return (
+    <Row className="mt-4 ms-4 me-4 mb-5">
+      <Col>
+        <Table responsive hover className="shadow-sm bg-white">
+          <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+            <tr className="border-bottom border-1 border-dark">
+              <th className="fw-normal">
+                Ime
+              </th>
+              <th className="fw-normal">
+                Prezime
+              </th>
+              <th className="fw-normal">
+                Uloga
+              </th>
+              <th className="fw-normal">
+                Email
+              </th>
+              <th className="fw-normal">
+                Prijavljen
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <>
+              <tr>
+                <td className="p-3 align-middle text-center">
+                  Fooooooo
+                </td>
+                <td className="p-3 align-middle text-center font-monospace" style={{maxLength: '5'}}>
+                </td>
+                <td className="align-middle text-center">
+                </td>
+                <td className="align-middle text-center">
+                </td>
+                <td className="align-middle text-center">
+                </td>
+              </tr>
+            </>
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
+  )
+}
+
+
+const UsersTableCroris = ({project}) => {
+  return (
+    <Row className="mt-4 ms-4 me-4 mb-5">
+      <Col>
+        <Table responsive hover className="shadow-sm bg-white">
+          <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+            <tr className="border-bottom border-1 border-dark">
+              <th className="fw-normal">
+                Ime
+              </th>
+              <th className="fw-normal">
+                Prezime
+              </th>
+              <th className="fw-normal">
+                Uloga
+              </th>
+              <th className="fw-normal">
+                Email
+              </th>
+              <th className="fw-normal">
+                CroRIS registracija
+              </th>
+              <th className="fw-normal">
+                Prijavljen
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <>
+              <tr>
+                <td className="p-3 align-middle text-center">
+                  Fooooooo
+                </td>
+                <td className="p-3 align-middle text-center font-monospace" style={{maxLength: '5'}}>
+                </td>
+                <td className="align-middle text-center">
+                </td>
+                <td className="align-middle text-center">
+                </td>
+                <td className="align-middle text-center">
+                </td>
+                <td className="align-middle text-center">
+                </td>
+              </tr>
+            </>
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
+  )
+}
+
+
 const Memberships = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
@@ -117,6 +219,8 @@ const Memberships = () => {
       project.state.name !== 'deny' && project.state.name !== 'submit'
     )
 
+    console.log('VRDEL DEBUG', projectsApproved)
+
     return (
       <>
         <Row className="mb-5">
@@ -125,25 +229,36 @@ const Memberships = () => {
         {
           projectsApproved.length > 0 ?
             projectsApproved.map((project, i) =>
-              <Row className="mb-5" key={`row-${i}`}>
-                <Col key={`col-${i}`}>
-                  <Card className="ms-3 border-0 bg-light me-3 shadow-sm" key={`card-${i}`}>
-                    <CardHeader className="d-flex border-0 justify-content-between">
-                      <span className="fs-5 text-dark fw-bold">
-                        { project?.name }
-                      </span>
-                    </CardHeader>
-                    <CardBody className="border-0 bg-light">
-                      <Row>
-                        <BriefProjectInfo project={project} />
-                      </Row>
-                      <Row>
-                        <BriefSummary project={project}/>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
+              <>
+                <Row className="mb-5" key={`row-${i}`}>
+                  <Col key={`col-${i}`}>
+                    <Card className="ms-3 border-0 bg-light me-3 shadow-sm" key={`card-${i}`}>
+                      <CardHeader className="d-flex border-0 justify-content-between">
+                        <span className="fs-5 text-dark fw-bold">
+                          { project?.name }
+                        </span>
+                      </CardHeader>
+                      <CardBody className="border-0 bg-light">
+                        {
+                          project.project_type.name === 'research-croris' ?
+                            <UsersTableCroris project={project} />
+                          :
+                            <UsersTableGeneral project={project} />
+                        }
+                        <Row>
+                          <BriefProjectInfo project={project} />
+                        </Row>
+                        <Row>
+                          {
+                            // <BriefSummary project={project}/>
+                          }
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+                <Row style={{height: '100px'}}/>
+              </>
             )
           :
             <Row className="mt-3 mb-3">
