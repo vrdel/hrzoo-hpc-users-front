@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { defaultAuthnRedirect } from '../config/default-redirect';
+import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from '../config/default-redirect';
 
 
 export const AuthContext = React.createContext({
@@ -20,7 +20,8 @@ export const AuthContextProvider = ( {children} ) => {
   const location = useLocation()
 
   function login(user) {
-    const origin = location.state?.from?.pathname || defaultAuthnRedirect
+    const redir = user.is_staff || user.is_superuser ? defaultAuthnRedirectStaff : defaultAuthnRedirect
+    const origin = location.state?.from?.pathname || redir
     setIsLoggedIn(true)
     setUserdetails(user)
     navigate(origin)

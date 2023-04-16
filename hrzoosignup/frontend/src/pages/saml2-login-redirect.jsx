@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from '../config/default-redirect';
 
 
 const Saml2LoginRedirect = ({sessionData=undefined}) => {
@@ -8,9 +9,9 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
   useEffect(() => {
     if (sessionData.active &&
       (sessionData.userdetails.is_staff || sessionData.userdetails.is_superuser))
-      navigate('/ui/upravljanje-zahtjevima')
+      navigate(defaultAuthnRedirectStaff)
     else
-      navigate('/ui/moji-zahtjevi')
+      navigate(defaultAuthnRedirect)
   }, [location.pathname])
 
   return (
