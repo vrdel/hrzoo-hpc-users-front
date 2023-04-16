@@ -162,8 +162,10 @@ const UsersTableCroris = ({project}) => {
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
+  let oibsJoined = new Set()
+  alreadyJoined.forEach(user => oibsJoined.add(user['user']['person_oib']))
 
-  console.log('VRDEL DEBUG', collaborators, lead, alreadyJoined)
+  console.log('VRDEL DEBUG', collaborators)
 
   return (
     <Row className="mt-4 ms-4 me-4 mb-5">
@@ -237,6 +239,34 @@ const UsersTableCroris = ({project}) => {
                   </tr>
                 ))
               }
+              {
+                collaborators.length > 0 && collaborators.map((user, i) =>
+                  !oibsJoined.has(user['oib']) &&
+                    (
+                      <tr key={`row-${i}`}>
+                        <td className="p-3 align-middle text-center">
+                          { user.first_name }
+                        </td>
+                        <td className="p-3 align-middle text-center">
+                          { user.last_name }
+                        </td>
+                        <td className="align-middle text-center">
+                          Suradnik
+                        </td>
+                        <td className="align-middle text-center">
+                          { user.email }
+                        </td>
+                        <td className="align-middle text-center">
+                          {
+                            user.email ? 'Da' : 'Ne'
+                          }
+                        </td>
+                        <td className="align-middle text-center">
+                          Ne
+                        </td>
+                      </tr>
+                    ))
+              }
             </>
           </tbody>
         </Table>
@@ -263,8 +293,6 @@ const Memberships = () => {
     let projectsApproved = nrProjects.filter(project =>
       project.state.name !== 'deny' && project.state.name !== 'submit'
     )
-
-    console.log('VRDEL DEBUG', projectsApproved)
 
     return (
       <>

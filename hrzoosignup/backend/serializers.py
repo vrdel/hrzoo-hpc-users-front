@@ -67,6 +67,8 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
             'person_mail',
             'first_name',
             'last_name',
+            'person_oib',
+            'person_uniqueid'
         )
         model = get_user_model()
 
