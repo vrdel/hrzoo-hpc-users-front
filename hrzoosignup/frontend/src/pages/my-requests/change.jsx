@@ -239,6 +239,11 @@ export const MyRequestChange = () => {
                       Obrađen:
                     </span>
                   </Col>
+                  <Col md={{size: 4}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span >
+                      Komentar:
+                    </span>
+                  </Col>
                 </Row>
                 <Row>
                   <RenderStateIcon reqState={requestState} />
@@ -255,7 +260,7 @@ export const MyRequestChange = () => {
                       activeReadOnlyResourceTypeMultiValue={true}
                     />
                   </Col>
-                  <Col className="ms-4 font-monospace" md={{size: 2}}>
+                  <Col className={ nrProject.date_changed ? "ms-4 font-monospace" : "ms-4"} md={{size: 2}}>
                     {
                       nrProject.date_changed ?
                         convertToEuropean(nrProject.date_changed)
@@ -267,6 +272,14 @@ export const MyRequestChange = () => {
                         convertTimeToEuropean(nrProject.date_changed)
                       :
                         ""
+                    }
+                  </Col>
+                  <Col className="ms-4" md={{size: 4}}>
+                    {
+                      nrProject?.state?.name === 'deny' && nrProject.staffcomment_set?.length > 0 ?
+                        nrProject.staffcomment_set[nrProject.staffcomment_set.length - 1].comment
+                      :
+                        '\u2212'
                     }
                   </Col>
                 </Row>

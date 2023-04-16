@@ -32,7 +32,7 @@ export const RenderStateIcon = ({reqState}) => {
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-warning" icon={faCog}/>{' '}
         <p className="fs-5 mt-1">
-          Produljenje
+          Obrada
         </p>
       </Col>
     )
