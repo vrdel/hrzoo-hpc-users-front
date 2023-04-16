@@ -7,15 +7,6 @@ import { PageTitle } from '../../components/PageTitle';
 import { fetchNrSpecificProject, changeProject } from '../../api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSave,
-  faCog,
-  faTimes,
-  faTimeline,
-  faCalendarXmark,
-  faCheckDouble,
-} from '@fortawesome/free-solid-svg-icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   useForm,
@@ -31,6 +22,7 @@ import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { RenderStateIcon } from '../../components/RenderState.jsx';
 import { url_ui_prefix } from '../../config/general';
 import { findTrueState } from '../../utils/reqstate';
+import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 
 function setInitialState() {
   let newState = new Object(
@@ -46,7 +38,6 @@ function setInitialState() {
 }
 
 
-
 export const MyRequestChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
@@ -60,6 +51,8 @@ export const MyRequestChange = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  const { ResourceTypesToSelect } = useContext(SharedData);
 
   const navigate = useNavigate()
 
@@ -230,20 +223,59 @@ export const MyRequestChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
-                <Row>
-                  <Col md={{offset: 1, size: 8}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                <Row className="mt-4">
+                  <Col md={{offset: 1, size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span >
                       Stanje zahtjeva:
+                    </span>
+                  </Col>
+                  <Col md={{size: 3}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span >
+                      Dodijeljeni tip resursa:
+                    </span>
+                  </Col>
+                  <Col md={{size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span >
+                      Obrađen:
                     </span>
                   </Col>
                 </Row>
                 <Row>
                   <RenderStateIcon reqState={requestState} />
+                  <Col className="ms-5" md={{size: 3}}>
+                    <CustomReactSelect
+                      aria-label="staff_requestResourceType"
+                      closeMenuOnSelect={false}
+                      id="staff_requestResourceType"
+                      isMulti
+                      isDisabled={true}
+                      options={ResourceTypesToSelect}
+                      placeholder=""
+                      value={rhfProps.getValues('staff_requestResourceType')}
+                      activeReadOnlyResourceTypeMultiValue={true}
+                    />
+                  </Col>
+                  <Col className="ms-4 font-monospace" md={{size: 2}}>
+                    {
+                      nrProject.date_changed ?
+                        convertToEuropean(nrProject.date_changed)
+                      :
+                        '\u2212'
+                    }
+                    <br/>
+                    { nrProject.date_changed ?
+                        convertTimeToEuropean(nrProject.date_changed)
+                      :
+                        ""
+                    }
+                  </Col>
+                </Row>
+                <Row style={{height: '50px'}}>
                 </Row>
                 <RequestHorizontalRulerRed />
-                <GeneralFields fieldsDisabled={disabledFields} />
-                <ScientificSoftware fieldsDisabled={disabledFields} />
-                <ResourceFields fieldsDisabled={disabledFields} />
+                <GeneralFields />
+                <ScientificSoftware/>
+                <ResourceFields />
                 <Row style={{height: '50px'}}>
                 </Row>
               </Form>
