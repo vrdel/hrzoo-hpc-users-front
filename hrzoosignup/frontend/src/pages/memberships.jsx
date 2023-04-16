@@ -272,117 +272,185 @@ const UsersTableGeneral = ({project}) => {
 
 
 const UsersTableCroris = ({project}) => {
+  const { userDetails } = useContext(AuthContext);
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   let oibsJoined = new Set()
   alreadyJoined.forEach(user => oibsJoined.add(user['user']['person_oib']))
+  const amILead = lead['user']['person_oib'] === userDetails.person_oib
+
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () => setIsOpen(!isOpen);
+
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
+    defaultValues: {
+      collaboratorEmails: '',
+    }
+  });
+  const onSubmit = data => {
+    alert(JSON.stringify(data, null, 2));
+  }
 
   return (
-    <Row className="mt-4 ms-4 me-4 mb-5">
-      <Col>
-        <Table responsive hover className="shadow-sm bg-white">
-          <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-            <tr className="border-bottom border-1 border-dark">
-              <th className="fw-normal">
-                Ime
-              </th>
-              <th className="fw-normal">
-                Prezime
-              </th>
-              <th className="fw-normal">
-                Uloga
-              </th>
-              <th className="fw-normal">
-                Email
-              </th>
-              <th className="fw-normal">
-                CroRIS registracija
-              </th>
-              <th className="fw-normal">
-                Prijavljen
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <>
-              <tr>
-                <td className="p-3 align-middle text-center">
-                  { lead['user'].first_name }
-                </td>
-                <td className="p-3 align-middle text-center">
-                  { lead['user'].last_name }
-                </td>
-                <td className="align-middle text-center">
-                  Voditelj
-                </td>
-                <td className="align-middle text-center">
-                  { extractEmails(lead['user'].person_mail) }
-                </td>
-                <td className="align-middle text-center">
-                  Da
-                </td>
-                <td className="align-middle text-center">
-                  Da
-                </td>
+    <>
+      <Row className="mt-4 ms-4 me-4 mb-5">
+        <Col>
+          <Table responsive hover className="shadow-sm bg-white">
+            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+              <tr className="border-bottom border-1 border-dark">
+                <th className="fw-normal">
+                  Ime
+                </th>
+                <th className="fw-normal">
+                  Prezime
+                </th>
+                <th className="fw-normal">
+                  Uloga
+                </th>
+                <th className="fw-normal">
+                  Email
+                </th>
+                <th className="fw-normal">
+                  CroRIS registracija
+                </th>
+                <th className="fw-normal">
+                  Prijavljen
+                </th>
               </tr>
-              {
-                alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
-                  <tr key={`row-${i}`}>
-                    <td className="p-3 align-middle text-center">
-                      { user['user'].first_name }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      { user['user'].last_name }
-                    </td>
-                    <td className="align-middle text-center">
-                      Suradnik
-                    </td>
-                    <td className="align-middle text-center">
-                      { extractEmails(user['user'].person_mail) }
-                    </td>
-                    <td className="align-middle text-center">
-                      Da
-                    </td>
-                    <td className="align-middle text-center">
-                      Da
-                    </td>
-                  </tr>
-                ))
-              }
-              {
-                collaborators.length > 0 && collaborators.map((user, i) =>
-                  !oibsJoined.has(user['oib']) &&
-                    (
-                      <tr key={`row-${i}`}>
-                        <td className="p-3 align-middle text-center">
-                          { user.first_name }
-                        </td>
-                        <td className="p-3 align-middle text-center">
-                          { user.last_name }
-                        </td>
-                        <td className="align-middle text-center">
-                          Suradnik
-                        </td>
-                        <td className="align-middle text-center">
-                          { extractEmails(user.email) }
-                        </td>
-                        <td className="align-middle text-center">
-                          {
-                            user.email ? 'Da' : 'Ne'
-                          }
-                        </td>
-                        <td className="align-middle text-center">
-                          Ne
-                        </td>
-                      </tr>
-                    ))
-              }
-            </>
-          </tbody>
-        </Table>
-      </Col>
-    </Row>
+            </thead>
+            <tbody>
+              <>
+                <tr>
+                  <td className="p-3 align-middle text-center">
+                    { lead['user'].first_name }
+                  </td>
+                  <td className="p-3 align-middle text-center">
+                    { lead['user'].last_name }
+                  </td>
+                  <td className="align-middle text-center">
+                    Voditelj
+                  </td>
+                  <td className="align-middle text-center">
+                    { extractEmails(lead['user'].person_mail) }
+                  </td>
+                  <td className="align-middle text-center">
+                    Da
+                  </td>
+                  <td className="align-middle text-center">
+                    Da
+                  </td>
+                </tr>
+                {
+                  alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
+                    <tr key={`row-${i}`}>
+                      <td className="p-3 align-middle text-center">
+                        { user['user'].first_name }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { user['user'].last_name }
+                      </td>
+                      <td className="align-middle text-center">
+                        Suradnik
+                      </td>
+                      <td className="align-middle text-center">
+                        { extractEmails(user['user'].person_mail) }
+                      </td>
+                      <td className="align-middle text-center">
+                        Da
+                      </td>
+                      <td className="align-middle text-center">
+                        Da
+                      </td>
+                    </tr>
+                  ))
+                }
+                {
+                  collaborators.length > 0 && collaborators.map((user, i) =>
+                    !oibsJoined.has(user['oib']) &&
+                      (
+                        <tr key={`row-${i}`}>
+                          <td className="p-3 align-middle text-center">
+                            { user.first_name }
+                          </td>
+                          <td className="p-3 align-middle text-center">
+                            { user.last_name }
+                          </td>
+                          <td className="align-middle text-center">
+                            Suradnik
+                          </td>
+                          <td className="align-middle text-center">
+                            { extractEmails(user.email) }
+                          </td>
+                          <td className="align-middle text-center">
+                            {
+                              user.email ? 'Da' : 'Ne'
+                            }
+                          </td>
+                          <td className="align-middle text-center">
+                            Ne
+                          </td>
+                        </tr>
+                      ))
+                }
+              </>
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+      {
+        amILead &&
+          <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+            <Row className="mt-3 mb-5">
+              <Col>
+                <Row>
+                  <Col className="d-flex justify-content-center">
+                    <Button size="lg" color="success" onClick={toggle}>
+                      <FontAwesomeIcon icon={faUsers}/>{' '}
+                      Pozovi suradnike
+                    </Button>
+                  </Col>
+                </Row>
+                <Row className="mt-4">
+                  <Col className="d-flex justify-content-center">
+                    <Collapse isOpen={isOpen}>
+                      <Card className="p-4" style={{maxWidth: '680px'}}>
+                        <CardTitle>
+                          <h5>
+                            Upis email adresa novih suradnika
+                          </h5>
+                        </CardTitle>
+                        <CardBody className="mb-4">
+                          <Controller
+                            name="collaboratorEmails"
+                            control={control}
+                            render={ ({field}) =>
+                              <CustomCreatableSelect
+                                name="collaboratorEmails"
+                                forwardedRef={field.ref}
+                                controlWidth="600px"
+                                placeholder="korisnik1@email.hr ENTER/TAB korisnik2@email.hr..."
+                                fontSize="18px"
+                                onChange={(e) => setValue('collaboratorEmails', e)}
+                              />
+                            }
+                          />
+                        </CardBody>
+                        <CardFooter className="d-flex bg-white mt-2 mb-1 align-items-center justify-content-center">
+                          <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                            <FontAwesomeIcon icon={faPaperPlane}/>{' '}
+                            Posalji poveznice za prijavu
+                          </Button>
+                        </CardFooter>
+                      </Card>
+                    </Collapse>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+          </Form>
+      }
+    </>
   )
 }
 
