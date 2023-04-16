@@ -252,7 +252,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row style={{height: '50px'}}/>
       <Row>
-        <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
+        <Col className="fs-4 mb-3" md={{offset: 1}}>
           HPC
         </Col>
         <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
@@ -359,7 +359,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row style={{height: '50px'}}/>
       <Row>
-        <Col className="fs-4 mb-3 text-decoration-underline" md={{offset: 1}}>
+        <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
         <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
