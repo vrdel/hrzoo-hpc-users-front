@@ -223,7 +223,7 @@ export const CustomCreatableSelect = ({controlWidth=undefined, fontSize="14px", 
   const customStyles2 = {
     multiValueLabel: (base) => ({
       ...base,
-      backgroundColor: "#1aa179",
+      backgroundColor: "#198754",
       color: "#ffffff",
       fontSize: fontSize,
     }),

@@ -9,7 +9,6 @@ import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { GeneralInfo, Persons, Finance, Summary } from '../components/GeneralProjectInfo';
 import { convertToEuropean, convertTimeToEuropean } from '../utils/dates';
 import { AuthContext } from '../components/AuthContextProvider';
-import CreatableSelect from '../components/CustomReactSelectCreatable';
 import { CustomCreatableSelect } from '../components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -219,7 +218,7 @@ const UsersTableGeneral = ({project}) => {
               <Row className="mt-4">
                 <Col className="d-flex justify-content-center">
                   <Collapse isOpen={isOpen}>
-                    <Card className="p-3" style={{maxWidth: '550px'}}>
+                    <Card className="p-3" style={{maxWidth: '660px'}}>
                       <CardTitle>
                         <h5>
                           Upis email adresa novih suradnika
@@ -227,8 +226,8 @@ const UsersTableGeneral = ({project}) => {
                       </CardTitle>
                       <CardBody>
                         <CustomCreatableSelect
-                          controlWidth="500px"
-                          placeholder="korisnik1@email.hr ENTER korisnik2@email.hr..."
+                          controlWidth="600px"
+                          placeholder="korisnik1@email.hr ENTER/TAB korisnik2@email.hr..."
                           fontSize="18px"
                         />
                       </CardBody>
