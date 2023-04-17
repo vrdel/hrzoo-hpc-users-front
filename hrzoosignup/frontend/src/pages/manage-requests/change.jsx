@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from '../../components/RequestHorizontalRuler';
-import GeneralFields from '../../components/fields-request/GeneralFields';
+import GeneralFields, { CroRisDescription } from '../../components/fields-request/GeneralFields';
 import { SharedData } from '../root';
 import { Col, Label, Row, Button, Form } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
@@ -137,6 +137,7 @@ export const ManageRequestsChange = () => {
   useEffect(() => {
     if (status === 'success' && nrProject) {
       rhfProps.setValue('requestName', nrProject.name)
+      rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('requestExplain', nrProject.reason)
       rhfProps.setValue('startDate', nrProject.date_start)
       rhfProps.setValue('endDate', nrProject.date_end)
@@ -289,6 +290,10 @@ export const ManageRequestsChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
+                {
+                  nrProject.project_type.name === 'research-croris' &&
+                    <CroRisDescription fieldsDisabled={disabledFields} />
+                }
                 <GeneralFields fieldsDisabled={disabledFields} />
                 <ScientificSoftware fieldsDisabled={disabledFields} />
                 <ResourceFields fieldsDisabled={disabledFields} />

@@ -143,4 +143,48 @@ const GeneralFields = ({fieldsDisabled=false}) => {
   )
 }
 
+
+export const CroRisDescription = ({fieldsDisabled=false}) => {
+  const { control, formState: {errors} } = useFormContext();
+
+  return (
+    <>
+      <Row className="mt-2">
+        <Col>
+          <h4 className="ms-4 mb-3 mt-4">Opis projekta iz sustava CroRIS</h4><br/>
+        </Col>
+      </Row>
+      <Row className="mt-1 mb-4">
+        <Col md={{size: 10, offset: 1}}>
+          <Controller
+            name="requestSummary"
+            control={control}
+            rules={{required: true}}
+            render={ ({field}) =>
+              <textarea
+                id="requestSummary"
+                {...field}
+                aria-label="requestSummary"
+                type="text"
+                disabled={fieldsDisabled}
+                className={`form-control ${errors && errors.requestSummary ? "is-invalid" : ''}`}
+                rows="4"
+              />
+            }
+          />
+          <ErrorMessage
+            errors={errors}
+            name="requestExplain"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
+        </Col>
+      </Row>
+    </>
+  )
+}
+
 export default GeneralFields
