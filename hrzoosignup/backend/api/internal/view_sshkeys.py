@@ -8,6 +8,8 @@ from rest_framework.renderers import JSONRenderer
 from backend.serializers import SshKeysSerializer
 from backend.models import SSHPublicKey
 
+from backend import models
+
 import json
 
 
@@ -34,6 +36,22 @@ class SshKeys(APIView):
 
     def post(self, request):
         request.data['user'] = request.user.pk
+
+        interested_states = models.State.objects.filter(name__in=['approve', 'extend'])
+        up_obj = models.UserProject.objects\
+            .filter(user=request.user.pk)\
+            .filter(project__state__in=interested_states)
+
+        if not up_obj:
+            err_status = status.HTTP_401_UNAUTHORIZED
+            err_response = {
+                'status': {
+                    'code': err_status,
+                    'message': 'Not authorized to add new SSH key'
+                }
+            }
+            return Response(err_response, status=err_status)
+
         serializer = SshKeysSerializer(data=request.data)
 
         if serializer.is_valid():
