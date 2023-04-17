@@ -14,7 +14,7 @@ import { CustomCreatableSelect, CustomReactSelect } from '../components/CustomRe
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPaperPlane,
-  faUsers,
+  faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -223,8 +223,8 @@ const UsersTableGeneral = ({project}) => {
               <Col>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button size="lg" color="success" onClick={toggle}>
-                      <FontAwesomeIcon icon={faUsers}/>{' '}
+                    <Button color="primary" onClick={toggle}>
+                      <FontAwesomeIcon icon={faArrowDown}/>{' '}
                       Pozovi suradnike
                     </Button>
                   </Col>
@@ -415,8 +415,8 @@ const UsersTableCroris = ({project}) => {
               <Col>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button size="lg" color="success" onClick={toggle}>
-                      <FontAwesomeIcon icon={faUsers}/>{' '}
+                    <Button color="primary" onClick={toggle}>
+                      <FontAwesomeIcon icon={faArrowDown}/>{' '}
                       Pozovi suradnike
                     </Button>
                   </Col>
