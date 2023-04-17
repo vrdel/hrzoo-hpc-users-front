@@ -125,35 +125,43 @@ class Invites(APIView):
         proj = models.Project.objects.get(identifier=proj_id)
         proj_type = models.ProjectType.objects.get(project=proj)
 
-        if proj_type.name == 'research-croris':
-            myoib = request.user.person_oib
-            cached = cache.get(f'{myoib}_croris')
-            emails = [col['value'] for col in request.data['collaboratorEmails']]
-            target = cached['projects_lead_users'][proj.croris_id]
-            oib_map = dict()
-            for user in target:
-                oib_map.update({user['email']: user['oib']})
-            cached_emails = set()
-            cached_emails.update([user['email'] for user in target])
-            for email in emails:
-                if email in cached_emails:
+        try:
+            if proj_type.name == 'research-croris':
+                myoib = request.user.person_oib
+                cached = cache.get(f'{myoib}_croris')
+                emails = [col['value'] for col in request.data['collaboratorEmails']]
+                target = cached['projects_lead_users'][proj.croris_id]
+                oib_map = dict()
+                for user in target:
+                    oib_map.update({user['email']: user['oib']})
+                cached_emails = set()
+                cached_emails.update([user['email'] for user in target])
+                for email in emails:
+                    if email in cached_emails:
+                        invite = Invitation.create(email, inviter=request.user,
+                                                project=proj,
+                                                person_oib=oib_map[email])
+                        invite.send_invitation(request)
+
+            else:
+                emails = [col['value'] for col in request.data['collaboratorEmails']]
+                for email in emails:
                     invite = Invitation.create(email, inviter=request.user,
-                                               project=proj,
-                                               person_oib=oib_map[email])
+                                            project=proj, person_oib='')
                     invite.send_invitation(request)
 
-        else:
-            emails = [col['value'] for col in request.data['collaboratorEmails']]
-            for email in emails:
-                invite = Invitation.create(email, inviter=request.user,
-                                           project=proj, person_oib='')
-                invite.send_invitation(request)
+            return Response({
+                'status': {
+                    'code': status.HTTP_200_OK,
+                    'message': 'Invitations sent'
+                }},
+                status=status.HTTP_200_OK)
 
-        # proj = models.Project.objects.get(identifier='NR-2023-04-001')
-
-        # invite = Invitation.create('daniel.vrcic@gmail.com', inviter=request.user, project=proj)
-        # invite.send_invitation(request)
-
-        return Response({
-            'message': 'Invitation sent'
-        })
+        # TODO: what are all posible exceptions?
+        except Exception as exc:
+            return Response({
+                'status': {
+                    'code': status.HTTP_400_BAD_REQUEST,
+                    'message': 'Invitations problem:{}'.format(repr(exc))
+                }},
+                status=status.HTTP_400_BAD_REQUEST)

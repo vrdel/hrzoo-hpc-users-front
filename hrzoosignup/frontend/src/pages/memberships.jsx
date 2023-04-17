@@ -18,6 +18,7 @@ import {
   faPaperPlane,
   faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify'
 
 
 function extractUsers(projectUsers, role) {
@@ -500,8 +501,24 @@ const Memberships = () => {
     setOnYesCallArg(data)
   }
 
-  const doAdd = (data) => {
-    addInvite(data)
+  const doAdd = async (data) => {
+    try {
+      const ret = await addInvite(data)
+      console.log('VRDEL DEBUG OK', ret)
+    }
+    catch (err) {
+      toast.error(
+        <span className="font-monospace text-white">
+          Pozivnice nije bilo moguće poslati: <br/>
+          { err.message }
+        </span>, {
+          theme: 'colored',
+          toastId: 'manreq-ok-change',
+          autoClose: 2500,
+          delay: 1000
+        }
+      )
+    }
   }
 
   function onYesCallback() {
