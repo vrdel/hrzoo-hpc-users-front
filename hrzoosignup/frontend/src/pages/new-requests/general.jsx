@@ -29,6 +29,32 @@ import { url_ui_prefix } from '../../config/general';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContextProvider';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
+import * as yup from "yup";
+
+
+const schemaResolve = yup.object().shape({
+  requestName: yup.string().required("Obvezno"),
+  requestExplain: yup.string().required("Obvezno"),
+  scientificDomain: yup.array().of(yup.object().shape(
+    {
+      name: yup.object().shape({
+            'label': yup.string().required(),
+            'value': yup.string().required()
+          }),
+      percent: yup.number().positive().lessThan(101).required("0-100"),
+      scientificfields: yup.array().of(yup.object().shape(
+        {
+          name: yup.object().shape({
+            'label': yup.string().required(),
+            'value': yup.string().required()
+          }),
+          percent: yup.number().positive().lessThan(101).required("0-100")
+
+        }
+      ))
+    }
+  ))
+});
 
 
 const GeneralRequest = ({projectType}) => {
@@ -43,6 +69,7 @@ const GeneralRequest = ({projectType}) => {
   const navigate = useNavigate()
 
   const rhfProps = useForm({
+    resolver: yupResolver(schemaResolve),
     defaultValues: {
       requestName: '',
       requestExplain: '',

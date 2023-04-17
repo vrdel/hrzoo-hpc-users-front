@@ -156,6 +156,8 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                   && errors.scientificDomain[domain_index]['percent'] ? "is-invalid" : ''}`}
                 placeholder="Udio"
                 disabled={fieldsDisabled}
+                min="0"
+                max="100"
                 type="number"
               />
             }
@@ -197,6 +199,8 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                           && errors.scientificDomain[domain_index]['scientificfields'][field_index]['percent'] ? "is-invalid" : ''}`}
                         placeholder="Udio"
                         disabled={fieldsDisabled}
+                        min="0"
+                        max="100"
                         type="number"
                       />
                     }
