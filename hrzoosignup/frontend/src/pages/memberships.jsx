@@ -145,7 +145,6 @@ const UsersTableGeneral = ({project, onSubmit}) => {
   });
 
   const onTableSubmit = (data) => {
-    data['myoib'] = userDetails.person_oib
     data['project'] = project['identifier']
     onSubmit(data)
   }
@@ -295,7 +294,6 @@ const UsersTableCroris = ({project, onSubmit}) => {
   });
 
   const onTableSubmit = (data) => {
-    data['myoib'] = userDetails.person_oib
     data['project'] = project['identifier']
     onSubmit(data)
   }

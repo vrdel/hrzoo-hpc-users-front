@@ -100,7 +100,7 @@ class Invites(APIView):
         proj = models.Project.objects.get(identifier=proj_id)
         proj_type = models.ProjectType.objects.get(project=proj)
         if proj_type.name == 'research-croris':
-            myoib = request.data['myoib']
+            myoib = request.user.person_oib
             cached = cache.get(f'{myoib}_croris')
             print(cached)
         else:
