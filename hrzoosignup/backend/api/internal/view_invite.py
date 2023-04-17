@@ -14,6 +14,8 @@ import json
 import requests
 import datetime
 
+from django.core.cache import cache
+
 
 def associate_user_to_project(user, project):
     role_obj = models.Role.objects.get(name='collaborator')
@@ -94,13 +96,22 @@ class Invites(APIView):
 
     def post(self, request):
         request.data['user'] = request.user.pk
+        proj_id = request.data['project']
+        proj = models.Project.objects.get(identifier=proj_id)
+        proj_type = models.ProjectType.objects.get(project=proj)
+        if proj_type.name == 'research-croris':
+            myoib = request.data['myoib']
+            cached = cache.get(f'{myoib}_croris')
+            print(cached)
+        else:
+            print(request)
 
         Invitation = get_invitation_model()
 
-        proj = models.Project.objects.get(identifier='NR-2023-04-001')
+        # proj = models.Project.objects.get(identifier='NR-2023-04-001')
 
-        invite = Invitation.create('daniel.vrcic@gmail.com', inviter=request.user, project=proj)
-        invite.send_invitation(request)
+        # invite = Invitation.create('daniel.vrcic@gmail.com', inviter=request.user, project=proj)
+        # invite.send_invitation(request)
 
         return Response({
             'message': 'Invitation sent'
