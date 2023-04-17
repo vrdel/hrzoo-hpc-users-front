@@ -212,6 +212,34 @@ class Projects(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def delete(self, request, **kwargs):
+        try:
+            if kwargs.get('specific', False):
+                req_id = kwargs.get('specific')
+                if request.user.is_staff or request.user.is_superuser:
+                    proj = models.Project.objects.get(identifier=req_id)
+                    models.UserProject.objects.filter(project=proj).delete()
+                    proj.delete()
+                    return Response(status=status.HTTP_204_NO_CONTENT)
+                else:
+                    err_response = {
+                        'status': {
+                            'code': status.HTTP_401_UNAUTHORIZED,
+                            'message': 'Not allowed to delete project'
+                        }
+                    }
+                    return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
+        except models.Project.DoesNotExist as exc:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_404_NOT_FOUND,
+                    'message': 'Project not found'
+                }
+            }
+            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
+
 
 class ProjectsRole(APIView):
     authentication_classes = (SessionAuthentication,)
