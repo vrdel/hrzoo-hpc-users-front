@@ -50,7 +50,7 @@ const LoginPrivate = () => {
       <Row className="login-first-row">
         <Col>
           <Row style={{'height': '110px'}}/>
-          <Card className="shadow-lg p-2" style={{height: '475px', width: '450px'}}>
+          <Card className="shadow-lg p-2" style={{minHeight: '475px', width: '450px'}}>
             <CardHeader
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"
@@ -96,7 +96,7 @@ const LoginPrivate = () => {
                     </p>
                   </Alert>
                 </FormGroup>
-                <div className="pt-5">
+                <div className="pt-4">
                 </div>
                 <FormGroup>
                   <Button color="success" type="submit" block className="mb-3">Prijava korisničkim imenom i lozinkom</Button>
