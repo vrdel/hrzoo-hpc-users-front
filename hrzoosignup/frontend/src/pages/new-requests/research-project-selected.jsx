@@ -32,7 +32,8 @@ import { addResearchProject } from '../../api/projects';
 import { convertToIso8601 } from '../../utils/dates';
 import { url_ui_prefix } from '../../config/general';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 const ExtractUsers = ({projectUsers}) => {
   return (
@@ -50,6 +51,30 @@ const ExtractUsers = ({projectUsers}) => {
 }
 
 
+const schemaResolve = yup.object().shape({
+  requestExplain: yup.string().required("Obvezno"),
+  scientificDomain: yup.array().of(yup.object().shape(
+    {
+      name: yup.object().shape({
+            'label': yup.string().required(),
+            'value': yup.string().required()
+          }),
+      percent: yup.number().positive().lessThan(101).required("0-100"),
+      scientificfields: yup.array().of(yup.object().shape(
+        {
+          name: yup.object().shape({
+            'label': yup.string().required(),
+            'value': yup.string().required()
+          }),
+          percent: yup.number().positive().lessThan(101).required("0-100")
+
+        }
+      ))
+    }
+  ))
+});
+
+
 const ResearchProjectRequestSelected = ({projectType}) => {
   const [projectTarget, setProjectTarget] = useState(undefined)
   const navigate = useNavigate()
@@ -62,6 +87,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
 
   const { projId } = useParams()
   const rhfProps = useForm({
+    resolver: yupResolver(schemaResolve),
     defaultValues: {
       requestName: '',
       requestExplain: '',
