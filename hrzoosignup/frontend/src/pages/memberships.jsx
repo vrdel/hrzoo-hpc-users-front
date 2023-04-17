@@ -245,7 +245,7 @@ const UsersTableGeneral = ({project}) => {
                                 name="collaboratorEmails"
                                 forwardedRef={field.ref}
                                 controlWidth="600px"
-                                placeholder="korisnik1@email.hr ENTER/TAB korisnik2@email.hr..."
+                                placeholder="suradnik1@email.hr ENTER/TAB suradnik2@email.hr..."
                                 fontSize="18px"
                                 onChange={(e) => setValue('collaboratorEmails', e)}
                               />
@@ -293,14 +293,14 @@ const UsersTableCroris = ({project}) => {
   }
 
   const missingCollab = new Array()
-  const missing = collaborators.forEach((user, i) => {
+  collaborators.forEach((user) => {
     if (!oibsJoined.has(user['oib']))
       missingCollab.push(user)
   })
 
   return (
     <>
-      <Row className="mt-4 ms-4 me-4 mb-5">
+      <Row className={amILead ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
         <Col>
           <Table responsive hover className="shadow-sm bg-white">
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
