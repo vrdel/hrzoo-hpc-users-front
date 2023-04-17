@@ -504,7 +504,15 @@ const Memberships = () => {
   const doAdd = async (data) => {
     try {
       const ret = await addInvite(data)
-      console.log('VRDEL DEBUG OK', ret)
+      toast.success(
+        <span className="font-monospace text-dark">
+          Pozivnice su uspješno poslane
+        </span>, {
+          toastId: 'invit-ok-sent',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
     }
     catch (err) {
       toast.error(
@@ -513,7 +521,7 @@ const Memberships = () => {
           { err.message }
         </span>, {
           theme: 'colored',
-          toastId: 'manreq-ok-change',
+          toastId: 'invit-fail-sent',
           autoClose: 2500,
           delay: 1000
         }
