@@ -156,8 +156,8 @@ class Invites(APIView):
                 for email in emails:
                     if email in cached_emails:
                         invite = Invitation.create(email, inviter=request.user,
-                                                project=proj,
-                                                person_oib=oib_map[email])
+                                                   project=proj,
+                                                   person_oib=oib_map[email])
                         invite.send_invitation(request)
 
             else:

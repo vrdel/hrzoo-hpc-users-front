@@ -14,6 +14,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
+import { url_ui_prefix } from '../config/general';
 
 
 const EmailInvitation = ({sessionData=undefined}) => {
@@ -52,6 +53,8 @@ const EmailInvitation = ({sessionData=undefined}) => {
     }
   }
 
+
+
   if (isLoggedIn || sessionData.active)
     return (
       <>
@@ -86,15 +89,19 @@ const EmailInvitation = ({sessionData=undefined}) => {
                     <Col>
                       <Alert color="success"
                         isOpen={inviteAlertSuccess}
-                        toggle={() => setInviteAlertSucces(false)} fade={false}>
-                        <p className="text-center">
+                        toggle={() => {
+                          setInviteAlertSucces(!inviteAlertSuccess)
+                          setTimeout(() => {navigate(url_ui_prefix + '/clanstva')}, 1500)
+                        }}
+                        fade={true}>
+                        <p className="text-center fs-5">
                           Prijava uspješna
                         </p>
                       </Alert>
-                      <Alert color="danger"
+                      <Alert color="danger" className="d-flex align-items-center justify-content-center"
                         isOpen={inviteAlertFail}
-                        toggle={() => setInviteAlertFail(false)} fade={false}>
-                        <p className="text-center">
+                        toggle={() => setInviteAlertFail(!inviteAlertFail)} fade={true}>
+                        <p className="text-center fs-5">
                           {
                             customMessage ?
                               customMessage
