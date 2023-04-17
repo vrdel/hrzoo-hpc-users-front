@@ -68,52 +68,59 @@ class Invites(APIView):
                     if (inv_oib == request.user.person_oib):
                         associate_user_to_project(user, proj)
 
-                        return Response({
+                        msg = {
                             'status': {
                                 'code': status.HTTP_201_CREATED,
                                 'message': '{} associated to project {}'.format(
                                     user.person_uniqueid,
                                     proj.identifier)
-                            }},
-                            status=status.HTTP_201_CREATED)
+                        }}
+                        print(msg)
+                        return Response(msg, status=status.HTTP_201_CREATED)
+
                     else:
-                        return Response({
+                        msg = {
                             'status': {
                                 'code': status.HTTP_403_FORBIDDEN,
                                 'message': '{} could not be associated to project {} - OIB does not match'.format(
                                     user.person_uniqueid,
                                     proj.identifier)
-                            }},
-                            status=status.HTTP_403_FORBIDDEN)
+                            }}
+                        print(msg)
+                        return Response(msg, status=status.HTTP_403_FORBIDDEN)
+
                 else:
                     associate_user_to_project(user, proj)
-
-                    return Response({
+                    msg = {
                         'status': {
-                            'code': status.HTTP_201_CREATED,
-                            'message': '{} associated to project {}'.format(
+                        'code': status.HTTP_201_CREATED,
+                        'message': '{} associated to project {}'.format(
                                 user.person_uniqueid,
                                 proj.identifier)
-                        }},
-                        status=status.HTTP_201_CREATED)
+                        }
+                    }
+                    print(msg)
+                    return Response(msg, status=status.HTTP_201_CREATED)
 
         except requests.exceptions.HTTPError as ex:
             if ex.response.status_code == 410:
-                return Response({
+                msg = {
                     'status': {
                         'code': status.HTTP_410_GONE,
-                        'message': 'Invitation code already used'
-                    }},
-                    status=status.HTTP_410_GONE
-                )
+                        'message': 'Invitation code already used'}
+                }
+                print(msg)
+                return Response(msg, status=status.HTTP_410_GONE)
 
         except IntegrityError as exc:
-            return Response({
+            msg = {
                 'status': {
                     'code': status.HTTP_400_BAD_REQUEST,
                     'message': 'Invitations problem: {}'.format(repr(exc))
-                }},
-                status=status.HTTP_400_BAD_REQUEST)
+                }
+            }
+            print(msg)
+            return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         Invitation = get_invitation_model()
@@ -123,13 +130,14 @@ class Invites(APIView):
         myprojs = set([upr.project.identifier for upr in myprojs])
 
         if proj_id not in myprojs:
-            return Response({
+            msg = {
                 'status': {
                     'code': status.HTTP_403_FORBIDDEN,
                     'message': 'Not allowed to send invitations for given project'
-                }},
-                status=status.HTTP_403_FORBIDDEN
-            )
+                }
+            }
+            print(msg)
+            return Response(msg, status=status.HTTP_403_FORBIDDEN)
 
         proj = models.Project.objects.get(identifier=proj_id)
         proj_type = models.ProjectType.objects.get(project=proj)
@@ -159,18 +167,22 @@ class Invites(APIView):
                                                project=proj, person_oib='')
                     invite.send_invitation(request)
 
-            return Response({
+            msg = {
                 'status': {
                     'code': status.HTTP_200_OK,
                     'message': 'Invitations sent'
-                }},
-                status=status.HTTP_200_OK)
+                }
+            }
+            print(msg)
+            return Response(msg, status=status.HTTP_200_OK)
 
         # TODO: what are all posible exceptions?
         except Exception as exc:
-            return Response({
+            msg = {
                 'status': {
                     'code': status.HTTP_400_BAD_REQUEST,
                     'message': 'Invitations problem:{}'.format(repr(exc))
-                }},
-                status=status.HTTP_400_BAD_REQUEST)
+                }
+            }
+            print(msg)
+            return Response(msg, status=status.HTTP_400_BAD_REQUEST)
