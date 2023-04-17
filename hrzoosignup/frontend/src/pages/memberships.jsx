@@ -129,7 +129,7 @@ const BriefProjectInfo = ({project}) => {
 }
 
 
-const UsersTableGeneral = ({project}) => {
+const UsersTableGeneral = ({project, onSubmit}) => {
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   const { userDetails } = useContext(AuthContext);
@@ -143,11 +143,11 @@ const UsersTableGeneral = ({project}) => {
       collaboratorEmails: '',
     }
   });
-  const onSubmit = data => {
+
+  const onTableSubmit = (data) => {
     data['myoib'] = userDetails.person_oib
     data['project'] = project['identifier']
-    // alert(JSON.stringify(data, null, 2));
-    addInvite(data)
+    onSubmit(data)
   }
 
   return (
@@ -221,7 +221,7 @@ const UsersTableGeneral = ({project}) => {
       </Row>
       {
         amILead &&
-          <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+          <Form onSubmit={handleSubmit(onTableSubmit)} className="needs-validation">
             <Row className="mt-3 mb-5">
               <Col>
                 <Row>
@@ -238,7 +238,7 @@ const UsersTableGeneral = ({project}) => {
                       <Card className="p-4" style={{maxWidth: '680px'}}>
                         <CardTitle>
                           <h5>
-                            Upis email adresa novih suradnika
+                            Upiši email adrese suradnika koje želiš pozvati na projekt
                           </h5>
                         </CardTitle>
                         <CardBody className="mb-4">
@@ -431,7 +431,7 @@ const UsersTableCroris = ({project, onSubmit}) => {
                       <Card className="p-4" style={{maxWidth: '680px'}}>
                         <CardTitle>
                           <h5>
-                            Odaberi email adrese na koje želis slati poveznice s prijavom
+                            Odaberi email adrese suradnika koje želiš pozvati na projekt
                           </h5>
                         </CardTitle>
                         <CardBody className="mb-4">
@@ -549,7 +549,7 @@ const Memberships = () => {
                           project.project_type.name === 'research-croris' ?
                             <UsersTableCroris project={project} onSubmit={onSubmit} />
                           :
-                            <UsersTableGeneral project={project} />
+                            <UsersTableGeneral project={project} onSubmit={onSubmit} />
                         }
                         <Row>
                           <BriefProjectInfo project={project} />
