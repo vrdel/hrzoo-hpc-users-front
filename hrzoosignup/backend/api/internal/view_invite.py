@@ -15,6 +15,7 @@ import requests
 import datetime
 
 from django.core.cache import cache
+from django.db import IntegrityError
 
 
 def associate_user_to_project(user, project):
@@ -106,6 +107,14 @@ class Invites(APIView):
                     status=status.HTTP_410_GONE
                 )
 
+        except IntegrityError as exc:
+            return Response({
+                'status': {
+                    'code': status.HTTP_400_BAD_REQUEST,
+                    'message': 'Invitations problem: {}'.format(repr(exc))
+                }},
+                status=status.HTTP_400_BAD_REQUEST)
+
     def post(self, request):
         Invitation = get_invitation_model()
         request.data['user'] = request.user.pk
@@ -147,7 +156,7 @@ class Invites(APIView):
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
                 for email in emails:
                     invite = Invitation.create(email, inviter=request.user,
-                                            project=proj, person_oib='')
+                                               project=proj, person_oib='')
                     invite.send_invitation(request)
 
             return Response({
