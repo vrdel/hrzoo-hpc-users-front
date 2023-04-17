@@ -6,8 +6,10 @@ import { PageTitle } from '../components/PageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
+import { addInvite } from '../api/invite';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { GeneralInfo, Persons, Finance, Summary } from '../components/GeneralProjectInfo';
+import ModalAreYouSure from '../components/ModalAreYouSure';
 import { convertToEuropean, convertTimeToEuropean } from '../utils/dates';
 import { AuthContext } from '../components/AuthContextProvider';
 import { CustomCreatableSelect, CustomReactSelect } from '../components/CustomReactSelect';
@@ -144,7 +146,8 @@ const UsersTableGeneral = ({project}) => {
   const onSubmit = data => {
     data['myoib'] = userDetails.person_oib
     data['project'] = project['identifier']
-    alert(JSON.stringify(data, null, 2));
+    // alert(JSON.stringify(data, null, 2));
+    addInvite(data)
   }
 
   return (
@@ -257,7 +260,7 @@ const UsersTableGeneral = ({project}) => {
                         <CardFooter className="d-flex bg-white mt-2 mb-1 align-items-center justify-content-center">
                           <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
                             <FontAwesomeIcon icon={faPaperPlane}/>{' '}
-                            Posalji poveznice za prijavu
+                            Pošalji poveznice za prijavu
                           </Button>
                         </CardFooter>
                       </Card>
@@ -273,7 +276,7 @@ const UsersTableGeneral = ({project}) => {
 }
 
 
-const UsersTableCroris = ({project}) => {
+const UsersTableCroris = ({project, onSubmit}) => {
   const { userDetails } = useContext(AuthContext);
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
@@ -290,10 +293,11 @@ const UsersTableCroris = ({project}) => {
       collaboratorEmails: '',
     }
   });
-  const onSubmit = data => {
+
+  const onTableSubmit = (data) => {
     data['myoib'] = userDetails.person_oib
     data['project'] = project['identifier']
-    alert(JSON.stringify(data, null, 2));
+    onSubmit(data)
   }
 
   const missingCollab = new Array()
@@ -410,7 +414,7 @@ const UsersTableCroris = ({project}) => {
       </Row>
       {
         amILead &&
-          <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
+          <Form onSubmit={handleSubmit(onTableSubmit)} className="needs-validation">
             <Row className="mt-3 mb-5">
               <Col>
                 <Row>
@@ -459,7 +463,7 @@ const UsersTableCroris = ({project}) => {
                         <CardFooter className="d-flex bg-white mt-2 mb-1 align-items-center justify-content-center">
                           <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
                             <FontAwesomeIcon icon={faPaperPlane}/>{' '}
-                            Posalji poveznice za prijavu
+                            Pošalji poveznice za prijavu
                           </Button>
                         </CardFooter>
                       </Card>
@@ -479,10 +483,34 @@ const Memberships = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
 
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
   const {status: nrStatus, data: nrProjects} = useQuery({
       queryKey: ['projects'],
       queryFn: fetchNrProjects
   })
+
+  const onSubmit = (data) => {
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Slanje pozivnica za istraživački projekt")
+    setModalMsg("Da li ste sigurni da želite poslati pozivnice na navedene email adrese?")
+    setOnYesCall('doaddinvite')
+    setOnYesCallArg(data)
+  }
+
+  const doAdd = (data) => {
+    addInvite(data)
+  }
+
+  function onYesCallback() {
+    if (onYesCall == 'doaddinvite') {
+      doAdd(onYesCallArg)
+    }
+  }
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
@@ -498,6 +526,12 @@ const Memberships = () => {
         <Row className="mb-5">
           <PageTitle pageTitle={pageTitle}/>
         </Row>
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback} />
         {
           projectsApproved.length > 0 ?
             projectsApproved.map((project, i) =>
@@ -513,7 +547,7 @@ const Memberships = () => {
                       <CardBody className="mb-1 bg-light">
                         {
                           project.project_type.name === 'research-croris' ?
-                            <UsersTableCroris project={project} />
+                            <UsersTableCroris project={project} onSubmit={onSubmit} />
                           :
                             <UsersTableGeneral project={project} />
                         }
