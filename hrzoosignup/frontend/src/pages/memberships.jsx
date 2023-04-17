@@ -10,7 +10,7 @@ import { TypeString, TypeColor } from '../config/map-projecttypes';
 import { GeneralInfo, Persons, Finance, Summary } from '../components/GeneralProjectInfo';
 import { convertToEuropean, convertTimeToEuropean } from '../utils/dates';
 import { AuthContext } from '../components/AuthContextProvider';
-import { CustomCreatableSelect } from '../components/CustomReactSelect';
+import { CustomCreatableSelect, CustomReactSelect } from '../components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPaperPlane,
@@ -292,6 +292,12 @@ const UsersTableCroris = ({project}) => {
     alert(JSON.stringify(data, null, 2));
   }
 
+  const missingCollab = new Array()
+  const missing = collaborators.forEach((user, i) => {
+    if (!oibsJoined.has(user['oib']))
+      missingCollab.push(user)
+  })
+
   return (
     <>
       <Row className="mt-4 ms-4 me-4 mb-5">
@@ -417,7 +423,7 @@ const UsersTableCroris = ({project}) => {
                       <Card className="p-4" style={{maxWidth: '680px'}}>
                         <CardTitle>
                           <h5>
-                            Upis email adresa novih suradnika
+                            Odaberi email adrese na koje želis slati poveznice s prijavom
                           </h5>
                         </CardTitle>
                         <CardBody className="mb-4">
@@ -425,12 +431,22 @@ const UsersTableCroris = ({project}) => {
                             name="collaboratorEmails"
                             control={control}
                             render={ ({field}) =>
-                              <CustomCreatableSelect
+                              <CustomReactSelect
                                 name="collaboratorEmails"
                                 forwardedRef={field.ref}
                                 controlWidth="600px"
-                                placeholder="korisnik1@email.hr ENTER/TAB korisnik2@email.hr..."
+                                placeholder="Odaberi..."
+                                closeMenuOnSelect={false}
+                                collaboratorsFixedMultiValue
+                                isMulti
                                 fontSize="18px"
+                                options={
+                                  missingCollab.map(user => (
+                                    {
+                                      'value': user.email,
+                                      'label': user.email
+                                    }
+                                  ))}
                                 onChange={(e) => setValue('collaboratorEmails', e)}
                               />
                             }

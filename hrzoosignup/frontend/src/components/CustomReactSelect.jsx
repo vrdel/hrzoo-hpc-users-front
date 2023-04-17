@@ -39,6 +39,7 @@ const DropdownIndicator = ({ ...props }) => {
 export const CustomReactSelect = ({forwardedRef=undefined,
   resourceTypeMultiValue=undefined, scientificSoftwareMultiValue=undefined,
   activeReadOnlyResourceTypeMultiValue=undefined, controlWidth=undefined,
+  fontSize=undefined, collaboratorsFixedMultiValue=undefined,
   ...props} ) => {
   const customStyles = {
     control: (provided,  state) => ({
@@ -48,6 +49,7 @@ export const CustomReactSelect = ({forwardedRef=undefined,
       overflow: 'visible',
       borderRadius: props.inputgroup ? '0 .25rem .25rem 0' : '.25rem',
       fontWeight: 400,
+      fontSize: fontSize,
       backgroundClip: 'padding-box',
       textShadow: 'none',
       textAlign: 'start',
@@ -163,7 +165,27 @@ export const CustomReactSelect = ({forwardedRef=undefined,
       />
     )
   }
-
+  else if (collaboratorsFixedMultiValue) {
+    const customStyles5 = {
+      multiValueLabel: (base) => ({
+        ...base,
+        backgroundColor: "#198754",
+        color: "#ffffff",
+        fontSize: fontSize,
+      }),
+      multiValueRemove: (base) => ({
+        ...base,
+      })
+    }
+    return (
+      <Select
+        {...props}
+        ref={ forwardedRef ? forwardedRef : null }
+        components={{MultiValueLabel, IndicatorSeparator: null, DropdownIndicator: null}}
+        styles={{...customStyles, ...customStyles5}}
+      />
+    )
+  }
   else
     return (
       <Select
