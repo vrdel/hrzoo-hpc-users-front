@@ -60,17 +60,31 @@ class Invites(APIView):
                 Invitation = get_invitation_model()
                 get_invite = Invitation.objects.get(key=kwargs['invitekey'])
                 proj = get_invite.project
-                associate_user_to_project(user, proj)
+                inv_oib = get_invite.person_oib
+                proj_type = models.ProjectType.objects.get(project=proj)
 
-                return Response({
-                    'status': {
-                        'code': status.HTTP_201_CREATED,
-                        'message': '{} associated to project {}'.format(
-                            user.person_uniqueid,
-                            proj.identifier)
-                    }},
-                    status=status.HTTP_200_OK
-                )
+                if (proj_type.name == 'research-croris'
+                    and inv_oib == request.user.person_oib):
+                    associate_user_to_project(user, proj)
+
+                    return Response({
+                        'status': {
+                            'code': status.HTTP_201_CREATED,
+                            'message': '{} associated to project {}'.format(
+                                user.person_uniqueid,
+                                proj.identifier)
+                        }},
+                        status=status.HTTP_201_CREATED)
+
+                else:
+                    return Response({
+                        'status': {
+                            'code': status.HTTP_403_FORBIDDEN,
+                            'message': '{} could not be associated to project {}'.format(
+                                user.person_uniqueid,
+                                proj.identifier)
+                        }},
+                        status=status.HTTP_403_FORBIDDEN)
 
         except requests.exceptions.HTTPError as ex:
             if (ex.response.status_code == 403
@@ -95,6 +109,7 @@ class Invites(APIView):
         return Response(status.HTTP_200_OK)
 
     def post(self, request):
+        Invitation = get_invitation_model()
         request.data['user'] = request.user.pk
         proj_id = request.data['project']
         proj = models.Project.objects.get(identifier=proj_id)
@@ -102,11 +117,22 @@ class Invites(APIView):
         if proj_type.name == 'research-croris':
             myoib = request.user.person_oib
             cached = cache.get(f'{myoib}_croris')
-            print(cached)
+            emails = [col['value'] for col in request.data['collaboratorEmails']]
+            target = cached['projects_lead_users'][proj.croris_id]
+            oib_map = dict()
+            for user in target:
+                oib_map.update({user['email']: user['oib']})
+            cached_emails = set()
+            cached_emails.update([user['email'] for user in target])
+            for email in emails:
+                if email in cached_emails:
+                    invite = Invitation.create(email, inviter=request.user,
+                                               project=proj,
+                                               person_oib=oib_map[email])
+                    invite.send_invitation(request)
         else:
             print(request)
 
-        Invitation = get_invitation_model()
 
         # proj = models.Project.objects.get(identifier='NR-2023-04-001')
 
