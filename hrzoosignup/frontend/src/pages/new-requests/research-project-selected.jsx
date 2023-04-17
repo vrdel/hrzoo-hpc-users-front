@@ -193,7 +193,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     // alert(JSON.stringify(dataToSend, null, 2));
 
     setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Podnošenje novog korisničkog zahtijeva")
+    setModalTitle("Podnošenje novog korisničkog zahtjeva")
     setModalMsg("Da li ste sigurni da želite podnijeti novi zahtjev?")
     setOnYesCall('doaddreq')
     setOnYesCallArg(dataToSend)

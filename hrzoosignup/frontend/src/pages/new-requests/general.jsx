@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
 import ResourceFields from '../../components/fields-request/ResourceFields';
 import GeneralFields from '../../components/fields-request/GeneralFields';
@@ -28,9 +28,16 @@ import { useMutation } from '@tanstack/react-query';
 import { url_ui_prefix } from '../../config/general';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContextProvider';
+import ModalAreYouSure from '../../components/ModalAreYouSure';
 
 
 const GeneralRequest = ({projectType}) => {
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
   const { userDetails } = useContext(AuthContext)
 
   const navigate = useNavigate()
@@ -73,7 +80,7 @@ const GeneralRequest = ({projectType}) => {
       //queryClient.invalidateQueries('my-projects');
       toast.success(
         <span className="font-monospace text-dark">
-          Zahtjev temeljem završnog rada/disertacije je uspješno podnesen
+          Zahtjev je uspješno podnesen
         </span>, {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
@@ -95,6 +102,12 @@ const GeneralRequest = ({projectType}) => {
       )
     }
   })
+
+  function onYesCallback() {
+    if (onYesCall == 'doaddreq') {
+      doAdd(onYesCallArg)
+    }
+  }
 
   const onSubmit = data => {
     let dataToSend = new Object()
@@ -128,28 +141,42 @@ const GeneralRequest = ({projectType}) => {
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submit'
-    doAdd(dataToSend)
     // alert(JSON.stringify(dataToSend, null, 2));
+
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Podnošenje novog korisničkog zahtjeva")
+    setModalMsg("Da li ste sigurni da želite podnijeti novi zahtjev?")
+    setOnYesCall('doaddreq')
+    setOnYesCallArg(dataToSend)
   }
 
   return (
-    <FormProvider {...rhfProps}>
-      <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
-        <RequestHorizontalRuler />
-        <GeneralFields />
-        <ScientificSoftware />
-        <ResourceFields />
-        <RequestHorizontalRuler />
-        <Row className="mt-2 mb-5 text-center">
-          <Col>
-            <Button size="lg" color="success" id="submit-button" type="submit">
-              <FontAwesomeIcon icon={faFile}/>{' '}
-              Podnesi zahtjev
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </FormProvider>
+    <>
+      <ModalAreYouSure
+        isOpen={areYouSureModal}
+        toggle={() => setAreYouSureModal(!areYouSureModal)}
+        title={modalTitle}
+        msg={modalMsg}
+        onYes={onYesCallback}
+      />
+      <FormProvider {...rhfProps}>
+        <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
+          <RequestHorizontalRuler />
+          <GeneralFields />
+          <ScientificSoftware />
+          <ResourceFields />
+          <RequestHorizontalRuler />
+          <Row className="mt-2 mb-5 text-center">
+            <Col>
+              <Button size="lg" color="success" id="submit-button" type="submit">
+                <FontAwesomeIcon icon={faFile}/>{' '}
+                Podnesi zahtjev
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </FormProvider>
+    </>
   )
 };
 
