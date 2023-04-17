@@ -169,8 +169,10 @@ export const CustomReactSelect = ({forwardedRef=undefined,
     const customStyles5 = {
       multiValueLabel: (base) => ({
         ...base,
-        backgroundColor: "#198754",
-        color: "#ffffff",
+        backgroundColor: '#e9ecef',
+        // backgroundColor: "#198754",
+        // color: "#ffffff",
+        color: "#000000",
         fontSize: fontSize,
       }),
       multiValueRemove: (base) => ({
@@ -245,8 +247,10 @@ export const CustomCreatableSelect = ({controlWidth=undefined, fontSize="14px", 
   const customStyles2 = {
     multiValueLabel: (base) => ({
       ...base,
-      backgroundColor: "#198754",
-      color: "#ffffff",
+      backgroundColor: '#e9ecef',
+      // backgroundColor: "#198754",
+      // color: "#ffffff",
+      color: "#000000",
       fontSize: fontSize,
     }),
     multiValueRemove: (base) => ({
@@ -258,7 +262,7 @@ export const CustomCreatableSelect = ({controlWidth=undefined, fontSize="14px", 
     <CreatableSelect
       {...props}
       ref={ forwardedRef ? forwardedRef : null }
-      components={{IndicatorSeparator: null, DropdownIndicator}}
+      components={{IndicatorSeparator: null, DropdownIndicator: null}}
       isMulti
       styles={{...customStyles, ...customStyles2}}
     />
