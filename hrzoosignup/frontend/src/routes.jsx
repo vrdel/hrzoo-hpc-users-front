@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom';
 import BasePage from './components/BasePage';
 import LoginPrivate from './pages/login-private';
-import LoginPublic from './pages/login-public';
 import LoginOffical from './pages/login-official';
 import MyRequestsList from './pages/my-requests/list';
 import { MyRequestChange } from './pages/my-requests/change';
@@ -54,7 +53,6 @@ const BaseRoutes = () => {
         <Routes>
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate />}/>
-            <Route path="prijava" element={<LoginPublic />}/>
             <Route path="prijava-pub" element={<LoginOffical />}/>
             <Route path="prijava-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} />
