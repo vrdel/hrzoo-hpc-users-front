@@ -301,8 +301,15 @@ const UsersTableCroris = ({project, onSubmit}) => {
 
   const missingCollab = new Array()
   collaborators.forEach((user) => {
-    if (!oibsJoined.has(user['oib']))
-      missingCollab.push(user)
+    if (!oibsJoined.has(user['oib'])) {
+      if (user['email'].includes(';')) {
+        let emails = user['email'].split(';')
+        missingCollab.push({...user, email: emails[0].trim()})
+        missingCollab.push({...user, email: emails[1].trim()})
+      }
+      else
+        missingCollab.push(user)
+    }
   })
 
   return (
