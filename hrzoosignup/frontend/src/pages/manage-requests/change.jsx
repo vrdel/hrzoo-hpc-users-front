@@ -4,8 +4,8 @@ import GeneralFields from '../../components/fields-request/GeneralFields';
 import { SharedData } from '../root';
 import { Col, Label, Row, Button, Form } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
-import { fetchNrSpecificProject, changeProject } from '../../api/projects';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { fetchNrSpecificProject, changeProject, deleteProject } from '../../api/projects';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -79,6 +79,7 @@ export const ManageRequestsChange = () => {
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const navigate = useNavigate()
+  const queryClient = useQueryClient();
 
   const {status, data: nrProject, error, isFetching} = useQuery({
       queryKey: ['change-project', projId],
@@ -95,6 +96,12 @@ export const ManageRequestsChange = () => {
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
       data['staff_resources_type'] = data['staff_requestResourceType']
       return changeProject(projId, data)
+    }
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: (projId) => {
+      return deleteProject(projId)
     }
   })
 
@@ -201,14 +208,45 @@ export const ManageRequestsChange = () => {
       doChange(onYesCallArg)
     }
     if (onYesCall == 'dodeletereq') {
-      console.log('VRDEL DEBUG', 'ja bih brisao')
+      doDelete()
     }
+  }
+
+  const doDelete = () => {
+    deleteMutation.mutate(projId, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('all-projects')
+        toast.success(
+          <span className="font-monospace text-dark">
+            Zahtjev je uspješno obrisan
+          </span>, {
+            toastId: 'manreq-ok-delete',
+            autoClose: 2500,
+            delay: 500,
+            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
+          }
+        )
+      },
+      onError: (error) => {
+        toast.error(
+          <span className="font-monospace text-dark">
+            Zahtjev nije bilo moguće obrisati:
+            { error.message }
+          </span>, {
+            toastId: 'manreq-ok-delete',
+            autoClose: 2500,
+            delay: 1000
+          }
+        )
+      },
+    })
   }
 
   const doChange = (data) => {
     // alert(JSON.stringify(data, null, 2))
     changeMutation.mutate(data, {
       onSuccess: () => {
+        queryClient.invalidateQueries('change-project')
         toast.success(
           <span className="font-monospace text-dark">
             Zahtjev je uspješno promijenjen

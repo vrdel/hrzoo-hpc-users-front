@@ -131,6 +131,47 @@ export async function changeProject(projectId, data)
 }
 
 
+export async function deleteProject(projectId)
+{
+  let cookies = new Cookies()
+  let error_msg = ''
+
+  try {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/projects/${projectId}`, {
+      method: 'DELETE',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': cookies.get('csrftoken'),
+        'Referer': 'same-origin'
+      },
+    })
+
+    if (!response.ok) {
+      try {
+        let json = await response.json();
+        error_msg = `${response.status} ${response.statusText} in DELETE: ${json?.status?.message}`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in DELETE`
+      }
+    }
+
+    return response
+  }
+  catch (err) {
+    error_msg = `${err} in DELETE`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error deleting project: ${error_msg}`)
+
+}
+
+
 export async function fetchNrProjects()
 {
   let error_msg = ''
