@@ -267,7 +267,7 @@ export const MyRequestChange = () => {
                       activeReadOnlyResourceTypeMultiValue={true}
                     />
                   </Col>
-                  <Col className={ nrProject.date_changed ? "ms-4 font-monospace" : "ms-4"} md={{size: 2}}>
+                  <Col className={ nrProject.date_changed ? "ms-4 font-monospace fs-5" : "ms-4"} md={{size: 2}}>
                     {
                       nrProject.date_changed ?
                         convertToEuropean(nrProject.date_changed)
@@ -293,9 +293,9 @@ export const MyRequestChange = () => {
                 <Row style={{height: '50px'}}>
                 </Row>
                 <RequestHorizontalRulerRed />
-                <GeneralFields />
-                <ScientificSoftware/>
-                <ResourceFields />
+                <GeneralFields fieldsDisabled={true} />
+                <ScientificSoftware fieldsDisabled={true} />
+                <ResourceFields fieldsDisabled={true} />
                 <Row style={{height: '50px'}}>
                 </Row>
               </Form>
