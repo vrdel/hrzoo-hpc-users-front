@@ -200,6 +200,9 @@ export const ManageRequestsChange = () => {
     if (onYesCall == 'dochangereq') {
       doChange(onYesCallArg)
     }
+    if (onYesCall == 'dodeletereq') {
+      console.log('VRDEL DEBUG', 'ja bih brisao')
+    }
   }
 
   const doChange = (data) => {
@@ -262,6 +265,8 @@ export const ManageRequestsChange = () => {
                   initialProjectState={nrProject.state.name}
                   commentDisabled={commentDisabled}
                   setCommentDisabled={setCommentDisabled}
+                  modalProps={{setAreYouSureModal, setModalTitle, setModalMsg,
+                    setOnYesCall, areYouSureModal}}
                 />
               </Form>
             </FormProvider>
@@ -273,7 +278,9 @@ export const ManageRequestsChange = () => {
 };
 
 
-const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setRequestState, initialProjectState, commentDisabled, setCommentDisabled}) => {
+const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
+  setRequestState, initialProjectState, commentDisabled, setCommentDisabled,
+  modalProps}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
 
@@ -286,7 +293,12 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState, setReq
           </span>
         </Col>
         <Col md={{size: 3}} className="d-inline-flex align-items-center justify-content-start">
-          <Button disabled={true} color="secondary" className="me-1" onClick={() => setDisabledFields(!disabledFields)}>
+          <Button color="secondary" className="me-1" onClick={() => {
+            modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
+            modalProps.setModalTitle('Brisanje korisničkog zahtjeva')
+            modalProps.setModalMsg('Da li ste sigurni da želite brisati korisnički zahtjev?')
+            modalProps.setOnYesCall('dodeletereq')}}
+          >
             Obriši zahtjev
           </Button>
           <Button disabled={true} color="danger" onClick={() => setDisabledFields(!disabledFields)}>
