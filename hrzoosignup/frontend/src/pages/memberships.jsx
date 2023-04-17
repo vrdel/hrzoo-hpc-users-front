@@ -142,6 +142,7 @@ const UsersTableGeneral = ({project}) => {
     }
   });
   const onSubmit = data => {
+    data['project'] = project['identifier']
     alert(JSON.stringify(data, null, 2));
   }
 
@@ -289,6 +290,7 @@ const UsersTableCroris = ({project}) => {
     }
   });
   const onSubmit = data => {
+    data['project'] = project['identifier']
     alert(JSON.stringify(data, null, 2));
   }
 
