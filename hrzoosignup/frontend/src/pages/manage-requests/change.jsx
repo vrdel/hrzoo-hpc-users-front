@@ -331,7 +331,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           </span>
         </Col>
         <Col md={{size: 3}} className="d-inline-flex align-items-center justify-content-start">
-          <Button color="secondary" className="me-1" onClick={() => {
+          <Button color="danger" className="me-1" onClick={() => {
             modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
             modalProps.setModalTitle('Brisanje korisničkog zahtjeva')
             modalProps.setModalMsg('Da li ste sigurni da želite brisati korisnički zahtjev?')
