@@ -32,8 +32,8 @@ import { addResearchProject } from '../../api/projects';
 import { convertToIso8601 } from '../../utils/dates';
 import { url_ui_prefix } from '../../config/general';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import validateDomainAndFields from '../../utils/validate-domain-fields';
+
 
 const ExtractUsers = ({projectUsers}) => {
   return (
@@ -51,30 +51,6 @@ const ExtractUsers = ({projectUsers}) => {
 }
 
 
-const schemaResolve = yup.object().shape({
-  requestExplain: yup.string().required("Obvezno"),
-  scientificDomain: yup.array().of(yup.object().shape(
-    {
-      name: yup.object().shape({
-            'label': yup.string().required(),
-            'value': yup.string().required()
-          }),
-      percent: yup.number().positive().lessThan(101).required("0-100"),
-      scientificfields: yup.array().of(yup.object().shape(
-        {
-          name: yup.object().shape({
-            'label': yup.string().required(),
-            'value': yup.string().required()
-          }),
-          percent: yup.number().positive().lessThan(101).required("0-100")
-
-        }
-      ))
-    }
-  ))
-});
-
-
 const ResearchProjectRequestSelected = ({projectType}) => {
   const [projectTarget, setProjectTarget] = useState(undefined)
   const navigate = useNavigate()
@@ -87,7 +63,6 @@ const ResearchProjectRequestSelected = ({projectType}) => {
 
   const { projId } = useParams()
   const rhfProps = useForm({
-    //resolver: yupResolver(schemaResolve),
     defaultValues: {
       requestName: '',
       requestExplain: '',
@@ -168,56 +143,6 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     }
   })
 
-  function validateDomainAndFields(onYesCallArg) {
-    let sumDomains = 0
-    let nameDomains = new Array()
-    let nameFields = new Array()
-    let sumAllFields = new Array()
-
-    for (var e of onYesCallArg['science_field']) {
-      sumDomains += parseInt(e['percent'])
-      nameDomains.push(e['name']['value'])
-      let sumFields = 0
-      for (var f of e['scientificfields']) {
-        sumFields += parseInt(f['percent'])
-        nameFields.push(f['name']['value'])
-      }
-      sumAllFields.push(sumFields)
-    }
-
-    let err_msg = new Array()
-    if (sumDomains !== 100)
-      err_msg.push('Udjeli područja zajedno moraju biti 100%. ')
-
-    let sumFields100 = false
-    for (var sum of sumAllFields)
-      if (sum !== 100)
-        sumFields100 = true
-    if (sumFields100)
-      err_msg.push('Udjeli polja u području zajedno moraju biti 100%. ')
-
-    let sfs = new Set(nameFields)
-    if (sfs.size < nameFields.length)
-      err_msg.push('Neka znanstvena polja se pojavljuju više puta. ')
-
-    let sds = new Set(nameDomains)
-    if (sds.size < nameDomains.length)
-      err_msg.push('Neka znanstvena područja se pojavljuju više puta. ')
-
-    if (err_msg.length > 0) {
-      toast.error(
-        <span className="font-monospace text-whitespace">
-          Zahtjev nije bilo moguće podnijeti:<br/>
-          { err_msg }
-        </span>, {
-          autoClose: false,
-          toastId: 'researchproj-fail-add',
-        }
-      )
-        return false
-    }
-    return true
-  }
 
   function onYesCallback() {
     if (onYesCall == 'doaddreq') {

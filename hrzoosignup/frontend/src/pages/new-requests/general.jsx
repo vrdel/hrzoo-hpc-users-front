@@ -13,8 +13,6 @@ import {
   useForm,
   FormProvider,
 } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { ErrorMessage } from '@hookform/error-message';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFile,
@@ -29,32 +27,7 @@ import { url_ui_prefix } from '../../config/general';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContextProvider';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
-import * as yup from "yup";
-
-
-const schemaResolve = yup.object().shape({
-  requestName: yup.string().required("Obvezno"),
-  requestExplain: yup.string().required("Obvezno"),
-  scientificDomain: yup.array().of(yup.object().shape(
-    {
-      name: yup.object().shape({
-            'label': yup.string().required(),
-            'value': yup.string().required()
-          }),
-      percent: yup.number().positive().lessThan(101).required("0-100"),
-      scientificfields: yup.array().of(yup.object().shape(
-        {
-          name: yup.object().shape({
-            'label': yup.string().required(),
-            'value': yup.string().required()
-          }),
-          percent: yup.number().positive().lessThan(101).required("0-100")
-
-        }
-      ))
-    }
-  ))
-});
+import validateDomainAndFields from '../../utils/validate-domain-fields';
 
 
 const GeneralRequest = ({projectType}) => {
@@ -69,7 +42,6 @@ const GeneralRequest = ({projectType}) => {
   const navigate = useNavigate()
 
   const rhfProps = useForm({
-    resolver: yupResolver(schemaResolve),
     defaultValues: {
       requestName: '',
       requestExplain: '',
@@ -132,7 +104,9 @@ const GeneralRequest = ({projectType}) => {
 
   function onYesCallback() {
     if (onYesCall == 'doaddreq') {
-      doAdd(onYesCallArg)
+      const res = validateDomainAndFields(onYesCallArg)
+      if (res)
+        doAdd(onYesCallArg)
     }
   }
 
