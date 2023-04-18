@@ -189,7 +189,7 @@ class Projects(APIView):
             if kwargs.get('specific', False):
                 req_type = kwargs.get('specific')
                 if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
-                    serializer = ProjectSerializerGet(models.Project.objects.all(), many=True)
+                    serializer = ProjectSerializerGet(models.Project.objects.all().order_by('-date_submitted'), many=True)
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
                     serializer = ProjectSerializerGet(models.Project.objects.get(identifier=req_type))
@@ -204,7 +204,7 @@ class Projects(APIView):
             }
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
-        up_obj = models.UserProject.objects.filter(user=request.user.pk)
+        up_obj = models.UserProject.objects.filter(user=request.user.pk).order_by('-project__date_submitted')
         for up in up_obj:
             projects.append(up.project)
 
@@ -251,7 +251,7 @@ class ProjectsRole(APIView):
             if kwargs.get('targetrole', False):
                 role = kwargs.get('targetrole')
                 role_obj = models.Role.objects.get(name=role)
-                up_obj = models.UserProject.objects.filter(user=request.user.pk).filter(role=role_obj.pk)
+                up_obj = models.UserProject.objects.filter(user=request.user.pk).filter(role=role_obj.pk).order_by('-project__date_submitted')
                 for up in up_obj:
                     projects.append(up.project)
 
