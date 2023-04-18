@@ -52,17 +52,13 @@ try:
     API_PROJECT = config.get('CRORIS', 'API_Project')
     API_PERSON = config.get('CRORIS', 'API_Person')
     CRORIS_USER = config.get('CRORIS', 'Username')
-    CRORIS_PASSWORD = config.get('DATABASE', 'Password')
+    CRORIS_PASSWORD = config.get('CRORIS', 'Password')
 
     SUPERUSER_NAME = config.get('SUPERUSER', 'Name')
     SUPERUSER_PASS = config.get('SUPERUSER', 'Password')
     SUPERUSER_EMAIL = config.get('SUPERUSER', 'Email')
 
     PERMISSIONS_STAFF = config.get('PERMISSIONS', 'Staff')
-
-    MAIL_SEND = config.getboolean('EMAIL', 'Send')
-    SRCE_SMTP = config.get('EMAIL', 'SrceSmtp')
-    ADMIN_MAIL = config.get('EMAIL', 'AdminMail')
 
 except NoSectionError as e:
     print(e)
@@ -74,6 +70,7 @@ except ImproperlyConfigured as e:
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -158,13 +155,14 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
 INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'smtp.srce.hr'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'user'
-EMAIL_HOST_PASSWORD = 'pass'
-EMAIL_USE_TLS = True
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
 EMAIL_USE_SSL = False
 EMAIL_TIMEOUT = 15
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -178,7 +176,6 @@ DATABASES = {
         'PASSWORD': DBPASSWORD,
 
     },
-
 }
 
 
@@ -230,15 +227,30 @@ SESSION_COOKIE_SECURE = True
 # custom user model
 # -vrdel
 AUTH_USER_MODEL = 'backend.User'
-#AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
-#                           'backend.auth.saml2.backends.SAML2Backend']
-AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'backend.auth.saml2.backends.SAML2Backend']
+                           # 'djangosaml2.backends.Saml2Backend']
+# AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
 LOGIN_REDIRECT_URL = '{}/ui/saml2-login-redirect'.format(RELATIVE_PATH)
-LOGOUT_REDIRECT_URL = '{}/ui/proxy'.format(RELATIVE_PATH)
-# SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
+LOGOUT_REDIRECT_URL = '{}/ui/prijava-priv'.format(RELATIVE_PATH)
+SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_SAMESITE = None
+# SESSION_COOKIE_SAMESITE = None
+LOGIN_URL = '/saml2/login/'
+SAML_ATTRIBUTE_MAPPING = {
+    'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
+    'mail': ('person_mail', ),
+    'o': ('person_institution', ),
+    'hrEduPersonOIB': ('person_oib', ),
+    'ou': ('person_organisation', ),
+    'hrEduPersonAffiliation': ('person_affiliation', ),
+    'givenName': ('first_name', ),
+    'sn': ('last_name', ),
+}
+SAML_CREATE_UNKNOWN_USER = True
+SAML_DJANGO_USER_MAIN_ATTRIBUTE = 'person_oib'
+
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
 STATIC_ROOT = '{}/usr/share/hrzoosignup/static/'.format(VENV)
@@ -250,10 +262,21 @@ WEBPACK_LOADER = {
         'POLL_INTERVAL': 0.1,
         'BUNDLE_DIR_NAME': 'reactbundle/',
         'STATS_FILE': os.path.join(BASE_DIR, 'frontend/webpack-stats.json'),
-        'IGNORE': [r'.+\.hot-update.js', r'.+\.map'],
     }
 }
 SECURE_SSL_REDIRECT = False
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
 
 CACHES = {
     'default': {
