@@ -1,0 +1,13 @@
+include README.md
+include LICENSE
+include setup.py
+include requirements.txt
+
+exclude etc/was.*
+exclude etc/*.devel.*
+exclude etc/metadata*
+exclude etc/secret_key
+exclude etc/secretkey
+exclude **/*.eslintrc.js
+
+recursive-exclude hrzoosignup/frontend/node_modules/* *
