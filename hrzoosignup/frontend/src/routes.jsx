@@ -53,7 +53,7 @@ const BaseRoutes = () => {
         <Routes>
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate />}/>
-            <Route path="prijava-pub" element={<LoginOffical />}/>
+            <Route path="prijava" element={<LoginOffical />}/>
             <Route path="prijava-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} />
             }/>
