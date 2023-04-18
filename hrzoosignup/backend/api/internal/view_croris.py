@@ -6,6 +6,7 @@ from rest_framework import status
 
 from django.conf import settings
 from django.core.cache import cache
+from django.contrib.auth import get_user_model
 
 import asyncio
 import uvloop
@@ -46,6 +47,12 @@ class CroRISInfo(APIView):
             if oib:
                 self.loop.run_until_complete(self._fetch_serie(oib))
                 self.loop.close()
+
+                user = get_user_model().objects.get(id=self.request.user.id)
+                user.croris_first_name = self.person_info.get('first_name', '')
+                user.croris_last_name = self.person_info.get('last_name', '')
+                user.croris_mail = self.person_info.get('email', '')
+                user.save()
 
                 # frontend is calling every 15 min
                 # we set here eviction after 20 min
