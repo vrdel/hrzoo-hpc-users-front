@@ -11,4 +11,4 @@ clean:
 	python setup.py clean --all
 	rm -rf build/
 	rm -rf dist
-	rm -rf vpsrequest.egg-info/
+	rm -rf hrzoosignup.egg-info/
