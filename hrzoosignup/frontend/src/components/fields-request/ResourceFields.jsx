@@ -76,6 +76,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                   {...field}
                   disabled={fieldsDisabled}
                   className="form-control text-center"
+                  min="1"
                   type="number"
                 />
               }
@@ -96,6 +97,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                   {...field}
                   className="form-control text-center"
                   disabled={fieldsDisabled}
+                  min="1"
                   type="number"
                 />
               }
@@ -116,6 +118,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                   {...field}
                   disabled={fieldsDisabled}
                   className="form-control text-center"
+                  min="1"
                   type="number"
                 />
               }
@@ -136,6 +139,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                   {...field}
                   className="form-control text-center"
                   disabled={fieldsDisabled}
+                  min="1"
                   type="number"
                 />
               }
@@ -156,6 +160,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                   {...field}
                   disabled={fieldsDisabled}
                   className="form-control text-center"
+                  min="1"
                   type="number"
                 />
               }
@@ -195,6 +200,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                   {...field}
                   className="form-control text-center"
                   disabled={fieldsDisabled}
+                  min="1"
                   type="number"
                 />
               }
@@ -215,6 +221,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                   {...field}
                   disabled={fieldsDisabled}
                   className="form-control text-center"
+                  min="1"
                   type="number"
                 />
               }
@@ -289,6 +296,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
                 {...field}
                 disabled={fieldsDisabled}
                 className="form-control text-center"
+                min="1"
                 type="number"
               />
             }
@@ -309,6 +317,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
                 {...field}
                 className="form-control text-center"
                 disabled={fieldsDisabled}
+                min="1"
                 type="number"
               />
             }
@@ -329,6 +338,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
                 {...field}
                 disabled={fieldsDisabled}
                 className="form-control text-center"
+                min="1"
                 type="number"
               />
             }
@@ -349,6 +359,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
                 {...field}
                 className="form-control text-center"
                 disabled={fieldsDisabled}
+                min="1"
                 type="number"
               />
             }
@@ -369,6 +380,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
                 {...field}
                 disabled={fieldsDisabled}
                 className="form-control text-center"
+                min="1"
                 type="number"
               />
             }
