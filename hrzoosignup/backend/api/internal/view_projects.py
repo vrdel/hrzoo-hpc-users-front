@@ -240,7 +240,6 @@ class Projects(APIView):
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
 
-
 class ProjectsRole(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated, )
@@ -283,53 +282,6 @@ class ProjectsRole(APIView):
                 'status': {
                     'code': status.HTTP_404_NOT_FOUND,
                     'message': 'Role not found'
-                }
-            }
-            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
-
-
-class ProjectsState(APIView):
-    authentication_classes = (SessionAuthentication,)
-    permission_classes = (IsAuthenticated, )
-
-    def get(self, request, **kwargs):
-        projects = list()
-
-        try:
-            if kwargs.get('targetstate', False):
-                state = kwargs.get('targetstate')
-                state_obj = models.State.objects.get(name=state)
-                up_obj = models.UserProject.objects.filter(user=request.user.pk)
-                for up in up_obj:
-                    projects.append(up.project)
-
-                serializer = ProjectSerializerGet(projects, many=True)
-
-                return Response(serializer.data, status=status.HTTP_200_OK)
-
-            else:
-                err_response = {
-                    'status': {
-                        'code': status.HTTP_400_BAD_REQUEST,
-                        'message': 'Role needed'
-                    }
-                }
-                return Response(err_response, status=status.HTTP_404_NOT_FOUND)
-
-        except models.Project.DoesNotExist as exc:
-            err_response = {
-                'status': {
-                    'code': status.HTTP_404_NOT_FOUND,
-                    'message': 'Project not found'
-                }
-            }
-            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
-
-        except models.State.DoesNotExist as exc:
-            err_response = {
-                'status': {
-                    'code': status.HTTP_404_NOT_FOUND,
-                    'message': 'State not found'
                 }
             }
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
