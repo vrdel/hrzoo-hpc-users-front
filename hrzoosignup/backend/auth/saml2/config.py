@@ -16,7 +16,7 @@ def get_saml_config(request):
 
     config = {
         'xmlsec_binary': '/usr/bin/xmlsec1',
-        'entityid': 'http://{}{}:8001/saml2/metadata/'.format(hostname, settings.RELATIVE_PATH),
+        'entityid': 'https://{}{}/saml2/metadata/'.format(hostname, settings.RELATIVE_PATH),
         'allow_unknown_attributes': True,
         'debug': 1,
         'service': {
@@ -28,11 +28,11 @@ def get_saml_config(request):
                 'want_response_signed': False,
                 'endpoints': {
                     'assertion_consumer_service': [
-                        ('http://{}{}:8001/saml2/acs/'.format(hostname, settings.RELATIVE_PATH),
+                        ('https://{}{}/saml2/acs/'.format(hostname, settings.RELATIVE_PATH),
                          saml2.BINDING_HTTP_POST),
                     ],
                     'single_logout_service': [
-                        ('http://{}{}:8001/saml2/ls/'.format(hostname, settings.RELATIVE_PATH),
+                        ('https://{}{}/saml2/ls/'.format(hostname, settings.RELATIVE_PATH),
                          saml2.BINDING_HTTP_REDIRECT),
                     ],
                 },
