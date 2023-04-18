@@ -7,11 +7,11 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (sessionData.active &&
-      (sessionData.userdetails.is_staff || sessionData.userdetails.is_superuser))
-      navigate(defaultAuthnRedirectStaff)
-    else
-      navigate(defaultAuthnRedirect)
+    const redir = sessionData.userdetails.is_staff || sessionData.userdetails.is_superuser
+      ? defaultAuthnRedirectStaff
+      : defaultAuthnRedirect
+    const origin = location.state?.from?.pathname || redir
+    navigate(origin)
   }, [location.pathname])
 
   return (
