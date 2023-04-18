@@ -153,7 +153,7 @@ export const ManageRequestsList = () => {
                 {
                   nrProjects.length < 5 && [...Array(5 - nrProjects.length)].map((_, i) =>
                     <tr key={i + 5}>
-                      <td colSpan="8" style={{height: '60px', minHeight: '60px'}}>
+                      <td colSpan="9" style={{height: '60px', minHeight: '60px'}}>
                       </td>
                     </tr>
                   )
