@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../components/AuthContextProvider';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import validateDomainAndFields from '../../utils/validate-domain-fields';
+import validateRequestDates from '../../utils/validate-dates-startend';
 
 
 const GeneralRequest = ({projectType}) => {
@@ -104,8 +105,10 @@ const GeneralRequest = ({projectType}) => {
 
   function onYesCallback() {
     if (onYesCall == 'doaddreq') {
-      const res = validateDomainAndFields(onYesCallArg)
-      if (res)
+      const resDates = validateRequestDates(onYesCallArg['date_start'],
+        onYesCallArg['date_end'])
+      const resDomains = validateDomainAndFields(onYesCallArg)
+      if (resDomains && resDates)
         doAdd(onYesCallArg)
     }
   }
