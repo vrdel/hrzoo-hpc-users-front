@@ -156,7 +156,7 @@ INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
 INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
 EMAIL_HOST = 'smtp.srce.hr'
-EMAIL_PORT = 587
+EMAIL_PORT = 25
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
