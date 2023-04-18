@@ -18,9 +18,11 @@ from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponseRedirect
 
 
 urlpatterns = [
+    re_path(r'^$', lambda x: HttpResponseRedirect('/ui/prijava')),
     path('auth/', include('dj_rest_auth.urls')),
     re_path(r'^saml2/', include(('djangosaml2.urls', 'backend'), namespace='saml2')),
     re_path(r'^ui', TemplateView.as_view(template_name='index.html')),
