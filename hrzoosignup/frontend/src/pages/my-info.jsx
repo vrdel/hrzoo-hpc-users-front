@@ -67,7 +67,7 @@ const CroRisInfo = ({croRisProjects}) => {
         <Col className="ms-3" md={{size: 2}}>
           {
             croRisProjects['person_info']['last_name'] ?
-              croRisProjects['person_info']['first_name']
+              croRisProjects['person_info']['last_name']
             :
               '\u2212'
           }
@@ -75,7 +75,7 @@ const CroRisInfo = ({croRisProjects}) => {
         <Col className="ms-3" md={{size: 3}}>
           {
             croRisProjects['person_info']['croris_id'] ?
-              croRisProjects['person_info']['first_name']
+              croRisProjects['person_info']['croris_id']
             :
               '\u2212'
           }
