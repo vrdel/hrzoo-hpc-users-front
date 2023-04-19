@@ -126,11 +126,9 @@ class ProjectsResearch(APIView):
             userproject_obj.save()
 
             if settings.EMAIL_SEND:
-                email_new_project([settings.EMAILFROM],
-                                project_ins.name,
-                                request.user,
-                                project_ins.project_type,
-                                project_ins.identifier)
+                email_new_project(project_ins.name, request.user,
+                                  project_ins.project_type,
+                                  project_ins.identifier)
 
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
