@@ -68,7 +68,7 @@ Pogledaj prijavu: https://computing.srce.hr/ui/upravljanje-zahtjevima/{prident}
 """
 
     return send_mail(
-        'Prijava {}'.format(project_type_subject),
+        '[Napredno računanje] Prijava {}'.format(project_type_subject),
         email,
         settings.EMAILFROM, to,
         fail_silently=True)
