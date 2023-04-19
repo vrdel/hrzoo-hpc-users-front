@@ -12,7 +12,7 @@ from django.core.cache import cache
 
 from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
 from backend import models
-from backend.email.project.templates import email_new_project
+from backend.email.project.templates import email_new_project, email_approve_project
 
 import json
 import datetime
@@ -179,6 +179,13 @@ class Projects(APIView):
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
+                # to=[settings.EMAILFROM]
+                if settings.EMAIL_SEND:
+                    userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
+                    person_mail = userproj[0].user.person_mail
+                    email_approve_project(["daniel.vrcic@gmail.com", person_mail],
+                                          p_obj.name, p_obj.project_type)
+
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
                 p_obj.date_changed = datetime.datetime.now()
