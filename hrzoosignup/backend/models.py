@@ -364,9 +364,12 @@ class CustomInvitation(AbstractBaseInvitation):
                     self.key
                 ),
                 "site_name": current_site.name,
+                "project_name": self.project.name,
                 "email": self.email,
                 "key": self.key,
                 "inviter": self.inviter,
+                "first_name": self.inviter.first_name,
+                "last_name": self.inviter.last_name,
             },
         )
 
