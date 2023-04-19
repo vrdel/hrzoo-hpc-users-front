@@ -4,11 +4,13 @@ import { SharedData } from '../../pages/root';
 import {
   Col,
   Input,
+  FormFeedback,
   InputGroup,
   InputGroupText,
   Label,
   Row,
 } from 'reactstrap';
+import { ErrorMessage } from '@hookform/error-message';
 import {
   Controller,
   useFormContext
@@ -236,6 +238,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
   )
 }
 
+
 export const HpcFields = ({fieldsDisabled=false}) => {
   const { control, formState: {errors} } = useFormContext();
 
@@ -295,8 +298,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               <Input
                 {...field}
                 disabled={fieldsDisabled}
-                className="form-control text-center"
-                min="1"
+                className={`form-control text-center ${errors && errors.HPCnSlotsCPU ? "is-invalid" : ''}`}
                 type="number"
               />
             }
@@ -304,6 +306,15 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           <InputGroupText>
             CPU
           </InputGroupText>
+          <ErrorMessage
+            errors={errors}
+            name="HPCnSlotsCPU"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
         </InputGroup>
       </Col>
       <Col md={{size: 2}}>
@@ -315,9 +326,8 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             render={ ({field}) =>
               <Input
                 {...field}
-                className="form-control text-center"
+                className={`form-control text-center ${errors && errors.HPCnSlotsGPU ? "is-invalid" : ''}`}
                 disabled={fieldsDisabled}
-                min="1"
                 type="number"
               />
             }
@@ -325,6 +335,15 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           <InputGroupText>
             GPU
           </InputGroupText>
+          <ErrorMessage
+            errors={errors}
+            name="HPCnSlotsGPU"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
         </InputGroup>
       </Col>
       <Col md={{size: 2}}>
@@ -337,8 +356,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               <Input
                 {...field}
                 disabled={fieldsDisabled}
-                className="form-control text-center"
-                min="1"
+                className={`form-control text-center ${errors && errors.HPCnRAM ? "is-invalid" : ''}`}
                 type="number"
               />
             }
@@ -346,6 +364,15 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           <InputGroupText>
             RAM
           </InputGroupText>
+          <ErrorMessage
+            errors={errors}
+            name="HPCnRAM"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
         </InputGroup>
       </Col>
       <Col md={{size: 2}}>
@@ -357,9 +384,8 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             render={ ({field}) =>
               <Input
                 {...field}
-                className="form-control text-center"
+                className={`form-control text-center ${errors && errors.HPCnTempGB ? "is-invalid" : ''}`}
                 disabled={fieldsDisabled}
-                min="1"
                 type="number"
               />
             }
@@ -367,6 +393,15 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           <InputGroupText>
             Temp
           </InputGroupText>
+          <ErrorMessage
+            errors={errors}
+            name="HPCnTempGB"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
         </InputGroup>
       </Col>
       <Col md={{size: 2}}>
@@ -379,8 +414,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               <Input
                 {...field}
                 disabled={fieldsDisabled}
-                className="form-control text-center"
-                min="1"
+                className={`form-control text-center ${errors && errors.HPCnDiskGB ? "is-invalid" : ''}`}
                 type="number"
               />
             }
@@ -388,6 +422,15 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           <InputGroupText>
             Disk
           </InputGroupText>
+          <ErrorMessage
+            errors={errors}
+            name="HPCnDiskGB"
+            render={({ message }) =>
+              <FormFeedback invalid className="end-0">
+                { message }
+              </FormFeedback>
+            }
+          />
         </InputGroup>
       </Col>
     </Row>
