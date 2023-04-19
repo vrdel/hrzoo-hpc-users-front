@@ -188,7 +188,7 @@ class Projects(APIView):
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
-                    email_approve_project([settings.EMAILFROM], person_mail],
+                    email_approve_project([settings.EMAILFROM, person_mail],
                                           p_obj.name, p_obj.project_type)
 
             serializer = ProjectSerializer(p_obj, data=request.data)
