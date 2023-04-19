@@ -18,7 +18,8 @@ vaš zahtjev za korištenje usluge Napredno računanje "{name}" je prihvaćen.
         subject,
         body,
         settings.EMAILFROM,
-        [to])
+        [to],
+        [settings.EMAILUS])
 
     return em.send(fail_silently=True)
 

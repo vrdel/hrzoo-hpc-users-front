@@ -1,11 +1,11 @@
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 def email_approve_membership(to, name, collab):
     subject = "[Napredno računanje] Prijava korisnika uspješna"
 
-    email = \
+    body = \
 f"""\
 Poštovani/a,
 
@@ -15,5 +15,12 @@ suradnik {collab.first_name} {collab.last_name} je potvrdio prijavu na projekt
 {settings.EMAILSIGNATURE}
 """
 
-    return send_mail(subject, email, settings.EMAILFROM, to,\
-                     fail_silently=False)
+    em = EmailMessage(
+        subject,
+        body,
+        settings.EMAILFROM,
+        [to],
+        [settings.EMAILUS]
+    )
+
+    return em.send(fail_silently=True)

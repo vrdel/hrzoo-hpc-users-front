@@ -173,8 +173,8 @@ class Projects(APIView):
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
-                    email_deny_project([settings.EMAILFROM, person_mail],
-                                          p_obj.name, p_obj.project_type, staff_comment)
+                    email_deny_project(person_mail, p_obj.name,
+                                       p_obj.project_type, staff_comment)
 
             if state.name == 'approve':
                 p_obj.approved_by = {
@@ -186,7 +186,7 @@ class Projects(APIView):
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
-                    email_approve_project([settings.EMAILFROM, person_mail],
+                    email_approve_project(person_mail,
                                           p_obj.name, p_obj.project_type)
 
             serializer = ProjectSerializer(p_obj, data=request.data)
