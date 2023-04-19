@@ -70,9 +70,8 @@ class Invites(APIView):
                     if (inv_oib == request.user.person_oib):
                         associate_user_to_project(user, proj)
 
-                        # to=[settings.EMAILFROM, get_invite.inviter.person_mail],
                         if settings.EMAIL_SEND:
-                            email_approve_membership(["daniel.vrcic@gmail.com",
+                            email_approve_membership([settings.EMAILFROM,
                                                       get_invite.inviter.person_mail],
                                                      proj.name, user)
 
@@ -100,9 +99,8 @@ class Invites(APIView):
                 else:
                     associate_user_to_project(user, proj)
 
-                    # to=[settings.EMAILFROM, get_invite.inviter.person_mail],
                     if settings.EMAIL_SEND:
-                        email_approve_membership(["daniel.vrcic@gmail.com",
+                        email_approve_membership([settings.EMAILFROM,
                                                  get_invite.inviter.person_mail],
                                                  proj.name, user)
                     msg = {
@@ -205,7 +203,7 @@ class Invites(APIView):
             msg = {
                 'status': {
                     'code': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invitations problem:{}'.format(repr(exc))
+                    'message': 'Invitations problem: {}'.format(repr(exc))
                 }
             }
             print(msg)

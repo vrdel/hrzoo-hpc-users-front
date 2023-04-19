@@ -51,9 +51,8 @@ class ProjectsGeneral(APIView):
             cobj.counter += 1
             cobj.save()
 
-            # to=[settings.EMAILFROM]
             if settings.EMAIL_SEND:
-                email_new_project(["daniel.vrcic@gmail.com"],
+                email_new_project([settings.EMAILFROM],
                                 project_ins.name,
                                 request.user,
                                 project_ins.project_type,
@@ -126,9 +125,8 @@ class ProjectsResearch(APIView):
                                                  date_joined=datetime.datetime.now())
             userproject_obj.save()
 
-            # to=[settings.EMAILFROM]
             if settings.EMAIL_SEND:
-                email_new_project(["daniel.vrcic@gmail.com"],
+                email_new_project([settings.EMAILFROM],
                                 project_ins.name,
                                 request.user,
                                 project_ins.project_type,
@@ -174,12 +172,10 @@ class Projects(APIView):
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
-                # TODO:
-                # to=[settings.EMAILFROM, person_mail]
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
-                    email_deny_project(["daniel.vrcic@gmail.com", person_mail],
+                    email_deny_project([settings.EMAILFROM, person_mail],
                                           p_obj.name, p_obj.project_type, staff_comment)
 
             if state.name == 'approve':
@@ -189,12 +185,10 @@ class Projects(APIView):
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
-                # TODO:
-                # to=[settings.EMAILFROM, person_mail]
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
-                    email_approve_project(["daniel.vrcic@gmail.com", person_mail],
+                    email_approve_project([settings.EMAILFROM], person_mail],
                                           p_obj.name, p_obj.project_type)
 
             serializer = ProjectSerializer(p_obj, data=request.data)
