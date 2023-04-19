@@ -27,7 +27,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
   const location = useLocation()
 
   useEffect(() => {
-    localStorage.setItem('invitation-key', inviteKey)
+    localStorage.setItem('invitation-key-set', inviteKey)
     if (!(isLoggedIn || sessionData.active))
       navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
     else {
@@ -37,7 +37,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
 
   async function acceptInvite() {
     try {
-      localStorage.removeItem('invitation-key')
+      localStorage.removeItem('invitation-key-set')
       const ret = await fetchInvite(inviteKey)
       setInviteAlertSucces(true)
     }

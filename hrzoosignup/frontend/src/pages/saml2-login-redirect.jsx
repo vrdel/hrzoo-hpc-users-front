@@ -8,13 +8,14 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const inviteKey = localStorage.getItem('invitation-key')
+    const inviteKey = localStorage.getItem('invitation-key-set')
     const redir = sessionData.userdetails.is_staff || sessionData.userdetails.is_superuser
       ? defaultAuthnRedirectStaff
       : defaultAuthnRedirect
     const origin = location.state?.from?.pathname || redir
     if (inviteKey)
-      navigate(url_ui_prefix + '/prijava-email/' + inviteKey)
+      //navigate(url_ui_prefix + '/prijava-email/' + inviteKey)
+      navigate(-2)
     else
       navigate(origin)
   }, [location.pathname])
