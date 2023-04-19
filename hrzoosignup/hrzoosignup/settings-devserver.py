@@ -64,6 +64,7 @@ try:
 
     EMAIL_SEND = config.getboolean('EMAIL', 'Send')
     EMAILFROM = config.get('EMAIL', 'From')
+    EMAILUS = config.get('EMAIL', 'Us')
     EMAILSIGNATURE = config.get('EMAIL', 'Signature')
     EMAILHOST = config.get('EMAIL', 'Host')
     EMAILPORT = config.getint('EMAIL', 'Port')
@@ -107,7 +108,7 @@ except FileNotFoundError as e:
     raise SystemExit(1)
 
 try:
-    EMAILSIGNATURE = open(EMAILSIGNATURE, 'r').read()
+    EMAILSIGNATURE = open(EMAILSIGNATURE, 'r', encoding='utf-8').read()
 except FileNotFoundError as e:
     print(EMAILSIGNATURE + ': %s' % repr(e))
     raise SystemExit(1)

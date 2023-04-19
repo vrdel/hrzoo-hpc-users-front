@@ -64,6 +64,7 @@ try:
 
     EMAIL_SEND = config.getboolean('EMAIL', 'Send')
     EMAILFROM = config.get('EMAIL', 'From')
+    EMAILUS = config.get('EMAIL', 'Us')
     EMAILSIGNATURE = config.get('EMAIL', 'Signature')
     EMAILHOST = config.get('EMAIL', 'Host')
     EMAILPORT = config.getint('EMAIL', 'Port')

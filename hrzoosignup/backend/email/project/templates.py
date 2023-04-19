@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.mail import send_mail
+from django.core.mail import EmailMessage
 
 
 def email_approve_project(to, name, prtype):
@@ -52,7 +52,7 @@ def email_new_project(to, name, lead, prtype, prident):
     elif prtype.name == 'research-croris':
         project_type_subject = "novog istraživačkog projekta"
 
-    email = \
+    body = \
 f"""\
 Poštovani/a,
 
@@ -67,8 +67,10 @@ Pogledaj prijavu: https://computing.srce.hr/ui/upravljanje-zahtjevima/{prident}
 {settings.EMAILSIGNATURE}
 """
 
-    return send_mail(
-        '[Napredno računanje] Prijava {}'.format(project_type_subject),
-        email,
-        settings.EMAILFROM, to,
-        fail_silently=True)
+    em = EmailMessage(
+        'Prijava ' + project_type_subject,
+        body,
+        settings.EMAILFROM,
+        [settings.EMAILUS])
+
+    return em.send(fail_silently=True)
