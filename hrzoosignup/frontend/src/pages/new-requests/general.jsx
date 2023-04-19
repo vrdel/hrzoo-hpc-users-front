@@ -62,19 +62,58 @@ const schemaResolve = yup.object().shape({
   scientificSoftwareExtra: yup.string(),
   scientificSoftwareHelp: yup.boolean(),
   requestResourceType: yup.array().of(yup.object()),
-  HPCnSlotsCPU: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  HPCnSlotsGPU: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  HPCnSlotsRAM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  HPCnRAM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  HPCnTempGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  HPCnDiskGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  CLOUDnVM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  CLOUDnSlotsCPU: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  CLOUDnRAM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  CLOUDnRAMVM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  CLOUDnFastDiskGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  CLOUDnDiskGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
-  CLOUDnIPs: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnSlotsCPU: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(6656, "Broj ne može biti veći od 6656")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnSlotsGPU: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(80, "Broj ne može biti veći od 80")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnSlotsRAM: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(80, "Broj ne može biti veći od 4000")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnRAM: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(4000, "Broj ne može biti veći od 4000")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnTempGB: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(580000, "Broj ne može biti veći od 580TB")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnDiskGB: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(2000000, "Broj ne može biti veći od 2PB")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnVM: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(100, "Broj ne može biti veći od 100")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnSlotsCPU: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(1000, "Broj ne može biti veći od 1000")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnRAM: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(1000, "Broj ne može biti veći od 2TB")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnRAMVM: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(1000, "Broj ne može biti veći od 2TB")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnFastDiskGB: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(500, "Broj ne može biti veći od 500GB")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnDiskGB: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(10000, "Broj ne može biti veći od 10TB")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnIPs: yup.number()
+    .min(1, "Broj ne može biti manji od 1")
+    .max(10, "Broj ne može biti veći od 10")
+    .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
 });
 
 
@@ -91,7 +130,7 @@ const GeneralRequest = ({projectType}) => {
 
   const rhfProps = useForm({
     resolver: yupResolver(schemaResolve),
-    criteriaMode: "firstError",
+    criteriaMode: "all",
     shouldFocusError: true,
     defaultValues: {
       requestName: '',
