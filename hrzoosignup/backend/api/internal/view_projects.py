@@ -50,11 +50,13 @@ class ProjectsGeneral(APIView):
             cobj.counter += 1
             cobj.save()
 
-            # to=computing@srce.hr
-            email_new_project(["daniel.vrcic@gmail.com"],
-                              project_ins.name,
-                              request.user,
-                              project_ins.identifier)
+            # to=[settings.EMAILFROM]
+            if settings.EMAIL_SEND:
+                email_new_project(["daniel.vrcic@gmail.com"],
+                                project_ins.name,
+                                request.user,
+                                project_ins.project_type,
+                                project_ins.identifier)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -122,6 +124,15 @@ class ProjectsResearch(APIView):
                                                  role=role_obj,
                                                  date_joined=datetime.datetime.now())
             userproject_obj.save()
+
+            # to=[settings.EMAILFROM]
+            if settings.EMAIL_SEND:
+                email_new_project(["daniel.vrcic@gmail.com"],
+                                project_ins.name,
+                                request.user,
+                                project_ins.project_type,
+                                project_ins.identifier)
+
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
