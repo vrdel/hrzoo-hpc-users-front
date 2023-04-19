@@ -114,6 +114,7 @@ const GeneralFields = ({fieldsDisabled=false}) => {
                 {...field}
                 locale="hr-HR"
                 disabled={fieldsDisabled}
+                maxDate={new Date(2027, 1)}
                 required={true}
                 className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
               />
@@ -129,6 +130,7 @@ const GeneralFields = ({fieldsDisabled=false}) => {
                 {...field}
                 required={true}
                 disabled={fieldsDisabled}
+                maxDate={new Date(2027, 1)}
                 locale="hr-HR"
                 className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
               />
