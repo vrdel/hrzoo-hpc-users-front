@@ -12,9 +12,11 @@ from django.core.cache import cache
 
 from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
 from backend import models
+from backend.email.project.templates import email_new_project
 
 import json
 import datetime
+import textwrap
 
 
 class ProjectsGeneral(APIView):
@@ -47,6 +49,9 @@ class ProjectsGeneral(APIView):
             userproject_obj.save()
             cobj.counter += 1
             cobj.save()
+
+            # to=computing@srce.hr
+            email_new_project(project_ins.name, "daniel.vrcic@gmail.com", request.user, project_ins.identifier)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

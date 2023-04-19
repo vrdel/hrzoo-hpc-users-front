@@ -15,7 +15,8 @@ SecretKeyFile = %(VENV)s/etc/hrzoosignup/secretkey
 Metadata = %(VENV)s/etc/hrzoosignup/metadata.xml
 
 [SUPERUSER]
-Name = HZSI SuperUser
+FirstName = SuperUserName
+LastName = SuperLastName
 Password = testbed
 Email = hzsi@srce.hr
 
@@ -38,7 +39,13 @@ Password = postgres
 Staff = dvrcic@aai-test.hr
 
 [EMAIL]
-TEMPLATE_DIR = %(VENV)s/etc/hrzoosignup/email_templates/
 Send = False
-SrceSmtp = smtp.srce.hr
-AdminMail = hpc@srce.hr
+From = computing@srce.hr
+Signature = %(VENV)s/etc/hrzoosignup/signature
+Host = smtp.gmail.com
+Port = 587
+User = user
+Password = pass
+TLS = True
+SSL = False
+Timeout = 15

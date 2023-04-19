@@ -60,6 +60,17 @@ try:
 
     PERMISSIONS_STAFF = config.get('PERMISSIONS', 'Staff')
 
+    EMAIL_SEND = config.getboolean('EMAIL', 'Send')
+    EMAILFROM = config.get('EMAIL', 'From')
+    EMAILSIGNATURE = config.get('EMAIL', 'Signature')
+    EMAILHOST = config.get('EMAIL', 'Host')
+    EMAILPORT = config.getint('EMAIL', 'Port')
+    EMAILUSER = config.get('EMAIL', 'User')
+    EMAILUPASSWORD = config.get('EMAIL', 'Password')
+    EMAILTLS = config.getboolean('EMAIL', 'TLS')
+    EMAILSSL = config.getboolean('EMAIL', 'SSL')
+    EMAILTIMEOUT = config.getint('EMAIL', 'TIMEOUT')
+
 except NoSectionError as e:
     print(e)
     raise SystemExit(1)
@@ -91,6 +102,12 @@ try:
     SECRET_KEY = open(SECRET_KEY_FILE, 'r').read()
 except FileNotFoundError as e:
     print(SECRET_KEY_FILE + ': %s' % repr(e))
+    raise SystemExit(1)
+
+try:
+    EMAILSIGNATURE = open(EMAILSIGNATURE, 'r').read()
+except FileNotFoundError as e:
+    print(EMAILSIGNATURE + ': %s' % repr(e))
     raise SystemExit(1)
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -155,13 +172,13 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
 INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
-EMAIL_HOST = 'smtp.srce.hr'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = False
-EMAIL_TIMEOUT = 15
+EMAIL_HOST = EMAILHOST
+EMAIL_PORT = EMAILPORT
+EMAIL_HOST_USER = EMAILUSER
+EMAIL_HOST_PASSWORD = EMAILUPASSWORD
+EMAIL_USE_TLS = EMAILTLS
+EMAIL_USE_SSL = EMAILSSL
+EMAIL_TIMEOUT = EMAILTIMEOUT
 
 
 # Database
@@ -203,11 +220,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Zagreb'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -250,7 +267,6 @@ SAML_ATTRIBUTE_MAPPING = {
 }
 SAML_CREATE_UNKNOWN_USER = True
 SAML_DJANGO_USER_MAIN_ATTRIBUTE = 'person_oib'
-
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
 STATIC_ROOT = '{}/usr/share/hrzoosignup/static/'.format(VENV)
