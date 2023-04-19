@@ -71,8 +71,7 @@ class Invites(APIView):
                         associate_user_to_project(user, proj)
 
                         if settings.EMAIL_SEND:
-                            email_approve_membership([settings.EMAILFROM,
-                                                      get_invite.inviter.person_mail],
+                            email_approve_membership([get_invite.inviter.person_mail],
                                                      proj.name, user)
 
                         msg = {
@@ -100,8 +99,7 @@ class Invites(APIView):
                     associate_user_to_project(user, proj)
 
                     if settings.EMAIL_SEND:
-                        email_approve_membership([settings.EMAILFROM,
-                                                 get_invite.inviter.person_mail],
+                        email_approve_membership([get_invite.inviter.person_mail],
                                                  proj.name, user)
                     msg = {
                         'status': {
