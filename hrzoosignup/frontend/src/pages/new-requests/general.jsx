@@ -20,7 +20,6 @@ import {
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ErrorMessage } from '@hookform/error-message';
 import { toast } from 'react-toastify'
 import { addGeneralProject } from '../../api/projects';
 import '../../styles/datepicker.css';
@@ -31,8 +30,8 @@ import { AuthContext } from '../../components/AuthContextProvider';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import validateDomainAndFields from '../../utils/validate-domain-fields';
 import validateRequestDates from '../../utils/validate-dates-startend';
-
 import * as yup from "yup";
+
 
 const schemaResolve = yup.object().shape({
   requestName: yup.string().required("Obvezno"),
