@@ -64,13 +64,13 @@ const NavigationLinksUser = ({activeBgColor}) => {
           Javni ključevi
         </NavLink>
       </NavItem>
-      <NavItem key='moji-podatci' className='mt-1 me-3 ms-auto'>
+      <NavItem key='moji-podaci' className='mt-1 me-3 ms-auto'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/moji-podatci'>
+          to='/ui/moji-podaci'>
           <FontAwesomeIcon icon={faCircleInfo} />{' '}
-          Moji podatci
+          Moji podaci
         </NavLink>
       </NavItem>
     </>
@@ -154,13 +154,13 @@ const NavigationLinks = () => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <NavItem key='moji-podatci' className='mt-1 me-3 ms-auto'>
+            <NavItem key='moji-podaci' className='mt-1 me-3 ms-auto'>
               <NavLink
                 style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
                 className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-                to='/ui/moji-podatci'>
+                to='/ui/moji-podaci'>
                 <FontAwesomeIcon icon={faCircleInfo} />{' '}
-                Moji podatci
+                Moji podaci
               </NavLink>
             </NavItem>
           </>

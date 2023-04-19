@@ -105,7 +105,7 @@ const BaseRoutes = () => {
               <Route path="clanstva" element={
                 <Memberships />
               }/>
-              <Route path="moji-podatci" element={
+              <Route path="moji-podaci" element={
                 <MyInfo />
               }/>
             </Route>
