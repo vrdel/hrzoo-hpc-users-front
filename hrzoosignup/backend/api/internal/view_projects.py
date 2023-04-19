@@ -51,7 +51,10 @@ class ProjectsGeneral(APIView):
             cobj.save()
 
             # to=computing@srce.hr
-            email_new_project(project_ins.name, "daniel.vrcic@gmail.com", request.user, project_ins.identifier)
+            email_new_project(["daniel.vrcic@gmail.com"],
+                              project_ins.name,
+                              request.user,
+                              project_ins.identifier)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 

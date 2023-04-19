@@ -2,7 +2,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 
 
-def email_new_project(name, to, lead, link):
+def email_new_project(to, name, lead, link):
 
     email = \
 f"""
@@ -17,11 +17,12 @@ Voditelj: {lead.first_name} {lead.last_name}
 
 Pogledaj prijavu: https://computing.srce.hr/ui/upravljanje-zahtjevima/{link}
 
+
 {settings.EMAILSIGNATURE}
 """
 
     return send_mail(
-        'Prijava novog projekta pri usluzi',
+        'Prijava novog projekta',
         email,
-        settings.EMAILFROM, ["daniel.vrcic@gmail.com"],
+        settings.EMAILFROM, to,
         fail_silently=False)
