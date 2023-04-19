@@ -27,12 +27,12 @@ vaša je prijava projekta "{name}" pri usluzi Napredno računanje prihvaćena.
         fail_silently=True)
 
 
-def email_deny_project(to, name, prtype):
+def email_deny_project(to, name, prtype, comment):
     project_type_subject = ''
     if prtype.name == 'thesis':
-        project_type_subject = "Završni rad/disertacija odobrena"
+        project_type_subject = "Završni rad/disertacija nije prihvaćena"
     elif prtype.name == 'practical':
-        project_type_subject = "Praktična nastava nije prihvaćen"
+        project_type_subject = "Praktična nastava nije prihvaćena"
     elif prtype.name == 'research-croris':
         project_type_subject = "Istraživački projekt nije prihvaćen"
 
@@ -42,7 +42,7 @@ Poštovani/a,
 
 vaša je prijava zahtjeva "{name}" pri usluzi Napredno računanje odbačena, s obrazloženjem:
 
-
+{comment}
 
 {settings.EMAILSIGNATURE}
 """

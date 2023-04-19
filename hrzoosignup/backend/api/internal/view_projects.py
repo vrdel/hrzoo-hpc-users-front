@@ -12,7 +12,8 @@ from django.core.cache import cache
 
 from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
 from backend import models
-from backend.email.project.templates import email_new_project, email_approve_project
+from backend.email.project.templates import email_new_project,\
+    email_approve_project, email_deny_project
 
 import json
 import datetime
@@ -166,12 +167,21 @@ class Projects(APIView):
             p_obj.state = state
             p_obj.staff_resources_type = request.data.get('staff_resources_type')
             if state.name == 'deny':
+                staff_comment = request.data.get('staff_comment')
                 p_obj.denied_by = {
                     'first_name': self.request.user.first_name,
                     'last_name': self.request.user.last_name,
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
+                # TODO:
+                # to=[settings.EMAILFROM, person_mail]
+                if settings.EMAIL_SEND:
+                    userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
+                    person_mail = userproj[0].user.person_mail
+                    email_deny_project(["daniel.vrcic@gmail.com", person_mail],
+                                          p_obj.name, p_obj.project_type, staff_comment)
+
             if state.name == 'approve':
                 p_obj.approved_by = {
                     'first_name': self.request.user.first_name,
@@ -179,7 +189,8 @@ class Projects(APIView):
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
-                # to=[settings.EMAILFROM]
+                # TODO:
+                # to=[settings.EMAILFROM, person_mail]
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
