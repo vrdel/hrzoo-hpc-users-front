@@ -16,6 +16,9 @@ import datetime
 
 from django.core.cache import cache
 from django.db import IntegrityError
+from django.conf import settings
+
+from backend.email.user.templates import email_approve_membership
 
 
 def associate_user_to_project(user, project):
@@ -48,7 +51,6 @@ class Invites(APIView):
 
         # hardcoding it here as
         # INVITATIONS_CONFIRMATION_URL_NAME did not help
-
         ret = requests.get('{}://{}/invitations/accept-invite/{}'.format(
             request.scheme,
             request.get_host(),
@@ -67,6 +69,12 @@ class Invites(APIView):
                 if (proj_type.name == 'research-croris'):
                     if (inv_oib == request.user.person_oib):
                         associate_user_to_project(user, proj)
+
+                        # to=[settings.EMAILFROM, get_invite.inviter.person_mail],
+                        if settings.EMAIL_SEND:
+                            email_approve_membership(["daniel.vrcic@gmail.com",
+                                                      get_invite.inviter.person_mail],
+                                                     proj.name, user)
 
                         msg = {
                             'status': {
@@ -91,6 +99,12 @@ class Invites(APIView):
 
                 else:
                     associate_user_to_project(user, proj)
+
+                    # to=[settings.EMAILFROM, get_invite.inviter.person_mail],
+                    if settings.EMAIL_SEND:
+                        email_approve_membership(["daniel.vrcic@gmail.com",
+                                                 get_invite.inviter.person_mail],
+                                                 proj.name, user)
                     msg = {
                         'status': {
                         'code': status.HTTP_201_CREATED,
