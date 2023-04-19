@@ -23,7 +23,7 @@ class Command(BaseCommand):
         user_data['last_name'] = settings.SUPERUSER_LASTNAME
         user_data['password'] = settings.SUPERUSER_PASS
         user_data['email'] = settings.SUPERUSER_EMAIL
-        user_data['person_email'] = settings.SUPERUSER_EMAIL
+        user_data['person_mail'] = settings.SUPERUSER_EMAIL
 
         try:
             user = self.user_model._default_manager.db_manager(DEFAULT_DB_ALIAS).create_superuser(**user_data)
