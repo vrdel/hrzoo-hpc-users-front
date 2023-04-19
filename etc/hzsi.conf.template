@@ -42,6 +42,7 @@ Staff = dvrcic@aai-test.hr
 [EMAIL]
 Send = True
 From = Napredno računanje <computing@srce.hr>
+Us = isabella-dezurni@srce.hr
 Signature = %(VENV)s/etc/hrzoosignup/signature
 Host = smtp.srce.hr
 Port = 25
