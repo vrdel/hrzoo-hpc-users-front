@@ -18,7 +18,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         user_data = dict()
 
-        user_data[self.user_model.USERNAME_FIELD] = settings.SUPERUSER_NAME
+        user_data[self.user_model.USERNAME_FIELD] = settings.SUPERUSER_USERNAME
         user_data['first_name'] = settings.SUPERUSER_FIRSTNAME
         user_data['last_name'] = settings.SUPERUSER_LASTNAME
         user_data['password'] = settings.SUPERUSER_PASS

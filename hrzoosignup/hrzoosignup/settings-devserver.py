@@ -55,6 +55,7 @@ try:
     CRORIS_PASSWORD = config.get('CRORIS', 'Password')
 
     SUPERUSER_FIRSTNAME = config.get('SUPERUSER', 'FirstName')
+    SUPERUSER_USERNAME = config.get('SUPERUSER', 'Username')
     SUPERUSER_LASTNAME = config.get('SUPERUSER', 'LastName')
     SUPERUSER_PASS = config.get('SUPERUSER', 'Password')
     SUPERUSER_EMAIL = config.get('SUPERUSER', 'Email')

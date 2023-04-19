@@ -15,6 +15,7 @@ SecretKeyFile = %(VENV)s/etc/hrzoosignup/secretkey
 Metadata = %(VENV)s/etc/hrzoosignup/metadata.xml
 
 [SUPERUSER]
+Username = hzsi
 FirstName = SuperUserName
 LastName = SuperLastName
 Password = testbed
