@@ -40,13 +40,13 @@ Password = postgres
 Staff = dvrcic@aai-test.hr
 
 [EMAIL]
-Send = False
-From = computing@srce.hr
+Send = True
+From = Napredno računanje <computing@srce.hr>
 Signature = %(VENV)s/etc/hrzoosignup/signature
-Host = smtp.gmail.com
-Port = 587
-User = user
-Password = pass
+Host = smtp.srce.hr
+Port = 25
+User =
+Password =
 TLS = True
 SSL = False
 Timeout = 15
