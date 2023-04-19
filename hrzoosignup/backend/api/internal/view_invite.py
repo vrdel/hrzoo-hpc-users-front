@@ -160,6 +160,16 @@ class Invites(APIView):
             if proj_type.name == 'research-croris':
                 myoib = request.user.person_oib
                 cached = cache.get(f'{myoib}_croris')
+                if not cached:
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                            'message': 'Problem fetching cached data'
+                        }
+                    }
+                    print(msg)
+                    return Response(msg, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
                 target = cached['projects_lead_users'][proj.croris_id]
                 oib_map = dict()
