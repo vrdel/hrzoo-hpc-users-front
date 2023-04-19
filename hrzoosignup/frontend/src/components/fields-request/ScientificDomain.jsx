@@ -202,7 +202,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                         disabled={fieldsDisabled}
                         min="0"
                         max="100"
-                        step="10"
+                        step="1"
                         type="number"
                       />
                     }

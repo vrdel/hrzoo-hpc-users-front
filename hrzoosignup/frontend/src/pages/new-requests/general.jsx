@@ -19,6 +19,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ErrorMessage } from '@hookform/error-message';
 import { toast } from 'react-toastify'
 import { addGeneralProject } from '../../api/projects';
 import '../../styles/datepicker.css';
@@ -29,6 +31,51 @@ import { AuthContext } from '../../components/AuthContextProvider';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import validateDomainAndFields from '../../utils/validate-domain-fields';
 import validateRequestDates from '../../utils/validate-dates-startend';
+
+import * as yup from "yup";
+
+const schemaResolve = yup.object().shape({
+  requestName: yup.string().required("Obvezno"),
+  requestExplain: yup.string().required("Obvezno"),
+  scientificDomain: yup.array().of(yup.object().shape(
+    {
+      name: yup.object().shape({
+            'label': yup.string().required(),
+            'value': yup.string().required()
+          }),
+      percent: yup.number().positive().lessThan(101).required("0-100"),
+      scientificfields: yup.array().of(yup.object().shape(
+        {
+          name: yup.object().shape({
+            'label': yup.string().required(),
+            'value': yup.string().required()
+          }),
+          percent: yup.number().positive().lessThan(101).required("0-100")
+
+        }
+      ))
+    }
+  )).required(),
+  startDate: yup.date().required("Obvezno"),
+  endDate: yup.date().required("Obvezno"),
+  scientificSoftware: yup.array().min(0).of(yup.string()),
+  scientificSoftwareExtra: yup.string(),
+  scientificSoftwareHelp: yup.boolean(),
+  requestResourceType: yup.array().of(yup.object()),
+  HPCnSlotsCPU: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnSlotsGPU: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnSlotsRAM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnRAM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnTempGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  HPCnDiskGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnVM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnSlotsCPU: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnRAM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnRAMVM: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnFastDiskGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnDiskGB: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+  CLOUDnIPs: yup.number().transform((value) => (isNaN(value) ? undefined : value)).nullable(),
+});
 
 
 const GeneralRequest = ({projectType}) => {
@@ -43,12 +90,15 @@ const GeneralRequest = ({projectType}) => {
   const navigate = useNavigate()
 
   const rhfProps = useForm({
+    resolver: yupResolver(schemaResolve),
+    criteriaMode: "firstError",
+    shouldFocusError: true,
     defaultValues: {
       requestName: '',
       requestExplain: '',
       startDate: '',
       endDate: '',
-      requestResourceType: '',
+      requestResourceType: [],
       HPCnSlotsCPU: '', HPCnSlotsGPU: '', HPCnRAM: '', HPCnTempGB: '', HPCnDiskGB: '',
       CLOUDnVM: '', CLOUDnSlotsCPU: '', CLOUDnRAM: '', CLOUDnRAMVM: '',
       CLOUDnFastDiskGB: '', CLOUDnDiskGB: '', CLOUDnIPs: '',
@@ -63,9 +113,9 @@ const GeneralRequest = ({projectType}) => {
           ]
         },
       ],
-      scientificSoftware: '',
+      scientificSoftware: [],
       scientificSoftwareExtra: '',
-      scientificSoftwareHelp: ''
+      scientificSoftwareHelp: false
     }
   });
 
