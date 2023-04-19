@@ -14,8 +14,7 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
       : defaultAuthnRedirect
     const origin = location.state?.from?.pathname || redir
     if (inviteKey)
-      //navigate(url_ui_prefix + '/prijava-email/' + inviteKey)
-      navigate(-2)
+      navigate(url_ui_prefix + '/prijava-email/' + inviteKey)
     else
       navigate(origin)
   }, [location.pathname])
