@@ -77,8 +77,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 <Input
                   {...field}
                   disabled={fieldsDisabled}
-                  className="form-control text-center"
-                  min="1"
+                  className={`form-control text-center ${errors && errors.CLOUDnVM ? "is-invalid" : ''}`}
                   type="number"
                 />
               }
@@ -86,6 +85,15 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             <InputGroupText>
               VM
             </InputGroupText>
+            <ErrorMessage
+              errors={errors}
+              name="CLOUDnVM"
+              render={({ message }) =>
+                <FormFeedback invalid className="end-0">
+                  { message }
+                </FormFeedback>
+              }
+            />
           </InputGroup>
         </Col>
         <Col md={{size: 2}}>
@@ -97,9 +105,8 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               render={ ({field}) =>
                 <Input
                   {...field}
-                  className="form-control text-center"
+                  className={`form-control text-center ${errors && errors.CLOUDnSlotsCPU ? "is-invalid" : ''}`}
                   disabled={fieldsDisabled}
-                  min="1"
                   type="number"
                 />
               }
@@ -107,6 +114,15 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             <InputGroupText>
               CPU
             </InputGroupText>
+            <ErrorMessage
+              errors={errors}
+              name="CLOUDnSlotsCPU"
+              render={({ message }) =>
+                <FormFeedback invalid className="end-0">
+                  { message }
+                </FormFeedback>
+              }
+            />
           </InputGroup>
         </Col>
         <Col md={{size: 2}}>
@@ -119,8 +135,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 <Input
                   {...field}
                   disabled={fieldsDisabled}
-                  className="form-control text-center"
-                  min="1"
+                  className={`form-control text-center ${errors && errors.CLOUDnRAM ? "is-invalid" : ''}`}
                   type="number"
                 />
               }
@@ -128,6 +143,15 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             <InputGroupText>
               RAM
             </InputGroupText>
+            <ErrorMessage
+              errors={errors}
+              name="CLOUDnRAM"
+              render={({ message }) =>
+                <FormFeedback invalid className="end-0">
+                  { message }
+                </FormFeedback>
+              }
+            />
           </InputGroup>
         </Col>
         <Col md={{size: 2}}>
@@ -139,9 +163,8 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               render={ ({field}) =>
                 <Input
                   {...field}
-                  className="form-control text-center"
+                  className={`form-control text-center ${errors && errors.CLOUDnRAMVM ? "is-invalid" : ''}`}
                   disabled={fieldsDisabled}
-                  min="1"
                   type="number"
                 />
               }
@@ -149,6 +172,15 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             <InputGroupText>
               RAM
             </InputGroupText>
+            <ErrorMessage
+              errors={errors}
+              name="CLOUDnRAMVM"
+              render={({ message }) =>
+                <FormFeedback invalid className="end-0">
+                  { message }
+                </FormFeedback>
+              }
+            />
           </InputGroup>
         </Col>
         <Col md={{size: 2}}>
@@ -161,8 +193,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 <Input
                   {...field}
                   disabled={fieldsDisabled}
-                  className="form-control text-center"
-                  min="1"
+                  className={`form-control text-center ${errors && errors.CLOUDnDiskGB ? "is-invalid" : ''}`}
                   type="number"
                 />
               }
@@ -170,6 +201,15 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             <InputGroupText>
               Disk
             </InputGroupText>
+            <ErrorMessage
+              errors={errors}
+              name="CLOUDnDiskGB"
+              render={({ message }) =>
+                <FormFeedback invalid className="end-0">
+                  { message }
+                </FormFeedback>
+              }
+            />
           </InputGroup>
         </Col>
       </Row>
@@ -200,9 +240,8 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               render={ ({field}) =>
                 <Input
                   {...field}
-                  className="form-control text-center"
+                  className={`form-control text-center ${errors && errors.CLOUDnFastDiskGB ? "is-invalid" : ''}`}
                   disabled={fieldsDisabled}
-                  min="1"
                   type="number"
                 />
               }
@@ -210,6 +249,15 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             <InputGroupText>
               Disk
             </InputGroupText>
+            <ErrorMessage
+              errors={errors}
+              name="CLOUDnFastDiskGB"
+              render={({ message }) =>
+                <FormFeedback invalid className="end-0">
+                  { message }
+                </FormFeedback>
+              }
+            />
           </InputGroup>
         </Col>
         <Col md={{size: 2}}>
@@ -222,8 +270,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 <Input
                   {...field}
                   disabled={fieldsDisabled}
-                  className="form-control text-center"
-                  min="1"
+                  className={`form-control text-center ${errors && errors.CLOUDnIPs ? "is-invalid" : ''}`}
                   type="number"
                 />
               }
@@ -231,6 +278,15 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             <InputGroupText>
               IP
             </InputGroupText>
+            <ErrorMessage
+              errors={errors}
+              name="CLOUDnIPs"
+              render={({ message }) =>
+                <FormFeedback invalid className="end-0">
+                  { message }
+                </FormFeedback>
+              }
+            />
           </InputGroup>
         </Col>
       </Row>
