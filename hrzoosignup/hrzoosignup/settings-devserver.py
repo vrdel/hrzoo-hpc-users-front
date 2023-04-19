@@ -174,6 +174,7 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
 INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
+DEFAULT_FROM_EMAIL = 'Napredno računanje <computing@srce.hr>'
 EMAIL_HOST = EMAILHOST
 EMAIL_PORT = EMAILPORT
 EMAIL_HOST_USER = EMAILUSER
@@ -256,7 +257,7 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
 # AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
 LOGIN_REDIRECT_URL = '{}/ui/saml2-login-redirect'.format(RELATIVE_PATH)
-LOGOUT_REDIRECT_URL = '{}/ui/prijava-priv'.format(RELATIVE_PATH)
+LOGOUT_REDIRECT_URL = '{}/ui/prijava'.format(RELATIVE_PATH)
 SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 # SESSION_COOKIE_SAMESITE = None

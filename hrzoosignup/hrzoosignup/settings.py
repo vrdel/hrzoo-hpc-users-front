@@ -174,6 +174,7 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
 INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
+DEFAULT_FROM_EMAIL = 'Napredno računanje <computing@srce.hr>'
 EMAIL_HOST = EMAILHOST
 EMAIL_PORT = EMAILPORT
 EMAIL_HOST_USER = EMAILUSER
