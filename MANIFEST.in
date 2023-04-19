@@ -2,6 +2,9 @@ include README.md
 include LICENSE
 include setup.py
 include requirements.txt
+include etc/email_*.txt
+include etc/signature
+include etc/hzsi.conf.template
 
 exclude etc/was.*
 exclude etc/*.devel.*
