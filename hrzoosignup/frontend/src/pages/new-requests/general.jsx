@@ -85,7 +85,7 @@ const GeneralRequest = ({projectType}) => {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
           delay: 500,
-          onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/moji-zahtjevi')}, 1500)
+          onClose: setTimeout(() => {navigate(url_ui_prefix + '/moji-zahtjevi')}, 1500)
         }
       )
     },
