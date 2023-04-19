@@ -12,8 +12,6 @@ import django.utils.timezone
 
 class Migration(migrations.Migration):
 
-    replaces = [('backend', '0001_initial_squashed'), ('backend', '0002_alter_project_croris_id'), ('backend', '0003_project_staff_resources_type_alter_project_reason_and_more'), ('backend', '0004_dateextend'), ('backend', '0005_rename_name_staffcomment_project_state_and_more'), ('backend', '0006_rename_date_approved_project_date_changed_and_more'), ('backend', '0007_custominvitation'), ('backend', '0008_remove_custominvitation_emails'), ('backend', '0009_alter_project_approved_by_alter_project_denied_by'), ('backend', '0010_project_croris_institute_project_institute'), ('backend', '0011_custominvitation_person_oib'), ('backend', '0012_alter_custominvitation_unique_together_and_more'), ('backend', '0013_custominvitation_person_oib')]
-
     dependencies = [
         ('auth', '0012_alter_user_first_name_max_length'),
     ]

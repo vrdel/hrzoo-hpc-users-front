@@ -1,0 +1,19 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}
+
+Poštovani/a,
+
+Voditelj {{ first_name }} {{ last_name }} vas je prijavio za korištenje usluge Napredno računanje
+na projektu "{{ project_name }}"
+
+Potvrdite prijavu na sljedećoj poveznici:
+{{ invite_url }}
+
+Srdačan pozdrav,
+-- 
+Napredno računanje
+Sveučilište u Zagrebu, Sveučilišni računski centar (Srce), www.srce.unizg.hr
+computing@srce.hr, tel: +385 1 616 5555, fax: +385 1 616 5559
+{% endblocktrans %}
+{% endautoescape %}
