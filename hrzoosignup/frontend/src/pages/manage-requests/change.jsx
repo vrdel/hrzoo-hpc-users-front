@@ -224,7 +224,7 @@ export const ManageRequestsChange = () => {
             toastId: 'manreq-ok-delete',
             autoClose: 2500,
             delay: 500,
-            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
+            onClose: setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
           }
         )
       },
@@ -255,7 +255,7 @@ export const ManageRequestsChange = () => {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
             delay: 500,
-            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
+            onClose: setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
           }
         )
       },
