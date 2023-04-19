@@ -43,7 +43,7 @@ s obrazloženjem:
         fail_silently=True)
 
 
-def email_new_project(to, name, lead, prtype, link):
+def email_new_project(to, name, lead, prtype, prident):
     project_type_subject = ''
     if prtype.name == 'thesis':
         project_type_subject = "novog završnog rada/disertacije"
@@ -62,7 +62,7 @@ Naziv: {name}
 
 Voditelj: {lead.first_name} {lead.last_name}
 
-Pogledaj prijavu: https://computing.srce.hr/ui/upravljanje-zahtjevima/{link}
+Pogledaj prijavu: https://computing.srce.hr/ui/upravljanje-zahtjevima/{prident}
 
 {settings.EMAILSIGNATURE}
 """
