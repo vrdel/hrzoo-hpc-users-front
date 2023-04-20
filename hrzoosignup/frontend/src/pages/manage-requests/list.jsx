@@ -12,16 +12,7 @@ import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
-
-
-function extractLeaderName(projectUsers) {
-  let target = projectUsers.filter(user => (
-    user['role']['name'] === 'lead'
-  ))
-  target = target[0]
-
-  return target.user.first_name + ' ' + target.user.last_name
-}
+import { extractLeaderName } from '../../utils/users_help'
 
 
 export const ManageRequestsList = () => {
@@ -125,7 +116,7 @@ export const ManageRequestsList = () => {
                         </Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        { extractLeaderName(project.userproject_set) }
+                        { extractLeaderName(project.userproject_set, retString=true) }
                       </td>
                       <td className="align-middle text-center">
                         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
