@@ -64,11 +64,14 @@ class ProjectSerializer(serializers.ModelSerializer):
 class UsersSerializerFiltered(serializers.ModelSerializer):
     class Meta:
         fields = (
+            'id',
             'person_mail',
             'first_name',
             'last_name',
             'person_oib',
-            'person_uniqueid'
+            'person_uniqueid',
+            'person_institution',
+            'person_organisation'
         )
         model = get_user_model()
 
