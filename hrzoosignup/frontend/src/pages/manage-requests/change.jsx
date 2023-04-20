@@ -29,6 +29,7 @@ import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { toast } from 'react-toastify'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { url_ui_prefix } from '../../config/general';
+import { extractLeaderName } from '../../utils/users_help';
 
 
 function setInitialState() {
@@ -63,7 +64,49 @@ function ToggleState(request_state, which) {
   return JSON.parse(JSON.stringify(newState))
 }
 
-const LeadBasicInfo = () => {
+const LeadBasicInfo = ({leadInfo}) => {
+  const user = leadInfo['user']
+  return (
+    <>
+      <Row>
+        <Col>
+          <h4 className="ms-4 mb-3 mt-4">Osnovni podaci o voditelju:</h4><br/>
+        </Col>
+      </Row>
+      <Row className="mt-1 mb-4">
+        <Col>
+          <Row>
+            <Col md={{size: 2, offset: 1}}>
+              Ime
+            </Col>
+            <Col>
+              Prezime
+            </Col>
+            <Col>
+              Email
+            </Col>
+            <Col>
+              Ustanova
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{size: 2, offset: 1}}>
+              { user.first_name }
+            </Col>
+            <Col>
+              { user.last_name }
+            </Col>
+            <Col>
+              { user.person_mail }
+            </Col>
+            <Col>
+              { user.person_institution }
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </>
+  )
 }
 
 
@@ -293,6 +336,7 @@ export const ManageRequestsChange = () => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
+                <LeadBasicInfo leadInfo={ extractLeaderName(nrProject.userproject_set) } />
                 {
                   nrProject.project_type.name === 'research-croris' &&
                     <CroRisDescription fieldsDisabled={disabledFields} />

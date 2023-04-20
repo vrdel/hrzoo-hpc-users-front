@@ -116,7 +116,7 @@ export const ManageRequestsList = () => {
                         </Badge>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        { extractLeaderName(project.userproject_set, retString=true) }
+                        { extractLeaderName(project.userproject_set, true) }
                       </td>
                       <td className="align-middle text-center">
                         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
