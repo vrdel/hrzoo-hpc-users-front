@@ -51,7 +51,7 @@ s obrazloženjem:
 def email_new_project(name, lead, prtype, prident):
     project_type_subject = ''
     if prtype.name == 'thesis':
-        project_type_subject = "novog završnog rada/disertacije"
+        project_type_subject = "nove izrade rada"
     elif prtype.name == 'practical':
         project_type_subject = "nove praktične nastave"
     elif prtype.name == 'research-croris':
