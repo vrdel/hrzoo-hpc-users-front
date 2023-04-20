@@ -63,6 +63,9 @@ function ToggleState(request_state, which) {
   return JSON.parse(JSON.stringify(newState))
 }
 
+const LeadBasicInfo = () => {
+}
+
 
 export const ManageRequestsChange = () => {
   const { LinkTitles } = useContext(SharedData);
