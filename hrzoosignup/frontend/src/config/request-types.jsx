@@ -5,8 +5,8 @@ let researchProject = {
     "value": "istrazivacki-projekt"
   }
 let thesisProject = {
-    "label": "Završni rad/disertacija",
-    "value": "zavrsni-rad"
+    "label": "Izrada rada",
+    "value": "izrada-rada"
   }
 let practicalClasses = {
     "label": "Praktična nastava",
@@ -25,7 +25,7 @@ export function UrlToRequestType(loc) {
   let url2buttonlabel = {
     [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: researchProject,
     [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
-    [url_ui_prefix + '/novi-zahtjev/zavrsni-rad']: thesisProject
+    [url_ui_prefix + '/novi-zahtjev/izrada-rada']: thesisProject
   }
 
   if (loc.includes(url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt')

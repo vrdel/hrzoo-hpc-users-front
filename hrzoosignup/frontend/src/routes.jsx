@@ -92,7 +92,7 @@ const BaseRoutes = () => {
                 <Route path="prakticna-nastava" element={
                   <GeneralRequest projectType="practical" />
                 }/>
-                <Route path="zavrsni-rad" element={
+                <Route path="izrada-rada" element={
                   <GeneralRequest projectType="thesis" />
                 }/>
               </Route>

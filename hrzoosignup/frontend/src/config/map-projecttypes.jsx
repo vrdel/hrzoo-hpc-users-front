@@ -3,7 +3,7 @@ import React from 'react';
 export function TypeString(type_name) {
   let type2string = {
     'research-croris': <>Istraživački<br/>projekt</>,
-    'thesis': <>Završni rad/<br/>disertacija</>,
+    'thesis': <>Izrada<br/>rada</>,
     'practical': <>Praktična<br/>nastava</>,
   }
 
