@@ -73,7 +73,7 @@ Pogledaj prijavu: https://computing.srce.hr/ui/upravljanje-zahtjevima/{prident}
 """
 
     em = EmailMessage(
-        'Prijava ' + project_type_subject,
+        '[Napredno računanje] Prijava ' + project_type_subject,
         body,
         settings.EMAILFROM,
         [settings.EMAILUS])
