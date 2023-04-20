@@ -153,6 +153,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         fields = (
+            'id',
             'approved_by',
             'croris_collaborators',
             'croris_end',
