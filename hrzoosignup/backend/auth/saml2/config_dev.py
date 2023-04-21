@@ -25,6 +25,7 @@ def get_saml_config(request):
                 'want_assertions_signed': False,
                 'force_authn': False,
                 'name_id_format_allow_create': False,
+                'allow_unsolicited': True,
                 'want_response_signed': False,
                 'endpoints': {
                     'assertion_consumer_service': [
