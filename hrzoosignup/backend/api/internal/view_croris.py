@@ -39,11 +39,6 @@ class CroRISInfo(APIView):
                 self.loop = uvloop.new_event_loop()
                 asyncio.set_event_loop(self.loop)
 
-                client_timeout = aiohttp.ClientTimeout(total=20)
-                self.session = ClientSession(timeout=client_timeout)
-                self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
-                                              settings.CRORIS_PASSWORD)
-
                 self.loop.run_until_complete(self._fetch_serie(oib))
                 self.loop.close()
 
@@ -78,7 +73,6 @@ class CroRISInfo(APIView):
                     }
                 })
             elif not oib:
-                self.loop.run_until_complete(self.close_session())
                 return Response({
                     'status': {
                         'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -87,7 +81,6 @@ class CroRISInfo(APIView):
                 })
 
         except (client_exceptions.ServerTimeoutError, asyncio.TimeoutError) as exc:
-            self.loop.run_until_complete(self.close_session())
             return Response({
                 'status': {
                     'code': status.HTTP_408_REQUEST_TIMEOUT,
@@ -96,7 +89,6 @@ class CroRISInfo(APIView):
             })
 
         except (client_exceptions.ClientError, http_exceptions.HttpProcessingError) as exc:
-            self.loop.run_until_complete(self.close_session())
             return Response({
                 'status': {
                     'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -112,6 +104,11 @@ class CroRISInfo(APIView):
                 return content
 
     async def _fetch_serie(self, oib):
+        client_timeout = aiohttp.ClientTimeout(total=20)
+        self.session = ClientSession(timeout=client_timeout)
+        self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
+                                        settings.CRORIS_PASSWORD)
+
         await self.fetch_person_lead(oib.strip())
         await self.fetch_project_lead_info()
         await self.fetch_project_associate_info()
