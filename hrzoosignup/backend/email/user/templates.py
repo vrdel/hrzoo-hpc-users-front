@@ -15,7 +15,7 @@ suradnik {collab.first_name} {collab.last_name} je potvrdio prijavu na projekt
 {settings.EMAILSIGNATURE}
 """
 
-    em = EmailMessage(
+    em = EmailMessage(\
         subject,
         body,
         settings.EMAILFROM,

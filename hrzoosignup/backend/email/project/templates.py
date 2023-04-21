@@ -14,7 +14,7 @@ vaš zahtjev za korištenje usluge Napredno računanje "{name}" je prihvaćen.
 {settings.EMAILSIGNATURE}
 """
 
-    em = EmailMessage(
+    em = EmailMessage(\
         subject,
         body,
         settings.EMAILFROM,
@@ -39,7 +39,7 @@ s obrazloženjem:
 {settings.EMAILSIGNATURE}
 """
 
-    em = EmailMessage(
+    em = EmailMessage(\
         project_type_subject,
         body,
         settings.EMAILFROM,
@@ -72,7 +72,7 @@ Pogledaj prijavu: https://computing.srce.hr/ui/upravljanje-zahtjevima/{prident}
 {settings.EMAILSIGNATURE}
 """
 
-    em = EmailMessage(
+    em = EmailMessage(\
         '[Napredno računanje] Prijava ' + project_type_subject,
         body,
         settings.EMAILFROM,
