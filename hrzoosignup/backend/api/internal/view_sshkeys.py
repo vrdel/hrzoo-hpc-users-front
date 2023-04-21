@@ -17,9 +17,24 @@ class SshKeys(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user=request.user.pk), many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get(self, request, **kwargs):
+        if not kwargs:
+            serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user=request.user.pk), many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        elif (kwargs.get('all', False)
+              and (request.user.is_staff or request.user.is_superuser)):
+            serializer = SshKeysSerializer(SSHPublicKey.objects.all(), many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            err_status = status.HTTP_400_BAD_REQUEST
+            err_response = {
+                'status': {
+                    'code': err_status,
+                    'message': 'Bad request'
+                }
+            }
+            return Response(err_response, status=err_status)
+
 
     def delete(self, request):
         key_name = request.data['name']
