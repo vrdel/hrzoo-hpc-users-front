@@ -234,6 +234,9 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
       rhfProps.setValue('staff_requestResourceType', nrProject.staff_resources_type)
 
+      rhfProps.setValue('approved_by', nrProject.approved_by)
+      rhfProps.setValue('denied_by', nrProject.denied_by)
+
       if (nrProject.staffcomment_set?.length > 0
         && nrProject.state.name === 'deny') {
         let lenPr = nrProject.staffcomment_set.length
@@ -398,6 +401,9 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   modalProps}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
+
+  const deniedBy = getValues('denied_by')
+  const approvedBy = getValues('approved_by')
 
   return (
     <>
@@ -593,15 +599,15 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
       </Row>
       <Row style={{'height': '50px'}}/>
-      <Row className="justify-content-end">
+      <Row className="justify-content-end fst-italic">
         <Col md={{size: 4}}className="fs-6 mt-3">
           Obradio:{'  '}
           {
-            initialProjectState === 'lead' ?
-              getValues('approved_by')['first_name']
+            initialProjectState === 'approve' ?
+              approvedBy ? approvedBy.first_name + ' ' + approvedBy.last_name : '\u2212'
             :
               initialProjectState === 'deny' ?
-                getValues('denied_by')['last_name']
+                deniedBy ? deniedBy.first_name + ' ' + deniedBy.last_name :  '\u2212'
               :
                 '\u2212'
           }
