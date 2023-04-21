@@ -30,6 +30,7 @@ import { toast } from 'react-toastify'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { url_ui_prefix } from '../../config/general';
 import { extractLeaderName } from '../../utils/users_help';
+import '../../styles/change_disabled.css';
 
 
 function setInitialState() {
