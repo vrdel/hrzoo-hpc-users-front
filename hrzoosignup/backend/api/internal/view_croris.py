@@ -30,21 +30,20 @@ class CroRISInfo(APIView):
         self.projects_lead_ids, \
         self.projects_associate_ids = [], [], [], []
 
-
-        self.loop = uvloop.new_event_loop()
-        asyncio.set_event_loop(self.loop)
-
-        client_timeout = aiohttp.ClientTimeout(total=10)
-        self.session = ClientSession(timeout=client_timeout)
-        self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
-                                      settings.CRORIS_PASSWORD)
-
     def get(self, request):
         oib = request.user.person_oib
 
         # we don't set HTTP error statuses on failed data fetchs
         try:
             if oib:
+                self.loop = uvloop.new_event_loop()
+                asyncio.set_event_loop(self.loop)
+
+                client_timeout = aiohttp.ClientTimeout(total=20)
+                self.session = ClientSession(timeout=client_timeout)
+                self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
+                                              settings.CRORIS_PASSWORD)
+
                 self.loop.run_until_complete(self._fetch_serie(oib))
                 self.loop.close()
 
