@@ -105,6 +105,9 @@ const LeadBasicInfo = ({leadInfo}) => {
           </Row>
           <Row className="fw-bold mt-5">
             <Col md={{size: 2, offset: 1}}>
+              Povezanost
+            </Col>
+            <Col className="ms-2" md={{size: 4}}>
               Ustanova
             </Col>
             <Col className="ms-2" md={{size: 4}}>
@@ -113,6 +116,9 @@ const LeadBasicInfo = ({leadInfo}) => {
           </Row>
           <Row>
             <Col md={{size: 2, offset: 1}}>
+              { user.person_affiliation}
+            </Col>
+            <Col className="ms-2" md={{size: 4}}>
               { user.person_institution}
             </Col>
             <Col className="ms-2" md={{size: 4}}>
