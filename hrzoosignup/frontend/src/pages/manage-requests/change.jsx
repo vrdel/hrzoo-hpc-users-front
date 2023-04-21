@@ -92,16 +92,16 @@ const LeadBasicInfo = ({leadInfo}) => {
           </Row>
           <Row>
             <Col md={{size: 2, offset: 1}}>
-              { user.first_name }
+              { user.first_name ? user.first_name : '\u2212' }
             </Col>
             <Col className="ms-2" md={{size: 2}}>
-              { user.last_name }
+              { user.last_name ? user.last_name :  '\u2212' }
             </Col>
             <Col className="ms-2" md={{size: 2}}>
-              { user.person_mail }
+              { user.person_mail ? user.person_mail : '\u2212' }
             </Col>
             <Col className="ms-2" md={{size: 2}}>
-              { user.person_uniqueid }
+              { user.person_uniqueid ? user.person_uniqueid :  '\u2212' }
             </Col>
           </Row>
           <Row className="fw-bold mt-5">
@@ -111,19 +111,19 @@ const LeadBasicInfo = ({leadInfo}) => {
             <Col className="ms-2" md={{size: 4}}>
               Ustanova
             </Col>
-            <Col className="ms-2" md={{size: 4}}>
+            <Col className="ms-3" md={{size: 4}}>
               Organizacijska jedinica
             </Col>
           </Row>
           <Row>
             <Col md={{size: 2, offset: 1}}>
-              { user.person_affiliation}
+              { user.person_affiliation ? user.person_affiliation :  '\u2212'}
             </Col>
             <Col className="ms-2" md={{size: 4}}>
-              { user.person_institution}
+              { user.person_institution ? user.person_institution : '\u2212'}
             </Col>
-            <Col className="ms-2" md={{size: 4}}>
-              { user.person_organisation }
+            <Col className="ms-3" md={{size: 4}}>
+              { user.person_organisation ? user.person_organisation : '\u2212'}
             </Col>
           </Row>
         </Col>
@@ -590,6 +590,21 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               />
             }
           />
+        </Col>
+      </Row>
+      <Row style={{'height': '50px'}}/>
+      <Row className="justify-content-end">
+        <Col md={{size: 4}}className="fs-6 mt-3">
+          Obradio:{'  '}
+          {
+            initialProjectState === 'lead' ?
+              getValues('approved_by')['first_name']
+            :
+              initialProjectState === 'deny' ?
+                getValues('denied_by')['last_name']
+              :
+                '\u2212'
+          }
         </Col>
       </Row>
       <Row style={{'height': '100px'}}/>
