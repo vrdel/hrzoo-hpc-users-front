@@ -5,6 +5,7 @@ import {
 } from "react-hook-form";
 import {
   Col,
+  Badge,
   FormFeedback,
   Input,
   Label,
@@ -15,8 +16,8 @@ import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from './ScientificDomain';
 
 
-const GeneralFields = ({fieldsDisabled=false}) => {
-  const { control, formState: {errors} } = useFormContext();
+const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false}) => {
+  const { control, getValues, formState: {errors} } = useFormContext();
 
   return (
     <>
@@ -137,9 +138,50 @@ const GeneralFields = ({fieldsDisabled=false}) => {
             }
           />
         </Col>
+        {
+          projectInfo && projectInfo.project_type &&
+          projectInfo.project_type.name === 'research-croris' &&
+            <>
+              <Row className="mt-4">
+                <Col md={{offset: 1}}>
+                  Korisnici:
+                </Col>
+              </Row>
+              <Row>
+                <Col md={{offset: 1}}>
+                  {
+                    projectInfo.userproject_set.map((user, i) =>
+                      user.role.name === 'lead' &&
+                      <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+                        {
+                          user['user']['first_name'] + ' ' + user['user']['last_name']
+                        }
+                      </Badge>
+                    )
+                  }
+                  {'   '}
+                  {
+                    projectInfo.croris_collaborators.map((user, i) =>
+                      <>
+                        <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+                          {
+                            user &&
+                            user['first_name'] + ' ' + user['last_name']
+                          }
+                        </Badge>
+                        {'  '}
+                      </>
+                    )
+                  }
+                </Col>
+              </Row>
+            </>
+        }
         <Col className="ms-1">
           <BaseNewScientificDomain fieldsDisabled={fieldsDisabled} />
         </Col>
+      </Row>
+      <Row>
       </Row>
     </>
   )

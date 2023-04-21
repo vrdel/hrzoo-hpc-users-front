@@ -363,7 +363,9 @@ export const ManageRequestsChange = () => {
                   nrProject.project_type.name === 'research-croris' &&
                     <CroRisDescription fieldsDisabled={disabledFields} />
                 }
-                <GeneralFields fieldsDisabled={disabledFields} />
+                <GeneralFields fieldsDisabled={disabledFields}
+                  projectInfo={nrProject}
+                />
                 <ScientificSoftware fieldsDisabled={disabledFields} />
                 <ResourceFields fieldsDisabled={disabledFields} />
                 <Row style={{height: '50px'}}>
