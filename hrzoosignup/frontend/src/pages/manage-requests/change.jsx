@@ -70,37 +70,53 @@ const LeadBasicInfo = ({leadInfo}) => {
     <>
       <Row>
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Osnovni podaci o voditelju:</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">Voditelj</h4><br/>
         </Col>
       </Row>
       <Row className="mt-1 mb-4">
         <Col>
-          <Row>
-            <Col md={{size: 2, offset: 1}}>
+          <Row className="fw-bold">
+            <Col sm={{size: 2, offset: 1}}>
               Ime
             </Col>
-            <Col>
+            <Col className="ms-2" md={{size: 2}}>
               Prezime
             </Col>
-            <Col>
+            <Col className="ms-2" md={{size: 2}}>
               Email
             </Col>
-            <Col>
-              Ustanova
+            <Col className="ms-2" md={{size: 3}}>
+              Korisnička oznaka
             </Col>
           </Row>
           <Row>
             <Col md={{size: 2, offset: 1}}>
               { user.first_name }
             </Col>
-            <Col>
+            <Col className="ms-2" md={{size: 2}}>
               { user.last_name }
             </Col>
-            <Col>
+            <Col className="ms-2" md={{size: 2}}>
               { user.person_mail }
             </Col>
-            <Col>
-              { user.person_institution }
+            <Col className="ms-2" md={{size: 2}}>
+              { user.person_uniqueid }
+            </Col>
+          </Row>
+          <Row className="fw-bold mt-5">
+            <Col md={{size: 2, offset: 1}}>
+              Ustanova
+            </Col>
+            <Col className="ms-2" md={{size: 4}}>
+              Organizacijska jedinica
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{size: 2, offset: 1}}>
+              { user.person_institution}
+            </Col>
+            <Col className="ms-2" md={{size: 4}}>
+              { user.person_organisation }
             </Col>
           </Row>
         </Col>
