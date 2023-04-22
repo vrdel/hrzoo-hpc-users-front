@@ -214,7 +214,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   ))
                 }
                 {
-                  invites.length > 0 && invites.map((user, i) => (
+                  invites?.length > 0 && invites.map((user, i) => (
                     <tr key={`row-${i + 100}`}>
                       <td className="p-3 align-middle text-center">
                         { '\u2212' }
@@ -294,7 +294,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
 }
 
 
-const UsersTableCroris = ({project, onSubmit}) => {
+const UsersTableCroris = ({project, invites, onSubmit}) => {
   const { userDetails } = useContext(AuthContext);
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
@@ -395,7 +395,15 @@ const UsersTableCroris = ({project, onSubmit}) => {
                         { extractEmails(user['user'].person_mail) }
                       </td>
                       <td className="align-middle text-center">
-                        Da
+                        {
+                          invites?.length > 0
+                            && [...invites['email']].indexOf(
+                              extractEmails(user['user'].person_mail) > 0)
+                            ?
+                              "Pozivnica"
+                            :
+                              "Da"
+                        }
                       </td>
                       <td className="align-middle text-center">
                         Da
@@ -454,9 +462,7 @@ const UsersTableCroris = ({project, onSubmit}) => {
                     <Collapse isOpen={isOpen}>
                       <Card className="p-4" style={{maxWidth: '680px'}}>
                         <CardTitle>
-                          <h5>
-                            Odaberi email adrese suradnika koje želiš pozvati na projekt
-                          </h5>
+                          Odaberi email adrese suradnika koje želiš pozvati na projekt
                         </CardTitle>
                         <CardBody className="mb-4">
                           <Controller
@@ -607,11 +613,16 @@ const Memberships = () => {
                       <CardBody className="mb-1 bg-light">
                         {
                           project.project_type.name === 'research-croris' ?
-                            <UsersTableCroris project={project} onSubmit={onSubmit} />
+                            <UsersTableCroris project={project}
+                              invites={invitesSent?.filter(inv =>
+                                inv.project.identifier === project.identifier
+                                && !inv.accepted
+                              )}
+                              onSubmit={onSubmit} />
                           :
                             <UsersTableGeneral
                               project={project}
-                              invites={invitesSent.filter(inv =>
+                              invites={invitesSent?.filter(inv =>
                                 inv.project.identifier === project.identifier
                                 && !inv.accepted
                               )}
