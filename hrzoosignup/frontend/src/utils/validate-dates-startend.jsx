@@ -4,12 +4,11 @@ import { compareAsc } from 'date-fns';
 
 
 function validateRequestDates(start, end) {
-
   const result = compareAsc(start, end);
 
   if (result > 0) {
     toast.error(
-      <span className="font-monospace text-whitespace">
+      <span className="font-monospace text-dark">
         Zahtjev nije bilo moguće podnijeti - validacija datuma neuspješna<br/><br/>
       </span>, {
         autoClose: false,

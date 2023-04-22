@@ -40,7 +40,7 @@ function validateDomainAndFields(onYesCallArg) {
 
   if (err_msg.length > 0) {
     toast.error(
-      <span className="font-monospace text-whitespace">
+      <span className="font-monospace text-dark">
         Zahtjev nije bilo moguće podnijeti - validacija znanstvenih područja i polja neuspješna<br/><br/>
         { err_msg }
       </span>, {
