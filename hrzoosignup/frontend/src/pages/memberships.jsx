@@ -3,7 +3,7 @@ import { SharedData } from './root';
 import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody, CardFooter,
   Label, Badge, Table, Button, Form } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
 import { addInvite, fetchMyInvites } from '../api/invite';
@@ -506,12 +506,15 @@ const UsersTableCroris = ({project, onSubmit}) => {
 const Memberships = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const [invitesSent, setInvitesSent] = useState(undefined);
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  const queryClient = useQueryClient();
 
   const {status: nrStatus, data: nrProjects} = useQuery({
       queryKey: ['projects'],
@@ -534,6 +537,7 @@ const Memberships = () => {
   const doAdd = async (data) => {
     try {
       const ret = await addInvite(data)
+      queryClient.invalidateQueries('invites')
       toast.success(
         <span className="font-monospace text-dark">
           Pozivnice su uspješno poslane
@@ -567,7 +571,8 @@ const Memberships = () => {
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+    setInvitesSent(myInvites)
+  }, [location.pathname, myInvites])
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'
@@ -606,7 +611,10 @@ const Memberships = () => {
                           :
                             <UsersTableGeneral
                               project={project}
-                              invites={myInvites.filter(inv => inv.project.identifier === project.identifier)}
+                              invites={invitesSent.filter(inv =>
+                                inv.project.identifier === project.identifier
+                                && !inv.accepted
+                              )}
                               onSubmit={onSubmit} />
                         }
                         <Row>
