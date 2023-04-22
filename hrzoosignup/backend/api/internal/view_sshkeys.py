@@ -11,6 +11,7 @@ from backend.email import sshkey as keyemail
 from backend import models
 
 from django.conf import settings
+from django.db import IntegrityError
 
 import json
 
@@ -72,10 +73,21 @@ class SshKeys(APIView):
         serializer = SshKeysSerializer(data=request.data)
 
         if serializer.is_valid():
-            serializer.save()
-            if settings.EMAIL_SEND:
-                keyemail.email_add_sshkey(request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            try:
+                serializer.save()
+                if settings.EMAIL_SEND:
+                    keyemail.email_add_sshkey(request.user)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            except IntegrityError as exc:
+                msg = {
+                    'status': {
+                        'code': status.HTTP_400_BAD_REQUEST,
+                        'message': 'SSH key problem: {}'.format(repr(exc))
+                    }
+                }
+                return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
         else:
             err_status = status.HTTP_400_BAD_REQUEST
             err_response = {

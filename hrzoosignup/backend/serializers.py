@@ -222,6 +222,16 @@ class SshKeysSerializer(serializers.ModelSerializer):
             )
         return value
 
+    def validate_name(self, value):
+        value = value.strip()
+
+        if value in list(models.SSHPublicKey.objects.\
+                         all().values_list('name', flat=True)):
+            raise serializers.ValidationError(
+                'Key of that name already exists'
+            )
+        return value
+
     def create(self, validated_data):
         complete = dict()
         complete['fingerprint'] = get_ssh_key_fingerprint(validated_data['public_key'])
