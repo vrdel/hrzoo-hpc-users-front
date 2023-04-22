@@ -58,7 +58,7 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
         <Row>
           {
             controlledFieldsDomain.map((item, index) => (
-              <>
+              <React.Fragment key={index}>
                 <Col className="mb-3" md={{size: 5}}>
                   <ScientificDomain control={control} index={index}
                     item={item} remove={domain_remove} fieldsDisabled={fieldsDisabled} />
@@ -69,7 +69,7 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
                       <AddNewScientificDomain append={domain_append} fieldsDisabled={fieldsDisabled} />
                     </Col>
                 }
-              </>
+              </React.Fragment>
             ))
           }
         </Row>

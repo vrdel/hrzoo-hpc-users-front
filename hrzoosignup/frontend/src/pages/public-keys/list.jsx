@@ -197,7 +197,7 @@ const PublicKeys = () => {
                 </thead>
                 <tbody>
                   { sshKeys.map((key, index) =>
-                    <>
+                    <React.Fragment key={index}>
                       <tr key={index}>
                         <td className="p-3 align-middle fs-5 text-center">
                           { key.name }
@@ -253,7 +253,7 @@ const PublicKeys = () => {
                           </Collapse>
                         </td>
                       </tr>
-                    </>
+                    </React.Fragment>
                   )}
                   {
                     sshKeys.length < 5 && [...Array(5 - sshKeys.length)].map((e, i) =>
