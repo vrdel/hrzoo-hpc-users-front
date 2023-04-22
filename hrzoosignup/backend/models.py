@@ -103,7 +103,7 @@ class SSHPublicKey(models.Model):
     )
 
     class Meta:
-        unique_together = ('name', 'user', 'fingerprint')
+        unique_together = ('user', 'fingerprint')
 
 
 class State(models.Model):

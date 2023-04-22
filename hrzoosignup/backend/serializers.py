@@ -201,7 +201,7 @@ class SshKeysSerializer(serializers.ModelSerializer):
             'name',
             'fingerprint',
             'public_key',
-            'date_created'
+            'date_created',
             'user'
         )
         model = models.SSHPublicKey
