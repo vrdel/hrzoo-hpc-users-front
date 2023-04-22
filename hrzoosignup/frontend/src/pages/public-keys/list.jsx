@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { SharedData } from '../root';
 import {
   Col,
@@ -38,6 +38,7 @@ const PublicKeys = () => {
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
   const [sshKeys, setSshKeys] = useState(undefined)
   const navigate = useNavigate();
+  const refKey = useRef(null);
 
   const queryClient = useQueryClient();
 
@@ -108,6 +109,25 @@ const PublicKeys = () => {
       )
     }
   })
+
+  const copyToClipboard = (e) => {
+    if (window.isSecureContext) {
+      navigator.clipboard.writeText(refKey.current.value);
+      e.target.focus();
+      toast.success("Javni ključ kopiran u međuspremnik", {
+        toastId: 'sshkey-copy-clipboard',
+        autoClose: 2500,
+        delay: 500
+      })
+    }
+    else {
+      toast.error("Unsecure context for key copying", {
+        toastId: 'sshkey-copy-clipboard',
+        autoClose: 2500,
+        delay: 500
+      })
+    }
+  }
 
   function onYesCallback() {
     if (onYesCall == 'doremovesshkey') {
@@ -207,6 +227,7 @@ const PublicKeys = () => {
                                   <textarea
                                     className="font-monospace form-control"
                                     rows="5"
+                                    ref={refKey}
                                     placeholder={
                                       key.public_key
                                     }
@@ -214,7 +235,9 @@ const PublicKeys = () => {
                                 </InputGroup>
                               </Col>
                               <Col className="d-flex align-self-center align-content-center">
-                                <Button size="sm" className="ms-3" color="success">
+                                <Button size="sm" className="ms-3" color="success"
+                                  onClick={(e) => copyToClipboard(e)}
+                                >
                                   <FontAwesomeIcon icon={faCopy} />
                                 </Button>
                               </Col>
