@@ -12,8 +12,7 @@ from django.core.cache import cache
 
 from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
 from backend import models
-from backend.email.project.templates import email_new_project,\
-    email_approve_project, email_deny_project
+from backend.email import project
 
 import json
 import datetime
@@ -52,9 +51,9 @@ class ProjectsGeneral(APIView):
             cobj.save()
 
             if settings.EMAIL_SEND:
-                email_new_project(project_ins.name, request.user,
-                                  project_ins.project_type,
-                                  project_ins.identifier)
+                project.email_new_project(project_ins.name, request.user,
+                                          project_ins.project_type,
+                                          project_ins.identifier)
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -124,9 +123,9 @@ class ProjectsResearch(APIView):
             userproject_obj.save()
 
             if settings.EMAIL_SEND:
-                email_new_project(project_ins.name, request.user,
-                                  project_ins.project_type,
-                                  project_ins.identifier)
+                project.email_new_project(project_ins.name, request.user,
+                                          project_ins.project_type,
+                                          project_ins.identifier)
 
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -171,8 +170,9 @@ class Projects(APIView):
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
-                    email_deny_project(person_mail, p_obj.name,
-                                       p_obj.project_type, staff_comment)
+                    project.email_deny_project(person_mail, p_obj.name,
+                                               p_obj.project_type,
+                                               staff_comment)
 
             if state.name == 'approve':
                 p_obj.approved_by = {
@@ -184,8 +184,8 @@ class Projects(APIView):
                 if settings.EMAIL_SEND:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
-                    email_approve_project(person_mail,
-                                          p_obj.name, p_obj.project_type)
+                    project.email_approve_project(person_mail, p_obj.name,
+                                                  p_obj.project_type)
 
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():

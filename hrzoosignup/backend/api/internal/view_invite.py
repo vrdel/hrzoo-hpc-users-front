@@ -18,7 +18,7 @@ from django.core.cache import cache
 from django.db import IntegrityError
 from django.conf import settings
 
-from backend.email.user.templates import email_approve_membership
+from backend.email import user as useremail
 
 
 def associate_user_to_project(user, project):
@@ -71,8 +71,8 @@ class Invites(APIView):
                         associate_user_to_project(user, proj)
 
                         if settings.EMAIL_SEND:
-                            email_approve_membership(get_invite.inviter.person_mail,
-                                                     proj.name, user)
+                            useremail.email_approve_membership(get_invite.inviter.person_mail,
+                                                               proj.name, user)
 
                         msg = {
                             'status': {
@@ -99,8 +99,8 @@ class Invites(APIView):
                     associate_user_to_project(user, proj)
 
                     if settings.EMAIL_SEND:
-                        email_approve_membership(get_invite.inviter.person_mail,
-                                                 proj.name, user)
+                        useremail.email_approve_membership(get_invite.inviter.person_mail,
+                                                           proj.name, user)
                     msg = {
                         'status': {
                         'code': status.HTTP_201_CREATED,
