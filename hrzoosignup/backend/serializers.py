@@ -196,6 +196,9 @@ class ProjectSerializerGet(serializers.ModelSerializer):
 
 
 class InvitesSerializer(serializers.ModelSerializer):
+    inviter = UsersSerializerFiltered(read_only=True)
+    project = ProjectSerializer(read_only=True)
+
     class Meta:
         fields = (
             'project',
