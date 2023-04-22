@@ -43,7 +43,8 @@ s obrazloženjem:
         project_type_subject,
         body,
         settings.EMAILFROM,
-        [to])
+        [to],
+        [settings.EMAILUS])
 
     return em.send(fail_silently=True)
 
