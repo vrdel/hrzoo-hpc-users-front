@@ -9,6 +9,7 @@ from rest_framework.renderers import JSONRenderer
 from invitations.utils import get_invitation_model
 
 from backend import models
+from backend.email import user as useremail
 
 import json
 import requests
@@ -17,8 +18,6 @@ import datetime
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.conf import settings
-
-from backend.email import user as useremail
 
 
 def associate_user_to_project(user, project):

@@ -7,8 +7,10 @@ from rest_framework.renderers import JSONRenderer
 
 from backend.serializers import SshKeysSerializer
 from backend.models import SSHPublicKey
-
+from backend.email import sshkey as keyemail
 from backend import models
+
+from django.conf import settings
 
 import json
 
@@ -71,6 +73,8 @@ class SshKeys(APIView):
 
         if serializer.is_valid():
             serializer.save()
+            if settings.EMAIL_SEND:
+                keyemail.email_add_sshkey(request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
