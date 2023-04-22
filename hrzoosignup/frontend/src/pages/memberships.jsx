@@ -6,7 +6,7 @@ import { PageTitle } from '../components/PageTitle';
 import { useQuery } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
-import { addInvite } from '../api/invite';
+import { addInvite, fetchMyInvites } from '../api/invite';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import ModalAreYouSure from '../components/ModalAreYouSure';
 import { convertToEuropean } from '../utils/dates';
@@ -129,7 +129,7 @@ const BriefProjectInfo = ({project}) => {
 }
 
 
-const UsersTableGeneral = ({project, onSubmit}) => {
+const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   const { userDetails } = useContext(AuthContext);
@@ -213,6 +213,27 @@ const UsersTableGeneral = ({project, onSubmit}) => {
                     </tr>
                   ))
                 }
+                {
+                  invites.length > 0 && invites.map((user, i) => (
+                    <tr key={`row-${i + 100}`}>
+                      <td className="p-3 align-middle text-center">
+                        { '\u2212' }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { '\u2212' }
+                      </td>
+                      <td className="align-middle text-center">
+                        Suradnik
+                      </td>
+                      <td className="align-middle text-center">
+                        { user.email }
+                      </td>
+                      <td className="align-middle text-center">
+                        Pozivnica
+                      </td>
+                    </tr>
+                  ))
+                }
               </>
             </tbody>
           </Table>
@@ -236,9 +257,7 @@ const UsersTableGeneral = ({project, onSubmit}) => {
                     <Collapse isOpen={isOpen}>
                       <Card className="p-4" style={{maxWidth: '680px'}}>
                         <CardTitle>
-                          <h5>
-                            Upiši email adrese suradnika koje želiš pozvati na projekt
-                          </h5>
+                          Upiši email adrese suradnika koje želiš pozvati na projekt
                         </CardTitle>
                         <CardBody className="mb-4">
                           <Controller
@@ -499,6 +518,11 @@ const Memberships = () => {
       queryFn: fetchNrProjects
   })
 
+  const {status: invitesStatus, data: myInvites} = useQuery({
+      queryKey: ['invites'],
+      queryFn: fetchMyInvites
+  })
+
   const onSubmit = (data) => {
     setAreYouSureModal(!areYouSureModal)
     setModalTitle("Slanje pozivnica za istraživački projekt")
@@ -545,7 +569,9 @@ const Memberships = () => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
 
-  if (nrStatus === 'success' && nrProjects) {
+  if (nrStatus === 'success'
+    && invitesStatus === 'success'
+    && nrProjects) {
     let projectsApproved = nrProjects.filter(project =>
       project.state.name !== 'deny' && project.state.name !== 'submit'
     )
@@ -578,7 +604,10 @@ const Memberships = () => {
                           project.project_type.name === 'research-croris' ?
                             <UsersTableCroris project={project} onSubmit={onSubmit} />
                           :
-                            <UsersTableGeneral project={project} onSubmit={onSubmit} />
+                            <UsersTableGeneral
+                              project={project}
+                              invites={myInvites.filter(inv => inv.project.identifier === project.identifier)}
+                              onSubmit={onSubmit} />
                         }
                         <Row>
                           <BriefProjectInfo project={project} />
