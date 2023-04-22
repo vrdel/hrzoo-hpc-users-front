@@ -10,6 +10,7 @@ from invitations.utils import get_invitation_model
 
 from backend import models
 from backend.email import user as useremail
+from backend.serializers import InvitesSerializer
 
 import json
 import requests
@@ -38,6 +39,19 @@ class InvitesLink(APIView):
     def get(self, request, **kwargs):
         user = request.user.pk
         return Response('ok, get us back', status.HTTP_200_OK)
+
+
+class InvitesSent(APIView):
+    authentication_classes = (SessionAuthentication,)
+    # permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, **kwargs):
+        user = request.user
+        myinvites = models.CustomInvitation.objects.filter(inviter=user)
+
+        serializer = InvitesSerializer(myinvites, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class Invites(APIView):

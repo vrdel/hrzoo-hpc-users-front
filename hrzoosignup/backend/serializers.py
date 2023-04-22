@@ -195,6 +195,18 @@ class ProjectSerializerGet(serializers.ModelSerializer):
         model = models.Project
 
 
+class InvitesSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'project',
+            'email',
+            'created',
+            'accepted',
+            'inviter'
+        )
+        model = models.CustomInvitation
+
+
 class SshKeysSerializer(serializers.ModelSerializer):
     user = UsersSerializerFiltered(read_only=True)
     class Meta:
