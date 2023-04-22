@@ -89,11 +89,11 @@ const CroRisInfo = ({croRisProjects}) => {
           }
         </Col>
       </Row>
-      <Row noGutters className="mt-5 ms-3 me-3">
+      <Row className="g-0 mt-5 ms-3 me-3">
         <Col>
         </Col>
       </Row>
-      <Row noGutters className="ms-2 me-3 mb-5 d-flex justify-content-center align-items-center">
+      <Row className="g-0 ms-2 me-3 mb-5 d-flex justify-content-center align-items-center">
         <TableCrorisProjects
           leadData={croRisProjects['projects_lead_info']}
           associateData={croRisProjects['projects_associate_info']}/>
