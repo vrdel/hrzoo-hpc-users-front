@@ -1,5 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+
+import datetime
+
 from backend import models
 
 
@@ -198,6 +201,7 @@ class SshKeysSerializer(serializers.ModelSerializer):
             'name',
             'fingerprint',
             'public_key',
+            'date_created'
             'user'
         )
         model = models.SSHPublicKey
@@ -222,4 +226,5 @@ class SshKeysSerializer(serializers.ModelSerializer):
         complete = dict()
         complete['fingerprint'] = get_ssh_key_fingerprint(validated_data['public_key'])
         complete.update({key: value for key, value in validated_data.items()})
+        complete['date_created'] = datetime.datetime.now()
         return models.SSHPublicKey.objects.create(**complete)

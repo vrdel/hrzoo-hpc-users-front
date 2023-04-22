@@ -97,9 +97,13 @@ class SSHPublicKey(models.Model):
         validators=[validators.MaxLengthValidator(2000), validate_ssh_public_key]
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_created = models.DateTimeField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
-        unique_together = ('name', 'user')
+        unique_together = ('name', 'user', 'fingerprint')
 
 
 class State(models.Model):

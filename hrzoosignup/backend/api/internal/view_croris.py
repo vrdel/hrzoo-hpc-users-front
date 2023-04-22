@@ -107,7 +107,7 @@ class CroRISInfo(APIView):
         client_timeout = aiohttp.ClientTimeout(total=20)
         self.session = ClientSession(timeout=client_timeout)
         self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
-                                        settings.CRORIS_PASSWORD)
+                                      settings.CRORIS_PASSWORD)
 
         await self.fetch_person_lead(oib.strip())
         await self.fetch_project_lead_info()
