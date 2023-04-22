@@ -439,7 +439,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             errors={errors}
             name="requestExplain"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }

@@ -81,7 +81,7 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
             errors={errors}
             name="scientificSoftwareExtra"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }

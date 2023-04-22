@@ -137,7 +137,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
           errors={errors}
           name={`scientificDomain.${domain_index}.name`}
           render={({ message }) =>
-            <FormFeedback invalid className="end-0">
+            <FormFeedback className="end-0">
               { message }
             </FormFeedback>
           }

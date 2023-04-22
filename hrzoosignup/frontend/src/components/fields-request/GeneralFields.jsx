@@ -54,7 +54,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
             errors={errors}
             name="requestName"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }
@@ -89,7 +89,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
             errors={errors}
             name="requestExplain"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }
@@ -220,7 +220,7 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
             errors={errors}
             name="requestExplain"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }

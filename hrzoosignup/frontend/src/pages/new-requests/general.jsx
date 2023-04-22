@@ -50,7 +50,6 @@ const schemaResolve = yup.object().shape({
             'value': yup.string().required()
           }),
           percent: yup.number().positive().lessThan(101).required("0-100")
-
         }
       ))
     }
@@ -95,11 +94,11 @@ const schemaResolve = yup.object().shape({
     .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
   CLOUDnRAM: yup.number()
     .min(1, "Broj ne može biti manji od 1")
-    .max(1000, "Broj ne može biti veći od 2TB")
+    .max(2000, "Broj ne može biti veći od 2TB")
     .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
   CLOUDnRAMVM: yup.number()
     .min(1, "Broj ne može biti manji od 1")
-    .max(1000, "Broj ne može biti veći od 2TB")
+    .max(2000, "Broj ne može biti veći od 2TB")
     .transform((value) => (isNaN(value) ? undefined : value)).nullable(),
   CLOUDnFastDiskGB: yup.number()
     .min(1, "Broj ne može biti manji od 1")

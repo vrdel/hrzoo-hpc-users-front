@@ -89,7 +89,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               errors={errors}
               name="CLOUDnVM"
               render={({ message }) =>
-                <FormFeedback invalid className="end-0">
+                <FormFeedback className="end-0">
                   { message }
                 </FormFeedback>
               }
@@ -118,7 +118,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               errors={errors}
               name="CLOUDnSlotsCPU"
               render={({ message }) =>
-                <FormFeedback invalid className="end-0">
+                <FormFeedback className="end-0">
                   { message }
                 </FormFeedback>
               }
@@ -147,7 +147,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               errors={errors}
               name="CLOUDnRAM"
               render={({ message }) =>
-                <FormFeedback invalid className="end-0">
+                <FormFeedback className="end-0">
                   { message }
                 </FormFeedback>
               }
@@ -176,7 +176,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               errors={errors}
               name="CLOUDnRAMVM"
               render={({ message }) =>
-                <FormFeedback invalid className="end-0">
+                <FormFeedback className="end-0">
                   { message }
                 </FormFeedback>
               }
@@ -205,7 +205,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               errors={errors}
               name="CLOUDnDiskGB"
               render={({ message }) =>
-                <FormFeedback invalid className="end-0">
+                <FormFeedback className="end-0">
                   { message }
                 </FormFeedback>
               }
@@ -253,7 +253,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               errors={errors}
               name="CLOUDnFastDiskGB"
               render={({ message }) =>
-                <FormFeedback invalid className="end-0">
+                <FormFeedback className="end-0">
                   { message }
                 </FormFeedback>
               }
@@ -282,7 +282,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               errors={errors}
               name="CLOUDnIPs"
               render={({ message }) =>
-                <FormFeedback invalid className="end-0">
+                <FormFeedback className="end-0">
                   { message }
                 </FormFeedback>
               }
@@ -366,7 +366,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             errors={errors}
             name="HPCnSlotsCPU"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }
@@ -395,7 +395,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             errors={errors}
             name="HPCnSlotsGPU"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }
@@ -424,7 +424,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             errors={errors}
             name="HPCnRAM"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }
@@ -453,7 +453,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             errors={errors}
             name="HPCnTempGB"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }
@@ -482,7 +482,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             errors={errors}
             name="HPCnDiskGB"
             render={({ message }) =>
-              <FormFeedback invalid className="end-0">
+              <FormFeedback className="end-0">
                 { message }
               </FormFeedback>
             }
