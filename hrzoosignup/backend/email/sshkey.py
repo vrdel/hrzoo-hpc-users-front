@@ -9,7 +9,7 @@ def email_add_sshkey(user):
 f"""\
 Poštovani/a,
 
-korisnik {user.first_name} {user.last_name} - {user.username} je dodao novi SSH javni ključ.
+korisnik {user.first_name} {user.last_name}, {user.username} je dodao novi SSH javni ključ.
 
 {settings.EMAILSIGNATURE}
 """

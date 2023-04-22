@@ -114,14 +114,22 @@ const PublicKeys = () => {
     if (window.isSecureContext) {
       navigator.clipboard.writeText(refKey.current.value);
       e.target.focus();
-      toast.success("Javni ključ kopiran u međuspremnik", {
+      toast.success(
+        <span className="font-monospace text-dark">
+          Javni ključ kopiran u međuspremnik
+        </span>
+        , {
         toastId: 'sshkey-copy-clipboard',
         autoClose: 2500,
         delay: 500
       })
     }
     else {
-      toast.error("Unsecure context for key copying", {
+      toast.error(
+        <span className="font-monospace text-dark">
+          Unsecure context for key copying
+        </span>
+        , {
         toastId: 'sshkey-copy-clipboard',
         autoClose: 2500,
         delay: 500
