@@ -196,6 +196,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
 
 
 class SshKeysSerializer(serializers.ModelSerializer):
+    user = UsersSerializerFiltered(read_only=True)
     class Meta:
         fields = (
             'name',
