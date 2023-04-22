@@ -30,7 +30,7 @@ import { toast } from 'react-toastify'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { url_ui_prefix } from '../../config/general';
 import { extractLeaderName } from '../../utils/users_help';
-import '../../styles/change_disabled.css';
+import '../../styles/staff-change-disabled.css';
 
 
 function setInitialState() {
@@ -601,7 +601,9 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row style={{'height': '50px'}}/>
       <Row className="justify-content-end fst-italic">
         <Col md={{size: 4}}className="fs-6 mt-3">
-          Obradio:{'  '}
+          <span className="fw-bold">
+            Obradio:{'  '}
+          </span>
           {
             initialProjectState === 'approve' ?
               approvedBy ? approvedBy.first_name + ' ' + approvedBy.last_name : '\u2212'

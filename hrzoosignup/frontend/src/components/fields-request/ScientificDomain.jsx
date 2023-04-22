@@ -121,7 +121,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
               aria-label="scientificDomain"
               controlWidth="300px"
               forwardedRef={field.ref}
-              id="scientificDomain"
+              id={fieldsDisabled ? "scientificDomain-disabled" : "scientificDomain"}
               error={errors && errors.scientificDomain
                 && errors.scientificDomain[domain_index]
                 && errors.scientificDomain[domain_index]['name'] ? true : false}
@@ -268,7 +268,7 @@ const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => 
           aria-label="scientificDomain"
           controlWidth="300px"
           forwardedRef={field.ref}
-          id="scientificDomain"
+          id={fieldsDisabled ? "scientificDomain-disabled" : "scientificDomain"}
           error={errors && errors.scientificDomain
             && errors.scientificDomain[domain_index]
             && errors.scientificDomain[domain_index]['scientificfields']

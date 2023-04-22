@@ -1,3 +1,7 @@
 input:disabled, textarea:disabled {
   color: #202020;
 }
+
+#scientificDomain-disabled * {
+  color: #202020;
+}
