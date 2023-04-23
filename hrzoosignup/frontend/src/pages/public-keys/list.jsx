@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
 import {
   Col,
@@ -38,7 +38,6 @@ const PublicKeys = () => {
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
   const [sshKeys, setSshKeys] = useState(undefined)
   const navigate = useNavigate();
-  const refKey = useRef(null);
 
   const queryClient = useQueryClient();
 
@@ -110,9 +109,9 @@ const PublicKeys = () => {
     }
   })
 
-  const copyToClipboard = (e) => {
+  const copyToClipboard = (e, key) => {
     if (window.isSecureContext) {
-      navigator.clipboard.writeText(refKey.current.value);
+      navigator.clipboard.writeText(key);
       e.target.focus();
       toast.success(
         <span className="font-monospace text-dark">
@@ -235,7 +234,6 @@ const PublicKeys = () => {
                                   <textarea
                                     className="font-monospace form-control"
                                     rows="5"
-                                    ref={refKey}
                                     placeholder={
                                       key.public_key
                                     }
@@ -244,7 +242,7 @@ const PublicKeys = () => {
                               </Col>
                               <Col className="d-flex align-self-center align-content-center">
                                 <Button size="sm" className="ms-3" color="success"
-                                  onClick={(e) => copyToClipboard(e)}
+                                  onClick={(e) => copyToClipboard(e, key.public_key)}
                                 >
                                   <FontAwesomeIcon icon={faCopy} />
                                 </Button>
