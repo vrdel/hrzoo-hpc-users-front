@@ -325,6 +325,14 @@ class ProjectCount(models.Model):
     counter = models.IntegerField(null=True)
 
 
+class ScienceSoftware(models.Model):
+    name =  models.CharField(
+        _("modulefile or concrete software name"),
+        max_length=24,
+        blank=True,
+    )
+
+
 # picked from invitations.model and overriden it as I didn't like
 # uniqueness on email as we'll need to send multiple project invitations
 # on the same email. also added relation to project.
