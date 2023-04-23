@@ -117,11 +117,18 @@ class CroRISInfo(APIView):
         await self.close_session()
 
     async def fetch_person_lead(self, oib):
-        self.person_info = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
+        fetch_data = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
+        fetch_data  = json.loads(fetch_data)
+        httpcode = fetch_data.get('httpStatusCode', False)
+        if httpcode and httpcode != 200:
+            raise client_exceptions.ClientError({
+                'status': fetch_data['httpStatusCode'],
+                'message': fetch_data['errorMessage']
+            })
 
+        self.person_info = fetch_data
         # lead_status set from fetch_project_lead_info as projects might be
         # dead
-        self.person_info = json.loads(self.person_info)
         project_links = self.person_info['_links'].get('projekt', None)
         self.person_info = {
             'first_name': self.person_info['ime'],
