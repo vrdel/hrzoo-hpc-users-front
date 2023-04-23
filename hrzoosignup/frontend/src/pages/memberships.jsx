@@ -690,7 +690,7 @@ const Memberships = () => {
         {
           projectsApproved.length > 0 ?
             projectsApproved.map((project, i) =>
-              <>
+              <React.Fragment key={`projects-${i}`}>
                 <Row className="mb-5" key={`row-${i}`}>
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
@@ -730,7 +730,7 @@ const Memberships = () => {
                   </Col>
                 </Row>
                 <Row style={{height: '100px'}}/>
-              </>
+              </React.Fragment>
             )
           :
             <Row className="mt-3 mb-3">
