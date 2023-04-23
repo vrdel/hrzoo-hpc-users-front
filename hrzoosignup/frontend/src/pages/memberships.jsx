@@ -38,6 +38,7 @@ function extractEmails(email) {
     return email
 }
 
+
 function emailInInvites(emails, invites) {
   let single_emails = emails.split(';')
   single_emails = single_emails.map(e => e.trim())
@@ -329,18 +330,21 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
     onSubmit(data)
   }
 
-  let email_invites = invites?.map(i => i.email)
+  let email_invites = invites.map(i => i.email)
 
   const missingCollab = new Array()
   collaborators.forEach((user) => {
     if (!oibsJoined.has(user['oib'])) {
       if (user['email'].includes(';')) {
         let emails = user['email'].split(';')
-        missingCollab.push({...user, email: emails[0].trim()})
-        missingCollab.push({...user, email: emails[1].trim()})
+        if (email_invites.indexOf(emails[0].trim()) === -1)
+          missingCollab.push({...user, email: emails[0].trim()})
+        if (email_invites.indexOf(emails[1].trim()) === -1)
+          missingCollab.push({...user, email: emails[1].trim()})
       }
       else
-        missingCollab.push(user)
+        if (email_invites.indexOf(user['email']) === -1)
+          missingCollab.push(user)
     }
   })
 
