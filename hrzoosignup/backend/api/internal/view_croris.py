@@ -17,6 +17,13 @@ import datetime
 from aiohttp import client_exceptions, http_exceptions, ClientSession
 
 
+def contains_exception(list):
+    for a in list:
+        if isinstance(a, Exception):
+            return (True, a)
+
+    return (False, None)
+
 
 class CroRISInfo(APIView):
     def __init__(self):
@@ -153,6 +160,10 @@ class CroRISInfo(APIView):
             self.projects_lead_info = await asyncio.gather(*coros,
                                                            loop=self.loop,
                                                            return_exceptions=True)
+            exc_raised, exc = contains_exception(self.projects_lead_info)
+            if exc_raised:
+                raise client_exceptions.ClientError(repr(exc))
+
             for project in self.projects_lead_info:
                 project = json.loads(project)
                 metadata = {}
@@ -223,6 +234,10 @@ class CroRISInfo(APIView):
                                                             loop=self.loop,
                                                             return_exceptions=True)
 
+        exc_raised, exc = contains_exception(self.projects_associate_info)
+        if exc_raised:
+            raise client_exceptions.ClientError(repr(exc))
+
         for project in self.projects_associate_info:
             project = json.loads(project)
             metadata = {}
@@ -274,6 +289,10 @@ class CroRISInfo(APIView):
 
         project_users = await asyncio.gather(*coros, loop=self.loop,
                                              return_exceptions=True)
+
+        exc_raised, exc = contains_exception(project_users)
+        if exc_raised:
+            raise client_exceptions.ClientError(repr(exc))
 
         i = 0
         for project in project_users:
