@@ -28,6 +28,7 @@ function extractUsers(projectUsers, role) {
   return users
 }
 
+
 function extractEmails(email) {
   const emails = email.split(';')
 
@@ -35,6 +36,17 @@ function extractEmails(email) {
     return emails.join(', ')
   else
     return email
+}
+
+function emailInInvites(emails, invites) {
+  let single_emails = emails.split(';')
+  single_emails = single_emails.map(e => e.trim())
+
+  for (var email of single_emails)
+    if (invites.indexOf(email) !== -1)
+      return true
+
+  return false
 }
 
 
@@ -429,8 +441,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                           </td>
                           <td className="align-middle text-center">
                             {
-                              email_invites?.length > 0
-                              && email_invites.indexOf(extractEmails(user.email)) !== -1
+                              emailInInvites(user.email, email_invites)
                                 ?
                                   'Pozivnica'
                                 :
