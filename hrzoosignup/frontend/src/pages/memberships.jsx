@@ -317,6 +317,8 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
     onSubmit(data)
   }
 
+  let email_invites = invites?.map(i => i.email)
+
   const missingCollab = new Array()
   collaborators.forEach((user) => {
     if (!oibsJoined.has(user['oib'])) {
@@ -395,15 +397,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                         { extractEmails(user['user'].person_mail) }
                       </td>
                       <td className="align-middle text-center">
-                        {
-                          invites?.length > 0
-                            && [...invites['email']].indexOf(
-                              extractEmails(user['user'].person_mail) > 0)
-                            ?
-                              "Pozivnica"
-                            :
-                              "Da"
-                        }
+                        Da
                       </td>
                       <td className="align-middle text-center">
                         Da
@@ -434,7 +428,14 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                             }
                           </td>
                           <td className="align-middle text-center">
-                            Ne
+                            {
+                              email_invites?.length > 0
+                              && email_invites.indexOf(extractEmails(user.email)) !== -1
+                                ?
+                                  'Pozivnica'
+                                :
+                                  'Ne'
+                            }
                           </td>
                         </tr>
                       ))
