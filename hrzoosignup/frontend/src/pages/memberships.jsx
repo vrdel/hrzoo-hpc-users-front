@@ -14,6 +14,7 @@ import { AuthContext } from '../components/AuthContextProvider';
 import { CustomCreatableSelect, CustomReactSelect } from '../components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faEnvelope,
   faPaperPlane,
   faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
@@ -201,7 +202,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   <td className="align-middle text-center">
                     { lead['user'].person_mail }
                   </td>
-                  <td className="align-middle text-center">
+                  <td className="align-middle text-center text-success">
                     Da
                   </td>
                 </tr>
@@ -220,7 +221,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <td className="align-middle text-center">
                         { user['user'].person_mail }
                       </td>
-                      <td className="align-middle text-center">
+                      <td className="align-middle text-center text-success">
                         Da
                       </td>
                     </tr>
@@ -242,7 +243,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         { user.email }
                       </td>
                       <td className="align-middle text-center">
-                        Pozivnica
+                        <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
                       </td>
                     </tr>
                   ))
@@ -309,6 +310,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
 const UsersTableCroris = ({project, invites, onSubmit}) => {
   const { userDetails } = useContext(AuthContext);
+  const [ emailInvites, setEmailInvites] = useState(undefined)
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
@@ -330,198 +332,207 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
     onSubmit(data)
   }
 
-  let email_invites = invites.map(i => i.email)
+  useEffect(() => {
+    setEmailInvites(invites)
+  }, [invites])
 
-  const missingCollab = new Array()
-  collaborators.forEach((user) => {
-    if (!oibsJoined.has(user['oib'])) {
-      if (user['email'].includes(';')) {
-        let emails = user['email'].split(';')
-        if (email_invites.indexOf(emails[0].trim()) === -1)
-          missingCollab.push({...user, email: emails[0].trim()})
-        if (email_invites.indexOf(emails[1].trim()) === -1)
-          missingCollab.push({...user, email: emails[1].trim()})
+
+  if (emailInvites !== undefined) {
+    let email_invites = emailInvites.map(i => i.email)
+
+    const missingCollab = new Array()
+    collaborators.forEach((user) => {
+      if (!oibsJoined.has(user['oib'])) {
+        if (user['email'].includes(';')) {
+          let emails = user['email'].split(';')
+          if (email_invites.indexOf(emails[0].trim()) === -1)
+            missingCollab.push({...user, email: emails[0].trim()})
+          if (email_invites.indexOf(emails[1].trim()) === -1)
+            missingCollab.push({...user, email: emails[1].trim()})
+        }
+        else
+          if (email_invites.indexOf(user['email']) === -1)
+            missingCollab.push(user)
       }
-      else
-        if (email_invites.indexOf(user['email']) === -1)
-          missingCollab.push(user)
-    }
-  })
+    })
 
-  return (
-    <>
-      <Row className={amILead && missingCollab.length > 0 ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
-        <Col>
-          <Table responsive hover className="shadow-sm bg-white">
-            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-              <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal">
-                  Ime
-                </th>
-                <th className="fw-normal">
-                  Prezime
-                </th>
-                <th className="fw-normal">
-                  Uloga
-                </th>
-                <th className="fw-normal">
-                  Email
-                </th>
-                <th className="fw-normal">
-                  CroRIS registracija
-                </th>
-                <th className="fw-normal">
-                  Prijavljen
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <>
-                <tr>
-                  <td className="p-3 align-middle text-center">
-                    { lead['user'].first_name }
-                  </td>
-                  <td className="p-3 align-middle text-center">
-                    { lead['user'].last_name }
-                  </td>
-                  <td className="align-middle text-center">
-                    Voditelj
-                  </td>
-                  <td className="align-middle text-center">
-                    { extractEmails(lead['user'].person_mail) }
-                  </td>
-                  <td className="align-middle text-center">
-                    Da
-                  </td>
-                  <td className="align-middle text-center">
-                    Da
-                  </td>
+    return (
+      <>
+        <Row className={amILead && missingCollab.length > 0 ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
+          <Col>
+            <Table responsive hover className="shadow-sm bg-white">
+              <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+                <tr className="border-bottom border-1 border-dark">
+                  <th className="fw-normal">
+                    Ime
+                  </th>
+                  <th className="fw-normal">
+                    Prezime
+                  </th>
+                  <th className="fw-normal">
+                    Uloga
+                  </th>
+                  <th className="fw-normal">
+                    Email
+                  </th>
+                  <th className="fw-normal">
+                    CroRIS registracija
+                  </th>
+                  <th className="fw-normal">
+                    Prijavljen
+                  </th>
                 </tr>
-                {
-                  alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
-                    <tr key={`row-${i}`}>
-                      <td className="p-3 align-middle text-center">
-                        { user['user'].first_name }
-                      </td>
-                      <td className="p-3 align-middle text-center">
-                        { user['user'].last_name }
-                      </td>
-                      <td className="align-middle text-center">
-                        Suradnik
-                      </td>
-                      <td className="align-middle text-center">
-                        { extractEmails(user['user'].person_mail) }
-                      </td>
-                      <td className="align-middle text-center">
-                        Da
-                      </td>
-                      <td className="align-middle text-center">
-                        Da
-                      </td>
-                    </tr>
-                  ))
-                }
-                {
-                  collaborators.length > 0 && collaborators.map((user, i) =>
-                    !oibsJoined.has(user['oib']) &&
-                      (
-                        <tr key={`row-${i}`}>
-                          <td className="p-3 align-middle text-center">
-                            { user.first_name }
-                          </td>
-                          <td className="p-3 align-middle text-center">
-                            { user.last_name }
-                          </td>
-                          <td className="align-middle text-center">
-                            Suradnik
-                          </td>
-                          <td className="align-middle text-center">
-                            { extractEmails(user.email) }
-                          </td>
-                          <td className="align-middle text-center">
-                            {
-                              user.email ? 'Da' : 'Ne'
-                            }
-                          </td>
-                          <td className="align-middle text-center">
-                            {
-                              emailInInvites(user.email, email_invites)
-                                ?
-                                  'Pozivnica'
-                                :
-                                  'Ne'
-                            }
-                          </td>
-                        </tr>
-                      ))
-                }
-              </>
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-      {
-        amILead && missingCollab.length > 0 &&
-          <Form onSubmit={handleSubmit(onTableSubmit)} className="needs-validation">
-            <Row className="mt-3 mb-5">
-              <Col>
-                <Row>
-                  <Col className="d-flex justify-content-center">
-                    <Button color="primary" onClick={toggle}>
-                      <FontAwesomeIcon icon={faArrowDown}/>{' '}
-                      Pozovi suradnike
-                    </Button>
-                  </Col>
-                </Row>
-                <Row className="mt-4">
-                  <Col className="d-flex justify-content-center">
-                    <Collapse isOpen={isOpen}>
-                      <Card className="ps-4 pe-4 pt-4" style={{maxWidth: '680px'}}>
-                        <CardTitle>
-                          Odaberi email adrese suradnika koje želiš pozvati na projekt
-                        </CardTitle>
-                        <CardBody className="mb-4">
-                          <Controller
-                            name="collaboratorEmails"
-                            control={control}
-                            render={ ({field}) =>
-                              <CustomReactSelect
-                                name="collaboratorEmails"
-                                forwardedRef={field.ref}
-                                controlWidth="600px"
-                                placeholder="Odaberi..."
-                                closeMenuOnSelect={false}
-                                collaboratorsFixedMultiValue
-                                isMulti
-                                fontSize="18px"
-                                options={
-                                  missingCollab.map(user => (
-                                    {
-                                      'value': user.email,
-                                      'label': user.email
-                                    }
-                                  ))}
-                                onChange={(e) => setValue('collaboratorEmails', e)}
-                              />
-                            }
-                          />
-                          <div className="d-flex align-items-center justify-content-center">
-                            <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
-                              <FontAwesomeIcon icon={faPaperPlane}/>{' '}
-                              Pošalji poveznice za prijavu
-                            </Button>
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-          </Form>
-      }
-    </>
-  )
+              </thead>
+              <tbody>
+                <>
+                  <tr>
+                    <td className="p-3 align-middle text-center">
+                      { lead['user'].first_name }
+                    </td>
+                    <td className="p-3 align-middle text-center">
+                      { lead['user'].last_name }
+                    </td>
+                    <td className="align-middle text-center">
+                      Voditelj
+                    </td>
+                    <td className="align-middle text-center">
+                      { extractEmails(lead['user'].person_mail) }
+                    </td>
+                    <td className="align-middle text-center">
+                      Da
+                    </td>
+                    <td className="align-middle text-center text-success">
+                      Da
+                    </td>
+                  </tr>
+                  {
+                    alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
+                      <tr key={`row-${i}`}>
+                        <td className="p-3 align-middle text-center">
+                          { user['user'].first_name }
+                        </td>
+                        <td className="p-3 align-middle text-center">
+                          { user['user'].last_name }
+                        </td>
+                        <td className="align-middle text-center">
+                          Suradnik
+                        </td>
+                        <td className="align-middle text-center">
+                          { extractEmails(user['user'].person_mail) }
+                        </td>
+                        <td className="align-middle text-center">
+                          Da
+                        </td>
+                        <td className="align-middle text-center text-success">
+                          Da
+                        </td>
+                      </tr>
+                    ))
+                  }
+                  {
+                    collaborators.length > 0 && collaborators.map((user, i) =>
+                      !oibsJoined.has(user['oib']) &&
+                        (
+                          <tr key={`row-${i}`}>
+                            <td className="p-3 align-middle text-center">
+                              { user.first_name }
+                            </td>
+                            <td className="p-3 align-middle text-center">
+                              { user.last_name }
+                            </td>
+                            <td className="align-middle text-center">
+                              Suradnik
+                            </td>
+                            <td className="align-middle text-center">
+                              { extractEmails(user.email) }
+                            </td>
+                            <td className="align-middle text-center">
+                              {
+                                user.email ? 'Da' : 'Ne'
+                              }
+                            </td>
+                            <td className="align-middle text-center">
+                              {
+                                emailInInvites(user.email, email_invites)
+                                  ?
+                                    <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
+                                  :
+                                    <span className="text-danger">
+                                      Ne
+                                    </span>
+                              }
+                            </td>
+                          </tr>
+                        ))
+                  }
+                </>
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
+        {
+          amILead && missingCollab.length > 0 &&
+            <Form onSubmit={handleSubmit(onTableSubmit)} className="needs-validation">
+              <Row className="mt-3 mb-5">
+                <Col>
+                  <Row>
+                    <Col className="d-flex justify-content-center">
+                      <Button color="primary" onClick={toggle}>
+                        <FontAwesomeIcon icon={faArrowDown}/>{' '}
+                        Pozovi suradnike
+                      </Button>
+                    </Col>
+                  </Row>
+                  <Row className="mt-4">
+                    <Col className="d-flex justify-content-center">
+                      <Collapse isOpen={isOpen}>
+                        <Card className="ps-4 pe-4 pt-4" style={{maxWidth: '680px'}}>
+                          <CardTitle>
+                            Odaberi email adrese suradnika koje želiš pozvati na projekt
+                          </CardTitle>
+                          <CardBody className="mb-4">
+                            <Controller
+                              name="collaboratorEmails"
+                              control={control}
+                              render={ ({field}) =>
+                                <CustomReactSelect
+                                  name="collaboratorEmails"
+                                  forwardedRef={field.ref}
+                                  controlWidth="600px"
+                                  placeholder="Odaberi..."
+                                  closeMenuOnSelect={false}
+                                  collaboratorsFixedMultiValue
+                                  isMulti
+                                  fontSize="18px"
+                                  options={
+                                    missingCollab.map(user => (
+                                      {
+                                        'value': user.email,
+                                        'label': user.email
+                                      }
+                                    ))}
+                                  onChange={(e) => setValue('collaboratorEmails', e)}
+                                />
+                              }
+                            />
+                            <div className="d-flex align-items-center justify-content-center">
+                              <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                                <FontAwesomeIcon icon={faPaperPlane}/>{' '}
+                                Pošalji poveznice za prijavu
+                              </Button>
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Collapse>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Form>
+        }
+      </>
+    )
+  }
 }
 
 
@@ -622,7 +633,7 @@ const Memberships = () => {
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
                       <CardHeader className="d-flex justify-content-between">
-                        <span className="fs-5 text-dark fw-bold">
+                        <span className="fs-5 text-dark">
                           { project?.name }
                         </span>
                       </CardHeader>
