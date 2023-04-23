@@ -476,7 +476,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                 <Row className="mt-4">
                   <Col className="d-flex justify-content-center">
                     <Collapse isOpen={isOpen}>
-                      <Card className="p-4" style={{maxWidth: '680px'}}>
+                      <Card className="ps-4 pe-4 pt-4" style={{maxWidth: '680px'}}>
                         <CardTitle>
                           Odaberi email adrese suradnika koje želiš pozvati na projekt
                         </CardTitle>
@@ -505,13 +505,13 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                               />
                             }
                           />
+                          <div className="d-flex align-items-center justify-content-center">
+                            <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                              <FontAwesomeIcon icon={faPaperPlane}/>{' '}
+                              Pošalji poveznice za prijavu
+                            </Button>
+                          </div>
                         </CardBody>
-                        <CardFooter className="d-flex bg-white mt-2 mb-1 align-items-center justify-content-center">
-                          <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
-                            <FontAwesomeIcon icon={faPaperPlane}/>{' '}
-                            Pošalji poveznice za prijavu
-                          </Button>
-                        </CardFooter>
                       </Card>
                     </Collapse>
                   </Col>
