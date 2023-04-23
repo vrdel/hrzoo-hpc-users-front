@@ -4,7 +4,6 @@ import { LinkTitles } from '../config/link-titles';
 import { RequestTypesToSelect, UrlToRequestType } from '../config/request-types';
 import { ResourceTypesToSelect } from '../config/resource-types';
 import { listScientificDomain, mapDomainsToFields } from '../config/scientific-domain';
-import { listScientificSoftware } from '../config/scientific-software';
 import { buildOptionsFromArray } from '../utils/select-tools';
 import { AuthContextProvider } from '../components/AuthContextProvider';
 
@@ -22,7 +21,6 @@ const Root = () => {
       listScientificDomain,
       mapDomainsToFields,
       buildOptionsFromArray,
-      listScientificSoftware
     }}>
       <AuthContextProvider>
         <Outlet />

@@ -1,7 +1,6 @@
 import Cookies from 'universal-cookie';
 import { url_api_prefix } from '../config/general';
-import { defaultLogoutRedirect } from '../config/default-redirect';
-import { useNavigate } from 'react-router-dom';
+
 
 export async function isActiveSession() {
   let response = await fetch(`${url_api_prefix}/api/v1/sessionactive`)
