@@ -1,0 +1,247 @@
+[
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 1,
+		"fields": {
+			"name": "amber/22-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 2,
+		"fields": {
+			"name": "amber/22-cuda"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 3,
+		"fields": {
+			"name": "bwa-mem2/2.2.1"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 4,
+		"fields": {
+			"name": "clustalO/1.2.4"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 5,
+		"fields": {
+			"name": "cp2k/2022.1-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 6,
+		"fields": {
+			"name": "crest/2.12-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 7,
+		"fields": {
+			"name": "gatk4/4.4.0.0"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 8,
+		"fields": {
+			"name": "gaussian/16-C01"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 9,
+		"fields": {
+			"name": "gromacs/2022.5-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 10,
+		"fields": {
+			"name": "gromacs/2022.5-cuda"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 11,
+		"fields": {
+			"name": "lammps/23Jun2022-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 12,
+		"fields": {
+			"name": "lammps/29Sep2021-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 13,
+		"fields": {
+			"name": "mathematica/13.2.1"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 14,
+		"fields": {
+			"name": "mmseqs2/14-7e284"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 15,
+		"fields": {
+			"name": "namd/2.13-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 16,
+		"fields": {
+			"name": "namd/2.14-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 17,
+		"fields": {
+			"name": "nwchem/7.0.2-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 18,
+		"fields": {
+			"name": "nwchem/7.2.0-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 19,
+		"fields": {
+			"name": "openfoam/2212"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 20,
+		"fields": {
+			"name": "orca/5.0.3"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 21,
+		"fields": {
+			"name": "orca/5.0.4"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 22,
+		"fields": {
+			"name": "orthofinder/2.5.4"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 23,
+		"fields": {
+			"name": "pytorch/1.14.0-ngc"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 24,
+		"fields": {
+			"name": "qe/6.8-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 25,
+		"fields": {
+			"name": "qe/7.0-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 26,
+		"fields": {
+			"name": "qe/7.1-cuda"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 27,
+		"fields": {
+			"name": "qe/7.1-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 28,
+		"fields": {
+			"name": "qe/7.1-nvhpc"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 29,
+		"fields": {
+			"name": "qe/2023-cuda"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 30,
+		"fields": {
+			"name": "samtools/1.17"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 31,
+		"fields": {
+			"name": "tensorflow/2.10.1-ngc"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 32,
+		"fields": {
+			"name": "wrf/4.3.3-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 33,
+		"fields": {
+			"name": "xtb/6.4.0-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 34,
+		"fields": {
+			"name": "xtb/6.5.1-gnu"
+		}
+	},
+	{
+		"model": "backend.ScienceSoftware",
+		"pk": 35,
+		"fields": {
+			"name": "xtb/6.6.0-gnu"
+		}
+	}
+]
