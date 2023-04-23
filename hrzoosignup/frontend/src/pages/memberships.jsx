@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
 import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody, CardFooter,
-  Label, Badge, Table, Button, Form } from 'reactstrap';
+  Label, Badge, Table, Button, Form, Tooltip } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
@@ -163,6 +163,24 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
     onSubmit(data)
   }
 
+  const [tooltipOpened, setTooltipOpened] = useState(undefined);
+  const showTooltip = (toolid) => {
+    let showed = new Object()
+    if (tooltipOpened === undefined && toolid) {
+      showed[toolid] = true
+      setTooltipOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(tooltipOpened))
+      showed[toolid] = !showed[toolid]
+      setTooltipOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (tooltipOpened !== undefined)
+      return tooltipOpened[toolid]
+  }
+
   return (
     <>
       <Row className={amILead ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
@@ -242,8 +260,16 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <td className="align-middle text-center">
                         { user.email }
                       </td>
-                      <td className="align-middle text-center">
+                      <td className="align-middle text-center" id={`Tooltip-${i + 100}`}>
                         <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
+                        <Tooltip
+                          placement='top'
+                          isOpen={isOpened(user.email)}
+                          target={`Tooltip-${i + 100}`}
+                          toggle={() => showTooltip(user.email)}
+                        >
+                          Aktivna pozivnica poslana na email
+                        </Tooltip>
                       </td>
                     </tr>
                   ))
@@ -330,6 +356,24 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   const onTableSubmit = (data) => {
     data['project'] = project['identifier']
     onSubmit(data)
+  }
+
+  const [tooltipOpened, setTooltipOpened] = useState(undefined);
+  const showTooltip = (toolid) => {
+    let showed = new Object()
+    if (tooltipOpened === undefined && toolid) {
+      showed[toolid] = true
+      setTooltipOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(tooltipOpened))
+      showed[toolid] = !showed[toolid]
+      setTooltipOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (tooltipOpened !== undefined)
+      return tooltipOpened[toolid]
   }
 
   useEffect(() => {
@@ -433,7 +477,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                     collaborators.length > 0 && collaborators.map((user, i) =>
                       !oibsJoined.has(user['oib']) &&
                         (
-                          <tr key={`row-${i}`}>
+                          <tr key={`row-${i + 100}`}>
                             <td className="p-3 align-middle text-center">
                               { user.first_name }
                             </td>
@@ -451,11 +495,21 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 user.email ? 'Da' : 'Ne'
                               }
                             </td>
-                            <td className="align-middle text-center">
+                            <td className="align-middle text-center" id={'Tooltip-' + i + 100}>
                               {
                                 emailInInvites(user.email, email_invites)
                                   ?
-                                    <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
+                                    <React.Fragment>
+                                      <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
+                                      <Tooltip
+                                        placement='top'
+                                        isOpen={isOpened(user.email)}
+                                        target={'Tooltip-' + i + 100}
+                                        toggle={() => showTooltip(user.email)}
+                                      >
+                                        Aktivna pozivnica poslana na email
+                                      </Tooltip>
+                                    </React.Fragment>
                                   :
                                     <span className="text-danger">
                                       Ne
