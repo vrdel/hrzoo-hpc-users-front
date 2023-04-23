@@ -20,4 +20,5 @@ urlpatterns = [
     path('invites-userlink/', views.InvitesLink.as_view(), name='inviteslink'),
     path('keys/', views.SshKeys.as_view(), name='sshkeys'),
     path('keys/<str:all>', views.SshKeys.as_view(), name='sshkeys'),
+    path('science-software/', views.ScienceSoftware.as_view(), name='sciencesoftware'),
 ] + router.urls

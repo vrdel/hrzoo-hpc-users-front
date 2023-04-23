@@ -254,3 +254,9 @@ class SshKeysSerializer(serializers.ModelSerializer):
         complete.update({key: value for key, value in validated_data.items()})
         complete['date_created'] = datetime.datetime.now()
         return models.SSHPublicKey.objects.create(**complete)
+
+
+class ScienceSoftwareSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ('name',)
+        model = models.ScienceSoftware
