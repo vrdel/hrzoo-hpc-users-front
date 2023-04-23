@@ -442,7 +442,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                     <td className="align-middle text-center">
                       { extractEmails(lead['user'].person_mail) }
                     </td>
-                    <td className="align-middle text-center">
+                    <td className="align-middle text-center text-success">
                       Da
                     </td>
                     <td className="align-middle text-center text-success">
@@ -464,7 +464,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                         <td className="align-middle text-center">
                           { extractEmails(user['user'].person_mail) }
                         </td>
-                        <td className="align-middle text-center">
+                        <td className="align-middle text-center text-success">
                           Da
                         </td>
                         <td className="align-middle text-center text-success">
@@ -492,7 +492,15 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                             </td>
                             <td className="align-middle text-center">
                               {
-                                user.email ? 'Da' : 'Ne'
+                                user.email
+                                  ?
+                                    <span className="text-success">
+                                      Da
+                                    </span>
+                                  :
+                                    <span className="text-danger">
+                                      Ne
+                                    </span>
                               }
                             </td>
                             <td className="align-middle text-center" id={'Tooltip-' + i + 100}>
