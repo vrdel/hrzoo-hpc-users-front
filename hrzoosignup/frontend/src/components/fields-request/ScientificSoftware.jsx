@@ -15,6 +15,7 @@ import { SharedData } from '../../pages/root';
 import { ErrorMessage } from '@hookform/error-message';
 import { fetchScienceSoftware } from '../../api/software';
 import { useQuery } from '@tanstack/react-query';
+import _ from "lodash";
 
 
 const ScientificSoftware = ({fieldsDisabled=false}) => {
@@ -30,7 +31,7 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
 
   useEffect(() => {
     if (status === 'success' && scienceSoftwareData.length > 0) {
-      let softwareNames = scienceSoftwareData.map(soft => soft['name'])
+      let softwareNames = _.sortBy(_.map(scienceSoftwareData,'name'))
       setListScientificSoftware(softwareNames)
     }
   }, [scienceSoftwareData])
