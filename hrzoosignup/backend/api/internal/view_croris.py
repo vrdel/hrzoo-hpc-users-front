@@ -171,7 +171,7 @@ class CroRISInfo(APIView):
                 # projects may be outdated
                 if metadata['end']:
                     today = datetime.datetime.today()
-                    end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y')
+                    end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') + settings.GRACE_DAYS
                     if end_date <= today:
                         self.dead_projects_lead.append(project.get('id'))
                         continue
@@ -245,7 +245,7 @@ class CroRISInfo(APIView):
             # projects may be outdated
             if metadata['end']:
                 today = datetime.datetime.today()
-                end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y')
+                end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') + settings.GRACE_DAYS
                 if end_date <= today:
                     self.dead_projects_associate.append(project.get('id'))
                     continue

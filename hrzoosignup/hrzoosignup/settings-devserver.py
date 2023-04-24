@@ -53,6 +53,7 @@ try:
     API_PERSON = config.get('CRORIS', 'API_Person')
     CRORIS_USER = config.get('CRORIS', 'Username')
     CRORIS_PASSWORD = config.get('CRORIS', 'Password')
+    GRACE_DAYS = config.getint('CRORIS', 'Grace_Days', fallback=0)
 
     SUPERUSER_FIRSTNAME = config.get('SUPERUSER', 'FirstName')
     SUPERUSER_USERNAME = config.get('SUPERUSER', 'Username')
