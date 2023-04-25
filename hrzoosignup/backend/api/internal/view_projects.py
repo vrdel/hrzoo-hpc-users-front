@@ -211,6 +211,7 @@ class Projects(APIView):
 
     def get(self, request, **kwargs):
         projects = list()
+        projects_research = list()
 
         try:
             if kwargs.get('specific', False):
@@ -234,6 +235,21 @@ class Projects(APIView):
         up_obj = models.UserProject.objects.filter(user=request.user.pk).order_by('-project__date_submitted')
         for up in up_obj:
             projects.append(up.project)
+            if (up.project.project_type.name == 'research-croris'
+                and up.role.name == 'lead'
+                and up.project.state.name == 'approve'):
+                projects_research.append(up.project)
+
+        # sync data for CroRIS projects that might have been updated
+        # since submission
+
+        oib = request.user.person_oib
+        croris_data = cache.get(f'{oib}_croris')
+        if croris_data:
+            lead_projects_users = croris_data['projects_lead_users']
+            for pl in projects_research:
+                pl.croris_collaborators = lead_projects_users[pl.croris_id]
+                pl.save()
 
         serializer = ProjectSerializerGet(projects, many=True)
 
