@@ -15,10 +15,13 @@ from backend.serializers import InvitesSerializer
 import json
 import requests
 import datetime
+import logging
 
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.conf import settings
+
+logger = logging.getLogger('hrzoosignup.views')
 
 
 def associate_user_to_project(user, project):
@@ -94,7 +97,7 @@ class Invites(APIView):
                                     user.person_uniqueid,
                                     proj.identifier)
                         }}
-                        print(msg)
+                        logger.info(msg)
                         return Response(msg, status=status.HTTP_201_CREATED)
 
                     else:
@@ -105,7 +108,7 @@ class Invites(APIView):
                                     user.person_uniqueid,
                                     proj.identifier)
                             }}
-                        print(msg)
+                        logger.warn(msg)
                         return Response(msg, status=status.HTTP_403_FORBIDDEN)
 
                 else:
@@ -122,7 +125,7 @@ class Invites(APIView):
                                 proj.identifier)
                         }
                     }
-                    print(msg)
+                    logger.info(msg)
                     return Response(msg, status=status.HTTP_201_CREATED)
 
         except requests.exceptions.HTTPError as ex:
@@ -132,7 +135,7 @@ class Invites(APIView):
                         'code': status.HTTP_410_GONE,
                         'message': 'Invitation code already used'}
                 }
-                print(msg)
+                logger.error(msg)
                 return Response(msg, status=status.HTTP_410_GONE)
 
         except IntegrityError as exc:
@@ -142,7 +145,7 @@ class Invites(APIView):
                     'message': 'Invitations problem: {}'.format(repr(exc))
                 }
             }
-            print(msg)
+            logger.error(msg)
             return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
@@ -159,7 +162,7 @@ class Invites(APIView):
                     'message': 'Not allowed to send invitations for given project'
                 }
             }
-            print(msg)
+            logger.error(msg)
             return Response(msg, status=status.HTTP_403_FORBIDDEN)
 
         proj = models.Project.objects.get(identifier=proj_id)
@@ -176,7 +179,7 @@ class Invites(APIView):
                             'message': 'Problem fetching cached data'
                         }
                     }
-                    print(msg)
+                    logger.error(msg)
                     return Response(msg, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
@@ -206,7 +209,7 @@ class Invites(APIView):
                     'message': 'Invitations sent'
                 }
             }
-            print(msg)
+            logger.info(msg)
             return Response(msg, status=status.HTTP_200_OK)
 
         # TODO: what are all posible exceptions?
@@ -217,5 +220,5 @@ class Invites(APIView):
                     'message': 'Invitations problem: {}'.format(repr(exc))
                 }
             }
-            print(msg)
+            logger.error(msg)
             return Response(msg, status=status.HTTP_400_BAD_REQUEST)

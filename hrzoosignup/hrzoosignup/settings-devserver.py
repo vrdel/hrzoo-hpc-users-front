@@ -330,17 +330,50 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
+        # 'file_debug': {
+            # 'level': 'DEBUG',
+            # 'class': 'logging.FileHandler',
+            # 'filename':  '{}var/log/debug.log'.format(VENV),
+            # 'formatter': 'verbose',
+        # },
+        'file_info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename':  '{}var/log/info.log'.format(VENV),
+            'formatter': 'verbose',
+        },
+        'file_error': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename':  '{}var/log/debug.log'.format(VENV),
+            'filename':  '{}var/log/error.log'.format(VENV),
+            'formatter': 'verbose',
+        },
+        'file_views': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename':  '{}var/log/views.log'.format(VENV),
             'formatter': 'verbose',
         },
     },
     'loggers': {
+        # 'django': {
+            # 'handlers': ['file_debug'],
+            # 'level': 'DEBUG',
+            # 'propagate': True,
+        # },
         'django': {
-            'handlers': ['file'],
+            'handlers': ['file_info'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['file_error'],
             'level': 'ERROR',
+            'propagate': True,
+        },
+        'hrzoosignup.views': {
+            'handlers': ['file_views'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
