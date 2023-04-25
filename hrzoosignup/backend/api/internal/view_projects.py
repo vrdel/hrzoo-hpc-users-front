@@ -242,12 +242,15 @@ class Projects(APIView):
 
         # sync data for CroRIS projects that might have been updated
         # since submission
-
         oib = request.user.person_oib
         croris_data = cache.get(f'{oib}_croris')
         if croris_data:
             lead_projects_users = croris_data['projects_lead_users']
+            lead_info = croris_data['projects_lead_info']
             for pl in projects_research:
+                # TODO: proper date + time, otherwise time=22h
+                # plinfo = [project for project in lead_info if project['croris_id'] == pl.croris_id]
+                # pl.date_end = datetime.datetime.strptime(plinfo['end'], '%d.%m.%Y')
                 pl.croris_collaborators = lead_projects_users[pl.croris_id]
                 pl.save()
 
