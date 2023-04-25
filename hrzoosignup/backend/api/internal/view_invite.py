@@ -21,6 +21,7 @@ from django.core.cache import cache
 from django.db import IntegrityError
 from django.conf import settings
 
+
 logger = logging.getLogger('hrzoosignup.views')
 
 

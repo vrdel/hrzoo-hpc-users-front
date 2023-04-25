@@ -13,8 +13,12 @@ import uvloop
 import aiohttp
 import json
 import datetime
+import logging
 
 from aiohttp import client_exceptions, http_exceptions, ClientSession
+
+
+logger = logging.getLogger('hrzoosignup.views')
 
 
 def contains_exception(list):

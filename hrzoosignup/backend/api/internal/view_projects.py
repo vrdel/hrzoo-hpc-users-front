@@ -17,6 +17,10 @@ from backend.email import project
 import json
 import datetime
 import textwrap
+import logging
+
+
+logger = logging.getLogger('hrzoosignup.views')
 
 
 class ProjectsGeneral(APIView):
@@ -230,6 +234,7 @@ class Projects(APIView):
                     'message': 'Project not found'
                 }
             }
+            logger.error(err_response)
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
         up_obj = models.UserProject.objects.filter(user=request.user.pk).order_by('-project__date_submitted')
@@ -283,6 +288,7 @@ class Projects(APIView):
                     'message': 'Project not found'
                 }
             }
+            logger.error(err_response)
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
 
@@ -312,6 +318,7 @@ class ProjectsRole(APIView):
                         'message': 'Role needed'
                     }
                 }
+                logger.error(err_response)
                 return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
         except models.Project.DoesNotExist as exc:
@@ -321,6 +328,7 @@ class ProjectsRole(APIView):
                     'message': 'Project not found'
                 }
             }
+            logger.error(err_response)
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
         except models.Role.DoesNotExist as exc:
@@ -330,4 +338,5 @@ class ProjectsRole(APIView):
                     'message': 'Role not found'
                 }
             }
+            logger.error(err_response)
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)

@@ -3,8 +3,14 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
+
 from backend.serializers import ScienceSoftwareSerializer
 from backend import models
+
+import logging
+
+
+logger = logging.getLogger('hrzoosignup.views')
 
 
 class ScienceSoftware(APIView):

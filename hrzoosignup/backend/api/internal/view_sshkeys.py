@@ -14,6 +14,10 @@ from django.conf import settings
 from django.db import IntegrityError
 
 import json
+import logging
+
+
+logger = logging.getLogger('hrzoosignup.views')
 
 
 class SshKeys(APIView):
