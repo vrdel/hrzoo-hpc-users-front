@@ -400,6 +400,11 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
       }
     })
 
+    let collabNoEmail = true
+    for (var collab of missingCollab)
+      if (collab['email'])
+        collabNoEmail = false
+
     return (
       <>
         <Row className={amILead && missingCollab.length > 0 ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
@@ -545,7 +550,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                 <Col>
                   <Row>
                     <Col className="d-flex justify-content-center">
-                      <Button color="primary" onClick={toggle}>
+                      <Button disabled={collabNoEmail} color="primary" onClick={toggle}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         Pozovi suradnike
                       </Button>
