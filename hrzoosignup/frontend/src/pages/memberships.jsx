@@ -488,7 +488,13 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                               Suradnik
                             </td>
                             <td className="align-middle text-center">
-                              { extractEmails(user.email) }
+                              {
+                                user.email
+                                ?
+                                  extractEmails(user.email)
+                                :
+                                  '\u2212'
+                              }
                             </td>
                             <td className="align-middle text-center">
                               {
