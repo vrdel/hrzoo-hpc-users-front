@@ -201,13 +201,24 @@ const InstituteInfo = () => {
             Povezanost
           </Label>
         </Col>
-        <Col className="ms-3" md={{size: 6}}>
+        <Col className="ms-3" md={{size: 4}}>
           <Label
             htmlFor="dirInstitute"
             aria-label="dirInstitute"
             className="fs-5 fw-bold"
           >
             Naziv ustanove
+          </Label>
+        </Col>
+        <Col className="ms-3" md={{size: 1}}>
+        </Col>
+        <Col className="ms-3" md={{size: 4}}>
+          <Label
+            htmlFor="dirOrganisationUnit"
+            aria-label="dirOrganisationUnit"
+            className="fs-5 fw-bold"
+          >
+            Organizacijska jedinica
           </Label>
         </Col>
 
@@ -221,7 +232,7 @@ const InstituteInfo = () => {
               '\u2212'
           }
         </Col>
-        <Col className="ms-3" md={{size: 6}}>
+        <Col className="ms-3" md={{size: 4}}>
           {
             userDetails.person_institution ?
               userDetails.person_institution
@@ -229,25 +240,9 @@ const InstituteInfo = () => {
               '\u2212'
           }
         </Col>
-      </Row>
-
-      <Row style={{height: "20px"}}>
-      </Row>
-
-      <Row className="mt-3 ms-2">
-        <Col className="ms-3" md={{size: 6}}>
-          <Label
-            htmlFor="dirOrganisationUnit"
-            aria-label="dirOrganisationUnit"
-            className="fs-5 fw-bold"
-          >
-            Organizacijska jedinica
-          </Label>
+        <Col className="ms-3" md={{size: 1}}>
         </Col>
-
-        <div className="w-100"></div>
-
-        <Col className="ms-3" md={{size: 6}}>
+        <Col className="ms-3" md={{size: 4}}>
           {
             userDetails.person_organisation ?
               userDetails.person_organisation
