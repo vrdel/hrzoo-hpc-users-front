@@ -293,7 +293,7 @@ export const MyRequestChange = () => {
                 <Row style={{height: '50px'}}>
                 </Row>
                 <RequestHorizontalRulerRed />
-                <GeneralFields fieldsDisabled={true} />
+                <GeneralFields projectInfo={nrProject} fieldsDisabled={true} />
                 <ScientificSoftware fieldsDisabled={true} />
                 <ResourceFields fieldsDisabled={true} />
                 <Row style={{height: '50px'}}>
