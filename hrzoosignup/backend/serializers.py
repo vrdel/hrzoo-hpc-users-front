@@ -242,7 +242,7 @@ class SshKeysSerializer(serializers.ModelSerializer):
         value = value.strip()
 
         if value in list(models.SSHPublicKey.objects.\
-                         all().values_list('name', flat=True)):
+                         filter(user=self.initial_data['user']).values_list('name', flat=True)):
             raise serializers.ValidationError(
                 'Key of that name already exists'
             )
@@ -253,6 +253,8 @@ class SshKeysSerializer(serializers.ModelSerializer):
         complete['fingerprint'] = get_ssh_key_fingerprint(validated_data['public_key'])
         complete.update({key: value for key, value in validated_data.items()})
         complete['date_created'] = datetime.datetime.now()
+        user = get_user_model().objects.get(id=self.initial_data['user'])
+        complete['user'] = user
         return models.SSHPublicKey.objects.create(**complete)
 
 
