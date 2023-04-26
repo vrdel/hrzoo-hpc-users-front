@@ -389,10 +389,9 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
       if (!oibsJoined.has(user['oib'])) {
         if (user['email'].includes(';')) {
           let emails = user['email'].split(';')
-          if (email_invites.indexOf(emails[0].trim()) === -1)
-            missingCollab.push({...user, email: emails[0].trim()})
-          if (email_invites.indexOf(emails[1].trim()) === -1)
-            missingCollab.push({...user, email: emails[1].trim()})
+          for (var email of emails)
+            if (email_invites.indexOf(email.trim()) === -1)
+              missingCollab.push({...user, email: email.trim()})
         }
         else
           if (email_invites.indexOf(user['email']) === -1)
