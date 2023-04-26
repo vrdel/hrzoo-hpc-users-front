@@ -37,7 +37,7 @@ class SshKeys(APIView):
             err_response = {
                 'status': {
                     'code': err_status,
-                    'message': 'Bad request'
+                    'message': '{} - Bad request'.format(request.user.username)
                 }
             }
             return Response(err_response, status=err_status)
@@ -51,7 +51,7 @@ class SshKeys(APIView):
         ok_response = {
             'status': {
                 'code': status.HTTP_204_NO_CONTENT,
-                'message': f'{key_name} successfully deleted'
+                'message': f'{request.user.username} - {key_name} successfully deleted'
             }
         }
         return Response(ok_response, status=status.HTTP_204_NO_CONTENT)
@@ -69,7 +69,7 @@ class SshKeys(APIView):
             err_response = {
                 'status': {
                     'code': err_status,
-                    'message': 'Not authorized to add new SSH key'
+                    'message': '{} - Not authorized to add new SSH key'.format(request.user.username)
                 }
             }
             return Response(err_response, status=err_status)
@@ -87,7 +87,7 @@ class SshKeys(APIView):
                 msg = {
                     'status': {
                         'code': status.HTTP_400_BAD_REQUEST,
-                        'message': 'SSH key problem: {}'.format(repr(exc))
+                        'message': '{} - SSH key problem: {}'.format(request.user.username, repr(exc))
                     }
                 }
                 return Response(msg, status=status.HTTP_400_BAD_REQUEST)
@@ -97,7 +97,7 @@ class SshKeys(APIView):
             err_response = {
                 'status': {
                     'code': err_status,
-                    'message': json.dumps(serializer.errors)
+                    'message': request.user.username + ' - ' + json.dumps(serializer.errors)
                 }
             }
             return Response(err_response, status=err_status)
