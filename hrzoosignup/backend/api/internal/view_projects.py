@@ -256,8 +256,11 @@ class Projects(APIView):
                 # TODO: proper date + time, otherwise time=22h
                 # plinfo = [project for project in lead_info if project['croris_id'] == pl.croris_id]
                 # pl.date_end = datetime.datetime.strptime(plinfo['end'], '%d.%m.%Y')
-                pl.croris_collaborators = lead_projects_users[pl.croris_id]
-                pl.save()
+                try:
+                    pl.croris_collaborators = lead_projects_users[pl.croris_id]
+                    pl.save()
+                except (KeyError, IndexError) as exc:
+                    logger.warn('{} - found project data (CroRIS ID={}) in database, but not in memcache'.format(request.user.username, pl.croris_id))
 
         serializer = ProjectSerializerGet(projects, many=True)
 
