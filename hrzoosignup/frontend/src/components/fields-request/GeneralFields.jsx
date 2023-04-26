@@ -189,7 +189,9 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
 
 
 export const CroRisDescription = ({fieldsDisabled=false}) => {
-  const { control, formState: {errors} } = useFormContext();
+  const { control, getValues, formState: {errors} } = useFormContext();
+
+  let crorisId = getValues('requestCroRisId')
 
   return (
     <>
@@ -225,6 +227,13 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
               </FormFeedback>
             }
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={{size: 10, offset: 1}}>
+          <a href={`https://www.croris.hr/projekti/projekt/${crorisId}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+            https://www.croris.hr/projekti/projekt/{crorisId}
+          </a>
         </Col>
       </Row>
     </>

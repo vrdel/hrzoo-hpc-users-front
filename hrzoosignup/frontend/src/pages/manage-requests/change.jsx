@@ -176,6 +176,7 @@ export const ManageRequestsChange = () => {
 
   const rhfProps = useForm({
     defaultValues: {
+      requestCroRisId: '',
       requestName: '',
       requestExplain: '',
       startDate: '',
@@ -205,6 +206,7 @@ export const ManageRequestsChange = () => {
 
   useEffect(() => {
     if (status === 'success' && nrProject) {
+      rhfProps.setValue('requestCroRisId', nrProject.croris_id)
       rhfProps.setValue('requestName', nrProject.name)
       rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('requestExplain', nrProject.reason)
