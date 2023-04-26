@@ -148,7 +148,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 </Col>
               </Row>
               <Row>
-                <Col md={{offset: 1}}>
+                <Col md={{offset: 1, size: 10}}>
                   {
                     projectInfo.userproject_set.map((user, i) =>
                       user.role.name === 'lead' &&
