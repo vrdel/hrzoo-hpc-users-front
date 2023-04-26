@@ -124,6 +124,7 @@ class CroRISInfo(APIView):
         await self.fetch_project_lead_info()
         await self.fetch_project_associate_info()
         await self.fetch_users_projects_lead()
+        await self.filter_unverified()
         await self.extract_email_for_associate()
         await self.close_session()
 
@@ -271,12 +272,30 @@ class CroRISInfo(APIView):
 
         self.projects_associate_info = parsed_projects
 
+    async def filter_unverified(self):
+        filter_ids = list()
+        for pid in self.projects_associate_ids:
+            fetched_project = await self._fetch_data(settings.API_PROJECT.replace("{projectId}", str(pid)))
+            project = json.loads(fetched_project)
+            verified = project.get('verified', False)
+            if verified and verified.lower() == 'false':
+                filter_ids.append(pid)
+            self.projects_associate_ids = list(filter(
+                lambda e: e not in filter_ids,
+                self.projects_associate_ids
+            ))
+            self.projects_associate_info = list(filter(
+                lambda p: p['croris_id'] not in filter_ids,
+                self.projects_associate_info
+            ))
+
     async def extract_email_for_associate(self):
         if not self.person_info['lead_status']:
             try:
                 pid = self.projects_associate_ids[0]
                 fetched_project = await self._fetch_data(settings.API_PROJECT.replace("{projectId}", str(pid)))
                 project = json.loads(fetched_project)
+
                 for person in project['osobeResources']['_embedded']['osobe']:
                     if person['persId'] == self.person_info['croris_id']:
                         self.person_info['email'] = person.get('email', '')
