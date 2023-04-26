@@ -274,9 +274,19 @@ class CroRISInfo(APIView):
         self.projects_associate_info = parsed_projects
 
     async def filter_unverified(self):
+        coros = []
         filter_ids = list()
+
         for pid in self.projects_associate_ids:
-            fetched_project = await self._fetch_data(settings.API_PROJECT.replace("{projectId}", str(pid)))
+            coros.append(self._fetch_data(settings.API_PROJECT.replace("{projectId}", str(pid))))
+        fetched_projects = await asyncio.gather(*coros, loop=self.loop,
+                                                return_exceptions=True)
+
+        exc_raised, exc = contains_exception(fetched_projects)
+        if exc_raised:
+            raise client_exceptions.ClientError(repr(exc))
+
+        for fetched_project in fetched_projects:
             project = json.loads(fetched_project)
             verified = project.get('verified', False)
             if verified and verified.lower() == 'false':
