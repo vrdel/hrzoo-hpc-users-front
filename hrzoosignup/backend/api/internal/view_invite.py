@@ -171,7 +171,7 @@ class Invites(APIView):
 
         try:
             if proj_type.name == 'research-croris':
-                myoib = request.user.person_oi
+                myoib = request.user.person_oib
                 cached = cache.get(f'{myoib}_croris')
                 if not cached:
                     msg = {
@@ -218,7 +218,7 @@ class Invites(APIView):
             msg = {
                 'status': {
                     'code': status.HTTP_400_BAD_REQUEST,
-                    'message': '{} - Invitations problem: {}'.format(user.username, repr(exc))
+                    'message': '{} - Invitations problem: {}'.format(request.user.username, repr(exc))
                 }
             }
             logger.error(msg)
