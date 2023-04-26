@@ -134,7 +134,7 @@ class Invites(APIView):
                 msg = {
                     'status': {
                         'code': status.HTTP_410_GONE,
-                        'message': 'Invitation code already used'}
+                        'message': '{} - Invitation code already used'.format(user.username)}
                 }
                 logger.error(msg)
                 return Response(msg, status=status.HTTP_410_GONE)
@@ -143,7 +143,7 @@ class Invites(APIView):
             msg = {
                 'status': {
                     'code': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invitations problem: {}'.format(repr(exc))
+                    'message': '{} - Invitations problem: {}'.format(user.username, repr(exc))
                 }
             }
             logger.error(msg)
@@ -160,7 +160,7 @@ class Invites(APIView):
             msg = {
                 'status': {
                     'code': status.HTTP_403_FORBIDDEN,
-                    'message': 'Not allowed to send invitations for given project'
+                    'message': '{} - Not allowed to send invitations for given project'.format(request.user.username)
                 }
             }
             logger.error(msg)
@@ -171,13 +171,13 @@ class Invites(APIView):
 
         try:
             if proj_type.name == 'research-croris':
-                myoib = request.user.person_oib
+                myoib = request.user.person_oi
                 cached = cache.get(f'{myoib}_croris')
                 if not cached:
                     msg = {
                         'status': {
                             'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
-                            'message': 'Problem fetching cached data'
+                            'message': '{} - Problem fetching cached data'.format(request.user.username)
                         }
                     }
                     logger.error(msg)
@@ -207,7 +207,7 @@ class Invites(APIView):
             msg = {
                 'status': {
                     'code': status.HTTP_200_OK,
-                    'message': 'Invitations sent'
+                    'message': '{} - Invitations sent'.format(request.user.username)
                 }
             }
             logger.info(msg)
@@ -218,7 +218,7 @@ class Invites(APIView):
             msg = {
                 'status': {
                     'code': status.HTTP_400_BAD_REQUEST,
-                    'message': 'Invitations problem: {}'.format(repr(exc))
+                    'message': '{} - Invitations problem: {}'.format(user.username, repr(exc))
                 }
             }
             logger.error(msg)
