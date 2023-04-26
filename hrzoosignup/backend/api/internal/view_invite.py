@@ -187,9 +187,22 @@ class Invites(APIView):
                 target = cached['projects_lead_users'][proj.croris_id]
                 oib_map = dict()
                 for user in target:
-                    oib_map.update({user['email']: user['oib']})
+                    user_email = [user['email']]
+                    if ';' in user['email']:
+                        user_email = [email.strip() for email in user['email'].split(';')]
+                    for email in user_email:
+                        oib_map.update({email: user['oib']})
                 cached_emails = set()
-                cached_emails.update([user['email'] for user in target])
+                for user in target:
+                    indcache_emails = list()
+                    if ';' in user['email']:
+                        targ_emails = user['email'].split(';')
+                        for email in targ_emails:
+                            indcache_emails.append(email.strip())
+                    else:
+                        indcache_emails.append(user['email'])
+                    cached_emails.update(indcache_emails)
+
                 for email in emails:
                     if email in cached_emails:
                         invite = Invitation.create(email, inviter=request.user,
