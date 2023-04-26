@@ -290,7 +290,7 @@ class CroRISInfo(APIView):
             project = json.loads(fetched_project)
             verified = project.get('verified', False)
             if verified and verified.lower() == 'false':
-                filter_ids.append(pid)
+                filter_ids.append(project['id'])
             self.projects_associate_ids = list(filter(
                 lambda e: e not in filter_ids,
                 self.projects_associate_ids
