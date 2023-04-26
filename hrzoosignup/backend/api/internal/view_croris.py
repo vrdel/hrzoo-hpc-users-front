@@ -228,9 +228,10 @@ class CroRISInfo(APIView):
             projects_associate_links = [projects_associate_links]
 
         skip_projects = self.dead_projects_lead + self.projects_lead_ids
-        projects_associate_links = list(
-            filter(lambda l: int(l['href'].split('/')[-1]) not in skip_projects,
-                projects_associate_links))
+        if skip_projects:
+            projects_associate_links = list(
+                filter(lambda l: int(l['href'].split('/')[-1]) not in skip_projects,
+                    projects_associate_links))
 
         for project in projects_associate_links:
             coros.append(self._fetch_data(project['href']))
