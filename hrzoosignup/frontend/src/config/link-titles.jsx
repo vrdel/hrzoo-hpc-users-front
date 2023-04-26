@@ -14,13 +14,13 @@ export function LinkTitles(loc) {
     [url_ui_prefix + '/clanstva']: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
   }
 
-  if (loc.includes('/moji-zahtjevi/') && loc.match(/[\w\d-_]+$/)) {
-    let identifier = loc.match(/[\w\d-_]+$/)
+  if (loc.includes('/moji-zahtjevi/') && loc.match(/[\w.\d-_]+$/)) {
+    let identifier = loc.match(/[\w.\d-_]+$/)
     return 'Pregledavanje zahtjeva ' + identifier
   }
 
-  if (loc.includes('/upravljanje-zahtjevima/') && loc.match(/[\w\d-_]+$/)) {
-    let identifier = loc.match(/[\w\d-_]+$/)
+  if (loc.includes('/upravljanje-zahtjevima/') && loc.match(/[\w.\d-_]+$/)) {
+    let identifier = loc.match(/[\w.\d-_]+$/)
     return 'Pregledavanje zahtjeva ' + identifier
   }
 
