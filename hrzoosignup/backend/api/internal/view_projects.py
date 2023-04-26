@@ -171,7 +171,7 @@ class Projects(APIView):
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
-                if settings.EMAIL_SEND:
+                if settings.EMAIL_SEND and request.data['staff_emailSend']:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
                     project.email_deny_project(person_mail, p_obj.name,
@@ -185,7 +185,7 @@ class Projects(APIView):
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
-                if settings.EMAIL_SEND:
+                if settings.EMAIL_SEND and request.data['staff_emailSend']:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
                     project.email_approve_project(person_mail, p_obj.name,

@@ -273,12 +273,12 @@ export const ManageRequestsChange = () => {
       return null
     }
 
-    //setAreYouSureModal(!areYouSureModal)
-    //setModalTitle("Obrada korisničkog zahtijeva")
-    //setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
-    //setOnYesCall('dochangereq')
-    //setOnYesCallArg(data)
-    alert(JSON.stringify(data, null, 2));
+    setAreYouSureModal(!areYouSureModal)
+    setModalTitle("Obrada korisničkog zahtijeva")
+    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
+    setOnYesCall('dochangereq')
+    setOnYesCallArg(data)
+    // alert(JSON.stringify(data, null, 2));
   }
 
   function onYesCallback() {
