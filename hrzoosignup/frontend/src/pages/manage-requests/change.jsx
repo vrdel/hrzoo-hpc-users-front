@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from '../../components/RequestHorizontalRuler';
 import GeneralFields, { CroRisDescription } from '../../components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Label, Row, Button, Form } from 'reactstrap';
+import { Col, Label, Row, Button, Form, FormGroup, Input } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
 import { fetchNrSpecificProject, changeProject, deleteProject } from '../../api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -200,7 +200,8 @@ export const ManageRequestsChange = () => {
       scientificSoftwareExtra: '',
       scientificSoftwareHelp: '',
       staff_requestResourceType: '',
-      staff_comment: ''
+      staff_comment: '',
+      staff_emailSend: true,
     }
   });
 
@@ -235,6 +236,7 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('CLOUDnIPs', nrProject.resources_numbers.CLOUDnIPs)
       rhfProps.setValue('requestResourceType', nrProject.resources_type)
       rhfProps.setValue('staff_requestResourceType', nrProject.staff_resources_type)
+      rhfProps.setValue('staff_emailSend', true)
 
       rhfProps.setValue('approved_by', nrProject.approved_by)
       rhfProps.setValue('denied_by', nrProject.denied_by)
@@ -271,11 +273,12 @@ export const ManageRequestsChange = () => {
       return null
     }
 
-    setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Obrada korisničkog zahtijeva")
-    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
-    setOnYesCall('dochangereq')
-    setOnYesCallArg(data)
+    //setAreYouSureModal(!areYouSureModal)
+    //setModalTitle("Obrada korisničkog zahtijeva")
+    //setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
+    //setOnYesCall('dochangereq')
+    //setOnYesCallArg(data)
+    alert(JSON.stringify(data, null, 2));
   }
 
   function onYesCallback() {
@@ -598,6 +601,29 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               />
             }
           />
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col style={{width: '150px'}} md={{size: 1}}/>
+        <Col md={{size: 9}}>
+          <FormGroup switch>
+            <Controller
+              name="staff_emailSend"
+              control={control}
+              render={({field}) =>
+                <Input
+                  {...field}
+                  type="switch"
+                  role="switch"
+                  disabled={!(requestState['approve'] === true
+                    || requestState['deny'] === true)}
+                  checked={getValues('staff_emailSend')}
+                  className="form-control fw-bold fst-italic"
+                />
+              }
+            />
+            <Label className="fw-bold fst-italic" check>Šalji email voditelju</Label>
+          </FormGroup>
         </Col>
       </Row>
       <Row style={{'height': '50px'}}/>
