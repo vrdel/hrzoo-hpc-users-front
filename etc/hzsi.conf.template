@@ -28,6 +28,7 @@ API_Project = https://www.croris.hr/projekti-api/projekt/{projectId}
 API_Person = https://www.croris.hr/projekti-api/osoba/{persId}
 Username = user
 Password = pass
+Grace_Days = 180
 
 
 [DATABASE]
