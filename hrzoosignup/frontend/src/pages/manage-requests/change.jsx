@@ -263,7 +263,7 @@ export const ManageRequestsChange = () => {
     if (whichState === 'approve'
       && (!data['staff_requestResourceType'] || data['staff_requestResourceType'].length === 0)) {
       toast.error(
-        <span className="font-monospace">
+        <span className="font-monospace text-dark">
           Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
         </span>, {
           autoClose: false,
