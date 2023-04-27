@@ -22,6 +22,8 @@ class Command(BaseCommand):
         parser.add_argument('--is-staff', action='store_true', default=False, dest='isstaff', help='Make user staff')
         parser.add_argument('--username', type=str, dest='username', help='Username of user', required=False)
         parser.add_argument('--password', type=str, dest='password', help='Password of user')
+        parser.add_argument('--unusable-password', action='store_true',
+                dest='unusablepassword', help='Unusable password for user')
         parser.add_argument('--permissions-config', action='store_true',
                             default=False, dest='permissions_config',
                             help='Pick usernames and permissions from default config')
@@ -69,7 +71,10 @@ class Command(BaseCommand):
         elif options['operation_set']:
             try:
                 user = self.user_model.objects.get(username=options['username'])
-                user.set_password(options['password'])
+                if options['password']:
+                    user.set_password(options['password'])
+                elif options['unusablepassword']:
+                    user.set_unusable_password()
                 user.save()
                 self.stdout.write('User password set'.format(options['username']))
             except Exception as exp:
