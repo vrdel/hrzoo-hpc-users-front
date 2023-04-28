@@ -9,7 +9,6 @@ from django.core.cache import cache
 from django.contrib.auth import get_user_model
 
 import asyncio
-import uvloop
 import aiohttp
 import json
 import datetime
@@ -47,7 +46,7 @@ class CroRISInfo(APIView):
         # we don't set HTTP error statuses on failed data fetchs
         try:
             if oib:
-                self.loop = uvloop.new_event_loop()
+                self.loop = asyncio.new_event_loop()
                 asyncio.set_event_loop(self.loop)
 
                 self.loop.run_until_complete(self._fetch_serie(oib))
