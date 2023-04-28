@@ -109,7 +109,15 @@ class ProjectsResearch(APIView):
         request.data['state'] = state_obj.pk
         request.data['is_active'] = True
         request.data['date_submitted'] = datetime.datetime.now()
-        request.data['identifier'] = request.data['croris_identifier']
+
+        if not request.data['croris_identifier']:
+            cobj = models.ProjectCount.objects.get()
+            code = 'NRC-{}-{:03}'.format(datetime.datetime.now().strftime('%Y-%m'), cobj.counter)
+            request.data['identifier'] = code
+            request.data['croris_identifier'] = code
+        else:
+            request.data['identifier'] = request.data['croris_identifier']
+
         request.data['institute'] = request.data['croris_institute']
 
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
