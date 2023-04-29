@@ -208,38 +208,78 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
             <tbody>
               <>
                 <tr>
-                  <td className="p-3 align-middle text-center">
+                  <td className={
+                    amILead
+                    ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                    : "p-3 align-middle text-center"
+                  }>
                     { lead['user'].first_name }
                   </td>
-                  <td className="p-3 align-middle text-center">
+                  <td className={
+                    amILead
+                    ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                    : "p-3 align-middle text-center"
+                  }>
                     { lead['user'].last_name }
                   </td>
-                  <td className="align-middle text-center">
+                  <td className={
+                    amILead
+                    ? "align-middle text-center fst-italic border-bottom border-secondary"
+                    : "align-middle text-center"
+                  }>
                     Voditelj
                   </td>
-                  <td className="align-middle text-center">
+                  <td className={
+                    amILead
+                    ? "align-middle text-center fst-italic border-bottom border-secondary"
+                    : "align-middle text-center"
+                    }>
                     { lead['user'].person_mail }
                   </td>
-                  <td className="align-middle text-center text-success">
+                  <td className={
+                    amILead
+                    ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                    : "align-middle text-center text-success"
+                  }>
                     Da
                   </td>
                 </tr>
                 {
                   alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
                     <tr key={`row-${i}`}>
-                      <td className="p-3 align-middle text-center">
+                      <td className={
+                        user['user']['person_oib'] === userDetails.person_oib
+                        ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                        : "p-3 align-middle text-center"
+                      }>
                         { user['user'].first_name }
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className={
+                        user['user']['person_oib'] === userDetails.person_oib
+                        ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                        : "p-3 align-middle text-center"
+                      }>
                         { user['user'].last_name }
                       </td>
-                      <td className="align-middle text-center">
+                      <td className={
+                        user['user']['person_oib'] === userDetails.person_oib
+                        ? "align-middle text-center fst-italic border-bottom border-secondary"
+                        : "align-middle text-center"
+                      }>
                         Suradnik
                       </td>
-                      <td className="align-middle text-center">
+                      <td className={
+                        user['user']['person_oib'] === userDetails.person_oib
+                        ? "align-middle text-center fst-italic border-bottom border-secondary"
+                        : "align-middle text-center"
+                      }>
                         { user['user'].person_mail }
                       </td>
-                      <td className="align-middle text-center text-success">
+                      <td className={
+                        user['user']['person_oib'] === userDetails.person_oib
+                        ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                        : "align-middle text-center text-success"
+                      }>
                         Da
                       </td>
                     </tr>
@@ -434,44 +474,92 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
               <tbody>
                 <>
                   <tr>
-                    <td className="p-3 align-middle text-center">
+                    <td className={
+                      amILead
+                      ? 'p-3 align-middle text-center fst-italic border-bottom border-secondary'
+                      : 'p-3 align-middle text-center'
+                    }>
                       { lead['user'].first_name }
                     </td>
-                    <td className="p-3 align-middle text-center">
+                    <td className={
+                      amILead
+                      ? 'p-3 align-middle text-center fst-italic border-bottom border-secondary'
+                      : 'p-3 align-middle text-center'
+                    }>
                       { lead['user'].last_name }
                     </td>
-                    <td className="align-middle text-center">
+                    <td className={
+                      amILead
+                      ? 'align-middle text-center fst-italic border-bottom border-secondary'
+                      : 'align-middle text-center'
+                    }>
                       Voditelj
                     </td>
-                    <td className="align-middle text-center">
+                    <td className={
+                      amILead
+                      ? 'align-middle text-center fst-italic border-bottom border-secondary'
+                      : 'align-middle text-center'
+                    }>
                       { extractEmails(lead['user'].person_mail) }
                     </td>
-                    <td className="align-middle text-center text-success">
+                    <td className={
+                      amILead
+                      ? 'align-middle text-center text-success fst-italic border-bottom border-secondary'
+                      : 'p-3 align-middle text-center text-success'
+                    }>
                       Da
                     </td>
-                    <td className="align-middle text-center text-success">
+                    <td className={
+                      amILead
+                      ? 'align-middle text-center text-success fst-italic border-bottom border-secondary'
+                      : 'p-3 align-middle text-center text-success'
+                    }>
                       Da
                     </td>
                   </tr>
                   {
                     alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
                       <tr key={`row-${i}`}>
-                        <td className="p-3 align-middle text-center">
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                          : "p-3 align-middle text-center"
+                        }>
                           { user['user'].first_name }
                         </td>
-                        <td className="p-3 align-middle text-center">
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                          : "p-3 align-middle text-center"
+                        }>
                           { user['user'].last_name }
                         </td>
-                        <td className="align-middle text-center">
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "align-middle text-center fst-italic border-bottom border-secondary"
+                          : "align-middle text-center"
+                        }>
                           Suradnik
                         </td>
-                        <td className="align-middle text-center">
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "align-middle text-center fst-italic border-bottom border-secondary"
+                          : "align-middle text-center"
+                        }>
                           { extractEmails(user['user'].person_mail) }
                         </td>
-                        <td className="align-middle text-center text-success">
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                          : "align-middle text-center text-success"
+                        }>
                           Da
                         </td>
-                        <td className="align-middle text-center text-success">
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                          : "align-middle text-center text-success"
+                        }>
                           Da
                         </td>
                       </tr>
@@ -482,16 +570,32 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                       !oibsJoined.has(user['oib']) &&
                         (
                           <tr key={`row-${i + 100}`}>
-                            <td className="p-3 align-middle text-center">
+                            <td className={
+                              user['user']?.oib === userDetails.person_oib
+                              ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                              : "p-3 align-middle text-center"
+                              }>
                               { user.first_name }
                             </td>
-                            <td className="p-3 align-middle text-center">
+                            <td className={
+                              user['user']?.oib === userDetails.person_oib
+                              ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                              : "p-3 align-middle text-center"
+                            }>
                               { user.last_name }
                             </td>
-                            <td className="align-middle text-center">
+                            <td className={
+                              user['user']?.oib === userDetails.person_oib
+                              ? "align-middle text-center fst-italic border-bottom border-secondary"
+                              : "align-middle text-center"
+                            }>
                               Suradnik
                             </td>
-                            <td className="align-middle text-center">
+                            <td className={
+                              user['user']?.oib === userDetails.person_oib
+                              ? "align-middle text-center fst-italic border-bottom border-secondary"
+                              : "align-middle text-center"
+                            }>
                               {
                                 user.email
                                 ?
@@ -500,7 +604,11 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                   '\u2212'
                               }
                             </td>
-                            <td className="align-middle text-center">
+                            <td className={
+                              user['user']?.oib === userDetails.person_oib
+                              ? "align-middle text-center fst-italic border-bottom border-secondary"
+                              : "align-middle text-center"
+                            }>
                               {
                                 user.email
                                   ?
@@ -513,7 +621,13 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                     </span>
                               }
                             </td>
-                            <td className="align-middle text-center" id={'Tooltip-' + i + 100}>
+                            <td className={
+                              user['user']?.oib === userDetails.person_oib
+                              ? "align-middle text-center fst-italic border-bottom border-secondary"
+                              : "align-middle text-center"
+                              }
+                              id={'Tooltip-' + i + 100}
+                            >
                               {
                                 emailInInvites(user.email, email_invites)
                                   ?
