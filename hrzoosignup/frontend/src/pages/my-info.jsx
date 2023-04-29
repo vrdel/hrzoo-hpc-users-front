@@ -102,11 +102,11 @@ const CroRisInfo = ({croRisProjects}) => {
   )
 }
 
-const InstituteInfo = () => {
+const InstituteTableInfo = () => {
   const { userDetails } = useContext(AuthContext);
 
   return (
-    <>
+    <React.Fragment>
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
@@ -114,146 +114,118 @@ const InstituteInfo = () => {
           </Label>
         </Col>
       </Row>
-      <Row className="mt-3 ms-2">
-        <Col className="ms-3" md={{size: 2}}>
-          <Label
-            htmlFor="dirName"
-            aria-label="dirName"
-            className="fs-5 fw-bold"
-          >
-            Ime
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 2}}>
-          <Label
-            htmlFor="dirLast"
-            aria-label="dirLastName"
-            className="fs-5 fw-bold"
-          >
-            Prezime
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 3}}>
-          <Label
-            htmlFor="dirUniqueId"
-            aria-label="dirUniqueId"
-            className="fs-5 fw-bold"
-          >
-            Korisnička oznaka
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          <Label
-            htmlFor="dirEmail"
-            aria-label="dirEmail"
-            className="fs-5 fw-bold"
-          >
-            Email
-          </Label>
-        </Col>
-
-        <div className="w-100"></div>
-
-        <Col className="ms-3" md={{size: 2}}>
-          {
-            userDetails.first_name ?
-              userDetails.first_name
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 2}}>
-          {
-            userDetails.last_name ?
-              userDetails.last_name
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 3}}>
-          {
-            userDetails.person_uniqueid ?
-              userDetails.person_uniqueid
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          {
-            userDetails.person_mail ?
-              userDetails.person_mail
-            :
-              '\u2212'
-          }
+      <Row>
+        <Col className="mt-3 ms-4" md={{size: 11}}>
+          <Table borderless responsive className="text-left">
+            <thead>
+              <tr>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  Ime
+                </th>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  Prezime
+                </th>
+                <th className="fw-bold fs-5" style={{width: '30%'}}>
+                  Korisnička oznaka
+                </th>
+                <th className="fw-bold fs-5">
+                  Email
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {
+                    userDetails.first_name ?
+                      userDetails.first_name
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    userDetails.last_name ?
+                      userDetails.last_name
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    userDetails.person_uniqueid ?
+                      userDetails.person_uniqueid
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    userDetails.person_mail ?
+                      userDetails.person_mail
+                    :
+                      '\u2212'
+                  }
+                </td>
+              </tr>
+            </tbody>
+          </Table>
         </Col>
       </Row>
-
-      <Row style={{height: "20px"}}>
-      </Row>
-
-      <Row className="mt-3 ms-2">
-        <Col className="ms-3" md={{size: 2}}>
-          <Label
-            htmlFor="dirAffiliation"
-            aria-label="dirAffiliation"
-            className="fs-5 fw-bold"
-          >
-            Povezanost
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          <Label
-            htmlFor="dirInstitute"
-            aria-label="dirInstitute"
-            className="fs-5 fw-bold"
-          >
-            Naziv ustanove
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 1}}>
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          <Label
-            htmlFor="dirOrganisationUnit"
-            aria-label="dirOrganisationUnit"
-            className="fs-5 fw-bold"
-          >
-            Organizacijska jedinica
-          </Label>
-        </Col>
-
-        <div className="w-100"></div>
-
-        <Col className="ms-3" md={{size: 2}}>
-          {
-            userDetails.person_affiliation ?
-              userDetails.person_affiliation
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          {
-            userDetails.person_institution ?
-              userDetails.person_institution
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 1}}>
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          {
-            userDetails.person_organisation ?
-              userDetails.person_organisation
-            :
-              '\u2212'
-          }
+      <Row>
+        <Col className="ms-4" md={{size: 11}}>
+          <Table borderless responsive className="text-left">
+            <thead>
+              <tr>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  Povezanost
+                </th>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  Naziv ustanove
+                </th>
+                <th className="fw-bold fs-5" style={{width: '30%'}}>
+                </th>
+                <th className="fw-bold fs-5" style={{width: '30%'}}>
+                  Organizacijska jedinica
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {
+                    userDetails.person_affiliation ?
+                      userDetails.person_affiliation
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td colSpan="2">
+                  {
+                    userDetails.person_institution ?
+                      userDetails.person_institution
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    userDetails.person_organisation ?
+                      userDetails.person_organisation
+                    :
+                      '\u2212'
+                  }
+                </td>
+              </tr>
+            </tbody>
+          </Table>
         </Col>
       </Row>
-    </>
+    </React.Fragment>
   )
+
 }
+
 
 const EmptyCroRis = () => {
   return (
@@ -414,7 +386,7 @@ const MyInfo = () => {
         <PageTitle pageTitle={pageTitle}/>
       </Row>
 
-      <InstituteInfo />
+      <InstituteTableInfo />
 
       <Row style={{height: "40px"}}>
       </Row>
