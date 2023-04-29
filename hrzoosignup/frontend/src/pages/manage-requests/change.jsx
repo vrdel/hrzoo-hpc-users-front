@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from '../../components/RequestHorizontalRuler';
 import GeneralFields, { CroRisDescription } from '../../components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Label, Row, Button, Form, FormGroup, Input } from 'reactstrap';
+import { Col, Label, Row, Button, Form, FormGroup, Input, Table } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
 import { fetchNrSpecificProject, changeProject, deleteProject } from '../../api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -74,58 +74,76 @@ const LeadBasicInfo = ({leadInfo}) => {
           <h4 className="ms-4 mb-3 mt-4">Voditelj</h4><br/>
         </Col>
       </Row>
-      <Row className="mt-1 mb-4">
-        <Col>
-          <Row className="fw-bold">
-            <Col sm={{size: 2, offset: 1}}>
-              Ime
-            </Col>
-            <Col className="ms-2" md={{size: 2}}>
-              Prezime
-            </Col>
-            <Col className="ms-2" md={{size: 2}}>
-              Email
-            </Col>
-            <Col className="ms-2" md={{size: 3}}>
-              Korisnička oznaka
-            </Col>
-          </Row>
-          <Row>
-            <Col md={{size: 2, offset: 1}}>
-              { user.first_name ? user.first_name : '\u2212' }
-            </Col>
-            <Col className="ms-2" md={{size: 2}}>
-              { user.last_name ? user.last_name :  '\u2212' }
-            </Col>
-            <Col className="ms-2" md={{size: 2}}>
-              { user.person_mail ? user.person_mail : '\u2212' }
-            </Col>
-            <Col className="ms-2" md={{size: 2}}>
-              { user.person_uniqueid ? user.person_uniqueid :  '\u2212' }
-            </Col>
-          </Row>
-          <Row className="fw-bold mt-5">
-            <Col md={{size: 2, offset: 1}}>
-              Povezanost
-            </Col>
-            <Col className="ms-2" md={{size: 4}}>
-              Ustanova
-            </Col>
-            <Col className="ms-3" md={{size: 4}}>
-              Organizacijska jedinica
-            </Col>
-          </Row>
-          <Row>
-            <Col md={{size: 2, offset: 1}}>
-              { user.person_affiliation ? user.person_affiliation :  '\u2212'}
-            </Col>
-            <Col className="ms-2" md={{size: 4}}>
-              { user.person_institution ? user.person_institution : '\u2212'}
-            </Col>
-            <Col className="ms-3" md={{size: 4}}>
-              { user.person_organisation ? user.person_organisation : '\u2212'}
-            </Col>
-          </Row>
+      <Row className="gx-0">
+        <Col md={{size: 10, offset: 1}}>
+          <Table borderless responsive className="text-left">
+            <thead>
+              <tr>
+                <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
+                  Ime
+                </th>
+                <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
+                  Prezime
+                </th>
+                <th className="ms-0 ps-0 fw-bold" style={{width: '30%'}}>
+                  Email
+                </th>
+                <th className="ms-0 ps-0 fw-bold">
+                  Korisnička oznaka
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="ms-0 ps-0">
+                  { user.first_name ? user.first_name : '\u2212' }
+                </td>
+                <td className="ms-0 ps-0">
+                  { user.last_name ? user.last_name :  '\u2212' }
+                </td>
+                <td className="ms-0 ps-0">
+                  { user.person_mail ? user.person_mail : '\u2212' }
+                </td>
+                <td className="ms-0 ps-0">
+                  { user.person_uniqueid ? user.person_uniqueid :  '\u2212' }
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+      <Row className="gx-0">
+        <Col md={{size: 10, offset: 1}}>
+          <Table borderless responsive className="text-left">
+            <thead>
+              <tr>
+                <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
+                  Povezanost
+                </th>
+                <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
+                  Naziv ustanove
+                </th>
+                <th className="ms-0 ps-0 fw-bold" style={{width: '30%'}}>
+                </th>
+                <th className="ms-0 ps-0 fw-bold" style={{width: '30%'}}>
+                  Organizacijska jedinica
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="ms-0 ps-0">
+                  { user.person_affiliation ? user.person_affiliation :  '\u2212'}
+                </td>
+                <td className="ms-0 ps-0" colSpan="2">
+                  { user.person_institution ? user.person_institution : '\u2212'}
+                </td>
+                <td className="ms-0 ps-0">
+                  { user.person_organisation ? user.person_organisation : '\u2212'}
+                </td>
+              </tr>
+            </tbody>
+          </Table>
         </Col>
       </Row>
     </>
