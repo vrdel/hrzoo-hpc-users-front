@@ -25,7 +25,7 @@ const LoginOfficial = () => {
           <Card className="shadow-lg">
             <CardHeader
               id='hzsi-loginheader'
-              className="p-3 d-sm-inline-flex align-items-center justify-content-center"
+              className="p-3 d-flex flex-row align-items-center justify-content-center"
             >
               <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
               <h2 className="ms-5 text-dark"><strong>Napredno računanje</strong></h2>
