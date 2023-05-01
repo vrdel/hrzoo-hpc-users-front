@@ -231,63 +231,63 @@ export const MyRequestChange = () => {
                   </Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={{offset: 1, size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
-                    <span >
+                  <Col md={{size: 4}} lg={{size: 2}} className="d-flex flex-column offset-md-0 offset-lg-1 align-items-center ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span className="mb-5">
                       Stanje zahtjeva:
                     </span>
+                    <p className="fw-normal">
+                      <RenderStateIcon reqState={requestState} />
+                    </p>
                   </Col>
-                  <Col md={{size: 3}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
-                    <span >
+                  <Col sm={{size: 10}} md={{size: 6}} lg={{size: 3}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span className="mb-5">
                       Dodijeljeni tip resursa:
                     </span>
-                  </Col>
-                  <Col md={{size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
-                    <span >
-                      Vrijeme:
-                    </span>
-                  </Col>
-                  <Col md={{size: 4}} className="ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
-                    <span >
-                      Komentar:
-                    </span>
-                  </Col>
-                </Row>
-                <Row>
-                  <RenderStateIcon reqState={requestState} />
-                  <Col className="ms-5" md={{size: 3}}>
                     <CustomReactSelect
                       aria-label="staff_requestResourceType"
                       closeMenuOnSelect={false}
                       id="staff_requestResourceType"
                       isMulti
+                      className="fw-normal"
                       isDisabled={true}
+                      controlWidth="30%"
                       options={ResourceTypesToSelect}
                       placeholder=""
                       value={rhfProps.getValues('staff_requestResourceType')}
                       activeReadOnlyResourceTypeMultiValue={true}
                     />
                   </Col>
-                  <Col className={ nrProject.date_changed ? "ms-4 font-monospace fs-5" : "ms-4"} md={{size: 2}}>
-                    {
-                      nrProject.date_changed ?
-                        convertToEuropean(nrProject.date_changed)
-                      :
-                        '\u2212'
-                    }
-                    <br/>
-                    { nrProject.date_changed ?
-                        convertTimeToEuropean(nrProject.date_changed)
-                      :
-                        ""
-                    }
+                  <Col md={{size: 3}} lg={{size: 2}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span className="mb-5">
+                      Vrijeme:
+                    </span>
+                    <p  className={nrProject.date_changed ? "fw-normal font-monospace fs-5" : "fw-normal fs-5"}>
+                      {
+                        nrProject.date_changed ?
+                          convertToEuropean(nrProject.date_changed)
+                        :
+                          '\u2212'
+                      }
+                      <br/>
+                      { nrProject.date_changed ?
+                          convertTimeToEuropean(nrProject.date_changed)
+                        :
+                          ""
+                      }
+                    </p>
                   </Col>
-                  <Col className="ms-4" md={{size: 4}}>
-                    {
-                      nrProject?.state?.name === 'deny' && nrProject.staffcomment_set?.length > 0 ?
-                        nrProject.staffcomment_set[nrProject.staffcomment_set.length - 1].comment
-                      :
-                        '\u2212'
-                    }
+                  <Col sm={{size: 11}} md={{size: 8}} lg={{size: 4}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                    <span className="mb-5">
+                      Komentar:
+                    </span>
+                    <p className="fw-normal fs-6">
+                      {
+                        nrProject?.state?.name === 'deny' && nrProject.staffcomment_set?.length > 0 ?
+                          nrProject.staffcomment_set[nrProject.staffcomment_set.length - 1].comment
+                        :
+                          '\u2212'
+                      }
+                    </p>
                   </Col>
                 </Row>
                 <Row style={{height: '50px'}}>
