@@ -303,48 +303,13 @@ export const HpcFields = ({fieldsDisabled=false}) => {
       <Col className="fs-4 mb-3" md={{offset: 1}}>
         HPC
       </Col>
-      <Col className="d-flex align-items-center" md={{offset: 1, size: 2}}>
+      <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 2}}>
         <Label
           htmlFor="HPCnSlotsCPU"
           aria-label="HPCnSlotsCPU"
           className="mr-2 form-label text-center">
           Prosječan broj procesorskih jezgri po poslu:
         </Label>
-      </Col>
-      <Col className="d-flex align-items-center" md={{size: 2}}>
-        <Label
-          htmlFor="HPCnSlotsGPU"
-          aria-label="HPCnSlotsGPU"
-          className="mr-2 form-label text-center">
-          Prosječan broj grafičkih procesora po poslu:
-        </Label>
-      </Col>
-      <Col className="d-flex align-items-center" md={{size: 2}}>
-        <Label
-          htmlFor="HPCnRAM"
-          aria-label="HPCnRAM"
-          className="mr-2 form-label text-center">
-          Prosječna količina radne memorije po poslu (GB):
-        </Label>
-      </Col>
-      <Col className="d-flex align-items-center" md={{size: 2}}>
-        <Label
-          htmlFor="HPCnTempGB"
-          aria-label="HPCnTempGB"
-          className="mr-2 form-label text-center">
-          Prosječna količina privremenog prostora po poslu (GB):
-        </Label>
-      </Col>
-      <Col className="d-flex align-items-center" md={{size: 2}}>
-        <Label
-          htmlFor="HPCnDiskGB"
-          aria-label="HPCnDiskGB"
-          className="mr-2 form-label text-center">
-          Ukupna količina spremišnog prostora potrebna za projekt (GB):
-        </Label>
-      </Col>
-      <div className="w-100"></div>
-      <Col md={{size: 2, offset: 1}}>
         <InputGroup>
           <Controller
             name="HPCnSlotsCPU"
@@ -373,7 +338,13 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Label
+          htmlFor="HPCnSlotsGPU"
+          aria-label="HPCnSlotsGPU"
+          className="mr-2 form-label text-center">
+          Prosječan broj grafičkih procesora po poslu:
+        </Label>
         <InputGroup>
           <Controller
             name="HPCnSlotsGPU"
@@ -402,7 +373,13 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Label
+          htmlFor="HPCnRAM"
+          aria-label="HPCnRAM"
+          className="mr-2 form-label text-center">
+          Prosječna količina radne memorije po poslu (GB):
+        </Label>
         <InputGroup>
           <Controller
             name="HPCnRAM"
@@ -431,7 +408,13 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Label
+          htmlFor="HPCnTempGB"
+          aria-label="HPCnTempGB"
+          className="mr-2 form-label text-center">
+          Prosječna količina privremenog prostora po poslu (GB):
+        </Label>
         <InputGroup>
           <Controller
             name="HPCnTempGB"
@@ -460,7 +443,13 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col md={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Label
+          htmlFor="HPCnDiskGB"
+          aria-label="HPCnDiskGB"
+          className="mr-2 form-label text-center">
+          Ukupna količina spremišnog prostora potrebna za projekt (GB):
+        </Label>
         <InputGroup>
           <Controller
             name="HPCnDiskGB"
