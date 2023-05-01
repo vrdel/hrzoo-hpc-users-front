@@ -184,7 +184,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
             <Row key={field_item.id} className="g-0 mb-2" >
               <Col className="d-inline-flex align-items-center">
                 <ScientificFields fieldsDisabled={fieldsDisabled} domain_index={domain_index} field_index={field_index} />
-                <InputGroup>
+                <InputGroup style={{minWidth: '30%'}}>
                   <Controller
                     name={`scientificDomain.${domain_index}.scientificfields.${field_index}.percent`}
                     aria-label="scientificField"
@@ -266,7 +266,7 @@ const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => 
       render={ ({field}) =>
         <CustomReactSelect
           aria-label="scientificDomain"
-          controlWidth="300px"
+          controlWidth="64%"
           forwardedRef={field.ref}
           id={fieldsDisabled ? "scientificDomain-disabled" : "scientificDomain"}
           error={errors && errors.scientificDomain
