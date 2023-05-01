@@ -506,7 +506,7 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-2">
-        <Col md={{size: 3, offset: 1}}>
+        <Col md={{size: 7, offset: 1}}>
           <Label
             htmlFor="requestResourceType"
             aria-label="requestResourceType"
@@ -520,7 +520,7 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
               <CustomReactSelect
                 aria-label="requestResourceType"
                 closeMenuOnSelect={false}
-                controlWidth="600px"
+                controlWidth="100%"
                 forwardedRef={field.ref}
                 id="requestResourceType"
                 isMulti
