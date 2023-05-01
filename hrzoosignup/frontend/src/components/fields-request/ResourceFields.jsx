@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { SharedData } from '../../pages/root';
 import {
@@ -26,7 +26,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
@@ -61,7 +61,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
@@ -96,7 +96,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
@@ -131,7 +131,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
@@ -166,7 +166,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
@@ -203,7 +203,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
@@ -238,7 +238,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
@@ -287,7 +287,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
       <Col className="fs-4 mb-3" md={{offset: 1}}>
         HPC
       </Col>
-      <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 2}}>
+      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
         <Label
           htmlFor="HPCnSlotsCPU"
           aria-label="HPCnSlotsCPU"
@@ -322,7 +322,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
         <Label
           htmlFor="HPCnSlotsGPU"
           aria-label="HPCnSlotsGPU"
@@ -357,7 +357,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
         <Label
           htmlFor="HPCnRAM"
           aria-label="HPCnRAM"
@@ -392,7 +392,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
         <Label
           htmlFor="HPCnTempGB"
           aria-label="HPCnTempGB"
@@ -427,7 +427,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+      <Col  className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
         <Label
           htmlFor="HPCnDiskGB"
           aria-label="HPCnDiskGB"
