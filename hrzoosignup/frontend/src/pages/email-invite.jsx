@@ -55,22 +55,22 @@ const EmailInvitation = ({sessionData=undefined}) => {
     }
   }
 
-
-
   if (isLoggedIn || sessionData.active)
     return (
       <>
         <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
           <Row>
-            <Col>
-              <Row style={{'height': '200px'}}/>
-              <Card className="shadow-lg pt-2" style={{width: '550px'}}>
+            <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+            </Col>
+            <Col lg={{size: 6}} md={{size: 8}}>
+              <Row className="m-lg-4 p-lg-4 m-md-3 p-md-3 m-sm-1 p-sm-1"/>
+              <Card className="shadow-lg">
                 <CardHeader
                   id='hzsi-loginheader'
-                  className="d-sm-inline-flex align-items-center justify-content-around"
+                  className="p-3 d-flex flex-row align-items-center justify-content-center"
                 >
                   <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-                  <h4 className="text-dark"><strong>Napredno računanje</strong></h4>
+                  <h4 className="ms-4 text-dark"><strong>Napredno računanje</strong></h4>
                 </CardHeader>
                 <CardBody className="pt-5">
                   <p className="fs-5 mb-4 text-center">
@@ -116,6 +116,8 @@ const EmailInvitation = ({sessionData=undefined}) => {
                   </Row>
                 </CardBody>
               </Card>
+            </Col>
+            <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
             </Col>
           </Row>
         </Container>
