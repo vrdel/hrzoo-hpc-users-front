@@ -131,7 +131,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
@@ -166,7 +166,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
@@ -203,7 +203,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
@@ -238,7 +238,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
           <Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
