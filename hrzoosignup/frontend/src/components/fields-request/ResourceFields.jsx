@@ -26,48 +26,13 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col className="d-flex align-items-center" md={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
             className="mr-2 form-label text-center">
             Broj virtualnih poslužitelja:
           </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnSlotsCPU"
-            aria-label="CLOUDnSlotsCPU"
-            className="mr-2 form-label text-center">
-            Ukupna količina virtualnih procesorskih jezgara:
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnRAM"
-            aria-label="CLOUDnRAM"
-            className="mr-2 form-label text-center">
-            Ukupna količina radne memorije (GB):
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnRAMVM"
-            aria-label="CLOUDnRAMVM"
-            className="mr-2 form-label text-center">
-            Maksimalna količina radne memorije po poslužitelju (GB):
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnDiskGB"
-            aria-label="CLOUDnDiskGB"
-            className="mr-2 form-label text-center">
-            Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):
-          </Label>
-        </Col>
-        <div className="w-100"></div>
-        <Col md={{size: 2, offset: 1}}>
           <InputGroup>
             <Controller
               name="CLOUDnVM"
@@ -96,7 +61,13 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnSlotsCPU"
+            aria-label="CLOUDnSlotsCPU"
+            className="mr-2 form-label text-center">
+            Ukupna količina virtualnih procesorskih jezgara:
+          </Label>
           <InputGroup>
             <Controller
               name="CLOUDnSlotsCPU"
@@ -125,7 +96,13 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnRAM"
+            aria-label="CLOUDnRAM"
+            className="mr-2 form-label text-center">
+            Ukupna količina radne memorije (GB):
+          </Label>
           <InputGroup>
             <Controller
               name="CLOUDnRAM"
@@ -154,7 +131,13 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnRAMVM"
+            aria-label="CLOUDnRAMVM"
+            className="mr-2 form-label text-center">
+            Maksimalna količina radne memorije po poslužitelju (GB):
+          </Label>
           <InputGroup>
             <Controller
               name="CLOUDnRAMVM"
@@ -183,7 +166,13 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnDiskGB"
+            aria-label="CLOUDnDiskGB"
+            className="mr-2 form-label text-center">
+            Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):
+          </Label>
           <InputGroup>
             <Controller
               name="CLOUDnDiskGB"
@@ -214,24 +203,13 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col md={{size: 2, offset: 1}}>
+        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
             className="mr-2 form-label text-center">
             Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):
           </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnIPs"
-            aria-label="CLOUDnIPs"
-            className="mr-2 form-label text-center">
-            Broj javnih IPv4 adresa:
-          </Label>
-        </Col>
-        <div className="w-100"></div>
-        <Col md={{size: 2, offset: 1}}>
           <InputGroup>
             <Controller
               name="CLOUDnFastDiskGB"
@@ -260,7 +238,13 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnIPs"
+            aria-label="CLOUDnIPs"
+            className="mr-2 form-label text-center">
+            Broj javnih IPv4 adresa:
+          </Label>
           <InputGroup>
             <Controller
               name="CLOUDnIPs"
