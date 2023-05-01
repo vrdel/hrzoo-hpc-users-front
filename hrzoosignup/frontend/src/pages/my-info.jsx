@@ -16,77 +16,62 @@ const CroRisInfo = ({croRisProjects}) => {
           </Label>
         </Col>
       </Row>
-      <Row className="mt-3 ms-2">
-        <Col className="ms-3" md={{size: 2}}>
-          <Label
-            htmlFor="dirName"
-            aria-label="dirName"
-            className="fs-5 fw-bold"
-          >
-            Ime
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 2}}>
-          <Label
-            htmlFor="dirLast"
-            aria-label="dirLastName"
-            className="fs-5 fw-bold"
-          >
-            Prezime
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 3}}>
-          <Label
-            htmlFor="dirUniqueId"
-            aria-label="dirUniqueId"
-            className="fs-5 fw-bold"
-          >
-            CroRIS ID
-          </Label>
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          <Label
-            htmlFor="dirEmail"
-            aria-label="dirEmail"
-            className="fs-5 fw-bold"
-          >
-            Email
-          </Label>
-        </Col>
-
-        <div className="w-100"></div>
-
-        <Col className="ms-3" md={{size: 2}}>
-          {
-            croRisProjects['person_info']['first_name'] ?
-              croRisProjects['person_info']['first_name']
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 2}}>
-          {
-            croRisProjects['person_info']['last_name'] ?
-              croRisProjects['person_info']['last_name']
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 3}}>
-          {
-            croRisProjects['person_info']['croris_id'] ?
-              croRisProjects['person_info']['croris_id']
-            :
-              '\u2212'
-          }
-        </Col>
-        <Col className="ms-3" md={{size: 4}}>
-          {
-            croRisProjects['person_info']['email'] ?
-              croRisProjects['person_info']['email']
-            :
-              '\u2212'
-          }
+      <Row>
+        <Col className="ms-4" md={{size: 11}}>
+          <Table borderless responsive className="text-left">
+            <thead>
+              <tr>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  Ime
+                </th>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  Prezime
+                </th>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  CroRIS ID
+                </th>
+                <th className="fw-bold fs-5">
+                  Email
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {
+                    croRisProjects['person_info']['first_name'] ?
+                      croRisProjects['person_info']['first_name']
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    croRisProjects['person_info']['last_name'] ?
+                      croRisProjects['person_info']['last_name']
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    croRisProjects['person_info']['croris_id'] ?
+                      croRisProjects['person_info']['croris_id']
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    croRisProjects['person_info']['email'] ?
+                      croRisProjects['person_info']['email']
+                    :
+                      '\u2212'
+                  }
+                </td>
+              </tr>
+            </tbody>
+          </Table>
         </Col>
       </Row>
       <Row className="g-0 mt-5 ms-3 me-3">
