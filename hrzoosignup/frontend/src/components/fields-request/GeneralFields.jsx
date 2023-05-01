@@ -81,7 +81,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 type="text"
                 disabled={fieldsDisabled}
                 className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
-                rows="4"
+                rows="7"
               />
             }
           />

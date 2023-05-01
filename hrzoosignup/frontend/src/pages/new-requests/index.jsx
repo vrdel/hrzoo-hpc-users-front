@@ -65,7 +65,7 @@ const NewRequestIndex = () => {
             type="text"
             disabled={true}
             className="form-control"
-            rows="4"
+            rows="7"
           />
         </Col>
       </Row>
@@ -257,48 +257,13 @@ const NewRequestIndex = () => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           HPC
         </Col>
-        <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
           <Label
             htmlFor="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
             className="mr-2 form-label text-center">
             Prosječan broj procesorskih jezgri po poslu:
           </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="HPCnSlotsGPU"
-            aria-label="HPCnSlotsGPU"
-            className="mr-2 form-label text-center">
-            Prosječan broj grafičkih procesora po poslu:
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="HPCnRAM"
-            aria-label="HPCnRAM"
-            className="mr-2 form-label text-center">
-            Prosječna količina radne memorije po poslu (GB):
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="HPCnTempGB"
-            aria-label="HPCnTempGB"
-            className="mr-2 form-label text-center">
-            Prosječna količina privremenog prostora po poslu (GB):
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="HPCnDiskGB"
-            aria-label="HPCnDiskGB"
-            className="mr-2 form-label text-center">
-            Ukupna količina spremišnog prostora potrebna za projekt (GB):
-          </Label>
-        </Col>
-        <div className="w-100"></div>
-        <Col md={{size: 2, offset: 1}}>
           <InputGroup>
             <Input
               disabled={true}
@@ -310,7 +275,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="HPCnSlotsGPU"
+            aria-label="HPCnSlotsGPU"
+            className="mr-2 form-label text-center">
+            Prosječan broj grafičkih procesora po poslu:
+          </Label>
           <InputGroup>
             <Input
               className="form-control text-center"
@@ -322,7 +293,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="HPCnRAM"
+            aria-label="HPCnRAM"
+            className="mr-2 form-label text-center">
+            Prosječna količina radne memorije po poslu (GB):
+          </Label>
           <InputGroup>
             <Input
               className="form-control text-center"
@@ -334,7 +311,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="HPCnTempGB"
+            aria-label="HPCnTempGB"
+            className="mr-2 form-label text-center">
+            Prosječna količina privremenog prostora po poslu (GB):
+          </Label>
           <InputGroup>
             <Input
               className="form-control text-center"
@@ -346,7 +329,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="HPCnDiskGB"
+            aria-label="HPCnDiskGB"
+            className="mr-2 form-label text-center">
+            Ukupna količina spremišnog prostora potrebna za projekt (GB):
+          </Label>
           <InputGroup>
             <Input
               className="form-control text-center"
@@ -364,48 +353,13 @@ const NewRequestIndex = () => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
+        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
             className="mr-2 form-label text-center">
             Broj virtualnih poslužitelja:
           </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnSlotsCPU"
-            aria-label="CLOUDnSlotsCPU"
-            className="mr-2 form-label text-center">
-            Ukupna količina virtualnih procesorskih jezgara:
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnRAM"
-            aria-label="CLOUDnRAM"
-            className="mr-2 form-label text-center">
-            Ukupna količina radne memorije (GB):
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnRAMVM"
-            aria-label="CLOUDnRAMVM"
-            className="mr-2 form-label text-center">
-            Maksimalna količina radne memorije po poslužitelju (GB):
-          </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnDiskGB"
-            aria-label="CLOUDnDiskGB"
-            className="mr-2 form-label text-center">
-            Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):
-          </Label>
-        </Col>
-        <div className="w-100"></div>
-        <Col md={{size: 2, offset: 1}}>
           <InputGroup>
             <Input
               disabled={true}
@@ -417,7 +371,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnSlotsCPU"
+            aria-label="CLOUDnSlotsCPU"
+            className="mr-2 form-label text-center">
+            Ukupna količina virtualnih procesorskih jezgara:
+          </Label>
           <InputGroup>
             <Input
               disabled={true}
@@ -429,7 +389,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnRAM"
+            aria-label="CLOUDnRAM"
+            className="mr-2 form-label text-center">
+            Ukupna količina radne memorije (GB):
+          </Label>
           <InputGroup>
             <Input
               disabled={true}
@@ -441,7 +407,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnRAMVM"
+            aria-label="CLOUDnRAMVM"
+            className="mr-2 form-label text-center">
+            Maksimalna količina radne memorije po poslužitelju (GB):
+          </Label>
           <InputGroup>
             <Input
               disabled={true}
@@ -453,7 +425,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnDiskGB"
+            aria-label="CLOUDnDiskGB"
+            className="mr-2 form-label text-center">
+            Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):
+          </Label>
           <InputGroup>
             <Input
               disabled={true}
@@ -467,24 +445,13 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col className="d-flex align-items-center" md={{size: 2, offset: 1}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{offset: 1, size: 2}}>
           <Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
             className="mr-2 form-label text-center">
             Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):
           </Label>
-        </Col>
-        <Col className="d-flex align-items-center" md={{size: 2}}>
-          <Label
-            htmlFor="CLOUDnIPs"
-            aria-label="CLOUDnIPs"
-            className="mr-2 form-label text-center">
-            Broj javnih IPv4 adresa:
-          </Label>
-        </Col>
-        <div className="w-100"></div>
-        <Col md={{size: 2, offset: 1}}>
           <InputGroup>
             <Input
               className="form-control text-center"
@@ -496,7 +463,13 @@ const NewRequestIndex = () => {
             </InputGroupText>
           </InputGroup>
         </Col>
-        <Col md={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+          <Label
+            htmlFor="CLOUDnIPs"
+            aria-label="CLOUDnIPs"
+            className="mr-2 form-label text-center">
+            Broj javnih IPv4 adresa:
+          </Label>
           <InputGroup>
             <Input
               disabled={true}

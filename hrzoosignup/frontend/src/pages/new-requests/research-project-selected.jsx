@@ -431,7 +431,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
                 aria-label="requestExplain"
                 type="text"
                 className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
-                rows="4"
+                rows="7"
               />
             }
           />

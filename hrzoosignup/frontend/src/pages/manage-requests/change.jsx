@@ -615,7 +615,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                 disabled={commentDisabled}
                 type="text"
                 className="form-control"
-                rows="5"
+                rows="10"
               />
             }
           />
