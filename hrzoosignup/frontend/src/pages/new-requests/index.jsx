@@ -104,7 +104,7 @@ const NewRequestIndex = () => {
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Row>
-            <Col className="mb-3" md={{size: 5}}>
+            <Col className="mb-3" sm={{size: 12}} md={{size: 10}} lg={{size: 10}} xl={{size: 5}}>
               <Card>
                 <CardHeader className="d-inline-flex align-items-center">
                   <Input
@@ -112,8 +112,9 @@ const NewRequestIndex = () => {
                     id="scientificDomain"
                     placeholder="Područje"
                     disabled={true}
+                    style={{maxWidth: '64%'}}
                   />
-                  <InputGroup>
+                  <InputGroup style={{maxWidth: '30%'}}>
                     <Input
                       className={`ms-1 form-control text-center`}
                       disabled={true}
@@ -143,8 +144,9 @@ const NewRequestIndex = () => {
                         className="rounded"
                         id="scientificDomain"
                         placeholder="Polje"
+                        style={{maxWidth: '64%'}}
                       />
-                      <InputGroup>
+                      <InputGroup style={{maxWidth: '30%'}}>
                         <Input
                           className={`ms-1 form-control text-center`}
                           placeholder="Udio"

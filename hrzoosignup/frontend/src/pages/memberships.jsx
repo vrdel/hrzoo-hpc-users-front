@@ -819,7 +819,7 @@ const Memberships = () => {
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
                       <CardHeader className="d-flex justify-content-between">
-                        <span className="fs-5 text-dark">
+                        <span className="fs-5 fw-bold text-dark">
                           { project?.name }
                         </span>
                       </CardHeader>
