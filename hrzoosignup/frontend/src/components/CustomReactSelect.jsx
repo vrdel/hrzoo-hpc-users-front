@@ -42,6 +42,10 @@ export const CustomReactSelect = ({forwardedRef=undefined,
   fontSize=undefined, collaboratorsFixedMultiValue=undefined,
   ...props} ) => {
   const customStyles = {
+    container: (provided, state) => ({
+      ...provided,
+      minWidth: controlWidth,
+    }),
     control: (provided,  state) => ({
       ...provided,
       margin: props.inputgroup ? '-1px' : 0,
@@ -53,7 +57,6 @@ export const CustomReactSelect = ({forwardedRef=undefined,
       backgroundClip: 'padding-box',
       textShadow: 'none',
       textAlign: 'start',
-      width: controlWidth,
       textIndent: 0,
       borderColor: props.error ? '#dc3545' : props.isnew ? '#198754' : props.ismissing ? '#0d6efd' : state.selectProps.menuIsOpen ? '#66afe9' : '#ced4da',
       transition: 'border-color .15s ease-in-out, box-shadow .15s ease-in-out',
@@ -201,6 +204,10 @@ export const CustomReactSelect = ({forwardedRef=undefined,
 
 export const CustomCreatableSelect = ({controlWidth=undefined, fontSize="14px", forwardedRef=undefined, ...props})  => {
   const customStyles = {
+    container: (provided, state) => ({
+      ...provided,
+      minWidth: controlWidth,
+    }),
     control: (provided,  state) => ({
       ...provided,
       margin: props.inputgroup ? '-1px' : 0,
@@ -211,7 +218,6 @@ export const CustomCreatableSelect = ({controlWidth=undefined, fontSize="14px", 
       fontWeight: 400,
       backgroundClip: 'padding-box',
       textShadow: 'none',
-      width: controlWidth,
       textAlign: 'start',
       textIndent: 0,
       borderColor: props.error ? '#dc3545' : props.isnew ? '#198754' : props.ismissing ? '#0d6efd' : state.selectProps.menuIsOpen ? '#66afe9' : '#ced4da',
