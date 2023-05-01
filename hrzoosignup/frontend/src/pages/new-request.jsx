@@ -45,7 +45,7 @@ const NewRequest = () => {
         <PageTitle pageTitle={pageTitle}/>
       </Row>
       <Row className="mb-2 ms-2 mt-4">
-        <Col className="d-inline-flex align-items-center">
+        <Col lg={{size: 9}} className="d-inline-flex align-items-center">
           <Label
             htmlFor="requestType"
             className="ps-2 pe-2 mt-1 pt-1 pb-1 text-white"
@@ -59,7 +59,7 @@ const NewRequest = () => {
             aria-label="requestType"
             className="ms-5 shadow-sm"
             placeholder="Odaberi"
-            controlWidth="400px"
+            controlWidth="40%"
             onChange={(e) => {
               if (e.value !== 'istrazivacki-projekt')
                 setContinueButtonDisabled(false)
@@ -113,6 +113,8 @@ const NewRequest = () => {
             <FontAwesomeIcon icon={faArrowRight}/>{' '}
             Nastavi
           </Button>
+        </Col>
+        <Col lg={{size: 3}}>
         </Col>
       </Row>
       <Row>
