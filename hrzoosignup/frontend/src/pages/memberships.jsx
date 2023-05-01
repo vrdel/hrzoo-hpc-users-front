@@ -333,9 +333,9 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col className="d-flex justify-content-center">
-                    <Collapse isOpen={isOpen}>
-                      <Card className="ps-4 pe-4 pt-4" style={{maxWidth: '680px'}}>
+                  <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
+                    <Collapse isOpen={isOpen} style={{width: '80%'}}>
+                      <Card className="ps-4 pe-4 pt-4">
                         <CardTitle>
                           Upiši email adrese suradnika koje želiš pozvati na projekt
                         </CardTitle>
@@ -347,7 +347,6 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               <CustomCreatableSelect
                                 name="collaboratorEmails"
                                 forwardedRef={field.ref}
-                                controlWidth="600px"
                                 placeholder="suradnik1@email.hr ENTER/TAB suradnik2@email.hr..."
                                 fontSize="18px"
                                 onChange={(e) => setValue('collaboratorEmails', e)}
@@ -670,9 +669,9 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                     </Col>
                   </Row>
                   <Row className="mt-4">
-                    <Col className="d-flex justify-content-center">
-                      <Collapse isOpen={isOpen}>
-                        <Card className="ps-4 pe-4 pt-4" style={{maxWidth: '680px'}}>
+                    <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
+                      <Collapse isOpen={isOpen} style={{width: '80%'}}>
+                        <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
                             Odaberi email adrese suradnika koje želiš pozvati na projekt
                           </CardTitle>
@@ -684,7 +683,6 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 <CustomReactSelect
                                   name="collaboratorEmails"
                                   forwardedRef={field.ref}
-                                  controlWidth="600px"
                                   placeholder="Odaberi..."
                                   closeMenuOnSelect={false}
                                   collaboratorsFixedMultiValue
