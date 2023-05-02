@@ -431,13 +431,15 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   return (
     <>
       <Row>
-        <Col md={{size: 9}} className="me-0">
+        <Col md={{size: 12}} className="me-0">
           <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
             Obrada:
           </span>
         </Col>
-        <Col md={{size: 3}} className="d-inline-flex align-items-center justify-content-start">
-          <Button color="danger" className="me-1" onClick={() => {
+      </Row>
+      <Row className="d-flex flex-row justify-content-end">
+        <Col md={{size: 6}} lg={{size: 5}} xl={{size: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 justify-content-center">
+          <Button color="danger" className="me-lg-1 me-md-1 me-sm-1" onClick={() => {
             modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
             modalProps.setModalTitle('Brisanje korisničkog zahtjeva')
             modalProps.setModalMsg('Da li ste sigurni da želite brisati korisnički zahtjev?')
@@ -445,7 +447,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           >
             Obriši zahtjev
           </Button>
-          <Button disabled={true} color="danger" onClick={() => setDisabledFields(!disabledFields)}>
+          <Button disabled={true} color="danger" className="me-lg-1 me-md-3 me-sm-3" onClick={() => setDisabledFields(!disabledFields)}>
             Uredi zahtjev
           </Button>
         </Col>
@@ -488,7 +490,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             color="success"
           />
         </Col>
-        <Col md={{size: 2}}>
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
           <FontAwesomeIcon
             className="fa-3x text-warning"
             icon={faCog}/>{' '}
@@ -506,7 +508,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             color="success"
           />
         </Col>
-        <Col md={{size: 2}}>
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
           <FontAwesomeIcon
             className="fa-3x text-warning"
             icon={faTimeline}/>{' '}
@@ -523,7 +525,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             }}
             color="success"/>
         </Col>
-        <Col md={{size: 2}}>
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
           <FontAwesomeIcon
             className="fa-3x text-danger"
             icon={faTimes}/>{' '}
@@ -540,7 +542,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             }}
             color="success"/>
         </Col>
-        <Col md={{size: 2}}>
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
           <FontAwesomeIcon
             className="fa-3x text-danger"
             icon={faCalendarXmark}/>{' '}

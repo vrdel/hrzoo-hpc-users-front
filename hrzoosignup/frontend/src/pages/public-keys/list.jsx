@@ -211,7 +211,7 @@ const PublicKeys = () => {
                           <Button size="sm" color="primary" onClick={() => showKey(key.name)}>
                             <FontAwesomeIcon icon={faArrowDown} />
                           </Button>
-                          <Button size="sm" className="ms-2" color="danger" onClick={() => {
+                          <Button size="sm" className="ms-lg-2 mt-lg-0 mt-sm-1" color="danger" onClick={() => {
                             setAreYouSureModal(!areYouSureModal)
                             setModalTitle("Brisanje javnog ključa")
                             setModalMsg("Da li ste sigurni da želite obrisati javni ključ?")
