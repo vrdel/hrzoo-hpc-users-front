@@ -599,7 +599,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       </Row>
       <Row className="mt-3">
         <Col style={{width: '150px'}} md={{size: 1}}/>
-        <Col md={{size: 9}}>
+        <Col md={{size: 10}}>
           <Label
             htmlFor="staff_comment"
             className="fw-bold mt-3 fs-5 form-label"
