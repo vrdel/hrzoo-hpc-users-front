@@ -1,4 +1,5 @@
 import datetime
+from unittest import mock
 
 from backend import models
 from backend.api import views
@@ -141,8 +142,10 @@ class AccountInfoApiTests(TestCase):
             name="Project name 1",
             institute="Grupa TNT",
             reason="yes",
-            date_start=datetime.datetime(2023, 4, 28, 14, 14, 23),
-            date_end=datetime.datetime(2055, 4, 28, 0, 0, 0),
+            date_start=datetime.datetime(2023, 4, 30, 14, 14, 23),
+            date_end=datetime.datetime(2024, 4, 28, 0, 0, 0),
+            croris_start=datetime.datetime(2023, 4, 28, 0, 0, 0),
+            croris_end=datetime.datetime(2024, 4, 28, 0, 0, 0),
             date_submitted=datetime.datetime.now(),
             date_changed=None,
             approved_by={},
@@ -187,7 +190,9 @@ class AccountInfoApiTests(TestCase):
             institute="Grupa TNT",
             reason="yes",
             date_start=datetime.datetime(2023, 1, 1, 0, 0, 0),
-            date_end=datetime.datetime(2045, 1, 1, 0, 0, 0),
+            date_end=datetime.datetime(2025, 1, 1, 0, 0, 0),
+            croris_start=datetime.datetime(2023, 1, 1, 0, 0, 0),
+            croris_end=datetime.datetime(2025, 1, 1, 0, 0, 0),
             date_submitted=datetime.datetime.now(),
             date_changed=None,
             approved_by={},
@@ -295,7 +300,16 @@ class AccountInfoApiTests(TestCase):
         self.url = "/api/v2/active_users"
         self.token = create_token()
 
-    def test_get_account_info(self):
+    def test_get_account_info_wrong_token(self):
+        request = self.factory.get(
+            self.url, **{"HTTP_AUTHORIZATION": "Api-Key wrong-token"}
+        )
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    @mock.patch("backend.api.views.get_todays_datetime")
+    def test_get_account_info(self, mock_now):
+        mock_now.return_value = datetime.datetime(2023, 5, 5, 12, 0, 0)
         request = self.factory.get(
             self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
         )
@@ -353,6 +367,82 @@ class AccountInfoApiTests(TestCase):
                             "project_sifra": "HRZOO1",
                             "resources": ["CPU", "GPU"],
                             "date_joined": "2023-05-02T12:34:00"
+                        }
+                    ]
+                }
+            ]
+        )
+
+    @mock.patch("backend.api.views.get_todays_datetime")
+    def test_get_account_info_if_project_expired(self, mock_now):
+        mock_now.return_value = datetime.datetime(2024, 5, 5, 12, 0, 0)
+        request = self.factory.get(
+            self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
+        )
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, [
+                {
+                    "id": self.user1.id,
+                    "user_email": "alan.ford@tnt.com",
+                    "user_first_name": "Alan",
+                    "user_last_name": "Ford",
+                    "user_ssh_keys": [
+                        {
+                            "name": "key1",
+                            "public_key": "ssh-rsa xxxxxxxxxxxxxxxxxxxx xxxxxx"
+                        },
+                        {
+                            "name": "key2",
+                            "public_key":
+                                "ssh-rsa xxxxxxxxxxxxxxxxxxxx xxxxxx xxxx"
+                        }
+                    ],
+                    "user_projects": [
+                        {
+                            "project_id": self.project2.id,
+                            "project_sifra": "HRZOO2",
+                            "resources": ["CPU"],
+                            "date_joined": "2023-05-01T14:00:00"
+                        }
+                    ]
+                }
+            ]
+        )
+
+    @mock.patch("backend.api.views.get_todays_datetime")
+    def test_get_account_info_if_project_extended(self, mock_now):
+        mock_now.return_value = datetime.datetime(2025, 5, 5, 12, 0, 0)
+        request = self.factory.get(
+            self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
+        )
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, [
+                {
+                    "id": self.user1.id,
+                    "user_email": "alan.ford@tnt.com",
+                    "user_first_name": "Alan",
+                    "user_last_name": "Ford",
+                    "user_ssh_keys": [
+                        {
+                            "name": "key1",
+                            "public_key": "ssh-rsa xxxxxxxxxxxxxxxxxxxx xxxxxx"
+                        },
+                        {
+                            "name": "key2",
+                            "public_key":
+                                "ssh-rsa xxxxxxxxxxxxxxxxxxxx xxxxxx xxxx"
+                        }
+                    ],
+                    "user_projects": [
+                        {
+                            "project_id": self.project2.id,
+                            "project_sifra": "HRZOO2",
+                            "resources": ["CPU"],
+                            "date_joined": "2023-05-01T14:00:00"
                         }
                     ]
                 }

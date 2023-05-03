@@ -2,6 +2,7 @@ import datetime
 
 from backend import models
 from backend import serializers
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from rest_framework import status
@@ -30,6 +31,10 @@ class IsSessionActive(APIView):
             return Response(
                 {'active': True, 'userdetails': userdetails},
                 status=status.HTTP_200_OK)
+
+
+def get_todays_datetime():
+    return datetime.datetime.now()
 
 
 class UsersAPI(APIView):
@@ -62,9 +67,14 @@ class UsersAPI(APIView):
                     "date_joined": datetime.datetime.strftime(
                         project.date_joined, "%Y-%m-%dT%H:%M:%S"
                     )
-                } for project in projects if project.project.state.name in [
-                    "approve", "extend"
-                ]
+                } for project in projects if (
+                    project.project.state.name == "approve" and
+                    project.project.date_end > get_todays_datetime()
+                ) or (
+                    project.project.state.name == "extend" and (
+                        project.project.date_end + relativedelta(months=+6)
+                    ) > get_todays_datetime()
+                )
             ]
             if len(user_projects) > 0:
                 resp_users.append({
