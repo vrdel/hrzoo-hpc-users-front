@@ -68,12 +68,17 @@ class UsersAPI(APIView):
                         project.date_joined, "%Y-%m-%dT%H:%M:%S"
                     )
                 } for project in projects if (
-                    project.project.state.name == "approve" and
-                    project.project.date_end > get_todays_datetime()
-                ) or (
-                    project.project.state.name == "extend" and (
-                        project.project.date_end + relativedelta(months=+6)
-                    ) > get_todays_datetime()
+                    project.project.state.name == "approve" and (
+                        project.project.date_end > get_todays_datetime() or (
+                            len(models.DateExtend.objects.filter(
+                                project=project.project
+                            )) > 0 and
+                            (
+                                project.project.date_end +
+                                relativedelta(months=+6)
+                            ) > get_todays_datetime()
+                        )
+                    )
                 )
             ]
             if len(user_projects) > 0:

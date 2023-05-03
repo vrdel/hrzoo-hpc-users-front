@@ -134,7 +134,6 @@ class AccountInfoApiTests(TestCase):
         )
 
         approved = models.State.objects.get(name="approve")
-        extended = models.State.objects.get(name="extend")
         denied = models.State.objects.get(name="deny")
 
         self.project1 = models.Project.objects.create(
@@ -225,7 +224,7 @@ class AccountInfoApiTests(TestCase):
             }],
             science_extrasoftware="",
             science_extrasoftware_help=True,
-            state=extended
+            state=approved
         )
 
         self.project3 = models.Project.objects.create(
@@ -413,6 +412,11 @@ class AccountInfoApiTests(TestCase):
 
     @mock.patch("backend.api.views.get_todays_datetime")
     def test_get_account_info_if_project_extended(self, mock_now):
+        models.DateExtend.objects.create(
+            project=self.project2,
+            date=datetime.datetime(2024, 12, 31, 0, 0, 0),
+            comment="Extended once"
+        )
         mock_now.return_value = datetime.datetime(2025, 5, 5, 12, 0, 0)
         request = self.factory.get(
             self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
