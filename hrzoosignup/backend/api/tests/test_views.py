@@ -171,9 +171,6 @@ def mock_db():
         staff_resources_type=[{
             "label": "GPU",
             "value": "GPU"
-        }, {
-            "label": "CPU",
-            "value": "CPU"
         }],
         science_extrasoftware="",
         science_extrasoftware_help=False,
@@ -215,10 +212,16 @@ def mock_db():
             "amber/22-cuda"
         ],
         is_active=True,
-        staff_resources_type=[{
-            "label": "CPU",
-            "value": "CPU"
-        }],
+        staff_resources_type=[
+            {
+                "label": "CPU",
+                "value": "CPU"
+            },
+            {
+                "label": "BIGMEM",
+                "value": "BIGMEM"
+            }
+        ],
         science_extrasoftware="",
         science_extrasoftware_help=True,
         state=approved
@@ -346,7 +349,7 @@ class UsersAPITests(TestCase):
                         "id": self.project1.id,
                         "identifier": "HRZOO1"
                     },
-                    "resources": ["CPU", "GPU"]
+                    "resources": ["BIGMEM", "CPU", "GPU"]
                 },
                 {
                     "id": self.user2.id,
@@ -365,7 +368,7 @@ class UsersAPITests(TestCase):
                         "id": self.project1.id,
                         "identifier": "HRZOO1"
                     },
-                    "resources": ["CPU", "GPU"]
+                    "resources": ["GPU"]
                 }
             ]
         )
@@ -400,7 +403,7 @@ class UsersAPITests(TestCase):
                         "id": self.project2.id,
                         "identifier": "HRZOO2"
                     },
-                    "resources": ["CPU"]
+                    "resources": ["BIGMEM", "CPU"]
                 }
             ]
         )
@@ -440,7 +443,7 @@ class UsersAPITests(TestCase):
                         "id": self.project2.id,
                         "identifier": "HRZOO2"
                     },
-                    "resources": ["CPU"]
+                    "resources": ["BIGMEM", "CPU"]
                 }
             ]
         )
