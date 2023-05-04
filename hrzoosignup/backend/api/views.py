@@ -18,10 +18,10 @@ class IsSessionActive(APIView):
     def get(self, request):
         userdetails = dict()
 
-        if (isinstance(self.request.user, AnonymousUser)
-            and self.request.auth is None):
+        if isinstance(self.request.user, AnonymousUser) and \
+                self.request.auth is None:
             return Response(
-                {"active": False, "error": "Session not active" },
+                {"active": False, "error": "Session not active"},
                 status=status.HTTP_200_OK)
         else:
             user = get_user_model().objects.get(id=self.request.user.id)
@@ -35,6 +35,19 @@ class IsSessionActive(APIView):
 
 def get_todays_datetime():
     return datetime.datetime.now()
+
+
+def filter_active_projects(projects):
+    return [
+        project for project in projects if
+        project.state.name == "approve" and (
+            project.date_end > get_todays_datetime() or (
+                len(models.DateExtend.objects.filter(project=project)) > 0 and (
+                    project.date_end + relativedelta(months=+6)
+                ) > get_todays_datetime()
+            )
+        )
+    ]
 
 
 class UsersAPI(APIView):
@@ -52,43 +65,31 @@ class UsersAPI(APIView):
                     for key in ssh_keys
                 ], key=lambda k: k["name"]
             )
-            projects = models.UserProject.objects.filter(user=user).order_by(
-                "-date_joined"
-            )
-            user_projects = [
-                {
-                    "project_id": project.project.id,
-                    "project_sifra": project.project.identifier,
-                    "resources": sorted(
-                        [r["value"] for r in
-                         project.project.staff_resources_type if r] if
-                        project.project.staff_resources_type else []
-                    ),
-                    "date_joined": datetime.datetime.strftime(
-                        project.date_joined, "%Y-%m-%dT%H:%M:%S"
-                    )
-                } for project in projects if (
-                    project.project.state.name == "approve" and (
-                        project.project.date_end > get_todays_datetime() or (
-                            len(models.DateExtend.objects.filter(
-                                project=project.project
-                            )) > 0 and
-                            (
-                                project.project.date_end +
-                                relativedelta(months=+6)
-                            ) > get_todays_datetime()
-                        )
-                    )
+            active_projects = filter_active_projects([
+                proj.project for proj in
+                models.UserProject.objects.filter(user=user).order_by(
+                    "-date_joined"
                 )
-            ]
-            if len(user_projects) > 0:
+            ])
+            resources = set()
+            for p in active_projects:
+                if p.staff_resources_type:
+                    resources.update(
+                        [t["value"] for t in p.staff_resources_type]
+                    )
+
+            if len(active_projects) > 0:
                 resp_users.append({
                     "id": user.id,
-                    "user_email": user.person_mail,
-                    "user_first_name": user.first_name,
-                    "user_last_name": user.last_name,
-                    "user_ssh_keys": user_ssh_keys,
-                    "user_projects": user_projects
+                    "email": user.person_mail,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "ssh_keys": user_ssh_keys,
+                    "last_project": {
+                        "id": active_projects[0].id,
+                        "sifra": active_projects[0].identifier
+                    },
+                    "resources": sorted(list(resources))
                 })
 
         return Response(resp_users)
