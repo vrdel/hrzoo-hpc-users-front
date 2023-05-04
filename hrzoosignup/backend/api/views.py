@@ -88,7 +88,7 @@ class UsersAPI(APIView):
                     "ssh_keys": user_ssh_keys,
                     "last_project": {
                         "id": active_projects[0].id,
-                        "sifra": active_projects[0].identifier
+                        "identifier": active_projects[0].identifier
                     },
                     "resources": sorted(list(resources))
                 })

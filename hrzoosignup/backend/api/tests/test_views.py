@@ -344,7 +344,7 @@ class UsersAPITests(TestCase):
                     ],
                     "last_project": {
                         "id": self.project1.id,
-                        "sifra": "HRZOO1"
+                        "identifier": "HRZOO1"
                     },
                     "resources": ["CPU", "GPU"]
                 },
@@ -363,7 +363,7 @@ class UsersAPITests(TestCase):
                     ],
                     "last_project": {
                         "id": self.project1.id,
-                        "sifra": "HRZOO1"
+                        "identifier": "HRZOO1"
                     },
                     "resources": ["CPU", "GPU"]
                 }
@@ -398,7 +398,7 @@ class UsersAPITests(TestCase):
                     ],
                     "last_project": {
                         "id": self.project2.id,
-                        "sifra": "HRZOO2"
+                        "identifier": "HRZOO2"
                     },
                     "resources": ["CPU"]
                 }
@@ -438,7 +438,7 @@ class UsersAPITests(TestCase):
                     ],
                     "last_project": {
                         "id": self.project2.id,
-                        "sifra": "HRZOO2"
+                        "identifier": "HRZOO2"
                     },
                     "resources": ["CPU"]
                 }
