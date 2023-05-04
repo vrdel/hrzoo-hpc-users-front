@@ -292,7 +292,7 @@ def mock_db():
     )
 
 
-class AccountInfoApiTests(TestCase):
+class UsersAPITests(TestCase):
     fixtures = ["states.json", "project-types.json", "roles.json"]
 
     def setUp(self) -> None:
@@ -309,7 +309,7 @@ class AccountInfoApiTests(TestCase):
         self.project1 = models.Project.objects.get(identifier="HRZOO1")
         self.project2 = models.Project.objects.get(identifier="HRZOO2")
 
-    def test_get_account_info_wrong_token(self):
+    def test_get_users_wrong_token(self):
         request = self.factory.get(
             self.url, **{"HTTP_AUTHORIZATION": "Api-Key wrong-token"}
         )
@@ -317,7 +317,7 @@ class AccountInfoApiTests(TestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     @mock.patch("backend.api.views.get_todays_datetime")
-    def test_get_account_info(self, mock_now):
+    def test_get_users(self, mock_now):
         mock_now.return_value = datetime.datetime(2023, 5, 5, 12, 0, 0)
         request = self.factory.get(
             self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
@@ -371,7 +371,7 @@ class AccountInfoApiTests(TestCase):
         )
 
     @mock.patch("backend.api.views.get_todays_datetime")
-    def test_get_account_info_if_project_expired(self, mock_now):
+    def test_get_users_if_project_expired(self, mock_now):
         mock_now.return_value = datetime.datetime(2024, 5, 5, 12, 0, 0)
         request = self.factory.get(
             self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
@@ -406,7 +406,7 @@ class AccountInfoApiTests(TestCase):
         )
 
     @mock.patch("backend.api.views.get_todays_datetime")
-    def test_get_account_info_if_project_extended(self, mock_now):
+    def test_get_users_if_project_extended(self, mock_now):
         models.DateExtend.objects.create(
             project=self.project2,
             date=datetime.datetime(2024, 12, 31, 0, 0, 0),
@@ -441,6 +441,115 @@ class AccountInfoApiTests(TestCase):
                         "sifra": "HRZOO2"
                     },
                     "resources": ["CPU"]
+                }
+            ]
+        )
+
+
+class ProjectsAPITests(TestCase):
+    fixtures = ["states.json", "project-types.json", "roles.json"]
+
+    def setUp(self) -> None:
+        self.factory = APIRequestFactory()
+        self.view = views.ProjectsAPI.as_view()
+        self.url = "/api/v2/active_projects"
+        self.token = create_token()
+
+        mock_db()
+
+        self.project1 = models.Project.objects.get(identifier="HRZOO1")
+        self.project2 = models.Project.objects.get(identifier="HRZOO2")
+
+        self.user1 = models.User.objects.get(username="ford@tnt.com")
+        self.user2 = models.User.objects.get(username="br@tnt.com")
+
+    def test_get_projects_if_wrong_token(self):
+        request = self.factory.get(
+            self.url, **{"HTTP_AUTHORIZATION": "Api-Key wrong-token"}
+        )
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    @mock.patch("backend.api.views.get_todays_datetime")
+    def test_get_projects(self, mock_now):
+        mock_now.return_value = datetime.datetime(2023, 5, 5, 12, 0, 0)
+        request = self.factory.get(
+            self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
+        )
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, [
+                {
+                    "id": self.project1.id,
+                    "identifier": "HRZOO1",
+                    "members": [
+                        {
+                            "id": self.user1.id,
+                            "email": "alan.ford@tnt.com"
+                        },
+                        {
+                            "id": self.user2.id,
+                            "email": "bob.rock@tnt.com"
+                        }
+                    ]
+                },
+                {
+                    "id": self.project2.id,
+                    "identifier": "HRZOO2",
+                    "members": [
+                        {
+                            "id": self.user1.id,
+                            "email": "alan.ford@tnt.com"
+                        }
+                    ]
+                }
+            ]
+        )
+
+    @mock.patch("backend.api.views.get_todays_datetime")
+    def test_get_projects_if_expired(self, mock_now):
+        mock_now.return_value = datetime.datetime(2024, 5, 5, 12, 0, 0)
+        request = self.factory.get(
+            self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
+        )
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, [
+                {
+                    "id": self.project2.id,
+                    "identifier": "HRZOO2",
+                    "members": [{
+                        "id": self.user1.id,
+                        "email": "alan.ford@tnt.com"
+                    }]
+                }
+            ]
+        )
+
+    @mock.patch("backend.api.views.get_todays_datetime")
+    def test_get_projects_if_extended(self, mock_now):
+        models.DateExtend.objects.create(
+            project=self.project2,
+            date=datetime.datetime(2024, 12, 31, 0, 0, 0),
+            comment="Extended once"
+        )
+        mock_now.return_value = datetime.datetime(2025, 5, 5, 12, 0, 0)
+        request = self.factory.get(
+            self.url, **{"HTTP_AUTHORIZATION": f"Api-Key {self.token}"}
+        )
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, [
+                {
+                    "id": self.project2.id,
+                    "identifier": "HRZOO2",
+                    "members": [{
+                        "id": self.user1.id,
+                        "email": "alan.ford@tnt.com"
+                    }]
                 }
             ]
         )

@@ -22,7 +22,8 @@ class IsSessionActive(APIView):
                 self.request.auth is None:
             return Response(
                 {"active": False, "error": "Session not active"},
-                status=status.HTTP_200_OK)
+                status=status.HTTP_200_OK
+            )
         else:
             user = get_user_model().objects.get(id=self.request.user.id)
             serializer = serializers.UsersSerializer(user)
@@ -93,3 +94,24 @@ class UsersAPI(APIView):
                 })
 
         return Response(resp_users)
+
+
+class ProjectsAPI(APIView):
+    permission_classes = (HasAPIKey,)
+
+    def get(self, request):
+        projects = filter_active_projects(models.Project.objects.all())
+
+        resp_projects = list()
+        for project in projects:
+            members = models.UserProject.objects.filter(project=project)
+            resp_projects.append({
+                "id": project.id,
+                "identifier": project.identifier,
+                "members": sorted([
+                    {"id": member.user.id, "email": member.user.person_mail}
+                    for member in members
+                ], key=lambda k: k["email"])
+            })
+
+        return Response(resp_projects)
