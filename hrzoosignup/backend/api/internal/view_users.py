@@ -36,6 +36,8 @@ class UsersInfo(APIView):
                     "last_name": user.last_name,
                     "person_institution": user.person_institution,
                     "person_mail": user.person_mail,
+                    "ssh_key":
+                        len(models.SSHPublicKey.objects.filter(user=user)) > 0,
                     "projects": [{
                         "identifier": userproject.project.identifier,
                         "state": userproject.project.state.name,

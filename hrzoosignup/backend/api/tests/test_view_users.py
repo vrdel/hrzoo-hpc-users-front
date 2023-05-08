@@ -41,6 +41,7 @@ class UsersInfoTests(TestCase):
                     "last_name": "Rock",
                     "person_institution": "Grupa TNT",
                     "person_mail": "bob.rock@tnt.com",
+                    "ssh_key": True,
                     "projects": [{
                         "identifier": "HRZOO1",
                         "state": "approve",
@@ -56,6 +57,7 @@ class UsersInfoTests(TestCase):
                     "last_name": "Ford",
                     "person_institution": "Grupa TNT",
                     "person_mail": "alan.ford@tnt.com",
+                    "ssh_key": True,
                     "projects": [{
                         "identifier": "HRZOO2",
                         "state": "approve",
