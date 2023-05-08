@@ -13,7 +13,7 @@ class UsersInfoTests(TestCase):
     def setUp(self) -> None:
         self.factory = APIRequestFactory()
         self.view = views.UsersInfo.as_view()
-        self.url = "/api/v2/internal/users"
+        self.url = "/api/v2/internal/active-users"
 
         mock_db()
 
@@ -57,12 +57,12 @@ class UsersInfoTests(TestCase):
                     "person_institution": "Grupa TNT",
                     "person_mail": "alan.ford@tnt.com",
                     "projects": [{
-                        "identifier": "HRZOO1",
+                        "identifier": "HRZOO2",
                         "state": "approve",
-                        "role": "collaborator",
+                        "role": "lead",
                         "type": "research-croris"
                     }, {
-                        "identifier": "HRZOO2",
+                        "identifier": "HRZOO1",
                         "state": "approve",
                         "role": "collaborator",
                         "type": "research-croris"

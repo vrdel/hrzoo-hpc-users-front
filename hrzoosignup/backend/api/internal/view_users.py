@@ -11,9 +11,21 @@ class UsersInfo(APIView):
 
     def get(self, request):
         users = models.User.objects.all()
+        lead = models.Role.objects.get(name="lead")
+        collaborator = models.Role.objects.get(name="collaborator")
 
         resp_users = list()
         for user in users:
+            userprojects = models.UserProject.objects.filter(user=user)
+            projects_lead = sorted(
+                [up for up in userprojects if up.role == lead],
+                key=lambda k: k.project.identifier
+            )
+            projects_collab = sorted(
+                [up for up in userprojects if up.role == collaborator],
+                key=lambda k: k.project.identifier
+            )
+            projects = projects_lead + projects_collab
             resp_users.append({
                 "username": user.username,
                 "first_name": user.first_name,
@@ -25,8 +37,7 @@ class UsersInfo(APIView):
                     "state": userproject.project.state.name,
                     "role": userproject.role.name,
                     "type": userproject.project.project_type.name
-                } for userproject in
-                    models.UserProject.objects.filter(user=user)],
+                } for userproject in projects],
                 "date_joined": user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
             })
 

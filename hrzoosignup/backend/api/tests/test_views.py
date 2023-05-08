@@ -270,6 +270,7 @@ def mock_db():
         project_type=thesis
     )
 
+    lead = models.Role.objects.get(name="lead")
     collaborator = models.Role.objects.get(name="collaborator")
 
     models.UserProject.objects.create(
@@ -289,7 +290,7 @@ def mock_db():
     models.UserProject.objects.create(
         user=user1,
         project=project2,
-        role=collaborator,
+        role=lead,
         date_joined=datetime.datetime(2023, 5, 1, 14, 0, 0)
     )
 
