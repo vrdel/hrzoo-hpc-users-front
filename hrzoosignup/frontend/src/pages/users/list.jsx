@@ -4,6 +4,8 @@ import { fetchUsers } from "../../api/users"
 import { useQuery } from "@tanstack/react-query";
 import { Badge, Col, Row, Table } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 
 export const UsersList = () => {
@@ -46,7 +48,10 @@ export const UsersList = () => {
                     Email
                   </th>
                   <th className="fw-normal">
-                    Projects
+                    Projekti
+                  </th>
+                  <th className="fw-normal">
+                    Dodan SSH ključ
                   </th>
                 </tr>
               </thead>
@@ -76,6 +81,14 @@ export const UsersList = () => {
                               { proj.identifier }
                             </Badge>
                           )
+                        }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        {
+                          user.ssh_key ? 
+                            <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#339900" }} />
+                          :
+                            <FontAwesomeIcon icon={faTimesCircle} style={{ color: "#CC0000" }} />
                         }
                       </td>
                     </tr>

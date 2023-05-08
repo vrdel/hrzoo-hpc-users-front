@@ -6,7 +6,7 @@ export async function fetchUsers() {
 	let error_msg = ""
 	
 	try {
-		let response = await fetch(`${url_api_prefix}/api/v1/internal/users/`)
+		let response = await fetch(`${url_api_prefix}/api/v1/internal/active-users/`)
 
 		if (response.ok) {
 			return await response.json()
