@@ -133,6 +133,9 @@ def mock_db():
     approved = models.State.objects.get(name="approve")
     denied = models.State.objects.get(name="deny")
 
+    research = models.ProjectType.objects.get(name="research-croris")
+    thesis = models.ProjectType.objects.get(name="thesis")
+
     project1 = models.Project.objects.create(
         identifier="HRZOO1",
         name="Project name 1",
@@ -174,7 +177,8 @@ def mock_db():
         }],
         science_extrasoftware="",
         science_extrasoftware_help=False,
-        state=approved
+        state=approved,
+        project_type=research
     )
 
     project2 = models.Project.objects.create(
@@ -224,7 +228,8 @@ def mock_db():
         ],
         science_extrasoftware="",
         science_extrasoftware_help=True,
-        state=approved
+        state=approved,
+        project_type=research
     )
 
     project3 = models.Project.objects.create(
@@ -261,7 +266,8 @@ def mock_db():
         ],
         is_active=True,
         science_extrasoftware_help=True,
-        state=denied
+        state=denied,
+        project_type=thesis
     )
 
     collaborator = models.Role.objects.get(name="collaborator")
