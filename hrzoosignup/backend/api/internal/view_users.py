@@ -17,28 +17,32 @@ class UsersInfo(APIView):
         resp_users = list()
         for user in users:
             userprojects = models.UserProject.objects.filter(user=user)
+            active_userprojects = [
+                p for p in userprojects if p.project.state.name == "approve"
+            ]
             projects_lead = sorted(
-                [up for up in userprojects if up.role == lead],
+                [up for up in active_userprojects if up.role == lead],
                 key=lambda k: k.project.identifier
             )
             projects_collab = sorted(
-                [up for up in userprojects if up.role == collaborator],
+                [up for up in active_userprojects if up.role == collaborator],
                 key=lambda k: k.project.identifier
             )
             projects = projects_lead + projects_collab
-            resp_users.append({
-                "username": user.username,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "person_institution": user.person_institution,
-                "person_mail": user.person_mail,
-                "projects": [{
-                    "identifier": userproject.project.identifier,
-                    "state": userproject.project.state.name,
-                    "role": userproject.role.name,
-                    "type": userproject.project.project_type.name
-                } for userproject in projects],
-                "date_joined": user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
-            })
+            if len(projects) > 0:
+                resp_users.append({
+                    "username": user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "person_institution": user.person_institution,
+                    "person_mail": user.person_mail,
+                    "projects": [{
+                        "identifier": userproject.project.identifier,
+                        "state": userproject.project.state.name,
+                        "role": userproject.role.name,
+                        "type": userproject.project.project_type.name
+                    } for userproject in projects],
+                    "date_joined": user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
+                })
 
         return Response(sorted(resp_users, key=lambda k: k["username"]))

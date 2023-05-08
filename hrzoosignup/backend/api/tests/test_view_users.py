@@ -70,41 +70,6 @@ class UsersInfoTests(TestCase):
                     "date_joined": self.user1.date_joined.strftime(
                         "%Y-%m-%d %H:%M:%S"
                     )
-                }, {
-                    "username": "hzsi",
-                    "first_name": "SuperUserName",
-                    "last_name": "SuperLastName",
-                    "person_institution": "SRCE",
-                    "person_mail": "super@user.hr",
-                    "projects": [],
-                    "date_joined": self.user.date_joined.strftime(
-                        "%Y-%m-%d %H:%M:%S"
-                    )
-                }, {
-                    "username": "nr1@tnt.com",
-                    "first_name": "Number",
-                    "last_name": "One",
-                    "person_institution": "Grupa TNT",
-                    "person_mail": "number1@tnt.com",
-                    "projects": [],
-                    "date_joined": self.user3.date_joined.strftime(
-                        "%Y-%m-%d %H:%M:%S"
-                    )
-                }, {
-                    "username": "oliver@tnt.com",
-                    "first_name": "Sir",
-                    "last_name": "Oliver",
-                    "person_institution": "Grupa TNT",
-                    "person_mail": "oliver@tnt.com",
-                    "projects": [{
-                        "identifier": "HRZOO3",
-                        "state": "deny",
-                        "role": "collaborator",
-                        "type": "thesis"
-                    }],
-                    "date_joined": self.user4.date_joined.strftime(
-                        "%Y-%m-%d %H:%M:%S"
-                    )
                 }
             ]
         )
