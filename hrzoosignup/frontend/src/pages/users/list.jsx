@@ -23,7 +23,7 @@ const UsersListForm = ({ data, pageTitle }) => {
       searchUsername: "",
       searchName: "",
       searchInstitution: "",
-      searchEmail: "", 
+      searchEmail: "",
       searchProject: "",
       searchSSHKey: ""
     }
@@ -184,8 +184,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <CustomReactSelect
                         forwardedRef={ field.ref }
                         placeholder="Odaberi"
-                        options={ buildOptionsFromArray(["Da", "Ne", "Pokaži sve"]) }
-                        className="form-control"
+                        options={ buildOptionsFromArray(["Da", "Ne", "Svi"]) }
                         onChange={ (e) => setValue("searchSSHKey", e.value) }
                       />
                     }
@@ -212,7 +211,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     </td>
                     <td className="p-3 align-middle text-center">
                       {
-                        user.projects.map((proj, pid) => 
+                        user.projects.map((proj, pid) =>
                           <Badge key={ pid } color={ `${proj.role === "lead" ? "success" : "primary"}` } className="fw-normal ms-1">
                             { proj.identifier }
                           </Badge>
@@ -221,7 +220,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     </td>
                     <td className="p-3 align-middle text-center">
                       {
-                        user.ssh_key ? 
+                        user.ssh_key ?
                           <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#339900" }} />
                         :
                           <FontAwesomeIcon icon={faTimesCircle} style={{ color: "#CC0000" }} />
