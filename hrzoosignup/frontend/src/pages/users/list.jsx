@@ -306,7 +306,7 @@ const UsersListForm = ({ data, pageTitle }) => {
               <select
                 style={{width: '180px'}}
                 className="ms-1 form-control form-select text-primary"
-                aria-label="Number of service types"
+                aria-label="Broj korisnika"
                 value={pageSize}
                 onChange={e => {
                   setPageSize(Number(e.target.value))
@@ -314,8 +314,8 @@ const UsersListForm = ({ data, pageTitle }) => {
                 }}
               >
                 {paginationHelp.choices.map(pageSize => (
-                  <option label={`${pageSize} service types`} key={pageSize} value={pageSize}>
-                    {pageSize} service types
+                  <option label={`${pageSize} korisnika`} key={pageSize} value={pageSize}>
+                    {pageSize} users
                   </option>
                 ))}
               </select>
