@@ -87,13 +87,13 @@ const UsersListForm = ({ data, pageTitle }) => {
                   #
                 </th>
                 <th className="fw-normal">
-                  Korisnička oznaka
-                </th>
-                <th className="fw-normal">
                   Ime i prezime
                 </th>
                 <th className="fw-normal">
                   Institucija
+                </th>
+                <th className="fw-normal">
+                  Korisnička oznaka
                 </th>
                 <th className="fw-normal">
                   Email
@@ -110,19 +110,6 @@ const UsersListForm = ({ data, pageTitle }) => {
               <tr>
                 <td className="p-3 align-middle text-center">
                   <FontAwesomeIcon icon={ faSearch } />
-                </td>
-                <td className="p-3 align-middle text-center">
-                  <Controller
-                    name="searchUsername"
-                    control={ control }
-                    render={ ({ field }) =>
-                      <Input
-                        { ...field }
-                        className="form-control"
-                        placeholder="Traži"
-                      />
-                    }
-                  />
                 </td>
                 <td className="p-3 align-middle text-center">
                   <Controller
@@ -146,6 +133,19 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-3 align-middle text-center">
+                  <Controller
+                    name="searchUsername"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        className="form-control"
+                        placeholder="Traži"
                       />
                     }
                   />
@@ -198,13 +198,13 @@ const UsersListForm = ({ data, pageTitle }) => {
                       { lookupIndices[user.id] + 1 }
                     </td>
                     <td className="p-3 align-middle text-center">
-                      { user.username }
-                    </td>
-                    <td className="p-3 align-middle text-center">
                       { `${user.first_name} ${user.last_name}` }
                     </td>
                     <td className="p-3 align-middle text-center">
                       { user.person_institution }
+                    </td>
+                    <td className="p-3 align-middle text-center">
+                      { user.username }
                     </td>
                     <td className="p-3 align-middle text-center">
                       { user.person_mail }
