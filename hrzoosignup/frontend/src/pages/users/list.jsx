@@ -176,7 +176,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-3 align-middle text-center" style={{width: '10%'}}>
                   <Controller
                     name="searchSSHKey"
                     control={ control }
