@@ -102,6 +102,16 @@ const NavigationLinks = () => {
                 Upravljanje zahtjevima
               </NavLink>
             </NavItem>
+            <NavItem key="korisnici" className="ms-3 mt-1">
+              <NavLink
+                style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+                className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+                to='/ui/korisnici'
+              >
+                <FontAwesomeIcon icon={faUsers} />{" "}
+                Korisnici
+              </NavLink>
+            </NavItem>
             <Dropdown
               isOpen={dropdownOpen}
               toggle={toggle}

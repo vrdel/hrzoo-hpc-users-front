@@ -25,6 +25,7 @@ import Root from './pages/root';
 import { isActiveSession } from './api/auth';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from './components/AuthContextProvider';
+import { UsersList } from './pages/users/list';
 
 
 const ProtectedRoute = ({sessionData, children}) => {
@@ -64,6 +65,11 @@ const BaseRoutes = () => {
               <Route path="upravljanje-zahtjevima" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsList />
+                </ProtectedRoute>
+              }/>
+              <Route path="korisnici" element={
+                <ProtectedRoute sessionData={sessionData}>
+                  <UsersList />
                 </ProtectedRoute>
               }/>
               <Route path="upravljanje-zahtjevima/:projId" element={
