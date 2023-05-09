@@ -102,7 +102,7 @@ const NavigationLinks = () => {
                 Upravljanje zahtjevima
               </NavLink>
             </NavItem>
-            <NavItem key="korisnici" className="ms-3 mt-1">
+            <NavItem key="korisnici" className="mt-1">
               <NavLink
                 style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
                 className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
