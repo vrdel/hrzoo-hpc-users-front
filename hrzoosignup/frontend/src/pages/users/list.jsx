@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faSearch, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { TablePaginationHelper } from "../../components/PaginationHelpers";
-import _ from "lodash";
 import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
 
@@ -38,9 +37,8 @@ const UsersListForm = ({ data, pageTitle }) => {
 
   const { fields } = useFieldArray({ control, name: "users" })
 
-  let lookupIndices = _.fromPairs(fields.map((e, index) => [e.id, index]))
-
   let fieldsView = fields
+
   let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
 
   if (searchUsername)
@@ -195,7 +193,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                 fieldsView.map((user, index) =>
                   <tr key={index}>
                     <td className="p-3 align-middle text-center">
-                      { lookupIndices[user.id] + 1 }
+                      { pageIndex * pageSize + index + 1 }
                     </td>
                     <td className="p-3 align-middle text-center">
                       { `${user.first_name} ${user.last_name}` }
