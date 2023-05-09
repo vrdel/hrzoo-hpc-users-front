@@ -1,6 +1,6 @@
+from django.urls import path
 from rest_framework import routers
-from django.urls import include, path, re_path
-from . import viewsets
+
 from . import views
 
 app_name = 'backend'
@@ -21,4 +21,5 @@ urlpatterns = [
     path('keys/', views.SshKeys.as_view(), name='sshkeys'),
     path('keys/<str:all>', views.SshKeys.as_view(), name='sshkeys'),
     path('science-software/', views.ScienceSoftware.as_view(), name='sciencesoftware'),
+    path("active-users/", views.UsersInfo.as_view(), name="users"),
 ] + router.urls
