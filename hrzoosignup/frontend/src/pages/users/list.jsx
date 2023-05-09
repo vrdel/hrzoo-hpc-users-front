@@ -2,7 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { SharedData } from "../root";
 import { fetchUsers } from "../../api/users"
 import { useQuery } from "@tanstack/react-query";
-import { Badge, Col, Row, Table, Pagination, PaginationItem, PaginationLink, Input } from "reactstrap";
+import { 
+  Badge, 
+  Col, 
+  Row, 
+  Table, 
+  Pagination, 
+  PaginationItem, 
+  PaginationLink, 
+  Input, 
+  Placeholder 
+} from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faSearch, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +20,35 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { TablePaginationHelper } from "../../components/PaginationHelpers";
 import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
+
+
+const EmptyTable = ({ msg }) => (
+  <>
+    {
+      [...Array(3)].map((_, i) => (
+        <tr key={i}>
+          <td colSpan="7" className="m-0 p-0 bg-light border-0">
+            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+          </td>
+        </tr>
+      ))
+    }
+    <tr key="4">
+      <td colSpan="7" className="table-light border-0 text-muted text-center p-3 fs-3">
+        { msg }
+      </td>
+    </tr>
+    {
+      [...Array(3)].map((_, i) => (
+        <tr key={i + 6}>
+          <td colSpan="7" className="m-0 p-0 bg-light border-0">
+            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+          </td>
+        </tr>
+      ))
+    }
+  </>
+)
 
 
 const UsersListForm = ({ data, pageTitle }) => {
@@ -66,8 +105,10 @@ const UsersListForm = ({ data, pageTitle }) => {
     else
       fieldsView = fieldsView.filter(e => e.ssh_key || !e.ssh_key)
 
+  const isSearched = searchUsername || searchName || searchInstitution || searchEmail || searchProject || searchSSHKey
+
   paginationHelp.searchNum = fieldsView.length
-  paginationHelp.isSearched = searchUsername || searchName || searchInstitution || searchEmail || searchProject || searchSSHKey
+  paginationHelp.isSearched = isSearched
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
 
@@ -190,42 +231,48 @@ const UsersListForm = ({ data, pageTitle }) => {
                 </td>
               </tr>
               {
-                fieldsView.map((user, index) =>
-                  <tr key={index}>
-                    <td className="p-3 align-middle text-center">
-                      { pageIndex * pageSize + index + 1 }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      { `${user.first_name} ${user.last_name}` }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      { user.person_institution }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      { user.username }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      { user.person_mail }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      {
-                        user.projects.map((proj, pid) =>
-                          <Badge key={ pid } color={ `${proj.role === "lead" ? "success" : "primary"}` } className="fw-normal ms-1">
-                            { proj.identifier }
-                          </Badge>
-                        )
-                      }
-                    </td>
-                    <td className="p-3 align-middle text-center">
-                      {
-                        user.ssh_key ?
-                          <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#339900" }} />
-                        :
-                          <FontAwesomeIcon icon={faTimesCircle} style={{ color: "#CC0000" }} />
-                      }
-                    </td>
-                  </tr>
-                )
+                fieldsView.length > 0 ?
+                  fieldsView.map((user, index) =>
+                    <tr key={index}>
+                      <td className="p-3 align-middle text-center">
+                        { pageIndex * pageSize + index + 1 }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { `${user.first_name} ${user.last_name}` }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { user.person_institution }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { user.username }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { user.person_mail }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        {
+                          user.projects.map((proj, pid) =>
+                            <Badge key={ pid } color={ `${proj.role === "lead" ? "success" : "primary"}` } className="fw-normal ms-1">
+                              { proj.identifier }
+                            </Badge>
+                          )
+                        }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        {
+                          user.ssh_key ?
+                            <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#339900" }} />
+                          :
+                            <FontAwesomeIcon icon={faTimesCircle} style={{ color: "#CC0000" }} />
+                        }
+                      </td>
+                    </tr>
+                  )
+                :
+                  data.length > 0 && isSearched ?
+                    <EmptyTable msg="Nijedan korisnik ne zadovoljava pretragu" />
+                  :
+                    <EmptyTable msg="Nema korisnika prijavljenih na projekt" />
               }
             </tbody>
           </Table>
