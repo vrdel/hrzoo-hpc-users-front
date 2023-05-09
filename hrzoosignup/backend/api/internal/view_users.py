@@ -44,7 +44,8 @@ class UsersInfo(APIView):
                         "role": userproject.role.name,
                         "type": userproject.project.project_type.name
                     } for userproject in projects],
-                    "date_joined": user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
+                    "date_joined":
+                        user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                 })
 
-        return Response(sorted(resp_users, key=lambda k: k["username"]))
+        return Response(sorted(resp_users, key=lambda k: k["first_name"]))
