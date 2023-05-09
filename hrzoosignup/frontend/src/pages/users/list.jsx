@@ -67,7 +67,7 @@ const UsersListForm = ({ data, pageTitle }) => {
       fieldsView = fieldsView.filter(e => e.ssh_key || !e.ssh_key)
 
   paginationHelp.searchNum = fieldsView.length
-  paginationHelp.isSearched = searchUsername || searchName || searchInstitution || searchEmail || searchProject
+  paginationHelp.isSearched = searchUsername || searchName || searchInstitution || searchEmail || searchProject || searchSSHKey
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
 
