@@ -36,3 +36,4 @@ hrzoosignup/frontend/*.local
 *.sln
 *.sw?
 tags
+docker_kz/
