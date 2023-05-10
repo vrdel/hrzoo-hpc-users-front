@@ -68,7 +68,8 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
       searchName: "",
       searchIdentifier: "",
       searchLead: "",
-      searchType: ""
+      searchType: "",
+      searchDateEnd: ""
     }
   })
 
@@ -77,6 +78,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
   const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
   const searchLead = useWatch({ control, name: "searchLead" })
   const searchType = useWatch({ control, name: "searchType" })
+  const searchDateEnd = useWatch({ control, name: "searchDateEnd" })
 
   const { fields } = useFieldArray({ control, name: "requests" })
 
@@ -108,7 +110,10 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
     else if (searchType.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))
 
-  const isSearched = searchState || searchName || searchIdentifier || searchLead || searchType
+  if (searchDateEnd)
+    fieldsView = fieldsView.filter(e => convertToEuropean(e.date_end).includes(searchDateEnd))
+
+  const isSearched = searchState || searchName || searchIdentifier || searchLead || searchType || searchDateEnd
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
@@ -230,7 +235,19 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">{" "}</td>
+                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
+                  <Controller
+                    name="searchDateEnd"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        placeholder="Traži"
+                        className="form-control"
+                      />
+                    }
+                  />
+                </td>
                 <td className="p-3 align-middle text-center">{" "}</td>
                 <td className="p-3 align-middle text-center">{" "}</td>
               </tr>
