@@ -339,9 +339,9 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                   )
                 :
                   data.length > 0 && isSearched ?
-                    <EmptyTable msg="Nijedan zahtjev ne zadovoljava pretragu" />
+                    <EmptyTable colspan="10" msg="Nijedan zahtjev ne zadovoljava pretragu" />
                   :
-                    <EmptyTable msg="Nema podnesenih zahtjeva" />
+                    <EmptyTable colspan="10" msg="Nema podnesenih zahtjeva" />
               }
             </tbody>
           </Table>

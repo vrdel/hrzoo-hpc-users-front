@@ -237,9 +237,9 @@ const UsersListForm = ({ data, pageTitle }) => {
                   )
                 :
                   data.length > 0 && isSearched ?
-                    <EmptyTable msg="Nijedan korisnik ne zadovoljava pretragu" />
+                    <EmptyTable colspan="7" msg="Nijedan korisnik ne zadovoljava pretragu" />
                   :
-                    <EmptyTable msg="Nema korisnika prijavljenih na projekt" />
+                    <EmptyTable colspan="7" msg="Nema korisnika prijavljenih na projekt" />
               }
             </tbody>
           </Table>
