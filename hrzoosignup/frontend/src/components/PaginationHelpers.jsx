@@ -1,3 +1,13 @@
+import React from "react"
+import { 
+  Row,
+  Col,
+  Pagination,
+  PaginationItem,
+  PaginationLink
+ } from "reactstrap"
+
+
 export class TablePaginationHelper {
   searchLen = 0
   startIndex = 0
@@ -123,4 +133,64 @@ export class TablePaginationHelper {
     else
       return 0
   }
+}
+
+
+export const HZSIPagination = ({
+  pageIndex,
+  pageSize,
+  setPageIndex,
+  setPageSize,
+  pageCount,
+  start,
+  choices,
+  resource_name
+}) => {
+  return (
+    <Row>
+      <Col className="d-flex justify-content-center align-self-center">
+        <Pagination className="mt-2">
+          <PaginationItem disabled={pageIndex === 0}>
+            <PaginationLink aria-label="First" first onClick={() => setPageIndex(0)}/>
+          </PaginationItem>
+          <PaginationItem disabled={pageIndex === 0}>
+            <PaginationLink aria-label="Previous" previous onClick={() => setPageIndex(pageIndex - 1)}/>
+          </PaginationItem>
+          {
+            [...Array(pageCount)].map((e, i) =>
+              <PaginationItem active={pageIndex === i ? true : false} key={i}>
+                <PaginationLink onClick={() => setPageIndex(i)}>
+                  { i + 1 }
+                </PaginationLink>
+              </PaginationItem>
+            )
+          }
+          <PaginationItem disabled={pageIndex === pageCount - 1}>
+            <PaginationLink aria-label="Next" next onClick={() => setPageIndex(pageIndex + 1)}/>
+          </PaginationItem>
+          <PaginationItem disabled={pageIndex === pageCount- 1}>
+            <PaginationLink aria-label="Last" last onClick={() => setPageIndex(pageCount - 1)}/>
+          </PaginationItem>
+          <PaginationItem>
+            <select
+              style={{width: '180px'}}
+              className="ms-1 form-control form-select text-primary"
+              aria-label={`Broj ${resource_name}`}
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value))
+                setPageIndex(Math.trunc(start / e.target.value))
+              }}
+            >
+              {choices.map(pageSize => (
+                <option label={`${pageSize} ${resource_name}`} key={pageSize} value={pageSize}>
+                  {pageSize} {resource_name}
+                </option>
+              ))}
+            </select>
+          </PaginationItem>
+        </Pagination>
+      </Col>
+    </Row>
+  )
 }
