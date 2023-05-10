@@ -14,7 +14,7 @@ import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faSearch, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
-import { HZSIPagination, TablePaginationHelper } from "../../components/PaginationHelpers";
+import { HZSIPagination, TablePaginationHelper } from "../../components/TableHelpers";
 import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
 
