@@ -18,25 +18,6 @@ import { EmptyTable, HZSIPagination, TablePaginationHelper } from '../../compone
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 
 
-const sortAscendingBySubmitDate = (a, b) => {
-  var keyA = new Date(a.date_submitted)
-  var keyB = new Date(b.date_submitted)
-
-  if (keyA < keyB) return -1;
-  if (keyA > keyB) return 1;
-  return 0;
-}
-
-
-const sortDescendingBySubmitDate = (a, b) => {
-  var keyA = new Date(a.date_submitted)
-  var keyB = new Date(b.date_submitted)
-
-  if (keyA > keyB) return -1;
-  if (keyA < keyB) return 1;
-  return 0;
-}
-
 const ManageRequestsForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
@@ -58,11 +39,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
     { label: "Rad", value: "thesis" },
     { label: "Nastava", value: "practical" },
     { label: "Svi", value: "all" }
-  ]
-
-  const optionsSort = [
-    { label: "Uzlazno", value: "asc" },
-    { label: "Silazno", value: "desc" }
   ]
 
   const navigate = useNavigate()
@@ -89,7 +65,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
     defaultValues: {
       requests: data,
       searchState: "",
-      sortSubmitDate: "",
       searchName: "",
       searchIdentifier: "",
       searchLead: "",
@@ -98,7 +73,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
   })
 
   const searchState = useWatch({ control, name: "searchState" })
-  const sortSubmitDate = useWatch({ control, name: "sortSubmitDate" })
   const searchName = useWatch({ control, name: "searchName" })
   const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
   const searchLead = useWatch({ control, name: "searchLead" })
@@ -116,14 +90,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
 
     else if (searchState.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
-  }
-
-  if (sortSubmitDate) {
-    if (sortSubmitDate === "desc")
-      fieldsView = fieldsView.sort(sortDescendingBySubmitDate)
-
-    else if (sortSubmitDate === "asc")
-      fieldsView = fieldsView.sort(sortAscendingBySubmitDate)
   }
 
   if (searchName)
@@ -210,20 +176,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
-                  <Controller
-                    name="sortSubmitDate"
-                    control={ control }
-                    render={ ({ field }) =>
-                      <CustomReactSelect
-                        forwardedRef={ field.ref }
-                        placeholder="Sortiraj"
-                        options={ optionsSort }
-                        onChange={ e => setValue("sortSubmitDate", e.value) }
-                      />
-                    }
-                  />
-                </td>
+                <td className="p-3 align-middle text-center">{" "}</td>
                 <td className="p-3 align-middle text-center">
                   <Controller
                     name="searchName"
@@ -286,7 +239,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                   fieldsView.map((project, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
-                        { pageIndex * pageSize + index + 1 }
+                        {!isSearched  ? fieldsView.length - index : pageIndex * pageSize + index + 1 }
                       </td>
                       <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
