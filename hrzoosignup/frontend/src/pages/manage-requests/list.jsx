@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { TypeString, TypeColor } from '../../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faMagnifyingGlass
+  faMagnifyingGlass, faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import { extractLeaderName } from '../../utils/users_help'
@@ -160,6 +160,9 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
               <tr className="border-bottom border-1 border-dark">
                 <th className="fw-normal">
+                  #
+                </th>
+                <th className="fw-normal">
                   Stanje
                 </th>
                 <th className="fw-normal">
@@ -190,6 +193,9 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
             </thead>
             <tbody>
               <tr>
+                <td className="p-3 align-middle text-center">
+                  <FontAwesomeIcon icon={ faSearch } />
+                </td>
                 <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
                   <Controller
                     name="searchState"
@@ -279,6 +285,9 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 fieldsView.length > 0 ?
                   fieldsView.map((project, index) =>
                     <tr key={index}>
+                      <td className="p-3 align-middle text-center">
+                        { pageIndex * pageSize + index + 1 }
+                      </td>
                       <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
                         <Tooltip
