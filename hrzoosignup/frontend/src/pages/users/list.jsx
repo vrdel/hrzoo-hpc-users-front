@@ -7,45 +7,15 @@ import {
   Col, 
   Row, 
   Table, 
-  Input, 
-  Placeholder 
+  Input
 } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faSearch, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
-import { HZSIPagination, TablePaginationHelper } from "../../components/TableHelpers";
+import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
-
-
-const EmptyTable = ({ msg }) => (
-  <>
-    {
-      [...Array(3)].map((_, i) => (
-        <tr key={i}>
-          <td colSpan="7" className="m-0 p-0 bg-light border-0">
-            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
-          </td>
-        </tr>
-      ))
-    }
-    <tr key="4">
-      <td colSpan="7" className="table-light border-0 text-muted text-center p-3 fs-3">
-        { msg }
-      </td>
-    </tr>
-    {
-      [...Array(3)].map((_, i) => (
-        <tr key={i + 6}>
-          <td colSpan="7" className="m-0 p-0 bg-light border-0">
-            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
-          </td>
-        </tr>
-      ))
-    }
-  </>
-)
 
 
 const UsersListForm = ({ data, pageTitle }) => {

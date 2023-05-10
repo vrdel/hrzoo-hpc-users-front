@@ -4,7 +4,8 @@ import {
   Col,
   Pagination,
   PaginationItem,
-  PaginationLink
+  PaginationLink,
+  Placeholder
  } from "reactstrap"
 
 
@@ -134,6 +135,35 @@ export class TablePaginationHelper {
       return 0
   }
 }
+
+
+export const EmptyTable = ({ msg }) => (
+  <>
+    {
+      [...Array(3)].map((_, i) => (
+        <tr key={i}>
+          <td colSpan="7" className="m-0 p-0 bg-light border-0">
+            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+          </td>
+        </tr>
+      ))
+    }
+    <tr key="4">
+      <td colSpan="7" className="table-light border-0 text-muted text-center p-3 fs-3">
+        { msg }
+      </td>
+    </tr>
+    {
+      [...Array(3)].map((_, i) => (
+        <tr key={i + 6}>
+          <td colSpan="7" className="m-0 p-0 bg-light border-0">
+            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+          </td>
+        </tr>
+      ))
+    }
+  </>
+)
 
 
 export const HZSIPagination = ({
