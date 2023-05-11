@@ -209,7 +209,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { pageIndex * pageSize + index + 1 }
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle text-center fw-bold">
                         { `${user.first_name} ${user.last_name}` }
                       </td>
                       <td className="p-3 align-middle text-center">
@@ -218,7 +218,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { user.username }
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle text-center font-monospace">
                         { user.person_mail }
                       </td>
                       <td className="p-3 align-middle text-center">

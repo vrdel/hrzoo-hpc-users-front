@@ -126,7 +126,7 @@ const NavigationLinks = () => {
             <Dropdown
               isOpen={dropdownOpen}
               toggle={toggle}
-              className="mt-1 ms-1">
+              className="mt-1">
               <DropdownToggle nav caret
                 style={elemInArray(location.pathname.split('/')[2], userPages) ? {'backgroundColor': activeBgColor, 'textColor': 'text-white'} : {}}
                 className={elemInArray(location.pathname.split('/')[2], userPages) ? "text-white" : "text-dark"}>
