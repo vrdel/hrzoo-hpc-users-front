@@ -36,22 +36,6 @@ class UsersInfoTests(TestCase):
         self.assertEqual(
             response.data, [
                 {
-                    "username": "br@tnt.com",
-                    "first_name": "Bob",
-                    "last_name": "Rock",
-                    "person_institution": "Grupa TNT",
-                    "person_mail": "bob.rock@tnt.com",
-                    "ssh_key": True,
-                    "projects": [{
-                        "identifier": "HRZOO1",
-                        "state": "approve",
-                        "role": "collaborator",
-                        "type": "research-croris"
-                    }],
-                    "date_joined": self.user2.date_joined.strftime(
-                        "%Y-%m-%d %H:%M:%S"
-                    )
-                }, {
                     "username": "ford@tnt.com",
                     "first_name": "Alan",
                     "last_name": "Ford",
@@ -70,6 +54,22 @@ class UsersInfoTests(TestCase):
                         "type": "research-croris"
                     }],
                     "date_joined": self.user1.date_joined.strftime(
+                        "%Y-%m-%d %H:%M:%S"
+                    )
+                }, {
+                    "username": "br@tnt.com",
+                    "first_name": "Bob",
+                    "last_name": "Rock",
+                    "person_institution": "Grupa TNT",
+                    "person_mail": "bob.rock@tnt.com",
+                    "ssh_key": True,
+                    "projects": [{
+                        "identifier": "HRZOO1",
+                        "state": "approve",
+                        "role": "collaborator",
+                        "type": "research-croris"
+                    }],
+                    "date_joined": self.user2.date_joined.strftime(
                         "%Y-%m-%d %H:%M:%S"
                     )
                 }
