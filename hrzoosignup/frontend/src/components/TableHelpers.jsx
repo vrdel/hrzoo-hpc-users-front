@@ -9,6 +9,33 @@ import {
  } from "reactstrap"
 
 
+export const optionsStates = [
+  { label: "Podnesen", value: "submit" },
+  { label: "Odobren", value: "approve" },
+  { label: "Odbijen", value: "deny" },
+  { label: "Istekao", value: "expire" },
+  { label: "Produžen", value: "extend" },
+  { label: "Svi", value: "all" }
+]
+
+export const optionsTypes = [
+  { label: "Projekt", value: "research-croris" },
+  { label: "Rad", value: "thesis" },
+  { label: "Nastava", value: "practical" },
+  { label: "Svi", value: "all" }
+]
+
+
+export const optionsStatesProjects = [
+  { label: "Odobren", value: "approve" },
+  { label: "Istekao", value: "expire" },
+  { label: "Produžen", value: "extend" },
+  { label: "Svi", value: "all" }
+]
+
+export const allStates = ["submit", "approve", "deny", "expire", "extend"]
+export const allProjectTypes = ["research-croris", "thesis", "practical"]
+
 export class TablePaginationHelper {
   searchLen = 0
   startIndex = 0

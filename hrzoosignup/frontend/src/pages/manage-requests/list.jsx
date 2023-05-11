@@ -14,32 +14,21 @@ import {
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import { extractLeaderName } from '../../utils/users_help'
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import { EmptyTable, HZSIPagination, TablePaginationHelper } from '../../components/TableHelpers';
+import { 
+  EmptyTable, 
+  HZSIPagination, 
+  TablePaginationHelper, 
+  optionsStates, 
+  optionsTypes,
+  allProjectTypes,
+  allStates 
+} from '../../components/TableHelpers';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 
 
 const ManageRequestsForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
-
-  const allStates = ["submit", "approve", "deny", "expire", "extend"]
-  const allProjectTypes = ["research-croris", "thesis", "practical"]
-
-  const optionsStates = [
-    { label: "Podnesen", value: "submit" },
-    { label: "Odobren", value: "approve" },
-    { label: "Odbijen", value: "deny" },
-    { label: "Istekao", value: "expire" },
-    { label: "Produžen", value: "extend" },
-    { label: "Svi", value: "all" }
-  ]
-
-  const optionsTypes = [
-    { label: "Projekt", value: "research-croris" },
-    { label: "Rad", value: "thesis" },
-    { label: "Nastava", value: "practical" },
-    { label: "Svi", value: "all" }
-  ]
 
   const navigate = useNavigate()
 
