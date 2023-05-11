@@ -10,6 +10,8 @@ services:
     stdin_open: true
     user: root
     ports:
+      - "80:80"
+      - "443:443"
       - "8001:8001"
       - "3001:3001"
       - "6899:6899"
@@ -35,7 +37,7 @@ services:
       - ../etc/:$VENV/etc/hrzoosignup
       - ../hrzoosignup/:$VENV/lib/python3.9/site-packages/hrzoosignup
       - ../hrzoosignup/frontend/:/home/user/frontend
-      - ../hrzoosignup/static/:$VENV/usr/share/hrzoosignup/static
+      - ../hrzoosignup/static/:$VENV/share/hrzoosignup/static
     networks:
       app_net:
         ipv4_address: 172.20.0.12
