@@ -280,7 +280,7 @@ SAML_CREATE_UNKNOWN_USER = True
 #SAML_DJANGO_USER_MAIN_ATTRIBUTE = 'person_oib'
 
 STATIC_URL = '{}/static/'.format(RELATIVE_PATH)
-STATIC_ROOT = '{}/usr/share/hrzoosignup/static/'.format(VENV)
+STATIC_ROOT = '{}/share/hrzoosignup/static/'.format(VENV)
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'frontend/bundles/')]
 
 WEBPACK_LOADER = {
