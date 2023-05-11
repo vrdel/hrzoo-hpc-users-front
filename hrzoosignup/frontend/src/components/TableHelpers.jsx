@@ -1,3 +1,14 @@
+import React from "react"
+import { 
+  Row,
+  Col,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
+  Placeholder
+ } from "reactstrap"
+
+
 export class TablePaginationHelper {
   searchLen = 0
   startIndex = 0
@@ -123,4 +134,93 @@ export class TablePaginationHelper {
     else
       return 0
   }
+}
+
+
+export const EmptyTable = ({ colspan, msg }) => (
+  <>
+    {
+      [...Array(3)].map((_, i) => (
+        <tr key={i}>
+          <td colSpan={colspan} className="m-0 p-0 bg-light border-0">
+            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+          </td>
+        </tr>
+      ))
+    }
+    <tr key="4">
+      <td colSpan={colspan} className="table-light border-0 text-muted text-center p-3 fs-3">
+        { msg }
+      </td>
+    </tr>
+    {
+      [...Array(3)].map((_, i) => (
+        <tr key={i + 6}>
+          <td colSpan={colspan} className="m-0 p-0 bg-light border-0">
+            <Placeholder size="lg" xs={12} style={{height: '40px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
+          </td>
+        </tr>
+      ))
+    }
+  </>
+)
+
+
+export const HZSIPagination = ({
+  pageIndex,
+  pageSize,
+  setPageIndex,
+  setPageSize,
+  pageCount,
+  start,
+  choices,
+  resource_name
+}) => {
+  return (
+    <Row>
+      <Col className="d-flex justify-content-center align-self-center">
+        <Pagination className="mt-2">
+          <PaginationItem disabled={pageIndex === 0}>
+            <PaginationLink aria-label="First" first onClick={() => setPageIndex(0)}/>
+          </PaginationItem>
+          <PaginationItem disabled={pageIndex === 0}>
+            <PaginationLink aria-label="Previous" previous onClick={() => setPageIndex(pageIndex - 1)}/>
+          </PaginationItem>
+          {
+            [...Array(pageCount)].map((e, i) =>
+              <PaginationItem active={pageIndex === i ? true : false} key={i}>
+                <PaginationLink onClick={() => setPageIndex(i)}>
+                  { i + 1 }
+                </PaginationLink>
+              </PaginationItem>
+            )
+          }
+          <PaginationItem disabled={pageIndex === pageCount - 1}>
+            <PaginationLink aria-label="Next" next onClick={() => setPageIndex(pageIndex + 1)}/>
+          </PaginationItem>
+          <PaginationItem disabled={pageIndex === pageCount- 1}>
+            <PaginationLink aria-label="Last" last onClick={() => setPageIndex(pageCount - 1)}/>
+          </PaginationItem>
+          <PaginationItem>
+            <select
+              style={{width: '180px'}}
+              className="ms-1 form-control form-select text-primary"
+              aria-label={`Broj ${resource_name}`}
+              value={pageSize}
+              onChange={e => {
+                setPageSize(Number(e.target.value))
+                setPageIndex(Math.trunc(start / e.target.value))
+              }}
+            >
+              {choices.map(pageSize => (
+                <option label={`${pageSize} ${resource_name}`} key={pageSize} value={pageSize}>
+                  {pageSize} {resource_name}
+                </option>
+              ))}
+            </select>
+          </PaginationItem>
+        </Pagination>
+      </Col>
+    </Row>
+  )
 }

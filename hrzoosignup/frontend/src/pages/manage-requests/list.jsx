@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Badge, Table, Tooltip, Button } from 'reactstrap';
+import { Col, Row, Badge, Table, Tooltip, Button, Input } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { PageTitle } from '../../components/PageTitle';
 import { StateIcons, StateString } from '../../config/map-states';
@@ -9,21 +9,39 @@ import { useQuery } from '@tanstack/react-query';
 import { TypeString, TypeColor } from '../../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faMagnifyingGlass,
+  faMagnifyingGlass, faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import { extractLeaderName } from '../../utils/users_help'
+import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
+import { EmptyTable, HZSIPagination, TablePaginationHelper } from '../../components/TableHelpers';
+import { CustomReactSelect } from '../../components/CustomReactSelect';
 
 
-export const ManageRequestsList = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
+const ManageRequestsForm = ({ data, pageTitle }) => {
+  const [pageSize, setPageSize] = useState(30)
+  const [pageIndex, setPageIndex] = useState(0)
+
+  const allStates = ["submit", "approve", "deny", "expire", "extend"]
+  const allProjectTypes = ["research-croris", "thesis", "practical"]
+
+  const optionsStates = [
+    { label: "Podnesen", value: "submit" },
+    { label: "Odobren", value: "approve" },
+    { label: "Odbijen", value: "deny" },
+    { label: "Istekao", value: "expire" },
+    { label: "Produžen", value: "extend" },
+    { label: "Svi", value: "all" }
+  ]
+
+  const optionsTypes = [
+    { label: "Projekt", value: "research-croris" },
+    { label: "Rad", value: "thesis" },
+    { label: "Nastava", value: "practical" },
+    { label: "Svi", value: "all" }
+  ]
+
   const navigate = useNavigate()
-
-  const {status, data: nrProjects, error, isFetching} = useQuery({
-      queryKey: ['all-projects'],
-      queryFn: fetchAllNrProjects
-  })
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
@@ -43,54 +61,203 @@ export const ManageRequestsList = () => {
       return tooltipOpened[toolid]
   }
 
-  useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+  const { control, setValue } = useForm({
+    defaultValues: {
+      requests: data,
+      searchState: "",
+      searchName: "",
+      searchIdentifier: "",
+      searchLead: "",
+      searchType: "",
+      searchDateEnd: ""
+    }
+  })
 
-  if (nrProjects?.length > 0)
-    return (
-      <>
-        <Row>
-          <PageTitle pageTitle={pageTitle}/>
-        </Row>
-        <Row className="mt-4">
-          <Col>
-            <Table responsive hover className="shadow-sm">
-              <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                <tr className="border-bottom border-1 border-dark">
-                  <th className="fw-normal">
-                    Stanje
-                  </th>
-                  <th className="fw-normal">
-                    Podnesen
-                  </th>
-                  <th className="fw-normal">
-                    Naziv
-                  </th>
-                  <th className="fw-normal">
-                    Šifra
-                  </th>
-                  <th className="fw-normal">
-                    Voditelj
-                  </th>
-                  <th className="fw-normal">
-                    Tip
-                  </th>
-                  <th className="fw-normal">
-                    Trajanje
-                  </th>
-                  <th className="fw-normal">
-                    Promjena
-                  </th>
-                  <th className="fw-normal">
-                    Radnje
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  nrProjects.map((project, index) =>
+  const searchState = useWatch({ control, name: "searchState" })
+  const searchName = useWatch({ control, name: "searchName" })
+  const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
+  const searchLead = useWatch({ control, name: "searchLead" })
+  const searchType = useWatch({ control, name: "searchType" })
+  const searchDateEnd = useWatch({ control, name: "searchDateEnd" })
+
+  const { fields } = useFieldArray({ control, name: "requests" })
+
+  let fieldsView = fields
+
+  let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
+
+  if (searchState) {
+    if (allStates.includes(searchState.toLowerCase()))
+      fieldsView = fieldsView.filter(e => e.state.name.toLowerCase() === searchState.toLowerCase())
+
+    else if (searchState.toLowerCase() === "all")
+      fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
+  }
+
+  if (searchName)
+    fieldsView = fieldsView.filter(e => e.name.toLowerCase().includes(searchName.toLowerCase()))
+
+  if (searchIdentifier)
+    fieldsView = fieldsView.filter(e => e.identifier.toLowerCase().includes(searchIdentifier.toLowerCase()))
+
+  if (searchLead)
+    fieldsView = fieldsView.filter(e => extractLeaderName(e.userproject_set, true).toLowerCase().includes(searchLead.toLowerCase()))
+  
+  if (searchType)
+    if (allProjectTypes.includes(searchType.toLowerCase()))
+      fieldsView = fieldsView.filter(e => e.project_type.name.toLowerCase() == searchType.toLowerCase())
+
+    else if (searchType.toLowerCase() === "all")
+      fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))
+
+  if (searchDateEnd)
+    fieldsView = fieldsView.filter(e => convertToEuropean(e.date_end).includes(searchDateEnd))
+
+  const isSearched = searchState || searchName || searchIdentifier || searchLead || searchType || searchDateEnd
+
+  paginationHelp.searchNum = fieldsView.length
+  paginationHelp.isSearched = isSearched
+  
+  fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
+
+  return (
+    <>
+      <Row>
+        <PageTitle pageTitle={pageTitle}/>
+      </Row>
+      <Row className="mt-4">
+        <Col>
+          <Table responsive hover className="shadow-sm">
+            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+              <tr className="border-bottom border-1 border-dark">
+                <th className="fw-normal">
+                  #
+                </th>
+                <th className="fw-normal">
+                  Stanje
+                </th>
+                <th className="fw-normal">
+                  Podnesen
+                </th>
+                <th className="fw-normal">
+                  Naziv
+                </th>
+                <th className="fw-normal">
+                  Šifra
+                </th>
+                <th className="fw-normal">
+                  Voditelj
+                </th>
+                <th className="fw-normal">
+                  Tip
+                </th>
+                <th className="fw-normal">
+                  Trajanje
+                </th>
+                <th className="fw-normal">
+                  Promjena
+                </th>
+                <th className="fw-normal">
+                  Radnje
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="p-3 align-middle text-center">
+                  <FontAwesomeIcon icon={ faSearch } />
+                </td>
+                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
+                  <Controller
+                    name="searchState"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <CustomReactSelect
+                        forwardedRef={ field.ref }
+                        placeholder="Odaberi"
+                        options={ optionsStates }
+                        onChange={ e => setValue("searchState", e.value) }
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-3 align-middle text-center">{" "}</td>
+                <td className="p-3 align-middle text-center">
+                  <Controller
+                    name="searchName"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        placeholder="Traži"
+                        className="form-control"
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-3 align-middle text-center">
+                  <Controller
+                    name="searchIdentifier"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        placeholder="Traži"
+                        className="form-control"
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-3 align-middle text-center">
+                  <Controller
+                    name="searchLead"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        placeholder="Traži"
+                        className="form-control"
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
+                  <Controller
+                    name="searchType"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <CustomReactSelect
+                        forwardedRef={ field.ref }
+                        placeholder="Odaberi"
+                        options={ optionsTypes }
+                        onChange={ e => setValue("searchType", e.value) }
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
+                  <Controller
+                    name="searchDateEnd"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        placeholder="Traži"
+                        className="form-control"
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-3 align-middle text-center">{" "}</td>
+                <td className="p-3 align-middle text-center">{" "}</td>
+              </tr>
+              {
+                fieldsView.length > 0 ?
+                  fieldsView.map((project, index) =>
                     <tr key={index}>
+                      <td className="p-3 align-middle text-center">
+                        {!isSearched  ? fieldsView.length - index : pageIndex * pageSize + index + 1 }
+                      </td>
                       <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
                         <Tooltip
@@ -140,34 +307,49 @@ export const ManageRequestsList = () => {
                       </td>
                     </tr>
                   )
-                }
-                {
-                  nrProjects.length < 5 && [...Array(5 - nrProjects.length)].map((_, i) =>
-                    <tr key={i + 5}>
-                      <td colSpan="9" style={{height: '60px', minHeight: '60px'}}>
-                      </td>
-                    </tr>
-                  )
-                }
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </>
-    )
-  else if (nrProjects?.length === 0) {
+                :
+                  data.length > 0 && isSearched ?
+                    <EmptyTable colspan="10" msg="Nijedan zahtjev ne zadovoljava pretragu" />
+                  :
+                    <EmptyTable colspan="10" msg="Nema podnesenih zahtjeva" />
+              }
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+      <HZSIPagination
+        pageIndex={ pageIndex }
+        pageSize={ pageSize }
+        setPageIndex={ setPageIndex }
+        setPageSize={ setPageSize }
+        pageCount={ paginationHelp.pageCount }
+        start={ paginationHelp.start }
+        choices={ paginationHelp.choices }
+        resource_name="zahtjeva"
+      />
+    </>
+  )
+}
+
+
+export const ManageRequestsList = () => {
+  const { LinkTitles } = useContext(SharedData);
+  const [pageTitle, setPageTitle] = useState(undefined);
+
+  const { data: nrProjects } = useQuery({
+      queryKey: ['all-projects'],
+      queryFn: fetchAllNrProjects
+  })
+
+  useEffect(() => {
+    setPageTitle(LinkTitles(location.pathname))
+  }, [location.pathname])
+
+  if (nrProjects)
     return (
-      <>
-        <Row>
-          <PageTitle pageTitle={pageTitle}/>
-        </Row>
-        <Row className="mt-3 mb-5 align-items-center">
-          <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center mt-5 p-3 fs-3"
-            style={{height: "300px"}} md={{offset: 1, size: 10}}>
-            Nema podnesenih zahtjeva
-          </Col>
-        </Row>
-      </>
+      <ManageRequestsForm
+        data={ nrProjects }
+        pageTitle={ pageTitle }
+      />
     )
-  }
 };
