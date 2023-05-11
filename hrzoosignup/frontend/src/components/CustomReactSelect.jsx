@@ -39,7 +39,7 @@ const DropdownIndicator = ({ ...props }) => {
 export const CustomReactSelect = ({forwardedRef=undefined,
   resourceTypeMultiValue=undefined, scientificSoftwareMultiValue=undefined,
   activeReadOnlyResourceTypeMultiValue=undefined, controlWidth=undefined,
-  fontSize=undefined, collaboratorsFixedMultiValue=undefined,
+  fontSize=undefined, minHeight=undefined, collaboratorsFixedMultiValue=undefined,
   ...props} ) => {
   const customStyles = {
     container: (provided, state) => ({
@@ -58,6 +58,7 @@ export const CustomReactSelect = ({forwardedRef=undefined,
       textShadow: 'none',
       textAlign: 'start',
       textIndent: 0,
+      minHeight: minHeight,
       borderColor: props.error ? '#dc3545' : props.isnew ? '#198754' : props.ismissing ? '#0d6efd' : state.selectProps.menuIsOpen ? '#66afe9' : '#ced4da',
       transition: 'border-color .15s ease-in-out, box-shadow .15s ease-in-out',
       boxShadow: state.selectProps.menuIsOpen ? '0 0 0 .2rem rgba(0, 123, 255, .25)' : 'none',

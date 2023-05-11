@@ -102,7 +102,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
 
   if (searchLead)
     fieldsView = fieldsView.filter(e => extractLeaderName(e.userproject_set, true).toLowerCase().includes(searchLead.toLowerCase()))
-  
+
   if (searchType)
     if (allProjectTypes.includes(searchType.toLowerCase()))
       fieldsView = fieldsView.filter(e => e.project_type.name.toLowerCase() == searchType.toLowerCase())
@@ -117,7 +117,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
-  
+
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
 
   return (
@@ -167,7 +167,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <td className="p-3 align-middle text-center">
                   <FontAwesomeIcon icon={ faSearch } />
                 </td>
-                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
+                <td className="p-3 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem'}}>
                   <Controller
                     name="searchState"
                     control={ control }
@@ -191,6 +191,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
@@ -204,6 +205,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
@@ -217,11 +219,12 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
+                <td className="p-3 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
                   <Controller
                     name="searchType"
                     control={ control }
@@ -235,7 +238,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center" style={{ width: "10%" }}>
+                <td className="p-3 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
                   <Controller
                     name="searchDateEnd"
                     control={ control }
@@ -244,6 +247,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
