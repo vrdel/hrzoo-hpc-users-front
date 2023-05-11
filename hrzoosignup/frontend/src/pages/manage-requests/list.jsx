@@ -164,10 +164,10 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <FontAwesomeIcon icon={ faSearch } />
                 </td>
-                <td className="p-3 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem'}}>
+                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem'}}>
                   <Controller
                     name="searchState"
                     control={ control }
@@ -181,8 +181,8 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">{" "}</td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">{" "}</td>
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchName"
                     control={ control }
@@ -196,7 +196,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchIdentifier"
                     control={ control }
@@ -210,7 +210,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchLead"
                     control={ control }
@@ -224,7 +224,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
+                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
                   <Controller
                     name="searchType"
                     control={ control }
@@ -238,7 +238,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
+                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
                   <Controller
                     name="searchDateEnd"
                     control={ control }
@@ -252,8 +252,8 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">{" "}</td>
-                <td className="p-3 align-middle text-center">{" "}</td>
+                <td className="p-2 align-middle text-center">{" "}</td>
+                <td className="p-2 align-middle text-center">{" "}</td>
               </tr>
               {
                 fieldsView.length > 0 ?
