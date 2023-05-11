@@ -445,9 +445,9 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
 
     return (
       <>
-        <Row className={amILead && missingCollab.length > 0 ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
+        <Row className={amILead && missingCollab.length > 0 ? 'mt-4 ms-0 me-0 mb-2 p-0' : 'p-0 mt-4 ms-0 me-0 mb-5'}>
           <Col>
-            <Table responsive hover className="shadow-sm bg-white">
+            <Table responsive hover className="shadow-sm bg-white m-0">
               <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
                 <tr className="border-bottom border-1 border-dark">
                   <th className="fw-normal">
