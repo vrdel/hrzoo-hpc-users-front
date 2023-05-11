@@ -69,6 +69,12 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   if (searchDateEnd)
     fieldsView = fieldsView.filter(e => convertToEuropean(e.date_end).includes(searchDateEnd))
 
+  if (searchUsers) {
+    fieldsView = fieldsView.filter(e => 
+      [extractLeaderName(e.userproject_set, true), ...extractCollaborators(e.userproject_set, true)].map(user => user.toLowerCase()).join(",").includes(searchUsers.toLowerCase())
+    )
+  }
+
   if (searchState) {
     if (allStates.includes(searchState.toLowerCase()))
       fieldsView = fieldsView.filter(e => e.state.name.toLowerCase() === searchState.toLowerCase())
