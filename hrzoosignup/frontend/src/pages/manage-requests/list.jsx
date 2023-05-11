@@ -14,14 +14,14 @@ import {
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import { extractLeaderName } from '../../utils/users_help'
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
-import { 
-  EmptyTable, 
-  HZSIPagination, 
-  TablePaginationHelper, 
-  optionsStates, 
+import {
+  EmptyTable,
+  HZSIPagination,
+  TablePaginationHelper,
+  optionsStates,
   optionsTypes,
   allProjectTypes,
-  allStates 
+  allStates
 } from '../../components/TableHelpers';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 
@@ -102,7 +102,9 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
   if (searchDateEnd)
     fieldsView = fieldsView.filter(e => convertToEuropean(e.date_end).includes(searchDateEnd))
 
-  const isSearched = searchState || searchName || searchIdentifier || searchLead || searchType || searchDateEnd
+  const isSearched = (searchState && searchState !== 'all')
+    || searchName || searchIdentifier || searchLead
+    || (searchType && searchType !== 'all') || searchDateEnd
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched

@@ -3,12 +3,12 @@ import { SharedData } from "../root";
 import { useQuery } from "@tanstack/react-query";
 import { fetchAllNrProjects } from "../../api/projects";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
-import { 
+import {
   TablePaginationHelper,
-  optionsStatesProjects, 
+  optionsStatesProjects,
   optionsTypes,
   allProjectTypes,
-  allStates, 
+  allStates,
   EmptyTable,
   HZSIPagination
 } from "../../components/TableHelpers";
@@ -57,7 +57,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   if (searchIdentifier)
     fieldsView = fieldsView.filter(e => e.identifier.toLowerCase().includes(searchIdentifier.toLowerCase()))
-  
+
   if (searchType) {
     if (allProjectTypes.includes(searchType.toLowerCase()))
       fieldsView = fieldsView.filter(e => e.project_type.name.toLowerCase() == searchType.toLowerCase())
@@ -70,7 +70,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
     fieldsView = fieldsView.filter(e => convertToEuropean(e.date_end).includes(searchDateEnd))
 
   if (searchUsers) {
-    fieldsView = fieldsView.filter(e => 
+    fieldsView = fieldsView.filter(e =>
       [extractLeaderName(e.userproject_set, true), ...extractCollaborators(e.userproject_set, true)].map(user => user.toLowerCase()).join(",").includes(searchUsers.toLowerCase())
     )
   }
@@ -83,7 +83,9 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
   }
 
-  const isSearched = searchName || searchIdentifier || searchType || searchDateEnd || searchUsers || searchState
+  const isSearched = searchName || searchIdentifier
+    || (searchType && searchType !== 'all')
+    || searchDateEnd || searchUsers || (searchState && searchState !== 'all')
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
@@ -243,7 +245,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                           { extractLeaderName(project.userproject_set, true) }
                         </Badge>
                         {
-                          extractCollaborators(project.userproject_set, true).map((collab, cid) => 
+                          extractCollaborators(project.userproject_set, true).map((collab, cid) =>
                             <Badge key={cid} color="secondary" className="fw-normal ms-1">
                               { collab }
                             </Badge>
