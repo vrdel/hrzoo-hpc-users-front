@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { SharedData } from "../root";
 import { fetchUsers } from "../../api/users"
 import { useQuery } from "@tanstack/react-query";
-import { 
-  Badge, 
-  Col, 
-  Row, 
-  Table, 
+import {
+  Badge,
+  Col,
+  Row,
+  Table,
   Input
 } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
@@ -114,10 +114,10 @@ const UsersListForm = ({ data, pageTitle }) => {
             </thead>
             <tbody>
               <tr>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <FontAwesomeIcon icon={ faSearch } />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchName"
                     control={ control }
@@ -126,11 +126,12 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchInstitution"
                     control={ control }
@@ -139,11 +140,12 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchUsername"
                     control={ control }
@@ -152,11 +154,12 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { ...field }
                         className="form-control"
                         placeholder="Traži"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchEmail"
                     control={ control }
@@ -165,11 +168,12 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center">
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchProject"
                     control={ control }
@@ -178,11 +182,12 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
                       />
                     }
                   />
                 </td>
-                <td className="p-3 align-middle text-center" style={{width: '10%'}}>
+                <td className="p-2 align-middle text-center" style={{width: '10%', fontSize: '0.83rem'}}>
                   <Controller
                     name="searchSSHKey"
                     control={ control }
