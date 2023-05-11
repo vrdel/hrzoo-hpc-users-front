@@ -88,6 +88,11 @@ const BriefProjectInfo = ({project}) => {
     <>
       <Col className="text-left" md={{size: 2}}>
         Šifra:
+        <div className="p-2 mt-2">
+          <Badge color={"secondary fw-normal"}>
+            { project.identifier }
+          </Badge>
+        </div>
       </Col>
       <Col md={{size: 3}}>
         <Label
@@ -96,6 +101,9 @@ const BriefProjectInfo = ({project}) => {
           className="mr-1">
           Trajanje:
         </Label>
+        <div className="p-2 fs-5 font-monospace">
+          { convertToEuropean(project.date_start) } &minus; { convertToEuropean(project.date_end) }
+        </div>
       </Col>
       <Col md={{size: 2}}>
         <Label
@@ -104,6 +112,9 @@ const BriefProjectInfo = ({project}) => {
           className="mr-1">
           Odobren:
         </Label>
+        <div className="p-2 fs-5 font-monospace">
+          { convertToEuropean(project.date_changed) }
+        </div>
       </Col>
       <Col md={{size: 2}}>
         <Label
@@ -112,28 +123,7 @@ const BriefProjectInfo = ({project}) => {
           className="mr-1">
           Tip:
         </Label>
-      </Col>
-
-      <div className="w-100"></div>
-
-      <Col md={{size: 2}}>
-        <div className="p-2">
-          <Badge color={"secondary fw-normal"}>
-            { project.identifier }
-          </Badge>
-        </div>
-      </Col>
-      <Col md={{size: 3}}>
-        <div className="p-2 fs-5 font-monospace">
-          { convertToEuropean(project.date_start) } &minus; { convertToEuropean(project.date_end) }
-        </div>
-      </Col>
-      <Col md={{size: 2}}>
-        <div className="p-2 fs-5 font-monospace">
-          { convertToEuropean(project.date_changed) }
-        </div>
-      </Col>
-      <Col md={{size: 2}}>
+        <br/>
         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
           { TypeString(project.project_type.name) }
         </span>
