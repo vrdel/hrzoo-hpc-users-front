@@ -16,7 +16,8 @@ import {
   faKey,
   faCircleInfo,
   faUserEdit,
-  faStamp
+  faStamp,
+  faCertificate
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
 import { AuthContext } from '../components/AuthContextProvider';
@@ -100,6 +101,16 @@ const NavigationLinks = () => {
                 to='/ui/upravljanje-zahtjevima'>
                 <FontAwesomeIcon icon={faStamp} />{' '}
                 Upravljanje zahtjevima
+              </NavLink>
+            </NavItem>
+            <NavItem key="projekti" className="mt-1">
+              <NavLink
+                style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+                className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+                to='/ui/projekti'
+              >
+                <FontAwesomeIcon icon={faCertificate} />{" "}
+                Projekti
               </NavLink>
             </NavItem>
             <NavItem key="korisnici" className="mt-1">
