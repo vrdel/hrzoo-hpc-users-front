@@ -48,7 +48,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   const { fields } = useFieldArray({ control, name: "projects" })
 
-  let fieldsView = fields.filter(e => ["approve", "extend", "expire"].includes(e.state.name.toLowerCase()))
+  let fieldsView = fields
 
   let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
 
@@ -212,7 +212,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   fieldsView.map((project, index) =>
                     <tr key={ index }>
                       <td className="p-3 align-middle text-center">
-                        { pageIndex * pageSize + index + 1 }
+                        { !isSearched ? data.length - pageIndex * pageSize - index : pageIndex * pageSize + index + 1 }
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
                         { project.name}
@@ -290,7 +290,7 @@ export const ProjectsList = () => {
   if (data)
     return (
       <ProjectsListForm
-        data={ data }
+        data={ data.filter(e => ["approve", "extend", "expire"].includes(e.state.name.toLowerCase())) }
         pageTitle={ pageTitle }
       />
     )

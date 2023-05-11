@@ -249,7 +249,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                   fieldsView.map((project, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
-                        {!isSearched  ? fieldsView.length - index : pageIndex * pageSize + index + 1 }
+                        {!isSearched  ? data.length - pageIndex * pageSize - index : pageIndex * pageSize + index + 1 }
                       </td>
                       <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
