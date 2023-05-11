@@ -438,8 +438,8 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
       </Row>
       <Row className="d-flex flex-row justify-content-end">
-        <Col md={{size: 6}} lg={{size: 5}} xl={{size: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 justify-content-center">
-          <Button color="danger" className="me-lg-1 me-md-1 me-sm-1" onClick={() => {
+        <Col md={{size: 6}} lg={{size: 5}} xl={{size: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 mt-3 justify-content-center">
+          <Button color="danger" className="me-lg-1 me-md-1 me-sm-1 me-1" onClick={() => {
             modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
             modalProps.setModalTitle('Brisanje korisničkog zahtjeva')
             modalProps.setModalMsg('Da li ste sigurni da želite brisati korisnički zahtjev?')
@@ -490,7 +490,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             color="success"
           />
         </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
           <FontAwesomeIcon
             className="fa-3x text-warning"
             icon={faCog}/>{' '}
@@ -508,7 +508,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             color="success"
           />
         </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
           <FontAwesomeIcon
             className="fa-3x text-warning"
             icon={faTimeline}/>{' '}
@@ -525,7 +525,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             }}
             color="success"/>
         </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
           <FontAwesomeIcon
             className="fa-3x text-danger"
             icon={faTimes}/>{' '}
@@ -542,7 +542,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             }}
             color="success"/>
         </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0">
+        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
           <FontAwesomeIcon
             className="fa-3x text-danger"
             icon={faCalendarXmark}/>{' '}
