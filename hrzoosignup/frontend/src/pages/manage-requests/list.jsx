@@ -62,6 +62,10 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
     }
   })
 
+  useEffect(() => {
+    setValue('requests', data)
+  }, [data])
+
   const searchState = useWatch({ control, name: "searchState" })
   const searchName = useWatch({ control, name: "searchName" })
   const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
