@@ -134,7 +134,7 @@ const MyRequestsList = () => {
                         </Row>
                       </td>
                       <td className="align-middle text-center">
-                        <Button color="light" onClick={() => navigate(project.identifier)}>
+                        <Button color="light" onClick={() => navigate(encodeURIComponent(project.identifier))}>
                           <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </Button>
                       </td>
