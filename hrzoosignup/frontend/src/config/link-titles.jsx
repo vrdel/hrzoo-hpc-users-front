@@ -16,8 +16,10 @@ export function LinkTitles(loc) {
     [url_ui_prefix + '/projekti']: 'Popis svih aktivnih projekata',
   }
 
-  if (loc.includes('/moji-zahtjevi/') && loc.match(/[\w.\d-_]+$/)) {
-    let identifier = loc.match(/[\w.\d-_]+$/)
+  if (loc.includes('/moji-zahtjevi/') && loc.match(/[%\w.\d-_]+$/)) {
+    let identifier = loc.match(/[%\w.\d-_]+$/)
+    if (identifier[0].includes('%'))
+      identifier = decodeURIComponent(identifier[0])
     return 'Pregledavanje zahtjeva ' + identifier
   }
 
