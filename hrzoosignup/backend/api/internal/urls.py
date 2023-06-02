@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from rest_framework import routers
 
 from . import views
@@ -11,7 +11,7 @@ urlpatterns = [
     path('croris-info/', views.CroRISInfo.as_view(), name='crorisinfo'),
     path('projects/', views.Projects.as_view(), name='projects'),
     path('projects/role/<str:targetrole>', views.ProjectsRole.as_view(), name='projectsrole'),
-    path('projects/<str:specific>', views.Projects.as_view(), name='projects'),
+    re_path('projects/(?P<specific>.*)', views.Projects.as_view(), name='projects'),
     path('projects-research/', views.ProjectsResearch.as_view(), name='projectsresearch'),
     path('projects-general/', views.ProjectsGeneral.as_view(), name='projectsgeneral'),
     path('invites/', views.Invites.as_view(), name='invites'),
