@@ -300,7 +300,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { project.date_changed && convertTimeToEuropean(project.date_changed) }
                       </td>
                       <td className="align-middle text-center">
-                        <Button color="light" onClick={() => navigate(project.identifier)}>
+                        <Button color="light" onClick={() => navigate(encodeURIComponent(project.identifier))}>
                           <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </Button>
                       </td>
