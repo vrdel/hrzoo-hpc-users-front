@@ -241,7 +241,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         { convertToEuropean(project.date_end) }
                       </td>
                       <td className="align-middle text-center">
-                        <Badge color="success" className="fw-normal ms-1">
+                        <Badge color="dark" className="fw-normal ms-1">
                           { extractLeaderName(project.userproject_set, true) }
                         </Badge>
                         {
