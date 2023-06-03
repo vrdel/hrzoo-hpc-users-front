@@ -23,8 +23,10 @@ export function LinkTitles(loc) {
     return 'Pregledavanje zahtjeva ' + identifier
   }
 
-  if (loc.includes('/upravljanje-zahtjevima/') && loc.match(/[\w.\d-_]+$/)) {
-    let identifier = loc.match(/[\w.\d-_]+$/)
+  if (loc.includes('/upravljanje-zahtjevima/') && loc.match(/[%\w.\d-_]+$/)) {
+    let identifier = loc.match(/[%\w.\d-_]+$/)
+    if (identifier[0].includes('%'))
+      identifier = decodeURIComponent(identifier[0])
     return 'Pregledavanje zahtjeva ' + identifier
   }
 
