@@ -224,7 +224,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         {
                           user.projects.map((proj, pid) =>
-                            <Badge key={ pid } color={ `${proj.role === "lead" ? "success" : "primary"}` } className="fw-normal ms-1">
+                            <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
                               { proj.identifier }
                             </Badge>
                           )
