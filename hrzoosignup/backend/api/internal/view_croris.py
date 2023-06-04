@@ -232,45 +232,51 @@ class CroRISInfo(APIView):
                 filter(lambda l: int(l['href'].split('/')[-1]) not in skip_projects,
                     projects_associate_links))
 
-        for project in projects_associate_links:
-            coros.append(self._fetch_data(project['href']))
+        if projects_associate_links:
+            for project in projects_associate_links:
+                if project:
+                    coros.append(self._fetch_data(project['href']))
+                else:
+                    return
 
-        self.projects_associate_info = await asyncio.gather(*coros,
-                                                            loop=self.loop,
-                                                            return_exceptions=True)
+            self.projects_associate_info = await asyncio.gather(*coros,
+                                                                loop=self.loop,
+                                                                return_exceptions=True)
 
-        exc_raised, exc = contains_exception(self.projects_associate_info)
-        if exc_raised:
-            raise client_exceptions.ClientError(repr(exc))
+            exc_raised, exc = contains_exception(self.projects_associate_info)
+            if exc_raised:
+                raise client_exceptions.ClientError(repr(exc))
 
-        for project in self.projects_associate_info:
-            project = json.loads(project)
-            metadata = {}
-            metadata['end'] = project.get('kraj', None)
-            # projects may be outdated
-            if metadata['end']:
-                today = datetime.datetime.today()
-                end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') +  datetime.timedelta(days=settings.GRACE_DAYS)
-                if end_date <= today:
-                    self.dead_projects_associate.append(project.get('id'))
-                    continue
-            metadata['start'] = project.get('pocetak', None)
-            metadata['croris_id'] = project.get('id')
-            self.projects_associate_ids.append(metadata['croris_id'])
-            metadata['identifier'] = project.get('hrSifraProjekta', None)
-            titles = project['title']
-            for title in titles:
-                if title['cfLangCode'] == 'hr':
-                    metadata['title'] = title['naziv']
-                    break
-            summaries = project['summary']
-            for summary in summaries:
-                if summary['cfLangCode'] == 'hr':
-                    metadata['summary'] = summary.get('naziv', '')
-                    break
-            parsed_projects.append(metadata)
+            for project in self.projects_associate_info:
+                project = json.loads(project)
+                metadata = {}
+                metadata['end'] = project.get('kraj', None)
+                # projects may be outdated
+                if metadata['end']:
+                    today = datetime.datetime.today()
+                    end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') +  datetime.timedelta(days=settings.GRACE_DAYS)
+                    if end_date <= today:
+                        self.dead_projects_associate.append(project.get('id'))
+                        continue
+                metadata['start'] = project.get('pocetak', None)
+                metadata['croris_id'] = project.get('id')
+                self.projects_associate_ids.append(metadata['croris_id'])
+                metadata['identifier'] = project.get('hrSifraProjekta', None)
+                titles = project['title']
+                for title in titles:
+                    if title['cfLangCode'] == 'hr':
+                        metadata['title'] = title['naziv']
+                        break
+                summaries = project['summary']
+                for summary in summaries:
+                    if summary['cfLangCode'] == 'hr':
+                        metadata['summary'] = summary.get('naziv', '')
+                        break
+                parsed_projects.append(metadata)
 
-        self.projects_associate_info = parsed_projects
+            self.projects_associate_info = parsed_projects
+        else:
+            self.projects_associate_info = None
 
     async def filter_unverified(self):
         coros = []
