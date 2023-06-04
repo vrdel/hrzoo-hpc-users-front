@@ -391,7 +391,7 @@ export const ManageRequestsChange = () => {
     return (
       <>
         <Row>
-          <PageTitle pageTitle={pageTitle}/>
+          <PageTitle pageTitle={pageTitle} isEditing={!disabledFields}/>
         </Row>
         <ModalAreYouSure
           isOpen={areYouSureModal}
