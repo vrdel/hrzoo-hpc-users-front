@@ -164,9 +164,6 @@ class Projects(APIView):
                 if value == True:
                     break
             state = models.State.objects.get(name=key)
-            # TODO:
-            # update writing rest of fields so that we can enable "editing" on
-            # frontend side
             p_obj.name = request.data['requestName']
             p_obj.reason = request.data['requestExplain']
             p_obj.resources_type = request.data['requestResourceType']
@@ -176,6 +173,8 @@ class Projects(APIView):
             p_obj.science_extrasoftware = request.data['scientificSoftwareExtra']
             p_obj.science_extrasoftware_help = request.data['scientificSoftwareHelp']
             p_obj.staff_resources_type = request.data.get('staff_requestResourceType')
+            p_obj.resources_numbers = request.data['resources_numbers']
+
             if state.name == 'deny':
                 staff_comment = request.data.get('staff_comment')
                 p_obj.denied_by = {

@@ -181,8 +181,25 @@ export const ManageRequestsChange = () => {
       data['reason'] = data['requestExplain']
       data['scientificSoftware'] = data['scientificSoftware'].map(e => e['value'])
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
+
       if (!disabledFields)
         data['staff_emailSend'] = false
+
+      data['resources_numbers'] = {
+        'HPCnSlotsCPU': data['HPCnSlotsCPU'],
+        'HPCnSlotsGPU': data['HPCnSlotsGPU'],
+        'HPCnSlotsRAM': data['HPCnRAM'],
+        'HPCnTempGB': data['HPCnTempGB'],
+        'HPCnDiskGB': data['HPCnDiskGB'],
+        'CLOUDnVM': data['CLOUDnVM'],
+        'CLOUDnSlotsCPU': data['CLOUDnSlotsCPU'],
+        'CLOUDnRAM': data['CLOUDnRAM'],
+        'CLOUDnRAMVM': data['CLOUDnRAMVM'],
+        'CLOUDnDiskGB': data['CLOUDnDiskGB'],
+        'CLOUDnFastDiskGB': data['CLOUDnFastDiskGB'],
+        'CLOUDnIPs': data['CLOUDnIPs'],
+      }
+
       return changeProject(projId, data)
     }
   })
