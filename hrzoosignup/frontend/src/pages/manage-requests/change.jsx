@@ -388,10 +388,16 @@ export const ManageRequestsChange = () => {
                 <LeadBasicInfo leadInfo={ extractLeaderName(nrProject.userproject_set) } />
                 {
                   nrProject.project_type.name === 'research-croris' &&
-                    <CroRisDescription fieldsDisabled={disabledFields} />
+                    <CroRisDescription fieldsDisabled={
+                      nrProject.project_type['name'] === 'research-croris'
+                        && !disabledFields
+                        ? true
+                        : disabledFields
+                      }
+                    />
                 }
                 <GeneralFields fieldsDisabled={disabledFields}
-                  projectInfo={nrProject}
+                  projectInfo={nrProject} isResearch={nrProject.project_type['name'] === 'research-croris'}
                 />
                 <ScientificSoftware fieldsDisabled={disabledFields} />
                 <ResourceFields fieldsDisabled={disabledFields} />

@@ -18,6 +18,10 @@ import BaseNewScientificDomain from './ScientificDomain';
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false}) => {
   const { control, getValues, formState: {errors} } = useFormContext();
+  let disabledName = fieldsDisabled
+
+  if (fieldsDisabled === false && isResearch)
+    disabledName = true
 
   return (
     <>
@@ -44,7 +48,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 {...field}
                 aria-label="requestName"
                 type="text"
-                disabled={fieldsDisabled}
+                disabled={disabledName}
                 className={`form-control ${errors && errors.requestName ? "is-invalid" : ''}`}
                 rows="1"
               />
