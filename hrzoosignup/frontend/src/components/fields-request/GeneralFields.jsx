@@ -18,10 +18,10 @@ import BaseNewScientificDomain from './ScientificDomain';
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false}) => {
   const { control, getValues, formState: {errors} } = useFormContext();
-  let disabledName = fieldsDisabled
+  let disabledRemain = fieldsDisabled
 
   if (fieldsDisabled === false && isResearch)
-    disabledName = true
+    disabledRemain = true
 
   return (
     <>
@@ -48,7 +48,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 {...field}
                 aria-label="requestName"
                 type="text"
-                disabled={disabledName}
+                disabled={disabledRemain}
                 className={`form-control ${errors && errors.requestName ? "is-invalid" : ''}`}
                 rows="1"
               />
@@ -118,7 +118,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
               <DatePicker
                 {...field}
                 locale="hr-HR"
-                disabled={fieldsDisabled}
+                disabled={disabledRemain}
                 maxDate={new Date(2027, 1)}
                 required={true}
                 className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
@@ -134,7 +134,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
               <DatePicker
                 {...field}
                 required={true}
-                disabled={fieldsDisabled}
+                disabled={disabledRemain}
                 maxDate={new Date(2027, 1)}
                 locale="hr-HR"
                 className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
