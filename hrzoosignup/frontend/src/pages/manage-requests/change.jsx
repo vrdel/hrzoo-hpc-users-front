@@ -447,7 +447,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           >
             Obriši zahtjev
           </Button>
-          <Button disabled={true} color="danger" className="me-lg-1 me-md-3 me-sm-3" onClick={() => setDisabledFields(!disabledFields)}>
+          <Button color="danger" className="me-lg-1 me-md-3 me-sm-3" onClick={() => setDisabledFields(!disabledFields)}>
             Uredi zahtjev
           </Button>
         </Col>
