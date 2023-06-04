@@ -167,10 +167,13 @@ class Projects(APIView):
             # TODO:
             # update writing rest of fields so that we can enable "editing" on
             # frontend side
-            p_obj.reason = request.data['reason']
-            p_obj.resources_type = request.data['resources_type']
+            p_obj.name = request.data['requestName']
+            p_obj.reason = request.data['requestExplain']
+            p_obj.resources_type = request.data['requestResourceType']
             p_obj.state = state
-            p_obj.staff_resources_type = request.data.get('staff_resources_type')
+            p_obj.science_field = request.data['scientificDomain']
+            p_obj.science_software = request.data['scientificSoftware']
+            p_obj.staff_resources_type = request.data.get('staff_requestResourceType')
             if state.name == 'deny':
                 staff_comment = request.data.get('staff_comment')
                 p_obj.denied_by = {

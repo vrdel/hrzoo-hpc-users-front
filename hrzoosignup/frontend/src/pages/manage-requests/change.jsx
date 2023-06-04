@@ -179,9 +179,8 @@ export const ManageRequestsChange = () => {
       data['is_active'] = true
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
-      data['resources_type'] = data['requestResourceType']
+      data['scientificSoftware'] = data['scientificSoftware'].map(e => e['value'])
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
-      data['staff_resources_type'] = data['staff_requestResourceType']
       return changeProject(projId, data)
     }
   })
