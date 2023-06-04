@@ -181,6 +181,8 @@ export const ManageRequestsChange = () => {
       data['reason'] = data['requestExplain']
       data['scientificSoftware'] = data['scientificSoftware'].map(e => e['value'])
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
+      if (!disabledFields)
+        data['staff_emailSend'] = false
       return changeProject(projId, data)
     }
   })
@@ -642,7 +644,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                   role="switch"
                   disabled={!(requestState['approve'] === true
                     || requestState['deny'] === true)}
-                  checked={getValues('staff_emailSend')}
+                  checked={disabledFields ? getValues('staff_emailSend') : false}
                   className="form-control fw-bold fst-italic"
                 />
               }
