@@ -69,7 +69,7 @@ const BasePage = ({sessionData=undefined}) => {
 
   useEffect(() => {
     if (!(isLoggedIn || sessionData.active))
-      navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
+      navigate(defaultUnAuthnRedirect)
     else
       sessionData?.userdetails && setUserdetails(sessionData.userdetails)
   }, [sessionData, isLoggedIn])

@@ -28,6 +28,24 @@ import { AuthContext } from './components/AuthContextProvider';
 import { UsersList } from './pages/users/list';
 import { ProjectsList } from './pages/projects/list';
 
+function getAndSetReferrer() {
+  let referrer = localStorage.getItem('referrer');
+  let stackUrls = undefined;
+
+  if (referrer)
+    stackUrls = JSON.parse(referrer);
+  else
+    stackUrls = new Array();
+
+  // track only last 5 urls
+  if (stackUrls.length === 5) {
+    stackUrls = new Array();
+    stackUrls.push(window.location.pathname);
+  }
+  else if (stackUrls.indexOf(window.location.pathname) === -1)
+    stackUrls.push(window.location.pathname);
+  localStorage.setItem('referrer', JSON.stringify(stackUrls));
+}
 
 const ProtectedRoute = ({sessionData, children}) => {
   const { isLoggedIn, userDetails } = useContext(AuthContext)
@@ -48,6 +66,8 @@ const BaseRoutes = () => {
     queryFn: isActiveSession,
     staleTime: 60 * 60 * 1000,
   })
+
+  getAndSetReferrer();
 
   if (sessionStatus == 'success' && sessionData) {
     return (

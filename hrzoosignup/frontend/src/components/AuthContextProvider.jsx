@@ -22,14 +22,18 @@ export const AuthContextProvider = ( {children} ) => {
   function login(user) {
     const redir = user.is_staff || user.is_superuser ? defaultAuthnRedirectStaff : defaultAuthnRedirect
     const origin = location.state?.from?.pathname || redir
+
     setIsLoggedIn(true)
     setUserdetails(user)
+    console.log("VRDEL DEBUG", localStorage.getItem("referrer"))
+    localStorage.removeItem("referrer")
     navigate(origin)
   }
 
   function logout() {
     setIsLoggedIn(false)
     setUserdetails("")
+    localStorage.removeItem("referrer")
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
