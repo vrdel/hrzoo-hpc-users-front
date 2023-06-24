@@ -28,6 +28,7 @@ import { AuthContext } from './components/AuthContextProvider';
 import { UsersList } from './pages/users/list';
 import { ProjectsList } from './pages/projects/list';
 
+
 function getAndSetReferrer() {
   let referrer = localStorage.getItem('referrer');
   let stackUrls = undefined;
@@ -37,8 +38,8 @@ function getAndSetReferrer() {
   else
     stackUrls = new Array();
 
-  // track only last 5 urls
-  if (stackUrls.length === 5) {
+  // track only last 3 urls
+  if (stackUrls.length === 3) {
     stackUrls = new Array();
     stackUrls.push(window.location.pathname);
   }
@@ -46,6 +47,7 @@ function getAndSetReferrer() {
     stackUrls.push(window.location.pathname);
   localStorage.setItem('referrer', JSON.stringify(stackUrls));
 }
+
 
 const ProtectedRoute = ({sessionData, children}) => {
   const { isLoggedIn, userDetails } = useContext(AuthContext)

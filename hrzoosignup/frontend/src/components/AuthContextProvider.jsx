@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from '../config/default-redirect';
+import { defaultUnAuthnRedirect,
+  defaultAuthnRedirect,
+  defaultAuthnRedirectStaff
+} from '../config/default-redirect';
 
 
 export const AuthContext = React.createContext({
@@ -20,14 +23,24 @@ export const AuthContextProvider = ( {children} ) => {
   const location = useLocation()
 
   function login(user) {
-    const redir = user.is_staff || user.is_superuser ? defaultAuthnRedirectStaff : defaultAuthnRedirect
-    const origin = location.state?.from?.pathname || redir
-
     setIsLoggedIn(true)
     setUserdetails(user)
-    console.log("VRDEL DEBUG", localStorage.getItem("referrer"))
-    localStorage.removeItem("referrer")
-    navigate(origin)
+
+    let wantVisit = JSON.parse(localStorage.getItem('referrer'))
+    if (wantVisit) {
+      // last - defaultUnAuthnRedirect or path user initially requested
+      if (wantVisit.length >= 1)
+        wantVisit = wantVisit[wantVisit.length - 1]
+      const defaultRedirect = user.is_staff
+        || user.is_superuser
+        ? defaultAuthnRedirectStaff
+        : defaultAuthnRedirect
+      if (wantVisit !== defaultUnAuthnRedirect)
+        navigate(wantVisit)
+      else
+        navigate(defaultRedirect)
+    }
+    localStorage.removeItem('referrer')
   }
 
   function logout() {
