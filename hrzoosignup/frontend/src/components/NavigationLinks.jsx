@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import {
   Nav,
   NavItem,
+  Badge,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
@@ -86,7 +87,6 @@ const NavigationLinks = () => {
   const toggle = () => setDropdownOpen(!dropdownOpen);
 
   let userPages = ['novi-zahtjev', 'moji-zahtjevi', 'clanstva', 'javni-kljucevi']
-
 
   return (
     <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex sticky-top">
@@ -175,7 +175,7 @@ const NavigationLinks = () => {
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <NavItem key='moji-podaci' className='mt-1 me-3 ms-auto'>
+            <NavItem key='moji-podaci' className='mt-1 ms-auto'>
               <NavLink
                 style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
                 className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
@@ -183,6 +183,9 @@ const NavigationLinks = () => {
                 <FontAwesomeIcon icon={faCircleInfo} />{' '}
                 Moji podaci
               </NavLink>
+            </NavItem>
+            <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center'>
+              <Badge color="danger">admin<br/>mode</Badge>
             </NavItem>
           </>
         :
