@@ -159,7 +159,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <td className="p-2 align-middle text-center">
                   <FontAwesomeIcon icon={ faSearch } />
                 </td>
-                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem'}}>
+                <td className="p-2 align-middle text-center" style={{fontSize: '0.83rem'}}>
                   <Controller
                     name="searchState"
                     control={ control }
@@ -216,7 +216,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
+                <td className="p-2 align-middle text-center" style={{fontSize: '0.83rem' }}>
                   <Controller
                     name="searchType"
                     control={ control }
@@ -230,7 +230,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: '0.83rem' }}>
+                <td className="p-2 align-middle text-center" style={{fontSize: '0.83rem' }}>
                   <Controller
                     name="searchDateEnd"
                     control={ control }
@@ -250,10 +250,10 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 fieldsView.length > 0 ?
                   fieldsView.map((project, index) =>
                     <tr key={index}>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle text-center" style={{width: "2%"}}>
                         {!isSearched  ? data.length - pageIndex * pageSize - index : pageIndex * pageSize + index + 1 }
                       </td>
-                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
+                      <td className="p-3 align-middle text-center" style={{ width: "10%" }} id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
                         <Tooltip
                           placement='top'
@@ -264,35 +264,35 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                           { StateString(project.state.name) }
                         </Tooltip>
                       </td>
-                      <td className="align-middle text-center fs-6 font-monospace">
+                      <td className="align-middle text-center fs-6 font-monospace" style={{ width: "5%" }}>
                         { convertToEuropean(project.date_submitted) }
                         <br/>
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
-                      <td className="p-3 align-middle text-info fw-bold text-center">
+                      <td className="p-3 align-middle text-info fw-bold text-center" style={{ width: "36%" }}>
                         <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
                           { project.name}
                         </Link>
                       </td>
-                      <td className="align-middle text-center">
+                      <td className="align-middle text-center" style={{ width: "10%" }}>
                         <Badge color="secondary" className="fw-normal">
                           { project.identifier }
                         </Badge>
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle text-center" style={{width: "12%"}}>
                         { extractLeaderName(project.userproject_set, true) }
                       </td>
-                      <td className="align-middle text-center">
+                      <td className="align-middle text-center" style={{width: "9%"}}>
                         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
                           { TypeString(project.project_type.name) }
                         </span>
                       </td>
-                      <td className="align-middle text-center fs-6 font-monospace">
+                      <td className="align-middle text-center fs-6 font-monospace" style={{width: "8%"}}>
                         { convertToEuropean(project.date_start) }
                         <br/>
                         { convertToEuropean(project.date_end) }
                       </td>
-                      <td className="align-middle text-center fs-6 font-monospace">
+                      <td className="align-middle text-center fs-6 font-monospace" style={{width: "8%"}}>
                         { project.date_changed && convertToEuropean(project.date_changed) }
                         <br/>
                         { project.date_changed && convertTimeToEuropean(project.date_changed) }
