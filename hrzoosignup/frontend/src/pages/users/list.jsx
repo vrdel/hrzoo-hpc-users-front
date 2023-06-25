@@ -89,25 +89,25 @@ const UsersListForm = ({ data, pageTitle }) => {
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
               <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '2%'}}>
                   #
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '25%'}}>
                   Ime i prezime
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '20%'}}>
                   Institucija
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '18%'}}>
                   Korisnička oznaka
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '20%'}}>
                   Email
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '5%'}}>
                   Projekti
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '10%'}}>
                   Javni ključ
                 </th>
               </tr>
@@ -159,7 +159,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center">
+                <td className="p-2 align-middle text-center" style={{width: '20%'}}>
                   <Controller
                     name="searchEmail"
                     control={ control }
@@ -173,7 +173,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center">
+                <td className="p-2 align-middle text-center" style={{width: '5%'}}>
                   <Controller
                     name="searchProject"
                     control={ control }
