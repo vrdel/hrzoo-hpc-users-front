@@ -215,7 +215,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { user.person_institution }
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle text-center font-monospace">
                         { user.username }
                       </td>
                       <td className="p-3 align-middle text-center font-monospace">
@@ -233,9 +233,9 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         {
                           user.ssh_key ?
-                            <FontAwesomeIcon icon={faCheckCircle} style={{ color: "#339900" }} />
+                            <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }} />
                           :
-                            <FontAwesomeIcon icon={faTimesCircle} style={{ color: "#CC0000" }} />
+                            <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }} />
                         }
                       </td>
                     </tr>
