@@ -29,7 +29,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
   useEffect(() => {
     localStorage.setItem('invitation-key-set', inviteKey)
     if (!(isLoggedIn || sessionData.active))
-      navigate(defaultUnAuthnRedirect, {replace: true, state: {"from": location}})
+      navigate(defaultUnAuthnRedirect)
     else {
       sessionData?.userdetails && setUserdetails(sessionData.userdetails)
     }
