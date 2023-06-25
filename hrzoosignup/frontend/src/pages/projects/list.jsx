@@ -33,7 +33,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       searchName: "",
       searchIdentifier: "",
       searchType: "",
-      searchDateEnd: "",
+      searchDate: "",
       searchUsers: "",
       searchState: ""
     }
@@ -42,7 +42,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const searchName = useWatch({ control, name: "searchName" })
   const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
   const searchType = useWatch({ control, name: "searchType" })
-  const searchDateEnd = useWatch({ control, name: "searchDateEnd" })
+  const searchDate = useWatch({ control, name: "searchDate" })
   const searchUsers = useWatch({ control, name: "searchUsers" })
   const searchState = useWatch({ control, name: "searchState" })
 
@@ -66,8 +66,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))
   }
 
-  if (searchDateEnd)
-    fieldsView = fieldsView.filter(e => convertToEuropean(e.date_end).includes(searchDateEnd))
+  if (searchDate)
+    fieldsView = fieldsView.filter(e =>
+      convertToEuropean(e.date_start).includes(searchDate)
+        || convertToEuropean(e.date_end).includes(searchDate))
 
   if (searchUsers) {
     fieldsView = fieldsView.filter(e =>
@@ -85,7 +87,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   const isSearched = searchName || searchIdentifier
     || (searchType && searchType !== 'all')
-    || searchDateEnd || searchUsers || (searchState && searchState !== 'all')
+    || searchDate || searchUsers || (searchState && searchState !== 'all')
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
@@ -188,7 +190,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 </td>
                 <td className="p-2 align-middle text-center">
                   <Controller
-                    name="searchDateEnd"
+                    name="searchDate"
                     control={ control }
                     render={ ({ field }) =>
                       <Input
