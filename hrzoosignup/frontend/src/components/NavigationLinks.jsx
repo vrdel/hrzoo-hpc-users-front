@@ -199,16 +199,17 @@ const NavigationLinks = () => {
           <>
             <NavigationLinksAdmin activeBgColor={activeBgColor} />
             <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center'>
-              <Badge
+              <span className='badge danger'
                 size="sm"
                 style={{cursor: 'pointer'}}
+                id="badge-admin"
                 onClick={() => {
                   setUserMode(!userMode)
                   navigate(defaultAuthnRedirect)
                 }}
-                color="danger">
+              >
                 admin<br/>mode
-              </Badge>
+              </span>
             </NavItem>
           </>
         :
@@ -221,16 +222,17 @@ const NavigationLinks = () => {
               (userDetails.is_staff || userDetails.is_superuser)
               &&
                 <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center'>
-                  <Badge
+                  <span className="badge success"
                     size="sm"
+                    id="badge-user"
                     style={{cursor: 'pointer'}}
                     onClick={() => {
                       setUserMode(!userMode)
                       navigate(defaultAuthnRedirectStaff)
                     }}
-                    color="success">
+                  >
                     user<br/>mode
-                  </Badge>
+                  </span>
                 </NavItem>
             }
           </>

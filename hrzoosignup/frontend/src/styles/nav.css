@@ -14,3 +14,19 @@
   background-color: #e8e9ea;
   text-decoration: none;
 }
+
+#badge-admin {
+  background-color: #dc3545;
+}
+
+#badge-admin:hover {
+  background-color: #bb2d3b;
+}
+
+#badge-user {
+  background-color: #198754;
+}
+
+#badge-user:hover {
+  background-color: #146c43;
+}
