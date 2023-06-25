@@ -58,7 +58,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
       searchIdentifier: "",
       searchLead: "",
       searchType: "",
-      searchDateEnd: ""
+      searchDate: ""
     }
   })
 
@@ -71,7 +71,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
   const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
   const searchLead = useWatch({ control, name: "searchLead" })
   const searchType = useWatch({ control, name: "searchType" })
-  const searchDateEnd = useWatch({ control, name: "searchDateEnd" })
+  const searchDate = useWatch({ control, name: "searchDate" })
 
   const { fields } = useFieldArray({ control, name: "requests" })
 
@@ -103,12 +103,15 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
     else if (searchType.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))
 
-  if (searchDateEnd)
-    fieldsView = fieldsView.filter(e => convertToEuropean(e.date_end).includes(searchDateEnd))
+  if (searchDate)
+    fieldsView = fieldsView.filter(e =>
+      convertToEuropean(e.date_start).includes(searchDate)
+        || convertToEuropean(e.date_end).includes(searchDate))
+
 
   const isSearched = (searchState && searchState !== 'all')
     || searchName || searchIdentifier || searchLead
-    || (searchType && searchType !== 'all') || searchDateEnd
+    || (searchType && searchType !== 'all') || searchDate
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
@@ -232,7 +235,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 </td>
                 <td className="p-2 align-middle text-center" style={{fontSize: '0.83rem' }}>
                   <Controller
-                    name="searchDateEnd"
+                    name="searchDate"
                     control={ control }
                     render={ ({ field }) =>
                       <Input
