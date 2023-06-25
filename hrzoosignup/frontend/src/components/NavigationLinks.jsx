@@ -119,58 +119,6 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           Korisnici
         </NavLink>
       </NavItem>
-      <Dropdown
-        isOpen={dropdownOpen}
-        toggle={toggle}
-        className="mt-1">
-        <DropdownToggle nav caret
-          style={elemInArray(location.pathname.split('/')[2], userPages) ? {'backgroundColor': activeBgColor, 'textColor': 'text-white'} : {}}
-          className={elemInArray(location.pathname.split('/')[2], userPages) ? "text-white" : "text-dark"}>
-          <FontAwesomeIcon icon={faUserEdit}/> Korisničke forme
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem className="ps-3 pe-3 p-2">
-            <Link
-              style={{textDecoration: "none"}}
-              id="hzsi-navlinks-dropdown"
-              className="text-dark ps-3 pe-3 p-2"
-              to='/ui/moji-zahtjevi'>
-              <FontAwesomeIcon icon={faBook} />{' '}
-              Moji zahtjevi
-            </Link>
-          </DropdownItem>
-          <DropdownItem className="ps-3 pe-3 p-2">
-            <Link
-              style={{textDecoration: "none"}}
-              id="hzsi-navlinks-dropdown"
-              className="text-dark ps-3 pe-3 p-2"
-              to='/ui/novi-zahtjev'>
-              <FontAwesomeIcon icon={faFileSignature} />{' '}
-              Novi zahtjev
-            </Link>
-          </DropdownItem>
-          <DropdownItem className="ps-3 pe-3 p-2">
-            <Link
-              style={{textDecoration: "none"}}
-              className="text-dark ps-3 pe-3 p-2"
-              id="hzsi-navlinks-dropdown"
-              to='/ui/clanstva'>
-              <FontAwesomeIcon icon={faUsers} />{' '}
-              Članstva
-            </Link>
-          </DropdownItem>
-          <DropdownItem className="ps-3 pe-3 p-2">
-            <Link
-              style={{textDecoration: "none"}}
-              id="hzsi-navlinks-dropdown"
-              className="text-dark ps-3 pe-3 p-2"
-              to='/ui/javni-kljucevi'>
-              <FontAwesomeIcon icon={faKey} />{' '}
-              Javni ključevi
-            </Link>
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
       <NavItem key='moji-podaci' className='mt-1 ms-auto'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
