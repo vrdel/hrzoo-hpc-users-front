@@ -3,13 +3,12 @@ import {
   Nav,
   NavItem,
   Badge,
-  Button,
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem
 } from 'reactstrap';
-import { NavLink, Link } from 'react-router-dom';
+import { useNavigate, NavLink, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFileSignature,
@@ -24,6 +23,11 @@ import {
 import '../styles/nav.css';
 import { AuthContext } from '../components/AuthContextProvider';
 import { elemInArray } from '../utils/array_help';
+import {
+  defaultAuthnRedirect,
+  defaultAuthnRedirectStaff
+} from '../config/default-redirect';
+
 
 
 const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
@@ -185,6 +189,7 @@ const NavigationLinks = () => {
   const activeBgColor = '#b04c46';
   const { userDetails } = useContext(AuthContext);
   const [userMode, setUserMode] = useState(false);
+  const navigate = useNavigate()
 
   return (
     <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex sticky-top">
@@ -197,7 +202,10 @@ const NavigationLinks = () => {
               <Badge
                 size="sm"
                 style={{cursor: 'pointer'}}
-                onClick={() => setUserMode(!userMode)}
+                onClick={() => {
+                  setUserMode(!userMode)
+                  navigate(defaultAuthnRedirect)
+                }}
                 color="danger">
                 admin<br/>mode
               </Badge>
@@ -216,7 +224,10 @@ const NavigationLinks = () => {
                   <Badge
                     size="sm"
                     style={{cursor: 'pointer'}}
-                    onClick={() => setUserMode(!userMode)}
+                    onClick={() => {
+                      setUserMode(!userMode)
+                      navigate(defaultAuthnRedirectStaff)
+                    }}
                     color="success">
                     user<br/>mode
                   </Badge>
