@@ -269,8 +269,8 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         <br/>
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
-                      <td className="p-3 align-middle fw-bold text-center">
-                        <Link to={encodeURIComponent(project.identifier)}>
+                      <td className="p-3 align-middle text-info fw-bold text-center">
+                        <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
                           { project.name}
                         </Link>
                       </td>
