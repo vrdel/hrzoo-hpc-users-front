@@ -2,13 +2,8 @@ import React, { useContext, useState } from 'react';
 import {
   Nav,
   NavItem,
-  Badge,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem
 } from 'reactstrap';
-import { useNavigate, NavLink, Link } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFileSignature,
@@ -16,13 +11,11 @@ import {
   faUsers,
   faKey,
   faCircleInfo,
-  faUserEdit,
   faStamp,
   faCertificate
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
 import { AuthContext } from '../components/AuthContextProvider';
-import { elemInArray } from '../utils/array_help';
 import {
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff
@@ -84,10 +77,6 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
 
 
 const NavigationLinksAdmin = ({activeBgColor}) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen(!dropdownOpen);
-  let userPages = ['novi-zahtjev', 'moji-zahtjevi', 'clanstva', 'javni-kljucevi']
-
   return (
     <>
       <NavItem key='upravljanje-zahtjevima' className='ms-3 mt-1'>
