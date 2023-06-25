@@ -102,26 +102,26 @@ const ProjectsListForm = ({ data, pageTitle }) => {
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
               <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '2%'}}>
                   #
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '10%'}}>
+                  Stanje
+                </th>
+                <th className="fw-normal" style={{width: '36%'}}>
                   Naziv
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '10%'}}>
                   Šifra
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '9%'}}>
                   Tip
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '8%'}}>
                   Trajanje
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '25%'}}>
                   Osobe
-                </th>
-                <th className="fw-normal">
-                  Stanje
                 </th>
               </tr>
             </thead>
@@ -129,6 +129,20 @@ const ProjectsListForm = ({ data, pageTitle }) => {
               <tr>
                 <td className="p-2 align-middle text-center">
                   <FontAwesomeIcon icon={ faSearch } />
+                </td>
+                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: "0.83rem" }}>
+                  <Controller
+                    name="searchState"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <CustomReactSelect
+                        forwardedRef={ field.ref }
+                        placeholder="Odaberi"
+                        options={ optionsStatesProjects }
+                        onChange={ e => setValue("searchState", e.value) }
+                      />
+                    }
+                  />
                 </td>
                 <td className="p-2 align-middle text-center">
                   <Controller
@@ -200,20 +214,6 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: "0.83rem" }}>
-                  <Controller
-                    name="searchState"
-                    control={ control }
-                    render={ ({ field }) =>
-                      <CustomReactSelect
-                        forwardedRef={ field.ref }
-                        placeholder="Odaberi"
-                        options={ optionsStatesProjects }
-                        onChange={ e => setValue("searchState", e.value) }
-                      />
-                    }
-                  />
-                </td>
               </tr>
               {
                 fieldsView.length > 0 ?
@@ -221,6 +221,9 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     <tr key={ index }>
                       <td className="p-3 align-middle text-center">
                         { !isSearched ? data.length - pageIndex * pageSize - index : pageIndex * pageSize + index + 1 }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { StateIcons(project.state.name) }
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
                         { project.name}
@@ -251,9 +254,6 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                             </Badge>
                           )
                         }
-                      </td>
-                      <td className="p-3 align-middle text-center">
-                        { StateIcons(project.state.name) }
                       </td>
                     </tr>
                   )
