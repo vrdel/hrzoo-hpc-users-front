@@ -125,31 +125,31 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
               <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal">
+                <th className="fw-normal"  style={{width: '2%'}}>
                   #
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '10%'}}>
                   Stanje
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '5%'}}>
                   Podnesen
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '36%'}}>
                   Naziv
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '10%'}}>
                   Šifra
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '12%'}}>
                   Voditelj
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '9%'}}>
                   Tip
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '8%'}}>
                   Trajanje
                 </th>
-                <th className="fw-normal">
+                <th className="fw-normal" style={{width: '8%'}}>
                   Promjena
                 </th>
               </tr>
