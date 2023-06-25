@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
 import { Col, Row, Badge, Table, Tooltip, Button, Input } from 'reactstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { PageTitle } from '../../components/PageTitle';
 import { StateIcons, StateString } from '../../config/map-states';
 import { fetchAllNrProjects } from '../../api/projects';
@@ -152,9 +152,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <th className="fw-normal">
                   Promjena
                 </th>
-                <th className="fw-normal">
-                  Radnje
-                </th>
               </tr>
             </thead>
             <tbody>
@@ -248,7 +245,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                   />
                 </td>
                 <td className="p-2 align-middle text-center">{" "}</td>
-                <td className="p-2 align-middle text-center">{" "}</td>
               </tr>
               {
                 fieldsView.length > 0 ?
@@ -274,7 +270,9 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
-                        { project.name}
+                        <Link to={encodeURIComponent(project.identifier)}>
+                          { project.name}
+                        </Link>
                       </td>
                       <td className="align-middle text-center">
                         <Badge color="secondary" className="fw-normal">
@@ -299,18 +297,13 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         <br/>
                         { project.date_changed && convertTimeToEuropean(project.date_changed) }
                       </td>
-                      <td className="align-middle text-center">
-                        <Button color="light" onClick={() => navigate(encodeURIComponent(project.identifier))}>
-                          <FontAwesomeIcon icon={faMagnifyingGlass} />
-                        </Button>
-                      </td>
                     </tr>
                   )
                 :
                   data.length > 0 && isSearched ?
-                    <EmptyTable colspan="10" msg="Nijedan zahtjev ne zadovoljava pretragu" />
+                    <EmptyTable colspan="9" msg="Nijedan zahtjev ne zadovoljava pretragu" />
                   :
-                    <EmptyTable colspan="10" msg="Nema podnesenih zahtjeva" />
+                    <EmptyTable colspan="9" msg="Nema podnesenih zahtjeva" />
               }
             </tbody>
           </Table>
