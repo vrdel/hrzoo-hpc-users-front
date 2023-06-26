@@ -12,7 +12,9 @@ import {
   faKey,
   faCircleInfo,
   faStamp,
-  faCertificate
+  faCertificate,
+  faToggleOn,
+  faToggleOff
 } from '@fortawesome/free-solid-svg-icons';
 import '../styles/nav.css';
 import { AuthContext } from '../components/AuthContextProvider';
@@ -136,7 +138,7 @@ const NavigationLinks = () => {
           <>
             <NavigationLinksAdmin activeBgColor={activeBgColor} />
             <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center'>
-              <span className='badge danger'
+              <span className='d-flex align-items-center badge danger rounded-pill'
                 size="sm"
                 style={{cursor: 'pointer'}}
                 id="badge-admin"
@@ -145,7 +147,10 @@ const NavigationLinks = () => {
                   navigate(defaultAuthnRedirect)
                 }}
               >
-                admin<br/>mode
+                <FontAwesomeIcon className="me-2" size="xl" icon={faToggleOn} />
+                <div className="me-1">
+                  admin
+                </div>
               </span>
             </NavItem>
           </>
@@ -159,7 +164,7 @@ const NavigationLinks = () => {
               (userDetails.is_staff || userDetails.is_superuser)
               &&
                 <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center'>
-                  <span className="badge success"
+                  <span className="d-flex align-items-center badge success rounded-pill"
                     size="sm"
                     id="badge-user"
                     style={{cursor: 'pointer'}}
@@ -168,7 +173,10 @@ const NavigationLinks = () => {
                       navigate(defaultAuthnRedirectStaff)
                     }}
                   >
-                    user<br/>mode
+                    <FontAwesomeIcon className="me-2" size="xl" icon={faToggleOff} />
+                    <div className="me-1">
+                      user
+                    </div>
                   </span>
                 </NavItem>
             }
