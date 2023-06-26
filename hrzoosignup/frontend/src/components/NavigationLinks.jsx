@@ -110,15 +110,6 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           Korisnici
         </NavLink>
       </NavItem>
-      <NavItem key='moji-podaci' className='mt-1 ms-auto'>
-        <NavLink
-          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/moji-podaci'>
-          <FontAwesomeIcon icon={faCircleInfo} />{' '}
-          Moji podaci
-        </NavLink>
-      </NavItem>
     </>
   )
 }
@@ -137,7 +128,7 @@ const NavigationLinks = () => {
         ?
           <>
             <NavigationLinksAdmin activeBgColor={activeBgColor} />
-            <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center'>
+            <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center ms-auto'>
               <span className='d-flex align-items-center badge danger rounded-pill'
                 size="sm"
                 style={{cursor: 'pointer'}}
