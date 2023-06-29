@@ -21,6 +21,8 @@ import { CustomReactSelect } from "../../components/CustomReactSelect";
 import { TypeColor, TypeString } from "../../config/map-projecttypes";
 import { extractCollaborators, extractLeaderName } from "../../utils/users_help";
 import { StateIcons } from "../../config/map-states";
+import { useNavigate } from "react-router-dom";
+import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 
 
 const ProjectsListForm = ({ data, pageTitle }) => {
@@ -287,8 +289,9 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 export const ProjectsList = () => {
   const { LinkTitles } = useContext(SharedData)
   const [pageTitle, setPageTitle] = useState(undefined)
+  const navigate = useNavigate()
 
-  const { data } = useQuery({
+  const { status, error, data } = useQuery({
     queryKey: ["all-projects"],
     queryFn: fetchAllNrProjects
   })
@@ -297,7 +300,10 @@ export const ProjectsList = () => {
     setPageTitle(LinkTitles(location.pathname))
   }, [LinkTitles])
 
-  if (data)
+  if (status === 'error' && error.message.includes('403'))
+    navigate(defaultUnAuthnRedirect)
+
+  if (status === 'success' && data)
     return (
       <ProjectsListForm
         data={ data.filter(e => ["approve", "extend", "expire"].includes(e.state.name.toLowerCase())) }
