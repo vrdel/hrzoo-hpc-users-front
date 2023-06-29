@@ -26,20 +26,24 @@ export const AuthContextProvider = ( {children} ) => {
     setIsLoggedIn(true)
     setUserdetails(user)
 
+    const defaultRedirect = user.is_staff
+      || user.is_superuser
+      ? defaultAuthnRedirectStaff
+      : defaultAuthnRedirect
+
     let wantVisit = JSON.parse(localStorage.getItem('referrer'))
     if (wantVisit) {
       // last - defaultUnAuthnRedirect or path user initially requested
       if (wantVisit.length >= 1)
         wantVisit = wantVisit[wantVisit.length - 1]
-      const defaultRedirect = user.is_staff
-        || user.is_superuser
-        ? defaultAuthnRedirectStaff
-        : defaultAuthnRedirect
       if (wantVisit !== defaultUnAuthnRedirect)
         navigate(wantVisit)
       else
         navigate(defaultRedirect)
     }
+    else
+      navigate(defaultRedirect)
+
     localStorage.removeItem('referrer')
   }
 
