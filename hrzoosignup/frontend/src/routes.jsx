@@ -66,7 +66,7 @@ const BaseRoutes = () => {
   const { status: sessionStatus, data: sessionData} = useQuery({
     queryKey: ['sessionactive'],
     queryFn: isActiveSession,
-    staleTime: 60 * 60 * 1000,
+    staleTime: 60 * 1000,
   })
 
   getAndSetReferrer();
