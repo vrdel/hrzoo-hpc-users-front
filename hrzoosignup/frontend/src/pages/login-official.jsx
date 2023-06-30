@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Col,
@@ -11,10 +11,22 @@ import {
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
+import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from '../config/default-redirect';
+import { useNavigate } from 'react-router-dom';
 import '../styles/login-official.css';
 
 
-const LoginOfficial = () => {
+const LoginOfficial = ({sessionData=undefined}) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionData?.active && sessionData?.userdetails)
+      if (sessionData.userdetails.is_staff)
+        navigate(defaultAuthnRedirectStaff)
+      else
+        navigate(defaultAuthnRedirect)
+  }, [sessionData])
+
   return (
     <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
       <Row>
