@@ -23,6 +23,8 @@ import { RenderStateIcon } from '../../components/RenderState.jsx';
 import { url_ui_prefix } from '../../config/general';
 import { findTrueState } from '../../utils/reqstate';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
+import { defaultUnAuthnRedirect} from '../../config/default-redirect';
+
 
 function setInitialState() {
   let newState = new Object(
@@ -56,7 +58,7 @@ export const MyRequestChange = () => {
 
   const navigate = useNavigate()
 
-  const {status, data: nrProject, error, isFetching} = useQuery({
+  const {status, data: nrProject, error} = useQuery({
       queryKey: ['change-project', projId],
       queryFn: () => fetchNrSpecificProject(projId),
   })
@@ -146,7 +148,11 @@ export const MyRequestChange = () => {
     }
 
     setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname, nrProject])
+
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+
+  }, [location.pathname, nrProject, status])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState

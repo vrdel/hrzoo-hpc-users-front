@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
+import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 
 
 const MyRequestsList = () => {
@@ -28,7 +29,7 @@ const MyRequestsList = () => {
   const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
 
-  const {status, data: nrProjects, error, isFetching} = useQuery({
+  const {status, data: nrProjects, error} = useQuery({
       queryKey: ['projects-lead'],
       queryFn: fetchNrProjectsLead
   })
@@ -54,7 +55,9 @@ const MyRequestsList = () => {
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [location.pathname, status])
 
   if (nrProjects?.length > 0)
     return (
