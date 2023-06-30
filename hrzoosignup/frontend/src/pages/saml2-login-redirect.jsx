@@ -21,7 +21,7 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
         ? defaultAuthnRedirectStaff
         : defaultAuthnRedirect
       let wantVisit = JSON.parse(localStorage.getItem('referrer'))
-      if (wantVisit) {
+      if (wantVisit && wantVisit.length > 0) {
         // before - defaultUnAuthnRedirect or path user initially requested
         // last - path of this component
         if (wantVisit.length >= 2)

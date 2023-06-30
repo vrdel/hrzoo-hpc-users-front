@@ -33,7 +33,7 @@ export const AuthContextProvider = ( {children} ) => {
       : defaultAuthnRedirect
 
     let wantVisit = JSON.parse(localStorage.getItem('referrer'))
-    if (wantVisit) {
+    if (wantVisit && wantVisit.length > 0) {
       // last - defaultUnAuthnRedirect or path user initially requested
       if (wantVisit.length >= 1)
         wantVisit = wantVisit[wantVisit.length - 1]
@@ -49,9 +49,9 @@ export const AuthContextProvider = ( {children} ) => {
   }
 
   function logout() {
+    queryClient.invalidateQueries("sessionactive")
     setIsLoggedIn(false)
     setUserdetails("")
-    queryClient.invalidateQueries("sessionactive")
     localStorage.removeItem("referrer")
   }
 
