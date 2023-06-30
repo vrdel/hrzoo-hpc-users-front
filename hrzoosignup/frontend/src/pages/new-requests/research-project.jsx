@@ -18,6 +18,7 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { GeneralInfo, Persons, Finance, Summary } from '../../components/GeneralProjectInfo';
+import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 
 
 const ResearchProjectRequest = () => {
@@ -28,7 +29,7 @@ const ResearchProjectRequest = () => {
   })
   const navigate = useNavigate()
 
-  const {status: nrStatus, data: nrProjects} = useQuery({
+  const {status: nrStatus, data: nrProjects, error: errProjects} = useQuery({
       queryKey: ['projects'],
       queryFn: fetchNrProjects
   })
@@ -37,6 +38,12 @@ const ResearchProjectRequest = () => {
     let existingProjectsIds = nrProjects.map(project => project['croris_identifier'])
     return existingProjectsIds.indexOf(projId) !== -1
   }
+
+  useEffect(() => {
+    if (nrStatus === 'error' && errProjects.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [nrStatus])
+
 
   if (status === 'success' && nrStatus === 'success'
     && croRisProjects['status']['code'] === 200
