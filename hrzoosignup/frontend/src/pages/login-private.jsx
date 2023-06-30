@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -20,9 +20,11 @@ import {
 import '../styles/login.css';
 import { doUserPassLogin } from '../api/auth';
 import { AuthContext } from '../components/AuthContextProvider';
+import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from '../config/default-redirect';
+import { useNavigate } from 'react-router-dom';
 
 
-const LoginPrivate = () => {
+const LoginPrivate = ({sessionData=undefined}) => {
   const [loginFailedVisible, setLoginFailedVisible] = useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -31,6 +33,15 @@ const LoginPrivate = () => {
     }
   });
   const { login: doLoginContext } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionData?.active && sessionData?.userdetails)
+      if (sessionData.userdetails.is_staff)
+        navigate(defaultAuthnRedirectStaff)
+      else
+        navigate(defaultAuthnRedirect)
+  }, [sessionData])
 
   async function doLogin(username, password) {
     const session = await doUserPassLogin(username, password)

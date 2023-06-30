@@ -4,6 +4,7 @@ import { defaultUnAuthnRedirect,
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff
 } from '../config/default-redirect';
+import { useQueryClient } from '@tanstack/react-query';
 
 
 export const AuthContext = React.createContext({
@@ -20,7 +21,7 @@ export const AuthContextProvider = ( {children} ) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userDetails, setUserdetails] = useState("")
   const navigate = useNavigate()
-  const location = useLocation()
+  const queryClient = useQueryClient();
 
   function login(user) {
     setIsLoggedIn(true)
@@ -50,6 +51,7 @@ export const AuthContextProvider = ( {children} ) => {
   function logout() {
     setIsLoggedIn(false)
     setUserdetails("")
+    queryClient.invalidateQueries("sessionactive")
     localStorage.removeItem("referrer")
   }
 
