@@ -32,7 +32,7 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
           navigate(defaultRedirect)
       }
       else
-          navigate(defaultRedirect)
+        navigate(defaultRedirect)
       localStorage.removeItem('referrer')
     }
   }, [location.pathname])
