@@ -24,6 +24,7 @@ import {
   allStates
 } from '../../components/TableHelpers';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
+import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 
 
 const ManageRequestsForm = ({ data, pageTitle }) => {
@@ -330,17 +331,21 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
 export const ManageRequestsList = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const navigate = useNavigate()
 
-  const { data: nrProjects } = useQuery({
+  const { status, error, data: nrProjects } = useQuery({
       queryKey: ['all-projects'],
       queryFn: fetchAllNrProjects
   })
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [location.pathname, status])
 
-  if (nrProjects)
+
+  if (status === 'success' && nrProjects)
     return (
       <ManageRequestsForm
         data={ nrProjects }

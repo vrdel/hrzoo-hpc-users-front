@@ -30,7 +30,7 @@ const LoginPrivate = () => {
       password: ''
     }
   });
-  const { login : doLoginContext } = useContext(AuthContext);
+  const { login: doLoginContext } = useContext(AuthContext);
 
   async function doLogin(username, password) {
     const session = await doUserPassLogin(username, password)

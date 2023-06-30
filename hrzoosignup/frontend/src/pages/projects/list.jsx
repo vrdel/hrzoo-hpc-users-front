@@ -298,10 +298,10 @@ export const ProjectsList = () => {
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
-  }, [LinkTitles])
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [LinkTitles, status])
 
-  if (status === 'error' && error.message.includes('403'))
-    navigate(defaultUnAuthnRedirect)
 
   if (status === 'success' && data)
     return (

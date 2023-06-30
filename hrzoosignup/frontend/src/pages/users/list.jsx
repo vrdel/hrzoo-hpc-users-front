@@ -16,6 +16,8 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
+import { useNavigate } from "react-router-dom";
+import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 
 
 const UsersListForm = ({ data, pageTitle }) => {
@@ -268,17 +270,20 @@ const UsersListForm = ({ data, pageTitle }) => {
 export const UsersList = () => {
   const { LinkTitles } = useContext(SharedData)
 	const [pageTitle, setPageTitle] = useState(undefined)
+  const navigate = useNavigate()
 
-	const { data } = useQuery({
+	const { status, error, data } = useQuery({
 		queryKey: ["all-users"],
 		queryFn: fetchUsers
 	})
 
 	useEffect(() => {
 		setPageTitle(LinkTitles(location.pathname))
-	}, [location.pathname])
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+	}, [location.pathname, status])
 
-  if (data)
+  if (status === 'success' && data)
     return (
       <UsersListForm
         data={ data }

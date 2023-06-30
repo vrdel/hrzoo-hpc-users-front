@@ -30,6 +30,7 @@ import { toast } from 'react-toastify'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { url_ui_prefix } from '../../config/general';
 import { extractLeaderName } from '../../utils/users_help';
+import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 import '../../styles/staff-change-disabled.css';
 
 
@@ -168,7 +169,7 @@ export const ManageRequestsChange = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient();
 
-  const {status, data: nrProject, error, isFetching} = useQuery({
+  const {status, data: nrProject, error} = useQuery({
       queryKey: ['change-project', projId],
       queryFn: () => fetchNrSpecificProject(projId),
   })
@@ -291,7 +292,10 @@ export const ManageRequestsChange = () => {
     }
 
     setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname, nrProject])
+
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [location.pathname, nrProject, status])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState
