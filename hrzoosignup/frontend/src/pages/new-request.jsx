@@ -11,6 +11,7 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../api/croris';
 import { toast } from 'react-toastify';
+import { defaultUnAuthnRedirect} from '../config/default-redirect';
 
 
 const NewRequest = () => {
@@ -23,7 +24,7 @@ const NewRequest = () => {
     RequestTypesToSelect,
     UrlToRequestType } = useContext(SharedData);
 
-  const {status, data: croRisData} = useQuery({
+  const {status, data: croRisData, error} = useQuery({
       queryKey: ['croris-info'],
       queryFn: fetchCroRIS,
       staleTime: 15 * 60 * 1000
@@ -37,7 +38,9 @@ const NewRequest = () => {
       setButtonDisabled(true)
       setSelectedProject(UrlToRequestType(location.pathname))
     }
-  }, [location.pathname])
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [location.pathname, status])
 
   return (
     <>
