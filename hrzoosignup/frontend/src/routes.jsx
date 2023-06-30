@@ -66,7 +66,6 @@ const BaseRoutes = () => {
   const { status: sessionStatus, data: sessionData} = useQuery({
     queryKey: ['sessionactive'],
     queryFn: isActiveSession,
-    staleTime: 60 * 60 * 1000,
   })
 
   getAndSetReferrer();
@@ -76,8 +75,8 @@ const BaseRoutes = () => {
       <BrowserRouter>
         <Routes>
           <Route path="ui" element={<Root />}>
-            <Route path="prijava-priv" element={<LoginPrivate />}/>
-            <Route path="prijava" element={<LoginOffical />}/>
+            <Route path="prijava-priv" element={<LoginPrivate sessionData={sessionData} />}/>
+            <Route path="prijava" element={<LoginOffical sessionData={sessionData} />}/>
             <Route path="prijava-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} />
             }/>
