@@ -21,7 +21,8 @@ const LoginOfficial = ({sessionData=undefined}) => {
 
   useEffect(() => {
     if (sessionData?.active && sessionData?.userdetails)
-      if (sessionData.userdetails.is_staff)
+      if (sessionData.userdetails.is_staff
+        || sessionData.userdetails.is_superuser)
         navigate(defaultAuthnRedirectStaff)
       else
         navigate(defaultAuthnRedirect)
