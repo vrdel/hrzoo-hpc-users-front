@@ -2,7 +2,7 @@ container_name = hzsi-web
 
 place-new-bundle:
 	./keep-latest-bundle.sh
-	docker exec -u user -t $(container_name) ./collectstatic.sh
+	docker exec -u user -t $(container_name) /home/user/collectstatic.sh
 
 devel-django-server:
 	docker exec -u user -ti $(container_name) /home/user/run-django-server.sh
@@ -16,7 +16,7 @@ prod-bundle:
 	docker exec -u user -t $(container_name) bash -c 'cd /home/user/frontend; node_modules/.bin/webpack --config webpack.config.js --progress --mode production'
 
 py-audit-view:
-	docker exec -u user -t $(container_name) ./safety.sh
+	docker exec -u user -t $(container_name) /home/user/safety.sh
 
 vitedev:
 	docker exec -u user -t $(container_name) bash -c 'cd /home/user/frontend && npm run vitedev'
