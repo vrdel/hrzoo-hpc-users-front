@@ -94,16 +94,16 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal"  style={{width: '286px'}}>
+                <th className="fw-normal"  style={{minWidth: '286px'}}>
                   Ime i prezime
                 </th>
                 <th className="fw-normal"  style={{width: '272px'}}>
                   Institucija
                 </th>
-                <th className="fw-normal"  style={{width: '226px'}}>
+                <th className="fw-normal"  style={{minWidth: '226px'}}>
                   Korisnička oznaka
                 </th>
-                <th className="fw-normal"  style={{width: '296px'}}>
+                <th className="fw-normal"  style={{minWidth: '296px'}}>
                   Email
                 </th>
                 <th className="fw-normal"  style={{width: '146px'}}>
