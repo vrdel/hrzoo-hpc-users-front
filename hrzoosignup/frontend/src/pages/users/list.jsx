@@ -91,25 +91,25 @@ const UsersListForm = ({ data, pageTitle }) => {
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
               <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal"  style={{width: '2%'}}>
+                <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal"  style={{width: '25%'}}>
+                <th className="fw-normal"  style={{width: '286px'}}>
                   Ime i prezime
                 </th>
-                <th className="fw-normal"  style={{width: '20%'}}>
+                <th className="fw-normal"  style={{width: '272px'}}>
                   Institucija
                 </th>
-                <th className="fw-normal"  style={{width: '18%'}}>
+                <th className="fw-normal"  style={{width: '226px'}}>
                   Korisnička oznaka
                 </th>
-                <th className="fw-normal"  style={{width: '20%'}}>
+                <th className="fw-normal"  style={{width: '296px'}}>
                   Email
                 </th>
-                <th className="fw-normal"  style={{width: '5%'}}>
+                <th className="fw-normal"  style={{width: '146px'}}>
                   Projekti
                 </th>
-                <th className="fw-normal"  style={{width: '10%'}}>
+                <th className="fw-normal"  style={{width: '116px'}}>
                   Javni ključ
                 </th>
               </tr>
@@ -161,7 +161,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center" style={{width: '20%'}}>
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchEmail"
                     control={ control }
@@ -175,7 +175,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center" style={{width: '5%'}}>
+                <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchProject"
                     control={ control }
@@ -189,7 +189,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center" style={{width: '10%', fontSize: '0.83rem'}}>
+                <td className="p-2 align-middle text-center" style={{fontSize: '0.83rem'}}>
                   <Controller
                     name="searchSSHKey"
                     control={ control }
@@ -197,6 +197,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <CustomReactSelect
                         forwardedRef={ field.ref }
                         placeholder="Odaberi"
+                        controlWidth="116px"
                         options={ buildOptionsFromArray(["Da", "Ne", "Svi"]) }
                         onChange={ (e) => setValue("searchSSHKey", e.value) }
                       />
