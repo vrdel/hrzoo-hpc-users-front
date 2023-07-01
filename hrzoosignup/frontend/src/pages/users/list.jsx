@@ -97,7 +97,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '286px'}}>
                   Ime i prezime
                 </th>
-                <th className="fw-normal"  style={{width: ''}}>
+                <th className="fw-normal"  style={{width: '272px'}}>
                   Institucija
                 </th>
                 <th className="fw-normal"  style={{width: '226px'}}>
@@ -218,10 +218,10 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { user.person_institution }
                       </td>
-                      <td className="p-3 align-middle text-center font-monospace">
+                      <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
                         { user.username }
                       </td>
-                      <td className="p-3 align-middle text-center font-monospace">
+                      <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
                         { user.person_mail }
                       </td>
                       <td className="p-3 align-middle text-center">
