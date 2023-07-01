@@ -106,25 +106,25 @@ const ProjectsListForm = ({ data, pageTitle }) => {
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
               <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal"  style={{width: '2%'}}>
+                <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal" style={{width: '10%'}}>
+                <th className="fw-normal" style={{width: '116px'}}>
                   Stanje
                 </th>
-                <th className="fw-normal" style={{width: '36%'}}>
+                <th className="fw-normal" style={{width: '500px'}}>
                   Naziv
                 </th>
-                <th className="fw-normal" style={{width: '10%'}}>
+                <th className="fw-normal" style={{width: '146px'}}>
                   Šifra
                 </th>
-                <th className="fw-normal" style={{width: '9%'}}>
+                <th className="fw-normal" style={{width: '116px'}}>
                   Tip
                 </th>
-                <th className="fw-normal" style={{width: '8%'}}>
+                <th className="fw-normal" style={{width: '120px'}}>
                   Trajanje
                 </th>
-                <th className="fw-normal" style={{width: '25%'}}>
+                <th className="fw-normal" style={{width: ''}}>
                   Osobe
                 </th>
               </tr>
@@ -134,13 +134,14 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 <td className="p-2 align-middle text-center">
                   <FontAwesomeIcon icon={ faSearch } />
                 </td>
-                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: "0.83rem" }}>
+                <td className="p-2 align-middle text-center" style={{ fontSize: "0.83rem" }}>
                   <Controller
                     name="searchState"
                     control={ control }
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
+                        controlWidth="116px"
                         placeholder="Odaberi"
                         options={ optionsStatesProjects }
                         onChange={ e => setValue("searchState", e.value) }
@@ -176,13 +177,14 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center" style={{ width: "10%", fontSize: "0.83rem" }}>
+                <td className="p-2 align-middle text-center" style={{ fontSize: "0.83rem" }}>
                   <Controller
                     name="searchType"
                     control={ control }
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
+                        controlWidth="116px"
                         placeholder="Odaberi"
                         options={ optionsTypes }
                         onChange={ e => setValue("searchType", e.value) }
