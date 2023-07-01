@@ -129,31 +129,31 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
               <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal"  style={{width: '2%'}}>
+                <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal" style={{width: '10%'}}>
+                <th className="fw-normal" style={{width: '116px'}}>
                   Stanje
                 </th>
-                <th className="fw-normal" style={{width: '5%'}}>
+                <th className="fw-normal" style={{width: '100px'}}>
                   Podnesen
                 </th>
-                <th className="fw-normal" style={{width: '36%'}}>
+                <th className="fw-normal" style={{width: '490px'}}>
                   Naziv
                 </th>
-                <th className="fw-normal" style={{width: '10%'}}>
+                <th className="fw-normal" style={{width: '146px'}}>
                   Šifra
                 </th>
-                <th className="fw-normal" style={{width: '12%'}}>
+                <th className="fw-normal" style={{width: '158px'}}>
                   Voditelj
                 </th>
-                <th className="fw-normal" style={{width: '9%'}}>
+                <th className="fw-normal" style={{width: '116px'}}>
                   Tip
                 </th>
-                <th className="fw-normal" style={{width: '8%'}}>
+                <th className="fw-normal" style={{width: '120px'}}>
                   Trajanje
                 </th>
-                <th className="fw-normal" style={{width: '8%'}}>
+                <th className="fw-normal" style={{width: ''}}>
                   Promjena
                 </th>
               </tr>
@@ -170,6 +170,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
+                        controlWidth="116px"
                         placeholder="Odaberi"
                         options={ optionsStates }
                         onChange={ e => setValue("searchState", e.value) }
@@ -227,6 +228,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
+                        controlWidth="116px"
                         placeholder="Odaberi"
                         options={ optionsTypes }
                         onChange={ e => setValue("searchType", e.value) }
@@ -254,10 +256,10 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 fieldsView.length > 0 ?
                   fieldsView.map((project, index) =>
                     <tr key={index}>
-                      <td className="p-3 align-middle text-center" style={{width: "2%"}}>
+                      <td className="p-3 align-middle text-center">
                         {!isSearched  ? data.length - pageIndex * pageSize - index : pageIndex * pageSize + index + 1 }
                       </td>
-                      <td className="p-3 align-middle text-center" style={{ width: "10%" }} id={'Tooltip-' + index}>
+                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
                         <Tooltip
                           placement='top'
@@ -268,35 +270,35 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                           { StateString(project.state.name) }
                         </Tooltip>
                       </td>
-                      <td className="align-middle text-center fs-6 font-monospace" style={{ width: "5%" }}>
+                      <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
                         <br/>
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
-                      <td className="p-3 align-middle text-info fw-bold text-center" style={{ width: "36%" }}>
+                      <td className="p-3 align-middle text-info fw-bold text-center">
                         <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
                           { project.name}
                         </Link>
                       </td>
-                      <td className="align-middle text-center" style={{ width: "10%" }}>
+                      <td className="align-middle text-center">
                         <Badge color="secondary" className="fw-normal">
                           { project.identifier }
                         </Badge>
                       </td>
-                      <td className="p-3 align-middle text-center" style={{width: "12%"}}>
+                      <td className="p-3 align-middle text-center">
                         { extractLeaderName(project.userproject_set, true) }
                       </td>
-                      <td className="align-middle text-center" style={{width: "9%"}}>
+                      <td className="align-middle text-center">
                         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
                           { TypeString(project.project_type.name) }
                         </span>
                       </td>
-                      <td className="align-middle text-center fs-6 font-monospace" style={{width: "8%"}}>
+                      <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_start) }
                         <br/>
                         { convertToEuropean(project.date_end) }
                       </td>
-                      <td className="align-middle text-center fs-6 font-monospace" style={{width: "8%"}}>
+                      <td className="align-middle text-center fs-6 font-monospace">
                         { project.date_changed && convertToEuropean(project.date_changed) }
                         <br/>
                         { project.date_changed && convertTimeToEuropean(project.date_changed) }
