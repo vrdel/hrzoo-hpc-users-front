@@ -49,10 +49,10 @@ export const AuthContextProvider = ( {children} ) => {
   }
 
   function logout() {
-    queryClient.invalidateQueries("sessionactive")
     setIsLoggedIn(false)
     setUserdetails("")
     localStorage.removeItem("referrer")
+    queryClient.invalidateQueries("sessionactive")
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,

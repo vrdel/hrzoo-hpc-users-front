@@ -12,7 +12,7 @@ export async function isActiveSession() {
 }
 
 
-export async function doLogout(onLogout) {
+export async function doLogout() {
   let cookies = new Cookies();
 
   let response = await fetch(`${url_api_prefix}/auth/logout/`, {
@@ -27,14 +27,7 @@ export async function doLogout(onLogout) {
       'Referer': 'same-origin'
     }})
 
-  onLogout()
-
   cookies.remove('saml_session')
-
-  //if (response.ok)
-    //setTimeout(() => {
-      //window.location = defaultLogoutRedirect
-    //}, 50)
 }
 
 
