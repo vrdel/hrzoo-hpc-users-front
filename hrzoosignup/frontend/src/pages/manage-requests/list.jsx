@@ -299,9 +299,20 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { convertToEuropean(project.date_end) }
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
-                        { project.date_changed && convertToEuropean(project.date_changed) }
-                        <br/>
-                        { project.date_changed && convertTimeToEuropean(project.date_changed) }
+                        {
+                          project.date_changed ?
+                            <>
+                              {
+                                project.date_changed && convertToEuropean(project.date_changed)
+                              }
+                              <br/>
+                              {
+                                project.date_changed && convertTimeToEuropean(project.date_changed)
+                              }
+                            </>
+                          :
+                            '\u2212'
+                        }
                       </td>
                     </tr>
                   )
