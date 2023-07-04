@@ -31,6 +31,17 @@ setup(name=NAME,
           "License :: OSI Approved :: Apache Software License",
           "Operating System :: POSIX :: Linux",
       ),
+      install_requires=[
+        'aiohttp',
+        'Django==4.*',
+        'django-invitations',
+        'django-webpack-loader',
+        'djangorestframework',
+        'djangorestframework-api-key',
+        'djangosaml2',
+        'psycopg2-binary',
+        'pymemcache'
+      ],
       scripts=['bin/hzsi-db', 'bin/hzsi-genseckey', 'bin/hzsi-manage'],
       data_files=[
           ('bin/', glob.glob('bin/*')),
