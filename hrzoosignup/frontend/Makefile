@@ -15,6 +15,12 @@ prod-bundle:
 	rm -rf bundles/reactbundle/* ; \
 	docker exec -u user -t $(container_name) bash -c 'cd /home/user/frontend; node_modules/.bin/webpack --config webpack.config.js --progress --mode production'
 
+devel-wheel:
+	docker exec -u user -t $(container_name) bash -c 'source /opt/hrzoo-signup/bin/activate && cd /home/user/hrzoosignup-source && make clean && make wheel-devel'
+
+prod-wheel:
+	docker exec -u user -t $(container_name) bash -c 'source /opt/hrzoo-signup/bin/activate && cd /home/user/hrzoosignup-source && make clean && make wheel-prod'
+
 py-audit-view:
 	docker exec -u user -t $(container_name) /home/user/safety.sh
 
@@ -38,3 +44,4 @@ devel-webpack-server-hmr:
 
 npm:
 	docker exec -t $(container_name) bash -c 'cd /home/user/frontend && npm $(ARGS)'
+
