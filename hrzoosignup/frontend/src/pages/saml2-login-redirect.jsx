@@ -26,7 +26,9 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
         // last - path of this component
         if (wantVisit.length >= 2)
           wantVisit = wantVisit[wantVisit.length - 2]
-        if (wantVisit !== defaultUnAuthnRedirect)
+        else if (wantVisit.length == 1)
+          wantVisit = wantVisit[0]
+        if (wantVisit !== defaultUnAuthnRedirect && !wantVisit.includes('saml2-login-redirect'))
           navigate(wantVisit)
         else
           navigate(defaultRedirect)
