@@ -112,7 +112,8 @@ const NewRequest = () => {
                 )
               else
                 navigate(selectedProject.value)
-            }}>
+            }}
+          >
             <FontAwesomeIcon icon={faArrowRight}/>{' '}
             Nastavi
           </Button>

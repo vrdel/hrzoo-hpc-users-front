@@ -12,10 +12,15 @@ let practicalClasses = {
     "label": "Praktična nastava",
     "value": "prakticna-nastava"
   }
+let institutionalProject = {
+    "label": "Institucijski projekt",
+    "value": "institucijski-projekt"
+  }
 
 
 export const RequestTypesToSelect = [
   researchProject,
+  institutionalProject,
   thesisProject,
   practicalClasses
 ]
@@ -24,6 +29,7 @@ export const RequestTypesToSelect = [
 export function UrlToRequestType(loc) {
   let url2buttonlabel = {
     [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: researchProject,
+    [url_ui_prefix + '/novi-zahtjev/institucijski-project']: institutionalProject,
     [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
     [url_ui_prefix + '/novi-zahtjev/izrada-rada']: thesisProject
   }
