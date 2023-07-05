@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../api/croris';
+import { fetchNrProjects } from '../api/projects';
 import { toast } from 'react-toastify';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
 
@@ -28,6 +29,11 @@ const NewRequest = () => {
       queryKey: ['croris-info'],
       queryFn: fetchCroRIS,
       staleTime: 15 * 60 * 1000
+  })
+
+  const {status: nrStatus, data: nrProjects} = useQuery({
+      queryKey: ['projects'],
+      queryFn: fetchNrProjects
   })
 
   useEffect(() => {
