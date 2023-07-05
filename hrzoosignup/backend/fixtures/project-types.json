@@ -19,5 +19,12 @@
     "fields": {
       "name": "practical"
      }
+  },
+  {
+    "model": "backend.ProjectType",
+    "pk": 4,
+    "fields": {
+      "name": "research-institutional"
+     }
   }
 ]
