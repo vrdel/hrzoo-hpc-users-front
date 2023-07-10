@@ -355,3 +355,17 @@ class ProjectsRole(APIView):
             }
             logger.error(err_response)
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
+
+class CanSubmitInstitutionalProject(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request):
+        oib = request.user.person_oib
+
+        croris_data = cache.get(f'{oib}_croris')
+        # from pudb.remote import set_trace; set_trace(host='0.0.0.0')
+
+        return Response(croris_data, status=status.HTTP_200_OK)
+

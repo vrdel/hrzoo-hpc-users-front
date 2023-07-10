@@ -14,6 +14,7 @@ urlpatterns = [
     re_path('projects/(?P<specific>.*)', views.Projects.as_view(), name='projects'),
     path('projects-research/', views.ProjectsResearch.as_view(), name='projectsresearch'),
     path('projects-general/', views.ProjectsGeneral.as_view(), name='projectsgeneral'),
+    path('can-submit-institutional-project/', views.CanSubmitInstitutionalProject.as_view(), name='cansubmitinstitutionalproject'),
     path('invites/', views.Invites.as_view(), name='invites'),
     path('invites-sent/', views.InvitesSent.as_view(), name='invitessent'),
     path('invites/<str:invitekey>', views.Invites.as_view(), name='invites'),
