@@ -38,6 +38,7 @@ class ProjectsGeneral(APIView):
         cobj = models.ProjectCount.objects.get()
         request.data['identifier'] = 'NR-{}-{:03}'.format(datetime.datetime.now().strftime('%Y-%m'), cobj.counter)
 
+        logger.info(request.data)
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
         request.data['project_type'] = type_obj.pk
 
@@ -362,10 +363,25 @@ class CanSubmitInstitutionalProject(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request):
+        projects_enddates = dict()
         oib = request.user.person_oib
 
         croris_data = cache.get(f'{oib}_croris')
-        # from pudb.remote import set_trace; set_trace(host='0.0.0.0')
 
-        return Response(croris_data, status=status.HTTP_200_OK)
+        if croris_data:
+            for pr in croris_data['projects_lead_info']:
+                projects_enddates.update({
+                    pr['identifier']: pr['end']
+                })
+
+        interest_projects = models.Project.objects.filter(users__id__exact=request.user.pk).values_list('croris_identifier', 'date_end')
+        interest_projects = list(interest_projects)
+        for approved_pr in interest_projects:
+            from pudb.remote import set_trace; set_trace(host='0.0.0.0')
+            if approved_pr[0] not in projects_enddates:
+                projects_enddates.update({
+                    approved_pr[0]: approved_pr[1]
+                })
+
+        return Response(projects_enddates, status=status.HTTP_200_OK)
 
