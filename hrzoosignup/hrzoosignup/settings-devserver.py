@@ -231,7 +231,7 @@ TIME_ZONE = 'Europe/Zagreb'
 
 USE_I18N = True
 
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
