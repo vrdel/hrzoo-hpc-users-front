@@ -17,7 +17,7 @@ import BaseNewScientificDomain from './ScientificDomain';
 
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false}) => {
-  const { control, getValues, formState: {errors} } = useFormContext();
+  const { control, setValue, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
 
   if (fieldsDisabled === false && isResearch)
@@ -120,6 +120,13 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 locale="hr-HR"
                 disabled={disabledRemain}
                 maxDate={new Date(2027, 1)}
+                onChange={(value) => {
+                  value.setHours(23)
+                  value.setMinutes(59)
+                  value.setSeconds(59)
+                  setValue('startDate', value)
+                  return value
+                }}
                 required={true}
                 className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
               />
@@ -135,6 +142,13 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 {...field}
                 required={true}
                 disabled={disabledRemain}
+                onChange={(value) => {
+                  value.setHours(23)
+                  value.setMinutes(59)
+                  value.setSeconds(59)
+                  setValue('endDate', value)
+                  return value
+                }}
                 maxDate={new Date(2027, 1)}
                 locale="hr-HR"
                 className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}

@@ -204,8 +204,8 @@ const GeneralRequest = ({projectType}) => {
     let dataToSend = new Object()
 
     data['project_type'] = projectType
-    dataToSend['date_end'] =  data['endDate'].toISOString()
-    dataToSend['date_start'] = data['startDate'].toISOString()
+    dataToSend['date_end'] =  data['endDate']
+    dataToSend['date_start'] = data['startDate']
     dataToSend['name'] = data['requestName']
     dataToSend['reason'] = data['requestExplain']
     dataToSend['institute'] = userDetails.person_institution
