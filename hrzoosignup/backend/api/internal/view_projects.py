@@ -9,6 +9,7 @@ from rest_framework.permissions import AllowAny
 
 from django.conf import settings
 from django.core.cache import cache
+from django.utils import timezone
 
 from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
 from backend import models
@@ -32,11 +33,11 @@ class ProjectsGeneral(APIView):
 
         request.data['state'] = state_obj.pk
         request.data['is_active'] = True
-        request.data['date_submitted'] = datetime.datetime.now()
+        request.data['date_submitted'] = timezone.now()
 
         # fixed project identifier in format NR-<year>-<month<-<count_posted>
         cobj = models.ProjectCount.objects.get()
-        request.data['identifier'] = 'NR-{}-{:03}'.format(datetime.datetime.now().strftime('%Y-%m'), cobj.counter)
+        request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
 
         logger.info(request.data)
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
@@ -50,7 +51,7 @@ class ProjectsGeneral(APIView):
             userproject_obj = models.UserProject(user=request.user,
                                                  project=project_ins,
                                                  role=role_obj,
-                                                 date_joined=datetime.datetime.now())
+                                                 date_joined=timezone.now())
             userproject_obj.save()
             cobj.counter += 1
             cobj.save()
@@ -109,11 +110,11 @@ class ProjectsResearch(APIView):
         state_obj = models.State.objects.get(name=request.data['state'])
         request.data['state'] = state_obj.pk
         request.data['is_active'] = True
-        request.data['date_submitted'] = datetime.datetime.now()
+        request.data['date_submitted'] = timezone.now()
 
         if not request.data['croris_identifier']:
             cobj = models.ProjectCount.objects.get()
-            code = 'NRC-{}-{:03}'.format(datetime.datetime.now().strftime('%Y-%m'), cobj.counter)
+            code = 'NRC-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
             request.data['identifier'] = code
             request.data['croris_identifier'] = code
         else:
@@ -132,7 +133,7 @@ class ProjectsResearch(APIView):
             userproject_obj = models.UserProject(user=request.user,
                                                  project=project_ins,
                                                  role=role_obj,
-                                                 date_joined=datetime.datetime.now())
+                                                 date_joined=timezone.now())
             userproject_obj.save()
 
             if settings.EMAIL_SEND:
@@ -206,13 +207,13 @@ class Projects(APIView):
 
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
-                p_obj.date_changed = datetime.datetime.now()
+                p_obj.date_changed = timezone.now()
                 p_obj.save()
                 if request.data.get('staff_comment') and state.name == 'deny':
                     comment = request.data.get('staff_comment')
                     sc = models.StaffComment.objects.create(
                         comment=comment,
-                        date=datetime.datetime.now(),
+                        date=timezone.now(),
                         project_state=state.name,
                         project_id = p_obj.pk,
                         comment_by={
