@@ -392,6 +392,9 @@ class CroRISInfo(APIView):
                             if project['croris_id'] == prjs['id']:
                                 self.projects_associate_info.remove(project)
 
+                pr_fields = self._extract_project_fields(prjs)
+                self.projects_lead_info.append(pr_fields)
+                logger.warning(pr_fields)
 
     async def close_session(self):
         await self.session.close()
