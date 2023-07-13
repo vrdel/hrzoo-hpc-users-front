@@ -106,6 +106,48 @@ class CroRISInfo(APIView):
                 }
             })
 
+    def _extract_project_fields(self, apidata):
+        metadata = {}
+        metadata['end'] = apidata.get('kraj', None)
+        # projects may be outdated
+        if metadata['end']:
+            today = datetime.datetime.today()
+            end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') + datetime.timedelta(days=settings.GRACE_DAYS)
+            if end_date <= today:
+                self.dead_projects_lead.append(apidata.get('id'))
+                return False
+        metadata['start'] = apidata.get('pocetak', None)
+        if 'tipProjekta' in apidata:
+            metadata['type'] = apidata.get('tipProjekta').get('naziv', None)
+        metadata['croris_id'] = apidata.get('id')
+        self.projects_lead_ids.append(metadata['croris_id'])
+        metadata['identifier'] = apidata.get('hrSifraProjekta', None)
+        titles = apidata['title']
+        for title in titles:
+            if title['cfLangCode'] == 'hr':
+                metadata['title'] = title['naziv']
+                break
+        summaries = apidata['summary']
+        for summary in summaries:
+            if summary['cfLangCode'] == 'hr':
+                metadata['summary'] = summary.get('naziv', '')
+                break
+
+        institute = apidata['ustanoveResources']
+        if institute and institute.get('_embedded', False):
+            institute = institute['_embedded']['ustanove'][0]
+            metadata['institute'] = {
+                'class': institute['klasifikacija']['naziv'],
+                'name': institute['naziv']
+            }
+
+        finance = apidata['financijerResources']
+        if finance and finance.get('_embedded', False):
+            finance = finance['_embedded']['financijeri'][0]
+            metadata['finance'] = finance['entityNameHr']
+
+        return metadata
+
     async def _fetch_data(self, url):
         headers = {'Accept': 'application/json'}
         async with self.session.get(url, headers=headers, auth=self.auth) as response:
@@ -126,7 +168,6 @@ class CroRISInfo(APIView):
         await self.filter_unverified()
         await self.extract_email_for_associate()
         await self.close_session()
-
         self.lead_institute_on_project_associate(oib)
 
     async def fetch_person_lead(self, oib):
@@ -172,46 +213,9 @@ class CroRISInfo(APIView):
 
             for project in self.projects_lead_info:
                 project = json.loads(project)
-                metadata = {}
-                metadata['end'] = project.get('kraj', None)
-                # projects may be outdated
-                if metadata['end']:
-                    today = datetime.datetime.today()
-                    end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') + datetime.timedelta(days=settings.GRACE_DAYS)
-                    if end_date <= today:
-                        self.dead_projects_lead.append(project.get('id'))
-                        continue
-                metadata['start'] = project.get('pocetak', None)
-                if 'tipProjekta' in project:
-                    metadata['type'] = project.get('tipProjekta').get('naziv', None)
-                metadata['croris_id'] = project.get('id')
-                self.projects_lead_ids.append(metadata['croris_id'])
-                metadata['identifier'] = project.get('hrSifraProjekta', None)
-                titles = project['title']
-                for title in titles:
-                    if title['cfLangCode'] == 'hr':
-                        metadata['title'] = title['naziv']
-                        break
-                summaries = project['summary']
-                for summary in summaries:
-                    if summary['cfLangCode'] == 'hr':
-                        metadata['summary'] = summary.get('naziv', '')
-                        break
-
-                institute = project['ustanoveResources']
-                if institute and institute.get('_embedded', False):
-                    institute = institute['_embedded']['ustanove'][0]
-                    metadata['institute'] = {
-                        'class': institute['klasifikacija']['naziv'],
-                        'name': institute['naziv']
-                    }
-
-                finance = project['financijerResources']
-                if finance and finance.get('_embedded', False):
-                    finance = finance['_embedded']['financijeri'][0]
-                    metadata['finance'] = finance['entityNameHr']
-
-                parsed_projects.append(metadata)
+                pr_fields = self._extract_project_fields(project)
+                if pr_fields:
+                    parsed_projects.append(pr_fields)
 
             self.projects_lead_info = parsed_projects
 
