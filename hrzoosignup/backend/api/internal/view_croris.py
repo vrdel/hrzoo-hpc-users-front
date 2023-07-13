@@ -382,5 +382,12 @@ class CroRISInfo(APIView):
                             and person['oib'] == oib):
                             iam_lead_institute = True
 
+                    if not project_have_main_leader and iam_lead_institute:
+                        self.projects_associate_ids.remove(prjs['id'])
+                        for project in self.projects_associate_info:
+                            if project['croris_id'] == prjs['id']:
+                                self.projects_associate_info.remove(project)
+
+
     async def close_session(self):
         await self.session.close()
