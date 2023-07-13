@@ -392,9 +392,22 @@ class CroRISInfo(APIView):
                             if project['croris_id'] == prjs['id']:
                                 self.projects_associate_info.remove(project)
 
-                pr_fields = self._extract_project_fields(prjs)
-                self.projects_lead_info.append(pr_fields)
-                logger.warning(pr_fields)
+                        pr_fields = self._extract_project_fields(prjs)
+                        self.projects_lead_info.append(pr_fields)
+                        for person in prjs['osobeResources']['_embedded']['osobe']:
+                            if person['oib'] != oib:
+                                if prjs['id'] not in self.projects_lead_users:
+                                    self.projects_lead_users[prjs['id']] = list()
+                                self.projects_lead_users[prjs['id']].append(
+                                    {
+                                        'first_name': person['ime'],
+                                        'last_name': person['prezime'],
+                                        'oib': person.get('oib', ''),
+                                        'email': person.get('email', ''),
+                                        'institution': person['ustanovaNaziv']
+                                    }
+                                )
+                        self.person_info['lead_status'] = True
 
     async def close_session(self):
         await self.session.close()
