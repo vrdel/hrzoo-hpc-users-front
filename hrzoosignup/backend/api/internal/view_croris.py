@@ -127,6 +127,8 @@ class CroRISInfo(APIView):
         await self.extract_email_for_associate()
         await self.close_session()
 
+        self.lead_institute_on_project_associate(oib)
+
     async def fetch_person_lead(self, oib):
         fetch_data = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
         fetch_data  = json.loads(fetch_data)
@@ -239,15 +241,14 @@ class CroRISInfo(APIView):
                 else:
                     return
 
-            self.projects_associate_info = await asyncio.gather(*coros,
-                                                                loop=self.loop,
-                                                                return_exceptions=True)
+            self.projects_associate_info_apidata = await asyncio.gather(*coros,
+                    loop=self.loop, return_exceptions=True)
 
-            exc_raised, exc = contains_exception(self.projects_associate_info)
+            exc_raised, exc = contains_exception(self.projects_associate_info_apidata)
             if exc_raised:
                 raise client_exceptions.ClientError(repr(exc))
 
-            for project in self.projects_associate_info:
+            for project in self.projects_associate_info_apidata:
                 project = json.loads(project)
                 metadata = {}
                 metadata['end'] = project.get('kraj', None)
@@ -353,6 +354,33 @@ class CroRISInfo(APIView):
                     }
                 )
             i += 1
+
+    def lead_institute_on_project_associate(self, oib):
+        project_associate_should_lead = list()
+
+        for project in self.projects_associate_info_apidata:
+            prjs = json.loads(project)
+            if prjs['id'] in self.projects_associate_ids:
+                eufunded = None
+                finance = prjs['financijerResources']
+                if finance and finance.get('_embedded', False):
+                    finances = finance['_embedded']['financijeri']
+                    for fin in finances:
+                        belong = fin.get('nadleznost', False)
+                        if belong:
+                            for bel in belong:
+                                if bel['cfLangCode'] == 'hr' and bel['naziv'] == 'Europska unija':
+                                    eufunded = True
+                                    break
+                if eufunded:
+                    project_have_main_leader = None
+                    iam_lead_institute = False
+                    for person in prjs['osobeResources']['_embedded']['osobe']:
+                        if person['klasifikacija']['naziv'].lower() == 'voditelj':
+                            project_have_main_leader = True
+                        if (person['klasifikacija']['naziv'] == 'voditelj na ustanovi'
+                            and person['oib'] == oib):
+                            iam_lead_institute = True
 
     async def close_session(self):
         await self.session.close()
