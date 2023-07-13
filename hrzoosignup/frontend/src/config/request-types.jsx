@@ -20,7 +20,8 @@ let institutionalProject = {
 
 export const RequestTypesToSelect = [
   researchProject,
-  institutionalProject,
+// leave out for now
+// institutionalProject,
   thesisProject,
   practicalClasses
 ]

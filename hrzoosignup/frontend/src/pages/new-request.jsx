@@ -31,11 +31,6 @@ const NewRequest = () => {
       staleTime: 15 * 60 * 1000
   })
 
-  const {status: nrStatus, data: nrProjects} = useQuery({
-      queryKey: ['projects'],
-      queryFn: fetchNrProjects
-  })
-
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
     if (location.pathname.endsWith('novi-zahtjev'))
