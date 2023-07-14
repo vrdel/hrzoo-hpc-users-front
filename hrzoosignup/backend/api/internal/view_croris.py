@@ -395,9 +395,9 @@ class CroRISInfo(APIView):
                         pr_fields = self._extract_project_fields(prjs)
                         self.projects_lead_info.append(pr_fields)
                         for person in prjs['osobeResources']['_embedded']['osobe']:
+                            if prjs['id'] not in self.projects_lead_users:
+                                self.projects_lead_users[prjs['id']] = list()
                             if person['oib'] != oib:
-                                if prjs['id'] not in self.projects_lead_users:
-                                    self.projects_lead_users[prjs['id']] = list()
                                 self.projects_lead_users[prjs['id']].append(
                                     {
                                         'first_name': person['ime'],
