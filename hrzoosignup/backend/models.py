@@ -141,11 +141,11 @@ class Project(models.Model):
         _('reason'),
         max_length=4096,
     )
-    date_start = models.DateTimeField(
+    date_start = models.DateField(
         null=True,
         blank=True,
     )
-    date_end  = models.DateTimeField(
+    date_end  = models.DateField(
         null=True,
         blank=True,
     )
@@ -195,11 +195,11 @@ class Project(models.Model):
         max_length=512,
         blank=True,
     )
-    croris_start = models.DateTimeField(
+    croris_start = models.DateField(
         null=True,
         blank=True,
     )
-    croris_end = models.DateTimeField(
+    croris_end = models.DateField(
         null=True,
         blank=True,
     )
