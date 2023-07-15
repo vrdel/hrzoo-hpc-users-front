@@ -12,6 +12,10 @@ export function convertToEuropean(yyyymmdd) {
   return format(parseISO(yyyymmdd), 'dd.MM.yyyy')
 }
 
+export function convertToAmerican(yyyymmdd) {
+  return format(yyyymmdd, 'yyyy-MM-dd')
+}
+
 export function convertTimeToEuropean(yyyymmdd) {
   return format(parseISO(yyyymmdd), 'H:mm')
 }

@@ -30,6 +30,7 @@ import { AuthContext } from '../../components/AuthContextProvider';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import validateDomainAndFields from '../../utils/validate-domain-fields';
 import validateRequestDates from '../../utils/validate-dates-startend';
+import { convertToAmerican } from '../../utils/dates.jsx';
 import * as yup from "yup";
 
 
@@ -204,8 +205,8 @@ const GeneralRequest = ({projectType}) => {
     let dataToSend = new Object()
 
     data['project_type'] = projectType
-    dataToSend['date_end'] =  data['endDate']
-    dataToSend['date_start'] = data['startDate']
+    dataToSend['date_end'] =  convertToAmerican(data['endDate'])
+    dataToSend['date_start'] = convertToAmerican(data['startDate'])
     dataToSend['name'] = data['requestName']
     dataToSend['reason'] = data['requestExplain']
     dataToSend['institute'] = userDetails.person_institution
@@ -233,7 +234,7 @@ const GeneralRequest = ({projectType}) => {
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submit'
-    // alert(JSON.stringify(dataToSend, null, 2));
+    //alert(JSON.stringify(dataToSend, null, 2));
 
     setAreYouSureModal(!areYouSureModal)
     setModalTitle("Podnošenje novog korisničkog zahtjeva")
