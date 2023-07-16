@@ -62,7 +62,7 @@ const BasePage = ({sessionData=undefined}) => {
 
   function onYesCallback() {
     if (onYesCall == 'dologout') {
-      doLogout()
+      doLogout(sessionData.csrftoken)
       doLogoutContext()
     }
   }

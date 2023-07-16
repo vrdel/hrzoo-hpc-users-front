@@ -251,6 +251,7 @@ SAML_SESSION_COOKIE_NAME = 'saml_session'
 SESSION_COOKIE_SAMESITE = False
 CSRF_COOKIE_SAMESITE = False
 CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = True
 
 # custom user model
 # -vrdel

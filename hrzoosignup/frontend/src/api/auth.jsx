@@ -1,4 +1,3 @@
-import Cookies from 'universal-cookie';
 import { url_api_prefix } from '../config/general';
 
 
@@ -12,9 +11,7 @@ export async function isActiveSession() {
 }
 
 
-export async function doLogout() {
-  let cookies = new Cookies();
-
+export async function doLogout(csrftoken) {
   let response = await fetch(`${url_api_prefix}/auth/logout/`, {
     method: 'POST',
     mode: 'cors',
@@ -23,18 +20,14 @@ export async function doLogout() {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-CSRFToken': cookies.get('csrftoken'),
+      'X-CSRFToken': csrftoken,
       'Referer': 'same-origin'
     }})
-
-  cookies.remove('saml_session')
 }
 
 
 export async function doUserPassLogin(username, password)
 {
-  let cookies = new Cookies();
-
   let response = await fetch(`${url_api_prefix}/auth/login/`, {
     method: 'POST',
     mode: 'cors',
@@ -43,7 +36,6 @@ export async function doUserPassLogin(username, password)
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'X-CSRFToken': cookies.get('csrftoken'),
       'Referer': 'same-origin'
     },
     body: JSON.stringify({
