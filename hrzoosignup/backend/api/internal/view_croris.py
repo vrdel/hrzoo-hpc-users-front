@@ -364,52 +364,53 @@ class CroRISInfo(APIView):
     def lead_institute_on_project_associate(self, oib):
         project_associate_should_lead = list()
 
-        for project in self.projects_associate_info_apidata:
-            prjs = json.loads(project)
-            if prjs['id'] in self.projects_associate_ids:
-                eufunded = None
-                finance = prjs['financijerResources']
-                if finance and finance.get('_embedded', False):
-                    finances = finance['_embedded']['financijeri']
-                    for fin in finances:
-                        belong = fin.get('nadleznost', False)
-                        if belong:
-                            for bel in belong:
-                                if bel['cfLangCode'] == 'hr' and bel['naziv'] == 'Europska unija':
-                                    eufunded = True
-                                    break
-                if eufunded:
-                    project_have_main_leader = None
-                    iam_lead_institute = False
-                    for person in prjs['osobeResources']['_embedded']['osobe']:
-                        if person['klasifikacija']['naziv'].lower() == 'voditelj':
-                            project_have_main_leader = True
-                        if (person['klasifikacija']['naziv'] == 'voditelj na ustanovi'
-                            and person['oib'] == oib):
-                            iam_lead_institute = True
-
-                    if not project_have_main_leader and iam_lead_institute:
-                        self.projects_associate_ids.remove(prjs['id'])
-                        for project in self.projects_associate_info:
-                            if project['croris_id'] == prjs['id']:
-                                self.projects_associate_info.remove(project)
-
-                        pr_fields = self._extract_project_fields(prjs)
-                        self.projects_lead_info.append(pr_fields)
+        if self.projects_associate_info:
+            for project in self.projects_associate_info_apidata:
+                prjs = json.loads(project)
+                if prjs['id'] in self.projects_associate_ids:
+                    eufunded = None
+                    finance = prjs['financijerResources']
+                    if finance and finance.get('_embedded', False):
+                        finances = finance['_embedded']['financijeri']
+                        for fin in finances:
+                            belong = fin.get('nadleznost', False)
+                            if belong:
+                                for bel in belong:
+                                    if bel['cfLangCode'] == 'hr' and bel['naziv'] == 'Europska unija':
+                                        eufunded = True
+                                        break
+                    if eufunded:
+                        project_have_main_leader = None
+                        iam_lead_institute = False
                         for person in prjs['osobeResources']['_embedded']['osobe']:
-                            if prjs['id'] not in self.projects_lead_users:
-                                self.projects_lead_users[prjs['id']] = list()
-                            if person['oib'] != oib:
-                                self.projects_lead_users[prjs['id']].append(
-                                    {
-                                        'first_name': person['ime'],
-                                        'last_name': person['prezime'],
-                                        'oib': person.get('oib', ''),
-                                        'email': person.get('email', ''),
-                                        'institution': person['ustanovaNaziv']
-                                    }
-                                )
-                        self.person_info['lead_status'] = True
+                            if person['klasifikacija']['naziv'].lower() == 'voditelj':
+                                project_have_main_leader = True
+                            if (person['klasifikacija']['naziv'] == 'voditelj na ustanovi'
+                                and person['oib'] == oib):
+                                iam_lead_institute = True
+
+                        if not project_have_main_leader and iam_lead_institute:
+                            self.projects_associate_ids.remove(prjs['id'])
+                            for project in self.projects_associate_info:
+                                if project['croris_id'] == prjs['id']:
+                                    self.projects_associate_info.remove(project)
+
+                            pr_fields = self._extract_project_fields(prjs)
+                            self.projects_lead_info.append(pr_fields)
+                            for person in prjs['osobeResources']['_embedded']['osobe']:
+                                if prjs['id'] not in self.projects_lead_users:
+                                    self.projects_lead_users[prjs['id']] = list()
+                                if person['oib'] != oib:
+                                    self.projects_lead_users[prjs['id']].append(
+                                        {
+                                            'first_name': person['ime'],
+                                            'last_name': person['prezime'],
+                                            'oib': person.get('oib', ''),
+                                            'email': person.get('email', ''),
+                                            'institution': person['ustanovaNaziv']
+                                        }
+                                    )
+                            self.person_info['lead_status'] = True
 
     async def close_session(self):
         await self.session.close()
