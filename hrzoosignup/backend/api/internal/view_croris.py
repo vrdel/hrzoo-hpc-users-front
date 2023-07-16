@@ -143,8 +143,10 @@ class CroRISInfo(APIView):
 
         finance = apidata['financijerResources']
         if finance and finance.get('_embedded', False):
-            finance = finance['_embedded']['financijeri'][0]
-            metadata['finance'] = finance['entityNameHr']
+            financiers = []
+            for fin in finance['_embedded']['financijeri']:
+                financiers.append(fin['entityNameHr'])
+            metadata['finance'] = financiers
 
         return metadata
 
