@@ -22,6 +22,7 @@ const BasePage = ({sessionData=undefined}) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [noToast, setNoToast] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
+  const [userMode, setUserMode] = useState(false);
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
@@ -76,6 +77,7 @@ const BasePage = ({sessionData=undefined}) => {
 
   if (isLoggedIn || sessionData.active)
     return (
+      // TODO: <Container fluid={userMode ? "xl" : false} className="pt-1 d-flex flex-column" style={userMode ? {maxWidth: '1500px'} : {maxWidth: '100%'}}>
       <Container fluid="xl" className="pt-1 d-flex flex-column" style={{maxWidth: '1500px'}}>
         <HeadTitle />
         <ModalAreYouSure
@@ -94,7 +96,7 @@ const BasePage = ({sessionData=undefined}) => {
               }}
             >
               <Navigation />
-              <NavigationLinks />
+              <NavigationLinks userMode={userMode} setUserMode={setUserMode} />
             </ModalContext.Provider>
           </Col>
         </Row>

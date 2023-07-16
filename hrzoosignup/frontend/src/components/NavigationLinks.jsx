@@ -115,10 +115,9 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
 }
 
 
-const NavigationLinks = () => {
+const NavigationLinks = ({userMode, setUserMode}) => {
   const activeBgColor = '#b04c46';
   const { userDetails } = useContext(AuthContext);
-  const [userMode, setUserMode] = useState(false);
   const navigate = useNavigate()
 
   return (
