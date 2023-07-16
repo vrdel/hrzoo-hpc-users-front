@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { GeneralInfo, Persons, Finance, Summary } from '../../components/GeneralProjectInfo';
+import { GeneralInfo, Persons, Finance, Summary, CrorisUrl } from '../../components/GeneralProjectInfo';
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 
 
@@ -76,6 +76,8 @@ const ResearchProjectRequest = () => {
                       <Finance project={project}  />
                       <div className="w-100"></div>
                       <Summary project={project} isSubmitted={isAlreadySubmitted(project.identifier)} />
+                      <div className="w-100"></div>
+                      <CrorisUrl project={project} />
                     </Row>
                     {
                       !isAlreadySubmitted(project.identifier)

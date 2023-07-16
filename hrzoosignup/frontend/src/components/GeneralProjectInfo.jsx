@@ -148,6 +148,28 @@ export const Finance = ({project}) => {
   )
 }
 
+export const CrorisUrl = ({project}) => {
+  return (
+    <>
+      <Col md={{size: 12}}>
+        <Label
+          htmlFor="projectCrorisUrl"
+          aria-label="projectCrorisUrl"
+          className="mr-1 mt-3 form-label fw-bold">
+          CroRIS poveznica:
+        </Label>
+      </Col>
+      <Col md={{size: 10}}>
+        <a href={`https://www.croris.hr/projekti/projekt/${project.croris_id}/`} className="ps-2" target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+          https://www.croris.hr/projekti/projekt/{project.croris_id}
+        </a>
+      </Col>
+    </>
+  )
+}
+
+
+
 
 export const Summary = ({project, isSubmitted}) => {
   return (
