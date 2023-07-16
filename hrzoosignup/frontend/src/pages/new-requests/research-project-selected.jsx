@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   useForm,
@@ -36,6 +36,7 @@ import ModalAreYouSure from '../../components/ModalAreYouSure';
 import validateDomainAndFields from '../../utils/validate-domain-fields';
 import { convertToAmerican } from '../../utils/dates.jsx';
 import * as yup from "yup";
+import { AuthContext } from '../../components/AuthContextProvider.jsx';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -142,6 +143,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+  const { csrfToken } = useContext(AuthContext)
 
   const { projId } = useParams()
   const rhfProps = useForm({
@@ -196,7 +198,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
 
   const addMutation = useMutation({
     mutationFn: (data) => {
-      return addResearchProject(data)
+      return addResearchProject(data, csrfToken)
     },
   })
 

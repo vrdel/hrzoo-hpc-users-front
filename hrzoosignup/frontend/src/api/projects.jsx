@@ -2,9 +2,8 @@ import { url_api_prefix } from '../config/general';
 import Cookies from 'universal-cookie';
 
 
-export async function addResearchProject(data)
+export async function addResearchProject(data, csrftoken)
 {
-  let cookies = new Cookies()
   let error_msg = ''
 
   try {
@@ -16,7 +15,7 @@ export async function addResearchProject(data)
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': cookies.get('csrftoken'),
+        'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
       body: data && JSON.stringify(data)

@@ -20,15 +20,17 @@ export const AuthContext = React.createContext({
 export const AuthContextProvider = ( {children} ) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userDetails, setUserdetails] = useState("")
+  const [csrfToken, setCsrfToken] = useState("")
   const navigate = useNavigate()
   const queryClient = useQueryClient();
 
-  function login(user) {
+  function login(session) {
     setIsLoggedIn(true)
-    setUserdetails(user)
+    setUserdetails(session.userdetails)
+    setCsrfToken(session.csrftoken)
 
-    const defaultRedirect = user.is_staff
-      || user.is_superuser
+    const defaultRedirect = session.userdetails.is_staff
+      || session.userdetails.is_superuser
       ? defaultAuthnRedirectStaff
       : defaultAuthnRedirect
 
@@ -56,7 +58,7 @@ export const AuthContextProvider = ( {children} ) => {
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
-    setUserdetails, login, logout }
+    setUserdetails, login, logout, csrfToken, setCsrfToken }
 
   return (
     <AuthContext.Provider value={authContextValue}>

@@ -26,9 +26,11 @@ const BasePage = ({sessionData=undefined}) => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
-  const { logout: doLogoutContext, isLoggedIn, setUserdetails } = useContext(AuthContext)
+  const {
+    logout: doLogoutContext,
+    isLoggedIn, setUserdetails,
+    setCsrfToken } = useContext(AuthContext)
   const navigate = useNavigate()
-  const location = useLocation()
 
   const {status, data: croRisData, error, failureReason, isFetching} = useQuery({
       queryKey: ['croris-info'],
@@ -71,8 +73,10 @@ const BasePage = ({sessionData=undefined}) => {
   useEffect(() => {
     if (!(isLoggedIn || sessionData.active))
       navigate(defaultUnAuthnRedirect)
-    else
+    else {
       sessionData?.userdetails && setUserdetails(sessionData.userdetails)
+      sessionData?.csrftoken && setCsrfToken(sessionData.csrftoken)
+    }
   }, [sessionData, isLoggedIn])
 
   if (isLoggedIn || sessionData.active)

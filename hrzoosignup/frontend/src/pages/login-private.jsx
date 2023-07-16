@@ -48,7 +48,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
     const session = await doUserPassLogin(username, password)
 
     if (session.active)
-      doLoginContext(session.userdetails)
+      doLoginContext(session)
     else
       setLoginFailedVisible(true)
   }
