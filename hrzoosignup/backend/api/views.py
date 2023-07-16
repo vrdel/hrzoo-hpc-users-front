@@ -22,7 +22,10 @@ class IsSessionActive(APIView):
         if isinstance(self.request.user, AnonymousUser) and \
                 self.request.auth is None:
             return Response(
-                {"active": False, "error": "Session not active"},
+                {
+                    "active": False,
+                    "error": "Session not active"
+                },
                 status=status.HTTP_200_OK
             )
         else:
