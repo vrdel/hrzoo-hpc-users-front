@@ -116,7 +116,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                           { finance }
                           {
                             projectInfo.croris_finance.length - 1 !== i ?
-                                ', '
+                                '; '
                               :
                                 ''
                           }

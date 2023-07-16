@@ -125,7 +125,23 @@ export const Finance = ({project}) => {
       </Col>
       <Col md={{size: 12}} className="mb-2">
         <div className="p-2">
-          { project.finance }
+          {
+            project.finance.length > 1
+              ?
+                project.finance.map((finance, i) =>
+                  <span key={`croris-finance-${i}`}>
+                    { finance }
+                    {
+                      project.finance.length - 1 !== i ?
+                          '; '
+                        :
+                          ''
+                    }
+                  </span>
+                )
+              :
+                project.finance[0]
+          }
         </div>
       </Col>
     </>
