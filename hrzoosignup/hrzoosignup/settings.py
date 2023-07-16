@@ -247,6 +247,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # explicitly enabled
 # -vrdel
 SESSION_COOKIE_SECURE = True
+SAML_SESSION_COOKIE_NAME = 'saml_session'
+CSRF_USE_SESSIONS = True
 
 # custom user model
 # -vrdel
