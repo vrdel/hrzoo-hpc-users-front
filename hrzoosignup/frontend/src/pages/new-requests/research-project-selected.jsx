@@ -34,6 +34,7 @@ import { convertToIso8601 } from '../../utils/dates';
 import { url_ui_prefix } from '../../config/general';
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import validateDomainAndFields from '../../utils/validate-domain-fields';
+import { convertToAmerican } from '../../utils/dates.jsx';
 import * as yup from "yup";
 
 
@@ -240,18 +241,18 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     let dataToSend = new Object()
 
     dataToSend['croris_collaborators'] = croRisProjects['data']['projects_lead_users'][projId]
-    dataToSend['croris_end'] = convertToIso8601(projectTarget.end)
+    dataToSend['croris_end'] = convertToAmerican(convertToIso8601(projectTarget.end))
     dataToSend['croris_finance'] = projectTarget.finance
     dataToSend['croris_institute'] = projectTarget.institute.name
     dataToSend['croris_id'] = projId
     dataToSend['croris_identifier'] = projectTarget.identifier
     dataToSend['croris_lead'] = `${croRisProjects['data']['person_info']['first_name']} ${croRisProjects['data']['person_info']['last_name']}`
-    dataToSend['croris_start'] = convertToIso8601(projectTarget.start)
+    dataToSend['croris_start'] = convertToAmerican(convertToIso8601(projectTarget.start))
     dataToSend['croris_summary'] = projectTarget.summary
     dataToSend['croris_title'] = projectTarget.title
     dataToSend['croris_type'] = projectTarget.type
-    dataToSend['date_end'] =  convertToIso8601(projectTarget.end)
-    dataToSend['date_start'] = convertToIso8601(projectTarget.start)
+    dataToSend['date_end'] =  convertToAmerican(convertToIso8601(projectTarget.end))
+    dataToSend['date_start'] = convertToAmerican(convertToIso8601(projectTarget.start))
     dataToSend['name'] = projectTarget.title
     dataToSend['reason'] = data['requestExplain']
     dataToSend['project_type'] = projectType
