@@ -1,10 +1,8 @@
 import { url_api_prefix } from '../config/general';
-import Cookies from 'universal-cookie';
 
 
-export async function addInvite(data)
+export async function addInvite(data, csrftoken)
 {
-  let cookies = new Cookies()
   let error_msg = ''
 
   try {
@@ -16,7 +14,7 @@ export async function addInvite(data)
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': cookies.get('csrftoken'),
+        'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
       body: data && JSON.stringify(data)

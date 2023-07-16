@@ -25,6 +25,7 @@ import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { fetchNrProjects } from '../../api/projects';
+import { AuthContext } from '../../components/AuthContextProvider';
 
 
 const PublicKeys = () => {
@@ -38,6 +39,7 @@ const PublicKeys = () => {
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
   const [sshKeys, setSshKeys] = useState(undefined)
   const navigate = useNavigate();
+  const { csrfToken } = useContext(AuthContext)
 
   const queryClient = useQueryClient();
 
@@ -79,7 +81,7 @@ const PublicKeys = () => {
 
   const deleteMutation = useMutation({
     mutationFn: (keyname) => {
-      return deleteSshKey(keyname)
+      return deleteSshKey(keyname, csrfToken)
     },
   })
   const doDelete = (keyname) => deleteMutation.mutate(keyname, {

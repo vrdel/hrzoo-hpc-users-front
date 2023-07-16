@@ -1,10 +1,8 @@
 import { url_api_prefix } from '../config/general';
-import Cookies from 'universal-cookie';
 
 
-export async function deleteSshKey(name)
+export async function deleteSshKey(name, csrftoken)
 {
-  let cookies = new Cookies()
   let error_msg = ''
 
   try {
@@ -16,7 +14,7 @@ export async function deleteSshKey(name)
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': cookies.get('csrftoken'),
+        'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
       body: name && JSON.stringify({
@@ -44,9 +42,8 @@ export async function deleteSshKey(name)
 }
 
 
-export async function addSshKey(data)
+export async function addSshKey(data, csrftoken)
 {
-  let cookies = new Cookies()
   let error_msg = ''
 
   try {
@@ -58,7 +55,7 @@ export async function addSshKey(data)
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': cookies.get('csrftoken'),
+        'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
       body: data && JSON.stringify(data)

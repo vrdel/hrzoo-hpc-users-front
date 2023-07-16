@@ -123,7 +123,7 @@ const GeneralRequest = ({projectType}) => {
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
-  const { userDetails } = useContext(AuthContext)
+  const { userDetails, csrfToken } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
@@ -159,7 +159,7 @@ const GeneralRequest = ({projectType}) => {
 
   const addMutation = useMutation({
     mutationFn: (data) => {
-      return addGeneralProject(data)
+      return addGeneralProject(data, csrfToken)
     },
   })
 

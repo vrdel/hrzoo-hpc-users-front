@@ -25,6 +25,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { url_ui_prefix } from '../../config/general';
+import { AuthContext } from '../../components/AuthContextProvider';
 
 
 const NewPublicKey = () => {
@@ -35,14 +36,13 @@ const NewPublicKey = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+  const { csrfToken } = useContext(AuthContext)
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
-
-  const queryClient = useQueryClient()
-
-  const navigate = useNavigate()
 
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -67,7 +67,7 @@ const NewPublicKey = () => {
 
   const addMutation = useMutation({
     mutationFn: (data) => {
-      return addSshKey(data)
+      return addSshKey(data, csrfToken)
     },
   })
   const doAdd = (data) => addMutation.mutate(data, {

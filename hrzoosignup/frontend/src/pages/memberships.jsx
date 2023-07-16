@@ -720,6 +720,7 @@ const Memberships = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+  const { csrfToken } = useContext(AuthContext);
 
   const queryClient = useQueryClient();
 
@@ -743,7 +744,7 @@ const Memberships = () => {
 
   const doAdd = async (data) => {
     try {
-      const ret = await addInvite(data)
+      const ret = await addInvite(data, csrfToken)
       queryClient.invalidateQueries('invites')
       toast.success(
         <span className="font-monospace text-dark">

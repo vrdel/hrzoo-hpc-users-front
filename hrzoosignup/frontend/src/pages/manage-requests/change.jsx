@@ -32,6 +32,7 @@ import { url_ui_prefix } from '../../config/general';
 import { extractLeaderName } from '../../utils/users_help';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 import '../../styles/staff-change-disabled.css';
+import { AuthContext } from '../../components/AuthContextProvider.jsx';
 
 
 function setInitialState() {
@@ -159,6 +160,7 @@ export const ManageRequestsChange = () => {
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
   const [requestState, setRequestState] = useState(undefined)
+  const { csrfToken } = useContext(AuthContext)
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -201,13 +203,13 @@ export const ManageRequestsChange = () => {
         'CLOUDnIPs': data['CLOUDnIPs'],
       }
 
-      return changeProject(projId, data)
+      return changeProject(projId, data, csrfToken)
     }
   })
 
   const deleteMutation = useMutation({
     mutationFn: (projId) => {
-      return deleteProject(projId)
+      return deleteProject(projId, csrfToken)
     }
   })
 

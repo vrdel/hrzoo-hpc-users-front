@@ -1,5 +1,4 @@
 import { url_api_prefix } from '../config/general';
-import Cookies from 'universal-cookie';
 
 
 export async function addResearchProject(data, csrftoken)
@@ -44,9 +43,8 @@ export async function addResearchProject(data, csrftoken)
 }
 
 
-export async function addGeneralProject(data)
+export async function addGeneralProject(data, csrftoken)
 {
-  let cookies = new Cookies()
   let error_msg = ''
 
   try {
@@ -58,7 +56,7 @@ export async function addGeneralProject(data)
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': cookies.get('csrftoken'),
+        'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
       body: data && JSON.stringify(data)
@@ -87,9 +85,8 @@ export async function addGeneralProject(data)
 }
 
 
-export async function changeProject(projectId, data)
+export async function changeProject(projectId, data, csrftoken)
 {
-  let cookies = new Cookies()
   let error_msg = ''
 
   try {
@@ -101,7 +98,7 @@ export async function changeProject(projectId, data)
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': cookies.get('csrftoken'),
+        'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
       body: data && JSON.stringify(data)
@@ -130,9 +127,8 @@ export async function changeProject(projectId, data)
 }
 
 
-export async function deleteProject(projectId)
+export async function deleteProject(projectId, csrftoken)
 {
-  let cookies = new Cookies()
   let error_msg = ''
 
   try {
@@ -144,7 +140,7 @@ export async function deleteProject(projectId)
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'X-CSRFToken': cookies.get('csrftoken'),
+        'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
     })
@@ -167,7 +163,6 @@ export async function deleteProject(projectId)
 
   if (error_msg)
     throw new Error(`Error deleting project: ${error_msg}`)
-
 }
 
 

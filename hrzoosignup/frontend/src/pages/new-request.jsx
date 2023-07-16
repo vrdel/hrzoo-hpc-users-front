@@ -10,7 +10,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../api/croris';
-import { fetchNrProjects } from '../api/projects';
 import { toast } from 'react-toastify';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
 
