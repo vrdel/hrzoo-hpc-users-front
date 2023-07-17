@@ -48,7 +48,7 @@ const UsersListForm = ({ data, pageTitle }) => {
   const { control, setValue } = useForm({
     defaultValues: {
       users: data,
-      searchUsername: "",
+      searchJoined: "",
       searchName: "",
       searchInstitution: "",
       searchEmail: "",
@@ -57,7 +57,7 @@ const UsersListForm = ({ data, pageTitle }) => {
     }
   })
 
-  const searchUsername = useWatch({ control, name: "searchUsername" })
+  const searchJoined = useWatch({ control, name: "searchJoined" })
   const searchName = useWatch({ control, name: "searchName" })
   const searchInstitution = useWatch({ control, name: "searchInstitution" })
   const searchEmail = useWatch({ control, name: "searchEmail" })
@@ -70,8 +70,8 @@ const UsersListForm = ({ data, pageTitle }) => {
 
   let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
 
-  if (searchUsername)
-    fieldsView = fieldsView.filter(e => e.username.toLowerCase().includes(searchUsername.toLowerCase()))
+  if (searchJoined)
+    fieldsView = fieldsView.filter(e => e.date_joined.includes(searchJoined))
 
   if (searchName)
     fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()))
@@ -98,7 +98,7 @@ const UsersListForm = ({ data, pageTitle }) => {
   if (sortName !== undefined)
     fieldsView = _.orderBy(fieldsView, ['first_name', 'last_name'], [sortName === true ? 'desc' : 'asc'])
 
-  const isSearched = searchUsername || searchName || searchInstitution || searchEmail || searchProject || searchSSHKey
+  const isSearched = searchJoined || searchName || searchInstitution || searchEmail || searchProject || searchSSHKey
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
@@ -131,11 +131,11 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '272px'}}>
                   Institucija
                 </th>
-                <th className="fw-normal"  style={{minWidth: '226px'}}>
-                  Korisnička oznaka
-                </th>
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   Email
+                </th>
+                <th className="fw-normal"  style={{minWidth: '226px'}}>
+                  Dodan
                 </th>
                 <th className="fw-normal"  style={{width: '146px'}}>
                   Projekti
@@ -180,20 +180,6 @@ const UsersListForm = ({ data, pageTitle }) => {
                 </td>
                 <td className="p-2 align-middle text-center">
                   <Controller
-                    name="searchUsername"
-                    control={ control }
-                    render={ ({ field }) =>
-                      <Input
-                        { ...field }
-                        className="form-control"
-                        placeholder="Traži"
-                        style={{fontSize: '0.83rem'}}
-                      />
-                    }
-                  />
-                </td>
-                <td className="p-2 align-middle text-center">
-                  <Controller
                     name="searchEmail"
                     control={ control }
                     render={ ({ field }) =>
@@ -201,6 +187,20 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { ...field }
                         placeholder="Traži"
                         className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    }
+                  />
+                </td>
+                <td className="p-2 align-middle text-center">
+                  <Controller
+                    name="searchJoined"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        className="form-control"
+                        placeholder="Traži"
                         style={{fontSize: '0.83rem'}}
                       />
                     }
@@ -259,10 +259,10 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { user.person_institution }
                       </td>
                       <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
-                        { user.username }
+                        { user.person_mail }
                       </td>
                       <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
-                        { user.person_mail }
+                        { user.date_joined }
                       </td>
                       <td className="p-3 align-middle text-center">
                         {
