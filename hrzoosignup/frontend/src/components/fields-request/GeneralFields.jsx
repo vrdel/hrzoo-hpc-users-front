@@ -100,36 +100,6 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
           />
         </Col>
       </Row>
-      {
-        projectInfo && projectInfo.project_type &&
-        projectInfo.project_type.name === 'research-croris' &&
-        <>
-          <Row className="mt-3">
-            <Col md={{offset: 1, size: 11}}>
-              Financijer:{' '}
-              <span className="fst-italic">
-                {
-                  projectInfo.croris_finance.length > 1
-                    ?
-                      projectInfo.croris_finance.map((finance, i) =>
-                        <span key={`croris-finance-${i}`}>
-                          { finance }
-                          {
-                            projectInfo.croris_finance.length - 1 !== i ?
-                                '; '
-                              :
-                                ''
-                          }
-                        </span>
-                      )
-                    :
-                      projectInfo.croris_finance[0]
-                }
-              </span>
-            </Col>
-          </Row>
-        </>
-      }
       <Row className="mt-3">
         <Col md={{size: 5, offset: 1}}>
           <Label
@@ -238,6 +208,7 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
   const { control, getValues, formState: {errors} } = useFormContext();
 
   let crorisId = getValues('requestCroRisId')
+  let crorisFinance = getValues('requestCroRisFinance')
 
   return (
     <>
@@ -280,6 +251,30 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
           <a href={`https://www.croris.hr/projekti/projekt/${crorisId}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
             https://www.croris.hr/projekti/projekt/{crorisId}
           </a>
+        </Col>
+      </Row>
+      <Row className="mt-3">
+        <Col md={{offset: 1, size: 11}}>
+          Financijer:{' '}
+          <span className="fst-italic">
+            {
+              crorisFinance.length > 1
+                ?
+                  crorisFinance.map((finance, i) =>
+                    <span key={`croris-finance-${i}`}>
+                      { finance }
+                      {
+                        crorisFinance.length - 1 !== i ?
+                            '; '
+                          :
+                            ''
+                      }
+                    </span>
+                  )
+                :
+                  crorisFinance[0]
+            }
+          </span>
         </Col>
       </Row>
     </>

@@ -242,7 +242,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                         forwardedRef={ field.ref }
                         placeholder="Odaberi"
                         controlWidth="116px"
-                        options={ buildOptionsFromArray(["Da", "Ne", "Svi"]) }
+                        options={ buildOptionsFromArray(["Svi", "Da", "Ne"]) }
                         onChange={ (e) => setValue("searchSSHKey", e.value) }
                       />
                     }
