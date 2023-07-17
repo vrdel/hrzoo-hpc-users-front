@@ -122,7 +122,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal position-relative"  style={{minWidth: '286px'}}
+                <th className="fw-normal position-relative"  style={{minWidth: '286px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                     setSortJoined(undefined)
@@ -139,7 +139,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   Email
                 </th>
-                <th className="fw-normal position-relative" style={{minWidth: '226px'}}
+                <th className="fw-normal position-relative" style={{minWidth: '226px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortJoined(!sortJoined)
                     setSortName(undefined)
@@ -274,7 +274,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
                         { user.person_mail }
                       </td>
-                      <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
+                      <td className="p-3 align-middle text-center fs-6 font-monospace" style={{wordBreak: 'break-all'}}>
                         { user.date_joined }
                       </td>
                       <td className="p-3 align-middle text-center">
