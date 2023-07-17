@@ -23,6 +23,7 @@ import { extractCollaborators, extractLeaderName } from "../../utils/users_help"
 import { StateIcons } from "../../config/map-states";
 import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
+import _ from "lodash";
 
 
 const ProjectsListForm = ({ data, pageTitle }) => {
@@ -63,6 +64,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   if (searchType) {
     if (allProjectTypes.includes(searchType.toLowerCase()))
       fieldsView = fieldsView.filter(e => e.project_type.name.toLowerCase() == searchType.toLowerCase())
+
+    else if (searchType === 'research-eu-croris')
+      fieldsView = fieldsView.filter(e => e.project_type.name === 'research-croris' &&
+        _.findIndex(e.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1)
 
     else if (searchType.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))
@@ -118,7 +123,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal" style={{width: '146px'}}>
                   Šifra
                 </th>
-                <th className="fw-normal" style={{width: '116px'}}>
+                <th className="fw-normal" style={{width: '126px'}}>
                   Tip
                 </th>
                 <th className="fw-normal" style={{width: '120px'}}>
@@ -184,7 +189,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
-                        controlWidth="116px"
+                        controlWidth="126px"
+                        customPadding="0.2rem"
                         placeholder="Odaberi"
                         options={ optionsTypes }
                         onChange={ e => setValue("searchType", e.value) }
@@ -240,8 +246,15 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         </Badge>
                       </td>
                       <td className="align-middle text-center">
-                        <span className={ `badge fw-normal ${TypeColor(project.project_type.name)}` }>
+                        <span className={ `badge fw-normal position-relative ${TypeColor(project.project_type.name)}` }>
                           { TypeString(project.project_type.name) }
+                          {
+                            _.findIndex(project.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
+                            <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+                              EU
+                              <span className="visually-hidden">EU</span>
+                            </span>
+                          }
                         </span>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
