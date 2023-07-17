@@ -44,6 +44,7 @@ const UsersListForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
+  const [sortJoined, setSortJoined] = useState(undefined)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -95,6 +96,9 @@ const UsersListForm = ({ data, pageTitle }) => {
     else
       fieldsView = fieldsView.filter(e => e.ssh_key || !e.ssh_key)
 
+  if (sortJoined !== undefined)
+    fieldsView = _.orderBy(fieldsView, ['date_joined'], [sortJoined === true ? 'desc' : 'asc'])
+
   if (sortName !== undefined)
     fieldsView = _.orderBy(fieldsView, ['first_name', 'last_name'], [sortName === true ? 'desc' : 'asc'])
 
@@ -121,6 +125,7 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal position-relative"  style={{minWidth: '286px'}}
                   onClick={() => {
                     setSortName(!sortName)
+                    setSortJoined(undefined)
                   }}
                 >
                   Ime, prezime i oznaka
@@ -134,8 +139,16 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   Email
                 </th>
-                <th className="fw-normal"  style={{minWidth: '226px'}}>
+                <th className="fw-normal position-relative" style={{minWidth: '226px'}}
+                  onClick={() => {
+                    setSortJoined(!sortJoined)
+                    setSortName(undefined)
+                  }}
+                >
                   Dodan
+                  <div className="position-absolute translate-middle top-50 start-100 pe-5">
+                    { sortArrow(sortJoined) }
+                  </div>
                 </th>
                 <th className="fw-normal"  style={{width: '146px'}}>
                   Projekti
