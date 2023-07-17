@@ -25,6 +25,7 @@ import {
 } from '../../components/TableHelpers';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
+import _ from "lodash";
 
 
 const ManageRequestsForm = ({ data, pageTitle }) => {
@@ -289,8 +290,15 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         { extractLeaderName(project.userproject_set, true) }
                       </td>
                       <td className="align-middle text-center">
-                        <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
+                        <span className={`badge fw-normal position-relative ${TypeColor(project.project_type.name)}`} >
                           { TypeString(project.project_type.name) }
+                          {
+                            _.findIndex(project.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
+                            <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+                              EU
+                              <span className="visually-hidden">EU</span>
+                            </span>
+                          }
                         </span>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
