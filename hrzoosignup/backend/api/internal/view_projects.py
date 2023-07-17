@@ -385,4 +385,3 @@ class CanSubmitInstitutionalProject(APIView):
                 })
 
         return Response(projects_enddates, status=status.HTTP_200_OK)
-

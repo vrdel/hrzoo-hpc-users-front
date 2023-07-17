@@ -18,11 +18,32 @@ import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
 import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
+import _ from 'lodash';
+
+
+const sortArrow = (descending) => {
+  if (descending === true)
+    return (
+      <span>{' '}&uarr;</span>
+    )
+  else if (descending === false)
+    return (
+      <span>&darr;{' '}</span>
+    )
+  else
+    return (
+      <>
+        <span>&uarr;</span>
+        <span>&darr;</span>
+      </>
+    )
+}
 
 
 const UsersListForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
+  const [sortName, setSortName] = useState(undefined)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -74,6 +95,9 @@ const UsersListForm = ({ data, pageTitle }) => {
     else
       fieldsView = fieldsView.filter(e => e.ssh_key || !e.ssh_key)
 
+  if (sortName !== undefined)
+    fieldsView = _.orderBy(fieldsView, ['first_name', 'last_name'], [sortName === true ? 'desc' : 'asc'])
+
   const isSearched = searchUsername || searchName || searchInstitution || searchEmail || searchProject || searchSSHKey
 
   paginationHelp.searchNum = fieldsView.length
@@ -94,8 +118,15 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal"  style={{minWidth: '286px'}}>
-                  Ime i prezime
+                <th className="fw-normal position-relative"  style={{minWidth: '286px'}}
+                  onClick={() => {
+                    setSortName(!sortName)
+                  }}
+                >
+                  Ime, prezime i oznaka
+                  <div className="position-absolute translate-middle top-50 start-100 pe-5">
+                    { sortArrow(sortName) }
+                  </div>
                 </th>
                 <th className="fw-normal"  style={{width: '272px'}}>
                   Institucija
@@ -213,7 +244,16 @@ const UsersListForm = ({ data, pageTitle }) => {
                         { pageIndex * pageSize + index + 1 }
                       </td>
                       <td className="p-3 align-middle text-center fw-bold">
-                        { `${user.first_name} ${user.last_name}` }
+                        <Row>
+                          <Col>
+                            { `${user.first_name} ${user.last_name}` }
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col className="font-monospace fw-normal">
+                            { user.username }
+                          </Col>
+                        </Row>
                       </td>
                       <td className="p-3 align-middle text-center">
                         { user.person_institution }
