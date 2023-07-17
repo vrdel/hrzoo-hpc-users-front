@@ -98,12 +98,17 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
   if (searchLead)
     fieldsView = fieldsView.filter(e => extractLeaderName(e.userproject_set, true).toLowerCase().includes(searchLead.toLowerCase()))
 
-  if (searchType)
+  if (searchType) {
     if (allProjectTypes.includes(searchType.toLowerCase()))
       fieldsView = fieldsView.filter(e => e.project_type.name.toLowerCase() == searchType.toLowerCase())
 
+    else if (searchType === 'research-eu-croris')
+      fieldsView = fieldsView.filter(e => e.project_type.name === 'research-croris' &&
+        _.findIndex(e.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1)
+
     else if (searchType.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))
+  }
 
   if (searchDate)
     fieldsView = fieldsView.filter(e =>
@@ -148,7 +153,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <th className="fw-normal" style={{width: '158px'}}>
                   Voditelj
                 </th>
-                <th className="fw-normal" style={{width: '116px'}}>
+                <th className="fw-normal" style={{width: '126px'}}>
                   Tip
                 </th>
                 <th className="fw-normal" style={{width: '120px'}}>
@@ -229,8 +234,9 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
-                        controlWidth="116px"
+                        controlWidth="126px"
                         placeholder="Odaberi"
+                        customPadding="0.2rem"
                         options={ optionsTypes }
                         onChange={ e => setValue("searchType", e.value) }
                       />

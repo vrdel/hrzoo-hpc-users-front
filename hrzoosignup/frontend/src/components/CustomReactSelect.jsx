@@ -39,7 +39,7 @@ const DropdownIndicator = ({ ...props }) => {
 export const CustomReactSelect = ({forwardedRef=undefined,
   resourceTypeMultiValue=undefined, scientificSoftwareMultiValue=undefined,
   activeReadOnlyResourceTypeMultiValue=undefined, controlWidth=undefined,
-  fontSize=undefined, minHeight=undefined, collaboratorsFixedMultiValue=undefined,
+  fontSize=undefined, customPadding=undefined, minHeight=undefined, collaboratorsFixedMultiValue=undefined,
   ...props} ) => {
   const customStyles = {
     container: (provided, state) => ({
@@ -68,7 +68,7 @@ export const CustomReactSelect = ({forwardedRef=undefined,
     }),
     option: (provided) => ({
       ...provided,
-      padding: '.25rem 1.5rem',
+      padding: customPadding ? customPadding : '.25rem 1.5rem',
       cursor: 'pointer',
       whiteSpace: 'nowrap',
       clear: 'both',

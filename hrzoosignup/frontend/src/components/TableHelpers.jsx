@@ -1,5 +1,5 @@
 import React from "react"
-import { 
+import {
   Row,
   Col,
   Pagination,
@@ -10,19 +10,20 @@ import {
 
 
 export const optionsStates = [
+  { label: "Svi", value: "all" },
   { label: "Podnesen", value: "submit" },
   { label: "Odobren", value: "approve" },
   { label: "Odbijen", value: "deny" },
   { label: "Istekao", value: "expire" },
   { label: "Produžen", value: "extend" },
-  { label: "Svi", value: "all" }
 ]
 
 export const optionsTypes = [
-  { label: "Projekt", value: "research-croris" },
+  { label: "Svi", value: "all" },
+  { label: "Istraživački", value: "research-croris" },
+  { label: "Istraživački EU", value: "research-eu-croris" },
   { label: "Rad", value: "thesis" },
-  { label: "Nastava", value: "practical" },
-  { label: "Svi", value: "all" }
+  { label: "Nastava", value: "practical" }
 ]
 
 
