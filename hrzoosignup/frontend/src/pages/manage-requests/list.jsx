@@ -69,8 +69,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
   }, [data])
 
   const searchState = useWatch({ control, name: "searchState" })
-  const searchName = useWatch({ control, name: "searchName" })
-  const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
+  const searchNameIdentifier = useWatch({ control, name: "searchNameIdentifier" })
   const searchLead = useWatch({ control, name: "searchLead" })
   const searchType = useWatch({ control, name: "searchType" })
   const searchDate = useWatch({ control, name: "searchDate" })
@@ -89,11 +88,13 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
       fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
   }
 
-  if (searchName)
-    fieldsView = fieldsView.filter(e => e.name.toLowerCase().includes(searchName.toLowerCase()))
-
-  if (searchIdentifier)
-    fieldsView = fieldsView.filter(e => e.identifier.toLowerCase().includes(searchIdentifier.toLowerCase()))
+  if (searchNameIdentifier)
+    fieldsView = fieldsView.filter(
+      (e) => (
+        e.name.toLowerCase().includes(searchNameIdentifier.toLowerCase())
+        || e.identifier.toLowerCase().includes(searchNameIdentifier.toLowerCase())
+      )
+    )
 
   if (searchLead)
     fieldsView = fieldsView.filter(e => extractLeaderName(e.userproject_set, true).toLowerCase().includes(searchLead.toLowerCase()))
@@ -117,7 +118,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
 
 
   const isSearched = (searchState && searchState !== 'all')
-    || searchName || searchIdentifier || searchLead
+    || searchNameIdentifier || searchLead
     || (searchType && searchType !== 'all') || searchDate
 
   paginationHelp.searchNum = fieldsView.length
@@ -145,7 +146,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                   Podnesen
                 </th>
                 <th className="fw-normal" style={{width: '690px'}}>
-                  Naziv
+                  Naziv i šifra
                 </th>
                 <th className="fw-normal" style={{width: '158px'}}>
                   Voditelj
@@ -184,7 +185,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <td className="p-2 align-middle text-center">{" "}</td>
                 <td className="p-2 align-middle text-center">
                   <Controller
-                    name="searchName"
+                    name="searchNameIdentifier"
                     control={ control }
                     render={ ({ field }) =>
                       <Input
