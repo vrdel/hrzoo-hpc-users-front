@@ -144,11 +144,8 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <th className="fw-normal" style={{width: '100px'}}>
                   Podnesen
                 </th>
-                <th className="fw-normal" style={{width: '490px'}}>
+                <th className="fw-normal" style={{width: '690px'}}>
                   Naziv
-                </th>
-                <th className="fw-normal" style={{width: '146px'}}>
-                  Šifra
                 </th>
                 <th className="fw-normal" style={{width: '158px'}}>
                   Voditelj
@@ -159,7 +156,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <th className="fw-normal" style={{width: '120px'}}>
                   Trajanje
                 </th>
-                <th className="fw-normal" style={{width: ''}}>
+                <th className="fw-normal" style={{width: '88px'}}>
                   Promjena
                 </th>
               </tr>
@@ -188,20 +185,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <td className="p-2 align-middle text-center">
                   <Controller
                     name="searchName"
-                    control={ control }
-                    render={ ({ field }) =>
-                      <Input
-                        { ...field }
-                        placeholder="Traži"
-                        className="form-control"
-                        style={{fontSize: '0.83rem'}}
-                      />
-                    }
-                  />
-                </td>
-                <td className="p-2 align-middle text-center">
-                  <Controller
-                    name="searchIdentifier"
                     control={ control }
                     render={ ({ field }) =>
                       <Input
@@ -282,15 +265,23 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         <br/>
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
-                      <td className="p-3 align-middle text-info fw-bold text-center">
-                        <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
-                          { project.name}
-                        </Link>
-                      </td>
-                      <td className="align-middle text-center">
-                        <Badge color="secondary" className="fw-normal">
-                          { project.identifier }
-                        </Badge>
+                      <td className="p-3 align-middle text-info fw-bold text-center position-relative">
+                        <Row>
+                          <Col>
+                            <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
+                              { project.name}
+                            </Link>
+                          </Col>
+                        </Row>
+                        <Row style={{height: '15px'}}>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <span className="fw-normal badge bg-secondary">
+                              { project.identifier }
+                            </span>
+                          </Col>
+                        </Row>
                       </td>
                       <td className="p-3 align-middle text-center">
                         { extractLeaderName(project.userproject_set, true) }
