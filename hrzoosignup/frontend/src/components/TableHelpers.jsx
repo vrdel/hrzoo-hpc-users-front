@@ -28,10 +28,10 @@ export const optionsTypes = [
 
 
 export const optionsStatesProjects = [
+  { label: "Svi", value: "all" },
   { label: "Odobren", value: "approve" },
   { label: "Istekao", value: "expire" },
   { label: "Produžen", value: "extend" },
-  { label: "Svi", value: "all" }
 ]
 
 export const allStates = ["submit", "approve", "deny", "expire", "extend"]

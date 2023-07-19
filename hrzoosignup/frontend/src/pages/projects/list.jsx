@@ -35,8 +35,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const { control, setValue } = useForm({
     defaultValues: {
       projects: data,
-      searchName: "",
-      searchIdentifier: "",
+      searchNameIdentifier: "",
       searchType: "",
       searchDate: "",
       searchUsers: "",
@@ -44,8 +43,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
     }
   })
 
-  const searchName = useWatch({ control, name: "searchName" })
-  const searchIdentifier = useWatch({ control, name: "searchIdentifier" })
+  const searchNameIdentifier = useWatch({ control, name: "searchNameIdentifier" })
   const searchType = useWatch({ control, name: "searchType" })
   const searchDate = useWatch({ control, name: "searchDate" })
   const searchUsers = useWatch({ control, name: "searchUsers" })
@@ -57,11 +55,13 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
 
-  if (searchName)
-    fieldsView = fieldsView.filter(e => e.name.toLowerCase().includes(searchName.toLowerCase()))
-
-  if (searchIdentifier)
-    fieldsView = fieldsView.filter(e => e.identifier.toLowerCase().includes(searchIdentifier.toLowerCase()))
+  if (searchNameIdentifier)
+    fieldsView = fieldsView.filter(
+      (e) => (
+        e.name.toLowerCase().includes(searchNameIdentifier.toLowerCase())
+        || e.identifier.toLowerCase().includes(searchNameIdentifier.toLowerCase())
+      )
+    )
 
   if (searchType) {
     if (allProjectTypes.includes(searchType.toLowerCase()))
@@ -94,8 +94,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
   }
 
-  const isSearched = searchName || searchIdentifier
-    || (searchType && searchType !== 'all')
+  const isSearched = searchNameIdentifier || (searchType && searchType !== 'all')
     || searchDate || searchUsers || (searchState && searchState !== 'all')
 
   paginationHelp.searchNum = fieldsView.length
@@ -116,14 +115,11 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal" style={{width: '116px'}}>
+                <th className="fw-normal" style={{width: '92px'}}>
                   Stanje
                 </th>
-                <th className="fw-normal" style={{width: '500px'}}>
-                  Naziv
-                </th>
-                <th className="fw-normal" style={{width: '146px'}}>
-                  Šifra
+                <th className="fw-normal" style={{width: '650px'}}>
+                  Naziv i šifra
                 </th>
                 <th className="fw-normal" style={{width: '126px'}}>
                   Tip
@@ -148,8 +144,9 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
-                        controlWidth="116px"
+                        controlWidth="92px"
                         placeholder="Odaberi"
+                        customPadding="0.2rem"
                         options={ optionsStatesProjects }
                         onChange={ e => setValue("searchState", e.value) }
                       />
@@ -158,21 +155,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 </td>
                 <td className="p-2 align-middle text-center">
                   <Controller
-                    name="searchName"
-                    control={ control }
-                    render={ ({ field }) =>
-                      <Input
-                        { ...field }
-                        placeholder="Traži"
-                        className="form-control"
-                        style={{ fontSize: "0.83rem" }}
-                      />
-                    }
-                  />
-                </td>
-                <td className="p-2 align-middle text-center">
-                  <Controller
-                    name="searchIdentifier"
+                    name="searchNameIdentifier"
                     control={ control }
                     render={ ({ field }) =>
                       <Input
@@ -240,12 +223,20 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         { StateIcons(project.state.name) }
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
-                        { project.name}
-                      </td>
-                      <td className="align-middle text-center">
-                        <Badge color="secondary" className="fw-normal">
-                          { project.identifier }
-                        </Badge>
+                        <Row>
+                          <Col>
+                            { project.name}
+                          </Col>
+                        </Row>
+                        <Row style={{height: '15px'}}>
+                        </Row>
+                        <Row>
+                          <Col>
+                            <Badge color="secondary" className="fw-normal">
+                              { project.identifier }
+                            </Badge>
+                          </Col>
+                        </Row>
                       </td>
                       <td className="align-middle text-center">
                         <span className={ `badge fw-normal position-relative ${TypeColor(project.project_type.name)}` }>
