@@ -139,13 +139,13 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal" style={{width: '116px'}}>
+                <th className="fw-normal" style={{width: '92px'}}>
                   Stanje
                 </th>
                 <th className="fw-normal" style={{width: '100px'}}>
                   Podnesen
                 </th>
-                <th className="fw-normal" style={{width: '690px'}}>
+                <th className="fw-normal" style={{width: '714px'}}>
                   Naziv i šifra
                 </th>
                 <th className="fw-normal" style={{width: '158px'}}>
@@ -174,7 +174,8 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
-                        controlWidth="116px"
+                        controlWidth="92px"
+                        customPadding="0.2rem"
                         placeholder="Odaberi"
                         options={ optionsStates }
                         onChange={ e => setValue("searchState", e.value) }
