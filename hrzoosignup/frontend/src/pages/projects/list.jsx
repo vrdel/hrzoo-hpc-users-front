@@ -127,7 +127,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal" style={{width: '120px'}}>
                   Trajanje
                 </th>
-                <th className="fw-normal" style={{width: ''}}>
+                <th className="fw-normal" style={{width: '380px'}}>
                   Osobe
                 </th>
               </tr>
