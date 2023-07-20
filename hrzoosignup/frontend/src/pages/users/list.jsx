@@ -365,7 +365,7 @@ const EmptyUsersTable = ({ pageTitle }) => {
             </thead>
             <tbody>
               <tr>
-                <td colSpan={8} className="m-0 p-0 bg-light border-0 text-center p-5 m-5">
+                <td colSpan={7} className="m-0 p-0 border-0 text-center p-5 m-5">
                   <Spinner
                     color="danger"
                     style={{
