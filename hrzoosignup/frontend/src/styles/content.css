@@ -7,4 +7,6 @@
 
 #hzsi-thead {
   background-color: #b04c46;
+  --bs-table-bg: #b04c46;
+  --bs-table-color: #ffffff;
 }
