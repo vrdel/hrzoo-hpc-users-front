@@ -23,9 +23,8 @@ import { extractCollaborators, extractLeaderName } from "../../utils/users_help"
 import { StateIcons } from "../../config/map-states";
 import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
+import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import _ from "lodash";
-
-
 
 
 const ProjectsListForm = ({ data, pageTitle }) => {
@@ -294,59 +293,6 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 }
 
 
-const EmptyProjectTable = ( {pageTitle} ) => {
-  return (
-    <>
-      <Row>
-        <PageTitle pageTitle={ pageTitle } />
-      </Row>
-      <Row className="mt-4">
-        <Col>
-          <Table responsive hover className="shadow-sm">
-            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-              <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal"  style={{width: '52px'}}>
-                  #
-                </th>
-                <th className="fw-normal" style={{width: '92px'}}>
-                  Stanje
-                </th>
-                <th className="fw-normal" style={{width: '650px'}}>
-                  Naziv i šifra
-                </th>
-                <th className="fw-normal" style={{width: '126px'}}>
-                  Tip
-                </th>
-                <th className="fw-normal" style={{width: '120px'}}>
-                  Trajanje
-                </th>
-                <th className="fw-normal" style={{width: '380px'}}>
-                  Osobe
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colSpan={6} className="m-0 p-0 border-0 text-center p-5 m-5">
-                  <Spinner
-                    style={{
-                      height: '20rem',
-                      width: '20rem',
-                      borderColor: '#b04c46',
-                      borderRightColor: 'transparent'
-                    }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-    </>
-  )
-}
-
-
 export const ProjectsList = () => {
   const { LinkTitles } = useContext(SharedData)
   const [pageTitle, setPageTitle] = useState(undefined)
@@ -373,6 +319,29 @@ export const ProjectsList = () => {
     )
   else if (status === 'loading' && pageTitle)
     return (
-      <EmptyProjectTable />
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={6}>
+        <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
+          <tr className="border-bottom border-1 border-dark">
+            <th className="fw-normal"  style={{width: '52px'}}>
+              #
+            </th>
+            <th className="fw-normal" style={{width: '92px'}}>
+              Stanje
+            </th>
+            <th className="fw-normal" style={{width: '650px'}}>
+              Naziv i šifra
+            </th>
+            <th className="fw-normal" style={{width: '126px'}}>
+              Tip
+            </th>
+            <th className="fw-normal" style={{width: '120px'}}>
+              Trajanje
+            </th>
+            <th className="fw-normal" style={{width: '380px'}}>
+              Osobe
+            </th>
+          </tr>
+        </thead>
+      </EmptyTableSpinner>
     )
 }
