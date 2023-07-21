@@ -68,8 +68,8 @@ const MyRequestsList = () => {
         <Row className="mt-4 ms-1 me-1 mb-5">
           <Col>
             <Table responsive hover className="shadow-sm">
-              <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                <tr className="border-bottom border-1 border-dark">
+              <thead id="hzsi-thead" className="align-middle text-center text-white">
+                <tr className="border-bottom-1 border-dark">
                   <th className="fw-normal">
                     Stanje
                   </th>
