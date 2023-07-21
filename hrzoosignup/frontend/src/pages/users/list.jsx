@@ -77,7 +77,9 @@ const UsersListForm = ({ data, pageTitle }) => {
     fieldsView = fieldsView.filter(e => e.date_joined.includes(searchJoined))
 
   if (searchName)
-    fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()))
+    fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()) ||
+      e.username.includes(searchName.toLowerCase())
+    )
 
   if (searchInstitution)
     fieldsView = fieldsView.filter(e => e.person_institution.toLowerCase().includes(searchInstitution.toLowerCase()))
