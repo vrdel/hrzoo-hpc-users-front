@@ -120,18 +120,20 @@ const UsersListForm = ({ data, pageTitle }) => {
         <Col>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
-              <tr className="border-bottom-1 border-dark">
+              <tr className="border-bottom border-dark">
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal position-relative"  style={{minWidth: '286px', cursor: 'pointer'}}
+                <th className="fw-normal border-0 d-flex justify-content-center"  style={{minWidth: '286px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                     setSortJoined(undefined)
                   }}
                 >
-                  Ime, prezime i oznaka
-                  <div className="position-absolute translate-middle top-50 start-100 pe-5">
+                  <div className="flex-grow-1">
+                    Ime, prezime i oznaka
+                  </div>
+                  <div>
                     { sortArrow(sortName) }
                   </div>
                 </th>
@@ -141,14 +143,16 @@ const UsersListForm = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   Email
                 </th>
-                <th className="fw-normal position-relative" style={{minWidth: '226px', cursor: 'pointer'}}
+                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '226px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortJoined(!sortJoined)
                     setSortName(undefined)
                   }}
                 >
-                  Dodan
-                  <div className="position-absolute translate-middle top-50 start-100 pe-5">
+                  <div className="flex-grow-1">
+                    Dodan
+                  </div>
+                  <div>
                     { sortArrow(sortJoined) }
                   </div>
                 </th>
@@ -347,10 +351,12 @@ export const UsersList = () => {
             <th className="fw-normal"  style={{width: '52px'}}>
               #
             </th>
-            <th className="fw-normal position-relative"  style={{minWidth: '286px', cursor: 'pointer'}}
+            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '286px', cursor: 'pointer'}}
             >
-              Ime, prezime i oznaka
-              <div className="position-absolute translate-middle top-50 start-100 pe-5">
+              <div className="flex-grow-1">
+                Ime, prezime i oznaka
+              </div>
+              <div>
                 { sortArrow() }
               </div>
             </th>
@@ -360,10 +366,12 @@ export const UsersList = () => {
             <th className="fw-normal"  style={{minWidth: '296px'}}>
               Email
             </th>
-            <th className="fw-normal position-relative" style={{minWidth: '226px', cursor: 'pointer'}}
+            <th className="fw-normal d-flex justify-content-center" style={{minWidth: '226px', cursor: 'pointer'}}
             >
-              Dodan
-              <div className="position-absolute translate-middle top-50 start-100 pe-5">
+              <div className="flex-grow-1">
+                Dodan
+              </div>
+              <div>
                 { sortArrow() }
               </div>
             </th>
@@ -377,7 +385,7 @@ export const UsersList = () => {
         </thead>
       </EmptyTableSpinner>
     )
-  else if (status === 'success' && data)
+  else if (status === 'success' && data && pageTitle)
     return (
       <UsersListForm
         data={ data }
