@@ -25,6 +25,7 @@ import {
 } from '../../components/TableHelpers';
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
+import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import _ from "lodash";
 
 
@@ -134,8 +135,8 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
       <Row className="mt-4">
         <Col>
           <Table responsive hover className="shadow-sm">
-            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-              <tr className="border-bottom border-1 border-dark">
+            <thead id="hzsi-thead" className="align-middle text-center text-white">
+              <tr className="border-bottom-1 border-dark">
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
@@ -267,7 +268,7 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
                         <br/>
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
-                      <td className="p-3 align-middle text-info fw-bold text-center position-relative">
+                      <td className="p-3 align-middle text-info fw-bold text-center">
                         <Row>
                           <Col>
                             <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
@@ -347,64 +348,6 @@ const ManageRequestsForm = ({ data, pageTitle }) => {
   )
 }
 
-export const EmptyRequestsList = ({ pageTitle }) => {
-    return (
-      <>
-        <Row>
-          <PageTitle pageTitle={pageTitle}/>
-        </Row>
-        <Row className="mt-4">
-          <Col>
-            <Table responsive hover className="shadow-sm">
-              <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                <tr className="border-bottom border-1 border-dark">
-                  <th className="fw-normal"  style={{width: '52px'}}>
-                    #
-                  </th>
-                  <th className="fw-normal" style={{width: '92px'}}>
-                    Stanje
-                  </th>
-                  <th className="fw-normal" style={{width: '100px'}}>
-                    Podnesen
-                  </th>
-                  <th className="fw-normal" style={{width: '714px'}}>
-                    Naziv i šifra
-                  </th>
-                  <th className="fw-normal" style={{width: '158px'}}>
-                    Voditelj
-                  </th>
-                  <th className="fw-normal" style={{width: '126px'}}>
-                    Tip
-                  </th>
-                  <th className="fw-normal" style={{width: '120px'}}>
-                    Trajanje
-                  </th>
-                  <th className="fw-normal" style={{width: '88px'}}>
-                    Promjena
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colSpan={8} className="m-0 p-0 border-0 text-center p-5 m-5">
-                    <Spinner
-                      style={{
-                        height: '20rem',
-                        width: '20rem',
-                        borderColor: '#b04c46',
-                        borderRightColor: 'transparent'
-                      }}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
-          </Col>
-        </Row>
-      </>
-    )
-}
-
 
 export const ManageRequestsList = () => {
   const { LinkTitles } = useContext(SharedData);
@@ -432,6 +375,35 @@ export const ManageRequestsList = () => {
     )
   else if (status === 'loading' && pageTitle)
     return (
-      <EmptyRequestsList pageTitle={pageTitle} />
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={8}>
+        <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <tr className="border-bottom-1 border-dark">
+            <th className="fw-normal"  style={{width: '52px'}}>
+              #
+            </th>
+            <th className="fw-normal" style={{width: '92px'}}>
+              Stanje
+            </th>
+            <th className="fw-normal" style={{width: '100px'}}>
+              Podnesen
+            </th>
+            <th className="fw-normal" style={{width: '714px'}}>
+              Naziv i šifra
+            </th>
+            <th className="fw-normal" style={{width: '158px'}}>
+              Voditelj
+            </th>
+            <th className="fw-normal" style={{width: '126px'}}>
+              Tip
+            </th>
+            <th className="fw-normal" style={{width: '120px'}}>
+              Trajanje
+            </th>
+            <th className="fw-normal" style={{width: '88px'}}>
+              Promjena
+            </th>
+          </tr>
+        </thead>
+      </EmptyTableSpinner>
     )
 };

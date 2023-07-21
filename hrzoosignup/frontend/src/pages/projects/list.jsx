@@ -109,8 +109,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       <Row className="mt-4">
         <Col>
           <Table responsive hover className="shadow-sm">
-            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-              <tr className="border-bottom border-1 border-dark">
+            <thead id="hzsi-thead" className="align-middle text-center text-white">
+              <tr className="border-bottom-1 border-dark">
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
@@ -320,8 +320,8 @@ export const ProjectsList = () => {
   else if (status === 'loading' && pageTitle)
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={6}>
-        <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-          <tr className="border-bottom border-1 border-dark">
+        <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <tr className="border-bottom-1 border-dark">
             <th className="fw-normal"  style={{width: '52px'}}>
               #
             </th>
