@@ -19,6 +19,7 @@ import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
 import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
+import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import _ from 'lodash';
 
 
@@ -118,8 +119,8 @@ const UsersListForm = ({ data, pageTitle }) => {
       <Row className="mt-4">
         <Col>
           <Table responsive hover className="shadow-sm">
-            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-              <tr className="border-bottom border-1 border-dark">
+            <thead id="hzsi-thead" className="align-middle text-center text-white">
+              <tr className="border-bottom-1 border-dark">
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
@@ -321,70 +322,6 @@ const UsersListForm = ({ data, pageTitle }) => {
   )
 }
 
-const EmptyUsersTable = ({ pageTitle }) => {
-  return (
-    <>
-      <Row>
-        <PageTitle pageTitle={ pageTitle } />
-      </Row>
-      <Row className="mt-4">
-        <Col>
-          <Table responsive hover className="shadow-sm">
-            <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-              <tr className="border-bottom border-1 border-dark">
-                <th className="fw-normal"  style={{width: '52px'}}>
-                  #
-                </th>
-                <th className="fw-normal position-relative"  style={{minWidth: '286px', cursor: 'pointer'}}
-                >
-                  Ime, prezime i oznaka
-                  <div className="position-absolute translate-middle top-50 start-100 pe-5">
-                    { sortArrow() }
-                  </div>
-                </th>
-                <th className="fw-normal"  style={{width: '272px'}}>
-                  Institucija
-                </th>
-                <th className="fw-normal"  style={{minWidth: '296px'}}>
-                  Email
-                </th>
-                <th className="fw-normal position-relative" style={{minWidth: '226px', cursor: 'pointer'}}
-                >
-                  Dodan
-                  <div className="position-absolute translate-middle top-50 start-100 pe-5">
-                    { sortArrow() }
-                  </div>
-                </th>
-                <th className="fw-normal"  style={{width: '146px'}}>
-                  Projekti
-                </th>
-                <th className="fw-normal"  style={{width: '116px'}}>
-                  Javni ključ
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td colSpan={7} className="m-0 p-0 border-0 text-center p-5 m-5">
-                  <Spinner
-                    color="danger"
-                    style={{
-                      height: '20rem',
-                      width: '20rem',
-                      borderColor: '#b04c46',
-                      borderRightColor: 'transparent'
-                    }}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-    </>
-  )
-}
-
 
 export const UsersList = () => {
   const { LinkTitles } = useContext(SharedData)
@@ -403,10 +340,43 @@ export const UsersList = () => {
 	}, [location.pathname, status])
 
   if (status === 'loading' && pageTitle)
-  return (
-    <EmptyUsersTable pageTitle={pageTitle} />
-  )
-
+    return (
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
+        <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <tr className="border-bottom-1 border-dark">
+            <th className="fw-normal"  style={{width: '52px'}}>
+              #
+            </th>
+            <th className="fw-normal position-relative"  style={{minWidth: '286px', cursor: 'pointer'}}
+            >
+              Ime, prezime i oznaka
+              <div className="position-absolute translate-middle top-50 start-100 pe-5">
+                { sortArrow() }
+              </div>
+            </th>
+            <th className="fw-normal"  style={{width: '272px'}}>
+              Institucija
+            </th>
+            <th className="fw-normal"  style={{minWidth: '296px'}}>
+              Email
+            </th>
+            <th className="fw-normal position-relative" style={{minWidth: '226px', cursor: 'pointer'}}
+            >
+              Dodan
+              <div className="position-absolute translate-middle top-50 start-100 pe-5">
+                { sortArrow() }
+              </div>
+            </th>
+            <th className="fw-normal"  style={{width: '146px'}}>
+              Projekti
+            </th>
+            <th className="fw-normal"  style={{width: '116px'}}>
+              Javni ključ
+            </th>
+          </tr>
+        </thead>
+      </EmptyTableSpinner>
+    )
   else if (status === 'success' && data)
     return (
       <UsersListForm
