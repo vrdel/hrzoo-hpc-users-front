@@ -11,7 +11,7 @@ export const EmptyTableSpinner = ({ pageTitle, colSpan, children }) => {
       </Row>
       <Row className="mt-4">
         <Col>
-          <Table responsive hover className="shadow-sm">
+          <Table responsive className="shadow-sm">
             { children }
             <tbody>
               <tr>
