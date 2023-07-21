@@ -14,6 +14,7 @@ export function LinkTitles(loc) {
     [url_ui_prefix + '/clanstva']: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
     [url_ui_prefix + '/korisnici']: 'Popis svih korisnika na projektima',
     [url_ui_prefix + '/projekti']: 'Popis svih odobrenih projekata',
+    [url_ui_prefix + '/softver']: 'Popis modulefiles-a dostupnih na klasteru',
   }
 
   if (loc.includes('/moji-zahtjevi/') && loc.match(/[%\w.\d-_]+$/)) {

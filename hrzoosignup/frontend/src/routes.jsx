@@ -10,6 +10,7 @@ import { MyRequestChange } from './pages/my-requests/change';
 import NewRequest from './pages/new-request';
 import { ManageRequestsChange } from './pages/manage-requests/change';
 import { ManageRequestsList } from './pages/manage-requests/list';
+import { SoftwareList } from './pages/software/list';
 import ResearchProjectRequest from './pages/new-requests/research-project';
 import ResearchProjectRequestSelected from './pages/new-requests/research-project-selected';
 import GeneralRequest from './pages/new-requests/general';
@@ -97,6 +98,11 @@ const BaseRoutes = () => {
               <Route path="korisnici" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UsersList />
+                </ProtectedRoute>
+              }/>
+              <Route path="softver" element={
+                <ProtectedRoute sessionData={sessionData}>
+                  <SoftwareList />
                 </ProtectedRoute>
               }/>
               <Route path="upravljanje-zahtjevima/:projId" element={

@@ -8,7 +8,6 @@ import {
   Row,
   Table,
   Input,
-  Spinner
 } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -42,7 +41,7 @@ const sortArrow = (descending=undefined) => {
 }
 
 
-const UsersListForm = ({ data, pageTitle }) => {
+const UsersListTable = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
@@ -389,7 +388,7 @@ export const UsersList = () => {
     )
   else if (status === 'success' && data && pageTitle)
     return (
-      <UsersListForm
+      <UsersListTable
         data={ data }
         pageTitle={ pageTitle }
       />

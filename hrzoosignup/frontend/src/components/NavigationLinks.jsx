@@ -87,7 +87,7 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/upravljanje-zahtjevima'>
           <FontAwesomeIcon icon={faStamp} />{' '}
-          Upravljanje zahtjevima
+          Zahtjevi
         </NavLink>
       </NavItem>
       <NavItem key="projekti" className="mt-1">
@@ -108,6 +108,16 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
         >
           <FontAwesomeIcon icon={faUsers} />{" "}
           Korisnici
+        </NavLink>
+      </NavItem>
+      <NavItem key="softver" className="mt-1">
+        <NavLink
+          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          to='/ui/softver'
+        >
+          <FontAwesomeIcon icon={faUsers} />{" "}
+          Softver
         </NavLink>
       </NavItem>
     </>
