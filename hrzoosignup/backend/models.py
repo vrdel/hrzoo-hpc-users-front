@@ -336,6 +336,11 @@ class ScienceSoftware(models.Model):
         null=True,
         blank=True
     )
+    added_by = models.JSONField(
+        _("JSONField with few details of staff that added application"),
+        blank=True,
+        null=True
+    )
 
 
 # picked from invitations.model and overriden it as I didn't like
