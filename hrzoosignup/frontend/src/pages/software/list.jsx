@@ -8,6 +8,7 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import _ from 'lodash';
 
 
 const sortArrow = (descending=undefined) => {
@@ -51,6 +52,9 @@ const SoftwareListTable = ({pageTitle, data}) => {
   if (searchName)
     fieldsView = fieldsView.filter(e => e.name.toLowerCase().includes(searchName.toLowerCase()))
 
+  if (sortName !== undefined)
+    fieldsView = _.orderBy(fieldsView, ['name'], [sortName === true ? 'desc' : 'asc'])
+
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = searchName === true
 
@@ -75,7 +79,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
                   }}
                 >
                   <div className="flex-grow-1">
-                    Ime modulefilea
+                    Modulefile aplikacije
                   </div>
                   <div>
                     { sortArrow(sortName) }
