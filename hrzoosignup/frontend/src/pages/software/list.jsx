@@ -125,9 +125,9 @@ const SoftwareListTable = ({pageTitle, data}) => {
                   )
                 :
                   data.length > 0 && searchName ?
-                    <EmptyTable colspan="7" msg="Nijedan modulefile ne zadovoljava pretragu" />
+                    <EmptyTable colspan="7" msg="Nijedna aplikacija ne zadovoljava pretragu" />
                   :
-                    <EmptyTable colspan="7" msg="Nema modulefilea na klasteru" />
+                    <EmptyTable colspan="7" msg="Nema aplikacija na klasteru" />
               }
             </tbody>
           </Table>
@@ -141,7 +141,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
         pageCount={ paginationHelp.pageCount }
         start={ paginationHelp.start }
         choices={ paginationHelp.choices }
-        resource_name="korisnika"
+        resource_name="aplikacija"
       />
     </>
   )

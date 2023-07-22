@@ -331,6 +331,11 @@ class ScienceSoftware(models.Model):
         max_length=24,
         blank=True,
     )
+    created = models.DateTimeField(
+        _("Datetime when application is added"),
+        null=True,
+        blank=True
+    )
 
 
 # picked from invitations.model and overriden it as I didn't like
