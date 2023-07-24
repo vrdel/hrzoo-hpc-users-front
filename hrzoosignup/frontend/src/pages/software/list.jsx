@@ -8,6 +8,7 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
 import _ from 'lodash';
 
 
@@ -85,6 +86,12 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     { sortArrow(sortName) }
                   </div>
                 </th>
+                <th className="fw-normal">
+                  Vrijeme
+                </th>
+                <th className="fw-normal">
+                  Dodao
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -106,6 +113,10 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     }
                   />
                 </td>
+                <td>
+                </td>
+                <td>
+                </td>
               </tr>
               {
                 fieldsView.length > 0 ?
@@ -115,19 +126,23 @@ const SoftwareListTable = ({pageTitle, data}) => {
                         { pageIndex * pageSize + index + 1 }
                       </td>
                       <td className="p-3 align-middle text-center fw-bold">
-                        <Row>
-                          <Col>
-                            { application.name }
-                          </Col>
-                        </Row>
+                        { application.name }
+                      </td>
+                      <td className="p-3 align-middle text-center font-monospace fs-6">
+                        { convertToEuropean(application.created) }
+                        <br/>
+                        { convertTimeToEuropean(application.created) }
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { application.added_by.first_name } { application.added_by.last_name }
                       </td>
                     </tr>
                   )
                 :
                   data.length > 0 && searchName ?
-                    <EmptyTable colspan="7" msg="Nijedna aplikacija ne zadovoljava pretragu" />
+                    <EmptyTable colspan="3" msg="Nijedna aplikacija ne zadovoljava pretragu" />
                   :
-                    <EmptyTable colspan="7" msg="Nema aplikacija na klasteru" />
+                    <EmptyTable colspan="3" msg="Nema aplikacija na klasteru" />
               }
             </tbody>
           </Table>
