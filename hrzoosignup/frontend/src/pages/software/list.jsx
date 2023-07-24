@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Table, Input } from 'reactstrap';
+import { Col, Row, Table, Input, Card, CardHeader, CardBody } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
 import { fetchScienceSoftware } from '../../api/software';
 import { useQuery } from '@tanstack/react-query';
@@ -74,8 +74,8 @@ const SoftwareListTable = ({pageTitle, data}) => {
       <Row>
         <PageTitle pageTitle={pageTitle}/>
       </Row>
-      <Row className="g-0">
-        <Col>
+      <Row className="g-0 mt-4">
+        <Col xl={{size: 7}}>
           <Table responsive hover className="shadow-sm me-0 pe-0">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr className="border-2 border-dark" style={{'borderLeft': 0, 'borderTop': 0, 'borderRight': 0}}>
@@ -170,6 +170,18 @@ const SoftwareListTable = ({pageTitle, data}) => {
               }
             </tbody>
           </Table>
+        </Col>
+        <Col>
+        </Col>
+        <Col xl={{size: 4}}>
+          <Card className="bg-success me-5 mt-4 text-white">
+            <CardHeader>
+              Dodaj novu aplikaciju
+            </CardHeader>
+            <CardBody className="mb-1 bg-white text-dark">
+              Kme, kme
+            </CardBody>
+          </Card>
         </Col>
       </Row>
       <HZSIPagination
