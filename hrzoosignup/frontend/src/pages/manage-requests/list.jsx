@@ -9,7 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { TypeString, TypeColor } from '../../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faMagnifyingGlass, faSearch
+  faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import { extractLeaderName } from '../../utils/users_help'
@@ -29,11 +29,9 @@ import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import _ from "lodash";
 
 
-const ManageRequestsForm = ({ data, pageTitle }) => {
+const ManageRequestsTable = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
-
-  const navigate = useNavigate()
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
@@ -368,7 +366,7 @@ export const ManageRequestsList = () => {
 
   if (status === 'success' && nrProjects && pageTitle)
     return (
-      <ManageRequestsForm
+      <ManageRequestsTable
         data={ nrProjects }
         pageTitle={ pageTitle }
       />

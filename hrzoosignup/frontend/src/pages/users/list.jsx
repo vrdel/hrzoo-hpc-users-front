@@ -126,7 +126,7 @@ const UsersListTable = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal border-0 d-flex justify-content-center"  style={{minWidth: '286px', cursor: 'pointer'}}
+                <th className="fw-normal border-0 d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                     setSortJoined(undefined)
@@ -139,7 +139,7 @@ const UsersListTable = ({ data, pageTitle }) => {
                     { sortArrow(sortName) }
                   </div>
                 </th>
-                <th className="fw-normal" style={{minWidth: '326px'}}>
+                <th className="fw-normal" style={{minWidth: '306px'}}>
                   Institucija
                 </th>
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
