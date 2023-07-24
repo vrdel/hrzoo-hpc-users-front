@@ -35,6 +35,8 @@ const SoftwareListTable = ({pageTitle, data}) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
+  const [sortCreated, setSortCreated] = useState(undefined)
+  const [sortAddedBy, setSortAddedBy] = useState(undefined)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -55,6 +57,12 @@ const SoftwareListTable = ({pageTitle, data}) => {
 
   if (sortName !== undefined)
     fieldsView = _.orderBy(fieldsView, ['name'], [sortName === true ? 'desc' : 'asc'])
+
+  if (sortCreated !== undefined)
+    fieldsView = _.orderBy(fieldsView, ['created'], [sortCreated === true ? 'desc' : 'asc'])
+
+  if (sortAddedBy !== undefined)
+    fieldsView = _.orderBy(fieldsView, ['added_by.first_name', 'added_by.last_name'], [sortCreated === true ? 'desc' : 'asc'])
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = searchName === true
@@ -86,11 +94,29 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     { sortArrow(sortName) }
                   </div>
                 </th>
-                <th className="fw-normal">
-                  Vrijeme
+                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
+                  onClick={() => {
+                    setSortCreated(!sortCreated)
+                  }}
+                >
+                  <div className="flex-grow-1">
+                    Vrijeme
+                  </div>
+                  <div>
+                    { sortArrow(sortCreated) }
+                  </div>
                 </th>
-                <th className="fw-normal">
-                  Dodao
+                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '158px', cursor: 'pointer'}}
+                  onClick={() => {
+                    setSortAddedBy(!sortAddedBy)
+                  }}
+                >
+                  <div className="flex-grow-1">
+                    Dodao
+                  </div>
+                  <div>
+                    { sortArrow(sortAddedBy) }
+                  </div>
                 </th>
               </tr>
             </thead>
