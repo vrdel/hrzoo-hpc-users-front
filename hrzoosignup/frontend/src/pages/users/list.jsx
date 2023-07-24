@@ -355,7 +355,7 @@ export const UsersList = () => {
             <th className="fw-normal"  style={{width: '52px'}}>
               #
             </th>
-            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '286px', cursor: 'pointer'}}>
+            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
               <div className="flex-grow-1">
                 Ime, prezime i oznaka
               </div>
@@ -363,13 +363,13 @@ export const UsersList = () => {
                 { sortArrow() }
               </div>
             </th>
-            <th className="fw-normal"  style={{width: '272px'}}>
+            <th className="fw-normal"  style={{width: '306px'}}>
               Institucija
             </th>
             <th className="fw-normal"  style={{minWidth: '296px'}}>
               Email
             </th>
-            <th className="fw-normal d-flex justify-content-center" style={{minWidth: '226px', cursor: 'pointer'}}
+            <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
             >
               <div className="flex-grow-1">
                 Dodan
@@ -378,7 +378,7 @@ export const UsersList = () => {
                 { sortArrow() }
               </div>
             </th>
-            <th className="fw-normal"  style={{width: '146px'}}>
+            <th className="fw-normal"  style={{width: '180px'}}>
               Projekti
             </th>
             <th className="fw-normal"  style={{width: '116px'}}>
