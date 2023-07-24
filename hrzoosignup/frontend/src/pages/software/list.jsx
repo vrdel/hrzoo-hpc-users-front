@@ -67,7 +67,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
         <PageTitle pageTitle={pageTitle}/>
       </Row>
       <Row>
-        <Col>
+        <Col sm={{size: 7}}>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr className="border-bottom border-dark">
@@ -140,9 +140,9 @@ const SoftwareListTable = ({pageTitle, data}) => {
                   )
                 :
                   data.length > 0 && searchName ?
-                    <EmptyTable colspan="3" msg="Nijedna aplikacija ne zadovoljava pretragu" />
+                    <EmptyTable colspan="4" msg="Nijedna aplikacija ne zadovoljava pretragu" />
                   :
-                    <EmptyTable colspan="3" msg="Nema aplikacija na klasteru" />
+                    <EmptyTable colspan="4" msg="Nema aplikacija na klasteru" />
               }
             </tbody>
           </Table>
