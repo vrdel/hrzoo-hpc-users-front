@@ -19,6 +19,7 @@ import { CustomReactSelect } from "../../components/CustomReactSelect";
 import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import _ from 'lodash';
 
 
@@ -138,13 +139,13 @@ const UsersListTable = ({ data, pageTitle }) => {
                     { sortArrow(sortName) }
                   </div>
                 </th>
-                <th className="fw-normal"  style={{width: '272px'}}>
+                <th className="fw-normal" style={{minWidth: '326px'}}>
                   Institucija
                 </th>
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   Email
                 </th>
-                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '226px', cursor: 'pointer'}}
+                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortJoined(!sortJoined)
                     setSortName(undefined)
@@ -157,10 +158,10 @@ const UsersListTable = ({ data, pageTitle }) => {
                     { sortArrow(sortJoined) }
                   </div>
                 </th>
-                <th className="fw-normal"  style={{width: '146px'}}>
+                <th className="fw-normal"  style={{minWidth: '180px'}}>
                   Projekti
                 </th>
-                <th className="fw-normal"  style={{width: '116px'}}>
+                <th className="fw-normal"  style={{minWidth: '116px'}}>
                   Javni ključ
                 </th>
               </tr>
@@ -282,7 +283,9 @@ const UsersListTable = ({ data, pageTitle }) => {
                         { user.person_mail }
                       </td>
                       <td className="p-3 align-middle text-center fs-6 font-monospace" style={{wordBreak: 'break-all'}}>
-                        { user.date_joined }
+                        { convertToEuropean(user.date_joined) }
+                        <br/>
+                        { convertTimeToEuropean(user.date_joined) }
                       </td>
                       <td className="p-3 align-middle text-center">
                         {
