@@ -4,12 +4,18 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.core.cache import cache
+
 
 class UsersInfo(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
+        ret_data = cache.get('usersinfo-get')
+        if ret_data:
+            return Response(ret_data)
+
         users = models.User.objects.all()
         lead = models.Role.objects.get(name="lead")
         collaborator = models.Role.objects.get(name="collaborator")
@@ -48,4 +54,7 @@ class UsersInfo(APIView):
                         user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                 })
 
-        return Response(sorted(resp_users, key=lambda k: k["first_name"]))
+            ret_data = sorted(resp_users, key=lambda k: k["first_name"])
+            cache.set('usersinfo-get', ret_data, 60 * 15)
+
+        return Response(ret_data)

@@ -61,6 +61,7 @@ class ProjectsGeneral(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
+            cache.touch('projects-get-all', 1)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -141,7 +142,7 @@ class ProjectsResearch(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
-
+            cache.touch('projects-get-all', 1)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
@@ -225,6 +226,7 @@ class Projects(APIView):
                     )
                     p_obj.staff_comment = sc
                     sc.save()
+                cache.touch('projects-get-all', 1)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get(self, request, **kwargs):
@@ -234,8 +236,14 @@ class Projects(APIView):
         try:
             if kwargs.get('specific', False):
                 req_type = kwargs.get('specific')
+
                 if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
                     serializer = ProjectSerializerGet(models.Project.objects.all().order_by('-date_submitted'), many=True)
+                    ret_data = cache.get('projects-get-all')
+                    if ret_data:
+                        return Response(ret_data, status=status.HTTP_200_OK)
+                    else:
+                        cache.set('projects-get-all', serializer.data, 60 * 15)
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
                     serializer = ProjectSerializerGet(models.Project.objects.get(identifier=req_type))
@@ -288,6 +296,7 @@ class Projects(APIView):
                     proj = models.Project.objects.get(identifier=req_id)
                     models.UserProject.objects.filter(project=proj).delete()
                     proj.delete()
+                    cache.touch('projects-get-all', 1)
                     return Response(status=status.HTTP_204_NO_CONTENT)
                 else:
                     err_response = {
@@ -378,7 +387,6 @@ class CanSubmitInstitutionalProject(APIView):
         interest_projects = models.Project.objects.filter(users__id__exact=request.user.pk).values_list('croris_identifier', 'date_end')
         interest_projects = list(interest_projects)
         for approved_pr in interest_projects:
-            from pudb.remote import set_trace; set_trace(host='0.0.0.0')
             if approved_pr[0] not in projects_enddates:
                 projects_enddates.update({
                     approved_pr[0]: approved_pr[1]

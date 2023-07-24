@@ -355,8 +355,7 @@ export const UsersList = () => {
             <th className="fw-normal"  style={{width: '52px'}}>
               #
             </th>
-            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '286px', cursor: 'pointer'}}
-            >
+            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '286px', cursor: 'pointer'}}>
               <div className="flex-grow-1">
                 Ime, prezime i oznaka
               </div>
