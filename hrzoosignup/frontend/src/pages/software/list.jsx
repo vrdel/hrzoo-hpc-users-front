@@ -74,49 +74,47 @@ const SoftwareListTable = ({pageTitle, data}) => {
       <Row>
         <PageTitle pageTitle={pageTitle}/>
       </Row>
-      <Row>
-        <Col sm={{size: 7}}>
-          <Table responsive hover className="shadow-sm">
+      <Row className="g-0">
+        <Col>
+          <Table responsive hover className="shadow-sm me-0 pe-0">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
-              <tr className="border-bottom border-dark">
-                <th className="fw-normal"  style={{width: '52px'}}>
-                  #
+              <tr className="border-2 border-dark" style={{'borderLeft': 0, 'borderTop': 0, 'borderRight': 0}}>
+                <th className="fw-normal position-relative"  style={{width: '52px'}}>
+                  <span>
+                    #
+                  </span>
                 </th>
-                <th className="fw-normal border-0 d-flex justify-content-center"  style={{minWidth: '286px', cursor: 'pointer'}}
+                <th className="fw-normal position-relative"  style={{minWidth: '286px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                   }}
                 >
-                  <div className="flex-grow-1">
+                  <span>
                     Modulefile aplikacije
-                  </div>
-                  <div>
+                  </span>
+                  <span className="position-absolute start-100 top-50 translate-middle pe-5">
                     { sortArrow(sortName) }
-                  </div>
+                  </span>
                 </th>
-                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
+                <th className="fw-normal position-relative" style={{minWidth: '146px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortCreated(!sortCreated)
                   }}
                 >
-                  <div className="flex-grow-1">
+                  <span>
                     Vrijeme
-                  </div>
-                  <div>
+                  </span>
+                  <span className="position-absolute start-100 top-50 translate-middle pe-5">
                     { sortArrow(sortCreated) }
-                  </div>
+                  </span>
                 </th>
-                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '158px', cursor: 'pointer'}}
-                  onClick={() => {
-                    setSortAddedBy(!sortAddedBy)
-                  }}
-                >
-                  <div className="flex-grow-1">
+                <th className="fw-normal position-relative" style={{minWidth: '158px', cursor: 'pointer'}}>
+                  <span>
                     Dodao
-                  </div>
-                  <div>
+                  </span>
+                  <span className="position-absolute start-100 top-50 translate-middle pe-5">
                     { sortArrow(sortAddedBy) }
-                  </div>
+                  </span>
                 </th>
               </tr>
             </thead>
