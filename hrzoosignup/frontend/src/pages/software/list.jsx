@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Table, Input, Card, CardHeader, CardBody } from 'reactstrap';
+import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
 import { fetchScienceSoftware } from '../../api/software';
 import { useQuery } from '@tanstack/react-query';
@@ -72,7 +72,10 @@ const SoftwareListTable = ({pageTitle, data}) => {
   return (
     <>
       <Row>
-        <PageTitle pageTitle={pageTitle}/>
+        <PageTitle pageTitle={pageTitle}>
+          <Button color="success">
+          Dodaj novu</Button>
+        </PageTitle>
       </Row>
       <Row className="g-0 mt-4">
         <Col xl={{size: 7}}>
