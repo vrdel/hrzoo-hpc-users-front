@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button } from 'reactstrap';
+import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
 import { fetchScienceSoftware } from '../../api/software';
 import { useQuery } from '@tanstack/react-query';
@@ -37,6 +37,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
   const [sortName, setSortName] = useState(undefined)
   const [sortCreated, setSortCreated] = useState(undefined)
   const [sortAddedBy, setSortAddedBy] = useState(undefined)
+  const [showAddNew, setShowAddNew] = useState(false)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -73,13 +74,30 @@ const SoftwareListTable = ({pageTitle, data}) => {
     <>
       <Row>
         <PageTitle pageTitle={pageTitle}>
-          <Button color="success">
-          Dodaj novu</Button>
+          <Button color="success" onClick={() => setShowAddNew(!showAddNew)}>
+            Dodaj novu
+          </Button>
         </PageTitle>
       </Row>
+      <Row>
+        <Collapse className="m-2 p-2" isOpen={showAddNew}>
+          <Row>
+            <Col xl={{size: 4}}>
+              <Card className="bg-success me-5 mt-4 text-white">
+                <CardHeader>
+                  Dodaj novu aplikaciju
+                </CardHeader>
+                <CardBody className="mb-1 bg-white text-dark">
+                  Kme, kme
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Collapse>
+      </Row>
       <Row className="g-0 mt-4">
-        <Col xl={{size: 7}}>
-          <Table responsive hover className="shadow-sm me-0 pe-0">
+        <Col>
+          <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr className="border-2 border-dark" style={{'borderLeft': 0, 'borderTop': 0, 'borderRight': 0}}>
                 <th className="fw-normal position-relative"  style={{width: '52px'}}>
@@ -87,7 +105,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     #
                   </span>
                 </th>
-                <th className="fw-normal position-relative"  style={{minWidth: '286px', cursor: 'pointer'}}
+                <th className="fw-normal position-relative"  style={{cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                   }}
@@ -99,7 +117,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     { sortArrow(sortName) }
                   </span>
                 </th>
-                <th className="fw-normal position-relative" style={{minWidth: '146px', cursor: 'pointer'}}
+                <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
                   onClick={() => {
                     setSortCreated(!sortCreated)
                   }}
@@ -111,7 +129,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     { sortArrow(sortCreated) }
                   </span>
                 </th>
-                <th className="fw-normal position-relative" style={{minWidth: '158px', cursor: 'pointer'}}>
+                <th className="fw-normal position-relative" style={{cursor: 'pointer'}}>
                   <span>
                     Dodao
                   </span>
@@ -175,16 +193,6 @@ const SoftwareListTable = ({pageTitle, data}) => {
           </Table>
         </Col>
         <Col>
-        </Col>
-        <Col xl={{size: 4}}>
-          <Card className="bg-success me-5 mt-4 text-white">
-            <CardHeader>
-              Dodaj novu aplikaciju
-            </CardHeader>
-            <CardBody className="mb-1 bg-white text-dark">
-              Kme, kme
-            </CardBody>
-          </Card>
         </Col>
       </Row>
       <HZSIPagination
