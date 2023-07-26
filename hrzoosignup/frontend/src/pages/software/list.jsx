@@ -9,6 +9,7 @@ import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../compone
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
+import ModalAreYouSure from '../../components/ModalAreYouSure';
 import _ from 'lodash';
 
 
@@ -38,6 +39,12 @@ const SoftwareListTable = ({pageTitle, data}) => {
   const [sortCreated, setSortCreated] = useState(undefined)
   const [sortAddedBy, setSortAddedBy] = useState(undefined)
   const [showAddNew, setShowAddNew] = useState(false)
+
+  const [areYouSureModal, setAreYouSureModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState(undefined)
+  const [modalMsg, setModalMsg] = useState(undefined)
+  const [onYesCall, setOnYesCall] = useState(undefined)
+  const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -70,6 +77,17 @@ const SoftwareListTable = ({pageTitle, data}) => {
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
 
+  function doRemove(index) {
+    console.log('VRDEL DEBUG', index)
+    //remove(index)
+  }
+
+  function onYesCallback() {
+    if (onYesCall == 'doremove') {
+      doRemove(onYesCallArg)
+    }
+  }
+
   return (
     <>
       <Row>
@@ -79,6 +97,13 @@ const SoftwareListTable = ({pageTitle, data}) => {
           </Button>
         </PageTitle>
       </Row>
+      <ModalAreYouSure
+        isOpen={areYouSureModal}
+        toggle={() => setAreYouSureModal(!areYouSureModal)}
+        title={modalTitle}
+        msg={modalMsg}
+        onYes={onYesCallback}
+      />
       <Row>
         <Collapse className="m-2 p-2" isOpen={showAddNew}>
           <Row>
@@ -192,10 +217,14 @@ const SoftwareListTable = ({pageTitle, data}) => {
                           className="d-flex-column align-items-center justify-content-center"
                           color="danger"
                           onClick={() => {
-                            remove(index)
+                            setAreYouSureModal(!areYouSureModal)
+                            setModalTitle("Brisanje modulefilea aplikacije")
+                            setModalMsg("Da li ste sigurni da želite obrisati modulefile?")
+                            setOnYesCall('doremove')
+                            setOnYesCallArg(index)
                           }}
                         >
-                          <FontAwesomeIcon icon={faTimes} />
+                          <FontAwesomeIcon className="mt-1" icon={faTimes} />
                         </Button>
                       </td>
                     </tr>
