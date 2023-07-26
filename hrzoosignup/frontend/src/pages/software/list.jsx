@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
 import _ from 'lodash';
 
@@ -47,7 +47,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
   })
 
   const searchName = useWatch({ control, name: "searchName" })
-  const { fields } = useFieldArray({ control, name: "applications" })
+  const { fields, remove } = useFieldArray({ control, name: "applications" })
 
   let fieldsView = fields
 
@@ -82,7 +82,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
       <Row>
         <Collapse className="m-2 p-2" isOpen={showAddNew}>
           <Row>
-            <Col xl={{size: 4}}>
+            <Col xl={{offset: 3, size: 6}}>
               <Card className="bg-success me-5 mt-4 text-white">
                 <CardHeader>
                   Dodaj novu aplikaciju
@@ -96,7 +96,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
         </Collapse>
       </Row>
       <Row className="g-0 mt-4">
-        <Col>
+        <Col sm={{size: 12}}>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr className="border-2 border-dark" style={{'borderLeft': 0, 'borderTop': 0, 'borderRight': 0}}>
@@ -105,7 +105,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     #
                   </span>
                 </th>
-                <th className="fw-normal position-relative"  style={{cursor: 'pointer'}}
+                <th className="fw-normal position-relative"  style={{minWidth: '60%', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                   }}
@@ -137,6 +137,9 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     { sortArrow(sortAddedBy) }
                   </span>
                 </th>
+                <th className="fw-normal position-relative" style={{minWidth: '52px',  cursor: 'pointer'}}>
+                  Radnje
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -162,6 +165,8 @@ const SoftwareListTable = ({pageTitle, data}) => {
                 </td>
                 <td>
                 </td>
+                <td>
+                </td>
               </tr>
               {
                 fieldsView.length > 0 ?
@@ -180,6 +185,18 @@ const SoftwareListTable = ({pageTitle, data}) => {
                       </td>
                       <td className="p-3 align-middle text-center">
                         { application.added_by.first_name } { application.added_by.last_name }
+                      </td>
+                      <td className="p-3 text-center align-middle">
+                        <Button
+                          size="sm"
+                          className="d-flex-column align-items-center justify-content-center"
+                          color="danger"
+                          onClick={() => {
+                            remove(index)
+                          }}
+                        >
+                          <FontAwesomeIcon icon={faTimes} />
+                        </Button>
                       </td>
                     </tr>
                   )
