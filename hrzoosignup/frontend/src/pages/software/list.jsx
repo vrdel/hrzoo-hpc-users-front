@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faTimes, faSave, faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { CustomReactSelect } from '../../components/CustomReactSelect'
@@ -107,6 +107,7 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
       <Row>
         <PageTitle pageTitle={pageTitle}>
           <Button color="success" onClick={() => setShowAddNew(!showAddNew)}>
+            <FontAwesomeIcon className="mt-1" icon={faWindowRestore} />{' '}
             Dodaj
           </Button>
         </PageTitle>
@@ -169,6 +170,14 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                           />
                         }
                       />
+                    </Col>
+                  </Row>
+                  <Row className="mt-3 text-center">
+                    <Col>
+                      <Button color="success" id="submit-button" type="submit">
+                        <FontAwesomeIcon icon={faSave}/>{' '}
+                        Spremi
+                      </Button>
                     </Col>
                   </Row>
                 </CardBody>
