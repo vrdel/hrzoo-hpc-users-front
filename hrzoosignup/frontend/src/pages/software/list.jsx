@@ -4,7 +4,7 @@ import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse, L
 import { PageTitle } from '../../components/PageTitle';
 import { fetchScienceSoftware, addScienceSoftware } from '../../api/software';
 import { fetchOpsUsers } from '../../api/users';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm, useWatch} from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,6 +15,7 @@ import { CustomReactSelect } from '../../components/CustomReactSelect'
 import { AuthContext } from '../../components/AuthContextProvider';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-toastify'
 import _ from 'lodash';
 
 
@@ -52,6 +53,7 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const { userDetails, csrfToken } = useContext(AuthContext)
+  const queryClient = useQueryClient()
 
   const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
@@ -96,6 +98,33 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     }))
   }
 
+  const doAdd = (data) => addMutation.mutate(data, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('science-software-list')
+      toast.success(
+        <span className="font-monospace text-dark">
+          Novi modulefile uspješno dodan
+        </span>, {
+          toastId: 'software-ok-add',
+          autoClose: 2500,
+          delay: 500,
+        }
+      )
+    },
+    onError: (error) => {
+      toast.error(
+        <span className="font-monospace text-dark">
+          Modulefile nije bilo moguće dodati:
+          { error.message }
+        </span>, {
+          toastId: 'software-fail-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+  })
+
   function doRemove(index) {
     console.log('VRDEL DEBUG', index)
     //remove(index)
@@ -107,6 +136,7 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
         && data['newAppAddedBy'].value.includes(user.last_name))
         data['username'] = user.username
     }
+    doAdd(data)
   }
 
   function onYesCallback() {
@@ -114,6 +144,10 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
       doRemove(onYesCallArg)
     }
   }
+
+  useEffect(() => {
+    setValue("applications", dataSoftware)
+  }, [dataSoftware.length])
 
   return (
     <Form onSubmit={ handleSubmit(onSubmit) } className="needs-validation">
@@ -358,7 +392,8 @@ export const SoftwareList = () => {
       pageTitle={pageTitle}
       dataSoftware={dataSoftware}
       dataOpsUsers={dataOpsUsers}
-      />
+    />
+
   else if (statusSoftware === 'loading' || statusOpsUsers === 'loading')
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={5}>
