@@ -13,6 +13,7 @@ import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { CustomReactSelect } from '../../components/CustomReactSelect'
 import { AuthContext } from '../../components/AuthContextProvider';
+import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import _ from 'lodash';
 
 
@@ -346,4 +347,48 @@ export const SoftwareList = () => {
       dataSoftware={dataSoftware}
       dataOpsUsers={dataOpsUsers}
       />
+  else if (statusSoftware === 'loading' || statusOpsUsers === 'loading')
+    return (
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={5}>
+        <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <tr className="border-2 border-dark" style={{'borderLeft': 0, 'borderTop': 0, 'borderRight': 0}}>
+            <th className="fw-normal position-relative"  style={{width: '52px'}}>
+              <span>
+                #
+              </span>
+            </th>
+            <th className="fw-normal position-relative"  style={{minWidth: '60%', cursor: 'pointer'}}
+            >
+              <span>
+                Modulefile aplikacije
+              </span>
+              <span className="position-absolute start-100 top-50 translate-middle pe-5">
+                { sortArrow() }
+              </span>
+            </th>
+            <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
+            >
+              <span>
+                Vrijeme
+              </span>
+              <span className="position-absolute start-100 top-50 translate-middle pe-5">
+                { sortArrow() }
+              </span>
+            </th>
+            <th className="fw-normal position-relative" style={{cursor: 'pointer'}}>
+              <span>
+                Dodao
+              </span>
+              <span className="position-absolute start-100 top-50 translate-middle pe-5">
+                { sortArrow() }
+              </span>
+            </th>
+            <th className="fw-normal position-relative" style={{minWidth: '52px',  cursor: 'pointer'}}>
+              Radnje
+            </th>
+          </tr>
+        </thead>
+      </EmptyTableSpinner>
+    )
+
 };
