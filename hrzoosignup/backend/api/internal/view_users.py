@@ -39,7 +39,7 @@ class UsersInfoOps(APIView):
                     'message': '{} - Not allowed to view the ops users'.format(request.user.username)
                 }
             }
-            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+            return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class UsersInfo(APIView):
