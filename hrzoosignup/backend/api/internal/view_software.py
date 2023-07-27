@@ -50,15 +50,16 @@ class ScienceSoftware(APIView):
             target_user = get_user_model().objects.get(username=request.data['username'])
 
             request.data['added_by'] = {
-                    'username': target_user['username'],
-                    'first_name': target_user['first_name'],
-                    'last_name': target_user['last_name']
+                    'username': target_user.username,
+                    'first_name': target_user.first_name,
+                    'last_name': target_user.last_name
                 }
 
             serializer = ScienceSoftwareSerializer(data=request.data)
 
             if serializer.is_valid():
                 serializer.save()
+                cache.delete('science-software-get')
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         else:
