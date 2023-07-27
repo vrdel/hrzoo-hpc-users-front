@@ -15,15 +15,22 @@ class UsersInfoOps(APIView):
 
     def get(self, request):
         if request.user.is_staff or request.user.is_superuser:
+            extract_users = []
             ret_data = cache.get('usersinfo-ops-get')
             if ret_data:
                 return Response(ret_data)
 
             users = get_user_model().objects.filter(is_staff=True)
-
-            serializer = serializers.UsersSerializer(users, many=True)
-            cache.set('usersinfo-ops-get', serializer.data, 60 * 15)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            for user in users:
+                extract_users.append(
+                    {
+                        'first_name': user.first_name,
+                        'last_name': user.last_name,
+                        'username': user.username
+                    }
+                )
+            cache.set('usersinfo-ops-get', extract_users, 60 * 15)
+            return Response(extract_users, status=status.HTTP_200_OK)
 
         else:
             err_response = {

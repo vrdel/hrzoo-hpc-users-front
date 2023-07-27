@@ -3,6 +3,7 @@ import { SharedData } from '../root';
 import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse, Label } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
 import { fetchScienceSoftware } from '../../api/software';
+import { fetchOpsUsers } from '../../api/users';
 import { useQuery } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
@@ -11,6 +12,7 @@ import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { CustomReactSelect } from '../../components/CustomReactSelect'
+import { AuthContext } from '../../components/AuthContextProvider';
 import _ from 'lodash';
 
 
@@ -33,7 +35,7 @@ const sortArrow = (descending=undefined) => {
 }
 
 
-const SoftwareListTable = ({pageTitle, data}) => {
+const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
@@ -47,12 +49,14 @@ const SoftwareListTable = ({pageTitle, data}) => {
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
+  const { userDetails } = useContext(AuthContext)
+
   const { control, setValue } = useForm({
     defaultValues: {
-      applications: data,
+      applications: dataSoftware,
       searchName: "",
       newAppModuleName: '',
-      newAppAddedBy: ''
+      newAppAddedBy: buildSelectValues([userDetails])[0]
     }
   })
 
@@ -79,6 +83,13 @@ const SoftwareListTable = ({pageTitle, data}) => {
   paginationHelp.isSearched = searchName === true
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
+
+  function buildSelectValues(opsusers) {
+    return opsusers.map(user => ({
+      'value': `${user.first_name} ${user.last_name}`,
+      'label': `${user.first_name} ${user.last_name}`
+    }))
+  }
 
   function doRemove(index) {
     console.log('VRDEL DEBUG', index)
@@ -144,18 +155,16 @@ const SoftwareListTable = ({pageTitle, data}) => {
                         Osoba:
                       </Label>
                       <Controller
-                        name="requestResourceType"
+                        name="newAppAddedBy"
                         control={control}
                         rules={{required: true}}
                         render={ ({field}) =>
                           <CustomReactSelect
-                            aria-label="newAppModuleName"
-                            closeMenuOnSelect={false}
+                            aria-label="newAppAddedBy"
                             forwardedRef={field.ref}
-                            id="newAppModuleName"
-                            isMulti
-                            options={[{'label': 'Daniel Vrcic', 'value': 'Daniel Vrcic'}]}
-                            placeholder="Odaberi"
+                            id="newAppAddedBy"
+                            options={buildSelectValues(dataOpsUsers)}
+                            value={field.value}
                             onChange={(e) => setValue('newAppAddedBy', e)}
                           />
                         }
@@ -278,7 +287,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
                     </tr>
                   )
                 :
-                  data.length > 0 && searchName ?
+                  dataSoftware.length > 0 && searchName ?
                     <EmptyTable colspan="4" msg="Nijedna aplikacija ne zadovoljava pretragu" />
                   :
                     <EmptyTable colspan="4" msg="Nema aplikacija na klasteru" />
@@ -308,15 +317,24 @@ export const SoftwareList = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
 
-  const { status, data} = useQuery({
+  const { status: statusSoftware, data: dataSoftware} = useQuery({
     queryKey: ['science-software-list'],
     queryFn: fetchScienceSoftware,
+  })
+
+  const { status: statusOpsUsers, data: dataOpsUsers} = useQuery({
+    queryKey: ['ops-users'],
+    queryFn: fetchOpsUsers,
   })
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
 
-  if (status === 'success')
-    return <SoftwareListTable pageTitle={pageTitle} data={data}/>
+  if (statusSoftware === 'success' && statusOpsUsers === 'success')
+    return <SoftwareListTable
+      pageTitle={pageTitle}
+      dataSoftware={dataSoftware}
+      dataOpsUsers={dataOpsUsers}
+      />
 };
