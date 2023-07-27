@@ -27,8 +27,9 @@ class ScienceSoftware(APIView):
 
             softwares = models.ScienceSoftware.objects.all()
             serializer = ScienceSoftwareSerializer(softwares, many=True)
-            cache.set('science-software-get', serializer.data, 60 * 15)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            sort_softwares = sorted(serializer.data, key=lambda e: e['name'])
+            cache.set('science-software-get', sort_softwares, 60 * 15)
+            return Response(sort_softwares, status=status.HTTP_200_OK)
 
         else:
             err_response = {
