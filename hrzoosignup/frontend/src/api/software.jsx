@@ -29,3 +29,44 @@ export async function fetchScienceSoftware()
   if (error_msg)
     throw new Error(`Error fetching Science Software data: ${error_msg}`)
 }
+
+
+export async function addScienceSoftware(data, csrftoken)
+{
+  let error_msg = ''
+
+  try {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/science-software/`, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+        'Referer': 'same-origin'
+      },
+      body: name && JSON.stringify({
+        'name': name
+      })
+    })
+
+    if (!response.ok) {
+      try {
+        let json = await response.json();
+        error_msg = `${response.status} ${response.statusText} in POST: ${json?.status?.message}`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in POST`
+      }
+
+    }
+  }
+  catch (err) {
+    error_msg = `${err} in POST`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error changing science software list: ${error_msg}`)
+}

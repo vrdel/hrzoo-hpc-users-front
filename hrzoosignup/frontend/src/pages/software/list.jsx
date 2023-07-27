@@ -1,11 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse, Label } from 'reactstrap';
+import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse, Label, Form } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
-import { fetchScienceSoftware } from '../../api/software';
+import { fetchScienceSoftware, addScienceSoftware } from '../../api/software';
 import { fetchOpsUsers } from '../../api/users';
 import { useQuery } from '@tanstack/react-query';
-import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch} from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes, faSave, faWindowRestore } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,7 @@ import ModalAreYouSure from '../../components/ModalAreYouSure';
 import { CustomReactSelect } from '../../components/CustomReactSelect'
 import { AuthContext } from '../../components/AuthContextProvider';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { useMutation } from '@tanstack/react-query';
 import _ from 'lodash';
 
 
@@ -50,9 +51,9 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
-  const { userDetails } = useContext(AuthContext)
+  const { userDetails, csrfToken } = useContext(AuthContext)
 
-  const { control, setValue } = useForm({
+  const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
       applications: dataSoftware,
       searchName: "",
@@ -63,6 +64,9 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
 
   const searchName = useWatch({ control, name: "searchName" })
   const { fields, remove } = useFieldArray({ control, name: "applications" })
+  const addMutation = useMutation({
+    mutationFn: (data) => addScienceSoftware(data, csrfToken)
+  })
 
   let fieldsView = fields
 
@@ -97,6 +101,10 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     //remove(index)
   }
 
+  function onSubmit(data) {
+    console.log('VRDEL DEBUG', data)
+  }
+
   function onYesCallback() {
     if (onYesCall == 'doremove') {
       doRemove(onYesCallArg)
@@ -104,7 +112,7 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   }
 
   return (
-    <>
+    <Form onSubmit={ handleSubmit(onSubmit) } className="needs-validation">
       <Row>
         <PageTitle pageTitle={pageTitle}>
           <Button color="success" onClick={() => setShowAddNew(!showAddNew)}>
@@ -318,7 +326,7 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
         choices={ paginationHelp.choices }
         resource_name="aplikacija"
       />
-    </>
+    </Form>
   )
 }
 
@@ -390,5 +398,4 @@ export const SoftwareList = () => {
         </thead>
       </EmptyTableSpinner>
     )
-
 };

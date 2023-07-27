@@ -1,4 +1,5 @@
 from django.core.cache import cache
+from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -40,3 +41,23 @@ class ScienceSoftware(APIView):
             }
             return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
 
+    def post(self, request, **kwargs):
+        if request.user.is_staff or request.user.is_superuser:
+            request.data['name'] = request.data['newAppModuleName']
+            request.data['created'] = timezone.now()
+            request.data['added_by'] = request.data['newAppAddedBy']
+
+            serializer = ScienceSoftwareSerializer(data=request.data)
+
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        else:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_401_UNAUTHORIZED,
+                    'message': '{} - Not allowed to view the ops users'.format(request.user.username)
+                }
+            }
+            return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
