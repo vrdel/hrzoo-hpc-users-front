@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse } from 'reactstrap';
+import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse, Label } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
 import { fetchScienceSoftware } from '../../api/software';
 import { useQuery } from '@tanstack/react-query';
@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
 import ModalAreYouSure from '../../components/ModalAreYouSure';
+import { CustomReactSelect } from '../../components/CustomReactSelect'
 import _ from 'lodash';
 
 
@@ -50,6 +51,8 @@ const SoftwareListTable = ({pageTitle, data}) => {
     defaultValues: {
       applications: data,
       searchName: "",
+      newAppModuleName: '',
+      newAppAddedBy: ''
     }
   })
 
@@ -93,7 +96,7 @@ const SoftwareListTable = ({pageTitle, data}) => {
       <Row>
         <PageTitle pageTitle={pageTitle}>
           <Button color="success" onClick={() => setShowAddNew(!showAddNew)}>
-            Dodaj novu
+            Dodaj
           </Button>
         </PageTitle>
       </Row>
@@ -107,13 +110,58 @@ const SoftwareListTable = ({pageTitle, data}) => {
       <Row>
         <Collapse className="m-2 p-2" isOpen={showAddNew}>
           <Row>
-            <Col xl={{offset: 3, size: 6}}>
+            <Col xl={{offset: 2, size: 8}}>
               <Card className="bg-success me-5 mt-4 text-white">
                 <CardHeader>
-                  Dodaj novu aplikaciju
+                  Nova aplikacija
                 </CardHeader>
                 <CardBody className="mb-1 bg-white text-dark">
-                  Kme, kme
+                  <Row>
+                    <Col className="text-left" md={{size: 8}}>
+                      <Label
+                        htmlFor="appName"
+                        className="mr-1 mt-3 form-label fw-bold"
+                        aria-label="appName">
+                        Modulefile:
+                      </Label>
+                      <Controller
+                        name="newAppModuleName"
+                        control={ control }
+                        render={({field}) =>
+                          <Input
+                            { ...field }
+                            placeholder="Ime modulefile-a aplikacije"
+                            className="form-control"
+                          />
+                        }
+                      />
+                    </Col>
+                    <Col>
+                      <Label
+                        htmlFor="newAppModuleName"
+                        className="mr-1 mt-3 form-label fw-bold"
+                        aria-label="newAppModuleName">
+                        Osoba:
+                      </Label>
+                      <Controller
+                        name="requestResourceType"
+                        control={control}
+                        rules={{required: true}}
+                        render={ ({field}) =>
+                          <CustomReactSelect
+                            aria-label="newAppModuleName"
+                            closeMenuOnSelect={false}
+                            forwardedRef={field.ref}
+                            id="newAppModuleName"
+                            isMulti
+                            options={[{'label': 'Daniel Vrcic', 'value': 'Daniel Vrcic'}]}
+                            placeholder="Odaberi"
+                            onChange={(e) => setValue('newAppAddedBy', e)}
+                          />
+                        }
+                      />
+                    </Col>
+                  </Row>
                 </CardBody>
               </Card>
             </Col>
