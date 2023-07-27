@@ -1,10 +1,38 @@
 from backend import models
+from backend import serializers
+from django.contrib.auth import get_user_model
+from django.core.cache import cache
+from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from django.core.cache import cache
+
+class UsersInfoOps(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        if request.user.is_staff or request.user.is_superuser:
+            ret_data = cache.get('usersinfo-ops-get')
+            if ret_data:
+                return Response(ret_data)
+
+            users = get_user_model().objects.filter(is_staff=True)
+
+            serializer = serializers.UsersSerializer(users, many=True)
+            cache.set('usersinfo-ops-get', serializer.data, 60 * 15)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        else:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_401_UNAUTHORIZED,
+                    'message': '{} - Not allowed to view the ops users'.format(request.user.username)
+                }
+            }
+            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
 
 class UsersInfo(APIView):
