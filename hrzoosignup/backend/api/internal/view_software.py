@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -45,7 +46,14 @@ class ScienceSoftware(APIView):
         if request.user.is_staff or request.user.is_superuser:
             request.data['name'] = request.data['newAppModuleName']
             request.data['created'] = timezone.now()
-            request.data['added_by'] = request.data['newAppAddedBy']
+
+            target_user = get_user_model().objects.get(username=request.data['username'])
+
+            request.data['added_by'] = {
+                    'username': target_user['username'],
+                    'first_name': target_user['first_name'],
+                    'last_name': target_user['last_name']
+                }
 
             serializer = ScienceSoftwareSerializer(data=request.data)
 

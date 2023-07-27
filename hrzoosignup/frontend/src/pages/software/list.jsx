@@ -102,7 +102,11 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   }
 
   function onSubmit(data) {
-    console.log('VRDEL DEBUG', data)
+    for (var user of dataOpsUsers) {
+      if (data['newAppAddedBy'].value.includes(user.first_name)
+        && data['newAppAddedBy'].value.includes(user.last_name))
+        data['username'] = user.username
+    }
   }
 
   function onYesCallback() {
