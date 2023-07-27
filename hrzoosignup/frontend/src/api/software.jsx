@@ -47,9 +47,7 @@ export async function addScienceSoftware(data, csrftoken)
         'X-CSRFToken': csrftoken,
         'Referer': 'same-origin'
       },
-      body: name && JSON.stringify({
-        'name': name
-      })
+      body: data && JSON.stringify(data)
     })
 
     if (!response.ok) {
