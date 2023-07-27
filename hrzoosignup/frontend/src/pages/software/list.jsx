@@ -246,6 +246,8 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                 <th className="fw-normal position-relative"  style={{minWidth: '60%', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
+                    setSortCreated(undefined)
+                    setSortAddedBy(undefined)
                   }}
                 >
                   <span>
@@ -258,6 +260,8 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                 <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
                   onClick={() => {
                     setSortCreated(!sortCreated)
+                    setSortName(undefined)
+                    setSortAddedBy(undefined)
                   }}
                 >
                   <span>
@@ -267,7 +271,13 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                     { sortArrow(sortCreated) }
                   </span>
                 </th>
-                <th className="fw-normal position-relative" style={{cursor: 'pointer'}}>
+                <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
+                  onClick={() => {
+                    setSortCreated(undefined)
+                    setSortName(undefined)
+                    setSortAddedBy(!sortAddedBy)
+                  }}
+                >
                   <span>
                     Dodao
                   </span>
