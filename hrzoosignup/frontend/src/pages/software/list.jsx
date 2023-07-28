@@ -99,7 +99,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     fieldsView = _.orderBy(fieldsView, ['created'], [sortCreated === true ? 'desc' : 'asc'])
 
   if (sortAddedBy !== undefined)
-    fieldsView = _.orderBy(fieldsView, ['added_by.first_name', 'added_by.last_name'], [sortCreated === true ? 'desc' : 'asc'])
+    fieldsView = _.orderBy(fieldsView, ['added_by.first_name', 'added_by.last_name'], [sortAddedBy === true ? 'desc' : 'asc'])
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = searchName === true
