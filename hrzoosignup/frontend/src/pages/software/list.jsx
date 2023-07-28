@@ -85,7 +85,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     fieldsView = fieldsView.filter(e => e.name.toLowerCase().includes(searchName.toLowerCase()))
 
   if (searchCreated)
-    fieldsView = fieldsView.filter(e => e.created.toLowerCase().includes(searchCreated.toLowerCase()))
+    fieldsView = fieldsView.filter(e => convertToEuropean(e.created).includes(searchCreated.toLowerCase()))
 
   if (searchAddedBy)
     fieldsView = fieldsView.filter(e =>
