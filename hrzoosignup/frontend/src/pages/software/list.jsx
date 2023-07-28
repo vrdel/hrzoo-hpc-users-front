@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useMemo } from 'react';
 import { SharedData } from '../root';
 import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse, Label, Form } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
-import { fetchScienceSoftware, addScienceSoftware } from '../../api/software';
+import { fetchScienceSoftware, addScienceSoftware, deleteScienceSoftware } from '../../api/software';
 import { fetchOpsUsers } from '../../api/users';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm, useWatch} from "react-hook-form";
@@ -39,7 +39,7 @@ const sortArrow = (descending=undefined) => {
 
 
 const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
-  const [pageSize, setPageSize] = useState(30)
+  const [pageSize, setPageSize] = useState(50)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
   const [sortCreated, setSortCreated] = useState(undefined)
@@ -59,23 +59,36 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     defaultValues: {
       applications: dataSoftware,
       searchName: "",
-      newAppModuleName: '',
+      searchCreated: "",
+      searchAddedBy: "",
+      newAppModuleName: "",
       newAppAddedBy: buildSelectValues([userDetails])[0]
     }
   })
 
   const searchName = useWatch({ control, name: "searchName" })
+  const searchCreated = useWatch({ control, name: "searchCreated" })
+  const searchAddedBy = useWatch({ control, name: "searchAddedBy" })
   const { fields, remove } = useFieldArray({ control, name: "applications" })
+
   const addMutation = useMutation({
     mutationFn: (data) => addScienceSoftware(data, csrfToken)
   })
+  const deleteMutation = useMutation({
+    mutationFn: (data) => deleteScienceSoftware(data, csrfToken)
+  })
 
   let fieldsView = fields
-
   let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
 
   if (searchName)
     fieldsView = fieldsView.filter(e => e.name.toLowerCase().includes(searchName.toLowerCase()))
+
+  if (searchCreated)
+    fieldsView = fieldsView.filter(e => e.created.toLowerCase().includes(searchCreated.toLowerCase()))
+
+  if (searchAddedBy)
+    fieldsView = fieldsView.filter(e => e.added_by.toLowerCase().includes(searchAddedBy.toLowerCase()))
 
   if (sortName !== undefined)
     fieldsView = _.orderBy(fieldsView, ['name'], [sortName === true ? 'desc' : 'asc'])
@@ -125,9 +138,34 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     }
   })
 
-  function doRemove(index) {
-    console.log('VRDEL DEBUG', index)
-    //remove(index)
+  function doRemove(data) {
+    remove(data.index)
+    return deleteMutation.mutate(data, {
+      onSuccess: () => {
+        queryClient.invalidateQueries('science-software-list')
+        toast.success(
+          <span className="font-monospace text-dark">
+            Modulefile uspješno izbrisan
+          </span>, {
+            toastId: 'software-ok-del',
+            autoClose: 2500,
+            delay: 500,
+          }
+        )
+      },
+      onError: (error) => {
+        toast.error(
+          <span className="font-monospace text-dark">
+            Modulefile nije bilo moguće izbrisati:
+            { error.message }
+          </span>, {
+            toastId: 'software-fail-del',
+            autoClose: 2500,
+            delay: 500
+          }
+        )
+      }
+    })
   }
 
   function onSubmit(data) {
@@ -146,6 +184,8 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
       doRemove(onYesCallArg)
     }
   }
+
+  let lookupIndexes = _.fromPairs(fields.map((e, index) => [e.id, index]))
 
   useEffect(() => {
     setValue("applications", dataSoftware)
@@ -348,7 +388,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                             setModalTitle("Brisanje modulefilea aplikacije")
                             setModalMsg("Da li ste sigurni da želite obrisati modulefile?")
                             setOnYesCall('doremove')
-                            setOnYesCallArg(index)
+                            setOnYesCallArg({
+                              'index': lookupIndexes[application.id],
+                              'name': application.name
+                            })
                           }}
                         >
                           <FontAwesomeIcon className="mt-1" icon={faTimes} />

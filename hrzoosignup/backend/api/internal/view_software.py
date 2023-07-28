@@ -66,7 +66,36 @@ class ScienceSoftware(APIView):
             err_response = {
                 'status': {
                     'code': status.HTTP_401_UNAUTHORIZED,
-                    'message': '{} - Not allowed to view the ops users'.format(request.user.username)
+                    'message': '{} - Not allowed to change science software'.format(request.user.username)
                 }
             }
             return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
+
+    def delete(self, request, id):
+        if request.user.is_staff or request.user.is_superuser:
+            try:
+                softwares = models.ScienceSoftware.objects.filter(id=id).filter(name=request.data['name'])
+                softwares.delete()
+                cache.delete('science-software-get')
+                return Response(status=status.HTTP_204_NO_CONTENT)
+
+            except models.ScienceSoftware.DoesNotExist as exc:
+                err_response = {
+                    'status': {
+                        'code': status.HTTP_404_NOT_FOUND,
+                        'message': '{} - Software not found'.format(request.user.username)
+                    }
+                }
+                logger.error(err_response)
+                return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
+        else:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_401_UNAUTHORIZED,
+                    'message': '{} - Not allowed to view the science software'.format(request.user.username)
+                }
+            }
+            logger.error(err_response)
+            return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
+

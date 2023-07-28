@@ -22,6 +22,7 @@ urlpatterns = [
     path('keys/', views.SshKeys.as_view(), name='sshkeys'),
     path('keys/<str:all>', views.SshKeys.as_view(), name='sshkeys'),
     path('science-software/', views.ScienceSoftware.as_view(), name='sciencesoftware'),
+    path('science-software/<int:id>', views.ScienceSoftware.as_view(), name='sciencesoftware'),
     path("active-users/", views.UsersInfo.as_view(), name="users"),
     path("ops-users/", views.UsersInfoOps.as_view(), name="users-ops"),
 ] + router.urls
