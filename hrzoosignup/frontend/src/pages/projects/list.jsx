@@ -13,7 +13,7 @@ import {
   HZSIPagination
 } from "../../components/TableHelpers";
 import { convertToEuropean } from "../../utils/dates";
-import { Badge, Col, Input, Row, Table, Spinner } from "reactstrap";
+import { Badge, Col, Input, Row, Table } from "reactstrap";
 import { PageTitle } from "../../components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -30,6 +30,7 @@ import _ from "lodash";
 const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
+  const { ResourceTypesToSelect } = useContext(SharedData)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -38,7 +39,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       searchType: "",
       searchDate: "",
       searchUsers: "",
-      searchState: ""
+      searchState: "",
+      searchResourceTypes: []
     }
   })
 
@@ -118,7 +120,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   Stanje
                 </th>
                 <th className="fw-normal" style={{width: '650px'}}>
-                  Naziv i šifra
+                  Naziv, šifra i dodijeljeni resursi
                 </th>
                 <th className="fw-normal" style={{width: '126px'}}>
                   Tip
@@ -152,19 +154,41 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     }
                   />
                 </td>
-                <td className="p-2 align-middle text-center">
-                  <Controller
-                    name="searchNameIdentifier"
-                    control={ control }
-                    render={ ({ field }) =>
-                      <Input
-                        { ...field }
-                        placeholder="Traži"
-                        className="form-control"
-                        style={{ fontSize: "0.83rem" }}
+                <td className="p-2 align-middle text-center" style={{ fontSize: "0.83rem" }}>
+                  <Row className="g-0">
+                    <Col>
+                      <Controller
+                        name="searchNameIdentifier"
+                        control={ control }
+                        render={ ({ field }) =>
+                          <Input
+                            { ...field }
+                            placeholder="Traži"
+                            className="form-control"
+                            style={{ fontSize: "0.83rem" }}
+                          />
+                        }
                       />
-                    }
-                  />
+                    </Col>
+                    <Col className="ps-1">
+                      <Controller
+                        name="searchType"
+                        control={ control }
+                        render={ ({ field }) =>
+                          <CustomReactSelect
+                            forwardedRef={ field.ref }
+                            customPadding="0.2rem"
+                            placeholder="Resursi"
+                            isMulti
+                            fontSize="0.83rem"
+                            resourceTypeMultiValue={true}
+                            options={ResourceTypesToSelect}
+                            onChange={ e => setValue("searchResourceTypes", e.value) }
+                          />
+                        }
+                      />
+                    </Col>
+                  </Row>
                 </td>
                 <td className="p-2 align-middle text-center" style={{ fontSize: "0.83rem" }}>
                   <Controller
