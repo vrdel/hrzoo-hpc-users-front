@@ -299,7 +299,12 @@ const UsersListTable = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         {
                           user.ssh_key ?
-                            <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }} />
+                            <div className='position-relative' key={`ssh-key-${index}`}>
+                              <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                              <span key={`ssh-key-${index}`} className="position-absolute top-100 translate-middle badge rounded-pill fw-normal text-dark bg-success-subtle" style={{fontSize: '0.6rem'}}>
+                                { user.n_ssh_key }
+                              </span>
+                            </div>
                           :
                             <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }} />
                         }
