@@ -38,7 +38,7 @@ const sortArrow = (descending=undefined) => {
 }
 
 
-const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
+const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
@@ -131,12 +131,14 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   }
 
   function onSubmit(data) {
-    for (var user of dataOpsUsers) {
-      if (data['newAppAddedBy'].value.includes(user.first_name)
-        && data['newAppAddedBy'].value.includes(user.last_name))
-        data['username'] = user.username
+    if (data) {
+      for (var user of dataOpsUsers) {
+        if (data['newAppAddedBy'].value.includes(user.first_name)
+          && data['newAppAddedBy'].value.includes(user.last_name))
+          data['username'] = user.username
+      }
+      doAdd(data)
     }
-    doAdd(data)
   }
 
   function onYesCallback() {
@@ -150,89 +152,91 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   }, [dataSoftware.length])
 
   return (
-    <Form onSubmit={ handleSubmit(onSubmit) } className="needs-validation">
-      <Row>
-        <PageTitle pageTitle={pageTitle}>
-          <Button color="success" onClick={() => setShowAddNew(!showAddNew)}>
-            <FontAwesomeIcon className="mt-1" icon={faWindowRestore} />{' '}
-            Dodaj
-          </Button>
-        </PageTitle>
-      </Row>
-      <ModalAreYouSure
-        isOpen={areYouSureModal}
-        toggle={() => setAreYouSureModal(!areYouSureModal)}
-        title={modalTitle}
-        msg={modalMsg}
-        onYes={onYesCallback}
-      />
-      <Row>
-        <Collapse className="m-2 p-2" isOpen={showAddNew}>
-          <Row>
-            <Col xl={{offset: 2, size: 8}}>
-              <Card className="bg-success me-5 mt-4 text-white">
-                <CardHeader>
-                  Nova aplikacija
-                </CardHeader>
-                <CardBody className="mb-1 bg-white text-dark">
-                  <Row>
-                    <Col className="text-left" md={{size: 8}}>
-                      <Label
-                        htmlFor="appName"
-                        className="mr-1 mt-3 form-label fw-bold"
-                        aria-label="appName">
-                        Modulefile:
-                      </Label>
-                      <Controller
-                        name="newAppModuleName"
-                        control={ control }
-                        render={({field}) =>
-                          <Input
-                            { ...field }
-                            placeholder="Ime modulefile-a aplikacije"
-                            className="form-control"
-                          />
-                        }
-                      />
-                    </Col>
-                    <Col>
-                      <Label
-                        htmlFor="newAppModuleName"
-                        className="mr-1 mt-3 form-label fw-bold"
-                        aria-label="newAppModuleName">
-                        Osoba:
-                      </Label>
-                      <Controller
-                        name="newAppAddedBy"
-                        control={control}
-                        rules={{required: true}}
-                        render={ ({field}) =>
-                          <CustomReactSelect
-                            aria-label="newAppAddedBy"
-                            forwardedRef={field.ref}
-                            id="newAppAddedBy"
-                            options={buildSelectValues(dataOpsUsers)}
-                            value={field.value}
-                            onChange={(e) => setValue('newAppAddedBy', e)}
-                          />
-                        }
-                      />
-                    </Col>
-                  </Row>
-                  <Row className="mt-3 text-center">
-                    <Col>
-                      <Button color="success" id="submit-button" type="submit">
-                        <FontAwesomeIcon icon={faSave}/>{' '}
-                        Spremi
-                      </Button>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
-        </Collapse>
-      </Row>
+    <React.Fragment>
+      <Form onSubmit={ handleSubmit(onSubmit) } className="needs-validation">
+        <Row>
+          <PageTitle pageTitle={pageTitle}>
+            <Button color="success" onClick={() => setShowAddNew(!showAddNew)}>
+              <FontAwesomeIcon className="mt-1" icon={faWindowRestore} />{' '}
+              Dodaj
+            </Button>
+          </PageTitle>
+        </Row>
+        <ModalAreYouSure
+          isOpen={areYouSureModal}
+          toggle={() => setAreYouSureModal(!areYouSureModal)}
+          title={modalTitle}
+          msg={modalMsg}
+          onYes={onYesCallback}
+        />
+        <Row>
+          <Collapse className="m-2 p-2" isOpen={showAddNew}>
+            <Row>
+              <Col xl={{offset: 2, size: 8}}>
+                <Card className="bg-success me-5 mt-4 text-white">
+                  <CardHeader>
+                    Nova aplikacija
+                  </CardHeader>
+                  <CardBody className="mb-1 bg-white text-dark">
+                    <Row>
+                      <Col className="text-left" md={{size: 8}}>
+                        <Label
+                          htmlFor="appName"
+                          className="mr-1 mt-3 form-label fw-bold"
+                          aria-label="appName">
+                          Modulefile:
+                        </Label>
+                        <Controller
+                          name="newAppModuleName"
+                          control={ control }
+                          render={({field}) =>
+                            <Input
+                              { ...field }
+                              placeholder="Ime modulefile-a aplikacije"
+                              className="form-control"
+                            />
+                          }
+                        />
+                      </Col>
+                      <Col>
+                        <Label
+                          htmlFor="newAppModuleName"
+                          className="mr-1 mt-3 form-label fw-bold"
+                          aria-label="newAppModuleName">
+                          Osoba:
+                        </Label>
+                        <Controller
+                          name="newAppAddedBy"
+                          control={control}
+                          rules={{required: true}}
+                          render={ ({field}) =>
+                            <CustomReactSelect
+                              aria-label="newAppAddedBy"
+                              forwardedRef={field.ref}
+                              id="newAppAddedBy"
+                              options={buildSelectValues(dataOpsUsers)}
+                              value={field.value}
+                              onChange={(e) => setValue('newAppAddedBy', e)}
+                            />
+                          }
+                        />
+                      </Col>
+                    </Row>
+                    <Row className="mt-3 text-center">
+                      <Col>
+                        <Button color="success" id="submit-button" type="submit">
+                          <FontAwesomeIcon icon={faSave}/>{' '}
+                          Spremi
+                        </Button>
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </Collapse>
+        </Row>
+      </Form>
       <Row className="g-0 mt-4">
         <Col sm={{size: 12}}>
           <Table responsive hover className="shadow-sm">
@@ -374,7 +378,7 @@ const SoftwareListTable = ({pageTitle, dataSoftware, dataOpsUsers}) => {
         choices={ paginationHelp.choices }
         resource_name="aplikacija"
       />
-    </Form>
+    </React.Fragment>
   )
 }
 
@@ -398,7 +402,7 @@ export const SoftwareList = () => {
   }, [location.pathname])
 
   if (statusSoftware === 'success' && statusOpsUsers === 'success')
-    return <SoftwareListTable
+    return <SoftwareListTableForm
       pageTitle={pageTitle}
       dataSoftware={dataSoftware}
       dataOpsUsers={dataOpsUsers}
