@@ -88,7 +88,9 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     fieldsView = fieldsView.filter(e => e.created.toLowerCase().includes(searchCreated.toLowerCase()))
 
   if (searchAddedBy)
-    fieldsView = fieldsView.filter(e => e.added_by.toLowerCase().includes(searchAddedBy.toLowerCase()))
+    fieldsView = fieldsView.filter(e =>
+    e.added_by.first_name.toLowerCase().includes(searchAddedBy.toLowerCase())
+      || e.added_by.last_name.toLowerCase().includes(searchAddedBy.toLowerCase()))
 
   if (sortName !== undefined)
     fieldsView = _.orderBy(fieldsView, ['name'], [sortName === true ? 'desc' : 'asc'])
@@ -224,7 +226,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                           htmlFor="appName"
                           className="mr-1 mt-3 form-label fw-bold"
                           aria-label="appName">
-                          Modulefile:
+                          Modulefile ili ime:
                         </Label>
                         <Controller
                           name="newAppModuleName"
@@ -232,7 +234,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                           render={({field}) =>
                             <Input
                               { ...field }
-                              placeholder="Ime modulefile-a aplikacije"
+                              placeholder="Modulefile ili ime aplikacije"
                               className="form-control"
                             />
                           }
@@ -354,8 +356,32 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                   />
                 </td>
                 <td>
+                  <Controller
+                    name="searchCreated"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        placeholder="Traži"
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    }
+                  />
                 </td>
                 <td>
+                  <Controller
+                    name="searchAddedBy"
+                    control={ control }
+                    render={ ({ field }) =>
+                      <Input
+                        { ...field }
+                        placeholder="Traži"
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    }
+                  />
                 </td>
                 <td>
                 </td>
