@@ -40,7 +40,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       searchDate: "",
       searchUsers: "",
       searchState: "",
-      searchResourceTypes: []
+      searchResourceTypes: ""
     }
   })
 
@@ -49,6 +49,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const searchDate = useWatch({ control, name: "searchDate" })
   const searchUsers = useWatch({ control, name: "searchUsers" })
   const searchState = useWatch({ control, name: "searchState" })
+  const searchResourceTypes = useWatch({ control, name: "searchResourceTypes"})
 
   const { fields } = useFieldArray({ control, name: "projects" })
 
@@ -94,6 +95,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
     else if (searchState.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
   }
+
 
   const isSearched = searchNameIdentifier || (searchType && searchType !== 'all')
     || searchDate || searchUsers || (searchState && searchState !== 'all')
@@ -155,7 +157,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   />
                 </td>
                 <td className="p-2 align-middle text-center" style={{ fontSize: "0.83rem" }}>
-                  <Row className="g-0">
+                  <Row className="g-0 d-flex align-items-center">
                     <Col>
                       <Controller
                         name="searchNameIdentifier"
@@ -259,7 +261,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               { project.identifier }
                             </Badge>
                             {
-                              project.staff_resources_type.map((rt, i) =>
+                              project.staff_resources_type.map((rtype, i) =>
                                 <span className="ms-1 p-1 fw-normal" key={i}
                                   style={{
                                     backgroundColor: '#feb272',
@@ -267,7 +269,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                                     borderRadius: '2px',
                                     fontSize: '0.83rem'
                                   }}>
-                                  {rt.value}
+                                  {rtype.value}
                                 </span>)
                             }
                           </Col>
