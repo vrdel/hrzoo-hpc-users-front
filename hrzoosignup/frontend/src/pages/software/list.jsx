@@ -416,7 +416,8 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                             setOnYesCall('doremove')
                             setOnYesCallArg({
                               'index': lookupIndexes[application.id],
-                              'name': application.name
+                              'name': application.name,
+                              'pk': application.pk
                             })
                           }}
                         >

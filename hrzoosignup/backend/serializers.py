@@ -260,5 +260,5 @@ class SshKeysSerializer(serializers.ModelSerializer):
 
 class ScienceSoftwareSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = ('name', 'created', 'added_by')
+        fields = ('pk', 'name', 'created', 'added_by')
         model = models.ScienceSoftware

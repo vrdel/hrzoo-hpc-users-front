@@ -75,7 +75,7 @@ export async function deleteScienceSoftware(data, csrftoken)
   let error_msg = ''
 
   try {
-    let response = await fetch(`${url_api_prefix}/api/v1/internal/science-software/${data.index}`, {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/science-software/${data.pk}`, {
       method: 'DELETE',
       mode: 'cors',
       cache: 'no-cache',

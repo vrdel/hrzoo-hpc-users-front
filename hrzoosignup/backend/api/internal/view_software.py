@@ -29,9 +29,8 @@ class ScienceSoftware(APIView):
 
             softwares = models.ScienceSoftware.objects.all()
             serializer = ScienceSoftwareSerializer(softwares, many=True)
-            sort_softwares = sorted(serializer.data, key=lambda e: e['name'])
-            cache.set('science-software-get', sort_softwares, 60 * 15)
-            return Response(sort_softwares, status=status.HTTP_200_OK)
+            cache.set('science-software-get', serializer.data, 60 * 15)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
             err_response = {
@@ -74,8 +73,8 @@ class ScienceSoftware(APIView):
     def delete(self, request, id):
         if request.user.is_staff or request.user.is_superuser:
             try:
-                softwares = models.ScienceSoftware.objects.filter(id=id).filter(name=request.data['name'])
-                softwares.delete()
+                software = models.ScienceSoftware.objects.get(id=id)
+                software.delete()
                 cache.delete('science-software-get')
                 return Response(status=status.HTTP_204_NO_CONTENT)
 
