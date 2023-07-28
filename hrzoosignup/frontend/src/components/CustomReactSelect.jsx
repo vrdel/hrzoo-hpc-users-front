@@ -103,7 +103,7 @@ export const CustomReactSelect = ({forwardedRef=undefined,
         ...base,
         backgroundColor: "#feb272",
         color: "#303030",
-        fontSize: "16px",
+        fontSize: !fontSize ? "16px" : fontSize,
       }),
       multiValueRemove: (base) => ({
         ...base,
