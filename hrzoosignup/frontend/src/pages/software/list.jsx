@@ -78,7 +78,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     mutationFn: (data) => deleteScienceSoftware(data, csrfToken)
   })
 
-  let fieldsView = fields
+  let fieldsView = _.orderBy(fields, ['name'])
   let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
 
   if (searchName)
