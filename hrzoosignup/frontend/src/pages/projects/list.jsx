@@ -96,9 +96,19 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
   }
 
+  if (searchResourceTypes.length > 0) {
+    let targetResource = searchResourceTypes.map(element => element.value)
+    fieldsView = fieldsView.filter(e =>
+      {
+        let projectResources = e.staff_resources_type.map(element => element.value)
+        if (_.difference(targetResource, projectResources).length === 0)
+          return e
+      }
+    )
+  }
 
   const isSearched = searchNameIdentifier || (searchType && searchType !== 'all')
-    || searchDate || searchUsers || (searchState && searchState !== 'all')
+    || searchDate || searchResourceTypes.length > 0 || searchUsers || (searchState && searchState !== 'all')
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
@@ -158,7 +168,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 </td>
                 <td className="p-2 align-middle text-center" style={{ fontSize: "0.83rem" }}>
                   <Row className="g-0 d-flex align-items-center">
-                    <Col>
+                    <Col sm={{size: 7}}>
                       <Controller
                         name="searchNameIdentifier"
                         control={ control }
@@ -172,20 +182,22 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         }
                       />
                     </Col>
-                    <Col className="ps-1">
+                    <Col sm={{size: 5}} className="ps-1">
                       <Controller
-                        name="searchType"
+                        name="searchResourceTypes"
                         control={ control }
                         render={ ({ field }) =>
                           <CustomReactSelect
                             forwardedRef={ field.ref }
                             customPadding="0.2rem"
                             placeholder="Resursi"
-                            isMulti
+                            isMulti={true}
                             fontSize="0.83rem"
+                            closeMenuOnSelect={false}
                             resourceTypeMultiValue={true}
+                            isClearable={false}
                             options={ResourceTypesToSelect}
-                            onChange={ e => setValue("searchResourceTypes", e.value) }
+                            onChange={ e => setValue("searchResourceTypes", e) }
                           />
                         }
                       />
