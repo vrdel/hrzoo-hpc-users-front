@@ -61,7 +61,7 @@ class ProjectsGeneral(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
-            cache.touch('projects-get-all', 1)
+            cache.delete('projects-get-all')
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -142,7 +142,7 @@ class ProjectsResearch(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
-            cache.touch('projects-get-all', 1)
+            cache.delete('projects-get-all')
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
@@ -226,7 +226,7 @@ class Projects(APIView):
                     )
                     p_obj.staff_comment = sc
                     sc.save()
-                cache.touch('projects-get-all', 1)
+                cache.delete('projects-get-all')
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get(self, request, **kwargs):
@@ -296,7 +296,7 @@ class Projects(APIView):
                     proj = models.Project.objects.get(identifier=req_id)
                     models.UserProject.objects.filter(project=proj).delete()
                     proj.delete()
-                    cache.touch('projects-get-all', 1)
+                    cache.delete('projects-get-all')
                     return Response(status=status.HTTP_204_NO_CONTENT)
                 else:
                     err_response = {
