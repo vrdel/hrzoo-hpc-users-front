@@ -253,11 +253,23 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         </Row>
                         <Row style={{height: '15px'}}>
                         </Row>
-                        <Row>
+                        <Row className="g-0 d-flex justify-content-center">
                           <Col>
-                            <Badge color="secondary" className="fw-normal">
+                            <Badge color="secondary" className="fw-normal me-3">
                               { project.identifier }
                             </Badge>
+                            {
+                              project.staff_resources_type.map((rt, i) =>
+                                <span className="ms-1 p-1 fw-normal" key={i}
+                                  style={{
+                                    backgroundColor: '#feb272',
+                                    color: '#303030',
+                                    borderRadius: '2px',
+                                    fontSize: '0.83rem'
+                                  }}>
+                                  {rt.value}
+                                </span>)
+                            }
                           </Col>
                         </Row>
                       </td>
