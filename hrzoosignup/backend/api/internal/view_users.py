@@ -70,6 +70,7 @@ class UsersInfo(APIView):
                 key=lambda k: k.project.identifier
             )
             projects = projects_lead + projects_collab
+            ssh_keys = len(models.SSHPublicKey.objects.filter(user=user))
             if len(projects) > 0:
                 resp_users.append({
                     "username": user.username,
@@ -77,8 +78,8 @@ class UsersInfo(APIView):
                     "last_name": user.last_name,
                     "person_institution": user.person_institution,
                     "person_mail": user.person_mail,
-                    "ssh_key":
-                        len(models.SSHPublicKey.objects.filter(user=user)) > 0,
+                    "ssh_key": ssh_keys > 0,
+                    "n_ssh_key": ssh_keys,
                     "projects": [{
                         "identifier": userproject.project.identifier,
                         "state": userproject.project.state.name,
