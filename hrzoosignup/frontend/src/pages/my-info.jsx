@@ -272,9 +272,6 @@ const TableCrorisProjects = ({leadData, associateData}) => {
         <th className="fw-normal">
           Trajanje
         </th>
-        <th className="fw-normal">
-          Šifra
-        </th>
       </tr>
     </thead>
   )
@@ -300,11 +297,6 @@ const TableCrorisProjects = ({leadData, associateData}) => {
                     <td className="align-middle text-center fs-6 font-monospace">
                       { project['start'] }<br/>{ project['end']}
                     </td>
-                    <td className="align-middle text-center fs-6">
-                      <Badge className="fs-6 fw-normal" color="secondary">
-                        { project['identifier'] }
-                      </Badge>
-                    </td>
                   </tr>
                 )
               }
@@ -321,11 +313,6 @@ const TableCrorisProjects = ({leadData, associateData}) => {
                     </td>
                     <td className="align-middle text-center fs-6 font-monospace">
                       { project['start'] }<br/>{ project['end']}
-                    </td>
-                    <td className="align-middle text-center fs-6">
-                      <Badge className="fs-6 fw-normal" color="secondary">
-                        { project['identifier'] }
-                      </Badge>
                     </td>
                   </tr>
                 )
