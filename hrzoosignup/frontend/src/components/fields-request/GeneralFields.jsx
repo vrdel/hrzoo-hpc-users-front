@@ -7,7 +7,6 @@ import {
   Col,
   Badge,
   FormFeedback,
-  Input,
   Label,
   Row,
 } from 'reactstrap';
