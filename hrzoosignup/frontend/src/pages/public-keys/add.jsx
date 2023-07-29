@@ -37,18 +37,17 @@ const NewPublicKey = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+  const [sshKeyFile, setSshKeyFile] = useState(undefined)
   const { csrfToken } = useContext(AuthContext)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, setValue, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       name: '',
-      public_key: ''
+      public_key: '',
+      imported_public_key: ''
     }
   });
 
@@ -64,6 +63,14 @@ const NewPublicKey = () => {
     if (onYesCall == 'doaddsshkey') {
       doAdd(onYesCallArg)
     }
+  }
+
+  function uploadKeyFile(event) {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setSshKeyFile(event.target.result)
+    }
+    reader.readAsText(event.target.files[0])
   }
 
   const addMutation = useMutation({
@@ -98,6 +105,12 @@ const NewPublicKey = () => {
       )
     }
   })
+
+  useEffect(() => {
+    setPageTitle(LinkTitles(location.pathname))
+    if (sshKeyFile)
+      setValue('public_key', sshKeyFile)
+  }, [location.pathname, sshKeyFile])
 
   return (
     <>
@@ -154,8 +167,22 @@ const NewPublicKey = () => {
               <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
                 Javni ključ:
               </Label>
-              <Input type='file' id="fileInput" style={{display: 'none'}}/>
-              <Button color="success" className="mt-3 mb-2">
+              <Controller
+                name="imported_public_key"
+                control={control}
+                render={ ({field}) =>
+                  <Input {...field}
+                    name="imported_public_key"
+                    type='file'
+                    id="fileInput"
+                    style={{display: 'none'}}
+                    onChange={(e) => {
+                      uploadKeyFile(e)
+                    }}
+                  />
+                }
+              />
+              <Button color="success" className="mt-3 mb-2" onClick={() => document.getElementById("fileInput").click()}>
                 <FontAwesomeIcon icon={faFile}/>{' '}
                 Učitaj
               </Button>
