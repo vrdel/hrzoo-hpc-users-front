@@ -261,7 +261,7 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
               crorisFinance.length > 1
                 ?
                   crorisFinance.map((finance, i) =>
-                    <span key={`croris-finance-${i}`}>
+                    <Badge className="bg-warning-subtle fw-normal text-dark fs-6" key={`croris-finance-${i}`}>
                       { finance }
                       {
                         crorisFinance.length - 1 !== i ?
@@ -269,10 +269,12 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
                           :
                             ''
                       }
-                    </span>
+                    </Badge>
                   )
                 :
-                  crorisFinance[0]
+                  <Badge className="bg-warning-subtle fw-normal text-dark fs-6">
+                    { crorisFinance[0] }
+                  </Badge>
             }
           </span>
         </Col>

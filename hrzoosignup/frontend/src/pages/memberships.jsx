@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody, CardFooter,
+import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody,
   Label, Badge, Table, Button, Form, Tooltip } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
