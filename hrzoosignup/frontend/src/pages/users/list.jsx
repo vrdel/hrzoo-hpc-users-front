@@ -106,12 +106,22 @@ const UsersListTable = ({ data, pageTitle }) => {
   if (sortName !== undefined)
     fieldsView = _.orderBy(fieldsView, ['first_name', 'last_name'], [sortName === true ? 'desc' : 'asc'])
 
-  const isSearched = searchJoined || searchName || searchInstitution || searchEmail || searchProject || searchSSHKey
+  const isSearched = searchJoined || searchName || searchInstitution || searchEmail || searchProject || (searchSSHKey && searchSSHKey.toLowerCase() !== 'svi')
 
   paginationHelp.searchNum = fieldsView.length
   paginationHelp.isSearched = isSearched
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
+
+  function calcIndex(index) {
+    if (sortName || sortJoined)
+      if (!isSearched)
+        return fields.length - (pageIndex * pageSize + index + 1)
+      else
+        return paginationHelp.searchLen + 1 - (pageIndex * pageSize + index + 1)
+    else
+      return pageIndex * pageSize + index + 1
+  }
 
   return (
     <>
@@ -262,7 +272,7 @@ const UsersListTable = ({ data, pageTitle }) => {
                   fieldsView.map((user, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
-                        { sortJoined || sortName ? fields.length - (pageIndex * pageSize + index + 1) : pageIndex * pageSize + index + 1 }
+                        { calcIndex(index) }
                       </td>
                       <td className="p-3 align-middle text-center fw-bold">
                         <Row>
