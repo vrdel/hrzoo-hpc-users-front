@@ -18,7 +18,8 @@ import {
   faPaperPlane,
   faArrowDown
 } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify'
+import { toast } from 'react-toastify';
+import { EmptyTableSpinner } from '../components/EmptyTableSpinner';
 
 
 function extractUsers(projectUsers, role) {
@@ -784,7 +785,7 @@ const Memberships = () => {
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'
-    && nrProjects) {
+    && nrProjects && pageTitle) {
     let projectsApproved = nrProjects.filter(project =>
       project.state.name !== 'deny' && project.state.name !== 'submit'
     )
@@ -855,6 +856,53 @@ const Memberships = () => {
       </>
     )
   }
+
+  else if (nrStatus === 'loading' || invitesStatus === 'loading' && pageTitle)
+    return (
+      <React.Fragment>
+        <Row className="mb-5">
+          <PageTitle pageTitle={pageTitle}/>
+        </Row>
+        <Row className="mb-5">
+          <Col>
+            <Card className="ms-3 bg-light me-3 shadow-sm">
+              <CardHeader className="d-flex justify-content-between">
+                <span className="fs-5 fw-bold text-dark">
+                  Ime projekta
+                </span>
+              </CardHeader>
+              <CardBody className="mb-1 bg-light">
+                <EmptyTableSpinner colSpan={6} rowClass="ms-4 me-4 mb-2">
+                  <thead id="hzsi-thead" className="align-middle text-center text-white">
+                    <tr className="border-bottom-1 border-dark">
+                      <th className="fw-normal">
+                        Ime
+                      </th>
+                      <th className="fw-normal">
+                        Prezime
+                      </th>
+                      <th className="fw-normal">
+                        Uloga
+                      </th>
+                      <th className="fw-normal">
+                        Email
+                      </th>
+                      <th className="fw-normal">
+                        CroRIS registracija
+                      </th>
+                      <th className="fw-normal">
+                        Prijavljen
+                      </th>
+                    </tr>
+                  </thead>
+                </EmptyTableSpinner>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row style={{height: '100px'}}/>
+      </React.Fragment>
+    )
 };
 
 export default Memberships;
