@@ -896,6 +896,15 @@ const Memberships = () => {
                     </tr>
                   </thead>
                 </EmptyTableSpinner>
+                <Row>
+                  <BriefProjectInfo project={{
+                    'identifier': 'šifra',
+                    'date_start': '2023-01-01',
+                    'date_end': '2027-01-01',
+                    'date_changed': '2026-01-01',
+                    'project_type': Object({'name': 'research-croris'})
+                  }} />
+                </Row>
               </CardBody>
             </Card>
           </Col>
