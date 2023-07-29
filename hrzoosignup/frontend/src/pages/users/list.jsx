@@ -46,7 +46,7 @@ const UsersListTable = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
-  const [sortJoined, setSortJoined] = useState(undefined)
+  const [sortJoined, setSortJoined] = useState(true)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -262,7 +262,7 @@ const UsersListTable = ({ data, pageTitle }) => {
                   fieldsView.map((user, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
-                        { pageIndex * pageSize + index + 1 }
+                        { sortJoined || sortName ? fields.length - (pageIndex * pageSize + index + 1) : pageIndex * pageSize + index + 1 }
                       </td>
                       <td className="p-3 align-middle text-center fw-bold">
                         <Row>
