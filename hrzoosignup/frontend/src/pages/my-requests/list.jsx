@@ -22,6 +22,7 @@ import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
+import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 
 
 const MyRequestsList = () => {
@@ -59,7 +60,38 @@ const MyRequestsList = () => {
       navigate(defaultUnAuthnRedirect)
   }, [location.pathname, status])
 
-  if (nrProjects?.length > 0)
+  if (status === 'loading' && pageTitle)
+    return (
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
+        <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <tr className="border-bottom-1 border-dark">
+            <th className="fw-normal">
+              Stanje
+            </th>
+            <th className="fw-normal">
+              Podnesen
+            </th>
+            <th className="fw-normal">
+              Naziv
+            </th>
+            <th className="fw-normal">
+              Šifra
+            </th>
+            <th className="fw-normal">
+              Tip
+            </th>
+            <th className="fw-normal">
+              Trajanje
+            </th>
+            <th className="fw-normal">
+              Radnje
+            </th>
+          </tr>
+        </thead>
+      </EmptyTableSpinner>
+
+    )
+  else if (nrProjects?.length > 0 && pageTitle)
     return (
       <>
         <Row>
@@ -158,7 +190,7 @@ const MyRequestsList = () => {
         </Row>
       </>
     )
-  else if (nrProjects?.length === 0)
+  else if (nrProjects?.length === 0 && pageTitle)
     return (
       <>
         <Row>
