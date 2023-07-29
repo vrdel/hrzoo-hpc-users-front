@@ -115,8 +115,8 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
             rules={{required: true}}
             render={ ({field}) =>
               <DatePicker
-                {...field}
                 locale="hr-HR"
+                forwardedRef={field.ref}
                 disabled={disabledRemain}
                 maxDate={new Date(2027, 1)}
                 onChange={(value) => {
@@ -126,6 +126,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                   setValue('startDate', value)
                   return value
                 }}
+                value={field.value}
                 required={true}
                 className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
               />
@@ -138,7 +139,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
             rules={{required: true}}
             render={ ({field}) =>
               <DatePicker
-                {...field}
+                forwardedRef={field.ref}
                 required={true}
                 disabled={disabledRemain}
                 onChange={(value) => {
@@ -150,6 +151,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 }}
                 maxDate={new Date(2027, 1)}
                 locale="hr-HR"
+                value={field.value}
                 className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
               />
             }
