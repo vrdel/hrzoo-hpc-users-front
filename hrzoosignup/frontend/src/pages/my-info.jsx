@@ -264,7 +264,7 @@ const TableCrorisProjects = ({leadData, associateData}) => {
     <thead id="hzsi-thead" className="align-middle text-center text-white">
       <tr className="border-bottom-1 border-dark">
         <th className="fw-normal">
-          Naziv
+          Naziv projekta i CroRIS poveznica
         </th>
         <th className="fw-normal">
           Uloga
@@ -287,7 +287,18 @@ const TableCrorisProjects = ({leadData, associateData}) => {
                 leadData && leadData.map((project, index) =>
                   <tr key={index}>
                     <td className="p-3 fw-bold align-middle text-center">
-                      { project['title'] }
+                      <Row className="mt-1">
+                        <Col>
+                          { project['title'] }
+                        </Col>
+                      </Row>
+                      <Row className="mt-3">
+                        <Col>
+                          <a className="fw-normal" href={`https://www.croris.hr/projekti/projekt/${project['croris_id']}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+                            https://www.croris.hr/projekti/projekt/{project['croris_id']}
+                          </a>
+                        </Col>
+                      </Row>
                     </td>
                     <td className="p-3 align-middle text-center">
                       <Badge className="fs-6 fw-normal" color="success">
@@ -304,7 +315,18 @@ const TableCrorisProjects = ({leadData, associateData}) => {
                 associateData && associateData.map((project, index) =>
                   <tr key={index}>
                     <td className="p-3 fw-bold align-middle text-center">
-                      { project['title'] }
+                      <Row>
+                        <Col>
+                          { project['title'] }
+                        </Col>
+                      </Row>
+                      <Row className="mt-3">
+                        <Col>
+                          <a className="fw-normal" href={`https://www.croris.hr/projekti/projekt/${project['croris_id']}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+                            https://www.croris.hr/projekti/projekt/{project['croris_id']}
+                          </a>
+                        </Col>
+                      </Row>
                     </td>
                     <td className="p-3 align-middle text-center">
                       <Badge className="fs-6 fw-normal" color="primary">
