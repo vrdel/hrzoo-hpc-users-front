@@ -311,8 +311,8 @@ const PublicKeys = () => {
           <Row className="mt-4 ms-4 me-4 mb-3">
             <Col>
               <Table responsive hover className="shadow-sm">
-                <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-                  <tr className="border-bottom border-1 border-dark">
+                <thead id="hzsi-thead" className="align-middle text-center text-white">
+                  <tr className="border-bottom-1 border-dark">
                     <th className="fw-normal">
                       Ime ključa
                     </th>
@@ -357,7 +357,7 @@ const PublicKeys = () => {
           </Row>
           <Row className="mb-2 mt-3">
             <Col className="d-flex justify-content-center">
-              <Button color="success" onClick={() => {
+              <Button size="lg" color="success" onClick={() => {
                   navigate('novi')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}
