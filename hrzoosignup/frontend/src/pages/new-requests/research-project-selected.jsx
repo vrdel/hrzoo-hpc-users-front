@@ -42,14 +42,14 @@ import { AuthContext } from '../../components/AuthContextProvider.jsx';
 const ExtractUsers = ({projectUsers}) => {
   return (
     projectUsers.map((user, i) =>
-      <>
+      <React.Fragment key={`wrap-project-users-${i}`}>
         <Badge color="secondary" className="fs-6 mb-2 fw-normal" key={`project-users-${i}`}>
           { user.first_name }
           {' '}
           { user.last_name }
         </Badge>
         {'   '}
-      </>
+      </React.Fragment>
     )
   )
 }

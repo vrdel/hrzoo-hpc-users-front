@@ -179,7 +179,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                   {'   '}
                   {
                     projectInfo.croris_collaborators.map((user, i) =>
-                      <>
+                      <React.Fragment key={`wrap-project-users-${i}`}>
                         <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
                           {
                             user &&
@@ -187,7 +187,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                           }
                         </Badge>
                         {'  '}
-                      </>
+                      </React.Fragment>
                     )
                   }
                 </Col>
