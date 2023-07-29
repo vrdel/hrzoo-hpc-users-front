@@ -234,8 +234,8 @@ const EmptyCroRis = () => {
 
 const TableCrorisProjects = ({leadData, associateData}) => {
   const CrorisTableHead = () => (
-    <thead id="hzsi-thead" className="table-active align-middle text-center text-white">
-      <tr className="border-bottom border-1 border-dark">
+    <thead id="hzsi-thead" className="align-middle text-center text-white">
+      <tr className="border-bottom-1 border-dark">
         <th className="fw-normal">
           Naziv
         </th>
