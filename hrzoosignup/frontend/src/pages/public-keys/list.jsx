@@ -26,6 +26,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { fetchNrProjects } from '../../api/projects';
 import { AuthContext } from '../../components/AuthContextProvider';
+import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 
 
 const PublicKeys = () => {
@@ -144,7 +145,28 @@ const PublicKeys = () => {
     }
   }
 
-  if (nrStatus === 'success' && nrProjects) {
+  if (status === 'loading' || nrStatus === 'loading')
+    return (
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
+        <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <tr className="border-bottom-1 border-dark">
+            <th className="fw-normal">
+              Ime ključa
+            </th>
+            <th className="fw-normal">
+              Digitalni otisak ključa
+            </th>
+            <th className="fw-normal">
+              Tip
+            </th>
+            <th className="fw-normal">
+              Radnje
+            </th>
+          </tr>
+        </thead>
+      </EmptyTableSpinner>
+    )
+  else if (nrStatus === 'success' && nrProjects) {
     let projectsApproved = nrProjects.filter(project =>
       project.state.name !== 'deny' && project.state.name !== 'submit'
     )
