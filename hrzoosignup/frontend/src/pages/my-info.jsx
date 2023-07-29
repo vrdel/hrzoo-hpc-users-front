@@ -74,6 +74,33 @@ const CroRisInfo = ({croRisProjects}) => {
           </Table>
         </Col>
       </Row>
+      <Row>
+        <Col className="ms-4" md={{size: 11}}>
+          <Table borderless responsive className="text-left">
+            <thead>
+              <tr>
+                <th className="fw-bold fs-5">
+                  CroRIS poveznica
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {
+                    croRisProjects['person_info']['croris_id'] ?
+                      <a href={`https://www.croris.hr/osobe/profil/${croRisProjects['person_info']['croris_id']}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+                        https://www.croris.hr/osobe/profil/{croRisProjects['person_info']['croris_id']}
+                      </a>
+                    :
+                      '\u2212'
+                  }
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
       <Row className="g-0 mt-5 ms-3 me-3">
         <Col>
         </Col>
