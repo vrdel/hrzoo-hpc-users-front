@@ -3,13 +3,21 @@ import { Col, Row, Table, Spinner } from "reactstrap";
 import { PageTitle } from "./PageTitle";
 
 
-export const EmptyTableSpinner = ({ pageTitle, colSpan, children }) => {
+export const EmptyTableSpinner = ({ pageTitle=undefined, colSpan, rowClass=undefined, children }) => {
+  let wrapRowClass = "mt-4"
+
+  if (rowClass)
+    wrapRowClass = wrapRowClass + ' ' + rowClass
+
   return (
     <React.Fragment>
-      <Row>
-        <PageTitle pageTitle={ pageTitle } />
-      </Row>
-      <Row className="mt-4">
+      {
+        pageTitle &&
+        <Row>
+          <PageTitle pageTitle={ pageTitle } />
+        </Row>
+      }
+      <Row className={wrapRowClass}>
         <Col>
           <Table responsive className="shadow-sm">
             { children }
