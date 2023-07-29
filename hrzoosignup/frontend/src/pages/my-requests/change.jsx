@@ -24,6 +24,7 @@ import { url_ui_prefix } from '../../config/general';
 import { findTrueState } from '../../utils/reqstate';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
+import { CroRisDescription } from '../../components/fields-request/GeneralFields';
 
 
 function setInitialState() {
@@ -77,6 +78,7 @@ export const MyRequestChange = () => {
 
   const rhfProps = useForm({
     defaultValues: {
+      requestCroRisId: '',
       requestName: '',
       requestExplain: '',
       startDate: '',
@@ -106,8 +108,11 @@ export const MyRequestChange = () => {
 
   useEffect(() => {
     if (status === 'success' && nrProject) {
+      rhfProps.setValue('requestCroRisId', nrProject.croris_id)
+      rhfProps.setValue('requestCroRisFinance', nrProject.croris_finance)
       rhfProps.setValue('requestName', nrProject.name)
       rhfProps.setValue('requestExplain', nrProject.reason)
+      rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('startDate', nrProject.date_start)
       rhfProps.setValue('endDate', nrProject.date_end)
       rhfProps.setValue('scientificDomain', nrProject.science_field)
@@ -299,7 +304,11 @@ export const MyRequestChange = () => {
                 <Row style={{height: '50px'}}>
                 </Row>
                 <RequestHorizontalRulerRed />
-                <GeneralFields projectInfo={nrProject} fieldsDisabled={true} />
+                <GeneralFields projectInfo={nrProject} fieldsDisabled={true}/>
+                {
+                  nrProject.project_type.name === 'research-croris' &&
+                    <CroRisDescription fieldsDisabled={true}/>
+                }
                 <ScientificSoftware fieldsDisabled={true} />
                 <ResourceFields fieldsDisabled={true} />
                 <Row style={{height: '50px'}}>
