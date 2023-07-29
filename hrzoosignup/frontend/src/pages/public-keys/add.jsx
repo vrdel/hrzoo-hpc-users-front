@@ -16,6 +16,7 @@ import { addSshKey } from '../../api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlus,
+  faFile,
   faKey,
 } from '@fortawesome/free-solid-svg-icons';
 import '../../styles/content.css';
@@ -148,10 +149,17 @@ const NewPublicKey = () => {
               </Col>
             </Row>
           </Col>
-          <Col className="ms-4" sm={{size: 7}}>
-            <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
-              Javni ključ:
-            </Label>
+          <Col className="ms-4 g-0" sm={{size: 7}}>
+            <div className="d-flex justify-content-between">
+              <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
+                Javni ključ:
+              </Label>
+              <Input type='file' id="fileInput" style={{display: 'none'}}/>
+              <Button color="success" className="mt-3 mb-2">
+                <FontAwesomeIcon icon={faFile}/>{' '}
+                Učitaj
+              </Button>
+            </div>
             <InputGroup>
               <Controller
                 name="public_key"
@@ -183,7 +191,7 @@ const NewPublicKey = () => {
         </Row>
         <Row className='mt-5 mb-5'>
           <Col className="text-center">
-            <Button className="mt-3" color="success" type="submit">
+            <Button size="lg" className="mt-3" color="success" type="submit">
               <FontAwesomeIcon icon={faPlus}/>{' '}
               Dodaj
             </Button>
