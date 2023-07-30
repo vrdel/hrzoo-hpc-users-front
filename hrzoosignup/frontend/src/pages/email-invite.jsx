@@ -25,21 +25,20 @@ const EmailInvitation = ({sessionData=undefined}) => {
   const [inviteAlertSuccess, setInviteAlertSucces] = useState(false);
   const [customMessage, setCustomMessage] = useState(undefined);
   const [progress, setProgress] = useState(0);
-  const location = useLocation()
 
   useEffect(() => {
     localStorage.setItem('invitation-key-set', inviteKey)
-    //if (!(isLoggedIn || sessionData.active))
-      //navigate(defaultUnAuthnRedirect)
-    //else {
-    sessionData?.userdetails && setUserdetails(sessionData.userdetails)
-    // }
+    if (!(isLoggedIn || sessionData.active))
+      navigate(defaultUnAuthnRedirect)
+    else {
+      sessionData?.userdetails && setUserdetails(sessionData.userdetails)
+   }
   }, [sessionData, isLoggedIn])
 
   async function acceptInvite() {
     try {
       localStorage.removeItem('invitation-key-set')
-      //const ret = await fetchInvite(inviteKey)
+      const ret = await fetchInvite(inviteKey)
       setInviteAlertSucces(true)
       startTimer()
     }
@@ -56,7 +55,6 @@ const EmailInvitation = ({sessionData=undefined}) => {
         setInviteAlertFail(true)
     }
   }
-
 
   const startTimer = () => {
     const intervalId = setInterval(() => {
