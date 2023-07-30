@@ -28,11 +28,11 @@ const EmailInvitation = ({sessionData=undefined}) => {
 
   useEffect(() => {
     localStorage.setItem('invitation-key-set', inviteKey)
-    if (!(isLoggedIn || sessionData.active))
-      navigate(defaultUnAuthnRedirect)
-    else {
-      sessionData?.userdetails && setUserdetails(sessionData.userdetails)
-    }
+    //if (!(isLoggedIn || sessionData.active))
+      //navigate(defaultUnAuthnRedirect)
+    //else {
+    sessionData?.userdetails && setUserdetails(sessionData.userdetails)
+    // }
   }, [sessionData, isLoggedIn])
 
   async function acceptInvite() {
@@ -70,7 +70,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
                   className="p-3 d-flex flex-row align-items-center justify-content-center"
                 >
                   <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-                  <h4 className="ms-4 text-dark"><strong>Napredno računanje</strong></h4>
+                  <h4 className="ms-4 text-dark"><strong>Napredno računanje</strong> - <span className="fst-italic">Pozivnica</span></h4>
                 </CardHeader>
                 <CardBody className="pt-5">
                   <p className="fs-5 mb-4 text-center">
