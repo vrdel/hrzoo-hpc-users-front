@@ -87,7 +87,7 @@ export const BriefSummary = ({project, isSubmitted}) => {
 const BriefProjectInfo = ({project}) => {
   return (
     <>
-      <Col className="text-left" md={{size: 2}}>
+      <Col className="ms-4 text-left" md={{size: 2}}>
         Šifra:
         <div className="p-2 mt-2">
           <Badge color={"secondary fw-normal"}>
@@ -174,7 +174,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
   return (
     <>
-      <Row className={amILead ? 'mt-4 ms-4 me-4 mb-2' : 'mt-4 ms-4 me-4 mb-5'}>
+      <Row className={amILead ? 'mt-4 ms-1 ps-0 pe-0 me-1 mb-2 ' : 'mt-4 ms-1 me-1 mb-5'}>
         <Col>
           <Table responsive hover className="shadow-sm bg-white">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
@@ -813,7 +813,7 @@ const Memberships = () => {
                           { project?.name }
                         </span>
                       </CardHeader>
-                      <CardBody className="mb-1 bg-light">
+                      <CardBody className="mb-1 bg-light p-0 m-0">
                         {
                           project.project_type.name === 'research-croris' ?
                             <UsersTableCroris project={project}
@@ -871,8 +871,8 @@ const Memberships = () => {
                   Ime projekta
                 </span>
               </CardHeader>
-              <CardBody className="mb-1 bg-light">
-                <EmptyTableSpinner colSpan={6} rowClass="ms-4 me-4 mb-2">
+              <CardBody className="mb-1 bg-light p-0 m-0">
+                <EmptyTableSpinner colSpan={6} rowClass="ms-2 me-2 mb-2">
                   <thead id="hzsi-thead" className="align-middle text-center text-white">
                     <tr className="border-bottom-1 border-dark">
                       <th className="fw-normal">
