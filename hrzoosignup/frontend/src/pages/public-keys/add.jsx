@@ -157,7 +157,7 @@ const NewPublicKey = () => {
             </InputGroup>
             <Row style={{minHeight: '60px'}}>
             </Row>
-            <Row>
+            <Row className="d-none d-lg-block">
               <Col>
                 <FontAwesomeIcon icon={faKey} className="ms-5 fa-10x" style={{color: "#f1f1f1"}}/>
               </Col>
