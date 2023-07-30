@@ -177,7 +177,7 @@ const NewPublicKey = () => {
                   uploadKeyFile(e)
                 }}
               />
-              <Button color="success" className="mt-3 mb-2" onClick={() => refFileInput.current.click()}>
+              <Button color="success" className="mt-3 mb-2 me-5 me-sm-0 me-md-0 me-xl-0" onClick={() => refFileInput.current.click()}>
                 <FontAwesomeIcon icon={faFile}/>{' '}
                 Učitaj
               </Button>
@@ -194,7 +194,7 @@ const NewPublicKey = () => {
                     aria-label="public_key"
                     type="text"
                     placeholder="ssh-rsa AAAAB3NzaC1yc2EAAAA... me@laptop"
-                    className={`shadow-sm bg-body rounded font-monospace fs-5 form-control ${errors && errors.public_key ? "is-invalid" : ''}`}
+                    className={`shadow-sm bg-body rounded font-monospace fs-5 me-5 me-sm-0 me-md-0 me-xl-0 form-control ${errors && errors.public_key ? "is-invalid" : ''}`}
                     rows="12"
                   />
                 }
