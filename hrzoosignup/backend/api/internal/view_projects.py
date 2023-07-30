@@ -39,7 +39,6 @@ class ProjectsGeneral(APIView):
         cobj = models.ProjectCount.objects.get()
         request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
 
-        logger.info(request.data)
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
         request.data['project_type'] = type_obj.pk
 
