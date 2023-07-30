@@ -3,7 +3,7 @@ import { Col, Row,
   Button,
   Alert, Container,
   Card, CardHeader,
-  CardBody } from 'reactstrap';
+  CardBody, Progress } from 'reactstrap';
 import { useParams } from 'react-router-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../components/AuthContextProvider';
@@ -24,6 +24,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
   const [inviteAlertFail, setInviteAlertFail] = useState(false);
   const [inviteAlertSuccess, setInviteAlertSucces] = useState(false);
   const [customMessage, setCustomMessage] = useState(undefined);
+  const [progress, setProgress] = useState(0);
   const location = useLocation()
 
   useEffect(() => {
@@ -38,8 +39,9 @@ const EmailInvitation = ({sessionData=undefined}) => {
   async function acceptInvite() {
     try {
       localStorage.removeItem('invitation-key-set')
-      const ret = await fetchInvite(inviteKey)
+      //const ret = await fetchInvite(inviteKey)
       setInviteAlertSucces(true)
+      startTimer()
     }
     catch (err) {
       if (err.message.toLowerCase().includes("410 gone")) {
@@ -55,7 +57,17 @@ const EmailInvitation = ({sessionData=undefined}) => {
     }
   }
 
-  if (isLoggedIn || sessionData.active)
+
+  const startTimer = () => {
+    const intervalId = setInterval(() => {
+      setProgress(progress => progress + 7);
+    }, 100)
+  };
+
+  if (isLoggedIn || sessionData.active) {
+    if (progress === 140)
+      navigate(url_ui_prefix + '/clanstva')
+
     return (
       <>
         <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
@@ -93,12 +105,18 @@ const EmailInvitation = ({sessionData=undefined}) => {
                         isOpen={inviteAlertSuccess}
                         toggle={() => {
                           setInviteAlertSucces(!inviteAlertSuccess)
-                          setTimeout(() => {navigate(url_ui_prefix + '/clanstva')}, 1500)
+                          setTimeout(() => {navigate(url_ui_prefix + '/clanstva')}, 800)
                         }}
                         fade={true}>
                         <p className="text-center fs-5">
-                          Prijava uspješna
+                          Prijava uspješna, preusmjeravanje...
                         </p>
+                        <Progress
+                          striped
+                          color="success"
+                          animated
+                          value={progress}
+                        />
                       </Alert>
                       <Alert color="danger" className="d-flex align-items-center justify-content-center"
                         isOpen={inviteAlertFail}
@@ -123,6 +141,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
         </Container>
       </>
     )
+  }
   else
     return <NotFound />
 };
