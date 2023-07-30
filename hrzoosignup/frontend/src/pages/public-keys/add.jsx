@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { SharedData } from '../root';
 import {
   Col,
@@ -41,6 +41,7 @@ const NewPublicKey = () => {
   const { csrfToken } = useContext(AuthContext)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const refFileInput = useRef(null)
 
 
   const { control, setValue, handleSubmit, formState: { errors } } = useForm({
@@ -167,22 +168,16 @@ const NewPublicKey = () => {
               <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
                 Javni ključ:
               </Label>
-              <Controller
-                name="imported_public_key"
-                control={control}
-                render={ ({field}) =>
-                  <Input {...field}
-                    name="imported_public_key"
-                    type='file'
-                    id="fileInput"
-                    style={{display: 'none'}}
-                    onChange={(e) => {
-                      uploadKeyFile(e)
-                    }}
-                  />
-                }
+              <Input
+                type='file'
+                id="fileInput"
+                style={{display: 'none'}}
+                innerRef={refFileInput}
+                onChange={(e) => {
+                  uploadKeyFile(e)
+                }}
               />
-              <Button color="success" className="mt-3 mb-2" onClick={() => document.getElementById("fileInput").click()}>
+              <Button color="success" className="mt-3 mb-2" onClick={() => refFileInput.current.click()}>
                 <FontAwesomeIcon icon={faFile}/>{' '}
                 Učitaj
               </Button>
