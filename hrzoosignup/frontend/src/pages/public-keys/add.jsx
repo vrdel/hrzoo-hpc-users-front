@@ -171,7 +171,7 @@ const NewPublicKey = () => {
               <Input
                 type='file'
                 id="fileInput"
-                style={{display: 'none'}}
+                className="d-none"
                 innerRef={refFileInput}
                 onChange={(e) => {
                   uploadKeyFile(e)
