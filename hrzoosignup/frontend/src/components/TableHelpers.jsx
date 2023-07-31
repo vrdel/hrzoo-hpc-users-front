@@ -226,7 +226,7 @@ export const HZSIPagination = ({
           <PaginationItem disabled={pageIndex === pageCount - 1}>
             <PaginationLink aria-label="Next" next onClick={() => setPageIndex(pageIndex + 1)}/>
           </PaginationItem>
-          <PaginationItem disabled={pageIndex === pageCount- 1}>
+          <PaginationItem disabled={pageIndex === pageCount - 1}>
             <PaginationLink aria-label="Last" last onClick={() => setPageIndex(pageCount - 1)}/>
           </PaginationItem>
           <PaginationItem>

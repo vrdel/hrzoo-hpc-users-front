@@ -102,7 +102,9 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     fieldsView = _.orderBy(fieldsView, ['added_by.first_name', 'added_by.last_name'], [sortAddedBy === true ? 'desc' : 'asc'])
 
   paginationHelp.searchNum = fieldsView.length
-  paginationHelp.isSearched = searchName || searchCreated || searchAddedBy
+
+  const isSearched = searchName || searchCreated || searchAddedBy
+  paginationHelp.isSearched = isSearched
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
 
@@ -192,6 +194,16 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   useEffect(() => {
     setValue("applications", dataSoftware)
   }, [dataSoftware.length])
+
+  function calcIndex(index) {
+    if (sortName || sortAddedBy || sortCreated)
+      if (!isSearched)
+        return fields.length + 1 - (pageIndex * pageSize + index + 1)
+      else
+        return paginationHelp.searchLen + 1 - (pageIndex * pageSize + index + 1)
+    else
+      return pageIndex * pageSize + index + 1
+  }
 
   return (
     <React.Fragment>
@@ -391,7 +403,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                   fieldsView.map((application, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
-                        { pageIndex * pageSize + index + 1 }
+                        { calcIndex(index) }
                       </td>
                       <td className="p-3 align-middle text-center fw-bold">
                         { application.name }
