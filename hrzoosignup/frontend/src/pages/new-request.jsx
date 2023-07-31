@@ -48,7 +48,7 @@ const NewRequest = () => {
         <PageTitle pageTitle={pageTitle}/>
       </Row>
       <Row className="mb-2 ms-2 mt-4">
-        <Col lg={{size: 9}} className="d-inline-flex align-items-center">
+        <Col md={{size: 12}} lg={{size: 9}} className="d-lg-inline-flex d-md-inline-flex d-flex-sm-column d-flex-xs-column align-items-center">
           <Label
             htmlFor="requestType"
             className="ps-2 pe-2 mt-1 pt-1 pb-1 text-white"
@@ -60,7 +60,7 @@ const NewRequest = () => {
           <CustomReactSelect
             id="requestType"
             aria-label="requestType"
-            className="ms-5 shadow-sm"
+            className="ms-lg-5 me-lg-0 ms-md-5 me-md-0 me-xs-5 me-sm-5 me-5 ms-xs-0 ms-sm-0 ms-0 mt-lg-0 mt-md-0 mt-xs-2 mt-sm-2 mt-2 shadow-sm"
             placeholder="Odaberi"
             controlWidth="40%"
             onChange={(e) => {
@@ -98,7 +98,7 @@ const NewRequest = () => {
           />
           <Button
             color="success"
-            className="ms-3"
+            className="ms-lg-3 ms-md-3 ms-xs-0 ms-sm-0 mt-sm-3 mt-xs-3 mt-lg-0 mt-md-0 mt-3"
             disabled={buttonDisabled || continueButtonDisabled}
             onClick={() => {
               if (!selectedProject)
@@ -118,7 +118,7 @@ const NewRequest = () => {
             Nastavi
           </Button>
         </Col>
-        <Col lg={{size: 3}}>
+        <Col className="d-md-block" lg={{size: 3}}>
         </Col>
       </Row>
       <Row>
