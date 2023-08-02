@@ -91,10 +91,9 @@ class UsersInfo(APIView):
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
 
-                ret_data = sorted(resp_users, key=lambda k: k["first_name"])
-                cache.set('usersinfo-get', ret_data, 60 * 15)
+                cache.set('usersinfo-get', resp_users, 60 * 15)
 
-            return Response(ret_data)
+            return Response(resp_users, status=status.HTTP_200_OK)
 
         else:
             err_response = {
