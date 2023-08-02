@@ -115,6 +115,13 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
 
+  function calcIndex(index) {
+    if (!isSearched)
+      return fields.length - (pageIndex * pageSize + index + 1)
+    else
+      return paginationHelp.searchLen + 1 - (pageIndex * pageSize + index + 1)
+  }
+
   return (
     <>
       <Row>
@@ -254,7 +261,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   fieldsView.map((project, index) =>
                     <tr key={ index }>
                       <td className="p-3 align-middle text-center">
-                        { !isSearched ? data.length - pageIndex * pageSize - index : pageIndex * pageSize + index + 1 }
+                        { calcIndex(index) }
                       </td>
                       <td className="p-3 align-middle text-center">
                         { StateIcons(project.state.name) }
