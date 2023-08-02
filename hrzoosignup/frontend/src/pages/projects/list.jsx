@@ -117,9 +117,9 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   function calcIndex(index) {
     if (!isSearched)
-      return fields.length - (pageIndex * pageSize + index + 1)
+      return fields.length - (pageIndex * pageSize + index)
     else
-      return paginationHelp.searchLen + 1 - (pageIndex * pageSize + index + 1)
+      return paginationHelp.searchLen - (pageIndex * pageSize + index + 1) + 1
   }
 
   return (
