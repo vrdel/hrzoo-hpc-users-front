@@ -116,9 +116,9 @@ const UsersListTable = ({ data, pageTitle }) => {
   function calcIndex(index) {
     if (sortName || sortJoined)
       if (!isSearched)
-        return fields.length - (pageIndex * pageSize + index + 1)
+        return fields.length - (pageIndex * pageSize + index + 1) + 1
       else
-        return paginationHelp.searchLen + 1 - (pageIndex * pageSize + index + 1)
+        return paginationHelp.searchLen - (pageIndex * pageSize + index + 1) + 1
     else
       return pageIndex * pageSize + index + 1
   }
