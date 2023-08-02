@@ -6,7 +6,7 @@ import { fetchScienceSoftware, addScienceSoftware, deleteScienceSoftware } from 
 import { fetchOpsUsers } from '../../api/users';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm, useWatch} from "react-hook-form";
-import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
+import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "../../components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes, faSave, faWindowRestore } from "@fortawesome/free-solid-svg-icons";
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
@@ -18,24 +18,6 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify'
 import _ from 'lodash';
 
-
-const sortArrow = (descending=undefined) => {
-  if (descending === true)
-    return (
-      <span>{' '}&uarr;</span>
-    )
-  else if (descending === false)
-    return (
-      <span>&darr;{' '}</span>
-    )
-  else
-    return (
-      <>
-        <span>&uarr;</span>
-        <span>&darr;</span>
-      </>
-    )
-}
 
 
 const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
@@ -312,7 +294,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                     Modulefile aplikacije
                   </span>
                   <span className="position-absolute start-100 top-50 translate-middle pe-5">
-                    { sortArrow(sortName) }
+                    { SortArrow(sortName) }
                   </span>
                 </th>
                 <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
@@ -326,7 +308,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                     Vrijeme
                   </span>
                   <span className="position-absolute start-100 top-50 translate-middle pe-5">
-                    { sortArrow(sortCreated) }
+                    { SortArrow(sortCreated) }
                   </span>
                 </th>
                 <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
@@ -340,7 +322,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                     Dodao
                   </span>
                   <span className="position-absolute start-100 top-50 translate-middle pe-5">
-                    { sortArrow(sortAddedBy) }
+                    { SortArrow(sortAddedBy) }
                   </span>
                 </th>
                 <th className="fw-normal position-relative" style={{minWidth: '52px',  cursor: 'pointer'}}>
@@ -506,7 +488,7 @@ export const SoftwareList = () => {
                 Modulefile aplikacije
               </span>
               <span className="position-absolute start-100 top-50 translate-middle pe-5">
-                { sortArrow() }
+                { SortArrow() }
               </span>
             </th>
             <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
@@ -515,7 +497,7 @@ export const SoftwareList = () => {
                 Vrijeme
               </span>
               <span className="position-absolute start-100 top-50 translate-middle pe-5">
-                { sortArrow() }
+                { SortArrow() }
               </span>
             </th>
             <th className="fw-normal position-relative" style={{cursor: 'pointer'}}>
@@ -523,7 +505,7 @@ export const SoftwareList = () => {
                 Dodao
               </span>
               <span className="position-absolute start-100 top-50 translate-middle pe-5">
-                { sortArrow() }
+                { SortArrow() }
               </span>
             </th>
             <th className="fw-normal position-relative" style={{minWidth: '52px',  cursor: 'pointer'}}>

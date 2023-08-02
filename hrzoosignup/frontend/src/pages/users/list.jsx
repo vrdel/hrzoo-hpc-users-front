@@ -13,7 +13,7 @@ import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faSearch, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
-import { HZSIPagination, TablePaginationHelper, EmptyTable } from "../../components/TableHelpers";
+import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "../../components/TableHelpers";
 import { buildOptionsFromArray } from "../../utils/select-tools";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
 import { useNavigate } from "react-router-dom";
@@ -21,25 +21,6 @@ import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import _ from 'lodash';
-
-
-const sortArrow = (descending=undefined) => {
-  if (descending === true)
-    return (
-      <span>{' '}&uarr;</span>
-    )
-  else if (descending === false)
-    return (
-      <span>&darr;{' '}</span>
-    )
-  else
-    return (
-      <>
-        <span>&uarr;</span>
-        <span>&darr;</span>
-      </>
-    )
-}
 
 
 const UsersListTable = ({ data, pageTitle }) => {
@@ -146,7 +127,7 @@ const UsersListTable = ({ data, pageTitle }) => {
                     Ime, prezime i oznaka
                   </div>
                   <div>
-                    { sortArrow(sortName) }
+                    { SortArrow(sortName) }
                   </div>
                 </th>
                 <th className="fw-normal" style={{minWidth: '306px'}}>
@@ -165,7 +146,7 @@ const UsersListTable = ({ data, pageTitle }) => {
                     Dodan
                   </div>
                   <div>
-                    { sortArrow(sortJoined) }
+                    { SortArrow(sortJoined) }
                   </div>
                 </th>
                 <th className="fw-normal"  style={{minWidth: '180px'}}>
@@ -375,7 +356,7 @@ export const UsersList = () => {
                 Ime, prezime i oznaka
               </div>
               <div>
-                { sortArrow() }
+                { SortArrow() }
               </div>
             </th>
             <th className="fw-normal"  style={{width: '306px'}}>
@@ -390,7 +371,7 @@ export const UsersList = () => {
                 Dodan
               </div>
               <div>
-                { sortArrow() }
+                { SortArrow() }
               </div>
             </th>
             <th className="fw-normal"  style={{width: '180px'}}>

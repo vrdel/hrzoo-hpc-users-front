@@ -9,6 +9,25 @@ import {
  } from "reactstrap"
 
 
+export const SortArrow = (descending=undefined) => {
+  if (descending === true)
+    return (
+      <span>{' '}&uarr;</span>
+    )
+  else if (descending === false)
+    return (
+      <span>&darr;{' '}</span>
+    )
+  else
+    return (
+      <>
+        <span>&uarr;</span>
+        <span>&darr;</span>
+      </>
+    )
+}
+
+
 export const optionsStates = [
   { label: "Svi", value: "all" },
   { label: "Podnesen", value: "submit" },
