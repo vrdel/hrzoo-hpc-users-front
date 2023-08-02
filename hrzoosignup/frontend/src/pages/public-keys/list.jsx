@@ -199,7 +199,7 @@ const PublicKeys = () => {
             title={modalTitle}
             msg={modalMsg}
             onYes={onYesCallback} />
-          <Row className="mt-4 ms-4 me-4 mb-5">
+          <Row className="mt-4 ms-0 ms-sm-0 ms-md-0 ms-xl-2 me-0 me-sm-0 me-xl-2 mb-5">
             <Col>
               <Table responsive hover className="shadow-sm">
                 <thead id="hzsi-thead" className="align-middle text-center text-white">
