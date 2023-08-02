@@ -145,9 +145,9 @@ const PublicKeys = () => {
     }
   }
 
-  if (status === 'loading' || nrStatus === 'loading')
+  if ((status === 'loading' || nrStatus === 'loading') && pageTitle)
     return (
-      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7} rowClass="mt-4 ms-0 ms-sm-0 ms-md-0 ms-xl-2 me-0 me-sm-0 me-xl-2 mb-5">
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr className="border-bottom-1 border-dark">
             <th className="fw-normal">
