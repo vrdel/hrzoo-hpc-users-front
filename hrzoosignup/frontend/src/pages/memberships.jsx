@@ -95,7 +95,7 @@ const BriefProjectInfo = ({project}) => {
           </Badge>
         </div>
       </Col>
-      <Col md={{size: 3}}>
+      <Col md={{size: 3}} className="ms-4 ms-sm-4 ms-md-0">
         <Label
           htmlFor="projectTime"
           aria-label="projectTime"
@@ -106,7 +106,7 @@ const BriefProjectInfo = ({project}) => {
           { convertToEuropean(project.date_start) } &minus; { convertToEuropean(project.date_end) }
         </div>
       </Col>
-      <Col md={{size: 2}}>
+      <Col md={{size: 2}} className="ms-4 ms-sm-4 ms-md-0">
         <Label
           htmlFor="projectTime"
           aria-label="projectTime"
@@ -117,7 +117,7 @@ const BriefProjectInfo = ({project}) => {
           { convertToEuropean(project.date_changed) }
         </div>
       </Col>
-      <Col md={{size: 2}}>
+      <Col md={{size: 2}} className="ms-4 ms-sm-4 ms-md-0">
         <Label
           htmlFor="projectType"
           aria-label="projectType"
