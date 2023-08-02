@@ -205,8 +205,9 @@ export const HZSIPagination = ({
   resource_name
 }) => {
   return (
-    <Row>
-      <Col className="d-flex justify-content-center align-self-center">
+    <Row className="g-0">
+      <Col className="d-flex justify-content-center">
+        <div className="flex-grow-1 d-none d-sm-block"/>
         <Pagination className="mt-2">
           <PaginationItem disabled={pageIndex === 0}>
             <PaginationLink aria-label="First" first onClick={() => setPageIndex(0)}/>
@@ -229,6 +230,10 @@ export const HZSIPagination = ({
           <PaginationItem disabled={pageIndex === pageCount - 1}>
             <PaginationLink aria-label="Last" last onClick={() => setPageIndex(pageCount - 1)}/>
           </PaginationItem>
+        </Pagination>
+      </Col>
+      <Col className="d-flex justify-content-center justify-content-sm-start">
+        <Pagination className="mt-2">
           <PaginationItem>
             <select
               style={{width: '180px'}}
