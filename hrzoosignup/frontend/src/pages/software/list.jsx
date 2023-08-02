@@ -42,7 +42,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   const [pageSize, setPageSize] = useState(50)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
-  const [sortCreated, setSortCreated] = useState(undefined)
+  const [sortCreated, setSortCreated] = useState(true)
   const [sortAddedBy, setSortAddedBy] = useState(undefined)
   const [showAddNew, setShowAddNew] = useState(false)
 
