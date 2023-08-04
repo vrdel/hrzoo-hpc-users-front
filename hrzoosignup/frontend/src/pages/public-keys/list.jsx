@@ -149,7 +149,7 @@ const PublicKeys = () => {
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={7} rowClass="mt-4 ms-0 ms-sm-0 ms-md-0 ms-xl-2 me-0 me-sm-0 me-xl-2 mb-5">
         <thead id="hzsi-thead" className="align-middle text-center text-white">
-          <tr className="border-bottom-1 border-dark">
+          <tr>
             <th className="fw-normal">
               Ime ključa
             </th>
@@ -203,7 +203,7 @@ const PublicKeys = () => {
             <Col>
               <Table responsive hover className="shadow-sm">
                 <thead id="hzsi-thead" className="align-middle text-center text-white">
-                  <tr className="border-bottom-1 border-dark">
+                  <tr>
                     <th className="fw-normal">
                       Ime ključa
                     </th>
@@ -312,7 +312,7 @@ const PublicKeys = () => {
             <Col>
               <Table responsive hover className="shadow-sm">
                 <thead id="hzsi-thead" className="align-middle text-center text-white">
-                  <tr className="border-bottom-1 border-dark">
+                  <tr>
                     <th className="fw-normal">
                       Ime ključa
                     </th>

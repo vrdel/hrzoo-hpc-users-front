@@ -113,11 +113,11 @@ const UsersListTable = ({ data, pageTitle }) => {
         <Col>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
-              <tr className="border-bottom border-dark">
+              <tr>
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal border-0 d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}
+                <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                     setSortJoined(undefined)
@@ -136,7 +136,7 @@ const UsersListTable = ({ data, pageTitle }) => {
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   Email
                 </th>
-                <th className="fw-normal border-0 d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
+                <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortJoined(!sortJoined)
                     setSortName(undefined)
@@ -347,7 +347,7 @@ export const UsersList = () => {
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">
-          <tr className="border-bottom-1 border-dark">
+          <tr>
             <th className="fw-normal"  style={{width: '52px'}}>
               #
             </th>

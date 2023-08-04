@@ -64,7 +64,7 @@ const MyRequestsList = () => {
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">
-          <tr className="border-bottom-1 border-dark">
+          <tr>
             <th className="fw-normal">
               Stanje
             </th>
@@ -101,7 +101,7 @@ const MyRequestsList = () => {
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="align-middle text-center text-white">
-                <tr className="border-bottom-1 border-dark">
+                <tr>
                   <th className="fw-normal">
                     Stanje
                   </th>
@@ -200,7 +200,7 @@ const MyRequestsList = () => {
           <Col>
             <Table responsive hover className="shadow-sm">
               <thead id="hzsi-thead" className="align-middle text-center text-white">
-                <tr className="border-bottom-1 border-dark">
+                <tr>
                   <th className="fw-normal">
                     Stanje
                   </th>

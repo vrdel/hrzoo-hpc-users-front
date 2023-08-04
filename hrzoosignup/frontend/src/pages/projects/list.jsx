@@ -131,7 +131,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
         <Col>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
-              <tr className="border-bottom-1 border-dark">
+              <tr>
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
@@ -378,7 +378,7 @@ export const ProjectsList = () => {
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={6}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">
-          <tr className="border-bottom-1 border-dark">
+          <tr>
             <th className="fw-normal"  style={{width: '52px'}}>
               #
             </th>

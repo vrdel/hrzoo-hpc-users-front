@@ -178,7 +178,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
         <Col>
           <Table responsive hover className="shadow-sm bg-white">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
-              <tr className="border-bottom-1 border-dark">
+              <tr>
                 <th className="fw-normal">
                   Ime
                 </th>
@@ -440,7 +440,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
           <Col>
             <Table responsive hover className="shadow-sm bg-white m-0">
               <thead id="hzsi-thead" className="align-middle text-center text-white">
-                <tr className="border-bottom-1 border-dark">
+                <tr>
                   <th className="fw-normal">
                     Ime
                   </th>
@@ -874,7 +874,7 @@ const Memberships = () => {
               <CardBody className="mb-1 bg-light p-0 m-0">
                 <EmptyTableSpinner colSpan={6} rowClass="ms-2 me-2 mb-2">
                   <thead id="hzsi-thead" className="align-middle text-center text-white">
-                    <tr className="border-bottom-1 border-dark">
+                    <tr>
                       <th className="fw-normal">
                         Ime
                       </th>

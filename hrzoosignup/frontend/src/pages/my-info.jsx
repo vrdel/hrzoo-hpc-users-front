@@ -262,7 +262,7 @@ const EmptyCroRis = () => {
 const TableCrorisProjects = ({leadData, associateData}) => {
   const CrorisTableHead = () => (
     <thead id="hzsi-thead" className="align-middle text-center text-white">
-      <tr className="border-bottom-1 border-dark">
+      <tr>
         <th className="fw-normal">
           Naziv projekta i CroRIS poveznica
         </th>

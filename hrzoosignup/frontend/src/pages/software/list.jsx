@@ -277,7 +277,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
         <Col sm={{size: 12}}>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
-              <tr className="border-2 border-dark" style={{'borderLeft': 0, 'borderTop': 0, 'borderRight': 0}}>
+              <tr>
                 <th className="fw-normal position-relative"  style={{width: '52px'}}>
                   <span>
                     #
@@ -476,7 +476,7 @@ export const SoftwareList = () => {
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={5}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">
-          <tr className="border-2 border-dark" style={{'borderLeft': 0, 'borderTop': 0, 'borderRight': 0}}>
+          <tr>
             <th className="fw-normal position-relative"  style={{width: '52px'}}>
               <span>
                 #
