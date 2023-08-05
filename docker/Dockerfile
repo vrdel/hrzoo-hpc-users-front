@@ -38,10 +38,10 @@ RUN pip install -U pip; pip3 install -U pip
 RUN dnf module install -y nodejs:18
 RUN ln -s /home/user /home/dvrcic
 RUN passwd -d root
-COPY entrypoint.sh /home/user/entrypoint.sh
 VOLUME [ "/sys/fs/cgroup" ]
 RUN sed -r -i 's/(^Defaults.*always_set_home)/# \1/' /etc/sudoers
 RUN echo -e "user ALL=(ALL) NOPASSWD: ALL\nDefaults env_keep += \"HOME\"" >> /etc/sudoers
+COPY collectstatic.sh run-django-server.sh run-frontdev-server.sh syncsite.sh /home/user
 USER user
 WORKDIR /home/user
 RUN curl -sfL https://git.io/chezmoi | sh
