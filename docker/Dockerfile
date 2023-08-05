@@ -40,6 +40,8 @@ RUN ln -s /home/user /home/dvrcic
 RUN passwd -d root
 VOLUME [ "/sys/fs/cgroup" ]
 RUN sed -r -i 's/(^Defaults.*always_set_home)/# \1/' /etc/sudoers
+RUN sed -r -i 's/(^.unix_http_server)/; \1/' /etc/supervisord.conf
+RUN sed -r -i 's/^(file.*supervisor.sock)/; \1/' /etc/supervisord.conf
 RUN echo -e "user ALL=(ALL) NOPASSWD: ALL\nDefaults env_keep += \"HOME\"" >> /etc/sudoers
 COPY collectstatic.sh run-django-server.sh run-frontdev-server.sh syncsite.sh /home/user
 USER user

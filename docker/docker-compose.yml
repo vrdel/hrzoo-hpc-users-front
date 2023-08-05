@@ -3,7 +3,7 @@ services:
     env_file:
       - .env
     image: $IMAGE
-    command: /sbin/init
+    command: "sudo /usr/bin/supervisord -nc /etc/supervisord.conf"
     container_name: hzsi-web
     hostname: hzsi-web
     tty: true
