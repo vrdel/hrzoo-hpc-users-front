@@ -25,6 +25,7 @@ RUN dnf -y install epel-release && \
       rpmdevtools \
       rsync \
       sudo \
+      supervisor \
       telnet \
       the_silver_searcher \
       tree \
@@ -44,4 +45,4 @@ RUN echo -e "user ALL=(ALL) NOPASSWD: ALL\nDefaults env_keep += \"HOME\"" >> /et
 USER user
 WORKDIR /home/user
 RUN curl -sfL https://git.io/chezmoi | sh
-CMD ["/bin/zsh"]
+CMD ["sudo", "/usr/bin/supervisord", "-nc",  "/etc/supervisord.conf"]
