@@ -3,7 +3,7 @@ services:
     env_file:
       - .env
     image: $IMAGE
-    command: "sudo /usr/bin/supervisord -nc /etc/supervisord.conf"
+    command: sudo /usr/bin/supervisord -nc /etc/supervisord.conf
     container_name: hzsi-web
     hostname: hzsi-web
     tty: true
@@ -17,9 +17,6 @@ services:
       - "6899:6899"
     depends_on:
       - db-hzsi
-    tmpfs:
-      - /run
-      - /tmp
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup
       - $HOME:/mnt
