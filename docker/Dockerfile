@@ -44,7 +44,14 @@ RUN sed -r -i 's/(^.unix_http_server)/; \1/' /etc/supervisord.conf
 RUN sed -r -i 's/^(file.*supervisor.sock)/; \1/' /etc/supervisord.conf
 RUN echo -e "user ALL=(ALL) NOPASSWD: ALL\nDefaults env_keep += \"HOME\"" >> /etc/sudoers
 COPY collectstatic.sh run-django-server.sh run-frontdev-server.sh syncsite.sh /home/user
+WORKDIR hrzoo-hpc-users-front-main
 USER user
 WORKDIR /home/user
+RUN sudo python3.9 -m venv /opt/hrzoo-signup
+RUN sudo sh -c '\
+	. /opt/hrzoo-signup/bin/activate \
+	&& pip install -U pip \
+	&& pip3 install -r https://raw.githubusercontent.com/vrdel/hrzoo-hpc-users-front/main/requirements.txt \
+	&& pip install git+https://github.com/vrdel/hrzoo-hpc-users-front'
 RUN curl -sfL https://git.io/chezmoi | sh
 CMD ["sudo", "/usr/bin/supervisord", "-nc",  "/etc/supervisord.conf"]
