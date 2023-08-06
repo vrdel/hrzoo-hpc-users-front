@@ -39,7 +39,7 @@ services:
       - ../hrzoosignup/frontend/:/home/user/frontend
       - ../hrzoosignup/static/:$VENV/share/hrzoosignup/static
     networks:
-      app_net:
+      hzsi-front-app_net:
         ipv4_address: 172.20.0.12
   db-hzsi:
     env_file:
@@ -49,11 +49,11 @@ services:
     volumes:
       - $PSQLDATA:/var/lib/postgresql/data
     networks:
-      app_net:
+      hzsi-front-app_net:
         ipv4_address: 172.20.0.13
 
 networks:
-  app_net:
+  hzsi-front-app_net:
     driver: bridge
     enable_ipv6: false
     ipam:
