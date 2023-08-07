@@ -5,7 +5,7 @@
 ### Container environment
 
 Development environment is based on Docker containers and building procedure and helper scripts are provided in `docker/` folder. Environment is implemented as multi-container Docker application that is bootstrapped with `docker compose` utility. Application is built from two containers:
-* `web-hzsi` - container based on Rockylinux 8 Linux that will have preinstalled supervisord, Node.js 18, Python 3.9 and virtual environment with the latest application code installed from this Github repository
+* `web-hzsi` - container based on Rocky Linux 8 that will have preinstalled supervisord, Node.js 18, Python 3.9 and virtual environment with the latest application code installed from this Github repository
 * `db-hzsi` - PostgreSQL 15 container pulled from Docker hub `postgres:15`
 
 `web-hzsi` needs to be manually built so once code from Github repository is cloned, one should be pointed to `docker/` folder, edit the `compose.env` to tweak the settings (mainly IMAGE and PSQLDATA) and run:
@@ -25,3 +25,8 @@ Now `node_modules` directory can be easily recreated from `hrzoosignup/frontend`
 ```
 hrzoosignup/frontend/$ make npm ARGS="install"
 ```
+`npm` here is actually called from the `web-hzsi` container environment.
+
+## Django development server and webpack-dev-server
+
+During the development of the application, backend code is run on Django's development server (`runserver`) and frontend is served via `webpack-dev-server`. Both have hot module reload (HMR) functionality enabled ensuring that code is recompiled and transpiled as changes have been made to it so developer always sees the latest changes in browser.
