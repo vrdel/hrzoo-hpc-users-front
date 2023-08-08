@@ -4,32 +4,33 @@ RUN groupadd user -g 1000 && useradd -u 1000 -g 1000 user -m -d /home/user -s /b
 RUN dnf -y update; dnf clean all
 RUN dnf -y install epel-release && \
     dnf -y install \
-      procps-ng \
       ack \
       ctags \
       fortune-mod \
       git \
       glibc-all-langpacks \
       iproute \
+      libpq \
       make \
-      memcached \
       mc \
-      net-tools \
+      memcached \
       ncurses-compat-libs \
+      net-tools \
       passwd \
+      procps-ng \
       python3-devel \
-      python39 \
-      python39-mod_wsgi \
       python3-pip \
       python3-setuptools \
+      python39 \
+      python39-mod_wsgi \
       rpmdevtools \
       rsync \
       sudo \
       supervisor \
       telnet \
       the_silver_searcher \
-      tree \
       tmux \
+      tree \
       vim \
       wget \
       yum-utils \
@@ -46,9 +47,10 @@ USER user
 WORKDIR /home/user
 RUN sudo python3.9 -m venv /opt/hrzoo-signup
 RUN sudo sh -c '\
-	. /opt/hrzoo-signup/bin/activate \
-	&& pip install -U pip \
-	&& pip3 install -r https://raw.githubusercontent.com/vrdel/hrzoo-hpc-users-front/main/requirements.txt \
-	&& pip install git+https://github.com/vrdel/hrzoo-hpc-users-front'
+  . /opt/hrzoo-signup/bin/activate \
+  && pip install -U pip \
+  && pip3 install -r https://raw.githubusercontent.com/vrdel/hrzoo-hpc-users-front/main/requirements.txt \
+  && pip install git+https://github.com/vrdel/hrzoo-hpc-users-front'
 RUN curl -sfL https://git.io/chezmoi | sh
+COPY chezmoi-config-apply.sh /home/user
 CMD ["sudo", "/usr/bin/supervisord", "-nc",  "/etc/supervisord.conf"]
