@@ -29,6 +29,6 @@ class Command(BaseCommand):
             user = self.user_model._default_manager.db_manager(DEFAULT_DB_ALIAS).create_superuser(**user_data)
             user.person_institution = 'SRCE'
             user.save()
-            self.stdout.write("Superuser created successfully.")
+            self.stdout.write(self.style.SUCCESS("Superuser created successfully.")))
         except IntegrityError:
-            self.stderr.write("Superuser already created.")
+            self.stderr.write(self.style.ERROR("Superuser already created."))

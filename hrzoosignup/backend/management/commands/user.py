@@ -55,7 +55,7 @@ class Command(BaseCommand):
                 user.first_name = ''.join(random.sample(ALPHACHARS, 8))
                 user.last_name = ''.join(random.sample(ALPHACHARS, 8))
                 user.save()
-                self.stdout.write('User {0} succesfully created'.format(options['username']))
+                self.stdout.write(self.style.SUCCESS('User {0} succesfully created'.format(options['username'])))
 
             except Exception as exp:
                 self.stderr.write(repr(exp))
@@ -64,7 +64,7 @@ class Command(BaseCommand):
             try:
                 user = self.user_model.objects.get(username=options['username'])
                 user.delete()
-                self.stdout.write('User {0} succesfully deleted'.format(options['username']))
+                self.stdout.write(self.style.SUCCESS('User {0} succesfully deleted'.format(options['username'])))
             except Exception as exp:
                 self.stderr.write(repr(exp))
 
@@ -76,7 +76,7 @@ class Command(BaseCommand):
                 elif options['unusablepassword']:
                     user.set_unusable_password()
                 user.save()
-                self.stdout.write('User password set'.format(options['username']))
+                self.stdout.write(self.style.SUCCESS('User password set'.format(options['username'])))
             except Exception as exp:
                 self.stderr.write(repr(exp))
 
@@ -85,6 +85,6 @@ class Command(BaseCommand):
                 user = self.user_model.objects.get(username=options['username'])
                 user.is_staff = 1
                 user.save()
-                self.stdout.write('User is_staff set'.format(options['username']))
+                self.stdout.write(self.style.SUCCESS('User is_staff set'.format(options['username'])))
             except Exception as exp:
                 self.stderr.write(repr(exp))
