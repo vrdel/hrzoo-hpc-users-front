@@ -9,6 +9,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('sessionactive/', views.IsSessionActive.as_view(), name='sessionactive'),
-    path("active_users", views.UsersAPI.as_view(), name="users"),
-    path("active_projects", views.ProjectsAPI.as_view(), name="projects"),
+    path("users", views.UsersAPI.as_view(), name="users"),
+    path("projects", views.ProjectsAPI.as_view(), name="projects"),
+    path("sshkeys", views.SshKeysAPI.as_view(), name="sshkeys"),
 ] + router.urls

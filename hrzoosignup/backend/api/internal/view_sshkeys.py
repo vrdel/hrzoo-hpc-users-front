@@ -42,7 +42,6 @@ class SshKeys(APIView):
             }
             return Response(err_response, status=err_status)
 
-
     def delete(self, request):
         key_name = request.data['name']
         user_keys = SSHPublicKey.objects.filter(user=request.user.pk)

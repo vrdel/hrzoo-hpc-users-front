@@ -59,6 +59,13 @@ def filter_active_projects(projects):
     ]
 
 
+class SshKeys(APIView):
+    permission_classes = (HasAPIKey,)
+
+    def get(self, request):
+        pass
+
+
 class UsersAPI(APIView):
     permission_classes = (HasAPIKey,)
 
