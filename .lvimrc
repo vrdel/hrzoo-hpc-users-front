@@ -1,0 +1,3 @@
+let $ALELINTPATH = $HOME . "/my_work/srce/git.hrzoo-hpc-users-front/hrzoo-hpc-users-front/lint"
+let b:ale_linters = ['flake8']
+let g:ale_python_flake8_executable =  $ALELINTPATH . '/ale-exe-flake8.sh'
