@@ -79,6 +79,15 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
         model = get_user_model()
 
 
+class UsersSerializerFiltered2(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            'username',
+        )
+        model = get_user_model()
+
+
 class UserProjectSerializer(serializers.ModelSerializer):
     role = RoleSerializer()
     user = UsersSerializerFiltered()
@@ -134,6 +143,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'userproject_set'
         )
         model = get_user_model()
+
 
 
 class StaffComment(serializers.ModelSerializer):
@@ -256,6 +266,10 @@ class SshKeysSerializer(serializers.ModelSerializer):
         user = get_user_model().objects.get(id=self.initial_data['user'])
         complete['user'] = user
         return models.SSHPublicKey.objects.create(**complete)
+
+
+class SshKeysSerializer2(SshKeysSerializer):
+    user = UsersSerializerFiltered2(read_only=True)
 
 
 class ScienceSoftwareSerializer(serializers.ModelSerializer):

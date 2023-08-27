@@ -2,10 +2,13 @@ import datetime
 
 from backend import models
 from backend import serializers
+from backend.models import SSHPublicKey
+
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.middleware.csrf import get_token
+
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -59,11 +62,12 @@ def filter_active_projects(projects):
     ]
 
 
-class SshKeys(APIView):
+class SshKeysAPI(APIView):
     permission_classes = (HasAPIKey,)
 
     def get(self, request):
-        pass
+        serializer = serializers.SshKeysSerializer2(SSHPublicKey.objects.all(), many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class UsersAPI(APIView):
