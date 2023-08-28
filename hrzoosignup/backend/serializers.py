@@ -64,6 +64,24 @@ class ProjectSerializer(serializers.ModelSerializer):
         model = models.Project
 
 
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.State
+
+
+class ProjectTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.ProjectType
+
+
+
+
 class UsersSerializerFiltered(serializers.ModelSerializer):
     class Meta:
         fields = (
@@ -88,9 +106,25 @@ class UsersSerializerFiltered2(serializers.ModelSerializer):
         model = get_user_model()
 
 
+class UsersSerializerFiltered3(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'person_mail',
+            'username',
+            'is_active',
+            'is_staff',
+            'is_superuser'
+        )
+        model = get_user_model()
+
+
 class UserProjectSerializer(serializers.ModelSerializer):
     role = RoleSerializer()
     user = UsersSerializerFiltered()
+
     class Meta:
         fields = (
             'user',
@@ -101,24 +135,9 @@ class UserProjectSerializer(serializers.ModelSerializer):
         model = models.UserProject
 
 
-class StateSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.State
-
-
-class ProjectTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.ProjectType
-
-
 class UsersSerializer(serializers.ModelSerializer):
     userproject_set = UserProjectSerializer(many=True, read_only=True)
+
     class Meta:
         fields = (
             'croris_first_name',
@@ -143,7 +162,6 @@ class UsersSerializer(serializers.ModelSerializer):
             'userproject_set'
         )
         model = get_user_model()
-
 
 
 class StaffComment(serializers.ModelSerializer):
@@ -222,6 +240,7 @@ class InvitesSerializer(serializers.ModelSerializer):
 
 class SshKeysSerializer(serializers.ModelSerializer):
     user = UsersSerializerFiltered(read_only=True)
+
     class Meta:
         fields = (
             'name',
@@ -231,7 +250,7 @@ class SshKeysSerializer(serializers.ModelSerializer):
             'user'
         )
         model = models.SSHPublicKey
-        read_only_fields=('fingerprint', )
+        read_only_fields = ('fingerprint', )
 
     def validate_public_key(self, value):
         value = value.strip()

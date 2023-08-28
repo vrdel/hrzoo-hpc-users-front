@@ -1,9 +1,4 @@
-import datetime
-
-from backend import models
 from backend import serializers
-
-from dateutil.relativedelta import relativedelta
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
@@ -13,7 +8,6 @@ from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_api_key.permissions import HasAPIKey
 
 from .view_users import UsersAPI
 from .view_projects import ProjectsAPI
