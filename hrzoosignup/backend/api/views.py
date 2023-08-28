@@ -16,6 +16,7 @@ from rest_framework.views import APIView
 from rest_framework_api_key.permissions import HasAPIKey
 
 from .view_users import UsersAPI
+from .view_projects import ProjectsAPI
 
 
 class IsSessionActive(APIView):
@@ -70,24 +71,3 @@ class SshKeysAPI(APIView):
     def get(self, request):
         serializer = serializers.SshKeysSerializer2(SSHPublicKey.objects.all(), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class ProjectsAPI(APIView):
-    permission_classes = (HasAPIKey,)
-
-    def get(self, request):
-        projects = filter_active_projects(models.Project.objects.all())
-
-        resp_projects = list()
-        for project in projects:
-            members = models.UserProject.objects.filter(project=project)
-            resp_projects.append({
-                "id": project.id,
-                "identifier": project.identifier,
-                "members": sorted([
-                    {"id": member.user.id, "email": member.user.person_mail}
-                    for member in members
-                ], key=lambda k: k["email"])
-            })
-
-        return Response(resp_projects)
