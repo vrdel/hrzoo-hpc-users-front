@@ -1,6 +1,8 @@
 from backend import models
+from backend import serializers
 
 from rest_framework.views import APIView
+from rest_framework import status
 from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.response import Response
 
@@ -10,17 +12,6 @@ class ProjectsAPI(APIView):
 
     def get(self, request):
         projects = models.Project.objects.all()
+        serializer = serializers.ProjectSerializerFiltered(projects, many=True)
 
-        resp_projects = list()
-        for project in projects:
-            members = models.UserProject.objects.filter(project=project)
-            resp_projects.append({
-                "id": project.id,
-                "identifier": project.identifier,
-                "members": sorted([
-                    {"id": member.user.id, "username": member.user.username}
-                    for member in members
-                ], key=lambda k: k["email"])
-            })
-
-        return Response(resp_projects)
+        return Response(serializer.data, status=status.HTTP_200_OK)
