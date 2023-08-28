@@ -81,8 +81,9 @@ class ProjectTypeSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializerFiltered(serializers.ModelSerializer):
-    project_type = ProjectTypeSerializer()
-    state = StateSerializer()
+    project_type = serializers.SerializerMethodField()
+    state = serializers.SerializerMethodField()
+    resources_type = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
@@ -95,6 +96,16 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
             'state'
         )
         model = models.Project
+
+    def get_resources_type(self, obj):
+        res_types = obj.resources_type
+        return [t['value'] for t in res_types]
+
+    def get_project_type(self, obj):
+        return obj.project_type.name
+
+    def get_state(self, obj):
+        return obj.state.name
 
 
 class UsersSerializerFiltered(serializers.ModelSerializer):
