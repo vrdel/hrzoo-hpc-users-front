@@ -2,9 +2,9 @@ import datetime
 
 from backend import models
 from backend import serializers
-from backend.models import SSHPublicKey
 
 from dateutil.relativedelta import relativedelta
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
 from django.middleware.csrf import get_token
@@ -17,6 +17,7 @@ from rest_framework_api_key.permissions import HasAPIKey
 
 from .view_users import UsersAPI
 from .view_projects import ProjectsAPI
+from .view_sshkeys import SshKeysAPI
 
 
 class IsSessionActive(APIView):
@@ -46,28 +47,3 @@ class IsSessionActive(APIView):
                     'csrftoken': get_token(request)
                 },
                 status=status.HTTP_200_OK)
-
-
-def get_todays_datetime():
-    return datetime.datetime.now()
-
-
-def filter_active_projects(projects):
-    return [
-        project for project in projects if
-        project.state.name == "approve" and (
-            project.date_end > get_todays_datetime() or (
-                len(models.DateExtend.objects.filter(project=project)) > 0 and (
-                    project.date_end + relativedelta(months=+6)
-                ) > get_todays_datetime()
-            )
-        )
-    ]
-
-
-class SshKeysAPI(APIView):
-    permission_classes = (HasAPIKey,)
-
-    def get(self, request):
-        serializer = serializers.SshKeysSerializer2(SSHPublicKey.objects.all(), many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
