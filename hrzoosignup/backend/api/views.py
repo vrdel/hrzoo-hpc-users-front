@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 from .view_users import UsersAPI
 from .view_projects import ProjectsAPI
 from .view_sshkeys import SshKeysAPI
+from .view_userproject import UserProjectAPI
 
 
 class IsSessionActive(APIView):

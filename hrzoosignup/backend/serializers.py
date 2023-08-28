@@ -80,6 +80,21 @@ class ProjectTypeSerializer(serializers.ModelSerializer):
         model = models.ProjectType
 
 
+class ProjectSerializerFiltered(serializers.ModelSerializer):
+    project_type = ProjectTypeSerializer()
+    state = StateSerializer()
+
+    class Meta:
+        fields = (
+            'identifier',
+            'is_active',
+            'name',
+            'project_type',
+            'resources_numbers',
+            'resources_type',
+            'state'
+        )
+        model = models.Project
 
 
 class UsersSerializerFiltered(serializers.ModelSerializer):
@@ -131,6 +146,19 @@ class UserProjectSerializer(serializers.ModelSerializer):
             'project',
             'role',
             'date_joined'
+        )
+        model = models.UserProject
+
+
+class UserProjectSerializer2(serializers.ModelSerializer):
+    user = UsersSerializerFiltered2()
+    project = ProjectSerializerFiltered()
+
+    class Meta:
+        fields = (
+            'user',
+            'project',
+            'date_joined',
         )
         model = models.UserProject
 
