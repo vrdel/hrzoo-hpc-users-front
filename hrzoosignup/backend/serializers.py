@@ -162,7 +162,7 @@ class UserProjectSerializer(serializers.ModelSerializer):
 
 
 class UserProjectSerializer2(serializers.ModelSerializer):
-    user = UsersSerializerFiltered2()
+    user = UsersSerializerFiltered3()
     project = ProjectSerializerFiltered()
 
     class Meta:

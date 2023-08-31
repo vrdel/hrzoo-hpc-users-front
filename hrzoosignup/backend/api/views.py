@@ -9,8 +9,6 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .view_users import UsersAPI
-from .view_projects import ProjectsAPI
 from .view_sshkeys import SshKeysAPI
 from .view_userproject import UserProjectAPI
 

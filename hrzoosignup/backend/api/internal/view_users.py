@@ -1,5 +1,4 @@
 from backend import models
-from backend import serializers
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from rest_framework import status
