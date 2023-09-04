@@ -27,6 +27,11 @@ let cloudGpuResource = {
   "value": "CLOUD-GPU"
 }
 
+let padobranResource = {
+  "label": "PADOBRAN",
+  "value": "PADOBRAN"
+}
+
 export const ResourceTypesToSelect = [
   gpuResource,
   cpuResource,
@@ -34,4 +39,5 @@ export const ResourceTypesToSelect = [
   cloudResource,
   cloudGpuResource,
   cloudBigMemResource,
+  padobranResource
 ]
