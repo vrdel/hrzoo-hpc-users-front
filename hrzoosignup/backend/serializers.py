@@ -83,7 +83,7 @@ class ProjectTypeSerializer(serializers.ModelSerializer):
 class ProjectSerializerFiltered(serializers.ModelSerializer):
     project_type = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
-    resources_type = serializers.SerializerMethodField()
+    staff_resources_type = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
@@ -92,14 +92,17 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
             'name',
             'project_type',
             'resources_numbers',
-            'resources_type',
+            'staff_resources_type',
             'state'
         )
         model = models.Project
 
-    def get_resources_type(self, obj):
-        res_types = obj.resources_type
-        return [t['value'] for t in res_types]
+    def get_staff_resources_type(self, obj):
+        res_types = obj.staff_resources_type
+        if res_types:
+            return [t['value'] for t in res_types]
+        else:
+            return []
 
     def get_project_type(self, obj):
         return obj.project_type.name
