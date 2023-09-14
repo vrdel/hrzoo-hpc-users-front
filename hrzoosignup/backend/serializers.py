@@ -87,6 +87,7 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
 
     class Meta:
         fields = (
+            'id',
             'identifier',
             'is_active',
             'name',
