@@ -209,6 +209,13 @@ const NewPublicKey = () => {
                 }
               />
             </InputGroup>
+            <Row className="g-0 mt-1 me-2 me-sm-2 me-md-2 me-xl-2">
+              <Col md={{size: 12}} sm={{size: 12}} xl={{size: 12}}  >
+                <small className="fst-italic">
+                  <span className="fw-bold">Napomena:</span> U formu se zalijepi javna komponenta ključa (id_rsa.pub) ili se ista može učitati iz datoteke
+                </small>
+              </Col>
+            </Row>
           </Col>
         </Row>
         <Row className='mt-5 mb-5'>
