@@ -140,6 +140,7 @@ class UsersSerializerFiltered3(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
+            'person_oib',
             'first_name',
             'last_name',
             'person_mail',
