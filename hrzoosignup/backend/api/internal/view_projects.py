@@ -159,6 +159,8 @@ class Projects(APIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, **kwargs):
+        import ipdb; ipdb.set_trace()
+
         req_type = kwargs.get('specific')
         if (request.user.is_staff or request.user.is_superuser):
             p_obj = models.Project.objects.get(identifier=req_type)
@@ -227,6 +229,9 @@ class Projects(APIView):
                     sc.save()
                 cache.delete('projects-get-all')
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, **kwargs):
         projects = list()
