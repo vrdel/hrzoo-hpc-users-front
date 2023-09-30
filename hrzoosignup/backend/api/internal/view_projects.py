@@ -159,8 +159,6 @@ class Projects(APIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, **kwargs):
-        import ipdb; ipdb.set_trace()
-
         req_type = kwargs.get('specific')
         if (request.user.is_staff or request.user.is_superuser):
             p_obj = models.Project.objects.get(identifier=req_type)
@@ -178,6 +176,8 @@ class Projects(APIView):
             p_obj.science_extrasoftware_help = request.data['scientificSoftwareHelp']
             p_obj.staff_resources_type = request.data.get('staff_requestResourceType')
             p_obj.resources_numbers = request.data['resources_numbers']
+            p_obj.date_start = request.data['date_start']
+            p_obj.date_end = request.data['date_end']
 
             if state.name == 'deny':
                 staff_comment = request.data.get('staff_comment')

@@ -33,6 +33,7 @@ import { extractLeaderName } from '../../utils/users_help';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 import '../../styles/staff-change-disabled.css';
 import { AuthContext } from '../../components/AuthContextProvider.jsx';
+import { convertToAmerican } from "../../utils/dates";
 
 
 function setInitialState() {
@@ -176,12 +177,21 @@ export const ManageRequestsChange = () => {
       queryFn: () => fetchNrSpecificProject(projId),
   })
 
+  function checkAmericanDateAndConvert(checkDate) {
+    if (typeof(checkDate) === 'string' &&
+      checkDate.match(/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/))
+        return checkDate
+    return convertToAmerican(checkDate)
+  }
+
   const changeMutation = useMutation({
     mutationFn: (data) => {
       data['identifier'] = projId
       data['is_active'] = true
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
+      data['date_start'] = checkAmericanDateAndConvert(data['startDate'])
+      data['date_end'] =  checkAmericanDateAndConvert(data['endDate'])
       data['scientificSoftware'] = data['scientificSoftware'].map(e => e['value'])
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
 
