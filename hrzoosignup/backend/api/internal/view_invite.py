@@ -97,8 +97,10 @@ class Invites(APIView):
                                 'message': '{} associated to project {}'.format(
                                     user.person_uniqueid,
                                     proj.identifier)
-                        }}
+                            }
+                        }
                         logger.info(msg)
+                        cache.delete("ext-users-projects")
                         return Response(msg, status=status.HTTP_201_CREATED)
 
                     else:
@@ -120,13 +122,14 @@ class Invites(APIView):
                                                            proj.name, user)
                     msg = {
                         'status': {
-                        'code': status.HTTP_201_CREATED,
-                        'message': '{} associated to project {}'.format(
+                            'code': status.HTTP_201_CREATED,
+                            'message': '{} associated to project {}'.format(
                                 user.person_uniqueid,
                                 proj.identifier)
                         }
                     }
                     logger.info(msg)
+                    cache.delete("ext-users-projects")
                     return Response(msg, status=status.HTTP_201_CREATED)
 
         except requests.exceptions.HTTPError as ex:

@@ -61,6 +61,7 @@ class ProjectsGeneral(APIView):
                                           project_ins.identifier)
 
             cache.delete('projects-get-all')
+            cache.delete("ext-users-projects")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -142,6 +143,7 @@ class ProjectsResearch(APIView):
                                           project_ins.identifier)
 
             cache.delete('projects-get-all')
+            cache.delete("ext-users-projects")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
@@ -227,6 +229,7 @@ class Projects(APIView):
                     )
                     p_obj.staff_comment = sc
                     sc.save()
+                cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -300,6 +303,7 @@ class Projects(APIView):
                     proj = models.Project.objects.get(identifier=req_id)
                     models.UserProject.objects.filter(project=proj).delete()
                     proj.delete()
+                    cache.delete("ext-users-projects")
                     cache.delete('projects-get-all')
                     return Response(status=status.HTTP_204_NO_CONTENT)
                 else:
