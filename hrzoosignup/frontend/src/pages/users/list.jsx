@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faSearch, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faSearch, faTimesCircle, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "../../components/TableHelpers";
 import { buildOptionsFromArray } from "../../utils/select-tools";
@@ -115,11 +115,13 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
             <Button className="mt-1 mb-1 mr-3" color={activeList ? "light" : "success"}
               active={ activeList }
               onClick={ () => { navigate('/ui/korisnici') } }>
+              <FontAwesomeIcon icon={ faCheck } />{' '}
               Aktivni
             </Button>
             <Button className="ml-1 mt-1 mb-1"  color={!activeList ? "light" : "warning"}
               active={ !activeList }
               onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
+              <FontAwesomeIcon icon={ faXmark } />{' '}
               Neaktivni
             </Button>
           </ButtonGroup>
@@ -301,11 +303,14 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                       </td>
                       <td className="p-3 align-middle text-center">
                         {
-                          user.projects.map((proj, pid) =>
-                            <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
-                              { proj.identifier }
-                            </Badge>
-                          )
+                          user.projects.length > 0 ?
+                            user.projects.map((proj, pid) =>
+                              <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
+                                { proj.identifier }
+                              </Badge>
+                            )
+                          :
+                            '\u2212'
                         }
                       </td>
                       <td className="p-3 align-middle text-center">
