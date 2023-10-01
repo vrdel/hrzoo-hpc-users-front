@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SharedData } from "../root";
-import { fetchUsers } from "../../api/users"
+import { fetchUsers, fetchUsersInactive } from "../../api/users"
 import { useQuery } from "@tanstack/react-query";
 import {
   Badge,
@@ -327,13 +327,80 @@ const UsersListTable = ({ data, pageTitle }) => {
 }
 
 
+export const UsersInactiveList = () => {
+  const { LinkTitles } = useContext(SharedData)
+	const [pageTitle, setPageTitle] = useState(undefined)
+  const navigate = useNavigate()
+
+	const { status, error, data } = useQuery({
+		queryKey: ["inactive-users"],
+		queryFn: fetchUsersInactive
+	})
+
+	useEffect(() => {
+		setPageTitle(LinkTitles(location.pathname))
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+	}, [location.pathname, status])
+
+  if (status === 'loading' && pageTitle)
+    return (
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
+        <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <tr>
+            <th className="fw-normal"  style={{width: '52px'}}>
+              #
+            </th>
+            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
+              <div className="flex-grow-1">
+                Ime, prezime i oznaka
+              </div>
+              <div>
+                { SortArrow() }
+              </div>
+            </th>
+            <th className="fw-normal"  style={{width: '306px'}}>
+              Institucija
+            </th>
+            <th className="fw-normal"  style={{minWidth: '296px'}}>
+              Email
+            </th>
+            <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
+            >
+              <div className="flex-grow-1">
+                Dodan
+              </div>
+              <div>
+                { SortArrow() }
+              </div>
+            </th>
+            <th className="fw-normal"  style={{width: '180px'}}>
+              Projekti
+            </th>
+            <th className="fw-normal"  style={{width: '116px'}}>
+              Javni ključ
+            </th>
+          </tr>
+        </thead>
+      </EmptyTableSpinner>
+    )
+  else if (status === 'success' && data && pageTitle)
+    return (
+      <UsersListTable
+        data={ data }
+        pageTitle={ pageTitle }
+      />
+    )
+}
+
+
 export const UsersList = () => {
   const { LinkTitles } = useContext(SharedData)
 	const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
 
 	const { status, error, data } = useQuery({
-		queryKey: ["all-users"],
+		queryKey: ["active-users"],
 		queryFn: fetchUsers
 	})
 
