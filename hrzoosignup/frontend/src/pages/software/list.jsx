@@ -192,7 +192,11 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
       <Form onSubmit={ handleSubmit(onSubmit) } className="needs-validation">
         <Row>
           <PageTitle pageTitle={pageTitle}>
-            <Button className="mt-1 mb-1" color="success" onClick={() => setShowAddNew(!showAddNew)}>
+            <Button className="mt-1 mb-1"
+              color={showAddNew ? "light" : "success"}
+              onClick={() => setShowAddNew(!showAddNew)}
+              active={ showAddNew }
+            >
               <FontAwesomeIcon className="mt-1" icon={faWindowRestore} />{' '}
               Dodaj
             </Button>
