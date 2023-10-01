@@ -19,6 +19,19 @@ import { toast } from 'react-toastify'
 import _ from 'lodash';
 
 
+const ButtonAdd = ({setShowAddNew, showAddNew, faWindowRestore}) => {
+  return (
+    <Button className="mt-1 mb-1"
+      color={showAddNew ? "light" : "success"}
+      onClick={() => setShowAddNew(!showAddNew)}
+      active={ showAddNew }
+    >
+      <FontAwesomeIcon className="mt-1" icon={faWindowRestore} />{' '}
+      Dodaj
+    </Button>
+  )
+}
+
 
 const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   const [pageSize, setPageSize] = useState(50)
@@ -192,14 +205,11 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
       <Form onSubmit={ handleSubmit(onSubmit) } className="needs-validation">
         <Row>
           <PageTitle pageTitle={pageTitle}>
-            <Button className="mt-1 mb-1"
-              color={showAddNew ? "light" : "success"}
-              onClick={() => setShowAddNew(!showAddNew)}
-              active={ showAddNew }
-            >
-              <FontAwesomeIcon className="mt-1" icon={faWindowRestore} />{' '}
-              Dodaj
-            </Button>
+            <ButtonAdd
+              setShowAddNew={setShowAddNew}
+              showAddNew={showAddNew}
+              faWindowRestore={faWindowRestore}
+            />
           </PageTitle>
         </Row>
         <ModalAreYouSure
@@ -478,7 +488,14 @@ export const SoftwareList = () => {
 
   else if (statusSoftware === 'loading' || statusOpsUsers === 'loading')
     return (
-      <EmptyTableSpinner pageTitle={pageTitle} colSpan={5}>
+      <EmptyTableSpinner pageTitle={pageTitle} colSpan={5}
+        PageTitleChild={ButtonAdd}
+        PageTitleChildProps={{
+          setShowAddNew: undefined,
+          showAddNew: false,
+          faWindowRestore: faWindowRestore
+        }}
+      >
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
             <th className="fw-normal position-relative"  style={{width: '52px'}}>
