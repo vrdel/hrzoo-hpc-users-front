@@ -4,10 +4,12 @@ import { fetchUsers, fetchUsersInactive } from "../../api/users"
 import { useQuery } from "@tanstack/react-query";
 import {
   Badge,
+  Button,
+  ButtonGroup,
   Col,
+  Input,
   Row,
   Table,
-  Input,
 } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,11 +25,12 @@ import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import _ from 'lodash';
 
 
-const UsersListTable = ({ data, pageTitle }) => {
+const UsersListTable = ({ data, pageTitle, activeList=true }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
   const [sortJoined, setSortJoined] = useState(true)
+  const navigate = useNavigate()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -104,10 +107,25 @@ const UsersListTable = ({ data, pageTitle }) => {
       return pageIndex * pageSize + index + 1
   }
 
+  let inactiveVisited = location.pathname.includes('neaktivni')
+
   return (
     <>
       <Row>
-        <PageTitle pageTitle={ pageTitle } />
+        <PageTitle pageTitle={ pageTitle }>
+          <ButtonGroup>
+            <Button className="mt-1 mb-1 mr-3" color={!inactiveVisited ? "light" : "success"}
+              active={ !inactiveVisited }
+              onClick={ () => { navigate('/ui/korisnici') } }>
+              Aktivni
+            </Button>
+            <Button className="ml-1 mt-1 mb-1"  color={inactiveVisited ? "light" : "warning"}
+              active={ inactiveVisited }
+              onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
+              Neaktivni
+            </Button>
+          </ButtonGroup>
+        </PageTitle>
       </Row>
       <Row className="mt-4">
         <Col>
@@ -456,6 +474,7 @@ export const UsersList = () => {
       <UsersListTable
         data={ data }
         pageTitle={ pageTitle }
+        activeList={false}
       />
     )
 }
