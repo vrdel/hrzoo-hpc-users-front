@@ -191,7 +191,7 @@ export const ManageRequestsChange = () => {
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
       data['date_start'] = checkAmericanDateAndConvert(data['startDate'])
-      data['date_end'] =  checkAmericanDateAndConvert(data['endDate'])
+      data['date_end'] = checkAmericanDateAndConvert(data['endDate'])
       data['scientificSoftware'] = data['scientificSoftware'].map(e => e['value'])
       data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
 

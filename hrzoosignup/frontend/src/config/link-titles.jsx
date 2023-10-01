@@ -13,6 +13,7 @@ export function LinkTitles(loc) {
     [url_ui_prefix + '/moji-podaci']: 'Moji podaci u imeniku matične ustanove i sustavu CroRIS',
     [url_ui_prefix + '/clanstva']: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
     [url_ui_prefix + '/korisnici']: 'Popis svih korisnika na projektima',
+    [url_ui_prefix + '/korisnici/neaktivni']: 'Popis neaktivnih korisnika koji nisu ni na jednom aktivnom projektu',
     [url_ui_prefix + '/projekti']: 'Popis svih odobrenih projekata',
     [url_ui_prefix + '/softver']: 'Popis aplikacija dostupnih na klasteru',
   }
