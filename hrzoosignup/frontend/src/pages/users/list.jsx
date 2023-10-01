@@ -25,6 +25,28 @@ import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import _ from 'lodash';
 
 
+const ButtonGroupActiveInactive = ({activeList}) => {
+  let navigate = useNavigate()
+
+  return (
+    <ButtonGroup>
+      <Button className="mt-1 mb-1 mr-3" color={activeList ? "light" : "success"}
+        active={ activeList }
+        onClick={ () => { navigate('/ui/korisnici') } }>
+        <FontAwesomeIcon icon={ faCheck } />{' '}
+        Aktivni
+      </Button>
+      <Button className="ml-1 mt-1 mb-1"  color={!activeList ? "light" : "warning"}
+        active={ !activeList }
+        onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
+        <FontAwesomeIcon icon={ faXmark } />{' '}
+        Neaktivni
+      </Button>
+    </ButtonGroup>
+  )
+}
+
+
 const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
@@ -111,20 +133,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
     <>
       <Row>
         <PageTitle pageTitle={ pageTitle }>
-          <ButtonGroup>
-            <Button className="mt-1 mb-1 mr-3" color={activeList ? "light" : "success"}
-              active={ activeList }
-              onClick={ () => { navigate('/ui/korisnici') } }>
-              <FontAwesomeIcon icon={ faCheck } />{' '}
-              Aktivni
-            </Button>
-            <Button className="ml-1 mt-1 mb-1"  color={!activeList ? "light" : "warning"}
-              active={ !activeList }
-              onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
-              <FontAwesomeIcon icon={ faXmark } />{' '}
-              Neaktivni
-            </Button>
-          </ButtonGroup>
+          <ButtonGroupActiveInactive activeList={activeList} />
         </PageTitle>
       </Row>
       <Row className="mt-4">
@@ -371,7 +380,10 @@ export const UsersInactiveList = () => {
 
   if (status === 'loading' && pageTitle)
     return (
-      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
+      <EmptyTableSpinner
+        pageTitle={pageTitle}
+        PageTitleChild={ButtonGroupActiveInactive}
+        colSpan={7} activeList={false}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
             <th className="fw-normal"  style={{width: '52px'}}>
@@ -439,7 +451,11 @@ export const UsersList = () => {
 
   if (status === 'loading' && pageTitle)
     return (
-      <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
+      <EmptyTableSpinner
+        pageTitle={pageTitle}
+        PageTitleChild={ButtonGroupActiveInactive}
+        colSpan={7} activeList={true}
+      >
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
             <th className="fw-normal"  style={{width: '52px'}}>
