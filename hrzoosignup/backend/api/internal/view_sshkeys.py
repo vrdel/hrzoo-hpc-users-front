@@ -11,6 +11,7 @@ from backend.email import sshkey as keyemail
 from backend import models
 
 from django.conf import settings
+from django.core.cache import cache
 from django.db import IntegrityError
 
 import json
@@ -53,6 +54,7 @@ class SshKeys(APIView):
                 'message': f'{request.user.username} - {key_name} successfully deleted'
             }
         }
+        cache.delete("ext-sshkeys")
         return Response(ok_response, status=status.HTTP_204_NO_CONTENT)
 
     def post(self, request):
@@ -80,6 +82,7 @@ class SshKeys(APIView):
                 serializer.save()
                 if settings.EMAIL_SEND:
                     keyemail.email_add_sshkey(request.user)
+                cache.delete("ext-sshkeys")
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             except IntegrityError as exc:
