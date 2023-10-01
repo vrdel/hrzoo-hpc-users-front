@@ -25,7 +25,7 @@ import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import _ from 'lodash';
 
 
-const UsersListTable = ({ data, pageTitle, activeList=true }) => {
+const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
@@ -107,20 +107,18 @@ const UsersListTable = ({ data, pageTitle, activeList=true }) => {
       return pageIndex * pageSize + index + 1
   }
 
-  let inactiveVisited = location.pathname.includes('neaktivni')
-
   return (
     <>
       <Row>
         <PageTitle pageTitle={ pageTitle }>
           <ButtonGroup>
-            <Button className="mt-1 mb-1 mr-3" color={!inactiveVisited ? "light" : "success"}
-              active={ !inactiveVisited }
+            <Button className="mt-1 mb-1 mr-3" color={activeList ? "light" : "success"}
+              active={ activeList }
               onClick={ () => { navigate('/ui/korisnici') } }>
               Aktivni
             </Button>
-            <Button className="ml-1 mt-1 mb-1"  color={inactiveVisited ? "light" : "warning"}
-              active={ inactiveVisited }
+            <Button className="ml-1 mt-1 mb-1"  color={!activeList ? "light" : "warning"}
+              active={ !activeList }
               onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
               Neaktivni
             </Button>
@@ -168,7 +166,12 @@ const UsersListTable = ({ data, pageTitle, activeList=true }) => {
                   </div>
                 </th>
                 <th className="fw-normal"  style={{minWidth: '180px'}}>
-                  Projekti
+                  {
+                    activeList ?
+                      "Projekti"
+                    :
+                      "Prošli projekti"
+                  }
                 </th>
                 <th className="fw-normal"  style={{minWidth: '116px'}}>
                   Javni ključ
@@ -393,7 +396,7 @@ export const UsersInactiveList = () => {
               </div>
             </th>
             <th className="fw-normal"  style={{width: '180px'}}>
-              Projekti
+              Prošli projekti
             </th>
             <th className="fw-normal"  style={{width: '116px'}}>
               Javni ključ
@@ -407,6 +410,7 @@ export const UsersInactiveList = () => {
       <UsersListTable
         data={ data }
         pageTitle={ pageTitle }
+        activeList={false}
       />
     )
 }
@@ -474,7 +478,7 @@ export const UsersList = () => {
       <UsersListTable
         data={ data }
         pageTitle={ pageTitle }
-        activeList={false}
+        activeList={true}
       />
     )
 }
