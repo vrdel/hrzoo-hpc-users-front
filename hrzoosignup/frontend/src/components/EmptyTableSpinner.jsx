@@ -3,7 +3,9 @@ import { Col, Row, Table, Spinner } from "reactstrap";
 import { PageTitle } from "./PageTitle";
 
 
-export const EmptyTableSpinner = ({ pageTitle=undefined, PageTitleChild=undefined, colSpan, rowClass=undefined, children, ...props}) => {
+export const EmptyTableSpinner = ({ pageTitle=undefined,
+  PageTitleChild=undefined, PageTitleChildProps=undefined, colSpan,
+  rowClass=undefined, children}) => {
   let wrapRowClass = "mt-4"
 
   if (rowClass)
@@ -17,7 +19,7 @@ export const EmptyTableSpinner = ({ pageTitle=undefined, PageTitleChild=undefine
           <PageTitle pageTitle={ pageTitle }>
             {
               PageTitleChild &&
-                <PageTitleChild {...props} />
+                <PageTitleChild {...PageTitleChildProps} />
             }
           </PageTitle>
         </Row>

@@ -383,7 +383,9 @@ export const UsersInactiveList = () => {
       <EmptyTableSpinner
         pageTitle={pageTitle}
         PageTitleChild={ButtonGroupActiveInactive}
-        colSpan={7} activeList={false}>
+        PageTitleChildProps={{activeList: false}}
+        colSpan={7}
+      >
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
             <th className="fw-normal"  style={{width: '52px'}}>
@@ -454,7 +456,8 @@ export const UsersList = () => {
       <EmptyTableSpinner
         pageTitle={pageTitle}
         PageTitleChild={ButtonGroupActiveInactive}
-        colSpan={7} activeList={true}
+        PageTitleChildProps={{activeList: true}}
+        colSpan={7}
       >
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
