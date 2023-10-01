@@ -24,5 +24,6 @@ urlpatterns = [
     path('science-software/', views.ScienceSoftware.as_view(), name='sciencesoftware'),
     path('science-software/<int:id>', views.ScienceSoftware.as_view(), name='sciencesoftware'),
     path("active-users/", views.UsersInfo.as_view(), name="users"),
+    path("inactive-users/", views.UsersInfoInactive.as_view(), name="inactiveusers"),
     path("ops-users/", views.UsersInfoOps.as_view(), name="users-ops"),
 ] + router.urls

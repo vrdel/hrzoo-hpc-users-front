@@ -3,4 +3,4 @@ from .view_sshkeys import SshKeys
 from .view_projects import ProjectsResearch, ProjectsGeneral, Projects, ProjectsRole, CanSubmitInstitutionalProject
 from .view_invite import Invites, InvitesLink, InvitesSent
 from .view_software import ScienceSoftware
-from .view_users import UsersInfo, UsersInfoOps
+from .view_users import UsersInfo, UsersInfoInactive, UsersInfoOps
