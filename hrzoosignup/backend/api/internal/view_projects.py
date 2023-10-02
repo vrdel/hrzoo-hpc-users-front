@@ -219,7 +219,7 @@ class Projects(APIView):
                         comment=comment,
                         date=timezone.now(),
                         project_state=state.name,
-                        project_id = p_obj.pk,
+                        project_id=p_obj.pk,
                         comment_by={
                             'first_name': self.request.user.first_name,
                             'last_name': self.request.user.last_name,
@@ -231,6 +231,8 @@ class Projects(APIView):
                     sc.save()
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
+                cache.delete("usersinfoinactive-get")
+                cache.delete("usersinfo-get")
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             else:
