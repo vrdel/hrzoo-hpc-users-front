@@ -30,13 +30,13 @@ const ButtonGroupActiveInactive = ({activeList}) => {
 
   return (
     <ButtonGroup size="sm">
-      <Button className="mt-1 mb-1 mr-3" color={activeList ? "light" : "success"}
+      <Button className="mt-1 mb-1 mr-3" color="light"
         active={ activeList }
         onClick={ () => { navigate('/ui/korisnici') } }>
         <FontAwesomeIcon icon={ faCheck } />{' '}
         Aktivni
       </Button>
-      <Button className="ml-1 mt-1 mb-1"  color={!activeList ? "light" : "warning"}
+      <Button className="ml-1 mt-1 mb-1" color="light"
         active={ !activeList }
         onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
         <FontAwesomeIcon icon={ faXmark } />{' '}
