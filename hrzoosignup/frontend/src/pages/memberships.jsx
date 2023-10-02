@@ -21,6 +21,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { EmptyTableSpinner } from '../components/EmptyTableSpinner';
+import _ from 'lodash';
 
 
 function extractUsers(projectUsers, role) {
@@ -371,14 +372,14 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
 const UsersTableCroris = ({project, invites, onSubmit}) => {
   const { userDetails } = useContext(AuthContext);
-  const [ emailInvites, setEmailInvites] = useState(undefined)
+  const [emailInvites, setEmailInvites] = useState(undefined)
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   let oibsJoined = new Set()
   alreadyJoined.forEach(user => oibsJoined.add(user['user']['person_oib']))
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
-  const [ checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
+  const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -680,7 +681,11 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                 <Col>
                   <Row>
                     <Col className="d-flex justify-content-center">
-                      <Button color="danger" onClick={() => onUsersCheckout()} className="me-2">
+                      <Button
+                        color="danger"
+                        active={!_.some(checkJoined, (value) => value === true)}
+                        onClick={() => onUsersCheckout()} className="me-2"
+                      >
                         <FontAwesomeIcon icon={faXmark}/>{' '}
                         Odjavi suradnike
                       </Button>
