@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
 import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody,
-  Label, Badge, Table, Button, Form, Tooltip } from 'reactstrap';
+  Label, Badge, Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
@@ -16,7 +16,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
   faPaperPlane,
-  faArrowDown
+  faArrowDown,
+  faXmark
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { EmptyTableSpinner } from '../components/EmptyTableSpinner';
@@ -317,7 +318,11 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
               <Col>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button color="primary" onClick={toggle}>
+                    <Button color="danger" onClick={toggle} className="me-2">
+                      <FontAwesomeIcon icon={faXmark}/>{' '}
+                      Odjavi suradnike
+                    </Button>
+                    <Button color="primary" onClick={toggle} className="ms-2">
                       <FontAwesomeIcon icon={faArrowDown}/>{' '}
                       Pozovi suradnike
                     </Button>
@@ -373,6 +378,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   let oibsJoined = new Set()
   alreadyJoined.forEach(user => oibsJoined.add(user['user']['person_oib']))
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
+  const [ checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -404,6 +410,19 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   const isOpened = (toolid) => {
     if (tooltipOpened !== undefined)
       return tooltipOpened[toolid]
+  }
+
+  function onChangeCheckOut(i) {
+    let tmpArray = [...checkJoined]
+    if (tmpArray[i])
+      tmpArray[i] = false
+    else
+      tmpArray[i] = true
+    setCheckJoined(tmpArray)
+  }
+
+  const onUsersCheckout = () => {
+    console.log('VRDEL DEBUG', checkJoined, alreadyJoined)
   }
 
   useEffect(() => {
@@ -550,7 +569,15 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                           ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                           : "align-middle text-center text-success"
                         }>
-                          Da
+                          <div className="position-relative">
+                            Da
+                            <Input
+                              type="checkbox"
+                              className="bg-danger border border-danger ms-4 position-absolute top-0 start-50 translate-middle"
+                              checked={checkJoined[i] === true}
+                              onChange={() => onChangeCheckOut(i)}
+                            />
+                          </div>
                         </td>
                       </tr>
                     ))
@@ -653,7 +680,11 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                 <Col>
                   <Row>
                     <Col className="d-flex justify-content-center">
-                      <Button disabled={collabNoEmail} color="primary" onClick={toggle}>
+                      <Button color="danger" onClick={() => onUsersCheckout()} className="me-2">
+                        <FontAwesomeIcon icon={faXmark}/>{' '}
+                        Odjavi suradnike
+                      </Button>
+                      <Button disabled={collabNoEmail} color="primary" className="ms-2" onClick={toggle}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         Pozovi suradnike
                       </Button>
