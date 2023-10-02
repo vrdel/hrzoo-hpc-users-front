@@ -29,7 +29,7 @@ const ButtonGroupActiveInactive = ({activeList}) => {
   let navigate = useNavigate()
 
   return (
-    <ButtonGroup>
+    <ButtonGroup size="sm">
       <Button className="mt-1 mb-1 mr-3" color={activeList ? "light" : "success"}
         active={ activeList }
         onClick={ () => { navigate('/ui/korisnici') } }>

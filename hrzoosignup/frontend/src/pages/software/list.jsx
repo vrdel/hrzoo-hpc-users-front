@@ -21,7 +21,7 @@ import _ from 'lodash';
 
 const ButtonAdd = ({setShowAddNew, showAddNew, faWindowRestore}) => {
   return (
-    <Button className="mt-1 mb-1"
+    <Button size="sm" className="mt-1 mb-1"
       color={showAddNew ? "light" : "success"}
       onClick={() => setShowAddNew(!showAddNew)}
       active={ showAddNew }
