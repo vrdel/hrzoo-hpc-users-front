@@ -221,6 +221,9 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                 <th className="fw-normal">
                   Prijavljen
                 </th>
+                <th className="fw-normal">
+                  Odjava
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -261,6 +264,13 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   }>
                     Da
                   </td>
+                  <td className={
+                    amILead
+                    ? "align-middle text-center fst-italic border-bottom border-secondary"
+                    : "align-middle text-center"
+                  }>
+                    {'\u2212'}
+                  </td>
                 </tr>
                 {
                   alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
@@ -298,15 +308,15 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                         : "align-middle text-center text-success"
                       }>
-                        <div className="position-relative">
-                          Da
-                          <Input
-                            type="checkbox"
-                            className="bg-danger border border-danger ms-4 position-absolute top-0 start-50 translate-middle"
-                            checked={checkJoined[i] === true}
-                            onChange={() => onChangeCheckOut(i)}
-                          />
-                        </div>
+                        Da
+                      </td>
+                      <td className="align-middle text-center">
+                        <Input
+                          type="checkbox"
+                          className="bg-danger border border-danger ms-1"
+                          checked={checkJoined[i] === true}
+                          onChange={() => onChangeCheckOut(i)}
+                        />
                       </td>
                     </tr>
                   ))
@@ -336,6 +346,9 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         >
                           Aktivna pozivnica poslana na email
                         </Tooltip>
+                      </td>
+                      <td className="align-middle text-center">
+                        {'\u2212'}
                       </td>
                     </tr>
                   ))
@@ -533,6 +546,9 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                   <th className="fw-normal">
                     Prijavljen
                   </th>
+                  <th className="fw-normal">
+                    Odjava
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -580,6 +596,13 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                     }>
                       Da
                     </td>
+                    <td className={
+                      amILead
+                      ? "align-middle text-center fst-italic border-bottom border-secondary"
+                      : "p-3 align-middle text-center"
+                    }>
+                      {'\u2212'}
+                    </td>
                   </tr>
                   {
                     alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
@@ -624,15 +647,19 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                           ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                           : "align-middle text-center text-success"
                         }>
-                          <div className="position-relative">
-                            Da
-                            <Input
-                              type="checkbox"
-                              className="bg-danger border border-danger ms-4 position-absolute top-0 start-50 translate-middle"
-                              checked={checkJoined[i] === true}
-                              onChange={() => onChangeCheckOut(i)}
-                            />
-                          </div>
+                          Da
+                        </td>
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                          : "align-middle text-center text-success"
+                        }>
+                          <Input
+                            type="checkbox"
+                            className="bg-danger border border-danger ms-1"
+                            checked={checkJoined[i] === true}
+                            onChange={() => onChangeCheckOut(i)}
+                          />
                         </td>
                       </tr>
                     ))
@@ -719,6 +746,9 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                       Ne
                                     </span>
                               }
+                            </td>
+                            <td className="align-middle text-center">
+                              {'\u2212'}
                             </td>
                           </tr>
                         ))
