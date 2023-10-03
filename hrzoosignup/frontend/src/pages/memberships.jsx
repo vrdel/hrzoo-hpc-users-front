@@ -4,7 +4,7 @@ import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody,
   Label, Badge, Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, useWatch } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
 import { addInvite, fetchMyInvites } from '../api/invite';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
@@ -154,6 +154,13 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
   const onTableSubmit = (data) => {
     data['project'] = project['identifier']
+    data['type'] = 'add'
+    onSubmit(data)
+  }
+
+  const onTableSignoff = (data) => {
+    data['project'] = project['identifier']
+    data['type'] = 'signoff'
     onSubmit(data)
   }
 
@@ -185,7 +192,10 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
   }
 
   const onUsersCheckout = () => {
-    console.log('VRDEL DEBUG', checkJoined, alreadyJoined)
+    onTableSignoff({
+      'joined_users': alreadyJoined,
+      'checked_users': checkJoined
+    })
   }
 
   return (
@@ -403,14 +413,21 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
+  const { control, handleSubmit, getValues, setValue, formState: { errors } } = useForm({
     defaultValues: {
-      collaboratorEmails: '',
+      collaboratorEmails: ''
     }
   });
 
   const onTableSubmit = (data) => {
     data['project'] = project['identifier']
+    data['type'] = 'add'
+    onSubmit(data)
+  }
+
+  const onTableSignoff = (data) => {
+    data['project'] = project['identifier']
+    data['type'] = 'signoff'
     onSubmit(data)
   }
 
@@ -442,7 +459,10 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   }
 
   const onUsersCheckout = () => {
-    console.log('VRDEL DEBUG', checkJoined, alreadyJoined)
+    onTableSignoff({
+      'joined_users': alreadyJoined,
+      'checked_users': checkJoined
+    })
   }
 
   useEffect(() => {
@@ -791,11 +811,21 @@ const Memberships = () => {
   })
 
   const onSubmit = (data) => {
-    setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Slanje pozivnica za istraživački projekt")
-    setModalMsg("Da li ste sigurni da želite poslati pozivnice na navedene email adrese?")
-    setOnYesCall('doaddinvite')
-    setOnYesCallArg(data)
+    console.log('VRDEL DEBUG', data)
+    if (data['type'] === 'add') {
+      setAreYouSureModal(!areYouSureModal)
+      setModalTitle("Slanje pozivnica za istraživački projekt")
+      setModalMsg("Da li ste sigurni da želite poslati pozivnice na navedene email adrese?")
+      setOnYesCall('doaddinvite')
+      setOnYesCallArg(data)
+    }
+    else if (data['type'] === 'signoff') {
+      setAreYouSureModal(!areYouSureModal)
+      setModalTitle("Odjava suradnika sa istraživačkog projekta")
+      setModalMsg("Da li ste sigurni da želite odjaviti označene suradnike?")
+      setOnYesCall('dosignoff')
+      setOnYesCallArg(data)
+    }
   }
 
   const doAdd = async (data) => {
@@ -827,10 +857,14 @@ const Memberships = () => {
     }
   }
 
+  const doSignoff = async (data) => {
+  }
+
   function onYesCallback() {
-    if (onYesCall == 'doaddinvite') {
+    if (onYesCall == 'doaddinvite')
       doAdd(onYesCallArg)
-    }
+    if (onYesCall == 'dosignoff')
+      doSignoff(onYesCallArg)
   }
 
   useEffect(() => {
