@@ -6,6 +6,7 @@ import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
+import { fetchSshKeys } from '../api/sshkeys';
 import { addInvite, fetchMyInvites } from '../api/invite';
 import { removeUserFromProject } from '../api/usersprojects';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
@@ -18,7 +19,8 @@ import {
   faEnvelope,
   faPaperPlane,
   faArrowDown,
-  faXmark
+  faXmark,
+  faKey
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { EmptyTableSpinner } from '../components/EmptyTableSpinner';
@@ -308,7 +310,20 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                         : "align-middle text-center text-success"
                       }>
-                        Da
+                        <div className="position-relative">
+                          Da
+                          <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
+                            <FontAwesomeIcon icon={faKey}/>
+                            <Tooltip
+                              placement='top'
+                              isOpen={isOpened(user.email)}
+                              target={`Tooltip-key-${i + 1000}`}
+                              toggle={() => showTooltip(user.email)}
+                            >
+                              Korisnik dodao javni ključ
+                            </Tooltip>
+                          </div>
+                        </div>
                       </td>
                       <td className="align-middle text-center">
                         <Input
@@ -855,6 +870,12 @@ const Memberships = () => {
       queryFn: fetchMyInvites
   })
 
+  const {status: sshKeysStatus, data: sshKeysData} = useQuery({
+      queryKey: ['ssh-keys'],
+      queryFn: fetchSshKeys,
+      staleTime: 15 * 60 * 1000
+  })
+
   const onSubmit = (data) => {
     if (data['type'] === 'add') {
       setAreYouSureModal(!areYouSureModal)
@@ -944,7 +965,8 @@ const Memberships = () => {
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'
-    && nrProjects && pageTitle) {
+    && sshKeysStatus === 'success'
+    && sshKeysData && nrProjects && pageTitle) {
     let projectsApproved = nrProjects.filter(project =>
       project.state.name !== 'deny' && project.state.name !== 'submit'
     )
@@ -975,7 +997,7 @@ const Memberships = () => {
                       <CardBody className="mb-1 bg-light p-0 m-0">
                         {
                           project.project_type.name === 'research-croris' ?
-                            <UsersTableCroris project={project}
+                            <UsersTableCroris sshkeys={sshKeysData} project={project}
                               invites={invitesSent?.filter(inv =>
                                 inv.project.identifier === project.identifier
                                 && !inv.accepted
