@@ -36,7 +36,7 @@ const ButtonGroupActiveInactive = ({activeList}) => {
         <FontAwesomeIcon icon={ faCheck } />{' '}
         Aktivni
       </Button>
-      <Button className="ml-1 mt-1 mb-1"  color="light"
+      <Button className="ml-1 mt-1 mb-1" color="light"
         active={ !activeList }
         onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
         <FontAwesomeIcon icon={ faXmark } />{' '}

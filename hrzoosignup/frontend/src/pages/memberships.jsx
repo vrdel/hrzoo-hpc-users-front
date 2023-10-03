@@ -6,7 +6,9 @@ import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
+import { fetchSshKeys } from '../api/sshkeys';
 import { addInvite, fetchMyInvites } from '../api/invite';
+import { removeUserFromProject } from '../api/usersprojects';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import ModalAreYouSure from '../components/ModalAreYouSure';
 import { convertToEuropean } from '../utils/dates';
@@ -17,7 +19,8 @@ import {
   faEnvelope,
   faPaperPlane,
   faArrowDown,
-  faXmark
+  faXmark,
+  faKey
 } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { EmptyTableSpinner } from '../components/EmptyTableSpinner';
@@ -141,6 +144,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   const { userDetails } = useContext(AuthContext);
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
+  const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -153,6 +157,13 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
   const onTableSubmit = (data) => {
     data['project'] = project['identifier']
+    data['type'] = 'add'
+    onSubmit(data)
+  }
+
+  const onTableSignoff = (data) => {
+    data['project'] = project['identifier']
+    data['type'] = 'signoff'
     onSubmit(data)
   }
 
@@ -172,6 +183,22 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const isOpened = (toolid) => {
     if (tooltipOpened !== undefined)
       return tooltipOpened[toolid]
+  }
+
+  function onChangeCheckOut(i) {
+    let tmpArray = [...checkJoined]
+    if (tmpArray[i])
+      tmpArray[i] = false
+    else
+      tmpArray[i] = true
+    setCheckJoined(tmpArray)
+  }
+
+  const onUsersCheckout = () => {
+    onTableSignoff({
+      'joined_users': alreadyJoined,
+      'checked_users': checkJoined
+    })
   }
 
   return (
@@ -195,6 +222,9 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                 </th>
                 <th className="fw-normal">
                   Prijavljen
+                </th>
+                <th className="fw-normal">
+                  Odjava
                 </th>
               </tr>
             </thead>
@@ -236,6 +266,13 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   }>
                     Da
                   </td>
+                  <td className={
+                    amILead
+                    ? "align-middle text-center fst-italic border-bottom border-secondary"
+                    : "align-middle text-center"
+                  }>
+                    {'\u2212'}
+                  </td>
                 </tr>
                 {
                   alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
@@ -273,7 +310,28 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                         : "align-middle text-center text-success"
                       }>
-                        Da
+                        <div className="position-relative">
+                          Da
+                          <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
+                            <FontAwesomeIcon icon={faKey}/>
+                            <Tooltip
+                              placement='top'
+                              isOpen={isOpened(user.email)}
+                              target={`Tooltip-key-${i + 1000}`}
+                              toggle={() => showTooltip(user.email)}
+                            >
+                              Korisnik dodao javni ključ
+                            </Tooltip>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="align-middle text-center">
+                        <Input
+                          type="checkbox"
+                          className="bg-danger border border-danger ms-1"
+                          checked={checkJoined[i] === true}
+                          onChange={() => onChangeCheckOut(i)}
+                        />
                       </td>
                     </tr>
                   ))
@@ -304,6 +362,9 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                           Aktivna pozivnica poslana na email
                         </Tooltip>
                       </td>
+                      <td className="align-middle text-center">
+                        {'\u2212'}
+                      </td>
                     </tr>
                   ))
                 }
@@ -319,7 +380,12 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
               <Col>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button color="danger" onClick={toggle} className="me-2">
+                    <Button
+                      color="danger"
+                      active={!_.some(checkJoined, (value) => value === true)}
+                      onClick={() => onUsersCheckout()}
+                      className="me-2"
+                    >
                       <FontAwesomeIcon icon={faXmark}/>{' '}
                       Odjavi suradnike
                     </Button>
@@ -386,12 +452,19 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
 
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
-      collaboratorEmails: '',
+      collaboratorEmails: ''
     }
   });
 
   const onTableSubmit = (data) => {
     data['project'] = project['identifier']
+    data['type'] = 'add'
+    onSubmit(data)
+  }
+
+  const onTableSignoff = (data) => {
+    data['project'] = project['id']
+    data['type'] = 'signoff'
     onSubmit(data)
   }
 
@@ -423,7 +496,16 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   }
 
   const onUsersCheckout = () => {
-    console.log('VRDEL DEBUG', checkJoined, alreadyJoined)
+    let usersToRemove = new Array()
+
+    alreadyJoined.map((user, ind) => {
+      if (checkJoined[ind])
+        usersToRemove.push(user['user']['id'])
+    })
+
+    onTableSignoff({
+      'remove_users': usersToRemove,
+    })
   }
 
   useEffect(() => {
@@ -479,6 +561,9 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                   <th className="fw-normal">
                     Prijavljen
                   </th>
+                  <th className="fw-normal">
+                    Odjava
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -526,6 +611,13 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                     }>
                       Da
                     </td>
+                    <td className={
+                      amILead
+                      ? "align-middle text-center fst-italic border-bottom border-secondary"
+                      : "p-3 align-middle text-center"
+                    }>
+                      {'\u2212'}
+                    </td>
                   </tr>
                   {
                     alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
@@ -570,15 +662,19 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                           ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                           : "align-middle text-center text-success"
                         }>
-                          <div className="position-relative">
-                            Da
-                            <Input
-                              type="checkbox"
-                              className="bg-danger border border-danger ms-4 position-absolute top-0 start-50 translate-middle"
-                              checked={checkJoined[i] === true}
-                              onChange={() => onChangeCheckOut(i)}
-                            />
-                          </div>
+                          Da
+                        </td>
+                        <td className={
+                          user['user']['person_oib'] === userDetails.person_oib
+                          ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                          : "align-middle text-center text-success"
+                        }>
+                          <Input
+                            type="checkbox"
+                            className="bg-danger border border-danger ms-1"
+                            checked={checkJoined[i] === true}
+                            onChange={() => onChangeCheckOut(i)}
+                          />
                         </td>
                       </tr>
                     ))
@@ -665,6 +761,9 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                       Ne
                                     </span>
                               }
+                            </td>
+                            <td className="align-middle text-center">
+                              {'\u2212'}
                             </td>
                           </tr>
                         ))
@@ -771,12 +870,27 @@ const Memberships = () => {
       queryFn: fetchMyInvites
   })
 
+  const {status: sshKeysStatus, data: sshKeysData} = useQuery({
+      queryKey: ['ssh-keys'],
+      queryFn: fetchSshKeys,
+      staleTime: 15 * 60 * 1000
+  })
+
   const onSubmit = (data) => {
-    setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Slanje pozivnica za istraživački projekt")
-    setModalMsg("Da li ste sigurni da želite poslati pozivnice na navedene email adrese?")
-    setOnYesCall('doaddinvite')
-    setOnYesCallArg(data)
+    if (data['type'] === 'add') {
+      setAreYouSureModal(!areYouSureModal)
+      setModalTitle("Slanje pozivnica za istraživački projekt")
+      setModalMsg("Da li ste sigurni da želite poslati pozivnice na navedene email adrese?")
+      setOnYesCall('doaddinvite')
+      setOnYesCallArg(data)
+    }
+    else if (data['type'] === 'signoff') {
+      setAreYouSureModal(!areYouSureModal)
+      setModalTitle("Odjava suradnika sa istraživačkog projekta")
+      setModalMsg("Da li ste sigurni da želite odjaviti označene suradnike?")
+      setOnYesCall('dosignoff')
+      setOnYesCallArg(data)
+    }
   }
 
   const doAdd = async (data) => {
@@ -808,10 +922,40 @@ const Memberships = () => {
     }
   }
 
-  function onYesCallback() {
-    if (onYesCall == 'doaddinvite') {
-      doAdd(onYesCallArg)
+  const doSignoff = async (data) => {
+    try {
+      const ret = await removeUserFromProject(data['project'], data['remove_users'], csrfToken)
+      queryClient.invalidateQueries('projects')
+      toast.success(
+        <span className="font-monospace text-dark">
+          Suradnici su uspješno odjavljeni
+        </span>, {
+          toastId: 'signoff-ok',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
     }
+    catch (err) {
+      toast.error(
+        <span className="font-monospace text-white">
+          Suradnike nije bilo moguće odjaviti: <br/>
+          { err.message }
+        </span>, {
+          theme: 'colored',
+          toastId: 'signoff-fail',
+          autoClose: 2500,
+          delay: 1000
+        }
+      )
+    }
+  }
+
+  function onYesCallback() {
+    if (onYesCall == 'doaddinvite')
+      doAdd(onYesCallArg)
+    if (onYesCall == 'dosignoff')
+      doSignoff(onYesCallArg)
   }
 
   useEffect(() => {
@@ -821,7 +965,8 @@ const Memberships = () => {
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'
-    && nrProjects && pageTitle) {
+    && sshKeysStatus === 'success'
+    && sshKeysData && nrProjects && pageTitle) {
     let projectsApproved = nrProjects.filter(project =>
       project.state.name !== 'deny' && project.state.name !== 'submit'
     )
@@ -852,7 +997,7 @@ const Memberships = () => {
                       <CardBody className="mb-1 bg-light p-0 m-0">
                         {
                           project.project_type.name === 'research-croris' ?
-                            <UsersTableCroris project={project}
+                            <UsersTableCroris sshkeys={sshKeysData} project={project}
                               invites={invitesSent?.filter(inv =>
                                 inv.project.identifier === project.identifier
                                 && !inv.accepted
