@@ -4,9 +4,10 @@ import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody,
   Label, Badge, Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useForm, Controller, useWatch } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
 import { addInvite, fetchMyInvites } from '../api/invite';
+import { removeUserFromProject } from '../api/usersprojects';
 import { TypeString, TypeColor } from '../config/map-projecttypes';
 import ModalAreYouSure from '../components/ModalAreYouSure';
 import { convertToEuropean } from '../utils/dates';
@@ -421,7 +422,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
-  const { control, handleSubmit, getValues, setValue, formState: { errors } } = useForm({
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
       collaboratorEmails: ''
     }
@@ -434,7 +435,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   }
 
   const onTableSignoff = (data) => {
-    data['project'] = project['identifier']
+    data['project'] = project['id']
     data['type'] = 'signoff'
     onSubmit(data)
   }
@@ -467,9 +468,15 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
   }
 
   const onUsersCheckout = () => {
+    let usersToRemove = new Array()
+
+    alreadyJoined.map((user, ind) => {
+      if (checkJoined[ind])
+        usersToRemove.push(user['user']['id'])
+    })
+
     onTableSignoff({
-      'joined_users': alreadyJoined,
-      'checked_users': checkJoined
+      'remove_users': usersToRemove,
     })
   }
 
@@ -819,7 +826,6 @@ const Memberships = () => {
   })
 
   const onSubmit = (data) => {
-    console.log('VRDEL DEBUG', data)
     if (data['type'] === 'add') {
       setAreYouSureModal(!areYouSureModal)
       setModalTitle("Slanje pozivnica za istraživački projekt")
@@ -866,6 +872,32 @@ const Memberships = () => {
   }
 
   const doSignoff = async (data) => {
+    try {
+      const ret = await removeUserFromProject(data['project'], data['remove_users'], csrfToken)
+      queryClient.invalidateQueries('projects')
+      toast.success(
+        <span className="font-monospace text-dark">
+          Suradnici su uspješno odjavljeni
+        </span>, {
+          toastId: 'signoff-ok',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+    catch (err) {
+      toast.error(
+        <span className="font-monospace text-white">
+          Suradnike nije bilo moguće odjaviti: <br/>
+          { err.message }
+        </span>, {
+          theme: 'colored',
+          toastId: 'signoff-fail',
+          autoClose: 2500,
+          delay: 1000
+        }
+      )
+    }
   }
 
   function onYesCallback() {
