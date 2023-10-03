@@ -141,6 +141,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   const { userDetails } = useContext(AuthContext);
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
+  const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -172,6 +173,19 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const isOpened = (toolid) => {
     if (tooltipOpened !== undefined)
       return tooltipOpened[toolid]
+  }
+
+  function onChangeCheckOut(i) {
+    let tmpArray = [...checkJoined]
+    if (tmpArray[i])
+      tmpArray[i] = false
+    else
+      tmpArray[i] = true
+    setCheckJoined(tmpArray)
+  }
+
+  const onUsersCheckout = () => {
+    console.log('VRDEL DEBUG', checkJoined, alreadyJoined)
   }
 
   return (
@@ -319,7 +333,12 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
               <Col>
                 <Row>
                   <Col className="d-flex justify-content-center">
-                    <Button color="danger" onClick={toggle} className="me-2">
+                    <Button
+                      color="danger"
+                      active={!_.some(checkJoined, (value) => value === true)}
+                      onClick={() => onUsersCheckout()}
+                      className="me-2"
+                    >
                       <FontAwesomeIcon icon={faXmark}/>{' '}
                       Odjavi suradnike
                     </Button>
