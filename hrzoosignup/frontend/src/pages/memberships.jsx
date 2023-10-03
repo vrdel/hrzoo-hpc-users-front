@@ -297,7 +297,15 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                         : "align-middle text-center text-success"
                       }>
-                        Da
+                        <div className="position-relative">
+                          Da
+                          <Input
+                            type="checkbox"
+                            className="bg-danger border border-danger ms-4 position-absolute top-0 start-50 translate-middle"
+                            checked={checkJoined[i] === true}
+                            onChange={() => onChangeCheckOut(i)}
+                          />
+                        </div>
                       </td>
                     </tr>
                   ))
