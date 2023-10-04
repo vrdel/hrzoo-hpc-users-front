@@ -113,6 +113,8 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
 
 
 class UsersSerializerFiltered(serializers.ModelSerializer):
+    sshkeys = serializers.SerializerMethodField()
+
     class Meta:
         fields = (
             'id',
@@ -122,9 +124,13 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
             'person_oib',
             'person_uniqueid',
             'person_institution',
-            'person_organisation'
+            'person_organisation',
+            'sshkeys'
         )
         model = get_user_model()
+
+    def get_sshkeys(self, obj):
+        return obj.sshpublickey_set.count() == True
 
 
 class UsersSerializerFiltered2(serializers.ModelSerializer):
