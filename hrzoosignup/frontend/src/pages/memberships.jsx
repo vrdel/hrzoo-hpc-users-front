@@ -161,14 +161,13 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
   }
 
   const onTableSignoff = (data) => {
-    data['project'] = project['identifier']
+    data['project'] = project['id']
     data['type'] = 'signoff'
     onSubmit(data)
   }
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
-    console.log('VRDEL DEBUG', toolid)
     let showed = new Object()
     if (tooltipOpened === undefined && toolid) {
       showed[toolid] = true
@@ -195,9 +194,15 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
   }
 
   const onUsersCheckout = () => {
+    let usersToRemove = new Array()
+
+    alreadyJoined.map((user, ind) => {
+      if (checkJoined[ind])
+        usersToRemove.push(user['user']['id'])
+    })
+
     onTableSignoff({
-      'joined_users': alreadyJoined,
-      'checked_users': checkJoined
+      'remove_users': usersToRemove,
     })
   }
 
@@ -489,7 +494,6 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
-    console.log('VRDEL DEBUG', toolid)
     let showed = new Object()
     if (tooltipOpened === undefined && toolid) {
       showed[toolid] = true
