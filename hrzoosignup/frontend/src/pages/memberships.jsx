@@ -349,7 +349,11 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                           }
                         </div>
                       </td>
-                      <td className="align-middle text-center">
+                      <td className={
+                        user['user']['person_oib'] === userDetails.person_oib
+                        ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                        : "align-middle text-center text-success"
+                      }>
                         <Input
                           type="checkbox"
                           className="bg-danger border border-danger ms-1"
