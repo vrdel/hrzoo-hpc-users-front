@@ -130,7 +130,7 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
         model = get_user_model()
 
     def get_sshkeys(self, obj):
-        return obj.sshpublickey_set.count() == True
+        return obj.sshpublickey_set.count() > 0
 
 
 class UsersSerializerFiltered2(serializers.ModelSerializer):

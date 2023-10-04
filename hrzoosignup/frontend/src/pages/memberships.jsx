@@ -284,7 +284,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               target={`Tooltip-key-${999}`}
                               toggle={() => showTooltip(lead['user'].person_mail)}
                             >
-                              Korisnik dodao javni ključ
+                              Dodan javni ključ
                             </Tooltip>
                           </div>
                       }
@@ -349,7 +349,7 @@ const UsersTableGeneral = ({project, invites, onSubmit}) => {
                                   target={`Tooltip-key-${i + 1000}`}
                                   toggle={() => showTooltip(user['user'].person_mail)}
                                 >
-                                  Korisnik dodao javni ključ
+                                  Dodan javni ključ
                                 </Tooltip>
                               </div>
                           }
@@ -664,7 +664,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 target={`Tooltip-key-${999}`}
                                 toggle={() => showTooltip(lead['user'].person_mail)}
                               >
-                                Korisnik dodao javni ključ
+                                Dodan javni ključ
                               </Tooltip>
                             </div>
                         }
@@ -736,7 +736,7 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                     target={`Tooltip-key-${i + 1000}`}
                                     toggle={() => showTooltip(user['user'].person_mail)}
                                   >
-                                    Korisnik dodao javni ključ
+                                    Dodan javni ključ
                                   </Tooltip>
                                 </div>
                             }
