@@ -601,9 +601,12 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                   <th className="fw-normal">
                     Prijavljen
                   </th>
-                  <th className="fw-normal">
-                    Odjava
-                  </th>
+                  {
+                    amILead &&
+                    <th className="fw-normal">
+                      Odjava
+                    </th>
+                  }
                 </tr>
               </thead>
               <tbody>
@@ -667,13 +670,16 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                         }
                       </div>
                     </td>
-                    <td className={
-                      amILead
-                      ? "align-middle text-center fst-italic border-bottom border-secondary"
-                      : "p-3 align-middle text-center"
-                    }>
-                      {'\u2212'}
-                    </td>
+                    {
+                      amILead &&
+                      <td className={
+                        amILead
+                        ? "align-middle text-center fst-italic border-bottom border-secondary"
+                        : "align-middle text-center"
+                      }>
+                        {'\u2212'}
+                      </td>
+                    }
                   </tr>
                   {
                     alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
@@ -736,18 +742,21 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                             }
                           </div>
                         </td>
-                        <td className={
-                          user['user']['person_oib'] === userDetails.person_oib
-                          ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                          : "align-middle text-center text-success"
-                        }>
-                          <Input
-                            type="checkbox"
-                            className="bg-danger border border-danger ms-1"
-                            checked={checkJoined[i] === true}
-                            onChange={() => onChangeCheckOut(i)}
-                          />
-                        </td>
+                        {
+                          amILead &&
+                          <td className={
+                            user['user']['person_oib'] === userDetails.person_oib
+                            ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                            : "align-middle text-center text-success"
+                          }>
+                            <Input
+                              type="checkbox"
+                              className="bg-danger border border-danger ms-1"
+                              checked={checkJoined[i] === true}
+                              onChange={() => onChangeCheckOut(i)}
+                            />
+                          </td>
+                        }
                       </tr>
                     ))
                   }
@@ -834,9 +843,12 @@ const UsersTableCroris = ({project, invites, onSubmit}) => {
                                     </span>
                               }
                             </td>
-                            <td className="align-middle text-center">
-                              {'\u2212'}
-                            </td>
+                            {
+                              amILead &&
+                              <td className="align-middle text-center">
+                                {'\u2212'}
+                              </td>
+                            }
                           </tr>
                         ))
                   }
