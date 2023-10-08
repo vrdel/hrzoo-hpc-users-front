@@ -19,9 +19,25 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
   const { control, setValue, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
   const [startDateSelect, setStartDateSelect] = useState(undefined)
+  const [endDate, setEndDate] = useState('')
 
   if (fieldsDisabled === false && isResearch)
     disabledRemain = true
+
+  function oneYearAhead(currentDate) {
+    if (currentDate) {
+      let currentYear = currentDate.getFullYear()
+      let newDate = ''
+
+      newDate = currentDate.setFullYear(currentYear + 1)
+      if (newDate)
+        setValue('endDate', newDate)
+      else
+        setValue('endDate', '')
+
+      return newDate
+    }
+  }
 
   return (
     <>
@@ -121,12 +137,17 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 disabled={disabledRemain}
                 maxDate={new Date(2027, 1)}
                 onChange={(value) => {
-                  value.setHours(23)
-                  value.setMinutes(59)
-                  value.setSeconds(59)
-                  setValue('startDate', value)
-                  setStartDateSelect(value)
-                  return value
+                  if (value) {
+                    value.setHours(23)
+                    value.setMinutes(59)
+                    value.setSeconds(59)
+                    setValue('startDate', value)
+                    if (isInstitute)
+                      setEndDate(oneYearAhead(value))
+                    return value
+                  }
+                  else
+                    setValue('startDate', '')
                 }}
                 value={field.value}
                 required={true}
@@ -136,7 +157,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
           />
           {'\u2212'}
           {
-            ! isInstitute ?
+            !isInstitute ?
               <Controller
                 name="endDate"
                 control={control}
@@ -147,11 +168,15 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                     required={true}
                     disabled={disabledRemain}
                     onChange={(value) => {
-                      value.setHours(23)
-                      value.setMinutes(59)
-                      value.setSeconds(59)
-                      setValue('endDate', value)
-                      return value
+                      if (value) {
+                        value.setHours(23)
+                        value.setMinutes(59)
+                        value.setSeconds(59)
+                        setValue('endDate', value)
+                        return value
+                      }
+                      else
+                        setValue('endDate', '')
                     }}
                     maxDate={new Date(2027, 1)}
                     locale="hr-HR"
@@ -161,12 +186,14 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 }
               />
             :
-              <span>
-                {
-                  console.log(startDateSelect)
-                }
-                Institucijski end date
-              </span>
+              <DatePicker
+                required={true}
+                disabled={true}
+                maxDate={new Date(2027, 1)}
+                locale="hr-HR"
+                value={endDate}
+                className={`ms-3`}
+              />
           }
         </Col>
         {

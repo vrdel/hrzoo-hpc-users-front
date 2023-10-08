@@ -56,7 +56,6 @@ const schemaResolve = yup.object().shape({
     }
   )).required(),
   startDate: yup.date().required("Obvezno"),
-  endDate: yup.date().required("Obvezno"),
   scientificSoftware: yup.array().min(0).of(yup.object()),
   scientificSoftwareExtra: yup.string(),
   scientificSoftwareHelp: yup.boolean(),
@@ -205,8 +204,8 @@ const InstituteRequest = ({projectType}) => {
     let dataToSend = new Object()
 
     data['project_type'] = projectType
-    dataToSend['date_end'] =  convertToAmerican(data['endDate'])
     dataToSend['date_start'] = convertToAmerican(data['startDate'])
+    dataToSend['date_end'] = convertToAmerican(data['endDate'])
     dataToSend['name'] = data['requestName']
     dataToSend['reason'] = data['requestExplain']
     dataToSend['institute'] = userDetails.person_institution
@@ -234,7 +233,7 @@ const InstituteRequest = ({projectType}) => {
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submit'
-    //alert(JSON.stringify(dataToSend, null, 2));
+    alert(JSON.stringify(dataToSend, null, 2));
 
     setAreYouSureModal(!areYouSureModal)
     setModalTitle("Podnošenje novog korisničkog zahtjeva")
