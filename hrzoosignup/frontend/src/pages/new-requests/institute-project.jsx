@@ -255,7 +255,7 @@ const InstituteRequest = ({projectType}) => {
       <FormProvider {...rhfProps}>
         <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
           <RequestHorizontalRuler />
-          <GeneralFields />
+          <GeneralFields isInstitute={true} />
           <ScientificSoftware />
           <ResourceFields />
           <RequestHorizontalRuler />

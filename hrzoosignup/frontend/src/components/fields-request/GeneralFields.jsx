@@ -15,7 +15,7 @@ import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from './ScientificDomain';
 
 
-const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false}) => {
+const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false, isInstitute=false}) => {
   const { control, setValue, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
 
@@ -133,29 +133,36 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
             }
           />
           {'\u2212'}
-          <Controller
-            name="endDate"
-            control={control}
-            rules={{required: true}}
-            render={ ({field}) =>
-              <DatePicker
-                forwardedRef={field.ref}
-                required={true}
-                disabled={disabledRemain}
-                onChange={(value) => {
-                  value.setHours(23)
-                  value.setMinutes(59)
-                  value.setSeconds(59)
-                  setValue('endDate', value)
-                  return value
-                }}
-                maxDate={new Date(2027, 1)}
-                locale="hr-HR"
-                value={field.value}
-                className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
+          {
+            ! isInstitute ?
+              <Controller
+                name="endDate"
+                control={control}
+                rules={{required: true}}
+                render={ ({field}) =>
+                  <DatePicker
+                    forwardedRef={field.ref}
+                    required={true}
+                    disabled={disabledRemain}
+                    onChange={(value) => {
+                      value.setHours(23)
+                      value.setMinutes(59)
+                      value.setSeconds(59)
+                      setValue('endDate', value)
+                      return value
+                    }}
+                    maxDate={new Date(2027, 1)}
+                    locale="hr-HR"
+                    value={field.value}
+                    className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
+                  />
+                }
               />
-            }
-          />
+            :
+              <span>
+                Institucijski end date
+              </span>
+          }
         </Col>
         {
           projectInfo && projectInfo.project_type &&
