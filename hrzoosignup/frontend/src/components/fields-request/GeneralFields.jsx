@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Controller,
   useFormContext
@@ -18,6 +18,7 @@ import BaseNewScientificDomain from './ScientificDomain';
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false, isInstitute=false}) => {
   const { control, setValue, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
+  const [startDateSelect, setStartDateSelect] = useState(undefined)
 
   if (fieldsDisabled === false && isResearch)
     disabledRemain = true
@@ -124,6 +125,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                   value.setMinutes(59)
                   value.setSeconds(59)
                   setValue('startDate', value)
+                  setStartDateSelect(value)
                   return value
                 }}
                 value={field.value}
@@ -160,6 +162,9 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
               />
             :
               <span>
+                {
+                  console.log(startDateSelect)
+                }
                 Institucijski end date
               </span>
           }
