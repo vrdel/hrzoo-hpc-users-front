@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRIS } from '../api/croris';
+import { canSubmitInstituteProject } from '../api/projects';
 import { toast } from 'react-toastify';
 import { defaultUnAuthnRedirect} from '../config/default-redirect';
 
@@ -27,6 +28,13 @@ const NewRequest = () => {
   const {status, data: croRisData, error} = useQuery({
       queryKey: ['croris-info'],
       queryFn: fetchCroRIS,
+      staleTime: 15 * 60 * 1000
+  })
+
+  const {statusSubmitInstitute, data: canSubmitInstitute, error:
+    errorSubmitInstitute} = useQuery({
+      queryKey: ['can-submit-institute'],
+      queryFn: canSubmitInstituteProject,
       staleTime: 15 * 60 * 1000
   })
 

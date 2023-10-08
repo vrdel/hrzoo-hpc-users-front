@@ -396,7 +396,7 @@ class ProjectsRole(APIView):
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
 
-class CanSubmitInstitutionalProject(APIView):
+class CanSubmitInstituteProject(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated, )
 

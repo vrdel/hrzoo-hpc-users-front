@@ -285,3 +285,33 @@ export async function fetchAllNrProjects()
   if (error_msg)
     throw new Error(`Error fetching All NRProjects data: ${error_msg}`)
 }
+
+
+export async function canSubmitInstituteProject()
+{
+  let error_msg = ''
+
+  try {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/can-submit-institute-project`)
+
+    if (response.ok)
+      return await response.json()
+
+    if (!response.ok) {
+      try {
+        await response.json();
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+    }
+
+  }
+  catch (err) {
+    error_msg = `${err} in GET`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error fetching All NRProjects data: ${error_msg}`)
+}
