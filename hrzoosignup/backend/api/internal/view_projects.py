@@ -35,11 +35,14 @@ class ProjectsGeneral(APIView):
         request.data['is_active'] = True
         request.data['date_submitted'] = timezone.now()
 
+        type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
+
         # fixed project identifier in format NR-<year>-<month<-<count_posted>
         cobj = models.ProjectCount.objects.get()
-        request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
-
-        type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
+        if type_obj.name == 'research-institutional':
+            request.data['identifier'] = 'NRI-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
+        else:
+            request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
 
         if type_obj.name == 'research-institutional':
             start = datetime.datetime.strptime(request.data['date_start'], '%Y-%m-%d')
@@ -50,7 +53,7 @@ class ProjectsGeneral(APIView):
                 err_response = {
                     'status': {
                         'code': err_status,
-                        'message': 'Length should be exactly one time period'
+                        'message': 'Length should be exactly one year period'
                     }
                 }
                 return Response(err_response, status=err_status)
