@@ -141,7 +141,7 @@ const BaseRoutes = () => {
                   <GeneralRequest projectType="thesis" />
                 }/>
                 <Route path="institucijski-projekt" element={
-                  <InstituteRequest projectType="institute" />
+                  <InstituteRequest projectType="research-institutional" />
                 }/>
               </Route>
               <Route path="javni-kljucevi" element={

@@ -14,7 +14,7 @@ export function TypeString(type_name) {
 export function TypeColor(type_name) {
   let type2string = {
     'research-croris': "bg-success",
-    'research-institutional': "bg-secondary",
+    'research-institutional': "bg-danger",
     'thesis': "bg-primary",
     'practical': "bg-warning text-dark",
   }

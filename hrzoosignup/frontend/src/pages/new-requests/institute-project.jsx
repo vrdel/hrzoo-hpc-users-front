@@ -233,7 +233,6 @@ const InstituteRequest = ({projectType}) => {
     }
     dataToSend['resources_type'] = data['requestResourceType']
     dataToSend['state'] = 'submit'
-    alert(JSON.stringify(dataToSend, null, 2));
 
     setAreYouSureModal(!areYouSureModal)
     setModalTitle("Podnošenje novog korisničkog zahtjeva")
