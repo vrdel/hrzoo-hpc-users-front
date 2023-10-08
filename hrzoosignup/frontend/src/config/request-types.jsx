@@ -20,8 +20,7 @@ let institutionalProject = {
 
 export const RequestTypesToSelect = [
   researchProject,
-// leave out for now
-// institutionalProject,
+  institutionalProject,
   thesisProject,
   practicalClasses
 ]
@@ -30,7 +29,7 @@ export const RequestTypesToSelect = [
 export function UrlToRequestType(loc) {
   let url2buttonlabel = {
     [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: researchProject,
-    [url_ui_prefix + '/novi-zahtjev/institucijski-project']: institutionalProject,
+    [url_ui_prefix + '/novi-zahtjev/institucijski-projekt']: institutionalProject,
     [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
     [url_ui_prefix + '/novi-zahtjev/izrada-rada']: thesisProject
   }

@@ -14,6 +14,7 @@ import { SoftwareList } from './pages/software/list';
 import ResearchProjectRequest from './pages/new-requests/research-project';
 import ResearchProjectRequestSelected from './pages/new-requests/research-project-selected';
 import GeneralRequest from './pages/new-requests/general';
+import InstituteRequest from './pages/new-requests/institute-project';
 import NewRequestIndex from './pages/new-requests/index';
 import EmailInvitation from './pages/email-invite';
 import Saml2LoginRedirect from './pages/saml2-login-redirect';
@@ -138,6 +139,9 @@ const BaseRoutes = () => {
                 }/>
                 <Route path="izrada-rada" element={
                   <GeneralRequest projectType="thesis" />
+                }/>
+                <Route path="institucijski-projekt" element={
+                  <InstituteRequest projectType="institute" />
                 }/>
               </Route>
               <Route path="javni-kljucevi" element={
