@@ -40,6 +40,21 @@ class ProjectsGeneral(APIView):
         request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
 
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
+
+        if type_obj.name == 'research-institutional':
+            start = datetime.datetime.strptime(request.data['date_start'], '%Y-%m-%d')
+            end = datetime.datetime.strptime(request.data['date_end'], '%Y-%m-%d')
+            days = (end - start).days
+            if days != 365 and days != 366:
+                err_status = status.HTTP_400_BAD_REQUEST
+                err_response = {
+                    'status': {
+                        'code': err_status,
+                        'message': 'Length should be exactly one time period'
+                    }
+                }
+                return Response(err_response, status=err_status)
+
         request.data['project_type'] = type_obj.pk
 
         serializer = ProjectSerializer(data=request.data)
