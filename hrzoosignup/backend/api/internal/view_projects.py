@@ -45,6 +45,40 @@ class ProjectsGeneral(APIView):
             request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
 
         if type_obj.name == 'research-institutional':
+            user_crorisproject = models.UserProject.objects.filter(
+                user_id=request.user.id,
+                project__project_type__name='research-croris'
+            )
+            user_instituteproject = models.UserProject.objects.filter(
+                user_id=request.user.id,
+                project__project_type__name='research-institutional'
+            )
+            if user_instituteproject.count() > 0 or user_crorisproject.count() > 0:
+                err_status = status.HTTP_401_UNAUTHORIZED
+                err_response = {
+                    'status': {
+                        'code': err_status,
+                        'message': 'Not allowed to submit institute project'
+                    }
+                }
+                return Response(err_response, status=err_status)
+
+            oib = request.user.person_oib
+            croris_data = cache.get(f'{oib}_croris')
+            if croris_data:
+                mbz = croris_data['person_info'].get('mbz', None)
+                projects_lead = croris_data['projects_lead_info']
+                projects_associate = croris_data['projects_associate_info']
+                if not mbz or len(projects_lead) > 0 or len(projects_associate) > 0:
+                    err_status = status.HTTP_401_UNAUTHORIZED
+                    err_response = {
+                        'status': {
+                            'code': err_status,
+                            'message': 'Not allowed to submit institute project'
+                        }
+                    }
+                    return Response(err_response, status=err_status)
+
             start = datetime.datetime.strptime(request.data['date_start'], '%Y-%m-%d')
             end = datetime.datetime.strptime(request.data['date_end'], '%Y-%m-%d')
             days = (end - start).days
@@ -56,7 +90,7 @@ class ProjectsGeneral(APIView):
                         'message': 'Length should be exactly one year period'
                     }
                 }
-                return Response(err_response, status=err_status)
+            return Response(err_response, status=err_status)
 
         request.data['project_type'] = type_obj.pk
 
@@ -433,7 +467,7 @@ class CanSubmitInstituteProject(APIView):
         croris_data = cache.get(f'{oib}_croris')
 
         if croris_data:
-            mbz = croris_data['person_info']['mbz']
+            mbz = croris_data['person_info'].get('mbz', None)
             if not mbz:
                 deny_resp = {
                     'status': {
