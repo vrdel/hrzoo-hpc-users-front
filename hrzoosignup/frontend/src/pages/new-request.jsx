@@ -74,7 +74,7 @@ const NewRequest = () => {
             onChange={(e) => {
               if (e.value === 'institucijski-projekt'
                 && statusSubmitInstitute === 'success'
-                && dataSubmitInstitute?.status?.operation !== 'ALLOW') {
+                && dataSubmitInstitute?.status?.operation === 'DENY') {
                 let msg = dataSubmitInstitute.status.message
                 let reasonDetail = ''
 
@@ -83,7 +83,11 @@ const NewRequest = () => {
                 else if (msg === 'Already submitted')
                   reasonDetail = 'Jedan institucijski projekt je već prijavljen'
                 else if (msg === 'Access CroRIS')
-                  reasonDetail = 'Pristup ste već ostvarili temeljem istraživačkog projekta u CroRIS-u'
+                  reasonDetail = 'Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS'
+                else if (msg === 'No CroRIS data')
+                  reasonDetail = 'Nema podataka iz sustava CroRIS'
+                else if (msg === 'Lead CroRIS project')
+                  reasonDetail = 'Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu "Moji podaci" za više detalja.'
 
                 toast.error(
                   <span className="font-monospace text-dark">

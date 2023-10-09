@@ -443,11 +443,23 @@ class CanSubmitInstituteProject(APIView):
                     }
                 }
                 return Response(deny_resp, status=status.HTTP_200_OK)
+
+            projects_lead = croris_data['projects_lead_info']
+            if len(projects_lead) > 0:
+                deny_resp = {
+                    'status': {
+                        'code': status.HTTP_200_OK,
+                        'operation': 'DENY',
+                        'message': 'Lead CroRIS project',
+                    }
+                }
+                return Response(deny_resp, status=status.HTTP_200_OK)
+
         else:
             no_data_resp = {
                 'status': {
                     'code': status.HTTP_200_OK,
-                    'operation': 'NODATA',
+                    'operation': 'DENY',
                     'message': 'No CroRIS data'
                 }
             }
