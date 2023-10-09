@@ -455,6 +455,17 @@ class CanSubmitInstituteProject(APIView):
                 }
                 return Response(deny_resp, status=status.HTTP_200_OK)
 
+            projects_associate = croris_data['projects_associate_info']
+            if len(projects_associate) > 0:
+                deny_resp = {
+                    'status': {
+                        'code': status.HTTP_200_OK,
+                        'operation': 'DENY',
+                        'message': 'Associate CroRIS project',
+                    }
+                }
+                return Response(deny_resp, status=status.HTTP_200_OK)
+
         else:
             no_data_resp = {
                 'status': {
