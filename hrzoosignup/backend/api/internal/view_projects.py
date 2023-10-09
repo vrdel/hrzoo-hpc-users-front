@@ -401,23 +401,27 @@ class CanSubmitInstituteProject(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request):
-        projects_enddates = dict()
         oib = request.user.person_oib
 
         croris_data = cache.get(f'{oib}_croris')
 
         if croris_data:
-            for pr in croris_data['projects_lead_info']:
-                projects_enddates.update({
-                    pr['identifier']: pr['end']
-                })
-
-        interest_projects = models.Project.objects.filter(users__id__exact=request.user.pk).values_list('croris_identifier', 'date_end')
-        interest_projects = list(interest_projects)
-        for approved_pr in interest_projects:
-            if approved_pr[0] not in projects_enddates:
-                projects_enddates.update({
-                    approved_pr[0]: approved_pr[1]
-                })
-
-        return Response(projects_enddates, status=status.HTTP_200_OK)
+            mbz = croris_data['person_info']['mbz']
+            if not mbz:
+                deny_resp = {
+                    'status': {
+                        'code': status.HTTP_200_OK,
+                        'operation': 'DENY',
+                        'message': 'MBZ unknown'
+                    }
+                }
+                return Response(deny_resp, status=status.HTTP_200_OK)
+        else:
+            no_data_resp = {
+                'status': {
+                    'code': status.HTTP_200_OK,
+                    'operation': 'NODATA',
+                    'message': 'No CroRIS data'
+                }
+            }
+            return Response(no_data_resp, status=status.HTTP_200_OK)

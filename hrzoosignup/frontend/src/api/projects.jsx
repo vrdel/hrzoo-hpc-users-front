@@ -313,5 +313,5 @@ export async function canSubmitInstituteProject()
   }
 
   if (error_msg)
-    throw new Error(`Error fetching All NRProjects data: ${error_msg}`)
+    throw new Error(`Error fetching institutional project permission: ${error_msg}`)
 }
