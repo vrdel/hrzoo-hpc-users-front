@@ -34,7 +34,7 @@ import { convertToAmerican } from '../../utils/dates.jsx';
 import * as yup from "yup";
 
 
-const schemaResolve = yup.object().shape({
+const schemaGeneralResolve = yup.object().shape({
   requestName: yup.string().required("Obvezno"),
   requestExplain: yup.string().required("Obvezno"),
   scientificDomain: yup.array().of(yup.object().shape(
@@ -116,7 +116,7 @@ const schemaResolve = yup.object().shape({
 });
 
 
-const GeneralRequest = ({projectType}) => {
+export const GeneralRequest = ({projectType, schemaResolve=schemaGeneralResolve}) => {
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
@@ -255,7 +255,7 @@ const GeneralRequest = ({projectType}) => {
       <FormProvider {...rhfProps}>
         <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
           <RequestHorizontalRuler />
-          <GeneralFields />
+          <GeneralFields isInstitute={projectType === 'research-institutional' ? true : false}/>
           <ScientificSoftware />
           <ResourceFields />
           <RequestHorizontalRuler />
