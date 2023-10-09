@@ -31,7 +31,7 @@ const NewRequest = () => {
       staleTime: 15 * 60 * 1000
   })
 
-  const {statusSubmitInstitute, data: canSubmitInstitute, error:
+  const {status: statusSubmitInstitute, data: dataSubmitInstitute, error:
     errorSubmitInstitute} = useQuery({
       queryKey: ['can-submit-institute'],
       queryFn: canSubmitInstituteProject,
@@ -72,10 +72,29 @@ const NewRequest = () => {
             placeholder="Odaberi"
             controlWidth="40%"
             onChange={(e) => {
-              if (e.value !== 'istrazivacki-projekt')
-                setContinueButtonDisabled(false)
-              else if (status === 'success' &&
-                croRisData?.status?.code !== 200) {
+              if (e.value === 'institucijski-projekt'
+                && statusSubmitInstitute === 'success'
+                && dataSubmitInstitute?.status?.operation !== 'ALLOW') {
+                let msg = dataSubmitInstitute.status.message
+                let reasonDetail = ''
+
+                if (msg === 'MBZ unknown')
+                  reasonDetail = 'Matični broj znanstvenika nije poznat'
+
+                toast.error(
+                  <span className="font-monospace text-dark">
+                    Nemate mogućnost prijave institucijskog projekta:{' '}
+                    { reasonDetail }
+                  </span>, {
+                    toastId: 'newreq-no-institute',
+                    autoClose: 2500,
+                  }
+                )
+                setContinueButtonDisabled(true)
+              }
+              else if (e.value === 'istrazivacki-projekt'
+                && status === 'success'
+                && croRisData?.status?.code !== 200) {
                 toast.error(
                   <span className="font-monospace text-dark">
                     Nema podataka iz sustava CroRIS
@@ -86,8 +105,9 @@ const NewRequest = () => {
                 )
                 setContinueButtonDisabled(true)
               }
-              else if (status === 'success' &&
-                croRisData?.data?.person_info?.lead_status !== true) {
+              else if (e.value === 'istrazivacki-projekt'
+                && status === 'success'
+                && croRisData?.data?.person_info?.lead_status !== true) {
                 toast.error(
                   <span className="font-monospace text-dark">
                     Nemate projekata prijavljenih u sustavu CroRIS
@@ -98,6 +118,9 @@ const NewRequest = () => {
                 )
                 setContinueButtonDisabled(true)
               }
+              else if (e.value !== 'istrazivacki-projekt')
+                setContinueButtonDisabled(false)
+
               return setSelectedProject(e)
             }}
             isDisabled={buttonDisabled}
