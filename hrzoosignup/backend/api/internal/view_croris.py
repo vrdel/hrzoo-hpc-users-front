@@ -174,7 +174,7 @@ class CroRISInfo(APIView):
 
     async def fetch_person_lead(self, oib):
         fetch_data = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
-        fetch_data  = json.loads(fetch_data)
+        fetch_data = json.loads(fetch_data)
         httpcode = fetch_data.get('httpStatusCode', False)
         if httpcode and httpcode != 200:
             raise client_exceptions.ClientError({
@@ -190,6 +190,7 @@ class CroRISInfo(APIView):
             'first_name': self.person_info['ime'],
             'last_name': self.person_info['prezime'],
             'croris_id': self.person_info['persId'],
+            'mbz': self.person_info.get('maticniBrojZnanstvenika', None),
             'lead_status': False,
             'project_lead_links': project_links
         }
@@ -261,7 +262,7 @@ class CroRISInfo(APIView):
                 # projects may be outdated
                 if metadata['end']:
                     today = datetime.datetime.today()
-                    end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') +  datetime.timedelta(days=settings.GRACE_DAYS)
+                    end_date = datetime.datetime.strptime(metadata['end'], '%d.%m.%Y') + datetime.timedelta(days=settings.GRACE_DAYS)
                     if end_date <= today:
                         self.dead_projects_associate.append(project.get('id'))
                         continue
