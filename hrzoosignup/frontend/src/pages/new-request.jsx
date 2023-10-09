@@ -80,6 +80,8 @@ const NewRequest = () => {
 
                 if (msg === 'MBZ unknown')
                   reasonDetail = 'Matični broj znanstvenika nije poznat'
+                else if (msg === 'Already submitted')
+                  reasonDetail = 'Jedan institucijski projekt je već prijavljen'
 
                 toast.error(
                   <span className="font-monospace text-dark">

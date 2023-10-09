@@ -401,8 +401,21 @@ class CanSubmitInstituteProject(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request):
-        oib = request.user.person_oib
+        user_instituteproject = models.UserProject.objects.filter(
+            user_id=request.user.id,
+            project__project_type__name='research-institutional'
+        )
+        if user_instituteproject.count() > 0:
+            deny_resp = {
+                'status': {
+                    'code': status.HTTP_200_OK,
+                    'operation': 'DENY',
+                    'message': 'Already submitted'
+                }
+            }
+            return Response(deny_resp, status=status.HTTP_200_OK)
 
+        oib = request.user.person_oib
         croris_data = cache.get(f'{oib}_croris')
 
         if croris_data:
