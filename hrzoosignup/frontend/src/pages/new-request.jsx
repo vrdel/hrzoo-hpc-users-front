@@ -128,7 +128,7 @@ const NewRequest = () => {
                 )
                 setContinueButtonDisabled(true)
               }
-              else if (e.value !== 'istrazivacki-projekt')
+              else
                 setContinueButtonDisabled(false)
 
               return setSelectedProject(e)
