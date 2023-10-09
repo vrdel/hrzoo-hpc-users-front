@@ -401,6 +401,20 @@ class CanSubmitInstituteProject(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request):
+        user_crorisproject = models.UserProject.objects.filter(
+            user_id=request.user.id,
+            project__project_type__name='research-croris'
+        )
+        if user_crorisproject.count() > 0:
+            deny_resp = {
+                'status': {
+                    'code': status.HTTP_200_OK,
+                    'operation': 'DENY',
+                    'message': 'Access CroRIS'
+                }
+            }
+            return Response(deny_resp, status=status.HTTP_200_OK)
+
         user_instituteproject = models.UserProject.objects.filter(
             user_id=request.user.id,
             project__project_type__name='research-institutional'

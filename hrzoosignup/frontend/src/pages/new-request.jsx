@@ -82,6 +82,8 @@ const NewRequest = () => {
                   reasonDetail = 'Matični broj znanstvenika nije poznat'
                 else if (msg === 'Already submitted')
                   reasonDetail = 'Jedan institucijski projekt je već prijavljen'
+                else if (msg === 'Access CroRIS')
+                  reasonDetail = 'Pristup ste već ostvarili temeljem istraživačkog projekta u CroRIS-u'
 
                 toast.error(
                   <span className="font-monospace text-dark">
