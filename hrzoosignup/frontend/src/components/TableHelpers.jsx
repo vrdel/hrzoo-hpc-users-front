@@ -54,7 +54,7 @@ export const optionsStatesProjects = [
 ]
 
 export const allStates = ["submit", "approve", "deny", "expire", "extend"]
-export const allProjectTypes = ["research-croris", "thesis", "practical"]
+export const allProjectTypes = ["research-croris", "thesis", "practical", "research-institutional"]
 
 export class TablePaginationHelper {
   searchLen = 0
