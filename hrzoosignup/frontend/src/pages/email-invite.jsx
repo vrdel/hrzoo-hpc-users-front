@@ -51,12 +51,20 @@ const EmailInvitation = ({sessionData=undefined}) => {
         setCustomMessage('Već jeste suradnik na pozvanom projektu')
         setInviteAlertSucces(true)
       }
-      else if (err.message.toLowerCase().includes("Lead CroRIS project")) {
+      else if (err.message.toLowerCase().includes("lead croris project")) {
         setCustomMessage('Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS')
         setInviteAlertSucces(true)
       }
-      else if (err.message.toLowerCase().includes("Associate CroRIS project")) {
+      else if (err.message.toLowerCase().includes("associate croris project")) {
         setCustomMessage('Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS')
+        setInviteAlertSucces(true)
+      }
+      else if (err.message.toLowerCase().includes("user croris project")) {
+        setCustomMessage('Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS')
+        setInviteAlertSucces(true)
+      }
+      else if (err.message.toLowerCase().includes("user institute project")) {
+        setCustomMessage('Već ste prijavljeni na jedan institucijski projekt')
         setInviteAlertSucces(true)
       }
       else
