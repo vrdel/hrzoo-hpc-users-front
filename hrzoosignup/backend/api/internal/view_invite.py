@@ -11,6 +11,7 @@ from invitations.utils import get_invitation_model
 from backend import models
 from backend.email import user as useremail
 from backend.serializers import InvitesSerializer
+from .view_croris import CroRISInfo
 
 import json
 import requests
@@ -63,8 +64,13 @@ class Invites(APIView):
     # permission_classes = (AllowAny,)
     permission_classes = (IsAuthenticated,)
 
+    def _testing_institute_project(self, request, **kwargs):
+        import ipdb; ipdb.set_trace()
+
     def get(self, request, **kwargs):
         user = request.user
+
+        self._testing_institute_project(request, **kwargs)
 
         # hardcoding it here as
         # INVITATIONS_CONFIRMATION_URL_NAME did not help
@@ -113,6 +119,61 @@ class Invites(APIView):
                             }}
                         logger.warn(msg)
                         return Response(msg, status=status.HTTP_403_FORBIDDEN)
+
+                elif (proj_type.name == 'research-institutional'):
+                    user_crorisproject = models.UserProject.objects.filter(
+                        user_id=request.user.id,
+                        project__project_type__name='research-croris'
+                    )
+                    if user_crorisproject.count() > 0:
+                        err_status = status.HTTP_401_UNAUTHORIZED
+                        err_response = {
+                            'status': {
+                                'code': err_status,
+                                'message': 'User CroRIS project'
+                            }
+                        }
+                        return Response(err_response, status=err_status)
+
+                    user_instituteproject = models.UserProject.objects.filter(
+                        user_id=request.user.id,
+                        project__project_type__name='research-institutional'
+                    )
+                    if user_instituteproject.count() > 0:
+                        err_status = status.HTTP_401_UNAUTHORIZED
+                        err_response = {
+                            'status': {
+                                'code': err_status,
+                                'message': 'User institute project'
+                            }
+                        }
+                        return Response(err_response, status=err_status)
+
+                    croris_info = CroRISInfo()
+                    croris_info.request = request
+                    croris_resp = croris_info.get(request).data
+
+                    if croris_resp:
+                        projects_lead = croris_resp['projects_lead_info']
+                        projects_associate = croris_resp['projects_associate_info']
+                        if len(projects_lead) > 0:
+                            err_status = status.HTTP_401_UNAUTHORIZED
+                            err_response = {
+                                'status': {
+                                    'code': err_status,
+                                    'message': 'Lead CroRIS project'
+                                }
+                            }
+                            return Response(err_response, status=err_status)
+                        if len(projects_associate) > 0:
+                            err_status = status.HTTP_401_UNAUTHORIZED
+                            err_response = {
+                                'status': {
+                                    'code': err_status,
+                                    'message': 'Associate CroRIS project'
+                                }
+                            }
+                            return Response(err_response, status=err_status)
 
                 else:
                     associate_user_to_project(user, proj)
