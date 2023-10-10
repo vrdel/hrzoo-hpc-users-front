@@ -478,8 +478,8 @@ class CanSubmitInstituteProject(APIView):
                 }
                 return Response(deny_resp, status=status.HTTP_200_OK)
 
-            projects_lead = croris_data['projects_lead_info']
-            if len(projects_lead) > 0:
+            projects_lead = croris_data.get('projects_lead_info', None)
+            if projects_lead and len(projects_lead) > 0:
                 deny_resp = {
                     'status': {
                         'code': status.HTTP_200_OK,
@@ -489,8 +489,8 @@ class CanSubmitInstituteProject(APIView):
                 }
                 return Response(deny_resp, status=status.HTTP_200_OK)
 
-            projects_associate = croris_data['projects_associate_info']
-            if len(projects_associate) > 0:
+            projects_associate = croris_data.get('projects_associate_info', None)
+            if projects_associate and len(projects_associate) > 0:
                 deny_resp = {
                     'status': {
                         'code': status.HTTP_200_OK,
