@@ -121,7 +121,7 @@ class Invites(APIView):
                         project__project_type__name='research-croris'
                     )
                     if user_crorisproject.count() > 0:
-                        err_status = status.HTTP_401_UNAUTHORIZED
+                        err_status = status.HTTP_403_FORBIDDEN
                         err_response = {
                             'status': {
                                 'code': err_status,
@@ -135,7 +135,7 @@ class Invites(APIView):
                         project__project_type__name='research-institutional'
                     )
                     if user_instituteproject.count() > 0:
-                        err_status = status.HTTP_401_UNAUTHORIZED
+                        err_status = status.HTTP_403_FORBIDDEN
                         err_response = {
                             'status': {
                                 'code': err_status,
@@ -152,7 +152,7 @@ class Invites(APIView):
                         projects_lead = croris_resp['data']['projects_lead_info']
                         projects_associate = croris_resp['data']['projects_associate_info']
                         if len(projects_lead) > 0:
-                            err_status = status.HTTP_401_UNAUTHORIZED
+                            err_status = status.HTTP_403_FORBIDDEN
                             err_response = {
                                 'status': {
                                     'code': err_status,
@@ -161,7 +161,7 @@ class Invites(APIView):
                             }
                             return Response(err_response, status=err_status)
                         if len(projects_associate) > 0:
-                            err_status = status.HTTP_401_UNAUTHORIZED
+                            err_status = status.HTTP_403_FORBIDDEN
                             err_response = {
                                 'status': {
                                     'code': err_status,

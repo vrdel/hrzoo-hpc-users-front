@@ -85,11 +85,10 @@ export async function fetchInvite(inviteKey)
 
     if (!response.ok) {
       try {
-        await response.json();
-        error_msg = `${response.status} ${response.statusText} in GET`
+        await response.text().then(text => {throw new Error(text)})
       }
       catch (err1) {
-        error_msg = `${response.status} ${response.statusText} in GET`
+        error_msg = `${err1.message}`
       }
     }
 

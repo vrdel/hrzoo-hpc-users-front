@@ -43,7 +43,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
       startTimer()
     }
     catch (err) {
-      if (err.message.toLowerCase().includes("410 gone")) {
+      if (err.message.toLowerCase().includes("invitation code already used")) {
         setCustomMessage('Pozivni kod je iskorišten')
         setInviteAlertFail(true)
       }
