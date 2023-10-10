@@ -74,7 +74,8 @@ const NewRequest = () => {
             onChange={(e) => {
               if (e.value === 'institucijski-projekt'
                 && statusSubmitInstitute === 'success'
-                && dataSubmitInstitute?.status?.operation === 'DENY') {
+                // && dataSubmitInstitute?.status?.operation === 'DENY') {
+                && dataSubmitInstitute?.status?.operation === 'ALLOW') {
                 let msg = dataSubmitInstitute.status.message
                 let reasonDetail = ''
 

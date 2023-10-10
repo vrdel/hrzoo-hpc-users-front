@@ -64,13 +64,8 @@ class Invites(APIView):
     # permission_classes = (AllowAny,)
     permission_classes = (IsAuthenticated,)
 
-    def _testing_institute_project(self, request, **kwargs):
-        import ipdb; ipdb.set_trace()
-
     def get(self, request, **kwargs):
         user = request.user
-
-        self._testing_institute_project(request, **kwargs)
 
         # hardcoding it here as
         # INVITATIONS_CONFIRMATION_URL_NAME did not help
@@ -154,8 +149,8 @@ class Invites(APIView):
                     croris_resp = croris_info.get(request).data
 
                     if croris_resp:
-                        projects_lead = croris_resp['projects_lead_info']
-                        projects_associate = croris_resp['projects_associate_info']
+                        projects_lead = croris_resp['data']['projects_lead_info']
+                        projects_associate = croris_resp['data']['projects_associate_info']
                         if len(projects_lead) > 0:
                             err_status = status.HTTP_401_UNAUTHORIZED
                             err_response = {
@@ -174,6 +169,24 @@ class Invites(APIView):
                                 }
                             }
                             return Response(err_response, status=err_status)
+
+                    associate_user_to_project(user, proj)
+
+                    if settings.EMAIL_SEND:
+                        useremail.email_approve_membership(get_invite.inviter.person_mail,
+                                                           proj.name, user)
+
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_201_CREATED,
+                            'message': '{} associated to project {}'.format(
+                                user.person_uniqueid,
+                                proj.identifier)
+                        }
+                    }
+                    logger.info(msg)
+                    cache.delete("ext-users-projects")
+                    return Response(msg, status=status.HTTP_201_CREATED)
 
                 else:
                     associate_user_to_project(user, proj)
