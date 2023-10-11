@@ -67,9 +67,11 @@ class ProjectsGeneral(APIView):
             croris_data = cache.get(f'{oib}_croris')
             if croris_data:
                 mbz = croris_data['person_info'].get('mbz', None)
-                projects_lead = croris_data['projects_lead_info']
-                projects_associate = croris_data['projects_associate_info']
-                if not mbz or len(projects_lead) > 0 or len(projects_associate) > 0:
+                projects_lead = croris_data.get('projects_lead_info', None)
+                projects_associate = croris_data.get('projects_associate_info', None)
+                if (not mbz
+                    or (projects_lead and len(projects_lead) > 0)
+                    or (projects_associate and len(projects_associate) > 0)):
                     err_status = status.HTTP_401_UNAUTHORIZED
                     err_response = {
                         'status': {

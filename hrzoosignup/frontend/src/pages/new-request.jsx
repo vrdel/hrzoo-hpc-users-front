@@ -80,7 +80,7 @@ const NewRequest = () => {
                 let reasonDetail = ''
 
                 if (msg === 'MBZ unknown')
-                  reasonDetail = 'Matični broj znanstvenika nije poznat'
+                  reasonDetail = 'Matični broj znanstvenika (MBZ) nije poznat'
                 else if (msg === 'Already submitted')
                   reasonDetail = 'Jedan institucijski projekt je već prijavljen'
                 else if (msg === 'Access CroRIS')
