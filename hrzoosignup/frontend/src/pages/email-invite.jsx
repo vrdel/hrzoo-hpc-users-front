@@ -44,7 +44,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
     }
     catch (err) {
       if (err.message.toLowerCase().includes("invitation code already used")) {
-        setCustomMessage('Pozivni kod je iskorišten')
+        setCustomMessage('Prijava neuspješna: Pozivni kod je iskorišten')
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("duplicate key")) {
@@ -52,19 +52,19 @@ const EmailInvitation = ({sessionData=undefined}) => {
         setInviteAlertSucces(true)
       }
       else if (err.message.toLowerCase().includes("lead croris project")) {
-        setCustomMessage('Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS')
+        setCustomMessage('Prijava neuspješna: Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS')
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("associate croris project")) {
-        setCustomMessage('Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS')
+        setCustomMessage('Prijava neuspješna: Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS')
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("user croris project")) {
-        setCustomMessage('Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS')
+        setCustomMessage('Prijava neuspješna: Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS')
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("user institute project")) {
-        setCustomMessage('Već ste prijavljeni na jedan institucijski projekt')
+        setCustomMessage('Prijava neuspješna: Već ste prijavljeni na jedan institucijski projekt')
         setInviteAlertFail(true)
       }
       else
