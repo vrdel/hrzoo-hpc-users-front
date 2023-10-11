@@ -92,7 +92,7 @@ class ProjectsGeneral(APIView):
                         'message': 'Length should be exactly one year period'
                     }
                 }
-            return Response(err_response, status=err_status)
+                return Response(err_response, status=err_status)
 
         request.data['project_type'] = type_obj.pk
 
