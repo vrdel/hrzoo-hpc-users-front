@@ -13,6 +13,11 @@ class UserProjectAPI(APIView):
     permission_classes = (HasAPIKey,)
 
     def get(self, request):
+        tags = self.request.query_params.get('tags')
+
+        if tags:
+            import ipdb; ipdb.set_trace()
+
         ret_data = cache.get('ext-users-projects')
         if ret_data:
             return Response(ret_data, status=status.HTTP_200_OK)
