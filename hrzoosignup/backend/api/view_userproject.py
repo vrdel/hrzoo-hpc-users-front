@@ -2,6 +2,7 @@ from backend import serializers
 from backend import models
 
 from django.core.cache import cache
+from django.db.models import Q
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -14,19 +15,28 @@ class UserProjectAPI(APIView):
 
     def get(self, request):
         tags = self.request.query_params.get('tags')
+        query = Q()
 
         if tags:
-            ret_data = cache.get('ext-users-projects')
+            tags = tags.split(',')
+            cached_data = cache.get('ext-users-projects')
+            cached_visited = set()
+            cached_interested = list()
 
-            if ret_data:
-                return Response(ret_data, status=status.HTTP_200_OK)
+            if cached_data:
+                for tag in tags:
+                    for up in cached_data:
+                        if (tag in up['project']['staff_resources_type']
+                            and up['project']['identifier'] not in cached_visited):
+                            cached_interested.append(up)
+                            cached_visited.add(up['project']['identifier'])
 
-            for tag in tags:
+            else:
+                for tag in tags:
+                    query |= Q(project__staff_resources_type__contains=[{"label": tag, "value": tag}])
+
             serializer = \
-                serializers.UserProjectSerializer2(models.UserProject.objects.filter(
-                    project__staff_resources_type__contains=[{"label": tags, "value": tags}]), many=True
-                )
-            import ipdb; ipdb.set_trace()
+                serializers.UserProjectSerializer2(models.UserProject.objects.filter(query).distinct(), many=True)
             cache.set('ext-users-projects', serializer.data, 60 * 15)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
