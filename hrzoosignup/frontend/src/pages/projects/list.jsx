@@ -98,7 +98,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   if (searchResourceTypes.length > 0) {
     let targetResource = searchResourceTypes.map(element => element.value)
-    fieldsView = _.filter(fieldsView, (e) =>
+    fieldsView = fieldsView.filter(e =>
       {
         let projectResources = e.staff_resources_type.map(element => element.value)
         for (var resource of projectResources)
