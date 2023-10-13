@@ -98,11 +98,12 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   if (searchResourceTypes.length > 0) {
     let targetResource = searchResourceTypes.map(element => element.value)
-    fieldsView = fieldsView.filter(e =>
+    fieldsView = _.filter(fieldsView, (e) =>
       {
         let projectResources = e.staff_resources_type.map(element => element.value)
-        if (_.difference(targetResource, projectResources).length === 0)
-          return e
+        for (var resource of projectResources)
+          if (targetResource.indexOf(resource) !== -1)
+              return e
       }
     )
   }
