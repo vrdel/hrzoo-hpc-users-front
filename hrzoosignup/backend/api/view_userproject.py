@@ -16,12 +16,12 @@ class UserProjectAPI(APIView):
     def get(self, request):
         tags = self.request.query_params.get('tags')
         query = Q()
+        cached_interested, db_interested = list(), list()
 
         if tags:
             tags = tags.split(',')
             cached_data = cache.get('ext-users-projects')
             cached_visited = set()
-            cached_interested = list()
 
             if cached_data:
                 for tag in tags:
@@ -30,16 +30,17 @@ class UserProjectAPI(APIView):
                             and up['project']['identifier'] not in cached_visited):
                             cached_interested.append(up)
                             cached_visited.add(up['project']['identifier'])
-
             else:
                 for tag in tags:
                     query |= Q(project__staff_resources_type__contains=[{"label": tag, "value": tag}])
+                db_interested = models.UserProject.objects.filter(query).distinct()
 
-            serializer = \
-                serializers.UserProjectSerializer2(models.UserProject.objects.filter(query).distinct(), many=True)
-            cache.set('ext-users-projects', serializer.data, 60 * 15)
-
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            if cached_interested:
+                return Response(cached_interested, status=status.HTTP_200_OK)
+            else:
+                serializer = \
+                    serializers.UserProjectSerializer2(db_interested, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
             ret_data = cache.get('ext-users-projects')
