@@ -21,15 +21,12 @@ class UserProjectAPI(APIView):
         if tags:
             tags = tags.split(',')
             cached_data = cache.get('ext-users-projects')
-            cached_visited = set()
 
             if cached_data:
                 for tag in tags:
                     for up in cached_data:
-                        if (tag in up['project']['staff_resources_type']
-                            and up['project']['identifier'] not in cached_visited):
+                        if (tag in up['project']['staff_resources_type']):
                             cached_interested.append(up)
-                            cached_visited.add(up['project']['identifier'])
             else:
                 for tag in tags:
                     query |= Q(project__staff_resources_type__contains=[{"label": tag, "value": tag}])
