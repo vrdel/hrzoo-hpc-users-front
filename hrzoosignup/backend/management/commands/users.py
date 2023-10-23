@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Permission
 from django.conf import settings
+from django.db.utils import IntegrityError
 
 import argparse
 import random
@@ -48,21 +49,23 @@ class Command(BaseCommand):
                                    required=True, help='SSO Unique ID of the user')
 
     def handle(self, *args, **options):
-        import ipdb; ipdb.set_trace()
         if options['command'] == 'create':
-            user_model = get_user_model()
-            user_model.objects.create(
-                username=options['username'],
-                first_name=options['first'],
-                last_name=options['last'],
-                person_uniqueid=options['uniqueid'],
-                person_mail=options['email'],
-                croris_first_name=options['first'],
-                croris_last_name=options['last'],
-                croris_mail=options['email'],
-                person_oib=options['oib'],
-                person_institution=options['institution'],
-                person_organisation=options['organisation'],
-            )
+            try:
+                user_model = get_user_model()
+                user_model.objects.create(
+                    username=options['username'],
+                    first_name=options['first'],
+                    last_name=options['last'],
+                    person_uniqueid=options['uniqueid'],
+                    person_mail=options['email'],
+                    croris_first_name=options['first'],
+                    croris_last_name=options['last'],
+                    croris_mail=options['email'],
+                    person_oib=options['oib'],
+                    person_institution=options['institution'],
+                    person_organisation=options['organisation'],
+                )
 
-        pass
+            except IntegrityError as exc:
+                self.stdout.write(self.style.ERROR('Error creating user'))
+                self.stdout.write(self.style.NOTICE(repr(exc)))
