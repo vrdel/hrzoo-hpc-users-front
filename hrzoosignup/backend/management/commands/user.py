@@ -76,7 +76,7 @@ class Command(BaseCommand):
                 elif options['unusablepassword']:
                     user.set_unusable_password()
                 user.save()
-                self.stdout.write(self.style.SUCCESS('User password set'.format(options['username'])))
+                self.stdout.write(self.style.SUCCESS('User {0} password set'.format(options['username'])))
             except Exception as exp:
                 self.stderr.write(repr(exp))
 
@@ -85,6 +85,6 @@ class Command(BaseCommand):
                 user = self.user_model.objects.get(username=options['username'])
                 user.is_staff = 1
                 user.save()
-                self.stdout.write(self.style.SUCCESS('User is_staff set'.format(options['username'])))
+                self.stdout.write(self.style.SUCCESS('User {0} is_staff set'.format(options['username'])))
             except Exception as exp:
                 self.stderr.write(repr(exp))

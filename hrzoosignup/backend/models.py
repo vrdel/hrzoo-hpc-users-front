@@ -145,11 +145,11 @@ class Project(models.Model):
         null=True,
         blank=True,
     )
-    date_end  = models.DateField(
+    date_end = models.DateField(
         null=True,
         blank=True,
     )
-    date_submitted  = models.DateTimeField(
+    date_submitted = models.DateTimeField(
         null=True,
         blank=True,
     )

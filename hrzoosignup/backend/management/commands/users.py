@@ -3,15 +3,19 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Permission
 from django.conf import settings
 from django.db.utils import IntegrityError
+from django.utils import timezone
+
+from backend.models import Project, UserProject, Role
 
 import argparse
+import datetime
 import random
 
 ALPHACHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 
 
 class Command(BaseCommand):
-    help = "Create additional user with different roles for testing purposes"
+    help = "User management tool"
 
     def __init__(self):
         super().__init__()
@@ -50,9 +54,21 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['command'] == 'create':
+            user, project = None, None
+
+            if options['project']:
+                try:
+                    project = Project.objects.get(identifier=options['project'])
+                    self.stdout.write('Found project {} \"{}\"'.format(options['project'], project.name))
+
+                except Project.DoesNotExist as exc:
+                    self.stdout.write(self.style.ERROR('Project does not exist'))
+                    self.stdout.write(self.style.NOTICE(repr(exc)))
+                    raise SystemExit(1)
+
             try:
                 user_model = get_user_model()
-                user_model.objects.create(
+                user = user_model.objects.create(
                     username=options['username'],
                     first_name=options['first'],
                     last_name=options['last'],
@@ -65,7 +81,26 @@ class Command(BaseCommand):
                     person_institution=options['institution'],
                     person_organisation=options['organisation'],
                 )
+                self.stdout.write('Created user {}'.format(user.username))
 
             except IntegrityError as exc:
                 self.stdout.write(self.style.ERROR('Error creating user'))
                 self.stdout.write(self.style.NOTICE(repr(exc)))
+                raise SystemExit(1)
+
+            if project and user:
+                try:
+                    role_colab = Role.objects.get(name='collaborator')
+                    UserProject.objects.create(
+                        user=user,
+                        project=project,
+                        role=role_colab,
+                        date_joined=timezone.make_aware(datetime.datetime.now())
+                    )
+                    self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
+
+                except IntegrityError as exc:
+                    self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
+                    self.stdout.write(self.style.NOTICE(repr(exc)))
+                    raise SystemExit(1)
+
