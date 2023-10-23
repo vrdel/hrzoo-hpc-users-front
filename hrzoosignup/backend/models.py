@@ -10,9 +10,7 @@ from django.core.exceptions import ValidationError
 
 from django.utils import timezone
 from django.utils.crypto import get_random_string
-from django.utils.translation import gettext_lazy as _
 
-from django.conf import settings
 from django.contrib.sites.shortcuts import get_current_site
 
 try:
@@ -20,7 +18,6 @@ try:
 except ImportError:
     from django.core.urlresolvers import reverse
 
-from invitations.managers import BaseInvitationManager
 from invitations.adapters import get_invitations_adapter
 from invitations.app_settings import app_settings
 from invitations.base_invitation import AbstractBaseInvitation
@@ -29,14 +26,13 @@ from invitations import signals
 import datetime
 
 
-
 def validate_ssh_public_key(ssh_key):
     if isinstance(ssh_key, str):
         ssh_key = ssh_key.encode('utf-8')
 
     try:
         serialization.load_ssh_public_key(ssh_key, backends.default_backend())
-    except (ValueError, UnsupportedAlgorithm) as e:
+    except (ValueError, UnsupportedAlgorithm):
         raise ValidationError('Invalid SSH public key.')
 
 
@@ -302,7 +298,7 @@ class DateExtend(models.Model):
 
 
 class Role(models.Model):
-    name =  models.CharField(
+    name = models.CharField(
         _("Role name"),
         max_length=24,
         blank=True,
@@ -317,6 +313,7 @@ class UserProject(models.Model):
         blank=True,
         null=True,
     )
+
     class Meta:
         unique_together = ['user', 'project', 'role']
 

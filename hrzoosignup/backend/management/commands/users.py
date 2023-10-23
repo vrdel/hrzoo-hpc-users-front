@@ -1,7 +1,8 @@
-from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import Permission
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
+from django.core.cache import cache
+from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from django.utils import timezone
 
@@ -82,6 +83,8 @@ class Command(BaseCommand):
                     person_organisation=options['organisation'],
                 )
                 self.stdout.write('Created user {}'.format(user.username))
+                cache.delete("usersinfoinactive-get")
+                cache.delete("usersinfo-get")
 
             except IntegrityError as exc:
                 self.stdout.write(self.style.ERROR('Error creating user'))
@@ -98,6 +101,8 @@ class Command(BaseCommand):
                         date_joined=timezone.make_aware(datetime.datetime.now())
                     )
                     self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
+                    cache.delete("ext-users-projects")
+                    cache.delete('projects-get-all')
 
                 except IntegrityError as exc:
                     self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
