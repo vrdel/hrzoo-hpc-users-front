@@ -26,6 +26,8 @@ services:
       - ../bin/hzsi-db:$VENV/bin/hzsi-db
       - ../bin/hzsi-genseckey:$VENV/bin/hzsi-genseckey
       - ../bin/hzsi-manage:$VENV/bin/hzsi-manage
+      - ../bin/hzsi-users:$VENV/bin/hzsi-users
+      - ../bin/hzsi-projects:$VENV/bin/hzsi-projects
       - ../docker/collectstatic.sh:/home/user/collectstatic.sh
       - ../docker/pysitepkg:/home/user/pysitepkg
       - ../docker/run-django-server.sh:/home/user/run-django-server.sh
