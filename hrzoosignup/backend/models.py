@@ -354,7 +354,7 @@ class CustomInvitation(AbstractBaseInvitation):
         max_length=254,
     )
     created = models.DateTimeField(verbose_name=_("created"), default=timezone.now)
-    person_oib = models.CharField( _('OIB number'), max_length=11, blank=True,)
+    person_oib = models.CharField(_('OIB number'), max_length=11, blank=True,)
 
     class Meta:
         unique_together = ['project', 'email']
