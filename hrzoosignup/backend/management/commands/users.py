@@ -7,6 +7,8 @@ from django.db.utils import IntegrityError
 from django.utils import timezone
 
 from backend.models import Project, UserProject, Role
+from backend.serializers import SshKeysSerializer, get_ssh_key_fingerprint
+from backend.models import SSHPublicKey
 
 import argparse
 import datetime
@@ -117,6 +119,23 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR('Error creating user'))
                 self.stdout.write(self.style.NOTICE(repr(exc)))
                 raise SystemExit(1)
+
+            if options['key'] or options['keyname']:
+                if not (options['key'] and options['keyname']):
+                    self.stdout.write(self.style.NOTICE('Both key path and key name should be specified'))
+                    raise SystemExit(1)
+
+                key_content = options['key'].read().strip()
+                serializer = SshKeysSerializer(data={
+                    'name': options['keyname'],
+                    'public_key': key_content,
+                    'user': user.id
+                })
+
+                if serializer.is_valid():
+                    serializer.save()
+                    self.stdout.write('Added key {} for the user {}'.format(
+                        serializer.data['fingerprint'], user.username))
 
             if project and user:
                 try:
