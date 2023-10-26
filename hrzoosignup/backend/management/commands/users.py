@@ -133,6 +133,7 @@ class Command(BaseCommand):
                 })
 
                 if serializer.is_valid():
+                    # TODO: cache key invalidate
                     serializer.save()
                     self.stdout.write('Added key {} for the user {}'.format(
                         serializer.data['fingerprint'], user.username))

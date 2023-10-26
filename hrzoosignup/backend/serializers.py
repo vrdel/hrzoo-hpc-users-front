@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 import datetime
 
@@ -331,7 +332,7 @@ class SshKeysSerializer(serializers.ModelSerializer):
         complete = dict()
         complete['fingerprint'] = get_ssh_key_fingerprint(validated_data['public_key'])
         complete.update({key: value for key, value in validated_data.items()})
-        complete['date_created'] = datetime.datetime.now()
+        complete['date_created'] = timezone.make_aware(datetime.datetime.now())
         user = get_user_model().objects.get(id=self.initial_data['user'])
         complete['user'] = user
         return models.SSHPublicKey.objects.create(**complete)
