@@ -63,6 +63,8 @@ class Command(BaseCommand):
 
         parser_delete.add_argument('--username', dest='username', type=str,
                                    required=True, help='Username of user')
+        parser_delete.add_argument('--key-name', dest='keyname', type=str, default='',
+                                   required=False, help='SSH key name')
 
     def handle(self, *args, **options):
         user_model = get_user_model()
@@ -72,12 +74,28 @@ class Command(BaseCommand):
                 user = user_model.objects.get(
                     username=options['username']
                 )
+
+                if options['keyname']:
+                    sshkey = SSHPublicKey.objects.get(
+                        name=options['keyname'],
+                        user=user
+                    )
+                    if sshkey:
+                        sshkey.delete()
+                        self.stdout.write('Deleted key {} user {}'.format(sshkey.fingerprint, user.username))
+                        cache.delete("ext-sshkeys")
+                        raise SystemExit(0)
+
                 user.delete()
                 cache.delete("usersinfoinactive-get")
                 cache.delete("usersinfo-get")
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
                 self.stdout.write('Deleted user {}'.format(user.username))
+
+            except SSHPublicKey.DoesNotExist as exc:
+                self.stdout.write(self.style.ERROR('Error deleting SSH key for user'))
+                self.stdout.write(self.style.NOTICE(repr(exc)))
 
             except user_model.DoesNotExist as exc:
                 self.stdout.write(self.style.ERROR('Error deleting user'))
@@ -133,10 +151,10 @@ class Command(BaseCommand):
                 })
 
                 if serializer.is_valid():
-                    # TODO: cache key invalidate
                     serializer.save()
                     self.stdout.write('Added key {} for the user {}'.format(
                         serializer.data['fingerprint'], user.username))
+                    cache.delete("ext-sshkeys")
                 else:
                     self.stdout.write(self.style.ERROR('Error adding key for the user'))
                     self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
