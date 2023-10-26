@@ -136,6 +136,10 @@ class Command(BaseCommand):
                     serializer.save()
                     self.stdout.write('Added key {} for the user {}'.format(
                         serializer.data['fingerprint'], user.username))
+                else:
+                    self.stdout.write(self.style.ERROR('Error adding key for the user'))
+                    self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
+                    raise SystemExit(1)
 
             if project and user:
                 try:
