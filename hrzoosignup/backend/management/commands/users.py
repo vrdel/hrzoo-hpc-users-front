@@ -54,9 +54,8 @@ class Command(BaseCommand):
                                    required=True, help='SSO Unique ID of the user')
         parser_create.add_argument('--key-name', dest='keyname', type=str, default='',
                                    required=False, help='SSH key name')
-        parser_create.add_argument('--key', dest='key', type=argparse.FileType(), default='',
+        parser_create.add_argument('--key', dest='key', type=argparse.FileType(),
                                    required=False, help='SSH key')
-
 
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
 
@@ -64,6 +63,25 @@ class Command(BaseCommand):
                                    required=True, help='Username of user')
 
     def handle(self, *args, **options):
+        user_model = get_user_model()
+
+        if options['command'] == 'delete':
+            try:
+                user = user_model.objects.get(
+                    username=options['username']
+                )
+                user.delete()
+                cache.delete("usersinfoinactive-get")
+                cache.delete("usersinfo-get")
+                cache.delete("ext-users-projects")
+                cache.delete('projects-get-all')
+                self.stdout.write('Deleted user {}'.format(user.username))
+
+            except user_model.DoesNotExist as exc:
+                self.stdout.write(self.style.ERROR('Error deleting user'))
+                self.stdout.write(self.style.NOTICE(repr(exc)))
+                raise SystemExit(1)
+
         if options['command'] == 'create':
             user, project = None, None
 
@@ -78,7 +96,6 @@ class Command(BaseCommand):
                     raise SystemExit(1)
 
             try:
-                user_model = get_user_model()
                 user = user_model.objects.create(
                     username=options['username'],
                     first_name=options['first'],
