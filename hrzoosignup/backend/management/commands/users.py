@@ -52,6 +52,16 @@ class Command(BaseCommand):
                                    required=False, help='Password for the user')
         parser_create.add_argument('--uniqueid', dest='uniqueid', type=str, default='',
                                    required=True, help='SSO Unique ID of the user')
+        parser_create.add_argument('--key-name', dest='keyname', type=str, default='',
+                                   required=False, help='SSH key name')
+        parser_create.add_argument('--key', dest='key', type=argparse.FileType(), default='',
+                                   required=False, help='SSH key')
+
+
+        parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
+
+        parser_delete.add_argument('--username', dest='username', type=str,
+                                   required=True, help='Username of user')
 
     def handle(self, *args, **options):
         if options['command'] == 'create':
@@ -108,4 +118,3 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
                     self.stdout.write(self.style.NOTICE(repr(exc)))
                     raise SystemExit(1)
-
