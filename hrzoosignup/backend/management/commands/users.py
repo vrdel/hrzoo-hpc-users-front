@@ -27,7 +27,6 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         subparsers = parser.add_subparsers(help="User subcommands", dest="command")
         parser_create = subparsers.add_parser("create", help="Create user based on passed metadata")
-
         parser_create.add_argument('--username', dest='username', type=str,
                                    required=True, help='Username of user')
         parser_create.add_argument('--first', dest='first', type=str,
@@ -60,13 +59,18 @@ class Command(BaseCommand):
                                    required=False, help='SSH key')
 
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
-
         parser_delete.add_argument('--username', dest='username', type=str,
                                    required=True, help='Username of user')
         parser_delete.add_argument('--key-name', dest='keyname', type=str, default='',
                                    required=False, help='SSH key name')
         parser_delete.add_argument('--project', dest='project', type=str, default='',
                                    required=False, help='Project identifier from which user will be unsigned')
+
+        parser_update = subparsers.add_parser("update", help="Update user based on passed metadata")
+        parser_update.add_argument('--username', dest='username', type=str,
+                                   required=True, help='Username of user')
+        parser_update.add_argument('--project', dest='project', type=str, default='',
+                                   required=False, help='Project identifier that user will be assigned to')
 
     def handle(self, *args, **options):
         user_model = get_user_model()
@@ -192,6 +196,44 @@ class Command(BaseCommand):
                     self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
                     cache.delete("ext-users-projects")
                     cache.delete('projects-get-all')
+
+                except IntegrityError as exc:
+                    self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
+                    self.stdout.write(self.style.NOTICE(repr(exc)))
+                    raise SystemExit(1)
+
+        if options['command'] == 'update':
+            user, project = None, None
+
+            try:
+                user = user_model.objects.get(
+                    username=options['username'],
+                )
+
+            except user_model.DoesNotExist as exc:
+                self.stdout.write(self.style.ERROR('User not found'))
+                self.stdout.write(self.style.NOTICE(repr(exc)))
+                raise SystemExit(1)
+
+            if options['project']:
+                try:
+                    project = Project.objects.get(identifier=options['project'])
+                    role_colab = Role.objects.get(name='collaborator')
+                    self.stdout.write('Found project {} \"{}\"'.format(options['project'], project.name))
+                    UserProject.objects.create(
+                        user=user,
+                        project=project,
+                        role=role_colab,
+                        date_joined=timezone.make_aware(datetime.datetime.now())
+                    )
+                    self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
+                    cache.delete("ext-users-projects")
+                    cache.delete('projects-get-all')
+
+                except Project.DoesNotExist as exc:
+                    self.stdout.write(self.style.ERROR('Project does not exist'))
+                    self.stdout.write(self.style.NOTICE(repr(exc)))
+                    raise SystemExit(1)
 
                 except IntegrityError as exc:
                     self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
