@@ -67,7 +67,7 @@ class Command(BaseCommand):
 
             key_content = options['key'].read().strip()
             serializer = SshKeysSerializer(data={
-                'name': options['keyname'],
+                'name': ' '.join(options['keyname']),
                 'public_key': key_content,
                 'user': user.id
             })
@@ -147,7 +147,7 @@ class Command(BaseCommand):
 
             key_content = options['key'].read().strip()
             serializer = SshKeysSerializer(data={
-                'name': options['keyname'],
+                'name': ' '.join(options['keyname']),
                 'public_key': key_content,
                 'user': user.id
             })
@@ -172,7 +172,7 @@ class Command(BaseCommand):
             # without removing the user
             if options['keyname']:
                 sshkey = SSHPublicKey.objects.get(
-                    name=options['keyname'],
+                    name=' '.join(options['keyname']),
                     user=user
                 )
                 if sshkey:
@@ -242,7 +242,7 @@ class Command(BaseCommand):
                                    required=False, help='Password for the user')
         parser_create.add_argument('--uniqueid', dest='uniqueid', type=str, default='',
                                    required=True, help='SSO Unique ID of the user')
-        parser_create.add_argument('--key-name', dest='keyname', type=str, default='',
+        parser_create.add_argument('--key-name', dest='keyname', type=str, default='', nargs='+',
                                    required=False, help='SSH key name')
         parser_create.add_argument('--key', dest='key', type=argparse.FileType(),
                                    required=False, help='SSH key')
@@ -250,7 +250,7 @@ class Command(BaseCommand):
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
         parser_delete.add_argument('--username', dest='username', type=str,
                                    required=True, help='Username of user')
-        parser_delete.add_argument('--key-name', dest='keyname', type=str, default='',
+        parser_delete.add_argument('--key-name', dest='keyname', type=str, default='', nargs='+',
                                    required=False, help='SSH key name')
         parser_delete.add_argument('--project', dest='project', type=str, default='',
                                    required=False, help='Project identifier from which user will be unsigned')
@@ -260,7 +260,7 @@ class Command(BaseCommand):
                                    required=True, help='Username of user')
         parser_update.add_argument('--project', dest='project', type=str, default='',
                                    required=False, help='Project identifier that user will be assigned to')
-        parser_update.add_argument('--key-name', dest='keyname', type=str,
+        parser_update.add_argument('--key-name', dest='keyname', type=str, nargs='+',
                                    default='', required=False, help='SSH key name')
         parser_update.add_argument('--key', dest='key',
                                    type=argparse.FileType(), required=False,
