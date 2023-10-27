@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { TypeString, TypeColor } from '../../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faCopy,
   faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
@@ -26,6 +27,7 @@ import {
 import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { copyToClipboard } from '../../utils/copy-clipboard';
 import _ from "lodash";
 
 
@@ -281,6 +283,17 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                             <span className="fw-normal badge bg-secondary">
                               { project.identifier }
                             </span>
+                            <Button className="ms-0 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
+                              color="light"
+                              onClick={(e) => copyToClipboard(
+                                e, project.identifier,
+                                "Šifra zahtjeva kopirana u međuspremnik",
+                                "Greška prilikom kopiranja šifre u međuspremnik",
+                                "id-request"
+                              )}
+                            >
+                              <FontAwesomeIcon size="xs" icon={faCopy} />
+                            </Button>
                           </Col>
                         </Row>
                       </td>
