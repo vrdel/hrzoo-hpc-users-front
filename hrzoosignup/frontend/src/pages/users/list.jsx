@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faSearch, faTimesCircle, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCopy, faSearch, faTimesCircle, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "../../components/TableHelpers";
 import { buildOptionsFromArray } from "../../utils/select-tools";
@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
+import { copyToClipboard } from '../../utils/copy-clipboard';
 import _ from 'lodash';
 
 
@@ -293,9 +294,20 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                             { `${user.first_name} ${user.last_name}` }
                           </Col>
                         </Row>
-                        <Row>
-                          <Col className="font-monospace fw-normal">
+                        <Row className="g-0">
+                          <Col className="font-monospace fw-normal d-flex justify-content-center align-items-center align-self-center">
                             { user.username }
+                            <Button className="ms-1 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
+                              color="light"
+                              onClick={(e) => copyToClipboard(
+                                e, user.username,
+                                "Korisnička oznaka kopirana u međuspremnik",
+                                "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                                "id-uid"
+                              )}
+                            >
+                              <FontAwesomeIcon size="xs" icon={faCopy} />
+                            </Button>
                           </Col>
                         </Row>
                       </td>
@@ -304,6 +316,19 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                       </td>
                       <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
                         { user.person_mail }
+                        <span>
+                          <Button className="ms-1 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
+                            color="light"
+                            onClick={(e) => copyToClipboard(
+                              e, user.person_mail,
+                              "Email kopiran u međuspremnik",
+                              "Greška prilikom kopiranja emaila u međuspremnik",
+                              "id-email"
+                            )}
+                          >
+                            <FontAwesomeIcon size="xs" icon={faCopy} />
+                          </Button>
+                        </span>
                       </td>
                       <td className="p-3 align-middle text-center fs-6 font-monospace" style={{wordBreak: 'break-all'}}>
                         { convertToEuropean(user.date_joined) }
@@ -314,9 +339,22 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                         {
                           user.projects.length > 0 ?
                             user.projects.map((proj, pid) =>
-                              <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
-                                { proj.identifier }
-                              </Badge>
+                              <React.Fragment key={pid}>
+                                <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
+                                  { proj.identifier }
+                                </Badge>
+                                <Button className="ms-0 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
+                                  color="light"
+                                  onClick={(e) => copyToClipboard(
+                                    e, proj.identifier,
+                                    "Šifra zahtjeva kopirana u međuspremnik",
+                                    "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
+                                    "id-request"
+                                  )}
+                                >
+                                  <FontAwesomeIcon size="xs" icon={faCopy} />
+                                </Button>
+                              </React.Fragment>
                             )
                           :
                             '\u2212'
