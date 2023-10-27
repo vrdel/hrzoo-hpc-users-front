@@ -48,8 +48,10 @@ class Command(BaseCommand):
                 croris_last_name=options['last'],
                 croris_mail=options['email'],
                 person_oib=options['oib'],
+                is_staff=options['staff'],
                 person_institution=options['institution'],
                 person_organisation=options['organisation'],
+                person_affiliation='worker'
             )
             self.stdout.write('Created user {}'.format(user.username))
             cache.delete("usersinfoinactive-get")
@@ -162,6 +164,21 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
                 raise SystemExit(1)
 
+        if options['staff'] != None:
+            user.is_staff = bool(options['staff'])
+            self.stdout.write('Promote user {} to staff'.format(user.username))
+
+        if options['email']:
+            user.person_mail = options['email']
+            user.croris_mail = options['email']
+            self.stdout.write('Set email for user {} to {}'.format(user.username, user.person_mail))
+
+        if options['oib']:
+            user.person_oib = options['oib']
+            self.stdout.write('Set OIB for user {} to {}'.format(user.username, user.person_oib))
+
+        user.save()
+
     def _user_delete(self, options):
         try:
             user = self.user_model.objects.get(
@@ -224,7 +241,7 @@ class Command(BaseCommand):
                                    help='Last name of user')
         parser_create.add_argument('--project', dest='project', type=str,
                                    required=False, help='Project identifier that user will be associated to')
-        parser_create.add_argument('--pubkey', dest='pubkey',
+        parser_create.add_argument('--pubkey', dest='key',
                                    type=argparse.FileType(), required=False,
                                    help='File path od public key component')
         parser_create.add_argument('--email', dest='email', type=str,
@@ -236,7 +253,7 @@ class Command(BaseCommand):
         parser_create.add_argument('--staff', dest='staff', action='store_true',
                                    default=False, required=False,
                                    help='Flag user as staff')
-        parser_create.add_argument('--oib', dest='oib', type=str, default='',
+        parser_create.add_argument('--oib', dest='oib', type=str, default='0',
                                    required=False, help='OIB of the user')
         parser_create.add_argument('--password', dest='password', type=str,
                                    required=False, help='Password for the user')
@@ -244,8 +261,6 @@ class Command(BaseCommand):
                                    required=True, help='SSO Unique ID of the user')
         parser_create.add_argument('--key-name', dest='keyname', type=str, default='', nargs='+',
                                    required=False, help='SSH key name')
-        parser_create.add_argument('--key', dest='key', type=argparse.FileType(),
-                                   required=False, help='SSH key')
 
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
         parser_delete.add_argument('--username', dest='username', type=str,
@@ -262,9 +277,15 @@ class Command(BaseCommand):
                                    required=False, help='Project identifier that user will be assigned to')
         parser_update.add_argument('--key-name', dest='keyname', type=str, nargs='+',
                                    default='', required=False, help='SSH key name')
-        parser_update.add_argument('--key', dest='key',
+        parser_update.add_argument('--pubkey', dest='key',
                                    type=argparse.FileType(), required=False,
                                    help='SSH key')
+        parser_update.add_argument('--staff', dest='staff', default=None,
+                                   type=int, required=False, help='User as staff')
+        parser_update.add_argument('--email', dest='email', type=str, default='',
+                                   required=False, help='Email of the user')
+        parser_update.add_argument('--oib', dest='oib', type=str, default='',
+                                   required=False, help='OIB of the user')
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
