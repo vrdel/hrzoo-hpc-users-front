@@ -127,6 +127,8 @@ class Command(BaseCommand):
                 self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
+                cache.delete("usersinfoinactive-get")
+                cache.delete("usersinfo-get")
 
             except Project.DoesNotExist as exc:
                 self.stdout.write(self.style.ERROR('Project does not exist'))
@@ -136,6 +138,28 @@ class Command(BaseCommand):
             except IntegrityError as exc:
                 self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
                 self.stdout.write(self.style.NOTICE(repr(exc)))
+                raise SystemExit(1)
+
+        if options['key'] or options['keyname']:
+            if not (options['key'] and options['keyname']):
+                self.stdout.write(self.style.NOTICE('Both key path and key name should be specified'))
+                raise SystemExit(1)
+
+            key_content = options['key'].read().strip()
+            serializer = SshKeysSerializer(data={
+                'name': options['keyname'],
+                'public_key': key_content,
+                'user': user.id
+            })
+
+            if serializer.is_valid():
+                serializer.save()
+                self.stdout.write('Added key {} for the user {}'.format(
+                    serializer.data['fingerprint'], user.username))
+                cache.delete("ext-sshkeys")
+            else:
+                self.stdout.write(self.style.ERROR('Error adding key for the user'))
+                self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
                 raise SystemExit(1)
 
     def _user_delete(self, options):
@@ -236,6 +260,11 @@ class Command(BaseCommand):
                                    required=True, help='Username of user')
         parser_update.add_argument('--project', dest='project', type=str, default='',
                                    required=False, help='Project identifier that user will be assigned to')
+        parser_update.add_argument('--key-name', dest='keyname', type=str,
+                                   default='', required=False, help='SSH key name')
+        parser_update.add_argument('--key', dest='key',
+                                   type=argparse.FileType(), required=False,
+                                   help='SSH key')
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
