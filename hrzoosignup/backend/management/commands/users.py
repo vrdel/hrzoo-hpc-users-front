@@ -51,7 +51,7 @@ class Command(BaseCommand):
                 is_staff=options['staff'],
                 person_institution=options['institution'],
                 person_organisation=options['organisation'],
-                person_affiliation='worker'
+                person_affiliation='šljaker'
             )
             self.stdout.write('Created user {}'.format(user.username))
             cache.delete("usersinfoinactive-get")
@@ -101,6 +101,13 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
                 self.stdout.write(self.style.NOTICE(repr(exc)))
                 raise SystemExit(1)
+
+        if options['password']:
+            user.set_password(options['password'])
+            self.stdout.write('Set password for user')
+        else:
+            user.set_unusable_password()
+        user.save()
 
     def _user_update(self, options):
         user, project = None, None
@@ -177,6 +184,10 @@ class Command(BaseCommand):
             user.person_oib = options['oib']
             self.stdout.write('Set OIB for user {} to {}'.format(user.username, user.person_oib))
 
+        if options['password']:
+            user.set_password(options['password'])
+            self.stdout.write('Set password for user')
+
         user.save()
 
     def _user_delete(self, options):
@@ -248,7 +259,7 @@ class Command(BaseCommand):
                                    required=True, help='Email of the user')
         parser_create.add_argument('--institution', dest='institution', type=str,
                                    required=True, help='Institution of the user')
-        parser_create.add_argument('--organisation', dest='organisation', type=str, default='',
+        parser_create.add_argument('--organisation', dest='organisation', type=str, default='Istraživanje ruda i gubljenje vremena',
                                    required=False, help='Organisation of the user')
         parser_create.add_argument('--staff', dest='staff', action='store_true',
                                    default=False, required=False,
@@ -286,6 +297,8 @@ class Command(BaseCommand):
                                    required=False, help='Email of the user')
         parser_update.add_argument('--oib', dest='oib', type=str, default='',
                                    required=False, help='OIB of the user')
+        parser_update.add_argument('--password', dest='password', type=str, default='',
+                                   required=False, help='Password for the user')
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
