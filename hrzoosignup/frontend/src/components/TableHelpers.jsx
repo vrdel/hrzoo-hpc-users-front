@@ -41,6 +41,7 @@ export const optionsTypes = [
   { label: "Svi", value: "all" },
   { label: "Istraživački", value: "research-croris" },
   { label: "Istraživački EU", value: "research-eu-croris" },
+  { label: "Institucijski", value: "research-institutional" },
   { label: "Rad", value: "thesis" },
   { label: "Nastava", value: "practical" }
 ]
