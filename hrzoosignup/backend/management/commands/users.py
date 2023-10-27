@@ -65,6 +65,8 @@ class Command(BaseCommand):
                                    required=True, help='Username of user')
         parser_delete.add_argument('--key-name', dest='keyname', type=str, default='',
                                    required=False, help='SSH key name')
+        parser_delete.add_argument('--project', dest='project', type=str, default='',
+                                   required=False, help='Project identifier from which user will be unsigned')
 
     def handle(self, *args, **options):
         user_model = get_user_model()
@@ -75,6 +77,8 @@ class Command(BaseCommand):
                     username=options['username']
                 )
 
+                # if SSH key specified, remove only it
+                # without removing the user
                 if options['keyname']:
                     sshkey = SSHPublicKey.objects.get(
                         name=options['keyname'],
@@ -86,12 +90,28 @@ class Command(BaseCommand):
                         cache.delete("ext-sshkeys")
                         raise SystemExit(0)
 
-                user.delete()
-                cache.delete("usersinfoinactive-get")
-                cache.delete("usersinfo-get")
-                cache.delete("ext-users-projects")
-                cache.delete('projects-get-all')
-                self.stdout.write('Deleted user {}'.format(user.username))
+                # if project specified, unsign user from it
+                elif options['project']:
+                    try:
+                        userproject = UserProject.objects.get(
+                            project__identifier=options['project'],
+                            user=user
+                        )
+                        userproject.delete()
+                        self.stdout.write('Removed user {} from project {}'.format(user.username, options['project']))
+                        raise SystemExit(0)
+
+                    except UserProject.DoesNotExist as exc:
+                        self.stdout.write(self.style.ERROR('Error removing user from project'))
+                        self.stdout.write(self.style.NOTICE(repr(exc)))
+                        raise SystemExit(1)
+                else:
+                    user.delete()
+                    cache.delete("usersinfoinactive-get")
+                    cache.delete("usersinfo-get")
+                    cache.delete("ext-users-projects")
+                    cache.delete('projects-get-all')
+                    self.stdout.write('Deleted user {}'.format(user.username))
 
             except SSHPublicKey.DoesNotExist as exc:
                 self.stdout.write(self.style.ERROR('Error deleting SSH key for user'))
