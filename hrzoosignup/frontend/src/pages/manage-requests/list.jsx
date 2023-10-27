@@ -288,7 +288,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                               onClick={(e) => copyToClipboard(
                                 e, project.identifier,
                                 "Šifra zahtjeva kopirana u međuspremnik",
-                                "Greška prilikom kopiranja šifre u međuspremnik",
+                                "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
                                 "id-request"
                               )}
                             >

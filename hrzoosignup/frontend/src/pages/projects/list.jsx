@@ -13,10 +13,10 @@ import {
   HZSIPagination
 } from "../../components/TableHelpers";
 import { convertToEuropean } from "../../utils/dates";
-import { Badge, Col, Input, Row, Table } from "reactstrap";
+import { Button, Badge, Col, Input, Row, Table } from "reactstrap";
 import { PageTitle } from "../../components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { CustomReactSelect } from "../../components/CustomReactSelect";
 import { TypeColor, TypeString } from "../../config/map-projecttypes";
 import { extractCollaborators, extractLeaderName } from "../../utils/users_help";
@@ -24,6 +24,7 @@ import { StateIcons } from "../../config/map-states";
 import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { copyToClipboard } from '../../utils/copy-clipboard';
 import _ from "lodash";
 
 
@@ -277,9 +278,20 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         </Row>
                         <Row className="g-0 d-flex justify-content-center">
                           <Col>
-                            <Badge color="secondary" className="fw-normal me-3">
+                            <Badge color="secondary" className="fw-normal">
                               { project.identifier }
                             </Badge>
+                            <Button className="border-0 ps-1 pe-1 pt-0 pb-0 mt-0 me-3"
+                              color="light"
+                              onClick={(e) => copyToClipboard(
+                                e, project.identifier,
+                                "Šifra projekta kopirana u međuspremnik",
+                                "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                                "id-uid"
+                              )}
+                            >
+                              <FontAwesomeIcon size="xs" icon={faCopy} />
+                            </Button>
                             {
                               project.staff_resources_type.map((rtype, i) =>
                                 <span className="ms-1 p-1 fw-normal" key={i}

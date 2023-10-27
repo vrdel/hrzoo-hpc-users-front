@@ -347,8 +347,8 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                   color="light"
                                   onClick={(e) => copyToClipboard(
                                     e, proj.identifier,
-                                    "Šifra zahtjeva kopirana u međuspremnik",
-                                    "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
+                                    "Šifra projekta kopirana u međuspremnik",
+                                    "Greška prilikom kopiranja šifre projekta u međuspremnik",
                                     "id-request"
                                   )}
                                 >
