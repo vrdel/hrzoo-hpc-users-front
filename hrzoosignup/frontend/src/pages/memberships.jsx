@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Collapse, Row, Card, CardTitle, CardHeader, CardBody,
-  Label, Badge, Table, Button, Form, Tooltip, Input } from 'reactstrap';
+import { Col, Row, Card, CardHeader, CardBody,
+  Label, Badge } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useForm, Controller } from 'react-hook-form';
 import { fetchNrProjects } from '../api/projects';
 import { addInvite, fetchMyInvites } from '../api/invite';
 import { removeUserFromProject } from '../api/usersprojects';
@@ -12,18 +11,10 @@ import { TypeString, TypeColor } from '../config/map-projecttypes';
 import ModalAreYouSure from '../components/ModalAreYouSure';
 import { convertToEuropean } from '../utils/dates';
 import { AuthContext } from '../components/AuthContextProvider';
-import { CustomCreatableSelect, CustomReactSelect } from '../components/CustomReactSelect';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faEnvelope,
-  faPaperPlane,
-  faArrowDown,
-  faXmark,
-  faKey
-} from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
 import { EmptyTableSpinner } from '../components/EmptyTableSpinner';
-import _ from 'lodash';
+import { UsersTableCroris } from '../components/membership/UsersTableCroris';
+import { UsersTableGeneral } from '../components/membership/UsersTableGeneral';
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
