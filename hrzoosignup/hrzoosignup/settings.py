@@ -338,19 +338,19 @@ LOGGING = {
         'file_info': {
             'level': 'INFO',
             'class': 'logging.FileHandler',
-            'filename':  '{}var/log/info.log'.format(VENV),
+            'filename': '{}var/log/info.log'.format(VENV),
             'formatter': 'verbose',
         },
         'file_error': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename':  '{}var/log/error.log'.format(VENV),
+            'filename': '{}var/log/error.log'.format(VENV),
             'formatter': 'verbose',
         },
         'file_views': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename':  '{}var/log/views.log'.format(VENV),
+            'filename': '{}var/log/views.log'.format(VENV),
             'formatter': 'verbose',
         },
     },
