@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SharedData } from "../root";
-import { fetchUsers, fetchUsersInactive } from "../../api/users"
+import { SharedData } from "Pages/root";
+import { fetchUsers, fetchUsersInactive } from "Api/users"
 import { useQuery } from "@tanstack/react-query";
 import {
   Badge,
@@ -11,19 +11,19 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import { PageTitle } from '../../components/PageTitle';
+import { PageTitle } from 'Components/PageTitle';
 import { MiniButton } from 'Components/MiniButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faCopy, faSearch, faTimesCircle, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
-import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "../../components/TableHelpers";
-import { buildOptionsFromArray } from "../../utils/select-tools";
-import { CustomReactSelect } from "../../components/CustomReactSelect";
+import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "Components/TableHelpers";
+import { buildOptionsFromArray } from "Utils/select-tools";
+import { CustomReactSelect } from "Components/CustomReactSelect";
 import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
-import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
-import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
-import { copyToClipboard } from '../../utils/copy-clipboard';
+import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
+import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
+import { copyToClipboard } from 'Utils/copy-clipboard';
 import _ from 'lodash';
 
 
@@ -54,7 +54,6 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
   const [sortJoined, setSortJoined] = useState(true)
-  const navigate = useNavigate()
 
   const { control, setValue } = useForm({
     defaultValues: {
