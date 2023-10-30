@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from '../root';
+import { SharedData } from 'Pages/root';
 import {
   Col,
   Row,
@@ -10,9 +10,9 @@ import {
   InputGroupText,
   Placeholder
 } from 'reactstrap';
-import { PageTitle } from '../../components/PageTitle';
+import { PageTitle } from 'Components/PageTitle';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchSshKeys, deleteSshKey } from '../../api/sshkeys';
+import { fetchSshKeys, deleteSshKey } from 'Api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -20,13 +20,13 @@ import {
   faKey,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/content.css';
-import ModalAreYouSure from '../../components/ModalAreYouSure';
+import 'Styles/content.css';
+import ModalAreYouSure from 'Components/ModalAreYouSure';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { fetchNrProjects } from '../../api/projects';
-import { AuthContext } from '../../components/AuthContextProvider';
-import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { fetchNrProjects } from 'Api/projects';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 
 
