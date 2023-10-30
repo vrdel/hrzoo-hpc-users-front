@@ -340,7 +340,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                         {
                           user.projects.length > 0 ?
                             user.projects.map((proj, pid) =>
-                              <Row className="g-0" key={pid}>
+                              <Row className={pid > 0 ? "g-0 mt-1" : "g-0"} key={pid}>
                                 <Col className="d-flex justify-content-center align-items-center align-self-center">
                                   <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
                                     { proj.identifier }
