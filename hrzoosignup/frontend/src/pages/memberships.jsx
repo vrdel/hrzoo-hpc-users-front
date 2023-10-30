@@ -136,6 +136,13 @@ const Memberships = () => {
       setOnYesCall('dosignoff')
       setOnYesCallArg(data)
     }
+    else if (data['type'] === 'inviterem') {
+      setAreYouSureModal(!areYouSureModal)
+      setModalTitle("Otkazivanje pozivnice")
+      setModalMsg("Da li ste sigurni da želite otkazati pozivnicu?")
+      setOnYesCall('doinviterem')
+      setOnYesCallArg(data)
+    }
   }
 
   const doAdd = async (data) => {

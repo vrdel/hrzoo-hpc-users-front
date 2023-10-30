@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { Col, Collapse, Row, Card, CardTitle, CardBody,
   Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { useForm, Controller } from 'react-hook-form';
-import { AuthContext } from '../../components/AuthContextProvider';
-import { CustomCreatableSelect } from '../../components/CustomReactSelect';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { CustomCreatableSelect } from 'Components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
@@ -12,7 +12,7 @@ import {
   faXmark,
   faKey
 } from '@fortawesome/free-solid-svg-icons';
-import { extractUsers } from '../../utils/invites-extracts';
+import { extractUsers } from 'Utils/invites-extracts';
 import _ from 'lodash';
 
 
@@ -42,6 +42,15 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     data['project'] = project['id']
     data['type'] = 'signoff'
     onSubmit(data)
+  }
+
+  const onInviteDelete = (user) => {
+    let email = user['email']
+    let inviterid = user['inviter']['id']
+    let type = 'inviterem'
+    onSubmit({
+      email, inviterid, type
+    })
   }
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
@@ -280,9 +289,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                           <div className="position-absolute top-0 ms-4 start-50 translate-middle">
                             <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
                               color="light"
-                              onClick={null}
+                              onClick={(e) => onInviteDelete(user)}
                             >
-                              <FontAwesomeIcon color="#DC3545" size="s" icon={faXmark}/>{' '}
+                              <FontAwesomeIcon color="#DC3545" size="s" icon={faXmark}/>
                             </Button>
                           </div>
                         </div>
