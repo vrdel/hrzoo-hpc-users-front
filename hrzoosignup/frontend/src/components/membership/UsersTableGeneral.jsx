@@ -266,9 +266,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <td className="align-middle text-center">
                         { user.email }
                       </td>
-                      <td className="align-middle text-center" id={`Tooltip-${i + 100}`}>
+                      <td className="align-middle text-center">
                         <div className="position-relative">
-                          <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
+                          <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope}/>
                           <Tooltip
                             placement='top'
                             isOpen={isOpened(user.email)}
@@ -278,7 +278,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                             Aktivna pozivnica poslana na email
                           </Tooltip>
                           <div className="position-absolute top-0 ms-4 start-50 translate-middle">
-                            <Button className="d-flex align-items-center justify-content-center ms-1 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
+                            <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
                               color="light"
                               onClick={null}
                             >
