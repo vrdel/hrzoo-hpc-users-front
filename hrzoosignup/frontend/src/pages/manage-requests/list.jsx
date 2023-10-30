@@ -28,6 +28,7 @@ import { CustomReactSelect } from '../../components/CustomReactSelect';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import { copyToClipboard } from '../../utils/copy-clipboard';
+import { MiniButton } from 'Components/MiniButton';
 import _ from "lodash";
 
 
@@ -279,11 +280,11 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                         <Row style={{height: '15px'}}>
                         </Row>
                         <Row>
-                          <Col>
+                          <Col className="d-flex justify-content-center align-items-center align-self-center">
                             <span className="fw-normal badge bg-secondary">
                               { project.identifier }
                             </span>
-                            <Button className="ms-0 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
+                            <MiniButton
                               color="light"
                               onClick={(e) => copyToClipboard(
                                 e, project.identifier,
@@ -293,7 +294,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                               )}
                             >
                               <FontAwesomeIcon size="xs" icon={faCopy} />
-                            </Button>
+                            </MiniButton>
                           </Col>
                         </Row>
                       </td>
