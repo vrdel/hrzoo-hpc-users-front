@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { defaultUnAuthnRedirect } from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import { copyToClipboard } from '../../utils/copy-clipboard';
+import { MiniButton } from 'Components/MiniButton';
 import _ from "lodash";
 
 
@@ -277,12 +278,12 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         <Row style={{height: '15px'}}>
                         </Row>
                         <Row className="g-0 d-flex justify-content-center">
-                          <Col>
+                          <Col className="d-flex justify-content-center align-items-center align-self-center">
                             <Badge color="secondary" className="fw-normal">
                               { project.identifier }
                             </Badge>
-                            <Button className="border-0 ps-1 pe-1 pt-0 pb-0 mt-0 me-3"
-                              color="light"
+                            <MiniButton
+                              childClassName="me-3"
                               onClick={(e) => copyToClipboard(
                                 e, project.identifier,
                                 "Šifra projekta kopirana u međuspremnik",
@@ -291,7 +292,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               )}
                             >
                               <FontAwesomeIcon size="xs" icon={faCopy} />
-                            </Button>
+                            </MiniButton>
                             {
                               project.staff_resources_type.map((rtype, i) =>
                                 <span className="ms-1 p-1 fw-normal" key={i}
