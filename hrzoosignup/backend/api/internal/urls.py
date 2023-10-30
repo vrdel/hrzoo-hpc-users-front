@@ -17,6 +17,7 @@ urlpatterns = [
     path('projects-general/', views.ProjectsGeneral.as_view(), name='projectsgeneral'),
     path('can-submit-institute-project/', views.CanSubmitInstituteProject.as_view(), name='cansubmitinstituteproject'),
     path('invites/', views.Invites.as_view(), name='invites'),
+    path('invites/delete', views.Invites.as_view(), name='invites'),
     path('invites-sent/', views.InvitesSent.as_view(), name='invitessent'),
     path('invites/<str:invitekey>', views.Invites.as_view(), name='invites'),
     path('invites-userlink/', views.InvitesLink.as_view(), name='inviteslink'),
