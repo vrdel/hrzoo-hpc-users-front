@@ -27,6 +27,7 @@ import { useNavigate } from 'react-router-dom';
 import { fetchNrProjects } from '../../api/projects';
 import { AuthContext } from '../../components/AuthContextProvider';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { copyToClipboard } from 'Utils/copy-clipboard';
 
 
 const PublicKeys = () => {
@@ -111,33 +112,6 @@ const PublicKeys = () => {
       )
     }
   })
-
-  const copyToClipboard = (e, key) => {
-    if (window.isSecureContext) {
-      navigator.clipboard.writeText(key);
-      e.target.focus();
-      toast.success(
-        <span className="font-monospace text-dark">
-          Javni ključ kopiran u međuspremnik
-        </span>
-        , {
-        toastId: 'sshkey-copy-clipboard',
-        autoClose: 2500,
-        delay: 500
-      })
-    }
-    else {
-      toast.error(
-        <span className="font-monospace text-dark">
-          Unsecure context for key copying
-        </span>
-        , {
-        toastId: 'sshkey-copy-clipboard',
-        autoClose: 2500,
-        delay: 500
-      })
-    }
-  }
 
   function onYesCallback() {
     if (onYesCall == 'doremovesshkey') {
@@ -266,7 +240,12 @@ const PublicKeys = () => {
                               </Col>
                               <Col className="d-flex align-self-center align-content-center">
                                 <Button size="sm" className="ms-3" color="success"
-                                  onClick={(e) => copyToClipboard(e, key.public_key)}
+                                  onClick={(e) => copyToClipboard(
+                                    e, key.public_key,
+                                    "Javni ključ kopiran u međuspremnik",
+                                    "Greška prilikom kopiranja javnog ključa u međuspremnik",
+                                    "sshkey"
+                                  )}
                                 >
                                   <FontAwesomeIcon icon={faCopy} />
                                 </Button>
