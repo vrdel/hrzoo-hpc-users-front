@@ -267,15 +267,25 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         { user.email }
                       </td>
                       <td className="align-middle text-center" id={`Tooltip-${i + 100}`}>
-                        <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
-                        <Tooltip
-                          placement='top'
-                          isOpen={isOpened(user.email)}
-                          target={`Tooltip-${i + 100}`}
-                          toggle={() => showTooltip(user.email)}
-                        >
-                          Aktivna pozivnica poslana na email
-                        </Tooltip>
+                        <div className="position-relative">
+                          <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
+                          <Tooltip
+                            placement='top'
+                            isOpen={isOpened(user.email)}
+                            target={`Tooltip-${i + 100}`}
+                            toggle={() => showTooltip(user.email)}
+                          >
+                            Aktivna pozivnica poslana na email
+                          </Tooltip>
+                          <div className="position-absolute top-0 ms-4 start-50 translate-middle">
+                            <Button className="d-flex align-items-center justify-content-center ms-1 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
+                              color="light"
+                              onClick={null}
+                            >
+                              <FontAwesomeIcon color="#DC3545" size="s" icon={faXmark}/>{' '}
+                            </Button>
+                          </div>
+                        </div>
                       </td>
                       {
                         amILead &&
