@@ -20,7 +20,7 @@ import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "Co
 import { buildOptionsFromArray } from "Utils/select-tools";
 import { CustomReactSelect } from "Components/CustomReactSelect";
 import { useNavigate } from "react-router-dom";
-import { defaultUnAuthnRedirect } from '../../config/default-redirect';
+import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { copyToClipboard } from 'Utils/copy-clipboard';
