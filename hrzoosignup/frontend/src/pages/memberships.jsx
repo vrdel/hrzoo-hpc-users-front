@@ -5,16 +5,16 @@ import { Col, Row, Card, CardHeader, CardBody,
 import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchNrProjects } from '../api/projects';
-import { addInvite, fetchMyInvites } from '../api/invite';
-import { removeUserFromProject } from '../api/usersprojects';
-import { TypeString, TypeColor } from '../config/map-projecttypes';
-import ModalAreYouSure from '../components/ModalAreYouSure';
-import { convertToEuropean } from '../utils/dates';
-import { AuthContext } from '../components/AuthContextProvider';
+import { addInvite, fetchMyInvites, delInvite } from 'Api/invite';
+import { removeUserFromProject } from 'Api/usersprojects';
+import { TypeString, TypeColor } from 'Config/map-projecttypes';
+import ModalAreYouSure from 'Components/ModalAreYouSure';
+import { convertToEuropean } from 'Utils/dates';
+import { AuthContext } from 'Components/AuthContextProvider';
 import { toast } from 'react-toastify';
-import { EmptyTableSpinner } from '../components/EmptyTableSpinner';
-import { UsersTableCroris } from '../components/membership/UsersTableCroris';
-import { UsersTableGeneral } from '../components/membership/UsersTableGeneral';
+import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
+import { UsersTableCroris } from 'Components/membership/UsersTableCroris';
+import { UsersTableGeneral } from 'Components/membership/UsersTableGeneral';
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -203,11 +203,42 @@ const Memberships = () => {
     }
   }
 
+  const doInviteRemove = async (data) => {
+    try {
+      const ret = await delInvite(data, csrfToken)
+      queryClient.invalidateQueries('invites')
+      toast.success(
+        <span className="font-monospace text-dark">
+          Pozivnica uspješno otkazana
+        </span>, {
+          toastId: 'inviterem-ok',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+    catch (err) {
+      toast.error(
+        <span className="font-monospace text-white">
+          Pozivnicu nije bilo moguće otkazati: <br/>
+          { err.message }
+        </span>, {
+          theme: 'colored',
+          toastId: 'inviterem-fail',
+          autoClose: 2500,
+          delay: 1000
+        }
+      )
+    }
+  }
+
   function onYesCallback() {
     if (onYesCall == 'doaddinvite')
       doAdd(onYesCallArg)
     if (onYesCall == 'dosignoff')
       doSignoff(onYesCallArg)
+    if (onYesCall == 'doinviterem')
+      doInviteRemove(onYesCallArg)
   }
 
   useEffect(() => {
