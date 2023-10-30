@@ -12,6 +12,7 @@ import {
   Table,
 } from "reactstrap";
 import { PageTitle } from '../../components/PageTitle';
+import { MiniButton } from 'Components/MiniButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faCopy, faSearch, faTimesCircle, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
@@ -297,8 +298,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                         <Row className="g-0">
                           <Col className="font-monospace fw-normal d-flex justify-content-center align-items-center align-self-center">
                             { user.username }
-                            <Button className="ms-1 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
-                              color="light"
+                            <MiniButton
                               onClick={(e) => copyToClipboard(
                                 e, user.username,
                                 "Korisnička oznaka kopirana u međuspremnik",
@@ -307,7 +307,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                               )}
                             >
                               <FontAwesomeIcon size="xs" icon={faCopy} />
-                            </Button>
+                            </MiniButton>
                           </Col>
                         </Row>
                       </td>
@@ -315,20 +315,21 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                         { user.person_institution }
                       </td>
                       <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
-                        { user.person_mail }
-                        <span>
-                          <Button className="ms-1 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
-                            color="light"
-                            onClick={(e) => copyToClipboard(
-                              e, user.person_mail,
-                              "Email kopiran u međuspremnik",
-                              "Greška prilikom kopiranja emaila u međuspremnik",
-                              "id-email"
-                            )}
-                          >
-                            <FontAwesomeIcon size="xs" icon={faCopy} />
-                          </Button>
-                        </span>
+                        <Row className="g-0">
+                          <Col className="d-flex justify-content-center align-items-center align-self-center">
+                            { user.person_mail }
+                            <MiniButton
+                              onClick={(e) => copyToClipboard(
+                                e, user.person_mail,
+                                "Email kopiran u međuspremnik",
+                                "Greška prilikom kopiranja emaila u međuspremnik",
+                                "id-email"
+                              )}
+                            >
+                              <FontAwesomeIcon size="xs" icon={faCopy} />
+                            </MiniButton>
+                          </Col>
+                        </Row>
                       </td>
                       <td className="p-3 align-middle text-center fs-6 font-monospace" style={{wordBreak: 'break-all'}}>
                         { convertToEuropean(user.date_joined) }
@@ -339,22 +340,24 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                         {
                           user.projects.length > 0 ?
                             user.projects.map((proj, pid) =>
-                              <React.Fragment key={pid}>
-                                <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
-                                  { proj.identifier }
-                                </Badge>
-                                <Button className="ms-0 border-0 ps-1 pe-1 pt-0 pb-0 mt-0"
-                                  color="light"
-                                  onClick={(e) => copyToClipboard(
-                                    e, proj.identifier,
-                                    "Šifra projekta kopirana u međuspremnik",
-                                    "Greška prilikom kopiranja šifre projekta u međuspremnik",
-                                    "id-request"
-                                  )}
-                                >
-                                  <FontAwesomeIcon size="xs" icon={faCopy} />
-                                </Button>
-                              </React.Fragment>
+                              <Row className="g-0" key={pid}>
+                                <Col className="d-flex justify-content-center align-items-center align-self-center">
+                                  <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
+                                    { proj.identifier }
+                                  </Badge>
+                                  <MiniButton
+                                    color="light"
+                                    onClick={(e) => copyToClipboard(
+                                      e, proj.identifier,
+                                      "Šifra projekta kopirana u međuspremnik",
+                                      "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                                      "id-request"
+                                    )}
+                                  >
+                                    <FontAwesomeIcon size="xs" icon={faCopy} />
+                                  </MiniButton>
+                                </Col>
+                              </Row>
                             )
                           :
                             '\u2212'
