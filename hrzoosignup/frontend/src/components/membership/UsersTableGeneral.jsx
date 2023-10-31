@@ -46,10 +46,11 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
   const onInviteDelete = (user) => {
     let email = user['email']
+    let projectid = user['project']['id']
     let inviterid = user['inviter']['id']
     let type = 'inviterem'
     onSubmit({
-      email, inviterid, type
+      email, projectid, inviterid, type
     })
   }
 
@@ -289,7 +290,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                           <div className="position-absolute top-0 ms-4 start-50 translate-middle">
                             <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
                               color="light"
-                              onClick={(e) => onInviteDelete(user)}
+                              onClick={() => onInviteDelete(user)}
                             >
                               <FontAwesomeIcon color="#DC3545" size="s" icon={faXmark}/>
                             </Button>
