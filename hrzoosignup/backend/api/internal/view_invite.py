@@ -35,7 +35,7 @@ def associate_user_to_project(user, project):
 
 
 # INVITATIONS_SIGNUP_REDIRECT setting
-# just return HTTP 200 OK here and that will return as back
+# just return HTTP 200 OK here and that will return us back
 # in still authenticated context.
 class InvitesLink(APIView):
     authentication_classes = (SessionAuthentication,)
@@ -57,6 +57,34 @@ class InvitesSent(APIView):
 
         serializer = InvitesSerializer(myinvites, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, **kwargs):
+        inviterem = request.data.get('type', None)
+        if inviterem and inviterem == 'inviterem':
+            try:
+                target = models.CustomInvitation.objects.get(
+                    email=request.data['email'],
+                    inviter_id=request.user.id,
+                    project_id=request.data['projectid']
+                )
+                target.delete()
+                ok_response = {
+                    'status': {
+                        'code': status.HTTP_204_NO_CONTENT,
+                        'message': f'{request.user.username} - Invitation successfully deleted'
+                    }
+                }
+                return Response(ok_response, status=status.HTTP_204_NO_CONTENT)
+
+            except models.CustomInvitation.DoesNotExist:
+                err_response = {
+                    'status': {
+                        'code': status.HTTP_404_NOT_FOUND,
+                        'message': '{} - Invitation not found'.format(request.user.username)
+                    }
+                }
+                logger.error(err_response)
+                return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
 
 class Invites(APIView):
@@ -230,6 +258,8 @@ class Invites(APIView):
 
     def post(self, request):
         Invitation = get_invitation_model()
+
+
         request.data['user'] = request.user.pk
         proj_id = request.data['project']
         myprojs = models.UserProject.objects.filter(user=request.user)
