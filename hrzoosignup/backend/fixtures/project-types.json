@@ -26,5 +26,12 @@
     "fields": {
       "name": "research-institutional"
      }
+  },
+  {
+    "model": "backend.ProjectType",
+    "pk": 5,
+    "fields": {
+      "name": "internal"
+     }
   }
 ]
