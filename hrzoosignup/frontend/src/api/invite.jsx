@@ -107,7 +107,7 @@ export async function delInvite(data, csrftoken)
   let error_msg = ''
 
   try {
-    let response = await fetch(`${url_api_prefix}/api/v1/internal/invites/delete`, {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/invites-sent/`, {
       method: 'POST',
       mode: 'cors',
       cache: 'no-cache',
