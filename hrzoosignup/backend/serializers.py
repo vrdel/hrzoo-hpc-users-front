@@ -48,6 +48,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'date_submitted',
             'denied_by',
             'identifier',
+            'id',
             'institute',
             'is_active',
             'name',
