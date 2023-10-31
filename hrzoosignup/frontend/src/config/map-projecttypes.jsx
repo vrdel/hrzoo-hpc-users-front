@@ -20,7 +20,7 @@ export function TypeColor(type_name) {
     'research-institutional': "bg-danger",
     'thesis': "bg-primary",
     'practical': "bg-warning text-dark",
-    'internal': "bg-secondary text-white",
+    'internal': "bg-info text-dark",
   }
 
   return type2string[type_name]

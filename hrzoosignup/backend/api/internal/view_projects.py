@@ -41,8 +41,21 @@ class ProjectsGeneral(APIView):
         cobj = models.ProjectCount.objects.get()
         if type_obj.name == 'research-institutional':
             request.data['identifier'] = 'NRI-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
+        elif type_obj.name == 'internal':
+            request.data['identifier'] = 'NRM-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
         else:
             request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
+
+        if type_obj.name == 'internal':
+            if not request.user.is_staff and not request.user.is_superuser:
+                err_status = status.HTTP_401_UNAUTHORIZED
+                err_response = {
+                    'status': {
+                        'code': err_status,
+                        'message': 'Not allowed to submit internal project'
+                    }
+                }
+                return Response(err_response, status=err_status)
 
         if type_obj.name == 'research-institutional':
             user_crorisproject = models.UserProject.objects.filter(
