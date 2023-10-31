@@ -1,11 +1,11 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { LinkTitles } from '../config/link-titles';
-import { RequestTypesToSelect, UrlToRequestType } from '../config/request-types';
-import { ResourceTypesToSelect } from '../config/resource-types';
-import { listScientificDomain, mapDomainsToFields } from '../config/scientific-domain';
-import { buildOptionsFromArray } from '../utils/select-tools';
-import { AuthContextProvider } from '../components/AuthContextProvider';
+import { LinkTitles } from 'Config/link-titles';
+import { RequestTypesToSelect, UrlToRequestType } from 'Config/request-types';
+import { ResourceTypesToSelect } from 'Config/resource-types';
+import { listScientificDomain, mapDomainsToFields } from 'Config/scientific-domain';
+import { buildOptionsFromArray } from 'Utils/select-tools';
+import { AuthContextProvider } from 'Components/AuthContextProvider';
 
 
 export const SharedData = React.createContext()

@@ -16,12 +16,12 @@ import {
   faToggleOn,
   faToggleOff
 } from '@fortawesome/free-solid-svg-icons';
-import '../styles/nav.css';
-import { AuthContext } from '../components/AuthContextProvider';
+import 'Styles/nav.css';
+import { AuthContext } from 'Components/AuthContextProvider';
 import {
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff
-} from '../config/default-redirect';
+} from 'Config/default-redirect';
 
 
 

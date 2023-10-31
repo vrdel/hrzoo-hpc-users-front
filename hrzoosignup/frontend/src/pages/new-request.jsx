@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { CustomReactSelect } from '../components/CustomReactSelect';
+import { CustomReactSelect } from 'Components/CustomReactSelect';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Col, Row, Button, Label } from 'reactstrap';
-import { SharedData } from './root';
-import { PageTitle } from '../components/PageTitle';
+import { SharedData } from 'Pages/root';
+import { PageTitle } from 'Components/PageTitle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@tanstack/react-query';
-import { fetchCroRIS } from '../api/croris';
-import { canSubmitInstituteProject } from '../api/projects';
+import { fetchCroRIS } from 'Api/croris';
+import { canSubmitInstituteProject } from 'Api/projects';
 import { toast } from 'react-toastify';
-import { defaultUnAuthnRedirect} from '../config/default-redirect';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 
 
 const NewRequest = () => {
@@ -24,6 +25,14 @@ const NewRequest = () => {
   const { LinkTitles,
     RequestTypesToSelect,
     UrlToRequestType } = useContext(SharedData);
+  const { userDetails } = useContext(AuthContext);
+
+  let requestTypesToSelect = RequestTypesToSelect
+  if (!userDetails.is_staff && !userDetails.is_superuser) {
+    requestTypesToSelect = RequestTypesToSelect.filter((e) =>
+      e.value !== 'interni-projekt'
+    )
+  }
 
   const {status, data: croRisData, error} = useQuery({
       queryKey: ['croris-info'],
@@ -135,7 +144,7 @@ const NewRequest = () => {
               return setSelectedProject(e)
             }}
             isDisabled={buttonDisabled}
-            options={RequestTypesToSelect}
+            options={requestTypesToSelect}
             value={selectedProject}
           />
           <Button
