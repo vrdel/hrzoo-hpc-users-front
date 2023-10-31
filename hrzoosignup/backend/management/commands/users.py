@@ -173,7 +173,10 @@ class Command(BaseCommand):
 
         if options['staff'] != None:
             user.is_staff = bool(options['staff'])
-            self.stdout.write('Promote user {} to staff'.format(user.username))
+            if user.is_staff:
+                self.stdout.write('Promote user {} to staff'.format(user.username))
+            else:
+                self.stdout.write('Demote user {} from staff'.format(user.username))
 
         if options['email']:
             user.person_mail = options['email']
