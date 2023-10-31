@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SharedData } from "../root";
+import { SharedData } from "Pages/root";
 import { useQuery } from "@tanstack/react-query";
-import { fetchAllNrProjects } from "../../api/projects";
+import { fetchAllNrProjects } from "Api/projects";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import {
   TablePaginationHelper,
@@ -11,20 +11,20 @@ import {
   allStates,
   EmptyTable,
   HZSIPagination
-} from "../../components/TableHelpers";
-import { convertToEuropean } from "../../utils/dates";
+} from "Components/TableHelpers";
+import { convertToEuropean } from "Utils/dates";
 import { Button, Badge, Col, Input, Row, Table } from "reactstrap";
-import { PageTitle } from "../../components/PageTitle";
+import { PageTitle } from "Components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCopy } from "@fortawesome/free-solid-svg-icons";
-import { CustomReactSelect } from "../../components/CustomReactSelect";
-import { TypeColor, TypeString } from "../../config/map-projecttypes";
-import { extractCollaborators, extractLeaderName } from "../../utils/users_help";
-import { StateIcons } from "../../config/map-states";
+import { CustomReactSelect } from "Components/CustomReactSelect";
+import { TypeColor, TypeString } from "Config/map-projecttypes";
+import { extractCollaborators, extractLeaderName } from "Utils/users_help";
+import { StateIcons } from "Config/map-states";
 import { useNavigate } from "react-router-dom";
-import { defaultUnAuthnRedirect } from '../../config/default-redirect';
-import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
-import { copyToClipboard } from '../../utils/copy-clipboard';
+import { defaultUnAuthnRedirect } from 'Config/default-redirect';
+import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
+import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import _ from "lodash";
 
