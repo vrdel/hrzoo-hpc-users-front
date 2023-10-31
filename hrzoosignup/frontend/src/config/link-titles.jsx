@@ -7,6 +7,7 @@ export function LinkTitles(loc) {
     [url_ui_prefix + '/novi-zahtjev']: 'Novi zahtjev',
     [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: 'Novi zahtjev temeljem istraživačkog projekta',
     [url_ui_prefix + '/novi-zahtjev/institucijski-projekt']: 'Novi zahtjev temeljem institucijskog projekta',
+    [url_ui_prefix + '/novi-zahtjev/interni-projekt']: 'Novi zahtjev temeljem internog projekta',
     [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: 'Novi zahtjev temeljem praktične nastave',
     [url_ui_prefix + '/novi-zahtjev/izrada-rada']: 'Novi zahtjev temeljem izrade rada',
     [url_ui_prefix + '/javni-kljucevi']: 'Upravljanje javnim ključevima',
