@@ -6,59 +6,6 @@ from django.contrib.auth import get_user_model
 from backend import models
 
 
-class InvitesSerializer(serializers.ModelSerializer):
-    inviter = UsersSerializerFiltered(read_only=True)
-    project = ProjectSerializer(read_only=True)
-
-    class Meta:
-        fields = (
-            'project',
-            'email',
-            'created',
-            'accepted',
-            'inviter'
-        )
-        model = models.CustomInvitation
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'approved_by',
-            'croris_collaborators',
-            'croris_end',
-            'croris_finance',
-            'croris_id',
-            'croris_identifier',
-            'croris_institute',
-            'croris_lead',
-            'croris_start',
-            'croris_summary',
-            'croris_title',
-            'croris_type',
-            'date_changed',
-            'date_end',
-            'date_start',
-            'date_submitted',
-            'denied_by',
-            'identifier',
-            'institute',
-            'is_active',
-            'name',
-            'project_type',
-            'reason',
-            'resources_numbers',
-            'resources_type',
-            'science_extrasoftware',
-            'science_extrasoftware_help',
-            'science_field',
-            'science_software',
-            'state',
-            'users',
-        )
-        model = models.Project
-
-
 class ScienceSoftwareSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('pk', 'name', 'created', 'added_by')
