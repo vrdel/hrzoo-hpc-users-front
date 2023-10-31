@@ -25,9 +25,9 @@ let internalProject = {
 export const RequestTypesToSelect = [
   researchProject,
   institutionalProject,
+  internalProject,
   thesisProject,
   practicalClasses,
-  internalProject
 ]
 
 

@@ -2,33 +2,34 @@ import React, { useContext } from 'react'
 import {
   Routes, Route, BrowserRouter
 } from 'react-router-dom';
-import BasePage from './components/BasePage';
-import LoginPrivate from './pages/login-private';
-import LoginOffical from './pages/login-official';
-import MyRequestsList from './pages/my-requests/list';
-import { MyRequestChange } from './pages/my-requests/change';
-import NewRequest from './pages/new-request';
-import { ManageRequestsChange } from './pages/manage-requests/change';
-import { ManageRequestsList } from './pages/manage-requests/list';
-import { SoftwareList } from './pages/software/list';
-import ResearchProjectRequest from './pages/new-requests/research-project';
-import ResearchProjectRequestSelected from './pages/new-requests/research-project-selected';
-import GeneralRequest from './pages/new-requests/general';
-import InstituteRequest from './pages/new-requests/institute-project';
-import NewRequestIndex from './pages/new-requests/index';
-import EmailInvitation from './pages/email-invite';
-import Saml2LoginRedirect from './pages/saml2-login-redirect';
-import PublicKeys from './pages/public-keys/list';
-import NewPublicKey from './pages/public-keys/add';
-import Memberships from './pages/memberships';
-import MyInfo from './pages/my-info';
-import NotFound from './pages/notfound';
-import Root from './pages/root';
-import { isActiveSession } from './api/auth';
+import BasePage from 'Components/BasePage';
+import LoginPrivate from 'Pages/login-private';
+import LoginOffical from 'Pages/login-official';
+import MyRequestsList from 'Pages/my-requests/list';
+import { MyRequestChange } from 'Pages/my-requests/change';
+import NewRequest from 'Pages/new-request';
+import { ManageRequestsChange } from 'Pages/manage-requests/change';
+import { ManageRequestsList } from 'Pages/manage-requests/list';
+import { SoftwareList } from 'Pages/software/list';
+import ResearchProjectRequest from 'Pages/new-requests/research-project';
+import ResearchProjectRequestSelected from 'Pages/new-requests/research-project-selected';
+import GeneralRequest from 'Pages/new-requests/general';
+import InstituteRequest from 'Pages/new-requests/institute-project';
+import InternalRequest from 'Pages/new-requests/internal-project';
+import NewRequestIndex from 'Pages/new-requests/index';
+import EmailInvitation from 'Pages/email-invite';
+import Saml2LoginRedirect from 'Pages/saml2-login-redirect';
+import PublicKeys from 'Pages/public-keys/list';
+import NewPublicKey from 'Pages/public-keys/add';
+import Memberships from 'Pages/memberships';
+import MyInfo from 'Pages/my-info';
+import NotFound from 'Pages/notfound';
+import Root from 'Pages/root';
+import { isActiveSession } from 'Api/auth';
 import { useQuery } from '@tanstack/react-query';
-import { AuthContext } from './components/AuthContextProvider';
-import { UsersList, UsersInactiveList } from './pages/users/list';
-import { ProjectsList } from './pages/projects/list';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { UsersList, UsersInactiveList } from 'Pages/users/list';
+import { ProjectsList } from 'Pages/projects/list';
 
 
 function getAndSetReferrer() {
@@ -142,6 +143,11 @@ const BaseRoutes = () => {
                 }/>
                 <Route path="institucijski-projekt" element={
                   <InstituteRequest />
+                }/>
+                <Route path="interni-projekt" element={
+                  <ProtectedRoute sessionData={sessionData}>
+                    <InternalRequest/>
+                  </ProtectedRoute>
                 }/>
               </Route>
               <Route path="javni-kljucevi" element={
