@@ -11,9 +11,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
 import datetime
 import logging
+
 
 logger = logging.getLogger('hrzoosignup.views')
 
@@ -38,6 +38,13 @@ class UsersProjectsInternal(APIView):
                     date_joined=timezone.make_aware(datetime.datetime.now())
                 )
                 up_obj.save()
+                msg = {
+                    'status': {
+                        'code': status.HTTP_200_OK,
+                        'message': '{} - Users added to internal project'.format(request.user.username)
+                    }
+                }
+                return Response(msg, status=status.HTTP_200_OK)
 
         except Exception as exc:
             msg = {
