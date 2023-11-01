@@ -2,6 +2,7 @@ from backend import serializers
 from backend import models
 
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
 
 import datetime
 import logging
@@ -33,7 +35,7 @@ class UsersProjectsInternal(APIView):
                     user=user,
                     project=target_project,
                     role=role_obj,
-                    date_joined=datetime.datetime.now()
+                    date_joined=timezone.make_aware(datetime.datetime.now())
                 )
                 up_obj.save()
 
