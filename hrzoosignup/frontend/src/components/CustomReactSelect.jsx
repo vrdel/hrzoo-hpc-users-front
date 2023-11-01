@@ -275,5 +275,4 @@ export const CustomCreatableSelect = ({controlWidth=undefined, fontSize="14px", 
       styles={{...customStyles, ...customStyles2}}
     />
   )
-
 }

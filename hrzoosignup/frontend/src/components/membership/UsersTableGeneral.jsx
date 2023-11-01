@@ -3,7 +3,7 @@ import { Col, Collapse, Row, Card, CardTitle, CardBody,
   Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { AuthContext } from 'Components/AuthContextProvider';
-import { CustomCreatableSelect } from 'Components/CustomReactSelect';
+import { CustomCreatableSelect, CustomReactSelect } from 'Components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowDown,
@@ -14,6 +14,8 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { extractUsers } from 'Utils/invites-extracts';
+import { fetchUsers, fetchUsersInactive } from "Api/users"
+import { useQuery } from "@tanstack/react-query";
 import _ from 'lodash';
 
 
@@ -27,9 +29,25 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
 
+  const [isOpen2, setIsOpen2] = useState(false);
+  const toggle2 = () => setIsOpen2(!isOpen2);
+
+	const { statusActiveUsers, errorActiveUsers, dataActiveUsers } = useQuery({
+		queryKey: ["active-users"],
+		queryFn: fetchUsers,
+    enabled: project.project_type['name'] === 'internal' && (userDetails.is_staff || userDetails.is_superuser)
+	})
+
+	const { statusInactiveUsers, errorInactiveUsers, dataInactiveUsers } = useQuery({
+		queryKey: ["inactive-users"],
+		queryFn: fetchUsersInactive,
+    enabled: project.project_type['name'] === 'internal' && (userDetails.is_staff || userDetails.is_superuser)
+	})
+
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
       collaboratorEmails: '',
+      collaboratorUids: ''
     }
   });
 
@@ -333,11 +351,12 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       Pozovi suradnike
                     </Button>
                     {
-                      project.project_type['name'] === 'internal' &&
-                        <Button color="success" onClick={toggle} className="ms-2">
-                          <FontAwesomeIcon icon={faPlus}/>{' '}
-                          Dodaj suradnike
-                        </Button>
+                      project.project_type['name'] === 'internal'
+                      && (userDetails.is_staff || userDetails.is_superuser) &&
+                      <Button color="success" onClick={toggle2} className="ms-2">
+                        <FontAwesomeIcon icon={faPlus}/>{' '}
+                        Dodaj suradnike
+                      </Button>
                     }
                   </Col>
                 </Row>
@@ -373,6 +392,36 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     </Collapse>
                   </Col>
                 </Row>
+                {
+                  project.project_type['name'] === 'internal'
+                  && (userDetails.is_staff || userDetails.is_superuser) &&
+                  <Row className="mt-4">
+                    <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
+                      <Collapse isOpen={isOpen2} style={{width: '80%'}}>
+                        <Card className="ps-4 pe-4 pt-4">
+                          <CardTitle>
+                            Korisničke oznake suradnika koje želiš na projektu
+                          </CardTitle>
+                          <CardBody className="mb-4">
+                            <Controller
+                              name="collaboratorEmails"
+                              control={control}
+                              render={ ({field}) =>
+                                <CustomReactSelect
+                                  name="collaboratorUids"
+                                  forwardedRef={field.ref}
+                                  placeholder="Odaberi..."
+                                  fontSize="18px"
+                                  onChange={(e) => setValue('collaboratorUids', e)}
+                                />
+                              }
+                            />
+                          </CardBody>
+                        </Card>
+                      </Collapse>
+                    </Col>
+                  </Row>
+                }
               </Col>
             </Row>
           </Form>
