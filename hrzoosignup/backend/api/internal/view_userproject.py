@@ -13,6 +13,14 @@ import logging
 logger = logging.getLogger('hrzoosignup.views')
 
 
+class UsersProjectsInternal(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, **kwargs):
+        import ipdb; ipdb.set_trace()
+
+
 class UsersProjects(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)

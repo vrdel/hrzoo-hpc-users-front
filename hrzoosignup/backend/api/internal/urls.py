@@ -10,6 +10,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('croris-info/', views.CroRISInfo.as_view(), name='crorisinfo'),
     path("users-projects/<int:projiddb>", views.UsersProjects.as_view(), name="usersprojects"),
+    path("users-intprojects/<int:projiddb>", views.UsersProjectsInternal.as_view(), name="usersintprojects"),
     path('projects/', views.Projects.as_view(), name='projects'),
     path('projects/role/<str:targetrole>', views.ProjectsRole.as_view(), name='projectsrole'),
     re_path('projects/(?P<specific>.*)', views.Projects.as_view(), name='projects'),
