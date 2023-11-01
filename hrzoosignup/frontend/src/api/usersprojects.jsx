@@ -1,4 +1,4 @@
-import { url_api_prefix } from '../config/general';
+import { url_api_prefix } from 'Config/general';
 
 
 export async function removeUserFromProject(projectId, data, csrftoken)
@@ -60,17 +60,17 @@ export async function addUserToInternalProject(projectId, data, csrftoken)
       body: data && JSON.stringify(data)
     })
 
+    if (response.ok)
+      return await response.json()
+
     if (!response.ok) {
       try {
-        let json = await response.json();
-        error_msg = `${response.status} ${response.statusText} in POST: ${json?.status?.message}`
+        await response.text().then(text => {throw new Error(text)})
       }
       catch (err1) {
-        error_msg = `${response.status} ${response.statusText} in POST`
+        error_msg = `${err1.message}`
       }
     }
-
-    return response
   }
   catch (err) {
     error_msg = `${err} in POST`;
