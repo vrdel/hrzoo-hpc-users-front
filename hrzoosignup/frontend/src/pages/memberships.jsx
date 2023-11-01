@@ -6,7 +6,7 @@ import { PageTitle } from '../components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchNrProjects } from '../api/projects';
 import { addInvite, fetchMyInvites, delInvite } from 'Api/invite';
-import { removeUserFromProject } from 'Api/usersprojects';
+import { removeUserFromProject, addInternal } from 'Api/usersprojects';
 import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import { convertToEuropean } from 'Utils/dates';
@@ -129,6 +129,13 @@ const Memberships = () => {
       setOnYesCall('doaddinvite')
       setOnYesCallArg(data)
     }
+    else if (data['type'] === 'add_internal') {
+      setAreYouSureModal(!areYouSureModal)
+      setModalTitle("Dodavanje suradnika na interni projekt")
+      setModalMsg("Da li ste sigurni da želite dodati navedene suradnike na projekt?")
+      setOnYesCall('doaddinternal')
+      setOnYesCallArg(data)
+    }
     else if (data['type'] === 'signoff') {
       setAreYouSureModal(!areYouSureModal)
       setModalTitle("Odjava suradnika sa istraživačkog projekta")
@@ -167,6 +174,35 @@ const Memberships = () => {
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
+          autoClose: 2500,
+          delay: 1000
+        }
+      )
+    }
+  }
+
+  const doAddInternal = async (data) => {
+    try {
+      const ret = await addInternal(data, csrfToken)
+      queryClient.invalidateQueries('projects')
+      toast.success(
+        <span className="font-monospace text-dark">
+          Suradnici su uspješno dodani
+        </span>, {
+          toastId: 'addint-ok',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+    catch (err) {
+      toast.error(
+        <span className="font-monospace text-white">
+          Suradnike nije bilo moguće dodati: <br/>
+          { err.message }
+        </span>, {
+          theme: 'colored',
+          toastId: 'addint-fail',
           autoClose: 2500,
           delay: 1000
         }
@@ -239,6 +275,8 @@ const Memberships = () => {
       doSignoff(onYesCallArg)
     if (onYesCall == 'doinviterem')
       doInviteRemove(onYesCallArg)
+    if (onYesCall == 'doaddinternal')
+      doAddInternal(onYesCallArg)
   }
 
   useEffect(() => {
