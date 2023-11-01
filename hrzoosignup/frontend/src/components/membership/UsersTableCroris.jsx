@@ -437,7 +437,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                   closeMenuOnSelect={false}
                                   collaboratorsFixedMultiValue
                                   isMulti
-                                  fontSize="18px"
+                                  fontSize="16px"
                                   options={
                                     missingCollab.map(user => (
                                       {

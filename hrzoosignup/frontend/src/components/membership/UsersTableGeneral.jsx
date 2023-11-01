@@ -32,13 +32,13 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const [isOpen2, setIsOpen2] = useState(false);
   const toggle2 = () => setIsOpen2(!isOpen2);
 
-	const { statusActiveUsers, errorActiveUsers, dataActiveUsers } = useQuery({
+  const { status: statusActiveUsers, error: errorActiveUsers, data: dataActiveUsers } = useQuery({
 		queryKey: ["active-users"],
 		queryFn: fetchUsers,
     enabled: project.project_type['name'] === 'internal' && (userDetails.is_staff || userDetails.is_superuser)
 	})
 
-	const { statusInactiveUsers, errorInactiveUsers, dataInactiveUsers } = useQuery({
+  const { status: statusInactiveUsers, error: errorInactiveUsers, data: dataInactiveUsers } = useQuery({
 		queryKey: ["inactive-users"],
 		queryFn: fetchUsersInactive,
     enabled: project.project_type['name'] === 'internal' && (userDetails.is_staff || userDetails.is_superuser)
@@ -50,6 +50,24 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
       collaboratorUids: ''
     }
   });
+
+  function concatenateAndSortUsers(active, inactive) {
+    let activeUsers = _.map(active, (user) => {
+      return {
+        'label': user['username'],
+        'value': user['username'],
+      }
+    })
+    let inactiveUsers = _.map(inactive, (user) => {
+      return {
+        'label': user['username'],
+        'value': user['username'],
+      }
+    })
+    let joined = _.orderBy(_.concat(activeUsers, inactiveUsers), ['value'])
+
+    return joined
+  }
 
   const onTableSubmit = (data) => {
     data['project'] = project['identifier']
@@ -404,14 +422,18 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                           </CardTitle>
                           <CardBody className="mb-4">
                             <Controller
-                              name="collaboratorEmails"
+                              name="collaboratorUids"
                               control={control}
                               render={ ({field}) =>
                                 <CustomReactSelect
                                   name="collaboratorUids"
                                   forwardedRef={field.ref}
                                   placeholder="Odaberi..."
-                                  fontSize="18px"
+                                  fontSize="16px"
+                                  closeMenuOnSelect={false}
+                                  collaboratorsFixedMultiValue
+                                  isMulti
+                                  options={concatenateAndSortUsers(dataActiveUsers, dataInactiveUsers)}
                                   onChange={(e) => setValue('collaboratorUids', e)}
                                 />
                               }
