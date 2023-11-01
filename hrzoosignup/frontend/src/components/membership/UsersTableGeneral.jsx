@@ -135,8 +135,6 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     onTableSignoff({
       'remove_users': usersToRemove,
     })
-
-    setCheckJoined(Array(alreadyJoined.length))
   }
 
   return (
@@ -372,14 +370,14 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <FontAwesomeIcon icon={faXmark}/>{' '}
                       Odjavi suradnike
                     </Button>
-                    <Button color="primary" onClick={toggle} className="ms-2">
+                    <Button color="primary" active={isOpen} onClick={toggle} className="ms-2">
                       <FontAwesomeIcon icon={faArrowDown}/>{' '}
                       Pozovi suradnike
                     </Button>
                     {
                       project.project_type['name'] === 'internal'
                       && (userDetails.is_staff || userDetails.is_superuser) &&
-                      <Button color="success" onClick={toggle2} className="ms-2">
+                      <Button color="success" active={isOpen2} onClick={toggle2} className="ms-2">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
                         Dodaj suradnike
                       </Button>
