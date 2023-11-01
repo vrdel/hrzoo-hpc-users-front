@@ -48,6 +48,16 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     onSubmit(data)
   }
 
+  const onInviteDelete = (user) => {
+    let email = user['email']
+    let projectid = project['id']
+    let inviterid = userDetails['id']
+    let type = 'inviterem'
+    onSubmit({
+      email, projectid, inviterid, type
+    })
+  }
+
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
     let showed = new Object()
@@ -74,6 +84,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
       tmpArray[i] = true
     setCheckJoined(tmpArray)
   }
+
 
   const onUsersCheckout = () => {
     let usersToRemove = new Array()
@@ -364,13 +375,16 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                               ? "align-middle text-center fst-italic border-bottom border-secondary"
                               : "align-middle text-center"
                               }
-                              id={'Tooltip-' + i + 100}
                             >
                               {
                                 emailInInvites(user.email, email_invites)
                                   ?
-                                    <React.Fragment>
-                                      <FontAwesomeIcon className="text-success fa-lg" icon={faEnvelope}/>
+                                    <div className="position-relative">
+                                      <FontAwesomeIcon
+                                        id={'Tooltip-' + i + 100}
+                                        className="text-success fa-lg"
+                                        icon={faEnvelope}
+                                      />
                                       <Tooltip
                                         placement='top'
                                         isOpen={isOpened(user.email)}
@@ -379,7 +393,15 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                       >
                                         Aktivna pozivnica poslana na email
                                       </Tooltip>
-                                    </React.Fragment>
+                                      <div className="position-absolute top-0 ms-4 start-50 translate-middle">
+                                        <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
+                                          color="light"
+                                          onClick={() => onInviteDelete(user)}
+                                        >
+                                          <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
+                                        </Button>
+                                      </div>
+                                    </div>
                                   :
                                     <span className="text-danger">
                                       Ne

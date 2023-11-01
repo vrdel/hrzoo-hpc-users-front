@@ -58,7 +58,6 @@ class UsersProjectsInternal(APIView):
             return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class UsersProjects(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)

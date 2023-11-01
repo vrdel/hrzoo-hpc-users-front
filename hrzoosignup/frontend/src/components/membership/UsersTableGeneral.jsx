@@ -338,7 +338,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               color="light"
                               onClick={() => onInviteDelete(user)}
                             >
-                              <FontAwesomeIcon color="#DC3545" size="s" icon={faXmark}/>
+                              <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
                             </Button>
                           </div>
                         </div>
