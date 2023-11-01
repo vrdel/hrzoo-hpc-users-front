@@ -135,6 +135,8 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     onTableSignoff({
       'remove_users': usersToRemove,
     })
+
+    setCheckJoined(Array(alreadyJoined.length))
   }
 
   return (
