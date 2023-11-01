@@ -21,6 +21,7 @@ import logging
 from django.core.cache import cache
 from django.db import IntegrityError
 from django.conf import settings
+from django.utils import timezone
 
 
 logger = logging.getLogger('hrzoosignup.views')
@@ -30,7 +31,7 @@ def associate_user_to_project(user, project):
     role_obj = models.Role.objects.get(name='collaborator')
     userproject_obj = models.UserProject(user=user, project=project,
                                          role=role_obj,
-                                         date_joined=datetime.datetime.now())
+                                         date_joined=timezone.make_aware(datetime.datetime.now()))
     userproject_obj.save()
 
 
