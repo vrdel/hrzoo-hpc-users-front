@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from './root';
+import { SharedData } from 'Pages/root';
 import { Col, Row, Card, CardHeader, CardBody,
   Label, Badge } from 'reactstrap';
-import { PageTitle } from '../components/PageTitle';
+import { PageTitle } from 'Components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchNrProjects } from '../api/projects';
+import { fetchNrProjects } from 'Api/projects';
 import { addInvite, fetchMyInvites, delInvite } from 'Api/invite';
-import { removeUserFromProject, addInternal } from 'Api/usersprojects';
+import { removeUserFromProject, addUserToInternalProject } from 'Api/usersprojects';
 import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import { convertToEuropean } from 'Utils/dates';
@@ -183,7 +183,7 @@ const Memberships = () => {
 
   const doAddInternal = async (data) => {
     try {
-      const ret = await addInternal(data, csrfToken)
+      const ret = await addUserToInternalProject(data['projectid'], data['collaboratorUids'], csrfToken)
       queryClient.invalidateQueries('projects')
       toast.success(
         <span className="font-monospace text-dark">
