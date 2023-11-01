@@ -7,6 +7,7 @@ import { CustomCreatableSelect, CustomReactSelect } from 'Components/CustomReact
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowDown,
+  faCheck,
   faEnvelope,
   faKey,
   faPaperPlane,
@@ -32,13 +33,13 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const [isOpen2, setIsOpen2] = useState(false);
   const toggle2 = () => setIsOpen2(!isOpen2);
 
-  const { status: statusActiveUsers, error: errorActiveUsers, data: dataActiveUsers } = useQuery({
+  const { data: dataActiveUsers } = useQuery({
 		queryKey: ["active-users"],
 		queryFn: fetchUsers,
     enabled: project.project_type['name'] === 'internal' && (userDetails.is_staff || userDetails.is_superuser)
 	})
 
-  const { status: statusInactiveUsers, error: errorInactiveUsers, data: dataInactiveUsers } = useQuery({
+  const { data: dataInactiveUsers } = useQuery({
 		queryKey: ["inactive-users"],
 		queryFn: fetchUsersInactive,
     enabled: project.project_type['name'] === 'internal' && (userDetails.is_staff || userDetails.is_superuser)
@@ -70,8 +71,13 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   }
 
   const onTableSubmit = (data) => {
+    if (!data['collaboratorEmails'] && data['collaboratorUids'].length > 0)
+      data['type'] = 'add_internal'
+    else
+      data['type'] = 'add'
+
     data['project'] = project['identifier']
-    data['type'] = 'add'
+    data['projectid'] = project['id']
     onSubmit(data)
   }
 
@@ -438,6 +444,12 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                                 />
                               }
                             />
+                            <div className="d-flex align-items-center justify-content-center">
+                              <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                                <FontAwesomeIcon icon={faCheck}/>{' '}
+                                Potvrdi
+                              </Button>
+                            </div>
                           </CardBody>
                         </Card>
                       </Collapse>
