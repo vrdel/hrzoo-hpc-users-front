@@ -377,7 +377,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     {
                       project.project_type['name'] === 'internal'
                       && (userDetails.is_staff || userDetails.is_superuser) &&
-                      <Button color="success" active={isOpen2} onClick={toggle2} className="ms-2">
+                      <Button color="success" active={isOpen2} onClick={toggle2} className="ms-3">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
                         Dodaj suradnike
                       </Button>
