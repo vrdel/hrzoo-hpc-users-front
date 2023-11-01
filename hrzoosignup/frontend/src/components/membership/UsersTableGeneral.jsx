@@ -6,11 +6,12 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { CustomCreatableSelect } from 'Components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faEnvelope,
-  faPaperPlane,
   faArrowDown,
+  faEnvelope,
+  faKey,
+  faPaperPlane,
+  faPlus,
   faXmark,
-  faKey
 } from '@fortawesome/free-solid-svg-icons';
 import { extractUsers } from 'Utils/invites-extracts';
 import _ from 'lodash';
@@ -331,6 +332,13 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <FontAwesomeIcon icon={faArrowDown}/>{' '}
                       Pozovi suradnike
                     </Button>
+                    {
+                      project.project_type['name'] === 'internal' &&
+                        <Button color="success" onClick={toggle} className="ms-2">
+                          <FontAwesomeIcon icon={faPlus}/>{' '}
+                          Dodaj suradnike
+                        </Button>
+                    }
                   </Col>
                 </Row>
                 <Row className="mt-4">

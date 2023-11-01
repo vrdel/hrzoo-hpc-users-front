@@ -13,7 +13,7 @@ import {
   HZSIPagination
 } from "Components/TableHelpers";
 import { convertToEuropean } from "Utils/dates";
-import { Button, Badge, Col, Input, Row, Table } from "reactstrap";
+import { Badge, Col, Input, Row, Table } from "reactstrap";
 import { PageTitle } from "Components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCopy } from "@fortawesome/free-solid-svg-icons";
