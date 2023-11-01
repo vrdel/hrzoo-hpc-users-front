@@ -1,6 +1,8 @@
 from backend import serializers
 from backend import models
 
+from django.contrib.auth import get_user_model
+
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
@@ -8,6 +10,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+import datetime
 import logging
 
 logger = logging.getLogger('hrzoosignup.views')
@@ -18,7 +21,32 @@ class UsersProjectsInternal(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request, **kwargs):
-        import ipdb; ipdb.set_trace()
+        projid = kwargs['projiddb']
+        target_users = [user['value'] for user in request.data]
+        target_users = get_user_model().objects.filter(username__in=target_users)
+        target_project = models.Project.objects.get(id=projid)
+        role_obj = models.Role.objects.get(name='collaborator')
+
+        try:
+            for user in target_users:
+                up_obj = models.UserProject(
+                    user=user,
+                    project=target_project,
+                    role=role_obj,
+                    date_joined=datetime.datetime.now()
+                )
+                up_obj.save()
+
+        except Exception as exc:
+            msg = {
+                'status': {
+                    'code': status.HTTP_400_BAD_REQUEST,
+                    'message': '{} - Adding users to internal project problem: {}'.format(request.user.username, repr(exc))
+                }
+            }
+            logger.error(msg)
+            return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 class UsersProjects(APIView):
