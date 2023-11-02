@@ -1,6 +1,7 @@
 from backend import serializers
 from backend import models
 
+from django.core.cache import cache
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
@@ -44,6 +45,10 @@ class UsersProjectsInternal(APIView):
                         'message': '{} - Users added to internal project'.format(request.user.username)
                     }
                 }
+
+            cache.delete("ext-users-projects")
+            cache.delete("usersinfoinactive-get")
+            cache.delete("usersinfo-get")
 
             return Response(msg, status=status.HTTP_200_OK)
 
