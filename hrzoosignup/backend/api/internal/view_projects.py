@@ -1,8 +1,9 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 # TODO: dev only
 from rest_framework.permissions import AllowAny
@@ -231,9 +232,17 @@ class Projects(APIView):
         req_type = kwargs.get('specific')
         if (request.user.is_staff or request.user.is_superuser):
             p_obj = models.Project.objects.get(identifier=req_type)
+
+            # already approved request, we're changing it
+            original_values = None
+            if p_obj.approved_by:
+                original_values = json.loads(JSONRenderer().render(ProjectSerializer(p_obj).data))
+                import ipdb; ipdb.set_trace()
+
             for (key, value) in request.data['requestState'].items():
                 if value == True:
                     break
+
             state = models.State.objects.get(name=key)
             p_obj.name = request.data['requestName']
             p_obj.reason = request.data['requestExplain']
@@ -278,6 +287,20 @@ class Projects(APIView):
 
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
+                if original_values:
+                    p_obj.changed_by = {
+                        'first_name': self.request.user.first_name,
+                        'last_name': self.request.user.last_name,
+                        'person_uniqueid': self.request.user.person_uniqueid,
+                        'username': self.request.user.username
+                    }
+                    p_obj.change_history = {
+                        'previous': original_values,
+                        'next': serializer.data,
+                        'who': p_obj.changed_by,
+                        'date': timezone.now().isoformat()
+                    }
+
                 p_obj.date_changed = timezone.now()
                 p_obj.save()
                 if request.data.get('staff_comment') and state.name == 'deny':
