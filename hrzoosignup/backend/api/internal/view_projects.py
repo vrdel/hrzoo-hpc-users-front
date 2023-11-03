@@ -237,7 +237,8 @@ class Projects(APIView):
             original_values = None
             if p_obj.approved_by:
                 original_values = json.loads(JSONRenderer().render(ProjectSerializer(p_obj).data))
-                import ipdb; ipdb.set_trace()
+                original_values.pop('changed_by')
+                original_values.pop('change_history')
 
             for (key, value) in request.data['requestState'].items():
                 if value == True:
@@ -294,9 +295,11 @@ class Projects(APIView):
                         'person_uniqueid': self.request.user.person_uniqueid,
                         'username': self.request.user.username
                     }
+                    next_values = json.loads(JSONRenderer().render(serializer.data))
+                    next_values.pop('change_history')
                     p_obj.change_history = {
                         'previous': original_values,
-                        'next': serializer.data,
+                        'next': next_values,
                         'who': p_obj.changed_by,
                         'date': timezone.now().isoformat()
                     }
