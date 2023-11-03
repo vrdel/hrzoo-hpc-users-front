@@ -175,7 +175,6 @@ class ProjectSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         fields = (
-            'id',
             'approved_by',
             'croris_collaborators',
             'croris_end',
@@ -193,6 +192,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'date_start',
             'date_submitted',
             'denied_by',
+            'id',
             'identifier',
             'institute',
             'is_active',

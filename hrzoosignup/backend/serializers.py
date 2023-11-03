@@ -31,6 +31,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'approved_by',
+            'change_history',
+            'changed_by',
             'croris_collaborators',
             'croris_end',
             'croris_finance',
@@ -42,15 +44,13 @@ class ProjectSerializer(serializers.ModelSerializer):
             'croris_summary',
             'croris_title',
             'croris_type',
-            'changed_by',
-            'change_history',
             'date_changed',
             'date_end',
             'date_start',
             'date_submitted',
             'denied_by',
-            'identifier',
             'id',
+            'identifier',
             'institute',
             'is_active',
             'name',
@@ -62,6 +62,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'science_extrasoftware_help',
             'science_field',
             'science_software',
+            'staff_resources_type',
             'state',
             'users',
         )
