@@ -163,6 +163,16 @@ class Project(models.Model):
         blank=True,
         null=True
     )
+    changed_by = models.JSONField(
+        _("JSONField with few details of staff that last changed request"),
+        blank=True,
+        null=True
+    )
+    change_history = models.JSONField(
+        _("JSONField with previous and new field values of requests and additional metadata of change"),
+        blank=True,
+        null=True
+    )
     science_field = models.JSONField(
         blank=True,
         null=True
@@ -208,7 +218,7 @@ class Project(models.Model):
         _("CroRIS id"),
         null=True
     )
-    croris_summary =  models.CharField(
+    croris_summary = models.CharField(
         _("CroRIS summary"),
         max_length=8192,
         blank=True,

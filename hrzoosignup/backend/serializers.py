@@ -42,6 +42,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             'croris_summary',
             'croris_title',
             'croris_type',
+            'changed_by',
+            'change_history',
             'date_changed',
             'date_end',
             'date_start',
