@@ -186,7 +186,7 @@ class Project(models.Model):
         null=True
     )
     is_active = models.BooleanField()
-    croris_title =  models.CharField(
+    croris_title = models.CharField(
         _("CroRIS title"),
         max_length=512,
         blank=True,

@@ -676,8 +676,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                   {...field}
                   type="switch"
                   role="switch"
-                  disabled={!(requestState['approve'] === true
-                    || requestState['deny'] === true)}
+                  disabled={
+                    !(requestState['approve'] === true || requestState['deny'] === true) ||
+                      (requestState['approve'] === true && initialProjectState === 'approve')
+                  }
                   checked={disabledFields ? getValues('staff_emailSend') : false}
                   className="form-control fw-bold fst-italic"
                 />
