@@ -137,6 +137,10 @@ class Project(models.Model):
         _('reason'),
         max_length=4096,
     )
+    date_approved = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
     date_start = models.DateField(
         null=True,
         blank=True,
