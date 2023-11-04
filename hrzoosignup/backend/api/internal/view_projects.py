@@ -297,12 +297,22 @@ class Projects(APIView):
                     }
                     next_values = json.loads(JSONRenderer().render(serializer.data))
                     next_values.pop('change_history')
-                    p_obj.change_history = {
-                        'previous': original_values,
-                        'next': next_values,
-                        'who': p_obj.changed_by,
-                        'date': timezone.now().isoformat()
-                    }
+                    if p_obj.change_history:
+                        changes = p_obj.change_history
+                        changes.append({
+                            'previous': original_values,
+                            'next': next_values,
+                            'who': p_obj.changed_by,
+                            'date': timezone.now().isoformat()
+                        })
+                        p_obj.change_history = changes
+                    else:
+                        p_obj.change_history = [{
+                            'previous': original_values,
+                            'next': next_values,
+                            'who': p_obj.changed_by,
+                            'date': timezone.now().isoformat()
+                        }]
 
                 p_obj.date_changed = timezone.now()
                 p_obj.save()
