@@ -187,6 +187,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'croris_summary',
             'croris_title',
             'croris_type',
+            'date_approved',
             'date_changed',
             'date_end',
             'date_start',
