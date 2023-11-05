@@ -1,10 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Badge, Placeholder, Row, Table, Label } from 'reactstrap';
+import { Col, Badge, Placeholder, Row, Table, Label, Tooltip } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { AuthContext } from '../components/AuthContextProvider'
 import { fetchCroRIS } from '../api/croris';
 import { useQuery } from '@tanstack/react-query';
+import { faCheckCircle, faStopCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 
 const CroRisInfo = ({croRisProjects}) => {
   return (
@@ -117,8 +120,62 @@ const CroRisInfo = ({croRisProjects}) => {
 const InstituteTableInfo = () => {
   const { userDetails } = useContext(AuthContext);
 
+  const [tooltipOpened, setTooltipOpened] = useState(undefined);
+  const showTooltip = (toolid) => {
+    let showed = new Object()
+    if (tooltipOpened === undefined && toolid) {
+      showed[toolid] = true
+      setTooltipOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(tooltipOpened))
+      showed[toolid] = !showed[toolid]
+      setTooltipOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (tooltipOpened !== undefined)
+      return tooltipOpened[toolid]
+  }
+
   return (
     <React.Fragment>
+      <Row>
+        <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{size:3}}>
+          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+            Status:
+          </Label>
+          <div className="fs-5 ps-2 d-flex align-items-center">
+            {
+              userDetails.is_active ?
+                <>
+                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
+                  <Tooltip
+                    placement='bottom'
+                    isOpen={isOpened(userDetails.first_name)}
+                    target={'Tooltip-' + userDetails.first_name}
+                    toggle={() => showTooltip(userDetails.first_name)}
+                  >
+                    Prijavljeni ste na bar jedan aktivan projekt
+                  </Tooltip>
+                </>
+              :
+                <>
+                  <span className="ms-3">Neaktivan</span>
+                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
+                  <Tooltip
+                    placement='bottom'
+                    isOpen={isOpened(userDetails.first_name)}
+                    target={'Tooltip-' + userDetails.first_name}
+                    toggle={() => showTooltip(userDetails.first_name)}
+                  >
+                    Niste prijavljeni ni na jedan aktivan projekt
+                  </Tooltip>
+                </>
+            }
+          </div>
+        </Col>
+      </Row>
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
