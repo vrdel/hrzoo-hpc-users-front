@@ -38,6 +38,17 @@ export function StateString(state_name) {
   return state2string[state_name]
 }
 
+export function StateStringUser(state_name) {
+  let state2string = {
+    'submit': 'Zahtjev je podnesen i čeka na obradu',
+    'approve': 'Aktivan',
+    'expire': 'Istekao',
+    'extend': 'Produljen'
+  }
+
+  return state2string[state_name]
+}
+
 export function StateShortString(state_name) {
   let state2string = {
     'submit': 'Obrada',

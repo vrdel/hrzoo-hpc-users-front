@@ -23,7 +23,7 @@ import { toast } from 'react-toastify';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { UsersTableCroris } from 'Components/membership/UsersTableCroris';
 import { UsersTableGeneral } from 'Components/membership/UsersTableGeneral';
-import { StateIcons, StateString } from "Config/map-states";
+import { StateIcons, StateStringUser } from "Config/map-states";
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -57,15 +57,41 @@ export const BriefSummary = ({project, isSubmitted}) => {
 }
 
 const BriefProjectInfo = ({project}) => {
+  const [tooltipOpened, setTooltipOpened] = useState(undefined);
+  const showTooltip = (toolid) => {
+    let showed = new Object()
+    if (tooltipOpened === undefined && toolid) {
+      showed[toolid] = true
+      setTooltipOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(tooltipOpened))
+      showed[toolid] = !showed[toolid]
+      setTooltipOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (tooltipOpened !== undefined)
+      return tooltipOpened[toolid]
+  }
+
   return (
     <>
-      <Col className="ms-4 text-left" md={{size: 2}}>
+      <Col className="ms-4 text-left" md={{size: 1}} >
         Stanje:
-        <div className="p-2 mt-2">
+        <div className="p-2 mt-2" id={`Tooltip-${project.identifier}`}>
           {
             StateIcons(project.state.name)
           }
         </div>
+        <Tooltip
+          placement='bottom'
+          isOpen={isOpened(project.identifier)}
+          target={'Tooltip-' + project.identifier}
+          toggle={() => showTooltip(project.identifier)}
+        >
+          { StateStringUser(project.state.name) }
+        </Tooltip>
       </Col>
       <Col md={{size: 3}} className="ms-4 ms-sm-4 ms-md-0">
         <Label
@@ -101,7 +127,7 @@ const BriefProjectInfo = ({project}) => {
           { TypeString(project.project_type.name) }
         </span>
       </Col>
-      <Col md={{size: 3}} className="ms-4 ms-sm-4 ms-md-0">
+      <Col md={{size: 4}} className="ms-4 ms-sm-4 ms-md-0 me-0">
         <Label
           htmlFor="projectType"
           aria-label="projectType"
