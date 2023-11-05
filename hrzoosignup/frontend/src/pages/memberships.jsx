@@ -80,7 +80,7 @@ const BriefProjectInfo = ({project}) => {
           { convertToEuropean(project.date_changed) }
         </div>
       </Col>
-      <Col md={{size: 2}} className="ms-4 ms-sm-4 ms-md-0">
+      <Col md={{size: 1}} className="ms-4 ms-sm-4 ms-md-0">
         <Label
           htmlFor="projectType"
           aria-label="projectType"
@@ -91,6 +91,31 @@ const BriefProjectInfo = ({project}) => {
         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
           { TypeString(project.project_type.name) }
         </span>
+      </Col>
+      <Col md={{size: 3}} className="ms-4 ms-sm-4 ms-md-0">
+        <Label
+          htmlFor="projectType"
+          aria-label="projectType"
+          className="mr-1">
+          Resursi:
+        </Label>
+        <br/>
+        {
+          project && project.staff_resources_type &&
+          project.staff_resources_type.map((rtype, i) =>
+            <React.Fragment key={i}>
+              <span className="me-1 ps-1 pe-1 pt-1 fw-normal" key={i}
+                style={{
+                  backgroundColor: '#feb272',
+                  color: '#303030',
+                  borderRadius: '2px',
+                  fontSize: '0.83rem'
+                }}>
+                {rtype.value}
+              </span>
+            </React.Fragment>
+          )
+        }
       </Col>
     </>
   )
