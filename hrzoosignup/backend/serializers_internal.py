@@ -133,6 +133,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'person_organisation',
             'person_uniqueid',
             'pk',
+            'status',
             'username',
             'userproject_set'
         )

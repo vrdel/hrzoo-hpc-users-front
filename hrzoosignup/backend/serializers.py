@@ -158,6 +158,7 @@ class UsersSerializerFiltered3(serializers.ModelSerializer):
             'last_name',
             'person_mail',
             'username',
+            'status',
             'is_active',
             'is_staff',
             'is_superuser'
@@ -215,6 +216,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'person_organisation',
             'person_uniqueid',
             'pk',
+            'status',
             'username',
             'userproject_set'
         )
