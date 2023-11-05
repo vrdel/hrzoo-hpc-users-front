@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 
 class SAML2Backend(Saml2Backend):
     def _update_user(self, user, attributes, attribute_mapping, force_save=False):
+        user.is_active = False
         return super()._update_user(user, attributes, attribute_mapping, force_save)
 
     def save_user(self, user, *args, **kwargs):
