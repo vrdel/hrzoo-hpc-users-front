@@ -104,11 +104,10 @@ const BriefProjectInfo = ({project}) => {
           project && project.staff_resources_type &&
           project.staff_resources_type.map((rtype, i) =>
             <React.Fragment key={i}>
-              <span className="me-1 ps-1 pe-1 pt-1 fw-normal" key={i}
+              <span className="me-1 ps-1 pe-1 pt-1 fw-normal border border-warning rounded" key={i}
                 style={{
                   backgroundColor: '#feb272',
                   color: '#303030',
-                  borderRadius: '2px',
                   fontSize: '0.83rem'
                 }}>
                 {rtype.value}
