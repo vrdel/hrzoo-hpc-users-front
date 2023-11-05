@@ -334,10 +334,13 @@ const Memberships = () => {
                 <Row className="mb-5" key={`row-${i}`}>
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
-                      <CardHeader className="d-flex justify-content-between">
+                      <CardHeader className="d-flex align-items-center justify-content-between">
                         <span className="fs-5 fw-bold text-dark">
                           { project?.name }
                         </span>
+                        <Badge color={"secondary fw-normal"}>
+                          { project.identifier }
+                        </Badge>
                       </CardHeader>
                       <CardBody className="mb-1 bg-light p-0 m-0">
                         {
