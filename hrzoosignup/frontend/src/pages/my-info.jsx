@@ -147,7 +147,7 @@ const InstituteTableInfo = () => {
           </Label>
           <div className="fs-5 ps-2 d-flex align-items-center">
             {
-              userDetails.is_active ?
+              userDetails.status ?
                 <>
                   <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
                   <Tooltip
