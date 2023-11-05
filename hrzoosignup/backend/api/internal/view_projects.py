@@ -274,12 +274,13 @@ class Projects(APIView):
                                                staff_comment)
 
             if state.name == 'approve':
-                p_obj.approved_by = {
-                    'first_name': self.request.user.first_name,
-                    'last_name': self.request.user.last_name,
-                    'person_uniqueid': self.request.user.person_uniqueid,
-                    'username': self.request.user.username
-                }
+                if not p_obj.approved_by:
+                    p_obj.approved_by = {
+                        'first_name': self.request.user.first_name,
+                        'last_name': self.request.user.last_name,
+                        'person_uniqueid': self.request.user.person_uniqueid,
+                        'username': self.request.user.username
+                    }
                 if settings.EMAIL_SEND and request.data['staff_emailSend']:
                     userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
                     person_mail = userproj[0].user.person_mail
