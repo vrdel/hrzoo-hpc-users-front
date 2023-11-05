@@ -20,8 +20,8 @@ class Command(BaseCommand):
         for software in models.ScienceSoftware.objects.all():
             software.created = datetime.datetime(2023, 4, 20, 12, 0, 0, tzinfo=timezone.get_current_timezone())
             software.added_by = {
-                        'username': 'initial',
-                        'first_name': 'Initial',
-                        'last_name': 'set'
-                    }
+                'username': 'initial',
+                'first_name': 'Initial',
+                'last_name': 'set'
+            }
             software.save()
