@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Permission
 from django.conf import settings
+from django.core.cache import cache
 
 import random
 
@@ -17,6 +18,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         all_users = self.user_model.objects.all()
+
+        any_changed = False
+
         for user in all_users:
             if user.is_staff or user.is_superuser:
                 continue
@@ -30,4 +34,14 @@ class Command(BaseCommand):
             if all_inactive and user.is_active != False:
                 self.stdout.write(self.style.NOTICE(f'Marking user {user.username} inactive'))
                 user.is_active = False
+                any_changed = True
                 user.save()
+
+        if any_changed:
+            cache.delete("usersinfoinactive-get")
+            cache.delete("usersinfo-get")
+            cache.delete("ext-users-projects")
+            cache.delete('projects-get-all')
+        else:
+            self.stdout.write('No changes')
+
