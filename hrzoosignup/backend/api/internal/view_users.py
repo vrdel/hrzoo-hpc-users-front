@@ -53,10 +53,7 @@ class UsersInfoInactive(APIView):
             if ret_data:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
-            # TODO: check only is_active status once setting it is done
-            users = models.User.objects.all()
-            lead = models.Role.objects.get(name="lead")
-            collaborator = models.Role.objects.get(name="collaborator")
+            users = models.User.objects.filter(is_active=False)
 
             users_noproject, users_inactiveprojects = list(), list()
             for user in users:
@@ -76,23 +73,6 @@ class UsersInfoInactive(APIView):
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
                 else:
-                    active_userprojects = [p for p in userprojects if p.project.state.name == "approve"]
-                    if active_userprojects:
-                        continue
-                    inactive_userprojects = [
-                        p for p in userprojects if p.project.state.name != "approve"
-                    ]
-                    if len(inactive_userprojects) == 0:
-                        continue
-                    projects_lead = sorted(
-                        [up for up in inactive_userprojects if up.role == lead],
-                        key=lambda k: k.project.identifier
-                    )
-                    projects_collab = sorted(
-                        [up for up in inactive_userprojects if up.role == collaborator],
-                        key=lambda k: k.project.identifier
-                    )
-                    inactive_projects = projects_lead + projects_collab
                     ssh_keys = len(models.SSHPublicKey.objects.filter(user=user))
                     users_inactiveprojects.append({
                         "username": user.username,
@@ -107,7 +87,7 @@ class UsersInfoInactive(APIView):
                             "state": userproject.project.state.name,
                             "role": userproject.role.name,
                             "type": userproject.project.project_type.name
-                        } for userproject in inactive_projects],
+                        } for userproject in userprojects],
                         "date_joined":
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
