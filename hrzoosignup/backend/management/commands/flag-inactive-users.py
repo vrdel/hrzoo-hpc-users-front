@@ -29,6 +29,8 @@ class Command(BaseCommand):
             ])
             if all_inactive:
                 self.stdout.write(self.style.NOTICE(f'Marking user {user.username} inactive'))
+                user.is_active = False
+                user.save()
 
 
 
