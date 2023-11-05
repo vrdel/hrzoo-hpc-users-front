@@ -33,6 +33,8 @@ def associate_user_to_project(user, project):
                                          role=role_obj,
                                          date_joined=timezone.make_aware(datetime.datetime.now()))
     userproject_obj.save()
+    user.status = True
+    user.save()
 
 
 # INVITATIONS_SIGNUP_REDIRECT setting
