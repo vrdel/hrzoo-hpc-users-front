@@ -9,13 +9,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 
-export function StateIcons(state_name) {
+export function StateIcons(state_name, small=false) {
+  let size = "fa-3x"
+
+  if (small)
+    size = "fa-2x"
+
   let state2icon = {
-    'submit': <FontAwesomeIcon className="text-warning fa-3x" icon={faCog}/>,
-    'approve': <FontAwesomeIcon className="text-success fa-3x" icon={faCheckDouble}/>,
-    'deny': <FontAwesomeIcon className="text-danger fa-3x" icon={faTimes}/>,
-    'expire': <FontAwesomeIcon className="text-danger fa-3x" icon={faCalendarXmark}/>,
-    'extend': <FontAwesomeIcon className="text-warning fa-3x" icon={faTimeline}/>
+    'submit': <FontAwesomeIcon className={`text-warning ${size}`} icon={faCog}/>,
+    'approve': <FontAwesomeIcon className={`text-success ${size}`} icon={faCheckDouble}/>,
+    'deny': <FontAwesomeIcon className={`text-danger ${size}`} icon={faTimes}/>,
+    'expire': <FontAwesomeIcon className={`text-danger ${size}`} icon={faCalendarXmark}/>,
+    'extend': <FontAwesomeIcon className={`text-warning ${size}`} icon={faTimeline}/>
   }
 
   return state2icon[state_name]

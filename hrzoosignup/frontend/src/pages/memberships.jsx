@@ -1,7 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from 'Pages/root';
-import { Col, Row, Card, CardHeader, CardBody,
-  Label, Badge } from 'reactstrap';
+import {
+  Col,
+  Row,
+  Card,
+  CardHeader,
+  CardBody,
+  Label,
+  Badge,
+  Tooltip
+} from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchNrProjects } from 'Api/projects';
@@ -15,6 +23,7 @@ import { toast } from 'react-toastify';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { UsersTableCroris } from 'Components/membership/UsersTableCroris';
 import { UsersTableGeneral } from 'Components/membership/UsersTableGeneral';
+import { StateIcons, StateString } from "Config/map-states";
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -51,11 +60,11 @@ const BriefProjectInfo = ({project}) => {
   return (
     <>
       <Col className="ms-4 text-left" md={{size: 2}}>
-        Šifra:
+        Stanje:
         <div className="p-2 mt-2">
-          <Badge color={"secondary fw-normal"}>
-            { project.identifier }
-          </Badge>
+          {
+            StateIcons(project.state.name)
+          }
         </div>
       </Col>
       <Col md={{size: 3}} className="ms-4 ms-sm-4 ms-md-0">
@@ -101,10 +110,9 @@ const BriefProjectInfo = ({project}) => {
         </Label>
         <br/>
         {
-          project && project.staff_resources_type &&
           project.staff_resources_type.map((rtype, i) =>
             <React.Fragment key={i}>
-              <span className="me-1 ps-1 pe-1 pt-1 fw-normal border border-warning rounded" key={i}
+              <span className="me-1 p-1 fw-normal border border-light-subtle border-2 rounded" key={i}
                 style={{
                   backgroundColor: '#feb272',
                   color: '#303030',
@@ -429,6 +437,13 @@ const Memberships = () => {
                     'identifier': 'šifra',
                     'date_start': '2023-01-01',
                     'date_end': '2027-01-01',
+                    'state': {
+                      'name': 'approve'
+                    },
+                    'staff_resources_type': [{
+                      'label': 'CPU',
+                      'value': 'CPU'
+                    }],
                     'date_changed': '2026-01-01',
                     'project_type': Object({'name': 'research-croris'})
                   }} />
