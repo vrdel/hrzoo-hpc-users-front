@@ -289,6 +289,7 @@ export const ManageRequestsChange = () => {
       rhfProps.setValue('staff_emailSend', true)
 
       rhfProps.setValue('approved_by', nrProject.approved_by)
+      rhfProps.setValue('changed_by', nrProject.changed_by)
       rhfProps.setValue('denied_by', nrProject.denied_by)
 
       if (nrProject.staffcomment_set?.length > 0
@@ -468,6 +469,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
 
   const deniedBy = getValues('denied_by')
   const approvedBy = getValues('approved_by')
+  const changedBy = getValues('changed_by')
 
   return (
     <>
@@ -691,9 +693,9 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       </Row>
       <Row style={{'height': '50px'}}/>
       <Row className="justify-content-end fst-italic">
-        <Col md={{size: 4}}className="fs-6 mt-3">
+        <Col md={{size: 4}} className="fs-6 mt-3">
           <span className="fw-bold">
-            Obradio:{'  '}
+            Odobrio:{'  '}
           </span>
           {
             initialProjectState === 'approve' ?
@@ -706,6 +708,19 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           }
         </Col>
       </Row>
+      {
+        changedBy &&
+        <Row className="justify-content-end fst-italic">
+          <Col md={{size: 4}} className="fs-6 mt-1">
+            <span className="fw-bold">
+              Promijenio:{'  '}
+            </span>
+            {
+              changedBy ? changedBy.first_name + ' ' + changedBy.last_name : '\u2212'
+            }
+          </Col>
+        </Row>
+      }
       <Row style={{'height': '100px'}}/>
       <Row className="mt-5 mb-5 text-center">
         <Col>
