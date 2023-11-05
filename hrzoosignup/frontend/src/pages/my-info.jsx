@@ -5,7 +5,7 @@ import { PageTitle } from '../components/PageTitle';
 import { AuthContext } from '../components/AuthContextProvider'
 import { fetchCroRIS } from '../api/croris';
 import { useQuery } from '@tanstack/react-query';
-import { faCheckCircle, faStopCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faStopCircle} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
@@ -161,7 +161,6 @@ const InstituteTableInfo = () => {
                 </>
               :
                 <>
-                  <span className="ms-3">Neaktivan</span>
                   <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
                   <Tooltip
                     placement='bottom'
