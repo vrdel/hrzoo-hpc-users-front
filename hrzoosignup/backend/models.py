@@ -37,6 +37,11 @@ def validate_ssh_public_key(ssh_key):
 
 
 class User(AbstractUser):
+    status = models.BooleanField(
+        default=True,
+        help_text='Custom is_active field that will designate whether user is assigned to active HRZOO project',
+        verbose_name='custom_active'
+    )
     person_uniqueid = models.CharField(
         _('hrEduPersonUniqueID - LDAP'),
         max_length=128,
