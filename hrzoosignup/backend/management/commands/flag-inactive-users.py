@@ -31,9 +31,9 @@ class Command(BaseCommand):
                 or project.state.name == 'submit'
                 for project in user_projects
             ])
-            if all_inactive and user.is_active != False:
+            if all_inactive and user.status != False:
                 self.stdout.write(self.style.NOTICE(f'Marking user {user.username} inactive'))
-                user.is_active = False
+                user.status = False
                 any_changed = True
                 user.save()
 

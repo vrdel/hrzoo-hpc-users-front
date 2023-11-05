@@ -53,7 +53,7 @@ class UsersInfoInactive(APIView):
             if ret_data:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
-            users = models.User.objects.filter(is_active=False)
+            users = models.User.objects.filter(status=False)
 
             users_noproject, users_inactiveprojects = list(), list()
             for user in users:
