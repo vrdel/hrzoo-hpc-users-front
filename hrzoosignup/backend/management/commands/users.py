@@ -49,6 +49,7 @@ class Command(BaseCommand):
                 croris_mail=options['email'],
                 person_oib=options['oib'],
                 is_staff=options['staff'],
+                status=False,
                 person_institution=options['institution'],
                 person_organisation=options['organisation'],
                 person_affiliation='šljaker'
@@ -93,6 +94,8 @@ class Command(BaseCommand):
                     role=role_colab,
                     date_joined=timezone.make_aware(datetime.datetime.now())
                 )
+                user.status = True
+                user.save()
                 self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
@@ -133,6 +136,7 @@ class Command(BaseCommand):
                     role=role_colab,
                     date_joined=timezone.make_aware(datetime.datetime.now())
                 )
+                user.status = True
                 self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
