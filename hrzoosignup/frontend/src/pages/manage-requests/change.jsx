@@ -698,7 +698,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             Odobrio:{'  '}
           </span>
           {
-            initialProjectState === 'approve' ?
+            ['approve', 'extend', 'expire'].indexOf(initialProjectState) >= 0 ?
               approvedBy ? approvedBy.first_name + ' ' + approvedBy.last_name : '\u2212'
             :
               initialProjectState === 'deny' ?
