@@ -16,6 +16,15 @@ class Command(BaseCommand):
         super().__init__()
         self.user_model = get_user_model()
 
+    def add_arguments(self, parser):
+        super(Command, self).add_arguments(parser)
+        parser.add_argument(
+            "--yes",
+            action="store_true",
+            dest="confirmed_yes",
+            help="Explicity state to agree to make the changes",
+        )
+
     def handle(self, *args, **options):
         all_users = self.user_model.objects.all()
 
@@ -32,10 +41,13 @@ class Command(BaseCommand):
                 for project in user_projects
             ])
             if all_inactive and user.status != False:
-                self.stdout.write(self.style.NOTICE(f'Marking user {user.username} inactive'))
-                user.status = False
-                any_changed = True
-                user.save()
+                if options.get('confirmed_yes', None):
+                    self.stdout.write(self.style.NOTICE(f'Marking user {user.username} inactive'))
+                    user.status = False
+                    any_changed = True
+                    user.save()
+                else:
+                    self.stdout.write(f'User {user.username} would be marked as inactive')
 
         if any_changed:
             cache.delete("usersinfoinactive-get")

@@ -9,9 +9,8 @@ class Command(FlushCommand):
             "--yes",
             action="store_true",
             dest="confirmed_yes",
-            help="Tells Django to NOT prompt the user for input of any kind.",
+            help="Explicity state to agree to flush the database",
         )
-        pass
 
     def handle(self, **options):
         self.stdout.write(self.style.WARNING('Trying to completely flush database'))
