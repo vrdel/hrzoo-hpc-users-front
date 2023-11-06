@@ -258,6 +258,9 @@ class Projects(APIView):
             p_obj.date_start = request.data['date_start']
             p_obj.date_end = request.data['date_end']
 
+            userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
+            lead_user = userproj[0].user
+
             if state.name == 'deny':
                 staff_comment = request.data.get('staff_comment')
                 p_obj.denied_by = {
@@ -267,8 +270,7 @@ class Projects(APIView):
                     'username': self.request.user.username
                 }
                 if settings.EMAIL_SEND and request.data['staff_emailSend']:
-                    userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
-                    person_mail = userproj[0].user.person_mail
+                    person_mail = lead_user.person_mail
                     project.email_deny_project(person_mail, p_obj.name,
                                                p_obj.project_type,
                                                staff_comment)
@@ -282,10 +284,11 @@ class Projects(APIView):
                         'username': self.request.user.username
                     }
                 if settings.EMAIL_SEND and request.data['staff_emailSend']:
-                    userproj = p_obj.userproject_set.filter(project=p_obj.id).filter(role__name='lead')
-                    person_mail = userproj[0].user.person_mail
+                    person_mail = lead_user.person_mail
                     project.email_approve_project(person_mail, p_obj.name,
                                                   p_obj.project_type)
+                lead_user.status = True
+                lead_user.save()
 
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
