@@ -471,7 +471,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   const approvedBy = getValues('approved_by')
   const changedBy = getValues('changed_by')
 
-  let sendEmailDisabled = false
+  let sendEmailDisabled = true
   setValue('staff_emailSend', false)
 
   if (initialProjectState === 'approve' && requestState['approve']) {
@@ -663,7 +663,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             htmlFor="staff_comment"
             className="fw-bold mt-3 fs-5 form-label"
             aria-label="staff_comment">
-            Dodatni komentar prilikom odbijanja zahtjeva:
+            Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:
           </Label>
           <Controller
             name="staff_comment"
