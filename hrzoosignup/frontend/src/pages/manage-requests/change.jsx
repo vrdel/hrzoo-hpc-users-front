@@ -471,6 +471,22 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   const approvedBy = getValues('approved_by')
   const changedBy = getValues('changed_by')
 
+  let sendEmailDisabled = false
+  setValue('staff_emailSend', false)
+
+  if (initialProjectState === 'approve' && requestState['approve']) {
+    sendEmailDisabled = false
+    setValue('staff_emailSend', false)
+  }
+  else if (requestState['approve']) {
+    sendEmailDisabled = false
+    setValue('staff_emailSend', true)
+  }
+  else if (requestState['deny']) {
+    sendEmailDisabled = false
+    setValue('staff_emailSend', true)
+  }
+
   return (
     <>
       <Row>
@@ -678,10 +694,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                   {...field}
                   type="switch"
                   role="switch"
-                  disabled={
-                    !(requestState['approve'] === true || requestState['deny'] === true) ||
-                      (requestState['approve'] === true && initialProjectState === 'approve')
-                  }
+                  disabled={sendEmailDisabled}
                   checked={disabledFields ? getValues('staff_emailSend') : false}
                   className="form-control fw-bold fst-italic"
                 />
@@ -695,7 +708,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row className="justify-content-end fst-italic">
         <Col md={{size: 4}} className="fs-6 mt-3">
           <span className="fw-bold">
-            Odobrio:{'  '}
+            Obradio:{'  '}
           </span>
           {
             ['approve', 'extend', 'expire'].indexOf(initialProjectState) >= 0 ?
