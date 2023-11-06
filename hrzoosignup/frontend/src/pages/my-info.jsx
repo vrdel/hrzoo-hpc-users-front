@@ -151,11 +151,12 @@ const InstituteTableInfo = () => {
                 <>
                   <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
                   <Tooltip
-                    placement='bottom'
+                    placement='right'
                     isOpen={isOpened(userDetails.first_name)}
                     target={'Tooltip-' + userDetails.first_name}
                     toggle={() => showTooltip(userDetails.first_name)}
                   >
+                    Aktivan<br/>
                     Prijavljeni ste na bar jedan aktivan projekt
                   </Tooltip>
                 </>
@@ -168,6 +169,7 @@ const InstituteTableInfo = () => {
                     target={'Tooltip-' + userDetails.first_name}
                     toggle={() => showTooltip(userDetails.first_name)}
                   >
+                    Neaktivan<br/>
                     Niste prijavljeni ni na jedan aktivan projekt
                   </Tooltip>
                 </>

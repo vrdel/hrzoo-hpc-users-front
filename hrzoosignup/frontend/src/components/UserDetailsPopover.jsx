@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { Badge } from 'reactstrap';
 import { AuthContext } from '../components/AuthContextProvider';
+import { faCheckCircle, faStopCircle} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const UserDetailsPopover = () => {
@@ -30,6 +32,14 @@ const UserDetailsPopover = () => {
           {userDetails.person_uniqueid}
         </div>
       }
+      <div className="text-center">
+        {
+          userDetails.status === true ?
+            <FontAwesomeIcon className="ms-3 me-3" color="#198754" icon={ faCheckCircle } />
+          :
+            <FontAwesomeIcon className="ms-3 me-3" color="#DC3545" icon={ faStopCircle } />
+        }
+      </div>
     </>
 
   )
