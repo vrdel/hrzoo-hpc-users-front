@@ -69,8 +69,8 @@ const CroRisInfo = ({croRisProjects}) => {
                 </td>
                 <td>
                   {
-                    croRisProjects['person_info']['croris_mbz'] ?
-                      croRisProjects['person_info']['croris_mbz']
+                    croRisProjects['person_info']['mbz'] ?
+                      croRisProjects['person_info']['mbz']
                     :
                       '\u2212'
                   }
