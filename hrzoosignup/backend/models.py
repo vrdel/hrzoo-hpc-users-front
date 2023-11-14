@@ -86,6 +86,11 @@ class User(AbstractUser):
         _("CroRIS email address"),
         blank=True
     )
+    croris_mbz = models.CharField(
+        _('CroRIS MBZ number'),
+        max_length=10,
+        blank=True,
+    )
 
 
 class SSHPublicKey(models.Model):
