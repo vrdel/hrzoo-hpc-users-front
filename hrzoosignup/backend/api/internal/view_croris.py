@@ -56,6 +56,7 @@ class CroRISInfo(APIView):
                 user.croris_first_name = self.person_info.get('first_name', '')
                 user.croris_last_name = self.person_info.get('last_name', '')
                 user.croris_mail = self.person_info.get('email', '')
+                user.croris_mbz = self.person_info.get('mbz', '')
                 user.save()
 
                 # frontend is calling every 15 min
