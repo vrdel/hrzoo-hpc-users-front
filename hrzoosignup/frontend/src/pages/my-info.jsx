@@ -33,6 +33,9 @@ const CroRisInfo = ({croRisProjects}) => {
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
                   CroRIS ID
                 </th>
+                <th className="fw-bold fs-5" style={{width: '20%'}}>
+                  MBZ
+                </th>
                 <th className="fw-bold fs-5">
                   Email
                 </th>
@@ -60,6 +63,14 @@ const CroRisInfo = ({croRisProjects}) => {
                   {
                     croRisProjects['person_info']['croris_id'] ?
                       croRisProjects['person_info']['croris_id']
+                    :
+                      '\u2212'
+                  }
+                </td>
+                <td>
+                  {
+                    croRisProjects['person_info']['croris_mbz'] ?
+                      croRisProjects['person_info']['croris_mbz']
                     :
                       '\u2212'
                   }
@@ -293,7 +304,6 @@ const InstituteTableInfo = () => {
       </Row>
     </React.Fragment>
   )
-
 }
 
 
