@@ -201,6 +201,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'croris_first_name',
             'croris_last_name',
             'croris_mail',
+            'croris_mbz',
             'date_joined',
             'first_name',
             'id',

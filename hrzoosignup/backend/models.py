@@ -90,6 +90,7 @@ class User(AbstractUser):
         _('CroRIS MBZ number'),
         max_length=10,
         blank=True,
+        null=True,
     )
 
 
