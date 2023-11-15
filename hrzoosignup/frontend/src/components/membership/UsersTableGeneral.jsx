@@ -152,18 +152,30 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   }
 
   const onUsersCheckout = () => {
-    let usersToRemove = new Array()
+    if (!project.is_active)
+      toast.error(
+        <span className="font-monospace text-white">
+          Projekt nije aktivan pa nije moguće odjavljivati suradnike<br/>
+        </span>, {
+          theme: 'colored',
+          toastId: 'invit-fail-sent',
+          autoClose: 2500,
+        }
+      )
+    else {
+      let usersToRemove = new Array()
 
-    let anyChecked = _.some(checkJoined, (value) => value === true)
-    if (anyChecked) {
-      alreadyJoined.map((user, ind) => {
-        if (checkJoined[ind])
-          usersToRemove.push(user['user']['id'])
-      })
+      let anyChecked = _.some(checkJoined, (value) => value === true)
+      if (anyChecked) {
+        alreadyJoined.map((user, ind) => {
+          if (checkJoined[ind])
+            usersToRemove.push(user['user']['id'])
+        })
 
-      onTableSignoff({
-        'remove_users': usersToRemove,
-      })
+        onTableSignoff({
+          'remove_users': usersToRemove,
+        })
+      }
     }
   }
 
