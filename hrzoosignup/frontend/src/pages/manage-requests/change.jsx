@@ -327,6 +327,18 @@ export const ManageRequestsChange = () => {
       return null
     }
 
+    if (whichState === 'deny' && !data['staff_comment']) {
+      toast.error(
+        <span className="font-monospace text-dark">
+          Pri odbijanju zahtjeva morate se izjasniti o razlogu.
+        </span>, {
+          autoClose: false,
+          toastId: 'manreq-change-no-reqcomment',
+        }
+      )
+      return null
+    }
+
     setAreYouSureModal(!areYouSureModal)
     setModalTitle("Obrada korisničkog zahtijeva")
     setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
