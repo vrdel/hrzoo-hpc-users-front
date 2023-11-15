@@ -114,7 +114,7 @@ class SSHPublicKey(models.Model):
 
 
 class State(models.Model):
-    name =  models.CharField(
+    name = models.CharField(
         _("Project state"),
         max_length=24,
         blank=True,
