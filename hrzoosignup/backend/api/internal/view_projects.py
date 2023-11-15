@@ -292,6 +292,11 @@ class Projects(APIView):
                 p_obj.is_active = True
                 lead_user.save()
 
+            if state.name == 'expire' or state.name == 'submit':
+                p_obj.is_active = False
+            elif state.name == 'extend':
+                p_obj.is_active = True
+
             serializer = ProjectSerializer(p_obj, data=request.data)
             if serializer.is_valid():
                 if original_values:
