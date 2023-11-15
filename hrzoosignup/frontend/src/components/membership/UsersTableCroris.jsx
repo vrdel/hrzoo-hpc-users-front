@@ -13,6 +13,7 @@ import {
   faKey
 } from '@fortawesome/free-solid-svg-icons';
 import { extractUsers, extractEmails, emailInInvites } from '../../utils/invites-extracts';
+import { toast } from 'react-toastify';
 import _ from 'lodash';
 
 
@@ -28,7 +29,20 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
 
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => {
+    if (project.is_active)
+      setIsOpen(!isOpen);
+    else
+      toast.error(
+        <span className="font-monospace text-white">
+          Projekt nije aktivan pa nije moguće pozivati suradnike<br/>
+        </span>, {
+          theme: 'colored',
+          toastId: 'invit-fail-sent',
+          autoClose: 2500,
+        }
+      )
+  }
 
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
