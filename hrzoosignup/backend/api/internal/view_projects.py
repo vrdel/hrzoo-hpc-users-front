@@ -33,7 +33,7 @@ class ProjectsGeneral(APIView):
         state_obj = models.State.objects.get(name=request.data['state'])
 
         request.data['state'] = state_obj.pk
-        request.data['is_active'] = True
+        request.data['is_active'] = False
         request.data['date_submitted'] = timezone.now()
 
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
@@ -178,7 +178,7 @@ class ProjectsResearch(APIView):
 
         state_obj = models.State.objects.get(name=request.data['state'])
         request.data['state'] = state_obj.pk
-        request.data['is_active'] = True
+        request.data['is_active'] = False
         request.data['date_submitted'] = timezone.now()
 
         if not request.data['croris_identifier']:
@@ -269,6 +269,7 @@ class Projects(APIView):
                     'person_uniqueid': self.request.user.person_uniqueid,
                     'username': self.request.user.username
                 }
+                p_obj.is_active = False
                 if settings.EMAIL_SEND and request.data['staff_emailSend']:
                     person_mail = lead_user.person_mail
                     project.email_deny_project(person_mail, p_obj.name,
@@ -288,6 +289,7 @@ class Projects(APIView):
                     project.email_approve_project(person_mail, p_obj.name,
                                                   p_obj.project_type)
                 lead_user.status = True
+                p_obj.is_active = True
                 lead_user.save()
 
             serializer = ProjectSerializer(p_obj, data=request.data)
