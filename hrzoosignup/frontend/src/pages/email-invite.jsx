@@ -47,6 +47,10 @@ const EmailInvitation = ({sessionData=undefined}) => {
         setCustomMessage('Prijava neuspješna: Pozivni kod je iskorišten')
         setInviteAlertFail(true)
       }
+      else if (err.message.toLowerCase().includes("already assigned to project")) {
+        setCustomMessage('Već jeste sudionik pozvanog projekta')
+        setInviteAlertFail(true)
+      }
       else if (err.message.toLowerCase().includes("duplicate key")) {
         setCustomMessage('Već jeste suradnik na pozvanom projektu')
         setInviteAlertSucces(true)

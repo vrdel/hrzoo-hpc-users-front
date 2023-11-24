@@ -115,6 +115,20 @@ class Invites(APIView):
                 inv_oib = get_invite.person_oib
                 proj_type = models.ProjectType.objects.get(project=proj)
 
+                already_assigned = models.UserProject.objects.filter(
+                    user__person_oib=user.person_oib,
+                    project__id=proj.id
+                )
+                if len(already_assigned) > 0:
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_400_BAD_REQUEST,
+                            'message': '{} - User {} already assigned to project'.format(request.user.username, user.username)
+                        }
+                    }
+                    logger.error(msg)
+                    return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
                 if (proj_type.name == 'research-croris'):
                     if (inv_oib == request.user.person_oib):
                         associate_user_to_project(user, proj)
@@ -261,7 +275,6 @@ class Invites(APIView):
 
     def post(self, request):
         Invitation = get_invitation_model()
-
 
         request.data['user'] = request.user.pk
         proj_id = request.data['project']
