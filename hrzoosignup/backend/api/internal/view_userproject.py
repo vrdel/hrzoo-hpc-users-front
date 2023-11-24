@@ -32,6 +32,20 @@ class UsersProjectsInternal(APIView):
 
         try:
             for user in target_users:
+                already_assigned = models.UserProject.objects.filter(
+                    user__person_oib=user.person_oib,
+                    project__id=target_project.id
+                )
+                if len(already_assigned) > 0:
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_400_BAD_REQUEST,
+                            'message': '{} - User {} already added to internal project'.format(request.user.username, user.username)
+                        }
+                    }
+                    logger.error(msg)
+                    return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
                 up_obj = models.UserProject(
                     user=user,
                     project=target_project,
