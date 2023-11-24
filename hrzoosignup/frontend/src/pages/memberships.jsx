@@ -254,17 +254,30 @@ const Memberships = () => {
       )
     }
     catch (err) {
-      toast.error(
-        <span className="font-monospace text-white">
-          Suradnike nije bilo moguće dodati: <br/>
-          { err.message }
-        </span>, {
-          theme: 'colored',
-          toastId: 'addint-fail',
-          autoClose: 2500,
-          delay: 1000
-        }
-      )
+      if (err.message.includes('already added'))
+        toast.warn(
+          <span className="font-monospace text-dark">
+            Neki suradnici su već dodani na projekt: <br/>
+            { err.message }
+          </span>, {
+            theme: 'colored',
+            toastId: 'addint-warn',
+            autoClose: 2500,
+            delay: 1000
+          }
+        )
+      else
+        toast.error(
+          <span className="font-monospace text-white">
+            Suradnike nije bilo moguće dodati: <br/>
+            { err.message }
+          </span>, {
+            theme: 'colored',
+            toastId: 'addint-fail',
+            autoClose: 2500,
+            delay: 1000
+          }
+        )
     }
   }
 
