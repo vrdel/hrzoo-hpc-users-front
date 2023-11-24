@@ -10,5 +10,6 @@ class SAML2Backend(Saml2Backend):
         return super()._update_user(user, attributes, attribute_mapping, force_save)
 
     def save_user(self, user, *args, **kwargs):
-        user.status = False
+        if not user.status:
+            user.status = False
         return super().save_user(user, *args, **kwargs)
