@@ -563,6 +563,15 @@ class CanSubmitInstituteProject(APIView):
                 }
                 return Response(deny_resp, status=status.HTTP_200_OK)
 
+            allow_resp = {
+                'status': {
+                    'code': status.HTTP_200_OK,
+                    'operation': 'ALLOW',
+                    'message': 'Can submit institute project',
+                }
+            }
+            return Response(allow_resp, status=status.HTTP_200_OK)
+
         else:
             no_data_resp = {
                 'status': {
