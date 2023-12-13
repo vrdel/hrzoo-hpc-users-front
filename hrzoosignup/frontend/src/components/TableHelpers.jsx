@@ -123,6 +123,8 @@ export class TablePaginationHelper {
       pagesAndIndexes['100'] = this.constructSlicesArrays(100, len)
 
     pagesAndIndexes[len] = [[0, len]]
+    if (this.searched)
+      pagesAndIndexes[this.fullLen] = [[0, this.fullLen]]
 
     this.pagesIndexes = pagesAndIndexes
   }
