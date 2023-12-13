@@ -304,6 +304,7 @@ class Invites(APIView):
         proj_type = models.ProjectType.objects.get(project=proj)
 
         try:
+            record_invites = list()
             if proj_type.name == 'research-croris':
                 myoib = request.user.person_oib
                 cached = cache.get(f'{myoib}_croris')
@@ -343,6 +344,7 @@ class Invites(APIView):
                                                    project=proj,
                                                    person_oib=oib_map[email])
                         invite.send_invitation(request)
+                    record_invites.append(invite)
 
             else:
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
@@ -350,11 +352,12 @@ class Invites(APIView):
                     invite = Invitation.create(email, inviter=request.user,
                                                project=proj, person_oib='')
                     invite.send_invitation(request)
+                    record_invites.append(invite)
 
             msg = {
                 'status': {
                     'code': status.HTTP_200_OK,
-                    'message': '{} - Invitations sent'.format(request.user.username)
+                    'message': '{} - Invitations sent {}'.format(request.user.username, repr([(inv.key, inv.email) for inv in record_invites]))
                 }
             }
             logger.info(msg)
