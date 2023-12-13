@@ -260,6 +260,15 @@ class Invites(APIView):
                         'code': status.HTTP_410_GONE,
                         'message': '{} - Invitation code already used'.format(user.username)}
                 }
+                try:
+                    Invitation = get_invitation_model()
+                    get_invite = Invitation.objects.get(key=kwargs['invitekey'])
+                except Invitation.DoesNotExist:
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_410_GONE,
+                            'message': '{} - Invitation code expired'.format(user.username)}
+                    }
                 logger.error(msg)
                 return Response(msg, status=status.HTTP_410_GONE)
 
