@@ -145,7 +145,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
               missingCollab.push({...user, email: email.trim()})
         }
         else
-          if (email_invites.indexOf(user['email']) === -1)
+          if (user['email'] && email_invites.indexOf(user['email']) === -1)
             missingCollab.push(user)
       }
     })
