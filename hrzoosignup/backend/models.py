@@ -42,6 +42,11 @@ class User(AbstractUser):
         help_text='Custom is_active field that will designate whether user is assigned to active HRZOO project',
         verbose_name='custom_active'
     )
+    mailinglist_subscribe = models.BooleanField(
+        blank=True,
+        help_text='Boolean field that indicates whether user is subscribed to mailinglist',
+        verbose_name='mailinglist_subscribe'
+    )
     person_uniqueid = models.CharField(
         _('hrEduPersonUniqueID - LDAP'),
         max_length=128,
