@@ -225,6 +225,9 @@ class CroRISInfo(APIView):
 
             if self.projects_lead_info:
                 self.person_info['lead_status'] = True
+        else:
+            self.person_info['lead_status'] = False
+            self.projects_lead_info = []
 
     async def fetch_project_associate_info(self):
         coros = []
