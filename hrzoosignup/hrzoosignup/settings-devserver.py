@@ -39,6 +39,7 @@ try:
     HOST_CERT = config.get('SECURITY', 'HostCert')
     HOST_KEY = config.get('SECURITY', 'HostKey')
     SECRET_KEY_FILE = config.get('SECURITY', 'SecretKeyFile')
+    CAFILE = config.get('SECURITY', 'CaFile')
 
     SAML_METADATA = config.get('SAML2', 'Metadata')
 

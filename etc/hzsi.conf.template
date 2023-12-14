@@ -15,6 +15,7 @@ AllowedHosts = hzsidev.hr, 127.0.0.1, 176.62.44.177, hzsidev-home.hr
 HostCert = %(VENV)s/etc/hrzoosignup/hostcert.pem
 HostKey = %(VENV)s/etc/hrzoosignup/hostkey.pem
 SecretKeyFile = %(VENV)s/etc/hrzoosignup/secretkey
+CaFile = /etc/pki/tls/certs/ca-bundle.crt
 
 [SAML2]
 Metadata = %(VENV)s/etc/hrzoosignup/metadata.xml
