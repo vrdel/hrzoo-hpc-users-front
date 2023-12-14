@@ -5,6 +5,11 @@ VENV = /opt/hrzoo-signup/
 Debug = True
 RelativePath =
 
+[CONNECTION]
+Timeout = 15
+Retry = 3
+SleepRetry = 15
+
 [SECURITY]
 AllowedHosts = hzsidev.hr, 127.0.0.1, 176.62.44.177, hzsidev-home.hr
 HostCert = %(VENV)s/etc/hrzoosignup/hostcert.pem
