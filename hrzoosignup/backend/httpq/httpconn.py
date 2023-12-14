@@ -14,9 +14,9 @@ def module_class_name(obj):
     return name.replace("'", '')
 
 
-def build_ssl_settings(confopts):
+def build_ssl_settings():
     try:
-        sslcontext = ssl.create_default_context(cafile=confopts['authentication']['cafile'])
+        sslcontext = ssl.create_default_context(cafile=settings.CAFILE)
 
         return sslcontext
 
@@ -24,21 +24,20 @@ def build_ssl_settings(confopts):
         return None
 
 
-def build_connection_retry_settings(confopts):
-    retry = int(confopts['connection']['retry'])
-    timeout = int(confopts['connection']['timeout'])
+def build_connection_retry_settings():
+    retry = int(settings.CONNECTION_RETRY)
+    timeout = int(settings.CONNECTION_TIMEOUT)
     return (retry, timeout)
 
 
 class SessionWithRetry(object):
-    def __init__(self, logger, confopts, token=None, auth=None, handle_session_close=False):
-        self.ssl_context = build_ssl_settings(confopts)
-        n_try, client_timeout = build_connection_retry_settings(confopts)
+    def __init__(self, logger, token=None, auth=None, handle_session_close=False):
+        self.ssl_context = build_ssl_settings()
+        n_try, client_timeout = build_connection_retry_settings()
         client_timeout = aiohttp.ClientTimeout(total=client_timeout,
                                                connect=client_timeout, sock_connect=client_timeout,
                                                sock_read=client_timeout)
         self.session = aiohttp.ClientSession(timeout=client_timeout)
-        self.confopts = confopts
         if auth:
             self.auth = aiohttp.BasicAuth(login=auth[0], password=auth[1])
         else:
@@ -60,7 +59,7 @@ class SessionWithRetry(object):
                 'Accept': 'application/json'
             })
         try:
-            sleepsecs = float(self.confopts['connection']['sleepretry'])
+            sleepsecs = float(settings.CONNECTION_SLEEPRETRY)
 
             while n <= self.n_try:
                 if n > 1:
