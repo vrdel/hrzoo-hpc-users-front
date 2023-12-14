@@ -51,6 +51,10 @@ try:
     DBPASSWORD = config.get('DATABASE', 'Password')
     DBHOST = config.get('DATABASE', 'Host')
 
+    MAILINGLIST_NAME = config.getint('MAILINGLIST', 'Name')
+    MAILINGLIST_CREDENTIALS = config.getint('MAILINGLIST', 'Credentials')
+    MAILINGLIST_SERVER = config.getint('MAILINGLIST', 'Server')
+
     API_PERSONLEAD = config.get('CRORIS', 'API_PersonLead')
     API_PERSONPROJECT = config.get('CRORIS', 'API_PersonProject')
     API_PROJECT = config.get('CRORIS', 'API_Project')

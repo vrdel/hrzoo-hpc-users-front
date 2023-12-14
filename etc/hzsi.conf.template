@@ -35,6 +35,10 @@ Username = user
 Password = pass
 Grace_Days = 180
 
+[MAILINGLIST]
+Name = computing-users@srce.hr
+Server = http://list.srce.hr:8001/3.0
+Credentials = username:pass
 
 [DATABASE]
 Host = db-hzsi
