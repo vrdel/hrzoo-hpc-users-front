@@ -362,6 +362,12 @@ LOGGING = {
             'filename': '{}var/log/views.log'.format(VENV),
             'formatter': 'verbose',
         },
+        'file_tasks': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}var/log/tasks.log'.format(VENV),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         # 'django': {
@@ -370,17 +376,17 @@ LOGGING = {
             # 'propagate': True,
         # },
         'django': {
-            'handlers': ['file_info'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-        'django': {
             'handlers': ['file_error'],
             'level': 'ERROR',
             'propagate': True,
         },
         'hrzoosignup.views': {
             'handlers': ['file_views'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'hrzoosignup.tasks': {
+            'handlers': ['file_tasks'],
             'level': 'DEBUG',
             'propagate': True,
         },
