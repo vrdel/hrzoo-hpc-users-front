@@ -4,7 +4,8 @@ import aiohttp
 import random
 
 from aiohttp import client_exceptions, http_exceptions
-from accounts_hpc.exceptions import SyncHttpError
+from backend.httpq.excep import HZSIHttpError
+from django.conf import settings
 
 
 def module_class_name(obj):
