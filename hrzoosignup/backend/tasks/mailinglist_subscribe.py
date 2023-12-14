@@ -6,7 +6,7 @@ from django.conf import settings
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
-from backend.utils import contains_exception
+from backend.utils.various import contains_exception
 
 
 logger = logging.getLogger('hrzoosignup.tasks')
