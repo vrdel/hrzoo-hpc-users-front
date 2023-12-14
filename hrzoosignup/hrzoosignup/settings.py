@@ -42,6 +42,10 @@ try:
 
     SAML_METADATA = config.get('SAML2', 'Metadata')
 
+    CONNECTION_TIMEOUT = config.getint('CONNECTION', 'Timeout')
+    CONNECTION_RETRY = config.getint('CONNECTION', 'Retry')
+    CONNECTION_SLEEPRETRY = config.getint('CONNECTION', 'SleepRetry')
+
     DBNAME = config.get('DATABASE', 'Name')
     DBUSER = config.get('DATABASE', 'User')
     DBPASSWORD = config.get('DATABASE', 'Password')
