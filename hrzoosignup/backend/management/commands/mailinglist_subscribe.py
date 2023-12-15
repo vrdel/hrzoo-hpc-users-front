@@ -3,6 +3,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Permission
 from django.core.cache import cache
 
+import asyncio
 
 from backend.httpq.httpconn import SessionWithRetry
 from backend.httpq.excep import HZSIHttpError
@@ -22,10 +23,16 @@ class Command(BaseCommand):
         users_to_subscribe = list()
 
         for user in all_users:
-            if user.status and not user.mailinglist_subscribe:
-                self.stdout.write(self.style.SUCCESS(f'Subscribing user {user.username} to mailing list'))
+            if user.status == True and user.mailinglist_subscribe == False:
                 users_to_subscribe.append(user)
 
-        ListSubscribe(users_to_subscribe).run()
+        try:
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
 
+            list_subscribe = ListSubscribe(users_to_subscribe)
+            loop.run_until_complete(list_subscribe.run())
+            loop.close()
 
+        except (HZSIHttpError, KeyboardInterrupt):
+            pass
