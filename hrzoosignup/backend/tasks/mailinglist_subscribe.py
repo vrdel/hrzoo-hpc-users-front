@@ -19,13 +19,12 @@ class ListSubscribe(object):
         auth = settings.MAILINGLIST_CREDENTIALS.split(':')
         self.users = users
         self.session = SessionWithRetry(logger, auth=auth, handle_session_close=True)
-        self.run()
 
     async def maillist_id(self, headers):
         headers = dict()
 
         response = await self.session.http_get('{}/lists/{}'.format(
-            self.confopts['mailinglist']['server'], self.confopts['mailinglist']['name']),
+            settings.MAILINGLIST_SERVER, settings.MAILINGLIST_NAME),
             headers=headers
         )
 
@@ -54,9 +53,9 @@ class ListSubscribe(object):
         except HZSIHttpError as exc:
             errormsg = ('{}').format(str(exc))
 
-            self.logger.error('Failed subscribing user %s on %s: %s' % (username,
-                                                                        settings.MAILINGLIST_NAME,
-                                                                        errormsg))
+            logger.error('Failed subscribing user %s on %s: %s' % (username,
+                                                                   settings.MAILINGLIST_NAME,
+                                                                   errormsg))
             return (False, exc)
 
     async def run(self):
@@ -67,6 +66,7 @@ class ListSubscribe(object):
             raise SystemExit(1)
 
         coros = []
+
         for user in self.users:
             coros.append(self.subscribe_maillist(user.person_mail, user.username, list_id))
 
@@ -79,12 +79,14 @@ class ListSubscribe(object):
             nu = 0
             for res in response:
                 if res[0]:
-                    user.mail_is_subscribed = True
+                    self.users[nu].mailinglist_subscribe = True
                     logger.info(f"User {self.users[nu].username} subscribed to {settings.MAILINGLIST_NAME}")
+                    await self.users[nu].asave()
                 else:
                     if res[1].status == 409:
-                        self.logger.info(f"User {self.users[nu].username} already subscribed to {settings.MAILINGLIST_NAME}, setting flag to True")
-                        user.mail_is_subscribed = True
+                        logger.info(f"User {self.users[nu].username} already subscribed to {settings.MAILINGLIST_NAME}, setting flag to True")
+                        self.users[nu].mailinglist_subscribe = True
+                        await self.users[nu].asave()
                     else:
                         logger.error(f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}")
                 nu += 1
