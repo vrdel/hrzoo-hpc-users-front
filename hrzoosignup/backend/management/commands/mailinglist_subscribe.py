@@ -4,6 +4,7 @@ from django.contrib.auth.models import Permission
 from django.core.cache import cache
 
 import asyncio
+import os
 
 from backend.httpq.httpconn import SessionWithRetry
 from backend.httpq.excep import HZSIHttpError
@@ -32,6 +33,11 @@ class Command(BaseCommand):
 
             list_subscribe = ListSubscribe(users_to_subscribe)
             loop.run_until_complete(list_subscribe.run())
+            if users_to_subscribe:
+                self.stdout.write(self.style.SUCCESS(f'User to subscribe: {repr([user.username for user in users_to_subscribe])}'))
+                self.stdout.write(f'Details in {os.environ["VIRTUAL_ENV"]}/var/log/tasks.log ')
+            else:
+                self.stdout.write('No users to subscribe')
             loop.close()
 
         except (HZSIHttpError, KeyboardInterrupt):
