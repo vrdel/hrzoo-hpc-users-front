@@ -123,7 +123,7 @@ class SessionWithRetry(object):
             return content
 
         except Exception as exc:
-            raise SyncHttpError(repr(exc)) from exc
+            raise HZSIHttpError(repr(exc)) from exc
 
     async def http_post(self, url, data, headers=None):
         try:
@@ -131,7 +131,7 @@ class SessionWithRetry(object):
             return content
 
         except Exception as exc:
-            raise SyncHttpError(repr(exc)) from exc
+            raise HZSIHttpError(repr(exc)) from exc
 
     async def close(self):
         return await self.session.close()
