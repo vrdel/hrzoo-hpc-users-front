@@ -1,0 +1,1 @@
+*/4 * * * * root . /opt/hrzoo-signup/bin/activate; $VIRTUAL_ENV/bin/hzsi-manage mailinglist_subscribe
