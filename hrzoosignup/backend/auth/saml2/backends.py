@@ -12,4 +12,6 @@ class SAML2Backend(Saml2Backend):
     def save_user(self, user, *args, **kwargs):
         if not user.status:
             user.status = False
+        if not user.mailinglist_subscribe:
+            user.mailinglist_subscribe = False
         return super().save_user(user, *args, **kwargs)
