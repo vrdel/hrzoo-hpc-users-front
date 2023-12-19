@@ -79,7 +79,7 @@ const BriefProjectInfo = ({project}) => {
     <>
       <Col className="ms-4 text-left" md={{size: 1}} >
         Stanje:
-        <div className="p-2 mt-2" id={`Tooltip-${project.identifier.replace(/\//g, '-')}`}>
+        <div className="p-2 mt-2" id={`Tooltip-${project.identifier.replace(/\/| /g, '-')}`}>
           {
             StateIcons(project.state.name)
           }
@@ -87,7 +87,7 @@ const BriefProjectInfo = ({project}) => {
         <Tooltip
           placement='bottom'
           isOpen={isOpened(project.identifier)}
-          target={'Tooltip-' + project.identifier.replace(/\//g, '-')}
+          target={'Tooltip-' + project.identifier.replace(/\/| /g, '-')}
           toggle={() => showTooltip(project.identifier)}
         >
           { StateStringUser(project.state.name) }
