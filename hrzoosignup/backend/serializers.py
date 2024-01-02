@@ -127,7 +127,10 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
 
     def get_institute(self, obj):
         orig = obj.institute
-        return orig
+        if orig in self.inst_maps.all_from():
+            return self.inst_maps.get(orig)
+        else:
+            return orig
 
 
 class UsersSerializerFiltered(serializers.ModelSerializer):
