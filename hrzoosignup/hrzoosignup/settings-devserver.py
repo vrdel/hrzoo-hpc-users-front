@@ -18,6 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # config parse
 # -vrdel
 import os
+import json
 from configparser import ConfigParser, NoSectionError
 from django.core.exceptions import ImproperlyConfigured
 
@@ -34,6 +35,7 @@ try:
     # General
     DEBUG_OPTION = bool(config.getboolean('GENERAL', 'Debug'))
     RELATIVE_PATH = config.get('GENERAL', 'RelativePath')
+    INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
     HOST_CERT = config.get('SECURITY', 'HostCert')
@@ -115,6 +117,13 @@ try:
     SECRET_KEY = open(SECRET_KEY_FILE, 'r').read()
 except FileNotFoundError as e:
     print(SECRET_KEY_FILE + ': %s' % repr(e))
+    raise SystemExit(1)
+
+try:
+    with open(INSTITUTION_MAP, mode='r') as fp:
+        MAP_INSTITUTIONS = json.loads(fp.read())
+except FileNotFoundError as e:
+    print(INSTITUTION_MAP + ': %s' % repr(e))
     raise SystemExit(1)
 
 try:
