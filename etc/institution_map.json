@@ -6,5 +6,49 @@
     {
         "from": "Fakultet elektrotehnike i racunarstva",
         "to": "Fakultet elektrotehnike i računarstva"
+    },
+    {
+        "from": "Fakultet elektrotehnike, strojarstva i brodogradnje",
+        "to": "Fakultet elektrotehnike, strojarstva i brodogradnje u Splitu"
+    },
+    {
+        "from": "Prirodoslovno-matematički fakultet",
+        "to": "Prirodoslovno-matematički fakultet, Zagreb"
+    },
+    {
+        "from": "Prirodoslovno-matematicki fakultet",
+        "to": "Prirodoslovno-matematički fakultet, Zagreb"
+    },
+    {
+        "from": "Sveučilište u Zagrebu Agronomski fakultet",
+        "to": "Agronomski fakultet"
+    },
+    {
+        "from": "Veterinarski Fakultet Sveučilišta u Zagrebu",
+        "to": "Veterinarski fakultet, Zagreb"
+    },
+    {
+        "from": "Fakultet elektrotehnike računarstva i informacijskih tehnologija",
+        "to": "Fakultet elektrotehnike, računarstva i informacijskih tehnologija Osijek"
+    },
+    {
+        "from": "Sveučilište u Zagrebu Farmaceutsko-biokemijski fakultet",
+        "to": "Farmaceutsko-biokemijski fakultet"
+    },
+    {
+        "from": "Sveučilište u Rijeci Ekonomski fakultet",
+        "to": "Ekonomski fakultet, Rijeka"
+    },
+    {
+        "from": "Kineziološki fakultet",
+        "to": "Kineziološki fakultet u Zagrebu"
+    },
+    {
+        "from": "Hrvatski Geološki Institut",
+        "to": "Hrvatski geološki institut"
+    },
+    {
+        "from": "Institut za fiziku",
+        "to": "Institut za fiziku, Zagreb"
     }
 ]
