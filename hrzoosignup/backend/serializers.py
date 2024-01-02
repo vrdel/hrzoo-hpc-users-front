@@ -91,6 +91,7 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
     project_type = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
     staff_resources_type = serializers.SerializerMethodField()
+    institute = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
@@ -98,6 +99,7 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
             'identifier',
             'is_active',
             'name',
+            'institute',
             'project_type',
             'resources_numbers',
             'staff_resources_type',
@@ -117,6 +119,10 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
 
     def get_state(self, obj):
         return obj.state.name
+
+    def get_institute(self, obj):
+        orig = obj.institute
+        return orig
 
 
 class UsersSerializerFiltered(serializers.ModelSerializer):
