@@ -120,7 +120,7 @@ except FileNotFoundError as e:
     raise SystemExit(1)
 
 try:
-    with open(INSTITUTION_MAP, mode='r') as fp:
+    with open(INSTITUTION_MAP, mode='r', encoding='utf-8') as fp:
         MAP_INSTITUTIONS = json.loads(fp.read())
 except FileNotFoundError as e:
     print(INSTITUTION_MAP + ': %s' % repr(e))
