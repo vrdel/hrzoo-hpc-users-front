@@ -33,6 +33,7 @@ RUN dnf -y install epel-release && \
       tree \
       vim \
       wget \
+      xmlsec1-openssl \
       yum-utils \
       zsh
 RUN pip install -U pip; pip3 install -U pip
