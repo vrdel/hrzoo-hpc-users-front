@@ -250,6 +250,7 @@ class CroRISInfo(APIView):
                 if project:
                     coros.append(self._fetch_data(project['href']))
                 else:
+                    self.projects_associate_info = []
                     return
 
             self.projects_associate_info_apidata = await asyncio.gather(*coros,
