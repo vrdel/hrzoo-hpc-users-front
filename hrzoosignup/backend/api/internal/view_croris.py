@@ -288,7 +288,7 @@ class CroRISInfo(APIView):
 
             self.projects_associate_info = parsed_projects
         else:
-            self.projects_associate_info = None
+            self.projects_associate_info = []
 
     async def filter_unverified(self):
         coros = []
