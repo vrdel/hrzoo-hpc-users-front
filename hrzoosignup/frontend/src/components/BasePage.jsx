@@ -41,7 +41,8 @@ const BasePage = ({sessionData=undefined}) => {
   if (status === 'success' && croRisData) {
     if (croRisData['status']['code'] !== 200 && !noToast) {
       // for person not having entry in CroRIS just skip silently
-      if (!croRisData['status']['message'].includes('Ne postoji traženi resurs'))
+      if (!croRisData['status']['message'].includes('Ne postoji traženi resurs')
+        && !croRisData['status']['message'].includes('Could not parse JSON data from CroRIS'))
         toast.error(
           <span className="font-monospace">
             { JSON.stringify(croRisData['status'], null, 2) }
