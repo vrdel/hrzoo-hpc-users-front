@@ -92,20 +92,34 @@ class CroRISInfo(APIView):
                 })
 
         except (client_exceptions.ServerTimeoutError, asyncio.TimeoutError) as exc:
-            return Response({
+            err_response = {
                 'status': {
                     'code': status.HTTP_408_REQUEST_TIMEOUT,
                     'message': 'Could not get data from CroRIS - {}'.format(repr(exc))
                 }
-            })
+            }
+            logger.error(err_response)
+            return Response(err_response, status=status.HTTP_408_REQUEST_TIMEOUT)
 
         except (client_exceptions.ClientError, http_exceptions.HttpProcessingError) as exc:
-            return Response({
+            err_response = {
                 'status': {
                     'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
                     'message': 'Could not parse data from CroRIS - {}'.format(repr(exc))
                 }
-            })
+            }
+            logger.error(err_response)
+            return Response(err_response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        except json.JSONDecodeError as exc:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    'message': 'Could not parse JSON data from CroRIS - {}'.format(repr(exc))
+                }
+            }
+            logger.error(err_response)
+            return Response(err_response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def _extract_project_fields(self, apidata):
         metadata = {}
@@ -175,9 +189,15 @@ class CroRISInfo(APIView):
 
     async def fetch_person_lead(self, oib):
         fetch_data = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
-        fetch_data = json.loads(fetch_data)
+        try:
+            fetch_data = json.loads(fetch_data)
+        except json.JSONDecodeError as exc:
+            logger.error('fetch_person_lead() - Failed JSON parse')
+            raise exc
+
         httpcode = fetch_data.get('httpStatusCode', False)
         if httpcode and httpcode != 200:
+            logger.error('fetch_person_lead() - Erroneous HTTP status from CroRIS')
             raise client_exceptions.ClientError({
                 'status': fetch_data['httpStatusCode'],
                 'message': fetch_data['errorMessage']
