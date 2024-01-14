@@ -112,6 +112,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     data['project'] = project['id']
     data['type'] = 'signoff'
     onSubmit(data)
+    setCheckJoined(Array(alreadyJoined.length))
   }
 
   const onInviteDelete = (user) => {
