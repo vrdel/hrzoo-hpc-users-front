@@ -110,6 +110,7 @@ class UsersProjects(APIView):
             cache.delete("ext-users-projects")
             cache.delete("usersinfoinactive-get")
             cache.delete("usersinfo-get")
+
             return Response(msg, status=status.HTTP_200_OK)
 
         except Exception as exc:

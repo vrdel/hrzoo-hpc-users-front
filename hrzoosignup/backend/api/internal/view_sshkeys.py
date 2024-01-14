@@ -54,6 +54,8 @@ class SshKeys(APIView):
                 'message': f'{request.user.username} - {key_name} successfully deleted'
             }
         }
+        cache.delete("usersinfoinactive-get")
+        cache.delete("usersinfo-get")
         cache.delete("ext-sshkeys")
         return Response(ok_response, status=status.HTTP_204_NO_CONTENT)
 
@@ -82,6 +84,8 @@ class SshKeys(APIView):
                 serializer.save()
                 if settings.EMAIL_SEND:
                     keyemail.email_add_sshkey(request.user)
+                cache.delete("usersinfoinactive-get")
+                cache.delete("usersinfo-get")
                 cache.delete("ext-sshkeys")
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
