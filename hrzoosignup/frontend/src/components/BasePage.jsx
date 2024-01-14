@@ -86,7 +86,7 @@ const BasePage = ({sessionData=undefined}) => {
   if (isLoggedIn || sessionData.active)
     return (
       // TODO: <Container fluid={userMode ? "xl" : false} className="pt-1 d-flex flex-column" style={userMode ? {maxWidth: '1500px'} : {maxWidth: '100%'}}>
-      <Container fluid="xl" className="pt-1 d-flex flex-column" style={{maxWidth: '1500px'}}>
+      <Container fluid="xl" className="pt-1 d-flex flex-column" style={{maxWidth: '1600px'}}>
         <HeadTitle />
         <ModalAreYouSure
           isOpen={areYouSureModal}
