@@ -13,6 +13,7 @@ import {
   faCircleInfo,
   faStamp,
   faCertificate,
+  faWindowRestore,
   faToggleOn,
   faToggleOff
 } from '@fortawesome/free-solid-svg-icons';
@@ -116,7 +117,7 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/softver'
         >
-          <FontAwesomeIcon icon={faUsers} />{" "}
+          <FontAwesomeIcon icon={faWindowRestore} />{" "}
           Softver
         </NavLink>
       </NavItem>
