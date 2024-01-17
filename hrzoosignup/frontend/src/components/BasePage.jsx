@@ -38,14 +38,14 @@ const BasePage = ({sessionData=undefined}) => {
       staleTime: 15 * 60 * 1000
   })
 
-  if (status === 'success' && croRisData) {
+  if (status === 'error' && croRisData && !noToast)
     if (croRisData['status']['code'] !== 200 && !noToast) {
       // for person not having entry in CroRIS just skip silently
       if (!croRisData['status']['message'].includes('Ne postoji traženi resurs')
-        && !croRisData['status']['message'].includes('Could not parse JSON data from CroRIS'))
+        || !croRisData['status']['message'].includes('Could not parse JSON data from CroRIS'))
         toast.error(
           <span className="font-monospace">
-            { JSON.stringify(croRisData['status'], null, 2) }
+            { failureReason?.message }
           </span>, {
             theme: 'colored',
             autoClose: false,
@@ -54,18 +54,6 @@ const BasePage = ({sessionData=undefined}) => {
           }
         )
     }
-  }
-  else if (status === 'error' && !noToast)
-    toast.error(
-      <span className="font-monospace">
-        { failureReason?.message }
-      </span>, {
-        theme: 'colored',
-        autoClose: false,
-        toastId: 'basepage-no-croris',
-        onClose: () => setNoToast(true)
-      }
-    )
 
   function onYesCallback() {
     if (onYesCall == 'dologout') {
