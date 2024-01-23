@@ -32,7 +32,7 @@ class UsersInfoOps(APIView):
                         'username': user.username
                     }
                 )
-            cache.set('usersinfo-ops-get', extract_users, 60 * 15)
+            cache.set('usersinfo-ops-get', extract_users, None)
             return Response(extract_users, status=status.HTTP_200_OK)
 
         else:
@@ -164,7 +164,7 @@ class UsersInfo(APIView):
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
 
-                cache.set('usersinfo-get', resp_users, 60 * 15)
+                cache.set('usersinfo-get', resp_users, None)
 
             return Response(resp_users, status=status.HTTP_200_OK)
 

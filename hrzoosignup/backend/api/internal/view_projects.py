@@ -366,7 +366,7 @@ class Projects(APIView):
                     if ret_data:
                         return Response(ret_data, status=status.HTTP_200_OK)
                     else:
-                        cache.set('projects-get-all', serializer.data, 60 * 15)
+                        cache.set('projects-get-all', serializer.data, None)
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
                     serializer = ProjectSerializerGet(models.Project.objects.get(identifier=req_type))

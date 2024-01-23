@@ -29,7 +29,7 @@ class ScienceSoftware(APIView):
 
             softwares = models.ScienceSoftware.objects.all()
             serializer = ScienceSoftwareSerializer(softwares, many=True)
-            cache.set('science-software-get', serializer.data, 60 * 15)
+            cache.set('science-software-get', serializer.data, None)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:

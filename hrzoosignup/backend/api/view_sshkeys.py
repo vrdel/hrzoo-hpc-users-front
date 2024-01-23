@@ -18,6 +18,6 @@ class SshKeysAPI(APIView):
             return Response(ret_data, status=status.HTTP_200_OK)
 
         serializer = serializers.SshKeysSerializer2(SSHPublicKey.objects.all(), many=True)
-        cache.set('ext-sshkeys', serializer.data, 60 * 15)
+        cache.set('ext-sshkeys', serializer.data, None)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

@@ -67,6 +67,6 @@ class UserProjectAPI(APIView):
                 return Response(ret_data, status=status.HTTP_200_OK)
 
             serializer = serializers.UserProjectSerializer2(models.UserProject.objects.all(), many=True)
-            cache.set('ext-users-projects', serializer.data, 60 * 15)
+            cache.set('ext-users-projects', serializer.data, None)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
