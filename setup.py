@@ -40,7 +40,8 @@ setup(name=NAME,
         'djangorestframework-api-key',
         'djangosaml2',
         'psycopg2-binary',
-        'pymemcache'
+        'pymemcache',
+        'unidecode'
       ],
       scripts=['bin/hzsi-db', 'bin/hzsi-genseckey', 'bin/hzsi-manage'],
       data_files=[
