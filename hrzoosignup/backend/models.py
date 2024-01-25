@@ -97,6 +97,11 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    person_username = models.CharField(
+        _("Username - LDAP"),
+        max_length=8,
+        blank=True
+    )
 
 
 class SSHPublicKey(models.Model):
