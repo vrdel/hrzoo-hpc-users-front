@@ -83,16 +83,28 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   if (searchJoined)
     fieldsView = fieldsView.filter(e => e.date_joined.includes(searchJoined))
 
-  if (searchName)
-    fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()) ||
-      e.username.includes(searchName.toLowerCase())
-    )
+  if (searchName) {
+    if (activeList)
+      fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()) ||
+        e.person_mail.includes(searchName.toLowerCase())
+      )
+    else
+      fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()) ||
+        e.username.includes(searchName.toLowerCase())
+      )
+  }
 
   if (searchInstitution)
     fieldsView = fieldsView.filter(e => e.person_institution.toLowerCase().includes(searchInstitution.toLowerCase()))
 
-  if (searchEmail)
-    fieldsView = fieldsView.filter(e => e.person_mail.toLowerCase().includes(searchEmail.toLowerCase()))
+  if (searchEmail) {
+    if (activeList)
+      fieldsView = fieldsView.filter(e => e.username.toLowerCase().includes(searchEmail.toLowerCase()) ||
+        e.person_username.includes(searchEmail.toLowerCase())
+      )
+    else
+      fieldsView = fieldsView.filter(e => e.person_mail.toLowerCase().includes(searchEmail.toLowerCase()))
+  }
 
   if (searchProject)
     fieldsView = fieldsView.filter(e => e.projects.map(proj => proj.identifier).join(" ").toLowerCase().includes(searchProject.toLowerCase()))
