@@ -99,7 +99,7 @@ class User(AbstractUser):
     )
     person_username = models.CharField(
         _("Username - LDAP"),
-        max_length=8,
+        max_length=10,
         blank=True
     )
 
