@@ -152,6 +152,7 @@ class UsersInfo(APIView):
                         "last_name": user.last_name,
                         "person_institution": inst_maps.check_replace(user.person_institution),
                         "person_mail": user.person_mail,
+                        "person_username": user.person_username,
                         "ssh_key": ssh_keys > 0,
                         "n_ssh_key": ssh_keys,
                         "projects": [{

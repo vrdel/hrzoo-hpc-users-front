@@ -152,7 +152,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   }}
                 >
                   <div className="flex-grow-1">
-                    Ime, prezime i oznaka
+                    Ime, prezime, email
                   </div>
                   <div>
                     { SortArrow(sortName) }
@@ -162,7 +162,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   Institucija
                 </th>
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
-                  Email
+                  Korisničko ime, AAI oznaka
                 </th>
                 <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
                   onClick={() => {
@@ -295,6 +295,26 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                           </Col>
                         </Row>
                         <Row className="g-0">
+                          <Col className="d-flex font-monospace fw-normal justify-content-center align-items-center align-self-center">
+                            { user.person_mail }
+                            <MiniButton
+                              onClick={(e) => copyToClipboard(
+                                e, user.person_mail,
+                                "Email kopiran u međuspremnik",
+                                "Greška prilikom kopiranja emaila u međuspremnik",
+                                "id-email"
+                              )}
+                            >
+                              <FontAwesomeIcon size="xs" icon={faCopy} />
+                            </MiniButton>
+                          </Col>
+                        </Row>
+                      </td>
+                      <td className="p-3 align-middle text-center">
+                        { user.person_institution }
+                      </td>
+                      <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
+                        <Row className="g-0">
                           <Col className="font-monospace fw-normal d-flex justify-content-center align-items-center align-self-center">
                             { user.username }
                             <MiniButton
@@ -309,26 +329,24 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                             </MiniButton>
                           </Col>
                         </Row>
-                      </td>
-                      <td className="p-3 align-middle text-center">
-                        { user.person_institution }
-                      </td>
-                      <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
-                        <Row className="g-0">
-                          <Col className="d-flex justify-content-center align-items-center align-self-center">
-                            { user.person_mail }
-                            <MiniButton
-                              onClick={(e) => copyToClipboard(
-                                e, user.person_mail,
-                                "Email kopiran u međuspremnik",
-                                "Greška prilikom kopiranja emaila u međuspremnik",
-                                "id-email"
-                              )}
-                            >
-                              <FontAwesomeIcon size="xs" icon={faCopy} />
-                            </MiniButton>
-                          </Col>
-                        </Row>
+                        {
+                          activeList &&
+                          <Row className="g-0">
+                            <Col className="font-monospace fw-normal d-flex justify-content-center align-items-center align-self-center">
+                              { user.person_username }
+                              <MiniButton
+                                onClick={(e) => copyToClipboard(
+                                  e, user.person_username,
+                                  "Korisničko ime kopirano u međuspremnik",
+                                  "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+                                  "id-uid"
+                                )}
+                              >
+                                <FontAwesomeIcon size="xs" icon={faCopy} />
+                              </MiniButton>
+                            </Col>
+                          </Row>
+                        }
                       </td>
                       <td className="p-3 align-middle text-center fs-6 font-monospace" style={{wordBreak: 'break-all'}}>
                         { convertToEuropean(user.date_joined) }
