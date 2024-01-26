@@ -171,6 +171,7 @@ class UsersSerializerFiltered3(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'person_mail',
+            'person_username',
             'username',
             'status',
             'is_active',
