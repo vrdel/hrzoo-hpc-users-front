@@ -15,7 +15,7 @@ const CroRisInfo = ({croRisProjects}) => {
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Sustav CroRIS:
+            Sustav CroRIS
           </Label>
         </Col>
       </Row>
@@ -152,46 +152,9 @@ const InstituteTableInfo = () => {
   return (
     <React.Fragment>
       <Row>
-        <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Status:
-          </Label>
-          <div className="fs-5 ps-2 d-flex align-items-center">
-            {
-              userDetails.status ?
-                <>
-                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
-                  <Tooltip
-                    placement='right'
-                    isOpen={isOpened(userDetails.first_name)}
-                    target={'Tooltip-' + userDetails.first_name}
-                    toggle={() => showTooltip(userDetails.first_name)}
-                  >
-                    Aktivan<br/>
-                    Prijavljeni ste na bar jedan aktivan projekt
-                  </Tooltip>
-                </>
-              :
-                <>
-                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
-                  <Tooltip
-                    placement='bottom'
-                    isOpen={isOpened(userDetails.first_name)}
-                    target={'Tooltip-' + userDetails.first_name}
-                    toggle={() => showTooltip(userDetails.first_name)}
-                  >
-                    Neaktivan<br/>
-                    Niste prijavljeni ni na jedan aktivan projekt
-                  </Tooltip>
-                </>
-            }
-          </div>
-        </Col>
-      </Row>
-      <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Imenik:
+            Imenik
           </Label>
         </Col>
       </Row>
@@ -307,13 +270,105 @@ const InstituteTableInfo = () => {
 }
 
 
+const StatusInfo = () => {
+  const { userDetails } = useContext(AuthContext);
+
+  const [tooltipOpened, setTooltipOpened] = useState(undefined);
+  const showTooltip = (toolid) => {
+    let showed = new Object()
+    if (tooltipOpened === undefined && toolid) {
+      showed[toolid] = true
+      setTooltipOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(tooltipOpened))
+      showed[toolid] = !showed[toolid]
+      setTooltipOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (tooltipOpened !== undefined)
+      return tooltipOpened[toolid]
+  }
+
+  return (
+    <React.Fragment>
+      <Row>
+        <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{size:3}}>
+          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+            Status
+          </Label>
+          <div className="fs-5 ps-2 d-flex align-items-center">
+            {
+              userDetails.status ?
+                <>
+                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
+                  <Tooltip
+                    placement='right'
+                    isOpen={isOpened(userDetails.first_name)}
+                    target={'Tooltip-' + userDetails.first_name}
+                    toggle={() => showTooltip(userDetails.first_name)}
+                  >
+                    Aktivan<br/>
+                    Prijavljeni ste na bar jedan aktivan projekt
+                  </Tooltip>
+                </>
+              :
+                <>
+                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
+                  <Tooltip
+                    placement='bottom'
+                    isOpen={isOpened(userDetails.first_name)}
+                    target={'Tooltip-' + userDetails.first_name}
+                    toggle={() => showTooltip(userDetails.first_name)}
+                  >
+                    Neaktivan<br/>
+                    Niste prijavljeni ni na jedan aktivan projekt
+                  </Tooltip>
+                </>
+            }
+          </div>
+        </Col>
+      </Row>
+      <Row className="mt-3 mb-3">
+        <Col className="mt-3 ms-4" md={{size: 11}}>
+          <Table borderless responsive className="text-left">
+            <thead>
+              <tr>
+                <th className="fw-bold fs-5" style={{width: '30%'}}>
+                  Korisničko ime
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {
+                    userDetails.person_username ?
+                      <Badge color="success" className="fs-5" pill>
+                        {userDetails.person_username}
+                      </Badge>
+                    :
+                      '\u2212'
+                  }
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+    </React.Fragment>
+  )
+}
+
+
 const EmptyCroRis = () => {
   return (
     <>
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Sustav CroRIS:
+            Sustav CroRIS
           </Label>
         </Col>
       </Row>
@@ -475,6 +530,7 @@ const MyInfo = () => {
         <PageTitle pageTitle={pageTitle}/>
       </Row>
 
+      <StatusInfo />
       <InstituteTableInfo />
 
       <Row style={{height: "40px"}}>
