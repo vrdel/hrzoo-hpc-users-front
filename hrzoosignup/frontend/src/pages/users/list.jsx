@@ -152,7 +152,12 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   }}
                 >
                   <div className="flex-grow-1">
-                    Ime, prezime, email
+                    {
+                      activeList ?
+                        'Ime, prezime, email'
+                      :
+                        'Ime, prezime i AAI oznaka'
+                    }
                   </div>
                   <div>
                     { SortArrow(sortName) }
@@ -162,7 +167,12 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   Institucija
                 </th>
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
-                  Korisničko ime, AAI oznaka
+                  {
+                    activeList ?
+                      'Korisničko ime, AAI oznaka'
+                    :
+                      'Email'
+                  }
                 </th>
                 <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
                   onClick={() => {
@@ -314,21 +324,6 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                         { user.person_institution }
                       </td>
                       <td className="p-3 align-middle text-center font-monospace" style={{wordBreak: 'break-all'}}>
-                        <Row className="g-0">
-                          <Col className="font-monospace fw-normal d-flex justify-content-center align-items-center align-self-center">
-                            { user.username }
-                            <MiniButton
-                              onClick={(e) => copyToClipboard(
-                                e, user.username,
-                                "Korisnička oznaka kopirana u međuspremnik",
-                                "Greška prilikom kopiranja korisničke oznake u međuspremnik",
-                                "id-uid"
-                              )}
-                            >
-                              <FontAwesomeIcon size="xs" icon={faCopy} />
-                            </MiniButton>
-                          </Col>
-                        </Row>
                         {
                           activeList &&
                           <Row className="g-0">
@@ -347,6 +342,21 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                             </Col>
                           </Row>
                         }
+                        <Row className="g-0">
+                          <Col className="font-monospace fw-normal d-flex justify-content-center align-items-center align-self-center">
+                            { user.username }
+                            <MiniButton
+                              onClick={(e) => copyToClipboard(
+                                e, user.username,
+                                "Korisnička oznaka kopirana u međuspremnik",
+                                "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                                "id-uid"
+                              )}
+                            >
+                              <FontAwesomeIcon size="xs" icon={faCopy} />
+                            </MiniButton>
+                          </Col>
+                        </Row>
                       </td>
                       <td className="p-3 align-middle text-center fs-6 font-monospace" style={{wordBreak: 'break-all'}}>
                         { convertToEuropean(user.date_joined) }
