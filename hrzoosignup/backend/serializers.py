@@ -231,6 +231,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'person_oib',
             'person_organisation',
             'person_uniqueid',
+            'person_username',
             'pk',
             'status',
             'username',
