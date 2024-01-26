@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from './root';
-import { Col, Badge, Placeholder, Row, Table, Label, Tooltip } from 'reactstrap';
+import { Col, Badge, Placeholder, Row, Table, Label, Tooltip, Button } from 'reactstrap';
 import { PageTitle } from '../components/PageTitle';
 import { AuthContext } from '../components/AuthContextProvider'
 import { fetchCroRIS } from '../api/croris';
 import { useQuery } from '@tanstack/react-query';
-import { faCheckCircle, faStopCircle} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faStopCircle, faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { copyToClipboard } from 'Utils/copy-clipboard';
 
 
 const CroRisInfo = ({croRisProjects}) => {
@@ -331,11 +332,11 @@ const StatusInfo = () => {
         </Col>
       </Row>
       <Row className="mt-3 mb-3">
-        <Col className="mt-3 ms-4" md={{size: 11}}>
+        <Col className="mt-3 ms-4" md={{size: 12}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
-                <th className="fw-bold fs-5" style={{width: '30%'}}>
+                <th className="fw-bold fs-5">
                   Korisničko ime
                 </th>
               </tr>
@@ -345,9 +346,23 @@ const StatusInfo = () => {
                 <td>
                   {
                     userDetails.person_username ?
-                      <Badge color="success" className="fs-5" pill>
-                        {userDetails.person_username}
-                      </Badge>
+                      <div className="d-flex align-items-center">
+                        <Badge color="success" className="fs-5">
+                          {userDetails.person_username}
+                        </Badge>
+                        <Button
+                          className="ms-1"
+                          color="light"
+                          onClick={(e) => copyToClipboard(
+                            e, userDetails.person_username,
+                            "Korisničko ime kopirano u međuspremnik",
+                            "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+                            "username"
+                          )}
+                        >
+                          <FontAwesomeIcon icon={faCopy} />
+                        </Button>
+                      </div>
                     :
                       '\u2212'
                   }
