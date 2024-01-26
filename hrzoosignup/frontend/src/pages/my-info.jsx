@@ -331,21 +331,21 @@ const StatusInfo = () => {
           </div>
         </Col>
       </Row>
-      <Row className="mt-3 mb-3">
-        <Col className="mt-3 ms-4" md={{size: 12}}>
-          <Table borderless responsive className="text-left">
-            <thead>
-              <tr>
-                <th className="fw-bold fs-5">
-                  Korisničko ime
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  {
-                    userDetails.person_username ?
+      {
+        userDetails.person_username &&
+          <Row className="mt-3 mb-3">
+            <Col className="mt-3 ms-4" md={{size: 12}}>
+              <Table borderless responsive className="text-left">
+                <thead>
+                  <tr>
+                    <th className="fw-bold fs-5">
+                      Korisničko ime
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
                       <div className="d-flex align-items-center">
                         <Badge color="success" className="fs-5">
                           {userDetails.person_username}
@@ -363,15 +363,13 @@ const StatusInfo = () => {
                           <FontAwesomeIcon icon={faCopy} />
                         </Button>
                       </div>
-                    :
-                      '\u2212'
-                  }
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
+                    </td>
+                  </tr>
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+      }
     </React.Fragment>
   )
 }
