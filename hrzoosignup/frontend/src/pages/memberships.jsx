@@ -24,6 +24,10 @@ import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { UsersTableCroris } from 'Components/membership/UsersTableCroris';
 import { UsersTableGeneral } from 'Components/membership/UsersTableGeneral';
 import { StateIcons, StateStringUser } from "Config/map-states";
+import { MiniButton } from 'Components/MiniButton';
+import { copyToClipboard } from 'Utils/copy-clipboard';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy} from "@fortawesome/free-solid-svg-icons";
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -381,12 +385,23 @@ const Memberships = () => {
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
                       <CardHeader className="d-flex align-items-center justify-content-between">
-                        <span className="fs-5 fw-bold text-dark">
+                        <span className="fs-5 fw-bold text-dark flex-grow-1">
                           { project?.name }
                         </span>
                         <Badge color={"secondary fw-normal"}>
                           { project.identifier }
                         </Badge>
+                        <MiniButton
+                          color="light"
+                          onClick={(e) => copyToClipboard(
+                            e, project.identifier,
+                            "Šifra projekta kopirana u međuspremnik",
+                            "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                            "id-request"
+                          )}
+                        >
+                          <FontAwesomeIcon size="xs" icon={faCopy} />
+                        </MiniButton>
                       </CardHeader>
                       <CardBody className="mb-1 bg-light p-0 m-0">
                         {
