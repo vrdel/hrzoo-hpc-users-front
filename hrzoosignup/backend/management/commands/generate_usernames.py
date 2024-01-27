@@ -26,12 +26,12 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        all_users = self.user_model.objects.all()
-        user_ids_assigned = UserProject.objects.all().values_list('user__id', flat=True)
+        userprojs = UserProject.objects.all()
         any_changed = False
 
-        for user in all_users:
-            if not user.person_username and user.id in user_ids_assigned:
+        for userproj in userprojs:
+            user = userproj.user
+            if not user.person_username:
                 new_username = gen_username(user.first_name, user.last_name)
                 if options.get('confirmed_yes', None):
                     self.stdout.write(self.style.NOTICE(f'Generated username {new_username} for {user.username}'))
