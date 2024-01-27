@@ -32,8 +32,8 @@ class Command(BaseCommand):
 
         for user in all_users:
             if not user.person_username and user.id in user_ids_assigned:
+                new_username = gen_username(user.first_name, user.last_name)
                 if options.get('confirmed_yes', None):
-                    new_username = gen_username(user.first_name, user.last_name)
                     self.stdout.write(self.style.NOTICE(f'Generated username {new_username} for {user.username}'))
 
                     user.person_username = new_username
