@@ -302,7 +302,7 @@ const StatusInfo = () => {
           <div className="fs-5 ps-2 d-flex align-items-center">
             {
               userDetails.status ?
-                <>
+                <React.Fragment>
                   <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
                   <Tooltip
                     placement='right'
@@ -313,9 +313,9 @@ const StatusInfo = () => {
                     Aktivan<br/>
                     Prijavljeni ste na bar jedan aktivan projekt
                   </Tooltip>
-                </>
+                </React.Fragment>
               :
-                <>
+                <React.Fragment>
                   <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
                   <Tooltip
                     placement='bottom'
@@ -326,7 +326,7 @@ const StatusInfo = () => {
                     Neaktivan<br/>
                     Niste prijavljeni ni na jedan aktivan projekt
                   </Tooltip>
-                </>
+                </React.Fragment>
             }
           </div>
         </Col>
@@ -334,7 +334,7 @@ const StatusInfo = () => {
       {
         userDetails.person_username &&
           <Row className="mt-3 mb-3">
-            <Col className="mt-3 ms-4" md={{size: 12}}>
+            <Col className="mt-3 ms-4">
               <Table borderless responsive className="text-left">
                 <thead>
                   <tr>
@@ -347,8 +347,17 @@ const StatusInfo = () => {
                   <tr>
                     <td>
                       <div className="d-flex align-items-center">
-                        <Badge color="success" className="fs-5">
+                        <Badge color="success" className="fs-5" id={`Tooltip-${userDetails.person_username}`}>
                           {userDetails.person_username}
+                          <Tooltip
+                            placement='right'
+                            isOpen={isOpened(userDetails.person_username)}
+                            target={'Tooltip-' + userDetails.person_username}
+                            toggle={() => showTooltip(userDetails.person_username)}
+                          >
+                            Dodijeljeno korisničko ime za
+                            pristup resursima
+                          </Tooltip>
                         </Badge>
                         <Button
                           className="ms-1"

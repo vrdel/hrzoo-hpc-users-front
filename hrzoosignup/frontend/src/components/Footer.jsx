@@ -21,7 +21,7 @@ const Footer = () => {
       </div>
       <div className="text-center pt-1 pb-2">
         <p>
-          <small>Copyright © 2023{' '}
+          <small>Copyright © 2024{' '}
             <a href="https://www.srce.unizg.hr/" target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
               Sveučilišni računski centar (Srce)
             </a>

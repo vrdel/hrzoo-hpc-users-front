@@ -72,7 +72,7 @@ const NewRequest = () => {
             aria-label="requestType"
             style={{backgroundColor: "#b04c46"}}
           >
-            Tip zahtjeva:
+            Tip zahtjeva
           </Label>
           <CustomReactSelect
             id="requestType"
