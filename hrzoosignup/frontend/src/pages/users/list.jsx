@@ -339,7 +339,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                         {
                           activeList &&
                           <Row className="g-0">
-                            <Col className="font-monospace fw-normal d-flex justify-content-center align-items-center align-self-center">
+                            <Col className="font-monospace fw-bold text-success d-flex justify-content-center align-items-center align-self-center">
                               { user.person_username }
                               <MiniButton
                                 onClick={(e) => copyToClipboard(
