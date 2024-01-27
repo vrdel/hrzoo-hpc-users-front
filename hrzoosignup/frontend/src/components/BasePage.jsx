@@ -101,7 +101,7 @@ const BasePage = ({sessionData=undefined}) => {
             <Outlet />
           </Col>
         </Row>
-        <Row>
+        <Row className="mt-2">
           <Col>
             <Footer />
           </Col>
