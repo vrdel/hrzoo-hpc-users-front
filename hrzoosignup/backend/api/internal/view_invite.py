@@ -147,6 +147,8 @@ class Invites(APIView):
                         }
                         logger.info(msg)
                         cache.delete("ext-users-projects")
+                        cache.delete("usersinfoinactive-get")
+                        cache.delete("usersinfo-get")
                         return Response(msg, status=status.HTTP_201_CREATED)
 
                     else:
@@ -231,6 +233,8 @@ class Invites(APIView):
                     }
                     logger.info(msg)
                     cache.delete("ext-users-projects")
+                    cache.delete("usersinfoinactive-get")
+                    cache.delete("usersinfo-get")
                     return Response(msg, status=status.HTTP_201_CREATED)
 
                 else:
