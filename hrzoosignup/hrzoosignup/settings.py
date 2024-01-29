@@ -62,6 +62,8 @@ try:
     API_PERSONPROJECT = config.get('CRORIS', 'API_PersonProject')
     API_PROJECT = config.get('CRORIS', 'API_Project')
     API_PERSON = config.get('CRORIS', 'API_Person')
+    API_INSTITUTIONACTIVE = config.get('CRORIS', 'API_InstitutionActive')
+    API_INSTITUTIONINACTIVE = config.get('CRORIS', 'API_InstitutionInactive')
     CRORIS_USER = config.get('CRORIS', 'Username')
     CRORIS_PASSWORD = config.get('CRORIS', 'Password')
     GRACE_DAYS = config.getint('CRORIS', 'Grace_Days', fallback=0)
