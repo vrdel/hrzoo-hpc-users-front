@@ -290,8 +290,9 @@ LOGIN_URL = '/saml2/login/'
 SAML_ATTRIBUTE_MAPPING = {
     'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
     'mail': ('person_mail', ),
-    'o': ('person_institution', ),
-#    'hrEduPersonOIB': ('person_oib', ),
+    # 'o': ('person_institution', ),
+    'hrEduPersonOIB': ('person_oib', ),
+    'hrEduOrgOIB': ('person_institution_oib', ),
     'ou': ('person_organisation', ),
     'hrEduPersonAffiliation': ('person_affiliation', ),
     'givenName': ('first_name', ),
