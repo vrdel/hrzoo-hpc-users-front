@@ -36,8 +36,8 @@ class FetchCrorisInstitution(object):
                 raise exc
             else:
                 try:
-                    inac = response[0]
-                    act = response[1]
+                    act = response[0]
+                    inac = response[1]
                     inactive_instits = json.loads(inac)['_embedded']['ustanove']
                     active_instits = json.loads(act)['_embedded']['ustanove']
 

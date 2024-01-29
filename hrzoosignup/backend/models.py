@@ -57,6 +57,11 @@ class User(AbstractUser):
         max_length=128,
         blank=True,
     )
+    person_institution_oib = models.CharField(
+        _('Institution OIB number'),
+        max_length=11,
+        blank=True,
+    )
     person_organisation = models.CharField(
         _('Organisation unit - LDAP'),
         max_length=128,
