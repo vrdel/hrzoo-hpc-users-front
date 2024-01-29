@@ -412,7 +412,7 @@ class CroRISInfo(APIView):
                             if person['klasifikacija']['naziv'].lower() == 'voditelj':
                                 project_have_main_leader = True
                             if (person['klasifikacija']['naziv'] == 'voditelj na ustanovi'
-                                and person['oib'] == oib):
+                                and person.get('oib', 0) == oib):
                                 iam_lead_institute = True
 
                         if not project_have_main_leader and iam_lead_institute:
@@ -426,7 +426,7 @@ class CroRISInfo(APIView):
                             for person in prjs['osobeResources']['_embedded']['osobe']:
                                 if prjs['id'] not in self.projects_lead_users:
                                     self.projects_lead_users[prjs['id']] = list()
-                                if person['oib'] != oib:
+                                if person.get('oib', 0) != oib:
                                     self.projects_lead_users[prjs['id']].append(
                                         {
                                             'first_name': person['ime'],
