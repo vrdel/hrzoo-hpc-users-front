@@ -132,7 +132,7 @@ class State(models.Model):
 
 
 class ProjectType(models.Model):
-    name =  models.CharField(
+    name = models.CharField(
         _("Project type"),
         max_length=24,
         blank=True,
@@ -358,7 +358,7 @@ class ProjectCount(models.Model):
 
 
 class ScienceSoftware(models.Model):
-    name =  models.CharField(
+    name = models.CharField(
         _("modulefile or concrete software name"),
         max_length=24,
         blank=True,
@@ -442,3 +442,50 @@ class CustomInvitation(AbstractBaseInvitation):
 
     def __str__(self):
         return f"Invite: {self.email}"
+
+
+class CrorisInstitutions(models.Model):
+    active = models.BooleanField(
+        _('Institution exist in the register'),
+        blank=True,
+    )
+    name_long = models.CharField(
+        _("Long name of institution"),
+        max_length=512,
+        blank=True,
+    )
+    name_short = models.CharField(
+        _("Short name of institution"),
+        max_length=256,
+        blank=True,
+    )
+    name_acronym = models.CharField(
+        _("Acronym of institution"),
+        max_length=32,
+        blank=True,
+    )
+    oib = models.CharField(
+        _('OIB number'),
+        max_length=11,
+        blank=True,
+    )
+    mbs = models.CharField(
+        _('MBS number'),
+        max_length=9,
+        blank=True,
+    )
+    mbu = models.CharField(
+        _('MBU number'),
+        max_length=3,
+        blank=True,
+    )
+    contact_web = models.CharField(
+        _("Web URL of institution"),
+        max_length=256,
+        blank=True,
+    )
+    contact_email = models.CharField(
+        _("Main email contact of institution"),
+        max_length=128,
+        blank=True,
+    )
