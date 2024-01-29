@@ -461,7 +461,7 @@ class CrorisInstitutions(models.Model):
     )
     name_acronym = models.CharField(
         _("Acronym of institution"),
-        max_length=32,
+        max_length=256,
         blank=True,
     )
     oib = models.CharField(
@@ -489,3 +489,6 @@ class CrorisInstitutions(models.Model):
         max_length=128,
         blank=True,
     )
+
+    def __str__(self):
+        return self.name_short
