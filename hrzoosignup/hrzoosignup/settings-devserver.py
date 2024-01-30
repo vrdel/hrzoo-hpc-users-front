@@ -36,6 +36,7 @@ try:
     DEBUG_OPTION = bool(config.getboolean('GENERAL', 'Debug'))
     RELATIVE_PATH = config.get('GENERAL', 'RelativePath')
     INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
+    PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
     HOST_CERT = config.get('SECURITY', 'HostCert')
@@ -126,6 +127,14 @@ try:
         MAP_INSTITUTIONS = json.loads(fp.read())
 except FileNotFoundError as e:
     print(INSTITUTION_MAP + ': %s' % repr(e))
+    raise SystemExit(1)
+
+try:
+    with open(PROJECT_IDENTIFIER_MAP, mode='r', encoding='utf-8') as fp:
+        PROJECT_IDENTIFIER_MAP = json.loads(fp.read())
+        PROJECT_IDENTIFIER_MAP = [field for field in PROJECT_IDENTIFIER_MAP if field.get('field').startswith('project.')]
+except FileNotFoundError as e:
+    print(PROJECT_IDENTIFIER_MAP + ': %s' % repr(e))
     raise SystemExit(1)
 
 try:

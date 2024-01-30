@@ -2,6 +2,7 @@ from backend import serializers
 from backend import models
 
 from django.db.models import Q
+from django.conf import settings
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -12,12 +13,18 @@ from rest_framework_api_key.permissions import HasAPIKey
 class AccountingUserProjectAPI(APIView):
     permission_classes = (HasAPIKey,)
 
+    def _replace_projectsapi_fields(self, projid):
+        for field in settings.PROJECT_IDENTIFIER_MAP:
+            if field['from'] in projid:
+                return projid.replace(field['from'], field['to'])
+        return projid
+
     def _generate_response(self, projects):
         ret_data = []
         for project in projects:
             fields_project = dict()
             fields_project['id'] = project.id
-            fields_project['sifra'] = project.identifier
+            fields_project['sifra'] = self._replace_projectsapi_fields(project.identifier)
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
