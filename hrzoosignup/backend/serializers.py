@@ -5,7 +5,6 @@ from django.utils import timezone
 import datetime
 
 from backend import models
-from backend.utils.institution_map import InstitutionMap
 
 
 def get_ssh_key_fingerprint(ssh_key):
@@ -110,7 +109,6 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
-        self.inst_maps = InstitutionMap()
 
     def get_staff_resources_type(self, obj):
         res_types = obj.staff_resources_type
@@ -124,13 +122,6 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
 
     def get_state(self, obj):
         return obj.state.name
-
-    def get_institute(self, obj):
-        orig = obj.institute
-        if orig in self.inst_maps.all_from():
-            return self.inst_maps.get(orig)
-        else:
-            return orig
 
 
 class UsersSerializerFiltered(serializers.ModelSerializer):

@@ -1,5 +1,4 @@
 from backend import models
-from backend.utils.institution_map import InstitutionMap
 
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
@@ -57,8 +56,6 @@ class UsersInfoInactive(APIView):
 
             users = models.User.objects.filter(status=False)
 
-            inst_maps = InstitutionMap()
-
             users_noproject, users_inactiveprojects = list(), list()
             for user in users:
                 userprojects = models.UserProject.objects.filter(user=user)
@@ -68,7 +65,7 @@ class UsersInfoInactive(APIView):
                         "username": user.username,
                         "first_name": user.first_name,
                         "last_name": user.last_name,
-                        "person_institution": inst_maps.check_replace(user.person_institution),
+                        "person_institution": user.person_institution,
                         "person_mail": user.person_mail,
                         "ssh_key": ssh_keys > 0,
                         "n_ssh_key": ssh_keys,
@@ -82,7 +79,7 @@ class UsersInfoInactive(APIView):
                         "username": user.username,
                         "first_name": user.first_name,
                         "last_name": user.last_name,
-                        "person_institution": inst_maps.check_replace(user.person_institution),
+                        "person_institution": user.person_institution,
                         "person_mail": user.person_mail,
                         "ssh_key": ssh_keys > 0,
                         "n_ssh_key": ssh_keys,
@@ -127,8 +124,6 @@ class UsersInfo(APIView):
             lead = models.Role.objects.get(name="lead")
             collaborator = models.Role.objects.get(name="collaborator")
 
-            inst_maps = InstitutionMap()
-
             resp_users = list()
             for user in users:
                 userprojects = models.UserProject.objects.filter(user=user)
@@ -150,7 +145,7 @@ class UsersInfo(APIView):
                         "username": user.username,
                         "first_name": user.first_name,
                         "last_name": user.last_name,
-                        "person_institution": inst_maps.check_replace(user.person_institution),
+                        "person_institution": user.person_institution,
                         "person_mail": user.person_mail,
                         "person_username": user.person_username,
                         "ssh_key": ssh_keys > 0,
