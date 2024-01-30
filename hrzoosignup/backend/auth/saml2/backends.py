@@ -23,7 +23,7 @@ class SAML2Backend(Saml2Backend):
                 user.person_institution = found.name_short
                 force_save = True
 
-            except CrorisInstitutions.DoesNotExist:
+            except (CrorisInstitutions.DoesNotExist, CrorisInstitutions.MultipleObjectsReturned):
                 if user.person_institution != attributes['o'][0]:
                     user.person_institution = attributes['o'][0]
                     force_save = True
