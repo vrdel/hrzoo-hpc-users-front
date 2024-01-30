@@ -269,10 +269,11 @@ class Project(models.Model):
         blank=True,
         null=True
     )
-    croris_institute = models.CharField(
+    croris_institute = models.JSONField(
         _('CroRIS institute'),
-        max_length=128,
+        max_length=512,
         blank=True,
+        null=True
     )
     croris_type = models.CharField(
         _("CroRIS tipProjekta"),
