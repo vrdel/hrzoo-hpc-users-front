@@ -5,6 +5,7 @@ VENV = /opt/hrzoo-signup/
 Debug = True
 RelativePath =
 InstitutionMap = %(VENV)s/etc/hrzoosignup/institution_map.json
+IdentifierMap = %(VENV)s/etc/hrzoosignup/replacestring_map.json
 
 [CONNECTION]
 Timeout = 15
