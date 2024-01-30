@@ -54,7 +54,8 @@ class Command(BaseCommand):
             help="Make changes",
         )
 
-    async def _task_fetch_data(self, any_changed, options, projects):
+    async def _task_resync_croris_institutions(self, options, projects):
+        any_changed = False
         try:
             projects_db = Project.objects.all()
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
@@ -92,110 +93,118 @@ class Command(BaseCommand):
                             self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
                             await target.asave()
 
+            return any_changed
+
         finally:
             await self.session.close()
 
-    def handle(self, *args, **options):
-        users = self.user_model.objects.all()
+    def _task_fix_user_institutions(self, options):
         any_changed = False
-
-        if options.get('user_yes', None):
-            for user in users:
-                try:
-                    email_domain = user.person_mail.split('@')[1]
-                    if 'gmail' in email_domain:
-                        continue
-                    person_id_domain = user.person_uniqueid.split('@')[1]
-                except IndexError:
+        users = self.user_model.objects.all()
+        for user in users:
+            try:
+                email_domain = user.person_mail.split('@')[1]
+                if 'gmail' in email_domain:
                     continue
+                person_id_domain = user.person_uniqueid.split('@')[1]
+            except IndexError:
+                continue
+            try:
+                query = Q()
+                if 'pmf' in person_id_domain:
+                    query |= Q(contact_web__contains=person_id_domain, active=True)
+                    query |= Q(contact_email__contains=person_id_domain, active=True)
+                else:
+                    query |= Q(contact_web__contains=email_domain, active=True)
+                    query |= Q(contact_email__contains=email_domain, active=True)
+                found = CrorisInstitutions.objects.get(query)
+                if user.person_institution != found.name_short:
+                    user.person_institution = found.name_short
+                    self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {found.name_short}'))
+                    any_changed = True
+                    if options.get('confirm_yes', None):
+                        user.save()
+            except CrorisInstitutions.MultipleObjectsReturned:
+                if 'pmf' in person_id_domain:
+                    query |= Q(contact_web__contains=person_id_domain, active=True)
+                    query |= Q(contact_email__contains=person_id_domain, active=True)
+                else:
+                    query |= Q(contact_web__contains=email_domain, active=True)
+                    query |= Q(contact_email__contains=email_domain, active=True)
+                multiple_found = CrorisInstitutions.objects.filter(query)
+                for found in multiple_found:
+                    if user.person_organisation and (user.person_organisation.lower() in found.name_acronym.lower() or user.person_organisation.lower() in found.contact_email.lower()):
+                        if user.person_institution != found.name_short:
+                            user.person_institution = found.name_short
+                            self.stdout.write(self.style.NOTICE(f'Resolving active institution for {user.username} to {found.name_short}'))
+                            if options.get('confirm_yes', None):
+                                user.save()
+            except CrorisInstitutions.DoesNotExist:
                 try:
                     query = Q()
-                    if 'pmf' in person_id_domain:
-                        query |= Q(contact_web__contains=person_id_domain, active=True)
-                        query |= Q(contact_email__contains=person_id_domain, active=True)
-                    else:
-                        query |= Q(contact_web__contains=email_domain, active=True)
-                        query |= Q(contact_email__contains=email_domain, active=True)
+                    query |= Q(contact_web__contains=email_domain, active=False)
+                    query |= Q(contact_email__contains=email_domain, active=False)
                     found = CrorisInstitutions.objects.get(query)
                     if user.person_institution != found.name_short:
                         user.person_institution = found.name_short
-                        self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {found.name_short}'))
-                        any_changed = True
+                        self.stdout.write(self.style.NOTICE(f'Setting inactive institution for {user.username} to {found.name_short}'))
                         if options.get('confirm_yes', None):
                             user.save()
+                            any_changed = True
                 except CrorisInstitutions.MultipleObjectsReturned:
-                    if 'pmf' in person_id_domain:
-                        query |= Q(contact_web__contains=person_id_domain, active=True)
-                        query |= Q(contact_email__contains=person_id_domain, active=True)
-                    else:
-                        query |= Q(contact_web__contains=email_domain, active=True)
-                        query |= Q(contact_email__contains=email_domain, active=True)
+                    query = Q()
+                    query |= Q(contact_web__contains=email_domain, active=False)
+                    query |= Q(contact_email__contains=email_domain, active=False)
                     multiple_found = CrorisInstitutions.objects.filter(query)
                     for found in multiple_found:
-                        if user.person_organisation and (user.person_organisation.lower() in found.name_acronym.lower() or user.person_organisation.lower() in found.contact_email.lower()):
+                        if user.person_organisation and user.person_organisation.lower() in found.name_acronym.lower():
                             if user.person_institution != found.name_short:
                                 user.person_institution = found.name_short
-                                self.stdout.write(self.style.NOTICE(f'Resolving active institution for {user.username} to {found.name_short}'))
+                                self.stdout.write(self.style.NOTICE(f'Resolving inactive institution for {user.username} to {found.name_short}'))
                                 if options.get('confirm_yes', None):
+                                    any_changed = True
                                     user.save()
                 except CrorisInstitutions.DoesNotExist:
-                    try:
-                        query = Q()
-                        query |= Q(contact_web__contains=email_domain, active=False)
-                        query |= Q(contact_email__contains=email_domain, active=False)
-                        found = CrorisInstitutions.objects.get(query)
-                        if user.person_institution != found.name_short:
-                            user.person_institution = found.name_short
-                            self.stdout.write(self.style.NOTICE(f'Setting inactive institution for {user.username} to {found.name_short}'))
-                            if options.get('confirm_yes', None):
-                                user.save()
-                                any_changed = True
-                    except CrorisInstitutions.MultipleObjectsReturned:
-                        query = Q()
-                        query |= Q(contact_web__contains=email_domain, active=False)
-                        query |= Q(contact_email__contains=email_domain, active=False)
-                        multiple_found = CrorisInstitutions.objects.filter(query)
-                        for found in multiple_found:
-                            if user.person_organisation and user.person_organisation.lower() in found.name_acronym.lower():
-                                if user.person_institution != found.name_short:
-                                    user.person_institution = found.name_short
-                                    self.stdout.write(self.style.NOTICE(f'Resolving inactive institution for {user.username} to {found.name_short}'))
-                                    if options.get('confirm_yes', None):
-                                        any_changed = True
-                                        user.save()
-                    except CrorisInstitutions.DoesNotExist:
-                        pass
+                    pass
 
+            if user.person_institution in self.inst_maps.all_from():
+                user.person_institution = self.inst_maps.get(user.person_institution)
+                self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
+                if options.get('confirm_yes', None):
+                    any_changed = True
+                    user.save()
+
+        for user in users:
+            if 'gmail' in user.person_mail:
                 if user.person_institution in self.inst_maps.all_from():
                     user.person_institution = self.inst_maps.get(user.person_institution)
                     self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
                     if options.get('confirm_yes', None):
                         any_changed = True
                         user.save()
+                if user.person_institution == 'Sveučilište Josipa Jurja Strossmayera u Osijeku' and user.person_organisation:
+                    user.person_institution = f'{user.person_institution}, {user.person_organisation}'
+                    self.stdout.write(self.style.NOTICE(f'Joining institution and organisation for {user.username} to {user.person_institution}'))
+                    if options.get('confirm_yes', None):
+                        any_changed = True
+                        user.save()
 
-            for user in users:
-                if 'gmail' in user.person_mail:
-                    if user.person_institution in self.inst_maps.all_from():
-                        user.person_institution = self.inst_maps.get(user.person_institution)
-                        self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
-                        if options.get('confirm_yes', None):
-                            any_changed = True
-                            user.save()
-                    if user.person_institution == 'Sveučilište Josipa Jurja Strossmayera u Osijeku' and user.person_organisation:
-                        user.person_institution = f'{user.person_institution}, {user.person_organisation}'
-                        self.stdout.write(self.style.NOTICE(f'Joining institution and organisation for {user.username} to {user.person_institution}'))
-                        if options.get('confirm_yes', None):
-                            any_changed = True
-                            user.save()
+        return any_changed
+
+    def handle(self, *args, **options):
+        any_changed_user, any_changed_project = False, False
+
+        if options.get('user_yes', None):
+            any_changed_user = self._task_fix_user_institutions(options)
 
         if options.get('research_resync_yes', None):
             projects_all = Project.objects.filter(project_type__name='research-croris')
             try:
-                asyncio.run(self._task_fetch_data(any_changed, options, projects_all))
+                any_changed_project = asyncio.run(self._task_resync_croris_institutions(options, projects_all))
             except (HZSIHttpError, KeyboardInterrupt):
                 pass
 
-        if any_changed:
+        if any_changed_user or any_changed_project:
             cache.delete("usersinfoinactive-get")
             cache.delete("usersinfo-get")
             cache.delete("ext-users-projects")
