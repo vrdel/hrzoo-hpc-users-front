@@ -159,7 +159,7 @@ class Command(BaseCommand):
                 continue
             try:
                 query = Q()
-                if 'pmf' in person_id_domain:
+                if 'pmf' in person_id_domain or 'ffzg' in person_id_domain:
                     query |= Q(contact_web__contains=person_id_domain, active=True)
                     query |= Q(contact_email__contains=person_id_domain, active=True)
                 else:
@@ -173,7 +173,7 @@ class Command(BaseCommand):
                     if options.get('confirm_yes', None):
                         user.save()
             except CrorisInstitutions.MultipleObjectsReturned:
-                if 'pmf' in person_id_domain:
+                if 'pmf' in person_id_domain or 'ffzg' in person_id_domain:
                     query |= Q(contact_web__contains=person_id_domain, active=True)
                     query |= Q(contact_email__contains=person_id_domain, active=True)
                 else:
