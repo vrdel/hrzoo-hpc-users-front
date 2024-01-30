@@ -91,7 +91,6 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
     project_type = serializers.SerializerMethodField()
     state = serializers.SerializerMethodField()
     staff_resources_type = serializers.SerializerMethodField()
-    institute = serializers.SerializerMethodField()
 
     class Meta:
         fields = (
@@ -277,6 +276,35 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'name',
             'project_type',
             'reason',
+            'resources_numbers',
+            'resources_type',
+            'science_extrasoftware',
+            'science_extrasoftware_help',
+            'science_field',
+            'science_software',
+            'staff_resources_type',
+            'staffcomment_set',
+            'state',
+            'userproject_set',
+            'users',
+        )
+        model = models.Project
+
+
+class AccountingProjectUsersSerializerGet(serializers.ModelSerializer):
+    users = UsersSerializerFiltered(many=True, read_only=True)
+    state = StateSerializer()
+    project_type = ProjectTypeSerializer()
+    userproject_set = UserProjectSerializer(many=True, read_only=True)
+    staffcomment_set = StaffComment(many=True, read_only=True)
+
+    class Meta:
+        fields = (
+            'id',
+            'identifier',
+            'institute',
+            'name',
+            'project_type',
             'resources_numbers',
             'resources_type',
             'science_extrasoftware',
