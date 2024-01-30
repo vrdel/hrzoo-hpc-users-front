@@ -2,6 +2,7 @@ from backend import serializers
 from backend import models
 
 from django.db.models import Q
+from django.conf import settings
 
 from rest_framework import status
 from rest_framework.response import Response
@@ -12,12 +13,18 @@ from rest_framework_api_key.permissions import HasAPIKey
 class AccountingUserProjectAPI(APIView):
     permission_classes = (HasAPIKey,)
 
+    def _replace_projectsapi_fields(self, projid):
+        for field in settings.PROJECT_IDENTIFIER_MAP:
+            if field['from'] in projid:
+                return projid.replace(field['from'], field['to'])
+        return projid
+
     def _generate_response(self, projects):
         ret_data = []
         for project in projects:
             fields_project = dict()
             fields_project['id'] = project.id
-            fields_project['sifra'] = project.identifier
+            fields_project['sifra'] = self._replace_projectsapi_fields(project.identifier)
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
@@ -46,10 +53,14 @@ class AccountingUserProjectAPI(APIView):
         if tags:
             tags = tags.split(',')
 
+            if len(tags) == 1:
+                db_interested = models.Project.objects.filter(staff_resources_type__exact=[{"label": tags[0], "value": tags[0]}])
+                return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
+
             for tag in tags:
                 query |= Q(staff_resources_type__contains=[{"label": tag, "value": tag}])
-            db_interested = models.Project.objects.filter(query).distinct()
 
+            db_interested = models.Project.objects.filter(query).distinct()
             return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
 
         else:
