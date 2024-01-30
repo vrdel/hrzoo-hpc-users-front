@@ -95,10 +95,11 @@ class Command(BaseCommand):
                             )
                         if options.get('confirm_yes', None):
                             target = await projects_db.aget(croris_id=project['id'])
-                            any_changed = True
-                            target.croris_institute = metadata_institutes
-                            self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
-                            await target.asave()
+                            if target.croris_institute != metadata_institutes:
+                                any_changed = True
+                                target.croris_institute = metadata_institutes
+                                self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
+                                await target.asave()
 
             return any_changed
 
