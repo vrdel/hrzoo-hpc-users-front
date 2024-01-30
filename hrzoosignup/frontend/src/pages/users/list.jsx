@@ -84,13 +84,8 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
     fieldsView = fieldsView.filter(e => e.date_joined.includes(searchJoined))
 
   if (searchName) {
-    if (activeList)
       fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()) ||
         e.person_mail.includes(searchName.toLowerCase())
-      )
-    else
-      fieldsView = fieldsView.filter(e => `${e.first_name} ${e.last_name}`.toLowerCase().includes(searchName.toLowerCase()) ||
-        e.username.includes(searchName.toLowerCase())
       )
   }
 
@@ -103,7 +98,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
         e.person_username.includes(searchEmail.toLowerCase())
       )
     else
-      fieldsView = fieldsView.filter(e => e.person_mail.toLowerCase().includes(searchEmail.toLowerCase()))
+      fieldsView = fieldsView.filter(e => e.username.includes(searchEmail.toLowerCase()))
   }
 
   if (searchProject)
