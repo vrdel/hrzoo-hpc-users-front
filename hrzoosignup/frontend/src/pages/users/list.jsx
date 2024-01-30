@@ -164,12 +164,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   }}
                 >
                   <div className="flex-grow-1">
-                    {
-                      activeList ?
-                        'Ime, prezime, email'
-                      :
-                        'Ime, prezime i AAI oznaka'
-                    }
+                    Ime, prezime i email
                   </div>
                   <div>
                     { SortArrow(sortName) }
@@ -181,9 +176,9 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   {
                     activeList ?
-                      'Korisničko ime, AAI oznaka'
+                      'Korisničko ime i AAI oznaka'
                     :
-                      'Email'
+                      'AAI oznaka'
                   }
                 </th>
                 <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
@@ -473,7 +468,7 @@ export const UsersInactiveList = () => {
             </th>
             <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
               <div className="flex-grow-1">
-                Ime, prezime i oznaka
+                Ime, prezime i email
               </div>
               <div>
                 { SortArrow() }
@@ -483,7 +478,7 @@ export const UsersInactiveList = () => {
               Institucija
             </th>
             <th className="fw-normal"  style={{minWidth: '296px'}}>
-              Email
+              AAI oznaka
             </th>
             <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
             >
@@ -546,7 +541,7 @@ export const UsersList = () => {
             </th>
             <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
               <div className="flex-grow-1">
-                Ime, prezime i oznaka
+                Ime, prezime i email
               </div>
               <div>
                 { SortArrow() }
@@ -556,7 +551,7 @@ export const UsersList = () => {
               Institucija
             </th>
             <th className="fw-normal"  style={{minWidth: '296px'}}>
-              Email
+              Korisničko ime i AAI oznaka
             </th>
             <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
             >
