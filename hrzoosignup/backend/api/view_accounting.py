@@ -53,10 +53,14 @@ class AccountingUserProjectAPI(APIView):
         if tags:
             tags = tags.split(',')
 
+            if len(tags) == 1:
+                db_interested = models.Project.objects.filter(staff_resources_type__exact=[{"label": tags[0], "value": tags[0]}])
+                return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
+
             for tag in tags:
                 query |= Q(staff_resources_type__contains=[{"label": tag, "value": tag}])
-            db_interested = models.Project.objects.filter(query).distinct()
 
+            db_interested = models.Project.objects.filter(query).distinct()
             return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
 
         else:
