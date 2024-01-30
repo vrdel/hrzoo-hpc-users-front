@@ -7,6 +7,7 @@ from django.db.models import Q
 from backend.utils.gen_username import gen_username
 from backend.models import User
 from backend.models import Project
+from backend.models import UserProject
 from backend.models import CrorisInstitutions
 from backend.utils.institution_map import InstitutionMap
 
@@ -40,6 +41,12 @@ class Command(BaseCommand):
             action="store_true",
             dest="user_yes",
             help="Set user person_institution to CroRIS names",
+        )
+        parser.add_argument(
+            "--project",
+            action="store_true",
+            dest="project_yes",
+            help="Fix project institute",
         )
         parser.add_argument(
             "--research-project-resync-institutions",
@@ -97,6 +104,47 @@ class Command(BaseCommand):
 
         finally:
             await self.session.close()
+
+    def _task_fix_project_institutions(self, options):
+        any_changed = False
+        projects_croris = Project.objects.filter(project_type__name='research-croris')
+        projects_other = Project.objects.exclude(project_type__name='research-croris')
+
+        for project in projects_croris:
+            eu_finance = len([fin for fin in project.croris_finance if 'Europska komisija'.lower() in fin.lower()]) != 0
+            if eu_finance:
+                userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
+                userlead_institution = userproj[0].user.person_institution
+                if project.institute != userlead_institution and options.get('confirm_yes', None):
+                    project.institute = userlead_institution
+                    self.stdout.write(self.style.NOTICE(f'Changing EU research project {project.identifier} institute of lead institute: {project.institute}'))
+                    any_changed = True
+                    project.save()
+            else:
+                holder = [hold for hold in project.croris_institute if hold['class'].lower() == 'nositelj'.lower()]
+                if len(holder) == 1 and project.institute != holder[0]['name'] and options.get('confirm_yes', None):
+                    project.institute = holder[0]['name']
+                    self.stdout.write(self.style.NOTICE(f"Changing research project {project.identifier} institute of holder: {holder[0]['name']}"))
+                    any_changed = True
+                    project.save()
+                if len(holder) > 1:
+                    userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
+                    userlead_institution = userproj[0].user.person_institution
+                    if project.institute != userlead_institution and options.get('confirm_yes', None):
+                        project.institute = userlead_institution
+                        self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} institute with multiple holders to that of lead institute: {project.institute}'))
+                        any_changed = True
+                        project.save()
+        for project in projects_other:
+            userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
+            userlead_institution = userproj[0].user.person_institution
+            if project.institute != userlead_institution and options.get('confirm_yes', None):
+                project.institute = userlead_institution
+                self.stdout.write(self.style.NOTICE(f'Changing project {project.identifier} institute of lead institute: {project.institute}'))
+                any_changed = True
+                project.save()
+
+        return any_changed
 
     def _task_fix_user_institutions(self, options):
         any_changed = False
@@ -203,6 +251,9 @@ class Command(BaseCommand):
                 any_changed_project = asyncio.run(self._task_resync_croris_institutions(options, projects_all))
             except (HZSIHttpError, KeyboardInterrupt):
                 pass
+
+        if options.get('project_yes', None):
+            any_changed_project = self._task_fix_project_institutions(options)
 
         if any_changed_user or any_changed_project:
             cache.delete("usersinfoinactive-get")
