@@ -5,7 +5,7 @@ from django.core.cache import cache
 from backend.utils.gen_username import gen_username
 from backend.models import User
 from backend.models import CrorisInstitutions
-
+from backend.utils.institution_map import InstitutionMap
 
 import random
 
@@ -13,10 +13,11 @@ ALPHACHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 
 
 class Command(BaseCommand):
-    help = "Generate username for users that assigned to project"
+    help = "Fix user and project institutions by aligning them with the names from CroRIS"
 
     def __init__(self):
         super().__init__()
+        self.inst_maps = InstitutionMap()
         self.user_model = get_user_model()
 
     def add_arguments(self, parser):
@@ -35,13 +36,15 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        users = User.objects.all()
+        users = self.user_model.objects.all()
         any_changed = False
 
         if options.get('user_yes', None):
             for user in users:
                 try:
                     email_domain = user.person_mail.split('@')[1]
+                    if 'gmail' in email_domain:
+                        continue
                     person_id_domain = user.person_uniqueid.split('@')[1]
                 except IndexError:
                     continue
@@ -69,7 +72,7 @@ class Command(BaseCommand):
                         query |= Q(contact_email__contains=email_domain, active=True)
                     multiple_found = CrorisInstitutions.objects.filter(query)
                     for found in multiple_found:
-                        if user.person_organisation and (user.person_organisation.lower() in found.name_acronym.lower() or user.person_organisation.lower() in found.contact_email):
+                        if user.person_organisation and (user.person_organisation.lower() in found.name_acronym.lower() or user.person_organisation.lower() in found.contact_email.lower()):
                             if user.person_institution != found.name_short:
                                 user.person_institution = found.name_short
                                 self.stdout.write(self.style.NOTICE(f'Resolving active institution for {user.username} to {found.name_short}'))
@@ -84,9 +87,9 @@ class Command(BaseCommand):
                         if user.person_institution != found.name_short:
                             user.person_institution = found.name_short
                             self.stdout.write(self.style.NOTICE(f'Setting inactive institution for {user.username} to {found.name_short}'))
-                            any_changed = True
                             if options.get('confirm_yes', None):
                                 user.save()
+                                any_changed = True
                     except CrorisInstitutions.MultipleObjectsReturned:
                         query = Q()
                         query |= Q(contact_web__contains=email_domain, active=False)
@@ -98,9 +101,32 @@ class Command(BaseCommand):
                                     user.person_institution = found.name_short
                                     self.stdout.write(self.style.NOTICE(f'Resolving inactive institution for {user.username} to {found.name_short}'))
                                     if options.get('confirm_yes', None):
+                                        any_changed = True
                                         user.save()
                     except CrorisInstitutions.DoesNotExist:
-                        continue
+                        pass
+
+                if user.person_institution in self.inst_maps.all_from():
+                    user.person_institution = self.inst_maps.get(user.person_institution)
+                    self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
+                    if options.get('confirm_yes', None):
+                        any_changed = True
+                        user.save()
+
+            for user in users:
+                if 'gmail' in user.person_mail:
+                    if user.person_institution in self.inst_maps.all_from():
+                        user.person_institution = self.inst_maps.get(user.person_institution)
+                        self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
+                        if options.get('confirm_yes', None):
+                            any_changed = True
+                            user.save()
+                    if user.person_institution == 'Sveučilište Josipa Jurja Strossmayera u Osijeku' and user.person_organisation:
+                        user.person_institution = f'{user.person_institution}, {user.person_organisation}'
+                        self.stdout.write(self.style.NOTICE(f'Joining institution and organisation for {user.username} to {user.person_institution}'))
+                        if options.get('confirm_yes', None):
+                            any_changed = True
+                            user.save()
 
         if any_changed:
             cache.delete("usersinfoinactive-get")
