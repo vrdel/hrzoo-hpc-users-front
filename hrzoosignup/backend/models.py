@@ -62,6 +62,11 @@ class User(AbstractUser):
         max_length=11,
         blank=True,
     )
+    person_institution_realm = models.CharField(
+        _('Institution realm - hrEduPersonHomeOrg'),
+        max_length=64,
+        blank=True,
+    )
     person_organisation = models.CharField(
         _('Organisation unit - LDAP'),
         max_length=128,
