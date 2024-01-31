@@ -300,6 +300,7 @@ SAML_ATTRIBUTE_MAPPING = {
     # 'o': ('person_institution', ),
     'hrEduPersonOIB': ('person_oib', ),
     'hrEduOrgOIB': ('person_institution_oib', ),
+    'hrEduPersonHomeOrg': ('person_institution_realm', ),
     'ou': ('person_organisation', ),
     'hrEduPersonAffiliation': ('person_affiliation', ),
     'givenName': ('first_name', ),
