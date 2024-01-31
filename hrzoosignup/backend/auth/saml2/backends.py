@@ -1,5 +1,3 @@
-from django.core.cache import cache
-
 from djangosaml2.backends import Saml2Backend
 from django.contrib.auth import get_user_model
 

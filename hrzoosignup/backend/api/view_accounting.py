@@ -28,6 +28,7 @@ class AccountingUserProjectAPI(APIView):
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
+            fields_project['finance'] = project.croris_finance if project.croris_finance else []
             fields_project['approved_resources'] = [res['value'] for res in project.staff_resources_type]
             fields_project['users'] = list()
 
