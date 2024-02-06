@@ -25,6 +25,8 @@ class AccountingUserProjectAPI(APIView):
             fields_project = dict()
             fields_project['id'] = project.id
             fields_project['sifra'] = self._replace_projectsapi_fields(project.identifier)
+            fields_project['date_from'] = project.date_start
+            fields_project['date_end'] = project.date_end
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
