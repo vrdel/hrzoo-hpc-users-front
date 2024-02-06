@@ -19,6 +19,12 @@ class AccountingUserProjectAPI(APIView):
                 return projid.replace(field['from'], field['to'])
         return projid
 
+    def _set_project_finance(self, project):
+        if project.croris_finance:
+            return project.croris_finance
+        else:
+            return [project.institute]
+
     def _generate_response(self, projects):
         ret_data = []
         for project in projects:
@@ -30,7 +36,7 @@ class AccountingUserProjectAPI(APIView):
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
-            fields_project['finance'] = project.croris_finance if project.croris_finance else []
+            fields_project['finance'] = self._set_project_finance(project)
             fields_project['approved_resources'] = [res['value'] for res in project.staff_resources_type]
             fields_project['users'] = list()
 
