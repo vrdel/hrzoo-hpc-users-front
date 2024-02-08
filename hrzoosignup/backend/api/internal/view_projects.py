@@ -284,6 +284,7 @@ class Projects(APIView):
                         'person_uniqueid': self.request.user.person_uniqueid,
                         'username': self.request.user.username
                     }
+                    p_obj.date_approved = timezone.now()
                 if settings.EMAIL_SEND and request.data['staff_emailSend']:
                     person_mail = lead_user.person_mail
                     project.email_approve_project(person_mail, p_obj.name,
