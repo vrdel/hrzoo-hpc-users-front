@@ -33,6 +33,7 @@ class AccountingUserProjectAPI(APIView):
             fields_project['sifra'] = self._replace_projectsapi_fields(project.identifier)
             fields_project['date_from'] = project.date_start
             fields_project['date_end'] = project.date_end
+            fields_project['date_approved'] = project.date_approved.strftime('%Y-%m-%d')
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
