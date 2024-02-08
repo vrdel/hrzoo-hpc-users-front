@@ -149,6 +149,7 @@ class Invites(APIView):
                         cache.delete("ext-users-projects")
                         cache.delete("usersinfoinactive-get")
                         cache.delete("usersinfo-get")
+                        cache.delete("projects-get-all")
                         return Response(msg, status=status.HTTP_201_CREATED)
 
                     else:
@@ -235,6 +236,7 @@ class Invites(APIView):
                     cache.delete("ext-users-projects")
                     cache.delete("usersinfoinactive-get")
                     cache.delete("usersinfo-get")
+                    cache.delete("projects-get-all")
                     return Response(msg, status=status.HTTP_201_CREATED)
 
                 else:
@@ -255,6 +257,7 @@ class Invites(APIView):
                     cache.delete("ext-users-projects")
                     cache.delete("usersinfoinactive-get")
                     cache.delete("usersinfo-get")
+                    cache.delete("projects-get-all")
                     return Response(msg, status=status.HTTP_201_CREATED)
 
         except requests.exceptions.HTTPError as ex:
