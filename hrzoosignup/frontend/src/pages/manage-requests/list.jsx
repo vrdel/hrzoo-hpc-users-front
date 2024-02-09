@@ -128,6 +128,13 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
 
   fieldsView = fieldsView.slice(paginationHelp.start, paginationHelp.end)
 
+  function calcIndex(index) {
+    if (!isSearched)
+      return fields.length - (pageIndex * pageSize + index + 1) + 1
+    else
+      return paginationHelp.searchLen - index - (pageIndex * pageSize)
+  }
+
   return (
     <>
       <Row>
@@ -251,7 +258,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                   fieldsView.map((project, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
-                        {!isSearched  ? data.length - pageIndex * pageSize - index : pageIndex * pageSize + index + 1 }
+                        { calcIndex(index) }
                       </td>
                       <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }

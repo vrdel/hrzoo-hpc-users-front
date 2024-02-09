@@ -132,7 +132,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
       if (!isSearched)
         return fields.length - (pageIndex * pageSize + index + 1) + 1
       else
-        return paginationHelp.searchLen - (pageIndex * pageSize + index + 1) + 1
+        return paginationHelp.searchLen - index - (pageIndex * pageSize)
     else
       return pageIndex * pageSize + index + 1
   }

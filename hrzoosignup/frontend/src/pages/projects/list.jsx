@@ -122,7 +122,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
     if (!isSearched)
       return fields.length - (pageIndex * pageSize + index)
     else
-      return paginationHelp.searchLen - (pageIndex * pageSize + index + 1) + 1
+      return paginationHelp.searchLen - index - (pageIndex * pageSize)
   }
 
   return (
