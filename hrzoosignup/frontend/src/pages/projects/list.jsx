@@ -400,7 +400,7 @@ export const ProjectsList = () => {
               Stanje
             </th>
             <th className="fw-normal" style={{width: '650px'}}>
-              Naziv i šifra
+              Naziv, šifra i dodijeljeni resursi
             </th>
             <th className="fw-normal" style={{width: '126px'}}>
               Tip
