@@ -65,7 +65,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
                 aria-label="requestName"
                 type="text"
                 disabled={disabledRemain}
-                className={`form-control ${errors && errors.requestName ? "is-invalid" : ''}`}
+                className={`form-control fs-5 ${errors && errors.requestName ? "is-invalid" : ''}`}
                 rows="1"
               />
             }
