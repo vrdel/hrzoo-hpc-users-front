@@ -307,6 +307,13 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                             }
                           </Col>
                         </Row>
+                        <Row style={{height: '15px'}}>
+                        </Row>
+                        <Row>
+                          <Col className="fw-medium fst-italic">
+                            { project.institute }
+                          </Col>
+                        </Row>
                       </td>
                       <td className="align-middle text-center">
                         <span className={ `badge fw-normal position-relative ${TypeColor(project.project_type.name)}` }>
