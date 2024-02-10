@@ -28,6 +28,12 @@ const ExtractUsers = ({projectUsers}) => {
 
 
 export const GeneralInfo = ({project, isSubmitted}) => {
+  let leadInstitute = project.institute.filter(inst => inst['class'] === 'nositelj')
+  if (!leadInstitute)
+    leadInstitute = project.institute[0]
+  else
+    leadInstitute = leadInstitute[0]
+
   return (
     <>
       <Col className="text-left fw-bold" md={{size: 2}}>
@@ -81,8 +87,8 @@ export const GeneralInfo = ({project, isSubmitted}) => {
       </Col>
       <Col md={{size: 4}}>
         <div className="p-2">
-          {project.institute.name}<br/>
-          <small>{project.institute.class}</small>
+          {leadInstitute.name}<br/>
+          <small>{leadInstitute.class}</small>
         </div>
       </Col>
     </>
@@ -148,6 +154,7 @@ export const Finance = ({project}) => {
   )
 }
 
+
 export const CrorisUrl = ({project}) => {
   return (
     <>
@@ -167,8 +174,6 @@ export const CrorisUrl = ({project}) => {
     </>
   )
 }
-
-
 
 
 export const Summary = ({project, isSubmitted}) => {
