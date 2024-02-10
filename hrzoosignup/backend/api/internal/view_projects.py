@@ -189,7 +189,11 @@ class ProjectsResearch(APIView):
         else:
             request.data['identifier'] = request.data['croris_identifier']
 
-        request.data['institute'] = request.data['croris_institute']
+        for ins in request.data['croris_institute']:
+            if ins['class'] == 'nositelj':
+                request.data['institute'] = ins['name']
+        else:
+            request.data['institute'] = request.data['croris_institute'][0]['name']
 
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
         request.data['project_type'] = type_obj.pk

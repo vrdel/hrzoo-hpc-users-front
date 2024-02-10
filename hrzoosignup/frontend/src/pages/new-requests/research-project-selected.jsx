@@ -245,7 +245,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     dataToSend['croris_collaborators'] = croRisProjects['data']['projects_lead_users'][projId]
     dataToSend['croris_end'] = convertToAmerican(convertToIso8601(projectTarget.end))
     dataToSend['croris_finance'] = projectTarget.finance
-    dataToSend['croris_institute'] = projectTarget.institute.name
+    dataToSend['croris_institute'] = projectTarget.institute
     dataToSend['croris_id'] = projId
     dataToSend['croris_identifier'] = projectTarget.identifier
     dataToSend['croris_lead'] = `${croRisProjects['data']['person_info']['first_name']} ${croRisProjects['data']['person_info']['last_name']}`

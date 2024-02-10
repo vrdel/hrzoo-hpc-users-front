@@ -150,11 +150,12 @@ class CroRISInfo(APIView):
 
         institute = apidata['ustanoveResources']
         if institute and institute.get('_embedded', False):
-            institute = institute['_embedded']['ustanove'][0]
-            metadata['institute'] = {
-                'class': institute['klasifikacija']['naziv'],
-                'name': institute['naziv']
-            }
+            metadata['institute'] = list()
+            for ins in institute['_embedded']['ustanove']:
+                metadata['institute'].append({
+                    'class': ins['klasifikacija']['naziv'],
+                    'name': ins['naziv']
+                })
 
         finance = apidata['financijerResources']
         if finance and finance.get('_embedded', False):
