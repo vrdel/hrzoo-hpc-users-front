@@ -37,7 +37,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const { control, setValue } = useForm({
     defaultValues: {
       projects: data,
-      searchNameIdentifier: "",
+      searchNameIdentifiterInstitute: "",
       searchType: "",
       searchDate: "",
       searchUsers: "",
@@ -46,7 +46,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
     }
   })
 
-  const searchNameIdentifier = useWatch({ control, name: "searchNameIdentifier" })
+  const searchNameIdentifiterInstitute = useWatch({ control, name: "searchNameIdentifiterInstitute" })
   const searchType = useWatch({ control, name: "searchType" })
   const searchDate = useWatch({ control, name: "searchDate" })
   const searchUsers = useWatch({ control, name: "searchUsers" })
@@ -59,11 +59,12 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
   let paginationHelp = new TablePaginationHelper(fieldsView.length, pageSize, pageIndex)
 
-  if (searchNameIdentifier)
+  if (searchNameIdentifiterInstitute)
     fieldsView = fieldsView.filter(
       (e) => (
-        e.name.toLowerCase().includes(searchNameIdentifier.toLowerCase())
-        || e.identifier.toLowerCase().includes(searchNameIdentifier.toLowerCase())
+        e.name.toLowerCase().includes(searchNameIdentifiterInstitute.toLowerCase())
+        || e.identifier.toLowerCase().includes(searchNameIdentifiterInstitute.toLowerCase())
+        || e.institute.toLowerCase().includes(searchNameIdentifiterInstitute.toLowerCase())
       )
     )
 
@@ -110,7 +111,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
     )
   }
 
-  const isSearched = searchNameIdentifier || (searchType && searchType !== 'all')
+  const isSearched = searchNameIdentifiterInstitute || (searchType && searchType !== 'all')
     || searchDate || searchResourceTypes.length > 0 || searchUsers || (searchState && searchState !== 'all')
 
   paginationHelp.searchNum = fieldsView.length
@@ -142,7 +143,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   Stanje
                 </th>
                 <th className="fw-normal" style={{width: '650px'}}>
-                  Naziv, šifra i dodijeljeni resursi
+                  Naziv, institucija, šifra i dodijeljeni resursi
                 </th>
                 <th className="fw-normal" style={{width: '126px'}}>
                   Tip
@@ -180,7 +181,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   <Row className="g-0 d-flex align-items-center">
                     <Col sm={{size: 7}}>
                       <Controller
-                        name="searchNameIdentifier"
+                        name="searchNameIdentifiterInstitute"
                         control={ control }
                         render={ ({ field }) =>
                           <Input
@@ -405,7 +406,7 @@ export const ProjectsList = () => {
               Stanje
             </th>
             <th className="fw-normal" style={{width: '650px'}}>
-              Naziv, šifra i dodijeljeni resursi
+              Naziv, institucija, šifra i dodijeljeni resursi
             </th>
             <th className="fw-normal" style={{width: '126px'}}>
               Tip

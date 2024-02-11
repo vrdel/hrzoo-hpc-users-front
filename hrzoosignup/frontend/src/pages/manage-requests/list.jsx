@@ -71,7 +71,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
   }, [data])
 
   const searchState = useWatch({ control, name: "searchState" })
-  const searchNameIdentifier = useWatch({ control, name: "searchNameIdentifier" })
+  const searchNameIdentifierInstitute = useWatch({ control, name: "searchNameIdentifierInstitute" })
   const searchLead = useWatch({ control, name: "searchLead" })
   const searchType = useWatch({ control, name: "searchType" })
   const searchDate = useWatch({ control, name: "searchDate" })
@@ -90,11 +90,12 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
       fieldsView = fieldsView.filter(e => allStates.includes(e.state.name.toLowerCase()))
   }
 
-  if (searchNameIdentifier)
+  if (searchNameIdentifierInstitute)
     fieldsView = fieldsView.filter(
       (e) => (
-        e.name.toLowerCase().includes(searchNameIdentifier.toLowerCase())
-        || e.identifier.toLowerCase().includes(searchNameIdentifier.toLowerCase())
+        e.name.toLowerCase().includes(searchNameIdentifierInstitute.toLowerCase())
+        || e.identifier.toLowerCase().includes(searchNameIdentifierInstitute.toLowerCase())
+        || e.institute.toLowerCase().includes(searchNameIdentifierInstitute.toLowerCase())
       )
     )
 
@@ -120,7 +121,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
 
 
   const isSearched = (searchState && searchState !== 'all')
-    || searchNameIdentifier || searchLead
+    || searchNameIdentifierInstitute || searchLead
     || (searchType && searchType !== 'all') || searchDate
 
   paginationHelp.searchNum = fieldsView.length
@@ -195,7 +196,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                 <td className="p-2 align-middle text-center">{" "}</td>
                 <td className="p-2 align-middle text-center">
                   <Controller
-                    name="searchNameIdentifier"
+                    name="searchNameIdentifierInstitute"
                     control={ control }
                     render={ ({ field }) =>
                       <Input
