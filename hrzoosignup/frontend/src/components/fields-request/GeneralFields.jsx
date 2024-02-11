@@ -12,13 +12,14 @@ import {
 } from 'reactstrap';
 import { ErrorMessage } from '@hookform/error-message';
 import DatePicker from 'react-date-picker';
-import BaseNewScientificDomain from './ScientificDomain';
+import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
+import { TypeString, TypeColor } from 'Config/map-projecttypes';
+import _ from "lodash";
 
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false, isInstitute=false}) => {
   const { control, setValue, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
-  const [startDateSelect, setStartDateSelect] = useState(undefined)
   const [endDate, setEndDate] = useState('')
 
   if (fieldsDisabled === false && isResearch)
@@ -210,6 +211,18 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
             <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
               { projectInfo.institute }
             </Badge>
+          </span>
+        </Col>
+        <Col>
+          <span className={`badge fw-normal position-relative ${TypeColor(projectInfo.project_type.name)}`} >
+            { TypeString(projectInfo.project_type.name) }
+            {
+              _.findIndex(projectInfo.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
+              <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+                EU
+                <span className="visually-hidden">EU</span>
+              </span>
+            }
           </span>
         </Col>
       </Row>
