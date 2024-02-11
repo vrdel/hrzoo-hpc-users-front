@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { Col, Row, Badge, Table, Tooltip, Button, Input, Spinner } from 'reactstrap';
+import { Col, Row, Table, Tooltip, Input } from 'reactstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { PageTitle } from '../../components/PageTitle';
 import { StateIcons, StateString } from '../../config/map-states';
 import { fetchAllNrProjects } from '../../api/projects';
 import { useQuery } from '@tanstack/react-query';
-import { TypeString, TypeColor } from '../../config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -29,6 +28,7 @@ import { defaultUnAuthnRedirect} from '../../config/default-redirect';
 import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
 import { copyToClipboard } from '../../utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
+import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import _ from "lodash";
 
 
@@ -315,16 +315,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                         { extractLeaderName(project.userproject_set, true) }
                       </td>
                       <td className="align-middle text-center">
-                        <span className={`badge fw-normal position-relative ${TypeColor(project.project_type.name)}`} >
-                          { TypeString(project.project_type.name) }
-                          {
-                            _.findIndex(project.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
-                            <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
-                              EU
-                              <span className="visually-hidden">EU</span>
-                            </span>
-                          }
-                        </span>
+                        <ProjectTypeBadge projectInfo={project} />
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_start) }
