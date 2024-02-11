@@ -13,8 +13,7 @@ import {
 import { ErrorMessage } from '@hookform/error-message';
 import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
-import { TypeString, TypeColor } from 'Config/map-projecttypes';
-import _ from "lodash";
+import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false, isInstitute=false}) => {
@@ -214,16 +213,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
           </span>
         </Col>
         <Col>
-          <span className={`badge fw-normal position-relative ${TypeColor(projectInfo.project_type.name)}`} >
-            { TypeString(projectInfo.project_type.name) }
-            {
-              _.findIndex(projectInfo.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
-              <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
-                EU
-                <span className="visually-hidden">EU</span>
-              </span>
-            }
-          </span>
+          <ProjectTypeBadge projectInfo={projectInfo} />
         </Col>
       </Row>
       <Row>
