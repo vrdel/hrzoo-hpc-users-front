@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { RequestHorizontalRulerRed } from '../../components/RequestHorizontalRuler';
-import GeneralFields, { CroRisDescription } from '../../components/fields-request/GeneralFields';
+import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
+import GeneralFields, { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
 import { Col, Label, Row, Button, Form, FormGroup, Input, Table } from 'reactstrap';
 import { PageTitle } from '../../components/PageTitle';
-import { fetchNrSpecificProject, changeProject, deleteProject } from '../../api/projects';
+import { fetchNrSpecificProject, changeProject, deleteProject } from 'Api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
+import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSave,
@@ -23,17 +23,17 @@ import {
   FormProvider,
   Controller,
 } from "react-hook-form";
-import ResourceFields from '../../components/fields-request/ResourceFields';
-import { StateShortString } from '../../config/map-states';
-import { CustomReactSelect } from '../../components/CustomReactSelect';
+import ResourceFields from 'Components/fields-request/ResourceFields';
+import { StateShortString } from 'Config/map-states';
+import { CustomReactSelect } from 'Components/CustomReactSelect';
 import { toast } from 'react-toastify'
-import ModalAreYouSure from '../../components/ModalAreYouSure';
-import { url_ui_prefix } from '../../config/general';
-import { extractLeaderName } from '../../utils/users_help';
-import { defaultUnAuthnRedirect} from '../../config/default-redirect';
-import '../../styles/staff-change-disabled.css';
-import { AuthContext } from '../../components/AuthContextProvider.jsx';
-import { convertToAmerican } from "../../utils/dates";
+import ModalAreYouSure from 'Components/ModalAreYouSure';
+import { url_ui_prefix } from 'Config/general';
+import { extractLeaderName } from 'Utils/users_help';
+import { defaultUnAuthnRedirect} from 'Config/default-redirect';
+import 'Styles/staff-change-disabled.css';
+import { AuthContext } from 'Components/AuthContextProvider.jsx';
+import { convertToAmerican } from "Utils/dates";
 
 
 function setInitialState() {

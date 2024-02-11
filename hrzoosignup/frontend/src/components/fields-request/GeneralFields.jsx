@@ -14,12 +14,15 @@ import { ErrorMessage } from '@hookform/error-message';
 import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
+import { AuthContext } from '../../components/AuthContextProvider';
 
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false, isInstitute=false}) => {
-  const { control, setValue, formState: {errors} } = useFormContext();
+  const { control, setValue, getValues, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
   const [endDate, setEndDate] = useState('')
+
+  const personInstiution = getValues('requestInstitute')
 
   if (fieldsDisabled === false && isResearch)
     disabledRemain = true
@@ -208,7 +211,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
         <Col md={{size: 5}}>
           <span className="fst-italic">
             <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
-              { projectInfo.institute }
+              { projectInfo ?  projectInfo.institute : personInstiution }
             </Badge>
           </span>
         </Col>

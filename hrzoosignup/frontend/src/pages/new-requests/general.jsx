@@ -136,6 +136,7 @@ export const GeneralRequest = ({projectType, schemaResolve=schemaGeneralResolve}
       requestExplain: '',
       startDate: '',
       endDate: '',
+      requestInstitute: userDetails.person_institution,
       requestResourceType: [],
       HPCnSlotsCPU: '', HPCnSlotsGPU: '', HPCnRAM: '', HPCnTempGB: '', HPCnDiskGB: '',
       CLOUDnVM: '', CLOUDnSlotsCPU: '', CLOUDnRAM: '', CLOUDnRAMVM: '',
