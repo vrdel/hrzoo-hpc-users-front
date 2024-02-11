@@ -1,11 +1,6 @@
 import React from 'react'
 import {
-  Button,
   Badge,
-  Card,
-  CardHeader,
-  CardBody,
-  Row,
   Col,
   Label,
 } from 'reactstrap';

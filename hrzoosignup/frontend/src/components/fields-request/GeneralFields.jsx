@@ -117,7 +117,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 5, offset: 1}}>
+        <Col md={{size: 4, offset: 1}}>
           <Label
             htmlFor="requestName"
             aria-label="requestName">
@@ -125,7 +125,16 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
         </Col>
-        <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
+        <Col md={{size: 5}}>
+          <Label
+            htmlFor="requestInstitute"
+            aria-label="requestInstitute">
+            Institucija nositelj:
+          </Label>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={{size: 4, offset: 1}} style={{whiteSpace: 'nowrap'}}>
           <Controller
             name="startDate"
             control={control}
@@ -196,6 +205,15 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
               />
           }
         </Col>
+        <Col md={{size: 5}}>
+          <span className="fst-italic">
+            <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
+              { projectInfo.institute }
+            </Badge>
+          </span>
+        </Col>
+      </Row>
+      <Row>
         {
           projectInfo && projectInfo.project_type &&
           projectInfo.project_type.name === 'research-croris' &&
