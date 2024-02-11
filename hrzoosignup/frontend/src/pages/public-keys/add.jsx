@@ -130,7 +130,7 @@ const NewPublicKey = () => {
         <Row>
           <Col className="mt-4" sm={{size: 3, offset: 1}}>
             <Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-              Ime ključa:
+              Ime ključa
             </Label>
             <InputGroup>
               <Controller
@@ -166,7 +166,7 @@ const NewPublicKey = () => {
           <Col className="ms-4 g-0" sm={{size: 7}}>
             <div className="d-flex justify-content-between">
               <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
-                Javni ključ:
+                Javni ključ
               </Label>
               <Input
                 type='file'
