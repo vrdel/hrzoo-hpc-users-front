@@ -156,7 +156,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                   Podnesen
                 </th>
                 <th className="fw-normal" style={{width: '714px'}}>
-                  Naziv i šifra
+                  Naziv, institucija i šifra
                 </th>
                 <th className="fw-normal" style={{width: '158px'}}>
                   Voditelj
@@ -413,7 +413,7 @@ export const ManageRequestsList = () => {
               Podnesen
             </th>
             <th className="fw-normal" style={{width: '714px'}}>
-              Naziv i šifra
+              Naziv, institucija i šifra
             </th>
             <th className="fw-normal" style={{width: '158px'}}>
               Voditelj
