@@ -284,7 +284,12 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                             </Link>
                           </Col>
                         </Row>
-                        <Row style={{height: '15px'}}>
+                        <Row className="pt-1">
+                          <Col className="fw-medium fst-italic text-dark">
+                            <small>{ project.institute }</small>
+                          </Col>
+                        </Row>
+                        <Row style={{height: '12px'}}>
                         </Row>
                         <Row>
                           <Col className="d-flex justify-content-center align-items-center align-self-center">

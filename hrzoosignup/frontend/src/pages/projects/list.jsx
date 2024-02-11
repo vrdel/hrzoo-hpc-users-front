@@ -275,7 +275,12 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                             { project.name}
                           </Col>
                         </Row>
-                        <Row style={{height: '15px'}}>
+                        <Row className="pt-1">
+                          <Col className="fw-medium fst-italic">
+                            <small>{ project.institute }</small>
+                          </Col>
+                        </Row>
+                        <Row style={{height: '12px'}}>
                         </Row>
                         <Row className="g-0 d-flex justify-content-center">
                           <Col className="d-flex justify-content-center align-items-center align-self-center">
@@ -305,13 +310,6 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                                   {rtype.value}
                                 </span>)
                             }
-                          </Col>
-                        </Row>
-                        <Row style={{height: '15px'}}>
-                        </Row>
-                        <Row>
-                          <Col className="fw-medium fst-italic">
-                            { project.institute }
                           </Col>
                         </Row>
                       </td>
