@@ -753,7 +753,8 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row style={{'height': '100px'}}/>
       <Row className="mt-5 mb-5 text-center">
         <Col>
-          <Button size="lg" color="success" id="submit-button" type="submit">
+          <Button disabled={!disabledFields} size="lg" color="success"
+            id="submit-button" type="submit">
             <FontAwesomeIcon icon={faSave}/>{' '}
             Spremi promjene
           </Button>
