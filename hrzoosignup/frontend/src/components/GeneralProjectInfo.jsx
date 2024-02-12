@@ -26,7 +26,8 @@ const ExtractUsers = ({projectUsers}) => {
 
 export const GeneralInfo = ({project, isSubmitted}) => {
   let leadInstitute = project.institute.filter(inst => inst['class'] === 'nositelj')
-  if (!leadInstitute)
+
+  if (leadInstitute.length === 0)
     leadInstitute = project.institute[0]
   else
     leadInstitute = leadInstitute[0]
@@ -138,14 +139,8 @@ export const Finance = ({project}) => {
               ?
                 project.finance.map((finance, i) =>
                   <span key={`croris-finance-${i}`} className="fst-italic">
-                    <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
+                    <Badge className="bg-warning-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
                       { finance }
-                      {
-                        project.finance.length - 1 !== i ?
-                            '; '
-                          :
-                            ''
-                      }
                     </Badge>
                   </span>
                 )
