@@ -3,7 +3,7 @@ import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields, { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
 import { Col, Label, Row, Button, Form, FormGroup, Input, Table } from 'reactstrap';
-import { PageTitle } from '../../components/PageTitle';
+import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject, deleteProject } from 'Api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
@@ -518,7 +518,11 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           >
             Obriši zahtjev
           </Button>
-          <Button color="danger" className="me-lg-1 me-md-3 me-sm-3" onClick={() => setDisabledFields(!disabledFields)}>
+          <Button color="danger"
+            className="me-lg-1 me-md-3 me-sm-3"
+            onClick={() => setDisabledFields(!disabledFields)}
+            active={!disabledFields}
+          >
             Uredi zahtjev
           </Button>
         </Col>
