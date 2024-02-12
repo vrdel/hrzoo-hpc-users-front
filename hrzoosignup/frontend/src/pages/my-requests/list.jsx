@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
-import { PageTitle } from '../../components/PageTitle';
-import '../../styles/content.css';
+import { PageTitle } from 'Components/PageTitle';
+import 'Styles/content.css';
 import {
   Button,
   Badge,
@@ -11,18 +11,18 @@ import {
   Table,
   Tooltip,
 } from 'reactstrap';
-import { fetchNrProjectsLead } from '../../api/projects';
-import { useNavigate } from 'react-router-dom';
+import { fetchNrProjectsLead } from 'Api/projects';
+import { useNavigate, Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
-import { StateIcons, StateString } from '../../config/map-states';
-import { TypeString, TypeColor } from '../../config/map-projecttypes';
+import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
+import { StateIcons, StateString } from 'Config/map-states';
+import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
-import { defaultUnAuthnRedirect} from '../../config/default-redirect';
-import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { defaultUnAuthnRedirect} from 'Config/default-redirect';
+import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 
 
 const MyRequestsList = () => {
@@ -146,7 +146,9 @@ const MyRequestsList = () => {
                         { convertTimeToEuropean(project.date_submitted) }
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
-                        { project.name}
+                        <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
+                          { project.name}
+                        </Link>
                       </td>
                       <td className="p-3 align-middle text-center">
                         <Badge className="fw-normal" color="secondary">{ project.identifier }</Badge>
