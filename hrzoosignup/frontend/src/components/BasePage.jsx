@@ -2,18 +2,18 @@ import React, { useState, useEffect,  useContext } from 'react'
 import { Row, Col, Container } from 'reactstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import Navigation from './Navigation';
-import NavigationLinks from './NavigationLinks';
-import ModalAreYouSure from './ModalAreYouSure';
-import Footer from './Footer';
-import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import '../styles/content.css';
-import { doLogout } from '../api/auth';
-import { fetchCroRIS } from '../api/croris';
-import { AuthContext } from '../components/AuthContextProvider';
-import { defaultUnAuthnRedirect} from '../config/default-redirect';
+import Navigation from 'Components/Navigation';
+import NavigationLinks from 'Components/NavigationLinks';
+import ModalAreYouSure from 'Components/ModalAreYouSure';
+import Footer from 'Components/Footer';
+import { Outlet, useNavigate } from 'react-router-dom';
+import 'Styles/content.css';
+import { doLogout } from 'Api/auth';
+import { fetchCroRIS } from 'Api/croris';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useQuery } from '@tanstack/react-query';
-import HeadTitle from '../components/HeadTitle';
+import HeadTitle from 'Components/HeadTitle';
 
 export const ModalContext = React.createContext();
 
