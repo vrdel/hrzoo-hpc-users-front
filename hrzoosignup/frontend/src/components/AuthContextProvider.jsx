@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { defaultUnAuthnRedirect,
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff
-} from '../config/default-redirect';
+} from 'Config/default-redirect';
 import { useQueryClient } from '@tanstack/react-query';
 
 
@@ -55,6 +55,9 @@ export const AuthContextProvider = ( {children} ) => {
     setUserdetails("")
     localStorage.removeItem('referrer')
     queryClient.invalidateQueries("sessionactive")
+    setTimeout(() => {
+      navigate(defaultUnAuthnRedirect)
+    }, 800)
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
