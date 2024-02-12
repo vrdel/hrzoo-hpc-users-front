@@ -210,12 +210,12 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
         </Col>
         <Col md={{size: 5}}>
           <span className="fst-italic">
-            <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
+            <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2 mt-sm-3" key="project-institute">
               { projectInfo ?  projectInfo.institute : personInstitution }
             </Badge>
           </span>
         </Col>
-        <Col>
+        <Col className="mt-sm-3">
           <ProjectTypeBadge projectInfo={projectInfo} />
         </Col>
       </Row>
