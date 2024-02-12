@@ -84,7 +84,12 @@ export const GeneralInfo = ({project, isSubmitted}) => {
       </Col>
       <Col md={{size: 4}}>
         <div className="p-2">
-          {leadInstitute.name}<br/>
+          <span className="fst-italic">
+            <Badge className="bg-secondary-subtle fw-normal text-dark fs-6">
+              {leadInstitute.name}
+            </Badge>
+          </span>
+          <br/>
           <small>{leadInstitute.class}</small>
         </div>
       </Col>
@@ -132,18 +137,24 @@ export const Finance = ({project}) => {
             project.finance.length > 1
               ?
                 project.finance.map((finance, i) =>
-                  <span key={`croris-finance-${i}`}>
-                    { finance }
-                    {
-                      project.finance.length - 1 !== i ?
-                          '; '
-                        :
-                          ''
-                    }
+                  <span key={`croris-finance-${i}`} className="fst-italic">
+                    <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
+                      { finance }
+                      {
+                        project.finance.length - 1 !== i ?
+                            '; '
+                          :
+                            ''
+                      }
+                    </Badge>
                   </span>
                 )
               :
-                project.finance[0]
+                <span className="fst-italic">
+                  <Badge className="bg-warning-subtle fw-normal fs-6 text-dark">
+                    { project.finance[0] }
+                  </Badge>
+                </span>
           }
         </div>
       </Col>

@@ -22,7 +22,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
   let disabledRemain = fieldsDisabled
   const [endDate, setEndDate] = useState('')
 
-  const personInstiution = getValues('requestInstitute')
+  const personInstitution = getValues('requestInstitute')
 
   if (fieldsDisabled === false && isResearch)
     disabledRemain = true
@@ -211,7 +211,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
         <Col md={{size: 5}}>
           <span className="fst-italic">
             <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
-              { projectInfo ?  projectInfo.institute : personInstiution }
+              { projectInfo ?  projectInfo.institute : personInstitution }
             </Badge>
           </span>
         </Col>

@@ -10,15 +10,15 @@ import {
 } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetchCroRIS } from '../../api/croris';
-import { fetchNrProjects } from '../../api/projects';
-import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
+import { fetchCroRIS } from 'Api/croris';
+import { fetchNrProjects } from 'Api/projects';
+import RequestHorizontalRuler from 'Components/RequestHorizontalRuler';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
-import { GeneralInfo, Persons, Finance, Summary, CrorisUrl } from '../../components/GeneralProjectInfo';
-import { defaultUnAuthnRedirect } from '../../config/default-redirect';
+import { GeneralInfo, Persons, Finance, Summary, CrorisUrl } from 'Components/GeneralProjectInfo';
+import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 
 
 const ResearchProjectRequest = () => {
