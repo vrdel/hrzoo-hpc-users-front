@@ -15,7 +15,7 @@ class SAML2Backend(Saml2Backend):
 
         except CrorisInstitutions.DoesNotExist:
             try:
-                user_email = user.mail[0]
+                user_email = user.person_mail[0]
                 user_email_domain = user_email.split('@')[1]
                 found = CrorisInstitutions.objects.get(contact_web__contains=user_email_domain)
                 user.person_institution = found.name_short
@@ -25,6 +25,9 @@ class SAML2Backend(Saml2Backend):
                 if user.person_institution != attributes['o'][0]:
                     user.person_institution = attributes['o'][0]
                     force_save = True
+
+            except IndexError:
+                pass
 
         return super()._update_user(user, attributes, attribute_mapping, force_save)
 
