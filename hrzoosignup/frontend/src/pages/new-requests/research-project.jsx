@@ -5,6 +5,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  Spinner,
   Row,
   Col,
 } from 'reactstrap';
@@ -105,7 +106,37 @@ const ResearchProjectRequest = () => {
         }
       </>
     )
+  } else {
+    return (
+      <>
+        <RequestHorizontalRuler />
+        <Row className="mb-4">
+          <Col>
+            <Card className="ms-3 mb-4 bg-success">
+              <CardHeader className="d-flex fs-5 text-white justify-content-between align-items-center">
+                Istraživački projekt
+              </CardHeader>
+              <CardBody className="mb-1 bg-white">
+                <Row>
+                  <Col className="d-flex justify-content-center align-items-center p-5">
+                    <Spinner
+                      style={{
+                        height: '25rem',
+                        width: '25rem',
+                        borderColor: '#b04c46',
+                        borderRightColor: 'transparent'
+                      }}
+                    />
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </>
+    )
   }
+
 };
 
 
