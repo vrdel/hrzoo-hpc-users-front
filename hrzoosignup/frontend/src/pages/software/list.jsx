@@ -1,19 +1,19 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
 import { Col, Row, Table, Input, Card, CardHeader, CardBody, Button, Collapse, Label, Form } from 'reactstrap';
-import { PageTitle } from '../../components/PageTitle';
-import { fetchScienceSoftware, addScienceSoftware, deleteScienceSoftware } from '../../api/software';
-import { fetchOpsUsers } from '../../api/users';
+import { PageTitle } from 'Components/PageTitle';
+import { fetchScienceSoftware, addScienceSoftware, deleteScienceSoftware } from 'Api/software';
+import { fetchOpsUsers } from 'Api/users';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Controller, useFieldArray, useForm, useWatch} from "react-hook-form";
-import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "../../components/TableHelpers";
+import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "Components/TableHelpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes, faSave, faWindowRestore } from "@fortawesome/free-solid-svg-icons";
-import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates'
-import ModalAreYouSure from '../../components/ModalAreYouSure';
-import { CustomReactSelect } from '../../components/CustomReactSelect'
-import { AuthContext } from '../../components/AuthContextProvider';
-import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
+import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates'
+import ModalAreYouSure from 'Components/ModalAreYouSure';
+import { CustomReactSelect } from 'Components/CustomReactSelect'
+import { AuthContext } from 'Components/AuthContextProvider';
+import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify'
 import _ from 'lodash';
