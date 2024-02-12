@@ -51,9 +51,6 @@ export const AuthContextProvider = ( {children} ) => {
   }
 
   function logout() {
-    setTimeout(() => {
-      navigate(defaultUnAuthnRedirect)
-    }, 1500)
     setIsLoggedIn(false)
     setUserdetails("")
     localStorage.removeItem('referrer')
