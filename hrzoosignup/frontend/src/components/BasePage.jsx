@@ -58,6 +58,7 @@ const BasePage = ({sessionData=undefined}) => {
   function onYesCallback() {
     if (onYesCall == 'dologout') {
       doLogout(sessionData.csrftoken)
+      window.location = '/saml2/logout'
       doLogoutContext()
     }
   }

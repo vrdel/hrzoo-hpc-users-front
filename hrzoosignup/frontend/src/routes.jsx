@@ -59,9 +59,7 @@ const ProtectedRoute = ({sessionData, children}) => {
     && (userDetails.is_staff || userDetails.is_superuser))
     return children
   else
-    return (
-      <NotFound/>
-    )
+    return null
 }
 
 
