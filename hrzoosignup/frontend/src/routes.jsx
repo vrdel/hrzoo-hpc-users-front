@@ -7,6 +7,7 @@ import LoginPrivate from 'Pages/login-private';
 import LoginOffical from 'Pages/login-official';
 import MyRequestsList from 'Pages/my-requests/list';
 import { MyRequestChange } from 'Pages/my-requests/change';
+import { ProjectChange } from 'Pages/projects/change';
 import NewRequest from 'Pages/new-request';
 import { ManageRequestsChange } from 'Pages/manage-requests/change';
 import { ManageRequestsList } from 'Pages/manage-requests/list';
@@ -90,11 +91,21 @@ const BaseRoutes = () => {
                   <ManageRequestsList />
                 </ProtectedRoute>
               }/>
+              <Route path="upravljanje-zahtjevima/:projId" element={
+                <ProtectedRoute sessionData={sessionData}>
+                  <ManageRequestsChange />
+                </ProtectedRoute>
+              }/>
               <Route path="projekti" element={
                 <ProtectedRoute sessionData={ sessionData }>
                   <ProjectsList />
                 </ProtectedRoute>
-              } />
+              }/>
+              <Route path="projekti/:projId" element={
+                <ProtectedRoute sessionData={ sessionData }>
+                  <ProjectChange />
+                </ProtectedRoute>
+              }/>
               <Route path="korisnici" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UsersList />
@@ -108,11 +119,6 @@ const BaseRoutes = () => {
               <Route path="softver" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <SoftwareList />
-                </ProtectedRoute>
-              }/>
-              <Route path="upravljanje-zahtjevima/:projId" element={
-                <ProtectedRoute sessionData={sessionData}>
-                  <ManageRequestsChange />
                 </ProtectedRoute>
               }/>
               <Route path="moji-zahtjevi" element={
