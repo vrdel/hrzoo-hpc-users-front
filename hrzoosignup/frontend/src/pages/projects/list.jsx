@@ -21,7 +21,7 @@ import { CustomReactSelect } from "Components/CustomReactSelect";
 import { TypeColor, TypeString } from "Config/map-projecttypes";
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
 import { StateIcons } from "Config/map-states";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
@@ -273,7 +273,9 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle fw-bold text-center">
                         <Row>
                           <Col>
-                            { project.name}
+                            <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
+                              { project.name}
+                            </Link>
                           </Col>
                         </Row>
                         <Row className="pt-1">
