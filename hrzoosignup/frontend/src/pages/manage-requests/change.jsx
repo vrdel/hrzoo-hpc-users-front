@@ -154,7 +154,7 @@ const LeadBasicInfo = ({leadInfo}) => {
 }
 
 
-export const ManageRequestsChange = () => {
+export const ManageRequestsChange = ({manageProject=false}) => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const [commentDisabled, setCommentDisabled] = useState(undefined);
@@ -318,7 +318,7 @@ export const ManageRequestsChange = () => {
       && (!data['staff_requestResourceType'] || data['staff_requestResourceType'].length === 0)) {
       toast.error(
         <span className="font-monospace text-dark">
-          Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
+          {`Pri odobravanju ${manageProject ? 'projekta' : 'zahtjeva'} morate se izjasniti o dodijeljenom tipu resursa.`}
         </span>, {
           autoClose: false,
           toastId: 'manreq-change-no-reqtype',
@@ -330,7 +330,7 @@ export const ManageRequestsChange = () => {
     if (whichState === 'deny' && !data['staff_comment']) {
       toast.error(
         <span className="font-monospace text-dark">
-          Pri odbijanju zahtjeva morate se izjasniti o razlogu.
+          {`Pri odbijanju ${manageProject ? 'projekta' : 'zahtjeva'} morate se izjasniti o razlogu.`}
         </span>, {
           autoClose: false,
           toastId: 'manreq-change-no-reqcomment',
@@ -340,8 +340,8 @@ export const ManageRequestsChange = () => {
     }
 
     setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Obrada korisničkog zahtijeva")
-    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
+    setModalTitle(`${manageProject ? 'Obrada projekta' : 'Obrada korisničkog zahtjeva'}`)
+    setModalMsg(`Da li ste sigurni da želite mijenjati ${manageProject ? 'projekt' : 'korisnički zahtjev?'}`)
     setOnYesCall('dochangereq')
     setOnYesCallArg(data)
     // alert(JSON.stringify(data, null, 2));
@@ -362,19 +362,19 @@ export const ManageRequestsChange = () => {
         queryClient.invalidateQueries('all-projects')
         toast.success(
           <span className="font-monospace text-dark">
-            Zahtjev je uspješno obrisan
+            {`${manageProject ? 'Projekt' : 'Zahtjev'} je uspješno obrisan`}
           </span>, {
             toastId: 'manreq-ok-delete',
             autoClose: 2500,
             delay: 500,
-            onClose: setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
+            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projekti' : '/upravljanje-zahtjevima'}`)}, 1500)
           }
         )
       },
       onError: (error) => {
         toast.error(
           <span className="font-monospace text-dark">
-            Zahtjev nije bilo moguće obrisati:
+            {`${manageProject ? 'Projekt' : 'Zahtjev'} nije bilo moguće obrisati:`}
             { error.message }
           </span>, {
             toastId: 'manreq-ok-delete',
@@ -393,19 +393,19 @@ export const ManageRequestsChange = () => {
         queryClient.invalidateQueries('change-project')
         toast.success(
           <span className="font-monospace text-dark">
-            Zahtjev je uspješno promijenjen
+            {`${manageProject ? 'Projekt' : 'Zahtjev'} je uspješno promijenjen`}
           </span>, {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
             delay: 500,
-            onClose: setTimeout(() => {navigate(url_ui_prefix + '/upravljanje-zahtjevima')}, 1500)
+            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projekti' : '/upravljanje-zahtjevima'}`)}, 1500)
           }
         )
       },
       onError: (error) => {
         toast.error(
           <span className="font-monospace text-dark">
-            Zahtjev nije bilo moguće promijeniti:
+            {`${manageProject ? 'Projekt' : 'Zahtjev'} nije bilo moguće promijeniti:`}
             { error.message }
           </span>, {
             toastId: 'manreq-ok-change',
@@ -462,6 +462,7 @@ export const ManageRequestsChange = () => {
                   setCommentDisabled={setCommentDisabled}
                   modalProps={{setAreYouSureModal, setModalTitle, setModalMsg,
                     setOnYesCall, areYouSureModal}}
+                  manageProject={manageProject}
                 />
               </Form>
             </FormProvider>
@@ -475,7 +476,7 @@ export const ManageRequestsChange = () => {
 
 const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   setRequestState, initialProjectState, commentDisabled, setCommentDisabled,
-  modalProps}) => {
+  modalProps, manageProject}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect } = useContext(SharedData);
 
@@ -516,14 +517,14 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             modalProps.setModalMsg('Da li ste sigurni da želite brisati korisnički zahtjev?')
             modalProps.setOnYesCall('dodeletereq')}}
           >
-            Obriši zahtjev
+            {`Obriši ${manageProject ? 'projekt' : 'zahtjev'}`}
           </Button>
           <Button color="danger"
             className="me-lg-1 me-md-3 me-sm-3"
             onClick={() => setDisabledFields(!disabledFields)}
             active={!disabledFields}
           >
-            Uredi zahtjev
+            {`Uredi ${manageProject ? 'projekt' : 'zahtjev'}`}
           </Button>
         </Col>
       </Row>
@@ -541,7 +542,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
         <Col md={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
           <span >
-            Stanje zahtjeva:
+            {`Stanje ${manageProject ? 'projekta:' : 'zahtjeva:'}`}
           </span>
         </Col>
       </Row>
