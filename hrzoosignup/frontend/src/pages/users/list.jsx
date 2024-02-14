@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SharedData } from "Pages/root";
 import { fetchUsers, fetchUsersInactive } from "Api/users"
+import { fetchNrSpecificProject } from "Api/projects"
 import { useQuery } from "@tanstack/react-query";
 import {
   Badge,
@@ -10,6 +11,7 @@ import {
   Input,
   Popover,
   PopoverBody,
+  PopoverHeader,
   Row,
   Table,
 } from "reactstrap";
@@ -26,7 +28,64 @@ import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { copyToClipboard } from 'Utils/copy-clipboard';
+import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import _ from 'lodash';
+
+
+const PopoverProjectInfo = ({rhfId, projId}) => {
+  const {status, data: projectData} = useQuery({
+    queryKey: ['users-project', projId],
+    queryFn: () => fetchNrSpecificProject(projId),
+  })
+
+  if (status === 'success' && projectData) {
+    return (
+      <>
+        <PopoverHeader className="d-flex align-items-center justify-content-between">
+          <span className="me-5">
+            <Badge key={rhfId} color="secondary" className="fw-normal">
+              {projectData.identifier}
+            </Badge>
+          </span>
+          <ProjectTypeBadge projectInfo={projectData} />
+        </PopoverHeader>
+        <PopoverBody>
+          <Row>
+            <Col className="fw-bold">
+              Naziv
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ms-2 me-2 fs-6 fst-italic">
+              { projectData['name'] }
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+            </Col>
+          </Row>
+          <Row className="mt-1">
+            <Col className="fw-bold">
+              Institucija
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ms-2 me-2 fst-italic">
+              { projectData['institute'] }
+            </Col>
+          </Row>
+        </PopoverBody>
+      </>
+    )
+  }
+  else
+    return (
+      <PopoverBody>
+        No data
+      </PopoverBody>
+    )
+
+}
 
 
 const ButtonGroupActiveInactive = ({activeList}) => {
@@ -396,18 +455,21 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                     color={ `${proj.role === "lead" ? "dark" : "secondary"}` }
                                     className="fw-normal ms-1"
                                     style={{cursor: 'pointer'}}
-                                    onClick={() => showPopover(`${user.id}-${pid}`) }
+                                    onClick={() => {
+                                      showPopover(`${user.id}-${pid}`)
+                                    }}
                                   >
                                     { proj.identifier }
                                   </Badge>
                                   <Popover
-                                    placement="bottom"
+                                    placement="left"
                                     isOpen={isOpened(`${user.id}-${pid}`)}
                                     target={`pop-${user.id}-${pid}`}
-                                    toggle={() => showPopover(`${user.id}-${pid}`) }>
-                                    <PopoverBody>
-                                      {`project details ${proj.identifier}`}
-                                    </PopoverBody>
+                                    toggle={() => {
+                                      showPopover(`${user.id}-${pid}`)
+                                    }}
+                                  >
+                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} />
                                   </Popover>
                                   <MiniButton
                                     color="light"
