@@ -30,6 +30,7 @@ import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
+import { StateIcons } from 'Config/map-states';
 import _ from 'lodash';
 
 
@@ -47,8 +48,11 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
     return (
       <>
         <PopoverHeader className="d-flex align-items-center justify-content-between">
-          <span className="me-5">
-            <Badge key={rhfId} color="secondary" className="fw-normal">
+          <span className="me-5 d-flex align-items-center">
+            {
+              StateIcons(projectData.state.name, true)
+            }
+            <Badge key={rhfId} color="secondary" className="ms-2 fw-normal">
               {projectData.identifier}
             </Badge>
           </span>
