@@ -8,6 +8,8 @@ import {
   ButtonGroup,
   Col,
   Input,
+  Popover,
+  PopoverBody,
   Row,
   Table,
 } from "reactstrap";
@@ -66,6 +68,24 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
       searchSSHKey: ""
     }
   })
+
+  const [popoverOpened, setPopoverOpened] = useState(undefined);
+  const showPopover = (popid) => {
+    let showed = new Object()
+    if (popoverOpened === undefined && popid) {
+      showed[popid] = true
+      setPopoverOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(popoverOpened))
+      showed[popid] = !showed[popid]
+      setPopoverOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (popoverOpened !== undefined)
+      return popoverOpened[toolid]
+  }
 
   const searchJoined = useWatch({ control, name: "searchJoined" })
   const searchName = useWatch({ control, name: "searchName" })
@@ -371,9 +391,24 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                             user.projects.map((proj, pid) =>
                               <Row className={pid > 0 ? "g-0 mt-1" : "g-0"} key={pid}>
                                 <Col className="d-flex justify-content-center align-items-center align-self-center">
-                                  <Badge key={ pid } color={ `${proj.role === "lead" ? "dark" : "secondary"}` } className="fw-normal ms-1">
+                                  <Badge key={pid}
+                                    id={`pop-${user.id}-${pid}`}
+                                    color={ `${proj.role === "lead" ? "dark" : "secondary"}` }
+                                    className="fw-normal ms-1"
+                                    style={{cursor: 'pointer'}}
+                                    onClick={() => showPopover(`${user.id}-${pid}`) }
+                                  >
                                     { proj.identifier }
                                   </Badge>
+                                  <Popover
+                                    placement="bottom"
+                                    isOpen={isOpened(`${user.id}-${pid}`)}
+                                    target={`pop-${user.id}-${pid}`}
+                                    toggle={() => showPopover(`${user.id}-${pid}`) }>
+                                    <PopoverBody>
+                                      {`project details ${proj.identifier}`}
+                                    </PopoverBody>
+                                  </Popover>
                                   <MiniButton
                                     color="light"
                                     onClick={(e) => copyToClipboard(
