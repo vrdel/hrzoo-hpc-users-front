@@ -29,6 +29,7 @@ import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
+import { extractCollaborators, extractLeaderName } from "Utils/users_help";
 import _ from 'lodash';
 
 
@@ -39,6 +40,10 @@ const PopoverProjectInfo = ({rhfId, projId}) => {
   })
 
   if (status === 'success' && projectData) {
+    let leader = extractLeaderName(projectData.userproject_set, true)
+    let collaborators = extractCollaborators(projectData.userproject_set, true)
+    let resources = projectData.staff_resources_type
+
     return (
       <>
         <PopoverHeader className="d-flex align-items-center justify-content-between">
@@ -56,24 +61,70 @@ const PopoverProjectInfo = ({rhfId, projId}) => {
             </Col>
           </Row>
           <Row>
-            <Col className="ms-2 me-2 fs-6 fst-italic">
-              { projectData['name'] }
+            <Col className="ms-2 me-2 fs-6">
+              { projectData['name'] }<br/>
+              <small className="fst-italic">{ projectData['institute'] }</small>
             </Col>
           </Row>
-          <Row>
-            <Col>
-            </Col>
-          </Row>
-          <Row className="mt-1">
+          {
+            resources && resources.length > 0 &&
+              <>
+                <Row className="mt-2">
+                  <Col className="fw-bold">
+                    Resursi
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="ms-2 mt-1 me-2">
+                    {
+                      projectData.staff_resources_type.map((rtype, i) =>
+                        <span className="ms-1 p-1 fw-normal" key={i}
+                          style={{
+                            backgroundColor: '#feb272',
+                            color: '#303030',
+                            borderRadius: '2px',
+                            fontSize: '0.83rem'
+                          }}>
+                          {rtype.value}
+                        </span>)
+                    }
+                  </Col>
+                </Row>
+              </>
+          }
+          <Row className="mt-4">
             <Col className="fw-bold">
-              Institucija
+              Voditelj
             </Col>
           </Row>
           <Row>
-            <Col className="ms-2 me-2 fst-italic">
-              { projectData['institute'] }
+            <Col className="ms-2 me-2">
+              <Badge color="dark" className="fw-normal ms-1">
+                { leader }
+              </Badge>
             </Col>
           </Row>
+          {
+            collaborators.length > 0 &&
+              <>
+                <Row className="mt-2">
+                  <Col className="fw-bold">
+                    Suradnici
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="ms-2 me-2">
+                    {
+                      collaborators.map((collab, cid) =>
+                        <Badge key={cid} color="secondary" className="fw-normal ms-1">
+                          { collab }
+                        </Badge>
+                      )
+                    }
+                  </Col>
+                </Row>
+              </>
+          }
         </PopoverBody>
       </>
     )
