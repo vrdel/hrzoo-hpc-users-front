@@ -18,7 +18,7 @@ import {
 import { PageTitle } from 'Components/PageTitle';
 import { MiniButton } from 'Components/MiniButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faCopy, faSearch, faTimesCircle, faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCopy, faSearch, faTimesCircle, faCheck, faXmark, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "Components/TableHelpers";
 import { buildOptionsFromArray } from "Utils/select-tools";
@@ -33,7 +33,7 @@ import { extractCollaborators, extractLeaderName } from "Utils/users_help";
 import _ from 'lodash';
 
 
-const PopoverProjectInfo = ({rhfId, projId}) => {
+const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
   const {status, data: projectData} = useQuery({
     queryKey: ['users-project', projId],
     queryFn: () => fetchNrSpecificProject(projId),
@@ -125,6 +125,21 @@ const PopoverProjectInfo = ({rhfId, projId}) => {
                 </Row>
               </>
           }
+          <Row className="mt-4">
+            <Col className="d-flex justify-content-center align-items-center align-self-center">
+              <a className="btn btn-primary btn-sm"
+                target="_blank"
+                style={{'textDecoration': 'none'}}
+                rel="noopener noreferrer"
+                role="button"
+                onClick={() => showPopover(rhfId)}
+                href={`/ui/upravljanje-zahtjevima/${projectData.identifier}`}
+              >
+                <FontAwesomeIcon icon={faArrowRight}/>{' '}
+                Detalji zahtjeva
+              </a>
+            </Col>
+          </Row>
         </PopoverBody>
       </>
     )
@@ -520,7 +535,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                       showPopover(`${user.id}-${pid}`)
                                     }}
                                   >
-                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} />
+                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} showPopover={showPopover} />
                                   </Popover>
                                   <MiniButton
                                     color="light"
