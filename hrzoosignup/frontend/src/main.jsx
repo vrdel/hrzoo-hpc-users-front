@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import BaseRoutes from './routes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import './styles/bootstrap-custom.scss'
+import 'Styles/bootstrap-custom.scss'
 
 const queryClient = new QueryClient()
 
