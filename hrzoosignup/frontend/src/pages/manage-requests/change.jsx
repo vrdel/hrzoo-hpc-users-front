@@ -474,6 +474,158 @@ export const ManageRequestsChange = ({manageProject=false}) => {
 };
 
 
+const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
+  return (
+    <>
+      <Col md={{size: 2}}/>
+      <Col md={{size: 2}}>
+        <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Odobren
+        </p>
+        <Button
+          style={{height: '30px', width: '30px'}}
+          outline={!requestState['approve']}
+          onClick={() => {
+            setCommentDisabled(true)
+            setRequestState(ToggleState(requestState, 'approve'))
+          }}
+          color="success"
+        />
+      </Col>
+      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+        <FontAwesomeIcon
+          className="fa-3x text-warning"
+          icon={faTimeline}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Produljenje
+        </p>
+        <Button
+          outline={!requestState['extend']}
+          style={{height: '30px', width: '30px'}}
+          onClick={() => {
+            setCommentDisabled(true)
+            setRequestState(ToggleState(requestState, 'extend'))
+          }}
+          color="success"/>
+      </Col>
+      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+        <FontAwesomeIcon
+          className="fa-3x text-danger"
+          icon={faCalendarXmark}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Istekao
+        </p>
+        <Button
+          outline={!requestState['expire']}
+          style={{height: '30px', width: '30px'}}
+          onClick={() => {
+            setCommentDisabled(true)
+            setRequestState(ToggleState(requestState, 'expire'))
+          }}
+          color="success"/>
+      </Col>
+    </>
+  )
+}
+
+
+const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
+  return (
+    <>
+      <Col md={{size: 2}}>
+        <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Odobren
+        </p>
+        <Button
+          style={{height: '30px', width: '30px'}}
+          outline={!requestState['approve']}
+          onClick={() => {
+            setCommentDisabled(true)
+            setRequestState(ToggleState(requestState, 'approve'))
+          }}
+          color="success"
+        />
+      </Col>
+      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+        <FontAwesomeIcon
+          className="fa-3x text-warning"
+          icon={faCog}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Obrada
+        </p>
+        <Button
+          style={{height: '30px', width: '30px'}}
+          outline={!requestState['submit']}
+          onClick={() => {
+            setCommentDisabled(true)
+            setRequestState(ToggleState(requestState, 'submit'))
+          }}
+          color="success"
+        />
+      </Col>
+      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+        <FontAwesomeIcon
+          className="fa-3x text-warning"
+          icon={faTimeline}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Produljenje
+        </p>
+        <Button
+          outline={!requestState['extend']}
+          style={{height: '30px', width: '30px'}}
+          onClick={() => {
+            setCommentDisabled(true)
+            setRequestState(ToggleState(requestState, 'extend'))
+          }}
+          color="success"/>
+      </Col>
+      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+        <FontAwesomeIcon
+          className="fa-3x text-danger"
+          icon={faTimes}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Odbijen
+        </p>
+        <Button
+          outline={!requestState['deny']}
+          style={{height: '30px', width: '30px'}}
+          onClick={() => {
+            setCommentDisabled(false)
+            setRequestState(ToggleState(requestState, 'deny'))
+          }}
+          color="success"/>
+      </Col>
+      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+        <FontAwesomeIcon
+          className="fa-3x text-danger"
+          icon={faCalendarXmark}/>{' '}
+        <br/>
+        <p className="fs-5">
+          Istekao
+        </p>
+        <Button
+          outline={!requestState['expire']}
+          style={{height: '30px', width: '30px'}}
+          onClick={() => {
+            setCommentDisabled(true)
+            setRequestState(ToggleState(requestState, 'expire'))
+          }}
+          color="success"/>
+      </Col>
+    </>
+  )
+}
+
+
 const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   setRequestState, initialProjectState, commentDisabled, setCommentDisabled,
   modalProps, manageProject}) => {
@@ -505,7 +657,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row>
         <Col md={{size: 12}} className="me-0">
           <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
-            Obrada:
+            Obrada
           </span>
         </Col>
       </Row>
@@ -550,100 +702,32 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row className="mt-2 mb-5 text-center">
         <Col md={{size: 1}}>
         </Col>
-        <Col md={{size: 2}}>
-          <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
-          <br/>
-          <p className="fs-5">
-            Odobren
-          </p>
-          <Button
-            style={{height: '30px', width: '30px'}}
-            outline={!requestState['approve']}
-            onClick={() => {
-              setCommentDisabled(true)
-              setRequestState(ToggleState(requestState, 'approve'))
-            }}
-            color="success"
-          />
-        </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-          <FontAwesomeIcon
-            className="fa-3x text-warning"
-            icon={faCog}/>{' '}
-          <br/>
-          <p className="fs-5">
-            Obrada
-          </p>
-          <Button
-            style={{height: '30px', width: '30px'}}
-            outline={!requestState['submit']}
-            onClick={() => {
-              setCommentDisabled(true)
-              setRequestState(ToggleState(requestState, 'submit'))
-            }}
-            color="success"
-          />
-        </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-          <FontAwesomeIcon
-            className="fa-3x text-warning"
-            icon={faTimeline}/>{' '}
-          <br/>
-          <p className="fs-5">
-            Produljenje
-          </p>
-          <Button
-            outline={!requestState['extend']}
-            style={{height: '30px', width: '30px'}}
-            onClick={() => {
-              setCommentDisabled(true)
-              setRequestState(ToggleState(requestState, 'extend'))
-            }}
-            color="success"/>
-        </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-          <FontAwesomeIcon
-            className="fa-3x text-danger"
-            icon={faTimes}/>{' '}
-          <br/>
-          <p className="fs-5">
-            Odbijen
-          </p>
-          <Button
-            outline={!requestState['deny']}
-            style={{height: '30px', width: '30px'}}
-            onClick={() => {
-              setCommentDisabled(false)
-              setRequestState(ToggleState(requestState, 'deny'))
-            }}
-            color="success"/>
-        </Col>
-        <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-          <FontAwesomeIcon
-            className="fa-3x text-danger"
-            icon={faCalendarXmark}/>{' '}
-          <br/>
-          <p className="fs-5">
-            Istekao
-          </p>
-          <Button
-            outline={!requestState['expire']}
-            style={{height: '30px', width: '30px'}}
-            onClick={() => {
-              setCommentDisabled(true)
-              setRequestState(ToggleState(requestState, 'expire'))
-            }}
-            color="success"/>
-        </Col>
+        {
+          manageProject ?
+            <ProjectState
+              requestState={requestState}
+              setCommentDisabled={setCommentDisabled}
+              setRequestState={setRequestState}
+            />
+          :
+            <RequestState
+              requestState={requestState}
+              setCommentDisabled={setCommentDisabled}
+              setRequestState={setRequestState}
+            />
+        }
       </Row>
-      <Row>
-        <Col className="d-flex justify-content-center fst-italic">
-          <p className="fw-bold">Napomena:</p>&nbsp;
-          <p>Inicijalno stanje zahtjeva: <span className="text-decoration-underline">{ StateShortString(initialProjectState) }</span><br/>
-            Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".
-          </p>
-        </Col>
-      </Row>
+      {
+        !manageProject &&
+        <Row>
+          <Col className="d-flex justify-content-center fst-italic">
+            <p className="fw-bold">Napomena:</p>&nbsp;
+            <p>Inicijalno stanje zahtjeva: <span className="text-decoration-underline">{ StateShortString(initialProjectState) }</span><br/>
+              Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".
+            </p>
+          </Col>
+        </Row>
+      }
       <Row className="mt-4">
         <Col style={{width: '150px'}} md={{size: 1}}/>
         <Col md={{size: 8}}>
@@ -673,54 +757,60 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           />
         </Col>
       </Row>
-      <Row className="mt-3">
-        <Col style={{width: '150px'}} md={{size: 1}}/>
-        <Col md={{size: 10}}>
-          <Label
-            htmlFor="staff_comment"
-            className="fw-bold mt-3 fs-5 form-label"
-            aria-label="staff_comment">
-            Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:
-          </Label>
-          <Controller
-            name="staff_comment"
-            control={control}
-            render={ ({field}) =>
-              <textarea
-                id="staff_comment"
-                {...field}
-                aria-label="staff_comment"
-                disabled={commentDisabled}
-                type="text"
-                className="form-control"
-                rows="10"
+      {
+        !manageProject &&
+        <>
+          <Row className="mt-3">
+            <Col style={{width: '150px'}} md={{size: 1}}/>
+            <Col md={{size: 10}}>
+              <Label
+                htmlFor="staff_comment"
+                className="fw-bold mt-3 fs-5 form-label"
+                aria-label="staff_comment">
+                Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:
+              </Label>
+              <Controller
+                name="staff_comment"
+                control={control}
+                render={ ({field}) =>
+                  <textarea
+                    id="staff_comment"
+                    {...field}
+                    aria-label="staff_comment"
+                    disabled={commentDisabled}
+                    type="text"
+                    className="form-control"
+                    rows="10"
+                  />
+                }
               />
-            }
-          />
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col style={{width: '150px'}} md={{size: 1}}/>
-        <Col md={{size: 9}}>
-          <FormGroup switch>
-            <Controller
-              name="staff_emailSend"
-              control={control}
-              render={({field}) =>
-                <Input
-                  {...field}
-                  type="switch"
-                  role="switch"
-                  disabled={sendEmailDisabled}
-                  checked={disabledFields ? getValues('staff_emailSend') : false}
-                  className="form-control fw-bold fst-italic"
+            </Col>
+          </Row>
+          <Row className="mt-3">
+            <Col style={{width: '150px'}} md={{size: 1}}/>
+            <Col md={{size: 9}}>
+              <FormGroup switch>
+                <Controller
+                  name="staff_emailSend"
+                  control={control}
+                  render={({field}) =>
+                    <Input
+                      {...field}
+                      type="switch"
+                      role="switch"
+                      disabled={sendEmailDisabled}
+                      checked={disabledFields ? getValues('staff_emailSend') : false}
+                      className="form-control fw-bold fst-italic"
+                    />
+                  }
                 />
-              }
-            />
-            <Label className="fw-bold fst-italic" check>Šalji email voditelju</Label>
-          </FormGroup>
-        </Col>
-      </Row>
+                <Label className="fw-bold fst-italic" check>Šalji email voditelju</Label>
+              </FormGroup>
+            </Col>
+          </Row>
+          <Row style={{'height': '100px'}}/>
+        </>
+      }
       <Row style={{'height': '50px'}}/>
       <Row className="justify-content-end fst-italic">
         <Col md={{size: 4}} className="fs-6 mt-3">
@@ -751,7 +841,6 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           </Col>
         </Row>
       }
-      <Row style={{'height': '100px'}}/>
       <Row className="mt-5 mb-5 text-center">
         <Col>
           <Button disabled={!disabledFields} size="lg" color="success"
