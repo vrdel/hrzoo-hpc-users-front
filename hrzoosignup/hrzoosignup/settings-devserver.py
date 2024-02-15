@@ -35,6 +35,7 @@ try:
     # General
     DEBUG_OPTION = bool(config.getboolean('GENERAL', 'Debug'))
     RELATIVE_PATH = config.get('GENERAL', 'RelativePath')
+    REALM_MAP = config.get('GENERAL', 'RealmMap')
     INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
     PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
 

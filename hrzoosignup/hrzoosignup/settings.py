@@ -36,6 +36,7 @@ try:
     DEBUG_OPTION = bool(config.getboolean('GENERAL', 'Debug'))
     RELATIVE_PATH = config.get('GENERAL', 'RelativePath')
     INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
+    REALM_MAP = config.get('GENERAL', 'RealmMap')
     PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
