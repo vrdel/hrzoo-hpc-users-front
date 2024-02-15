@@ -46,13 +46,19 @@ class Command(BaseCommand):
             "--project",
             action="store_true",
             dest="project_yes",
-            help="Fix project institute",
+            help="Fix project lead institution",
         )
         parser.add_argument(
             "--research-project-resync-institutions",
             action="store_true",
             dest="research_resync_yes",
-            help="Set user person_institution to CroRIS names",
+            help="Resync institutions for all submitted CroRIS research projects",
+        )
+        parser.add_argument(
+            "--set-realm-institutions",
+            action="store_true",
+            dest="realm_yes",
+            help="Make changes",
         )
         parser.add_argument(
             "--yes",
@@ -240,6 +246,26 @@ class Command(BaseCommand):
 
         return any_changed
 
+    def _task_set_realm_institutions(self, options):
+        any_changed = False
+        users = self.user_model.objects.all()
+        for user in users:
+            visited_inst, inst_croris = set(), None
+            inst_oib = user.person_institution_oib
+            if inst_oib and inst_oib not in visited_inst:
+                try:
+                    inst_croris = CrorisInstitutions.objects.get(oib=inst_oib)
+                    if user.person_institution_realm and not inst_croris.realm:
+                        inst_croris.realm = user.person_institution_realm
+                        self.stdout.write(self.style.NOTICE(f'Setting realm for {inst_croris.name_short} to {inst_croris.realm}'))
+                        any_changed = True
+                        inst_croris.save()
+                    visited_inst.add(inst_oib)
+                except CrorisInstitutions.DoesNotExist:
+                    pass
+
+        return any_changed
+
     def handle(self, *args, **options):
         any_changed_user, any_changed_project = False, False
 
@@ -255,6 +281,9 @@ class Command(BaseCommand):
 
         if options.get('project_yes', None):
             any_changed_project = self._task_fix_project_institutions(options)
+
+        if options.get('realm_yes', None):
+            self._task_set_realm_institutions(options)
 
         if any_changed_user or any_changed_project:
             cache.delete("usersinfoinactive-get")
