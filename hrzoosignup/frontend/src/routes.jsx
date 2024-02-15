@@ -86,12 +86,12 @@ const BaseRoutes = () => {
               <Route path="saml2-login-redirect" element={
                 <Saml2LoginRedirect sessionData={sessionData} />
               }/>
-              <Route path="upravljanje-zahtjevima" element={
+              <Route path="zahtjevi" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsList />
                 </ProtectedRoute>
               }/>
-              <Route path="upravljanje-zahtjevima/:projId" element={
+              <Route path="zahtjevi/:projId" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsChange />
                 </ProtectedRoute>

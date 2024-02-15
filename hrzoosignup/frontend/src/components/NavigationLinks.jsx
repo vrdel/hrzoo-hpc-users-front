@@ -82,11 +82,11 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
 const NavigationLinksAdmin = ({activeBgColor}) => {
   return (
     <>
-      <NavItem key='upravljanje-zahtjevima' className='ms-3 mt-1'>
+      <NavItem key='zahtjevi' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/upravljanje-zahtjevima'>
+          to='/ui/zahtjevi'>
           <FontAwesomeIcon icon={faStamp} />{' '}
           Zahtjevi
         </NavLink>

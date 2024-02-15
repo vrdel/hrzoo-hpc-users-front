@@ -2,7 +2,7 @@ import { url_ui_prefix } from './general';
 
 export function LinkTitles(loc) {
   let url2linktitle = {
-    [url_ui_prefix + '/upravljanje-zahtjevima']: 'Upravljanje zahtjevima',
+    [url_ui_prefix + '/zahtjevi']: 'Upravljanje zahtjevima',
     [url_ui_prefix + '/moji-zahtjevi']: 'Moji zahtjevi',
     [url_ui_prefix + '/novi-zahtjev']: 'Novi zahtjev',
     [url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt']: 'Novi zahtjev temeljem istraživačkog projekta',
@@ -27,7 +27,7 @@ export function LinkTitles(loc) {
     return 'Pregledavanje zahtjeva ' + identifier
   }
 
-  if (loc.includes('/upravljanje-zahtjevima/') && loc.match(/[%\w.\d-_]+$/)) {
+  if (loc.includes('/zahtjevi/') && loc.match(/[%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = decodeURIComponent(identifier[0])

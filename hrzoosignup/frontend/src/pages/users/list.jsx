@@ -137,7 +137,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
                 rel="noopener noreferrer"
                 role="button"
                 onClick={() => showPopover(rhfId)}
-                href={`/ui/upravljanje-zahtjevima/${projectData.identifier}`}
+                href={`/ui/zahtjevi/${projectData.identifier}`}
               >
                 <FontAwesomeIcon icon={faArrowRight}/>{' '}
                 Detalji zahtjeva
