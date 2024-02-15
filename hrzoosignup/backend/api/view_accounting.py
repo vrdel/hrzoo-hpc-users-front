@@ -57,23 +57,36 @@ class AccountingUserProjectAPI(APIView):
 
     def get(self, request):
         tags = self.request.query_params.get('tags')
+        tag = self.request.query_params.get('tag')
+        op = self.request.query_params.get('op')
         query = Q()
         db_interested = list()
 
         if tags:
             tags = tags.split(',')
-
-            if len(tags) == 1:
-                db_interested = models.Project.objects.filter(staff_resources_type__exact=[{"label": tags[0], "value": tags[0]}])
-                return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
-
+            target_resources = list()
             for tag in tags:
-                query |= Q(staff_resources_type__contains=[{"label": tag, "value": tag}])
+                if op:
+                    if op == 'OR':
+                        query |= Q(staff_resources_type__contains=[{"label": tag, "value": tag}])
+                    elif op == 'AND':
+                        target_resources.append({
+                            "label": tag,
+                            "value": tag
+                        })
+                else:
+                    query |= Q(staff_resources_type__contains=[{"label": tag, "value": tag}])
 
-            db_interested = models.Project.objects.filter(query).distinct()
+            if target_resources:
+                db_interested = models.Project.objects.filter(staff_resources_type__exact=target_resources).distinct()
+            else:
+                db_interested = models.Project.objects.filter(query).distinct()
+            return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
+
+        elif tag:
+            db_interested = models.Project.objects.filter(staff_resources_type__exact=[{"label": tag, "value": tag}])
             return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
 
         else:
             projects = models.Project.objects.all().filter(state__name__in=['approve', 'expire', 'extend'])
-
             return Response(self._generate_response(projects), status=status.HTTP_200_OK)
