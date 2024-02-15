@@ -14,10 +14,72 @@ import { ErrorMessage } from '@hookform/error-message';
 import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
-import { AuthContext } from '../../components/AuthContextProvider';
 
 
-const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=false, isInstitute=false}) => {
+const GeneralProjectUsers = ({projectInfo}) =>
+  <Row>
+    <Col md={{offset: 1, size: 10}}>
+      {
+        projectInfo.userproject_set.map((user, i) =>
+          user.role.name === 'lead' &&
+          <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+            {
+              user['user']['first_name'] + ' ' + user['user']['last_name']
+            }
+          </Badge>
+        )
+      }
+      {'   '}
+      {
+        projectInfo.userproject_set.map((user, i) =>
+          user.role.name === 'collaborator' &&
+          <React.Fragment key={`wrap-project-users-${i}`}>
+            <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+              {
+                user['user']['first_name'] + ' ' + user['user']['last_name']
+              }
+            </Badge>
+            {'  '}
+          </React.Fragment>
+        )
+      }
+    </Col>
+  </Row>
+
+
+const CrorisProjectUsers = ({projectInfo}) =>
+  <Row>
+    <Col md={{offset: 1, size: 10}}>
+      {
+        projectInfo.userproject_set.map((user, i) =>
+          user.role.name === 'lead' &&
+          <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+            {
+              user['user']['first_name'] + ' ' + user['user']['last_name']
+            }
+          </Badge>
+        )
+      }
+      {'   '}
+      {
+        projectInfo.croris_collaborators.map((user, i) =>
+          <React.Fragment key={`wrap-project-users-${i}`}>
+            <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+              {
+                user &&
+                user['first_name'] + ' ' + user['last_name']
+              }
+            </Badge>
+            {'  '}
+          </React.Fragment>
+        )
+      }
+    </Col>
+  </Row>
+
+
+const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
+  isResearch=false, manageProject=false, isInstitute=false}) => {
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
   const [endDate, setEndDate] = useState('')
@@ -222,42 +284,27 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false, isResearch=fals
       <Row>
         {
           projectInfo && projectInfo.project_type &&
-          projectInfo.project_type.name === 'research-croris' &&
+          projectInfo.project_type.name === 'research-croris' ?
             <>
               <Row className="mt-4">
                 <Col md={{offset: 1}}>
                   Korisnici:
                 </Col>
               </Row>
-              <Row>
-                <Col md={{offset: 1, size: 10}}>
-                  {
-                    projectInfo.userproject_set.map((user, i) =>
-                      user.role.name === 'lead' &&
-                      <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
-                        {
-                          user['user']['first_name'] + ' ' + user['user']['last_name']
-                        }
-                      </Badge>
-                    )
-                  }
-                  {'   '}
-                  {
-                    projectInfo.croris_collaborators.map((user, i) =>
-                      <React.Fragment key={`wrap-project-users-${i}`}>
-                        <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
-                          {
-                            user &&
-                            user['first_name'] + ' ' + user['last_name']
-                          }
-                        </Badge>
-                        {'  '}
-                      </React.Fragment>
-                    )
-                  }
-                </Col>
-              </Row>
+              <CrorisProjectUsers projectInfo={projectInfo} />
             </>
+          :
+            manageProject ?
+              <>
+                <Row className="mt-4">
+                  <Col md={{offset: 1}}>
+                    Korisnici:
+                  </Col>
+                </Row>
+                <GeneralProjectUsers projectInfo={projectInfo} />
+              </>
+            :
+              null
         }
         <Col className="ms-1">
           <BaseNewScientificDomain fieldsDisabled={fieldsDisabled} />

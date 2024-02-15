@@ -445,7 +445,8 @@ export const ManageRequestsChange = ({manageProject=false}) => {
                     />
                 }
                 <GeneralFields fieldsDisabled={disabledFields}
-                  projectInfo={nrProject} isResearch={nrProject.project_type['name'] === 'research-croris'}
+                  projectInfo={nrProject} manageProject={manageProject}
+                  isResearch={nrProject.project_type['name'] === 'research-croris'}
                 />
                 <ScientificSoftware fieldsDisabled={disabledFields} />
                 <ResourceFields fieldsDisabled={disabledFields} />
