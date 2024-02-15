@@ -2,17 +2,17 @@ import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
 import { Col, Row, Table, Tooltip, Input } from 'reactstrap';
 import { useNavigate, Link } from 'react-router-dom';
-import { PageTitle } from '../../components/PageTitle';
-import { StateIcons, StateString } from '../../config/map-states';
-import { fetchAllNrProjects } from '../../api/projects';
+import { PageTitle } from 'Components/PageTitle';
+import { StateIcons, StateString } from 'Config/map-states';
+import { fetchAllNrProjects } from 'Api/projects';
 import { useQuery } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
   faSearch
 } from '@fortawesome/free-solid-svg-icons';
-import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
-import { extractLeaderName } from '../../utils/users_help'
+import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
+import { extractLeaderName } from 'Utils/users_help'
 import { Controller, useFieldArray, useForm, useWatch } from 'react-hook-form';
 import {
   EmptyTable,
@@ -22,11 +22,11 @@ import {
   optionsTypes,
   allProjectTypes,
   allStates
-} from '../../components/TableHelpers';
-import { CustomReactSelect } from '../../components/CustomReactSelect';
-import { defaultUnAuthnRedirect} from '../../config/default-redirect';
-import { EmptyTableSpinner } from '../../components/EmptyTableSpinner';
-import { copyToClipboard } from '../../utils/copy-clipboard';
+} from 'Components/TableHelpers';
+import { CustomReactSelect } from 'Components/CustomReactSelect';
+import { defaultUnAuthnRedirect} from 'Config/default-redirect';
+import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
+import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import _ from "lodash";
