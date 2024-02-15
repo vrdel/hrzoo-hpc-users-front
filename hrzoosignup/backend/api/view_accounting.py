@@ -19,6 +19,12 @@ class AccountingUserProjectAPI(APIView):
                 return projid.replace(field['from'], field['to'])
         return projid
 
+    def _set_realm_from_map(self, inst_name):
+        for field in settings.MAP_REALMS:
+            if field['from'] in inst_name:
+                return inst_name.replace(field['from'], field['to'])
+        return ''
+
     def _set_project_finance(self, project):
         if project.croris_finance:
             return project.croris_finance
@@ -28,6 +34,9 @@ class AccountingUserProjectAPI(APIView):
     def _generate_response(self, projects):
         ret_data = []
         for project in projects:
+            realm_inst = models.CrorisInstitutions.objects.get(name_short=project.institute).realm
+            if not realm_inst:
+                realm_inst = self._set_realm_from_map(project.institute)
             fields_project = dict()
             fields_project['id'] = project.id
             fields_project['sifra'] = self._replace_projectsapi_fields(project.identifier)
@@ -37,6 +46,7 @@ class AccountingUserProjectAPI(APIView):
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
+            fields_project['realm'] = realm_inst
             fields_project['finance'] = self._set_project_finance(project)
             fields_project['approved_resources'] = [res['value'] for res in project.staff_resources_type]
             fields_project['users'] = list()
