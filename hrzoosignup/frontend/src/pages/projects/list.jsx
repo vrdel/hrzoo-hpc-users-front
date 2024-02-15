@@ -46,6 +46,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
     }
   })
 
+  useEffect(() => {
+    setValue('projects', data)
+  }, [data])
+
   const searchNameIdentifiterInstitute = useWatch({ control, name: "searchNameIdentifiterInstitute" })
   const searchType = useWatch({ control, name: "searchType" })
   const searchDate = useWatch({ control, name: "searchDate" })
@@ -386,7 +390,7 @@ export const ProjectsList = () => {
     setPageTitle(LinkTitles(location.pathname))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [LinkTitles, status])
+  }, [location.pathname, status])
 
 
   if (status === 'success' && data && pageTitle)
