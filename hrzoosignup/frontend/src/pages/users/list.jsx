@@ -44,6 +44,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
     let leader = extractLeaderName(projectData.userproject_set, true)
     let collaborators = extractCollaborators(projectData.userproject_set, true)
     let resources = projectData.staff_resources_type
+    let isRequest = projectData.state.name !== 'approve' && projectData.state.name !== 'deny'
 
     return (
       <>
@@ -137,10 +138,10 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
                 rel="noopener noreferrer"
                 role="button"
                 onClick={() => showPopover(rhfId)}
-                href={`/ui/zahtjevi/${projectData.identifier}`}
+                href={`/ui/${isRequest ? 'zahtjevi' : 'projekti'}/${projectData.identifier}`}
               >
                 <FontAwesomeIcon icon={faArrowRight}/>{' '}
-                Detalji zahtjeva
+                {`Detalji ${isRequest ? 'zahtjeva' : 'projekta'}`}
               </a>
             </Col>
           </Row>
@@ -149,11 +150,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
     )
   }
   else
-    return (
-      <PopoverBody>
-        No data
-      </PopoverBody>
-    )
+    return null
 
 }
 
