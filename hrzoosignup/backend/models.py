@@ -500,6 +500,11 @@ class CrorisInstitutions(models.Model):
         max_length=128,
         blank=True,
     )
+    realm = models.CharField(
+        _('AAI@EduHR realm'),
+        max_length=16,
+        blank=True,
+    )
 
     def __str__(self):
         return self.name_short
