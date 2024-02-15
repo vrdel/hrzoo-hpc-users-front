@@ -2,5 +2,77 @@
     {
         "from": "Fakultet strojarstva i brodogradnje",
         "to": "fsb.hr"
+    },
+    {
+        "from": "Sveučilište Josipa Jurja Strossmayera u Osijeku, Odjel za fiziku",
+        "to": "unios-fiz.hr"
+    },
+    {
+        "from": "Agronomski fakultet",
+        "to": "agr.hr"
+    },
+    {
+        "from": "Medicinski fakultet Osijek",
+        "to": "mefos.hr"
+    },
+    {
+        "from": "Državni hidrometeorološki zavod",
+        "to": "dhz.hr"
+    },
+    {
+        "from": "Metalurški fakultet",
+        "to": "simet.hr"
+    },
+    {
+        "from": "Hrvatski geološki institut",
+        "to": "hgi-cgs.hr"
+    },
+    {
+        "from": "Fakultet organizacije i informatike",
+        "to": "foi.hr"
+    },
+    {
+        "from": "Institut za fiziku, Zagreb",
+        "to": "ifs.hr"
+    },
+    {
+        "from": "Kemijsko-tehnološki fakultet u Splitu",
+        "to": "ktf-split.hr"
+    },
+    {
+        "from": "Institut za medicinska istraživanja i medicinu rada, Zagreb",
+        "to": "imi.hr"
+    },
+    {
+        "from": "Fakultet turizma i ruralnog razvoja u Požegi",
+        "to": "ftrr.hr"
+    },
+    {
+        "from": "Sveučilište u Rijeci, Fakultet biotehnologije i razvoja lijekova",
+        "to": "uniri-biotech.hr"
+    },
+    {
+        "from": "Ekonomski fakultet, Zagreb",
+        "to": "efzg.hr"
+    },
+    {
+        "from": "Medicinski fakultet u Splitu",
+        "to": "mefst.hr"
+    },
+    {
+        "from": "Sveučilište u Splitu, Sveučilišni odjel za studije mora",
+        "to": "unist-more.hr"
+    },
+    {
+        "from": "Institut za oceanografiju i ribarstvo, Split",
+        "to": "izor.hr"
+    },
+    {
+        "from": "Tehničko veleučilište u Zagrebu",
+        "to": "tvz.hr"
+    },
+    {
+        "from": "Fakultet elektrotehnike, strojarstva i brodogradnje u Splitu",
+        "to": "fesb.hr"
     }
 ]
