@@ -523,7 +523,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                   <Badge key={pid}
                                     id={`pop-${user.id}-${pid}`}
                                     color={ `${proj.role === "lead" ? "dark" : "secondary"}` }
-                                    className="fw-normal ms-1"
+                                    className="fw-normal ms-1 text-decoration-underline"
                                     style={{cursor: 'pointer'}}
                                     onClick={() => {
                                       showPopover(`${user.id}-${pid}`)
