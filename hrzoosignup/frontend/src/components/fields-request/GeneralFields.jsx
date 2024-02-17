@@ -182,102 +182,98 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 4, offset: 1}}>
+        <Col className="d-flex flex-column justify-content-end" md={{size: 4, offset: 1}}>
           <Label
             htmlFor="requestName"
             aria-label="requestName">
             Period korištenja:
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
+          <span>
+            <Controller
+              name="startDate"
+              control={control}
+              rules={{required: true}}
+              render={ ({field}) =>
+                <DatePicker
+                  locale="hr-HR"
+                  forwardedRef={field.ref}
+                  disabled={disabledRemain}
+                  maxDate={new Date(2027, 1)}
+                  onChange={(value) => {
+                    if (value) {
+                      value.setHours(23)
+                      value.setMinutes(59)
+                      value.setSeconds(59)
+                      setValue('startDate', value)
+                      if (isInstitute)
+                        setEndDate(oneYearAhead(value))
+                      return value
+                    }
+                    else
+                      setValue('startDate', '')
+                  }}
+                  value={field.value}
+                  required={true}
+                  className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
+                />
+              }
+            />
+            {'\u2212'}
+            {
+              !isInstitute ?
+                <Controller
+                  name="endDate"
+                  control={control}
+                  rules={{required: true}}
+                  render={ ({field}) =>
+                    <DatePicker
+                      forwardedRef={field.ref}
+                      required={true}
+                      disabled={disabledRemain}
+                      onChange={(value) => {
+                        if (value) {
+                          value.setHours(23)
+                          value.setMinutes(59)
+                          value.setSeconds(59)
+                          setValue('endDate', value)
+                          return value
+                        }
+                        else
+                          setValue('endDate', '')
+                      }}
+                      maxDate={new Date(2027, 1)}
+                      locale="hr-HR"
+                      value={field.value}
+                      className={`ms-0 ms-md-0 ms-xl-0 ms-xxl-3 ms-sm-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
+                    />
+                  }
+                />
+              :
+                <DatePicker
+                  required={true}
+                  disabled={true}
+                  maxDate={new Date(2027, 1)}
+                  locale="hr-HR"
+                  value={endDate}
+                  className="ms-0 ms-xxl-3 ms-xl-0 ms-sm-3 ms-md-0"
+                />
+            }
+          </span>
         </Col>
-        <Col md={{size: 5}}>
+        <Col className="d-flex flex-column mt-3" md={{size: 5}}>
           <Label
             htmlFor="requestInstitute"
             aria-label="requestInstitute">
             Institucija nositelj:
           </Label>
-        </Col>
-      </Row>
-      <Row>
-        <Col md={{size: 4, offset: 1}} style={{whiteSpace: 'nowrap'}}>
-          <Controller
-            name="startDate"
-            control={control}
-            rules={{required: true}}
-            render={ ({field}) =>
-              <DatePicker
-                locale="hr-HR"
-                forwardedRef={field.ref}
-                disabled={disabledRemain}
-                maxDate={new Date(2027, 1)}
-                onChange={(value) => {
-                  if (value) {
-                    value.setHours(23)
-                    value.setMinutes(59)
-                    value.setSeconds(59)
-                    setValue('startDate', value)
-                    if (isInstitute)
-                      setEndDate(oneYearAhead(value))
-                    return value
-                  }
-                  else
-                    setValue('startDate', '')
-                }}
-                value={field.value}
-                required={true}
-                className={`mt-2 me-3 ${errors && errors.startDate ? "is-invalid" : ''}`}
-              />
-            }
-          />
-          {'\u2212'}
-          {
-            !isInstitute ?
-              <Controller
-                name="endDate"
-                control={control}
-                rules={{required: true}}
-                render={ ({field}) =>
-                  <DatePicker
-                    forwardedRef={field.ref}
-                    required={true}
-                    disabled={disabledRemain}
-                    onChange={(value) => {
-                      if (value) {
-                        value.setHours(23)
-                        value.setMinutes(59)
-                        value.setSeconds(59)
-                        setValue('endDate', value)
-                        return value
-                      }
-                      else
-                        setValue('endDate', '')
-                    }}
-                    maxDate={new Date(2027, 1)}
-                    locale="hr-HR"
-                    value={field.value}
-                    className={`ms-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
-                  />
-                }
-              />
-            :
-              <DatePicker
-                required={true}
-                disabled={true}
-                maxDate={new Date(2027, 1)}
-                locale="hr-HR"
-                value={endDate}
-                className={`ms-3`}
-              />
-          }
-        </Col>
-        <Col md={{size: 5}}>
           <span className="fst-italic">
             <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2 mt-sm-3" key="project-institute">
               { projectInfo ?  projectInfo.institute : personInstitution }
             </Badge>
           </span>
         </Col>
-        <Col className="mt-sm-3">
+        <Col className="mt-3">
           <ProjectTypeBadge projectInfo={projectInfo} />
         </Col>
       </Row>

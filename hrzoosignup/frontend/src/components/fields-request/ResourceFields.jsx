@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { CustomReactSelect } from '../../components/CustomReactSelect';
-import { SharedData } from '../../pages/root';
+import React, { useContext } from 'react'
+import { CustomReactSelect } from 'Components/CustomReactSelect';
+import { SharedData } from 'Pages/root';
 import {
   Col,
   Input,
