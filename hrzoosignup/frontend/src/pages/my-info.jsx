@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from './root';
+import { SharedData } from 'Pages/root';
 import { Col, Badge, Placeholder, Row, Table, Label, Tooltip, Button } from 'reactstrap';
-import { PageTitle } from '../components/PageTitle';
-import { AuthContext } from '../components/AuthContextProvider'
-import { fetchCroRIS } from '../api/croris';
+import { PageTitle } from 'Components/PageTitle';
+import { AuthContext } from 'Components/AuthContextProvider'
+import { fetchCroRIS } from 'Api/croris';
 import { useQuery } from '@tanstack/react-query';
 import { faCheckCircle, faStopCircle, faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

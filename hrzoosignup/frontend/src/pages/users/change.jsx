@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { SharedData } from 'Pages/root';
 import { Col, Row } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
+import StatusInfo from 'Components/user-info/StatusInfo';
 
 
 const UserChange = () => {
@@ -21,18 +22,16 @@ const UserChange = () => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
 
-  return (
-    <>
-      <Row>
-        <PageTitle pageTitle={pageTitle}/>
-      </Row>
-      <Row>
-        <Col>
-          { userId }
-        </Col>
-      </Row>
-    </>
-  )
+  if (status === 'success' && userData)
+    return (
+      <>
+        <Row>
+          <PageTitle pageTitle={pageTitle}/>
+        </Row>
+
+        <StatusInfo myInfo={false} userDetails={userData} />
+      </>
+    )
 };
 
 export default UserChange;
