@@ -30,6 +30,7 @@ import { isActiveSession } from 'Api/auth';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { UsersList, UsersInactiveList } from 'Pages/users/list';
+import UserChange from 'Pages/users/change';
 import { ProjectsList } from 'Pages/projects/list';
 
 
@@ -109,6 +110,11 @@ const BaseRoutes = () => {
               <Route path="korisnici" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UsersList />
+                </ProtectedRoute>
+              }/>
+              <Route path="korisnici/:userId" element={
+                <ProtectedRoute sessionData={sessionData}>
+                  <UserChange />
                 </ProtectedRoute>
               }/>
               <Route path="korisnici/neaktivni" element={
