@@ -237,7 +237,7 @@ export const MyRequestChange = () => {
                 <Row>
                   <Col md={{size: 9}} className="mt-4 me-0">
                     <span className="ps-2 pe-2 pt-1 pb-1 fs-5 text-white ms-4 mb-4 mt-3" style={{backgroundColor: "#b04c46"}}>
-                      Obrada:
+                      Obrada
                     </span>
                   </Col>
                 </Row>

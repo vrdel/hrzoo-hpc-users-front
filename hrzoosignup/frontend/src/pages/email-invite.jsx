@@ -5,16 +5,16 @@ import { Col, Row,
   Card, CardHeader,
   CardBody, Progress } from 'reactstrap';
 import { useParams } from 'react-router-dom';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../components/AuthContextProvider';
-import { defaultUnAuthnRedirect} from '../config/default-redirect';
-import NotFound from '../pages/notfound';
-import { fetchInvite } from '../api/invite';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { defaultUnAuthnRedirect} from 'Config/default-redirect';
+import NotFound from 'Pages/notfound';
+import { fetchInvite } from 'Api/invite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
-import { url_ui_prefix } from '../config/general';
+import { url_ui_prefix } from 'Config/general';
 
 
 const EmailInvitation = ({sessionData=undefined}) => {

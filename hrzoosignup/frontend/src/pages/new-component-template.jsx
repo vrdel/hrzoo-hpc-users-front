@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from './root';
+import { SharedData } from 'Pages/root';
 import { Col, Row } from 'reactstrap';
-import { PageTitle } from '../components/PageTitle';
+import { PageTitle } from 'Components/PageTitle';
 
 
 const MyInfo = () => {

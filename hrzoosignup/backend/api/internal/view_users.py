@@ -171,3 +171,12 @@ class UsersInfo(APIView):
                 }
             }
             return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class UserInfo(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        import ipdb; ipdb.set_trace()
+        return Response(resp_user, status=status.HTTP_200_OK)
