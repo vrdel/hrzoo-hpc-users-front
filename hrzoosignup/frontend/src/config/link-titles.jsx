@@ -47,13 +47,14 @@ export function LinkTitles(loc) {
       identifier = decodeURIComponent(identifier[0])
     return 'Detalji neaktivnog korisnika ' + identifier
   }
-
-  if (loc.includes('/korisnici/') && loc.match(/[@%\w.\d-_]+$/)) {
+  else if (loc.includes('/korisnici/') && loc.match(/[@%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%@\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = decodeURIComponent(identifier[0])
-    return 'Detalji aktivnog korisnika ' + identifier
+    if (identifier[0] !== 'neaktivni')
+      return 'Detalji aktivnog korisnika ' + identifier
   }
+
 
   if (loc.includes('/novi-zahtjev/istrazivacki-projekt/') && loc.match(/[0-9]$/))
     return 'Novi zahtjev temeljem odabranog istraživačkog projekta'
