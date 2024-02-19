@@ -81,97 +81,102 @@ const BaseRoutes = () => {
             <Route path="prijava-priv" element={<LoginPrivate sessionData={sessionData} />}/>
             <Route path="prijava" element={<LoginOffical sessionData={sessionData} />}/>
             <Route path="prijava-email/:inviteKey" element={
-              <EmailInvitation sessionData={sessionData} />
-            }/>
+              <EmailInvitation sessionData={sessionData} /> }
+            />
             <Route element={<BasePage sessionData={sessionData} />}>
               <Route path="saml2-login-redirect" element={
-                <Saml2LoginRedirect sessionData={sessionData} />
-              }/>
+                <Saml2LoginRedirect sessionData={sessionData} /> }
+              />
               <Route path="zahtjevi" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsList />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
               <Route path="zahtjevi/:projId" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsChange />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
               <Route path="projekti" element={
                 <ProtectedRoute sessionData={ sessionData }>
                   <ProjectsList />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
               <Route path="projekti/:projId" element={
                 <ProtectedRoute sessionData={ sessionData }>
                   <ProjectChange />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
               <Route path="korisnici" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UsersList />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
               <Route path="korisnici/:userId" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UserChange />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
               <Route path="korisnici/neaktivni" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UsersInactiveList />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
+              <Route path="korisnici/neaktivni/:userId" element={
+                <ProtectedRoute sessionData={sessionData}>
+                  <UserChange />
+                </ProtectedRoute> }
+              />
               <Route path="softver" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <SoftwareList />
-                </ProtectedRoute>
-              }/>
+                </ProtectedRoute> }
+              />
               <Route path="moji-zahtjevi" element={
-                <MyRequestsList />
-              }/>
+                <MyRequestsList /> }
+              />
               <Route path="moji-zahtjevi/:projId" element={
-                <MyRequestChange />
-              }/>
+                <MyRequestChange /> }
+              />
               <Route path="novi-zahtjev" element={
-                <NewRequest />
-              }>
+                <NewRequest /> }
+              >
                 <Route index element={
-                  <NewRequestIndex />
-                }/>
+                  <NewRequestIndex /> }
+                />
                 <Route path="istrazivacki-projekt" element={
-                  <ResearchProjectRequest />
-                }/>
+                  <ResearchProjectRequest /> }
+                />
                 <Route path="istrazivacki-projekt/:projId" element={
-                  <ResearchProjectRequestSelected projectType="research-croris" />
-                }/>
+                  <ResearchProjectRequestSelected projectType="research-croris" /> }
+                />
                 <Route path="prakticna-nastava" element={
-                  <GeneralRequest projectType="practical" />
-                }/>
+                  <GeneralRequest projectType="practical" /> }
+                />
                 <Route path="izrada-rada" element={
-                  <GeneralRequest projectType="thesis" />
-                }/>
+                  <GeneralRequest projectType="thesis" /> }
+                />
                 <Route path="institucijski-projekt" element={
-                  <InstituteRequest />
-                }/>
+                  <InstituteRequest /> }
+                />
                 <Route path="interni-projekt" element={
                   <ProtectedRoute sessionData={sessionData}>
                     <InternalRequest/>
-                  </ProtectedRoute>
-                }/>
+                  </ProtectedRoute> }
+                />
               </Route>
               <Route path="javni-kljucevi" element={
-                <PublicKeys />
-              }/>
+                <PublicKeys /> }
+              />
               <Route path="javni-kljucevi/novi" element={
-                <NewPublicKey />
-              }/>
+                <NewPublicKey /> }
+              />
               <Route path="clanstva" element={
-                <Memberships />
-              }/>
+                <Memberships /> }
+              />
               <Route path="moji-podaci" element={
-                <MyInfo />
-              }/>
+                <MyInfo /> }
+              />
             </Route>
             <Route path="*" element={<NotFound />}/>
           </Route>
