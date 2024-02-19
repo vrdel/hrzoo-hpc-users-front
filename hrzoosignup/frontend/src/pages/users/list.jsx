@@ -23,7 +23,7 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "Components/TableHelpers";
 import { buildOptionsFromArray } from "Utils/select-tools";
 import { CustomReactSelect } from "Components/CustomReactSelect";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
@@ -449,7 +449,9 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                       <td className="p-3 align-middle text-center fw-bold">
                         <Row>
                           <Col>
-                            { `${user.first_name} ${user.last_name}` }
+                            <Link className="text-dark" to={encodeURIComponent(user.username)} >
+                              { `${user.first_name} ${user.last_name}` }
+                            </Link>
                           </Col>
                         </Row>
                         <Row className="g-0">
