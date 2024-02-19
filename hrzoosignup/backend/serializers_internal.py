@@ -39,6 +39,25 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
         model = get_user_model()
 
 
+class UserSerializerFiltered(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            'person_mail',
+            'first_name',
+            'last_name',
+            'person_oib',
+            'person_uniqueid',
+            'person_username',
+            'person_affiliation',
+            'person_mail',
+            'croris_mbz',
+            'person_institution',
+            'person_organisation'
+        )
+        model = get_user_model()
+
+
 class SshKeysSerializer(serializers.ModelSerializer):
     user = UsersSerializerFiltered(read_only=True)
 

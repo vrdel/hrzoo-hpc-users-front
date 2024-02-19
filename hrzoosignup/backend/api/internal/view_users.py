@@ -1,4 +1,5 @@
 from backend import models
+from backend.serializers_internal import UserSerializerFiltered
 
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
@@ -119,7 +120,7 @@ class UsersInfo(APIView):
             if ret_data:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
-            users = models.User.objects.all()
+            users = get_user_model().objects.all()
             lead = models.Role.objects.get(name="lead")
             collaborator = models.Role.objects.get(name="collaborator")
 
@@ -177,6 +178,20 @@ class UserInfo(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        import ipdb; ipdb.set_trace()
-        return Response(resp_user, status=status.HTTP_200_OK)
+    def get(self, request, username):
+        user_model = get_user_model()
+        try:
+            target_user = user_model.objects.get(username=username)
+            target_user = UserSerializerFiltered(target_user)
+
+            return Response(target_user.data, status=status.HTTP_200_OK)
+
+        except user_model.DoesNotExist:
+            err_response = {
+                'status': {
+                    'code': status.HTTP_404_NOT_FOUND,
+                    'message': '{} - User with username {} not found'.format(request.user.username, username)
+                }
+            }
+            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+
