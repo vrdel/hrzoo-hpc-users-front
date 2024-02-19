@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from 'Pages/root';
-import { Col, Badge, Placeholder, Row, Table, Label, Tooltip, Button } from 'reactstrap';
+import { Col, Badge, Placeholder, Row, Table, Label } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { AuthContext } from 'Components/AuthContextProvider'
 import { fetchCroRIS } from 'Api/croris';
 import { useQuery } from '@tanstack/react-query';
 import StatusInfo from 'Components/user-info/StatusInfo';
+import InstituteTableInfo from 'Components/user-info/UserInstitute';
 
 
 const CroRisInfo = ({croRisProjects}) => {
@@ -124,147 +125,6 @@ const CroRisInfo = ({croRisProjects}) => {
           associateData={croRisProjects['projects_associate_info']}/>
       </Row>
     </>
-  )
-}
-
-const InstituteTableInfo = () => {
-  const { userDetails } = useContext(AuthContext);
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
-
-  return (
-    <React.Fragment>
-      <Row>
-        <Col className="mt-4 ms-3" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Imenik
-          </Label>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="mt-3 ms-4" md={{size: 11}}>
-          <Table borderless responsive className="text-left">
-            <thead>
-              <tr>
-                <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Ime
-                </th>
-                <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Prezime
-                </th>
-                <th className="fw-bold fs-5" style={{width: '30%'}}>
-                  Korisnička oznaka
-                </th>
-                <th className="fw-bold fs-5">
-                  Email
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  {
-                    userDetails.first_name ?
-                      userDetails.first_name
-                    :
-                      '\u2212'
-                  }
-                </td>
-                <td>
-                  {
-                    userDetails.last_name ?
-                      userDetails.last_name
-                    :
-                      '\u2212'
-                  }
-                </td>
-                <td>
-                  {
-                    userDetails.person_uniqueid ?
-                      userDetails.person_uniqueid
-                    :
-                      '\u2212'
-                  }
-                </td>
-                <td>
-                  {
-                    userDetails.person_mail ?
-                      userDetails.person_mail
-                    :
-                      '\u2212'
-                  }
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="ms-4" md={{size: 11}}>
-          <Table borderless responsive className="text-left">
-            <thead>
-              <tr>
-                <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Povezanost
-                </th>
-                <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Naziv ustanove
-                </th>
-                <th className="fw-bold fs-5" style={{width: '30%'}}>
-                </th>
-                <th className="fw-bold fs-5" style={{width: '30%'}}>
-                  Organizacijska jedinica
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  {
-                    userDetails.person_affiliation ?
-                      userDetails.person_affiliation
-                    :
-                      '\u2212'
-                  }
-                </td>
-                <td colSpan="2">
-                  {
-                    userDetails.person_institution ?
-                      userDetails.person_institution
-                    :
-                      '\u2212'
-                  }
-                </td>
-                <td>
-                  {
-                    userDetails.person_organisation ?
-                      userDetails.person_organisation
-                    :
-                      '\u2212'
-                  }
-                </td>
-              </tr>
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
-    </React.Fragment>
   )
 }
 
@@ -440,7 +300,7 @@ const MyInfo = () => {
       </Row>
 
       <StatusInfo userDetails={userDetails} />
-      <InstituteTableInfo />
+      <InstituteTableInfo userDetails={userDetails} />
 
       <Row style={{height: "40px"}}>
       </Row>

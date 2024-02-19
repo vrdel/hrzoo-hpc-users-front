@@ -3,9 +3,10 @@ import { fetchSpecificUser } from "Api/users";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from 'react-router-dom';
 import { SharedData } from 'Pages/root';
-import { Col, Row } from 'reactstrap';
+import { Row } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import StatusInfo from 'Components/user-info/StatusInfo';
+import InstituteTableInfo from 'Components/user-info/UserInstitute';
 
 
 const UserChange = () => {
@@ -29,6 +30,7 @@ const UserChange = () => {
           <PageTitle pageTitle={pageTitle}/>
         </Row>
 
+        <InstituteTableInfo myInfo={false} userDetails={userData} />
         <StatusInfo myInfo={false} userDetails={userData} />
       </>
     )
