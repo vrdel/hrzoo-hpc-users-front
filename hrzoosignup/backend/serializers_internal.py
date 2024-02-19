@@ -53,7 +53,11 @@ class UserSerializerFiltered(serializers.ModelSerializer):
             'person_mail',
             'croris_mbz',
             'person_institution',
-            'person_organisation'
+            'person_organisation',
+            'status',
+            'is_active',
+            'is_staff',
+            'is_superuser'
         )
         model = get_user_model()
 
