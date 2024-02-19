@@ -449,7 +449,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                       <td className="p-3 align-middle text-center fw-bold">
                         <Row>
                           <Col>
-                            <Link className="text-dark" to={encodeURIComponent(user.username)} >
+                            <Link className="text-dark" to={user.username} >
                               { `${user.first_name} ${user.last_name}` }
                             </Link>
                           </Col>

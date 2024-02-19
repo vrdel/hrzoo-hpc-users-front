@@ -41,6 +41,13 @@ export function LinkTitles(loc) {
     return 'Pregledavanje projekta ' + identifier
   }
 
+  if (loc.includes('/korisnici/') && loc.match(/[@%\w.\d-_]+$/)) {
+    let identifier = loc.match(/[%@\w.\d-_]+$/)
+    if (identifier[0].includes('%'))
+      identifier = decodeURIComponent(identifier[0])
+    return 'Detalji korisnika ' + identifier
+  }
+
   if (loc.includes('/novi-zahtjev/istrazivacki-projekt/') && loc.match(/[0-9]$/))
     return 'Novi zahtjev temeljem odabranog istraživačkog projekta'
 

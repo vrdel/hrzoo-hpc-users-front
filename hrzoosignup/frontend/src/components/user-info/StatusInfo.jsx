@@ -69,11 +69,11 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
             {
               userDetails.status ?
                 <React.Fragment>
-                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
+                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
                   <Tooltip
                     placement='right'
                     isOpen={isOpened(userDetails.first_name)}
-                    target={'Tooltip-' + userDetails.first_name}
+                    target={'Tooltip-' + userDetails.first_name.replace(/ /g, '-')}
                     toggle={() => showTooltip(userDetails.first_name)}
                   >
                     <TooltipMsgActive myInfo={myInfo} />
@@ -81,11 +81,11 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                 </React.Fragment>
               :
                 <React.Fragment>
-                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
+                  <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
                   <Tooltip
                     placement='bottom'
                     isOpen={isOpened(userDetails.first_name)}
-                    target={'Tooltip-' + userDetails.first_name}
+                    target={'Tooltip-' + userDetails.first_name.replace(/ /g, '-')}
                     toggle={() => showTooltip(userDetails.first_name)}
                   >
                     <TooltipMsgInactive myInfo={myInfo} />
