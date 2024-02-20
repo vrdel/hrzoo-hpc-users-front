@@ -11,9 +11,9 @@ import {
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
-import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from '../config/default-redirect';
+import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
-import '../styles/login-official.css';
+import 'Styles/login-official.css';
 
 
 const LoginOfficial = ({sessionData=undefined}) => {

@@ -29,7 +29,7 @@ const BasePage = ({sessionData=undefined}) => {
   const {
     logout: doLogoutContext,
     isLoggedIn, setUserdetails,
-    setCsrfToken } = useContext(AuthContext)
+    setCsrfToken, loginType } = useContext(AuthContext)
   const navigate = useNavigate()
 
   const {status, data: croRisData, error, failureReason, isFetching} = useQuery({
@@ -56,10 +56,15 @@ const BasePage = ({sessionData=undefined}) => {
     }
 
   function onYesCallback() {
-    if (onYesCall == 'dologout') {
+    if (onYesCall === 'dologout') {
       doLogout(sessionData.csrftoken)
-      window.location = '/saml2/logout'
+      if (loginType === 'saml2')
+        window.location = '/saml2/logout'
       doLogoutContext()
+      if (loginType === 'basic')
+        setTimeout(() => {
+          window.location = defaultUnAuthnRedirect
+        }, 50)
     }
   }
 

@@ -113,6 +113,7 @@ const NewRequest = () => {
                 setContinueButtonDisabled(true)
               }
               else if (e.value === 'istrazivacki-projekt'
+                && status === 'success'
                 && croRisData?.status?.code !== 200) {
                 toast.error(
                   <span className="font-monospace text-dark">

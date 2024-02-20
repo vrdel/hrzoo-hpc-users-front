@@ -17,10 +17,10 @@ import {
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
-import '../styles/login.css';
-import { doUserPassLogin } from '../api/auth';
-import { AuthContext } from '../components/AuthContextProvider';
-import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from '../config/default-redirect';
+import 'Styles/login.css';
+import { doUserPassLogin } from 'Api/auth';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -32,7 +32,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
       password: ''
     }
   });
-  const { login: doLoginContext } = useContext(AuthContext);
+  const { login: doLoginContext, setLoginType } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,8 +47,10 @@ const LoginPrivate = ({sessionData=undefined}) => {
   async function doLogin(username, password) {
     const session = await doUserPassLogin(username, password)
 
-    if (session.active)
+    if (session.active) {
+      setLoginType('basic')
       doLoginContext(session)
+    }
     else
       setLoginFailedVisible(true)
   }

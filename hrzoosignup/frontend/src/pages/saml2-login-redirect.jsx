@@ -1,21 +1,24 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { AuthContext } from 'Components/AuthContextProvider';
 import { useNavigate } from 'react-router-dom';
 import {
   defaultUnAuthnRedirect,
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff
-} from '../config/default-redirect';
-import { url_ui_prefix } from '../config/general';
+} from 'Config/default-redirect';
+import { url_ui_prefix } from 'Config/general';
 
 
 const Saml2LoginRedirect = ({sessionData=undefined}) => {
   const navigate = useNavigate();
+  const { setLoginType } = useContext(AuthContext)
 
   useEffect(() => {
     const inviteKey = localStorage.getItem('invitation-key-set')
     if (inviteKey)
       navigate(url_ui_prefix + '/prijava-email/' + inviteKey)
     else {
+      setLoginType('saml2')
       const defaultRedirect = sessionData.userdetails.is_staff
         || sessionData.userdetails.is_superuser
         ? defaultAuthnRedirectStaff
