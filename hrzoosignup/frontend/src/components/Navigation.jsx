@@ -14,10 +14,10 @@ import {
   faLaptopCode,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
-import '../styles/nav.css';
-import { ModalContext } from './BasePage'
-import { AuthContext } from '../components/AuthContextProvider';
-import UserDetailsPopover from '../components/UserDetailsPopover';
+import 'Styles/nav.css';
+import { ModalContext } from 'Components/BasePage'
+import { AuthContext } from 'Components/AuthContextProvider';
+import UserDetailsPopover from 'Components/UserDetailsPopover';
 
 
 const Navigation = () => {

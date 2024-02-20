@@ -21,6 +21,7 @@ export const AuthContextProvider = ( {children} ) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userDetails, setUserdetails] = useState("")
   const [csrfToken, setCsrfToken] = useState("")
+  const [loginType, setLoginType] = useState("")
   const navigate = useNavigate()
   const queryClient = useQueryClient();
 
@@ -53,12 +54,14 @@ export const AuthContextProvider = ( {children} ) => {
   function logout() {
     setIsLoggedIn(false)
     setUserdetails("")
+    setLoginType("")
     localStorage.removeItem('referrer')
     queryClient.invalidateQueries("sessionactive")
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
-    setUserdetails, login, logout, csrfToken, setCsrfToken }
+    setUserdetails, login, logout, csrfToken, setCsrfToken, loginType,
+    setLoginType }
 
   return (
     <AuthContext.Provider value={authContextValue}>
