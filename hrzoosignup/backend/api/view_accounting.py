@@ -31,6 +31,24 @@ class AccountingUserProjectAPI(APIView):
         else:
             return [project.institute]
 
+    def _flatten_field(self, field):
+        reformat_sfs = list()
+
+        for sf in field:
+            rsf = dict()
+            rsf['name'] = sf['name']['value']
+            rsf['percent'] = sf['percent']
+            rsf['scientificfields'] = list()
+            for fl in sf['scientificfields']:
+                rsf_s = dict()
+                rsf_s['name'] = fl['name']['value']
+                rsf_s['percent'] = fl['percent']
+                rsf['scientificfields'].append(rsf_s)
+
+            reformat_sfs.append(rsf)
+
+        return reformat_sfs
+
     def _generate_response(self, projects):
         ret_data = []
         for project in projects:
@@ -46,6 +64,7 @@ class AccountingUserProjectAPI(APIView):
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
+            fields_project['science_field'] = self._flatten_field(project.science_field)
             fields_project['realm'] = realm_inst
             fields_project['finance'] = self._set_project_finance(project)
             fields_project['approved_resources'] = [res['value'] for res in project.staff_resources_type]
