@@ -8,24 +8,19 @@ from django.conf import settings
 from django.core.cache import cache
 from django.contrib.auth import get_user_model
 
+from backend.httpq.excep import HZSIHttpError
+from backend.httpq.httpconn import SessionWithRetry
+from backend.utils.various import contains_exception
+
 import asyncio
-import aiohttp
 import json
 import datetime
 import logging
 
-from aiohttp import client_exceptions, http_exceptions, ClientSession
+from aiohttp import client_exceptions, http_exceptions
 
 
 logger = logging.getLogger('hrzoosignup.views')
-
-
-def contains_exception(list):
-    for a in list:
-        if isinstance(a, Exception):
-            return (True, a)
-
-    return (False, None)
 
 
 class CroRISInfo(APIView):
@@ -62,13 +57,12 @@ class CroRISInfo(APIView):
                 # frontend is calling every 15 min
                 # we set here eviction after 20 min
                 cache.set(f'{oib}_croris', {
-                        'person_info': self.person_info,
-                        'projects_lead_info': self.projects_lead_info,
-                        'projects_lead_users': self.projects_lead_users,
-                        'projects_associate_info': self.projects_associate_info,
-                        'projects_associate_ids': self.projects_associate_ids,
-                    }, 20 * 60
-                )
+                          'person_info': self.person_info,
+                          'projects_lead_info': self.projects_lead_info,
+                          'projects_lead_users': self.projects_lead_users,
+                          'projects_associate_info': self.projects_associate_info,
+                          'projects_associate_ids': self.projects_associate_ids},
+                          20 * 60)
 
                 return Response({
                     'data': {
@@ -168,16 +162,14 @@ class CroRISInfo(APIView):
 
     async def _fetch_data(self, url):
         headers = {'Accept': 'application/json'}
-        async with self.session.get(url, headers=headers, auth=self.auth) as response:
-            content = await response.text()
-            if content:
-                return content
+        content = await self.session.http_get(url, headers=headers)
+        if content:
+            return content
 
     async def _fetch_serie(self, oib):
-        client_timeout = aiohttp.ClientTimeout(total=20)
-        self.session = ClientSession(timeout=client_timeout)
-        self.auth = aiohttp.BasicAuth(settings.CRORIS_USER,
-                                      settings.CRORIS_PASSWORD)
+        auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
+        self.session = SessionWithRetry(logger, auth=auth,
+                                        handle_session_close=True)
 
         await self.fetch_person_lead(oib.strip())
         await self.fetch_project_lead_info()
@@ -275,7 +267,8 @@ class CroRISInfo(APIView):
                     return
 
             self.projects_associate_info_apidata = await asyncio.gather(*coros,
-                    loop=self.loop, return_exceptions=True)
+                                                                        loop=self.loop,
+                                                                        return_exceptions=True)
 
             exc_raised, exc = contains_exception(self.projects_associate_info_apidata)
             if exc_raised:
@@ -349,7 +342,7 @@ class CroRISInfo(APIView):
                 for person in project['osobeResources']['_embedded']['osobe']:
                     if person['persId'] == self.person_info['croris_id']:
                         self.person_info['email'] = person.get('email', '')
-            except (IndexError, ValueError) as exp:
+            except (IndexError, ValueError):
                 pass
 
     async def fetch_users_projects_lead(self):
