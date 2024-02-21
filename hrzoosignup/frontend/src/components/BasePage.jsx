@@ -9,7 +9,7 @@ import Footer from 'Components/Footer';
 import { Outlet, useNavigate } from 'react-router-dom';
 import 'Styles/content.css';
 import { doLogout } from 'Api/auth';
-import { fetchCroRIS } from 'Api/croris';
+import { fetchCroRISMe } from 'Api/croris';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useQuery } from '@tanstack/react-query';
@@ -34,7 +34,7 @@ const BasePage = ({sessionData=undefined}) => {
 
   const {status, data: croRisData, error, failureReason, isFetching} = useQuery({
       queryKey: ['croris-info'],
-      queryFn: fetchCroRIS,
+      queryFn: fetchCroRISMe,
       staleTime: 15 * 60 * 1000
   })
 

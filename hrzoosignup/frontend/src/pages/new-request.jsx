@@ -9,7 +9,7 @@ import {
   faArrowRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { useQuery } from '@tanstack/react-query';
-import { fetchCroRIS } from 'Api/croris';
+import { fetchCroRISMe } from 'Api/croris';
 import { canSubmitInstituteProject } from 'Api/projects';
 import { toast } from 'react-toastify';
 import { AuthContext } from 'Components/AuthContextProvider';
@@ -36,7 +36,7 @@ const NewRequest = () => {
 
   const {status, data: croRisData, error} = useQuery({
       queryKey: ['croris-info'],
-      queryFn: fetchCroRIS,
+      queryFn: fetchCroRISMe,
       staleTime: 15 * 60 * 1000
   })
 

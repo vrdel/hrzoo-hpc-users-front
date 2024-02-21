@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFile,
 } from '@fortawesome/free-solid-svg-icons';
-import { fetchCroRIS } from '../../api/croris';
+import { fetchCroRISMe } from '../../api/croris';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ErrorMessage } from '@hookform/error-message';
@@ -178,7 +178,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
 
   const {status, data: croRisProjects, error, isFetching} = useQuery({
       queryKey: ['croris-info'],
-      queryFn: fetchCroRIS,
+      queryFn: fetchCroRISMe,
       staleTime: 15 * 60 * 1000
   })
 

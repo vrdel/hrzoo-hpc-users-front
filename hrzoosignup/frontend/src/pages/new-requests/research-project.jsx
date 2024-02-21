@@ -11,7 +11,7 @@ import {
 } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { fetchCroRIS } from 'Api/croris';
+import { fetchCroRISMe } from 'Api/croris';
 import { fetchNrProjects } from 'Api/projects';
 import RequestHorizontalRuler from 'Components/RequestHorizontalRuler';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -25,7 +25,7 @@ import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 const ResearchProjectRequest = () => {
   const {status, data: croRisProjects, error, isFetching} = useQuery({
       queryKey: ['croris-info'],
-      queryFn: fetchCroRIS,
+      queryFn: fetchCroRISMe,
       staleTime: 15 * 60 * 1000
   })
   const navigate = useNavigate()
