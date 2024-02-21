@@ -58,13 +58,11 @@ const BasePage = ({sessionData=undefined}) => {
   async function onYesCallback() {
     if (onYesCall === 'dologout') {
       await doLogout(sessionData.csrftoken)
+      doLogoutContext()
       if (loginType === 'saml2')
         window.location = '/saml2/logout'
-      doLogoutContext()
-      if (loginType === 'basic')
-        setTimeout(() => {
-          window.location = defaultUnAuthnRedirect
-        }, 50)
+      else
+        window.location = defaultUnAuthnRedirect
     }
   }
 
