@@ -43,7 +43,7 @@ const UserChange = () => {
         {
           statusCroRis === 'success' && croRisData && croRisData.data
           ?
-            <CroRisInfo croRisProjects={croRisData['data']} />
+            <CroRisInfo croRisProjects={croRisData['data']} changeView={true} />
           :
             <EmptyCroRis />
         }
