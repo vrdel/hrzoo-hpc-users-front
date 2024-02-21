@@ -4,6 +4,7 @@ import { faCheckCircle, faStopCircle, faCopy} from "@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 
+
 const TooltipMsgActive = ({myInfo=true}) => {
   if (myInfo)
     return (

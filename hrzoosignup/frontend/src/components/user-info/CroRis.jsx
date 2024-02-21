@@ -1,4 +1,8 @@
 import React from 'react';
+import { MiniButton } from 'Components/MiniButton';
+import { copyToClipboard } from 'Utils/copy-clipboard';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Col, Badge, Placeholder, Row, Table, Label, Spinner } from 'reactstrap';
 
 
@@ -190,7 +194,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
                       '\u2212'
                   }
                 </td>
-                <td>
+                <td className="font-monospace">
                   {
                     croRisProjects['person_info']['croris_id'] ?
                       croRisProjects['person_info']['croris_id']
@@ -198,7 +202,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
                       '\u2212'
                   }
                 </td>
-                <td>
+                <td className="font-monospace">
                   {
                     croRisProjects['person_info']['mbz'] ?
                       croRisProjects['person_info']['mbz']
@@ -206,10 +210,23 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
                       '\u2212'
                   }
                 </td>
-                <td>
+                <td className="font-monospace">
                   {
                     croRisProjects['person_info']['email'] ?
-                      croRisProjects['person_info']['email']
+                      <span className="d-flex align-items-center">
+                        { croRisProjects['person_info']['email'] }
+                        <MiniButton
+                          childClassName="me-3"
+                          onClick={(e) => copyToClipboard(
+                            e, croRisProjects['person_info']['email'],
+                            "Email korisnika kopiran u međuspremnik",
+                            "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                            "id-emailuser"
+                          )}
+                        >
+                          <FontAwesomeIcon size="xs" icon={faCopy} />
+                        </MiniButton>
+                      </span>
                     :
                       '\u2212'
                   }

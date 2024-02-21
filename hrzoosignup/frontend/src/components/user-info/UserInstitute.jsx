@@ -1,4 +1,8 @@
 import React from 'react';
+import { MiniButton } from 'Components/MiniButton';
+import { copyToClipboard } from 'Utils/copy-clipboard';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Table, Label } from 'reactstrap';
 
 
@@ -49,18 +53,44 @@ const InstituteTableInfo = ({userDetails}) => {
                       '\u2212'
                   }
                 </td>
-                <td>
+                <td className="font-monospace">
                   {
                     userDetails.person_uniqueid ?
-                      userDetails.person_uniqueid
+                      <span className="d-flex align-items-center">
+                        { userDetails.person_uniqueid }
+                        <MiniButton
+                          childClassName="me-3"
+                          onClick={(e) => copyToClipboard(
+                            e, userDetails.person_uniqueid,
+                            "Korisnička oznaka kopirana u međuspremnik",
+                            "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                            "id-uid"
+                          )}
+                        >
+                          <FontAwesomeIcon size="xs" icon={faCopy} />
+                        </MiniButton>
+                      </span>
                     :
                       '\u2212'
                   }
                 </td>
-                <td>
+                <td className="font-monospace">
                   {
                     userDetails.person_mail ?
-                      userDetails.person_mail
+                      <span className="d-flex align-items-center">
+                        { userDetails.person_mail }
+                        <MiniButton
+                          childClassName="me-3"
+                          onClick={(e) => copyToClipboard(
+                            e, userDetails.person_mail,
+                            "Email korisnika kopiran u međuspremnik",
+                            "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                            "id-emailuser"
+                          )}
+                        >
+                          <FontAwesomeIcon size="xs" icon={faCopy} />
+                        </MiniButton>
+                      </span>
                     :
                       '\u2212'
                   }
