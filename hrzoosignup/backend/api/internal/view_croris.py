@@ -105,7 +105,7 @@ class CroRISInfo(APIView):
             logger.error(err_response)
             return Response(err_response, status=status.HTTP_200_OK)
 
-        except json.JSONDecodeError as exc:
+        except (json.JSONDecodeError, TypeError) as exc:
             err_response = {
                 'status': {
                     'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -184,7 +184,7 @@ class CroRISInfo(APIView):
         fetch_data = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", oib))
         try:
             fetch_data = json.loads(fetch_data)
-        except json.JSONDecodeError as exc:
+        except (json.JSONDecodeError, TypeError) as exc:
             logger.error('fetch_person_lead() - Failed JSON parse')
             raise exc
 
