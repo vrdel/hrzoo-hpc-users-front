@@ -86,7 +86,7 @@ class CroRISInfo(APIView):
             elif not oib:
                 return Response({
                     'status': {
-                        'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        'code': status.HTTP_200_OK,
                         'message': 'Could not get authentication info from database'
                     }
                 })
@@ -99,7 +99,7 @@ class CroRISInfo(APIView):
                 }
             }
             logger.error(err_response)
-            return Response(err_response, status=status.HTTP_408_REQUEST_TIMEOUT)
+            return Response(err_response, status=status.HTTP_200_OK)
 
         except (client_exceptions.ClientError, http_exceptions.HttpProcessingError) as exc:
             err_response = {
@@ -109,7 +109,7 @@ class CroRISInfo(APIView):
                 }
             }
             logger.error(err_response)
-            return Response(err_response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(err_response, status=status.HTTP_200_OK)
 
         except json.JSONDecodeError as exc:
             err_response = {
@@ -119,7 +119,7 @@ class CroRISInfo(APIView):
                 }
             }
             logger.error(err_response)
-            return Response(err_response, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(err_response, status=status.HTTP_200_OK)
 
     def _extract_project_fields(self, apidata):
         metadata = {}
