@@ -13,10 +13,10 @@ import {
   HZSIPagination
 } from "Components/TableHelpers";
 import { convertToEuropean } from "Utils/dates";
-import { Badge, Col, Input, Row, Table } from "reactstrap";
+import { Badge, Col, Input, Row, Table, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import { PageTitle } from "Components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCopy, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { CustomReactSelect } from "Components/CustomReactSelect";
 import { TypeColor, TypeString } from "Config/map-projecttypes";
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
@@ -26,8 +26,76 @@ import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
+import { fetchSpecificUser } from "Api/users";
 import _ from "lodash";
 
+
+const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
+  const {status, data: userData, error} = useQuery({
+      queryKey: ['change-user', userName],
+      queryFn: () => fetchSpecificUser(userName),
+  })
+
+  if (status === 'success' && userData) {
+    return (
+      <>
+        <PopoverHeader className="d-flex align-items-center font-monospace justify-content-between">
+          { userName }
+        </PopoverHeader>
+        <PopoverBody>
+          <Row>
+            <Col className="fw-bold">
+              Ime i prezime
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ms-2 me-2 fs-6 fst-italic">
+              {`${userData.first_name} ${userData.last_name}`}
+            </Col>
+          </Row>
+          <Row className="mt-2">
+            <Col className="fw-bold">
+              Ustanova
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ms-2 me-2 fs-6 fst-italic">
+              {`${userData.person_institution}`}<br/>
+              <small>{`${userData.person_affiliation}`}</small>
+            </Col>
+          </Row>
+          <Row className="mt-2">
+            <Col className="fw-bold">
+              Email
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ms-2 me-2 fs-6 fst-italic">
+              {`${userData.person_mail}`}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col className="d-flex justify-content-center align-items-center align-self-center">
+              <a className="btn btn-primary btn-sm"
+                target="_blank"
+                style={{'textDecoration': 'none'}}
+                rel="noopener noreferrer"
+                role="button"
+                onClick={() => showPopover(rhfId)}
+                href={`/ui/korisnici/${userData.username}`}
+              >
+                <FontAwesomeIcon icon={faArrowRight}/>{' '}
+                Detalji korisnika
+              </a>
+            </Col>
+          </Row>
+        </PopoverBody>
+      </>
+    )
+  }
+  else
+    return null
+}
 
 const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
@@ -45,6 +113,24 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       searchResourceTypes: ""
     }
   })
+
+  const [popoverOpened, setPopoverOpened] = useState(undefined);
+  const showPopover = (popid) => {
+    let showed = new Object()
+    if (popoverOpened === undefined && popid) {
+      showed[popid] = true
+      setPopoverOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(popoverOpened))
+      showed[popid] = !showed[popid]
+      setPopoverOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (popoverOpened !== undefined)
+      return popoverOpened[toolid]
+  }
 
   useEffect(() => {
     setValue('projects', data)
@@ -338,13 +424,37 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         { convertToEuropean(project.date_end) }
                       </td>
                       <td className="align-middle text-center">
-                        <Badge color="dark" className="fw-normal ms-1">
+                        <Badge
+                          color="dark"
+                          className="fw-normal ms-1 text-decoration-underline"
+                          style={{cursor: 'pointer'}}
+                        >
                           { extractLeaderName(project.userproject_set, true) }
                         </Badge>
                         {
-                          extractCollaborators(project.userproject_set, true).map((collab, cid) =>
-                            <Badge key={cid} color="secondary" className="fw-normal ms-1">
-                              { collab }
+                          extractCollaborators(project.userproject_set).map((collab, cid) =>
+                            <Badge
+                              key={cid}
+                              color="secondary"
+                              id={`pop-${index}-${collab.user.id}`}
+                              className="fw-normal ms-1 text-decoration-underline"
+                              style={{cursor: 'pointer'}}
+                            >
+                              {`${collab.user.first_name} ${collab.user.last_name}`}
+                              <Popover
+                                placement="left"
+                                isOpen={isOpened(`${index}-${collab.user.id}`)}
+                                target={`pop-${index}-${collab.user.id}`}
+                                toggle={() => {
+                                  showPopover(`${index}-${collab.user.id}`)
+                                }}
+                              >
+                                <PopoverUserInfo
+                                  rhfId={`${index}-${collab.user.id}`}
+                                  userName={collab.user.username}
+                                  showPopover={showPopover}
+                                />
+                              </Popover>
                             </Badge>
                           )
                         }

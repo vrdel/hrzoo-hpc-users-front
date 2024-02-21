@@ -151,7 +151,6 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
   }
   else
     return null
-
 }
 
 
