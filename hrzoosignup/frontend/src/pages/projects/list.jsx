@@ -29,6 +29,7 @@ import { MiniButton } from 'Components/MiniButton';
 import { fetchSpecificUser } from "Api/users";
 import _ from "lodash";
 
+
 const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
   let targetUser = extractLeaderName(project.userproject_set).user
 
@@ -137,6 +138,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
   else
     return null
 }
+
 
 const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
