@@ -7,14 +7,7 @@ import { defaultUnAuthnRedirect,
 import { useQueryClient } from '@tanstack/react-query';
 
 
-export const AuthContext = React.createContext({
-  isLoggedIn: false,
-  setIsLoggedIn: () => {},
-  userDetails: null,
-  setUserdetails: () => {},
-  login: () => {},
-  logout: () => {},
-});
+export const AuthContext = React.createContext();
 
 
 export const AuthContextProvider = ( {children} ) => {
