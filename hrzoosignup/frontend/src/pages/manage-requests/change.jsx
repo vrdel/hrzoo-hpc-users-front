@@ -558,7 +558,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           className="fa-3x text-warning"
           icon={faCog}/>{' '}
         <br/>
-        <p className="fs-5">
+        <p className="fs-<br/>5">
           Obrada
         </p>
         <Button
@@ -658,7 +658,12 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row>
         <Col md={{size: 12}} className="me-0">
           <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
-            Obrada
+            {
+              manageProject ?
+                "Promjena"
+              :
+                "Obrada"
+            }
           </span>
         </Col>
       </Row>
