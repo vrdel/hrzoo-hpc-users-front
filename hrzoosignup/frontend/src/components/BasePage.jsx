@@ -55,9 +55,9 @@ const BasePage = ({sessionData=undefined}) => {
         )
     }
 
-  function onYesCallback() {
+  async function onYesCallback() {
     if (onYesCall === 'dologout') {
-      doLogout(sessionData.csrftoken)
+      await doLogout(sessionData.csrftoken)
       if (loginType === 'saml2')
         window.location = '/saml2/logout'
       doLogoutContext()
