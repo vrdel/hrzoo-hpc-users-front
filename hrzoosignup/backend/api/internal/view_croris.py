@@ -22,7 +22,17 @@ logger = logging.getLogger('hrzoosignup.views')
 class CroRISInfo(APIView):
     def get(self, request, **kwargs):
         target_oib = kwargs.get('target_oib', None)
+
         if target_oib:
+            if not (request.user.is_staff or request.user.is_superuser):
+                err_response = {
+                    'status': {
+                        'code': status.HTTP_401_UNAUTHORIZED,
+                        'message': '{} - Not allowed to view the CroRIS details of user'.format(request.user.username)
+                    }
+                }
+                return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
+
             oib = kwargs.get('target_oib')
         else:
             oib = request.user.person_oib
