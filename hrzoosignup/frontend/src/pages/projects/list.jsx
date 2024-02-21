@@ -29,6 +29,36 @@ import { MiniButton } from 'Components/MiniButton';
 import { fetchSpecificUser } from "Api/users";
 import _ from "lodash";
 
+const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
+  let targetUser = extractLeaderName(project.userproject_set).user
+
+  return (
+    <Badge
+      key={`${index}-l`}
+      color="dark"
+      id={`pop-lead-${index}-${targetUser.id}`}
+      className="fw-normal ms-1 text-decoration-underline"
+      style={{cursor: 'pointer'}}
+    >
+      {`${targetUser.first_name} ${targetUser.last_name}`}
+      <Popover
+        placement="left"
+        isOpen={isOpened(`${index}-${targetUser.id}`)}
+        target={`pop-lead-${index}-${targetUser.id}`}
+        toggle={() => {
+          showPopover(`${index}-${targetUser.id}`)
+        }}
+      >
+        <PopoverUserInfo
+          rhfId={`${index}-${targetUser.id}`}
+          userName={targetUser.username}
+          showPopover={showPopover}
+        />
+      </Popover>
+    </Badge>
+  )
+}
+
 
 const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
   const {status, data: userData, error} = useQuery({
@@ -70,7 +100,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
             </Col>
           </Row>
           <Row>
-            <Col className="d-flex font-monospace justify-content-center align-items-center align-self-center ms-2 me-2 fs-6 fst-italic">
+            <Col className="d-flex font-monospace align-items-center ms-2 me-2 fs-6 fst-italic">
               {`${userData.person_mail}`}
               <MiniButton
                 childClassName="me-3"
@@ -435,19 +465,18 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         { convertToEuropean(project.date_end) }
                       </td>
                       <td className="align-middle text-center">
-                        <Badge
-                          color="dark"
-                          className="fw-normal ms-1 text-decoration-underline"
-                          style={{cursor: 'pointer'}}
-                        >
-                          { extractLeaderName(project.userproject_set, true) }
-                        </Badge>
+                        <LeadUserBadge
+                          index={index}
+                          project={project}
+                          isOpened={isOpened}
+                          showPopover={showPopover}
+                        />
                         {
                           extractCollaborators(project.userproject_set).map((collab, cid) =>
                             <Badge
-                              key={cid}
+                              key={`${index}-c${cid}`}
                               color="secondary"
-                              id={`pop-${index}-${collab.user.id}`}
+                              id={`pop-collab-${index}-${collab.user.id}`}
                               className="fw-normal ms-1 text-decoration-underline"
                               style={{cursor: 'pointer'}}
                             >
@@ -455,7 +484,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               <Popover
                                 placement="left"
                                 isOpen={isOpened(`${index}-${collab.user.id}`)}
-                                target={`pop-${index}-${collab.user.id}`}
+                                target={`pop-collab-${index}-${collab.user.id}`}
                                 toggle={() => {
                                   showPopover(`${index}-${collab.user.id}`)
                                 }}
