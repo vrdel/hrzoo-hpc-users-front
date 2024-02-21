@@ -70,8 +70,19 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
             </Col>
           </Row>
           <Row>
-            <Col className="ms-2 me-2 fs-6 fst-italic">
+            <Col className="d-flex justify-content-center align-items-center align-self-center ms-2 me-2 fs-6 fst-italic">
               {`${userData.person_mail}`}
+              <MiniButton
+                childClassName="me-3"
+                onClick={(e) => copyToClipboard(
+                  e, userData.person_mail,
+                  "Email korisnika kopiran u međuspremnik",
+                  "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                  "id-emailuser"
+                )}
+              >
+                <FontAwesomeIcon size="xs" icon={faCopy} />
+              </MiniButton>
             </Col>
           </Row>
           <Row className="mt-4">
