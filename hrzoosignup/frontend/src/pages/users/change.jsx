@@ -41,11 +41,14 @@ const UserChange = () => {
         <StatusInfo myInfo={false} userDetails={userData} />
         <InstituteTableInfo myInfo={false} userDetails={userData} />
         {
-          statusCroRis === 'success' && croRisData && croRisData.data
-          ?
-            <CroRisInfo croRisProjects={croRisData['data']} changeView={true} />
+          statusCroRis === 'loading' ?
+            <EmptyCroRis spinner={true} changeView={true} />
           :
-            <EmptyCroRis />
+            statusCroRis === 'success' && croRisData && croRisData.data
+            ?
+              <CroRisInfo croRisProjects={croRisData['data']} changeView={true} />
+            :
+              <EmptyCroRis changeView={true} />
         }
       </>
     )

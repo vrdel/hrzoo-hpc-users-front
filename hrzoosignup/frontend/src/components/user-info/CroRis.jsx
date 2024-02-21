@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Badge, Placeholder, Row, Table, Label } from 'reactstrap';
+import { Col, Badge, Placeholder, Row, Table, Label, Spinner } from 'reactstrap';
 
 
 const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
@@ -262,7 +262,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
 }
 
 
-export const EmptyCroRis = () => {
+export const EmptyCroRis = ({changeView=false, spinner=false}) => {
   return (
     <>
       <Row>
@@ -273,8 +273,23 @@ export const EmptyCroRis = () => {
         </Col>
       </Row>
       <Row className="mt-3 mb-3">
-        <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '200px'}} md={{offset: 1, size: 10}}>
-          Nema podataka iz sustava CroRIS
+        <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '300px'}} md={{offset: 1, size: 10}}>
+          {
+            spinner ?
+              <Spinner
+                style={{
+                  height: '15rem',
+                  width: '15rem',
+                  borderColor: '#b04c46',
+                  borderRightColor: 'transparent'
+                }}
+              />
+            :
+              changeView ?
+                "Nema podataka za korisnika u sustavu CroRIS"
+              :
+                "Nema podataka iz sustava CroRIS"
+          }
         </Col>
       </Row>
     </>
