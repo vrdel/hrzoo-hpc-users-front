@@ -179,19 +179,27 @@ class UserInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request, username):
-        user_model = get_user_model()
-        try:
-            target_user = user_model.objects.get(username=username)
-            target_user = UserSerializerFiltered(target_user)
+        if request.user.is_staff or request.user.is_superuser:
+            user_model = get_user_model()
+            try:
+                target_user = user_model.objects.get(username=username)
+                target_user = UserSerializerFiltered(target_user)
 
-            return Response(target_user.data, status=status.HTTP_200_OK)
+                return Response(target_user.data, status=status.HTTP_200_OK)
 
-        except user_model.DoesNotExist:
+            except user_model.DoesNotExist:
+                err_response = {
+                    'status': {
+                        'code': status.HTTP_404_NOT_FOUND,
+                        'message': '{} - User with username {} not found'.format(request.user.username, username)
+                    }
+                }
+                return Response(err_response, status=status.HTTP_404_NOT_FOUND)
+        else:
             err_response = {
                 'status': {
-                    'code': status.HTTP_404_NOT_FOUND,
-                    'message': '{} - User with username {} not found'.format(request.user.username, username)
+                    'code': status.HTTP_401_UNAUTHORIZED,
+                    'message': '{} - Not allowed to view the details of user'.format(request.user.username)
                 }
             }
-            return Response(err_response, status=status.HTTP_404_NOT_FOUND)
-
+            return Response(err_response, status=status.HTTP_401_UNAUTHORIZED)
