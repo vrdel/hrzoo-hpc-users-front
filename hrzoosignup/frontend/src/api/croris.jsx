@@ -25,5 +25,4 @@ export async function fetchCroRIS()
 
   if (error_msg)
     throw new Error(`Error fetching data from CroRIS: ${error_msg}`)
-
 }

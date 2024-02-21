@@ -16,6 +16,7 @@ urlpatterns = [
     path("users-projects/<int:projiddb>", views.UsersProjects.as_view(), name="usersprojects"),
     path('can-submit-institute-project/', views.CanSubmitInstituteProject.as_view(), name='cansubmitinstituteproject'),
     path('croris-info/', views.CroRISInfo.as_view(), name='crorisinfo'),
+    path('croris-info/<str:target_oib>', views.CroRISInfo.as_view(), name='crorisinfo'),
     path('invites-sent/', views.InvitesSent.as_view(), name='invitessent'),
     path('invites-userlink/', views.InvitesLink.as_view(), name='inviteslink'),
     path('invites/', views.Invites.as_view(), name='invites'),

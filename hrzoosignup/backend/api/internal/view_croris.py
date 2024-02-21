@@ -20,9 +20,13 @@ logger = logging.getLogger('hrzoosignup.views')
 
 
 class CroRISInfo(APIView):
-    def get(self, request):
-        oib = request.user.person_oib
-        # we don't set HTTP error statuses on failed data fetchs
+    def get(self, request, **kwargs):
+        target_oib = kwargs.get('target_oib', None)
+        if target_oib:
+            oib = kwargs.get('target_oib')
+        else:
+            oib = request.user.person_oib
+
         try:
             if oib:
                 croris = CroRISCore(oib)
@@ -34,15 +38,16 @@ class CroRISInfo(APIView):
                 user.croris_mbz = croris.person_info.get('mbz', '')
                 user.save()
 
-                # frontend is calling every 15 min
-                # we set here eviction after 20 min
-                cache.set(f'{oib}_croris', {
-                          'person_info': croris.person_info,
-                          'projects_lead_info': croris.projects_lead_info,
-                          'projects_lead_users': croris.projects_lead_users,
-                          'projects_associate_info': croris.projects_associate_info,
-                          'projects_associate_ids': croris.projects_associate_ids},
-                          20 * 60)
+                if target_oib:
+                    # frontend is calling every 15 min
+                    # we set here eviction after 20 min
+                    cache.set(f'{oib}_croris', {
+                              'person_info': croris.person_info,
+                              'projects_lead_info': croris.projects_lead_info,
+                              'projects_lead_users': croris.projects_lead_users,
+                              'projects_associate_info': croris.projects_associate_info,
+                              'projects_associate_ids': croris.projects_associate_ids},
+                              20 * 60)
 
                 return Response({
                     'data': {
