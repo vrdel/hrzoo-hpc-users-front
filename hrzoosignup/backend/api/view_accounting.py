@@ -49,6 +49,12 @@ class AccountingUserProjectAPI(APIView):
 
         return reformat_sfs
 
+    def _croris_url(self, croris_id):
+        if croris_id:
+            return f'https://www.croris.hr/projekti/projekt/{croris_id}'
+        else:
+            return ''
+
     def _generate_response(self, projects):
         ret_data = []
         for project in projects:
@@ -64,6 +70,7 @@ class AccountingUserProjectAPI(APIView):
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
             fields_project['ustanova'] = project.institute
+            fields_project['croris_url'] = self._croris_url(project.croris_id)
             fields_project['science_field'] = self._flatten_field(project.science_field)
             fields_project['realm'] = realm_inst
             fields_project['finance'] = self._set_project_finance(project)
