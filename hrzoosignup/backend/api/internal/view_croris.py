@@ -48,7 +48,7 @@ class CroRISInfo(APIView):
                 user.croris_mbz = croris.person_info.get('mbz', '')
                 user.save()
 
-                if target_oib:
+                if not target_oib:
                     # frontend is calling every 15 min
                     # we set here eviction after 20 min
                     cache.set(f'{oib}_croris', {
