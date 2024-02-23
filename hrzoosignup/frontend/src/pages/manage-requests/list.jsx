@@ -312,7 +312,9 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                         </Row>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        { extractLeaderName(project.userproject_set, true) }
+                        <Link rel="noopener noreferrer" className="text-dark" to={`/ui/korisnici/${extractLeaderName(project.userproject_set).user.username}`}>
+                          { extractLeaderName(project.userproject_set, true) }
+                        </Link>
                       </td>
                       <td className="align-middle text-center">
                         <ProjectTypeBadge projectInfo={project} />
