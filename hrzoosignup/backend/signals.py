@@ -11,7 +11,7 @@ def generate_username(sender, instance, created, **kwargs):
     if kwargs['raw']:
         return
 
-    if not instance.user.person_username:
+    if not instance.user.person_username and instance.project.state.name == 'approve':
         new_username = gen_username(instance.user.first_name, instance.user.last_name)
         instance.user.person_username = new_username
         logger.info(f"Generated username {new_username} for {instance.user.username}")
