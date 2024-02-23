@@ -137,6 +137,7 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
             'person_uniqueid',
             'person_institution',
             'person_organisation',
+            'person_affiliation',
             'sshkeys'
         )
         model = get_user_model()
