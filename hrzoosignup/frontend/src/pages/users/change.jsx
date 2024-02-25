@@ -18,6 +18,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import {
   faCopy,
 } from '@fortawesome/free-solid-svg-icons';
+import { url_ui_prefix } from 'Config/general';
 import { MiniButton } from 'Components/MiniButton';
 import _ from "lodash";
 
@@ -68,7 +69,7 @@ const UserProjectsTable = ({projects}) => {
                   <td className="p-3 align-middle fw-bold text-center">
                     <Row>
                       <Col>
-                        <Link className="text-dark" to={encodeURIComponent(pro.project.identifier)}>
+                        <Link className="text-dark" to={`${url_ui_prefix}/projekti/${encodeURIComponent(pro.project.identifier)}`}>
                           { pro.project.name}
                         </Link>
                       </Col>

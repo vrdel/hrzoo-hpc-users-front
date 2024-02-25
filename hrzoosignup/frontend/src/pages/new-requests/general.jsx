@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
-import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
-import ResourceFields from '../../components/fields-request/ResourceFields';
-import GeneralFields from '../../components/fields-request/GeneralFields';
-import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
+import RequestHorizontalRuler from 'Components/RequestHorizontalRuler';
+import ResourceFields from 'Components/fields-request/ResourceFields';
+import GeneralFields from 'Components/fields-request/GeneralFields';
+import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import {
   Button,
   Col,
@@ -21,16 +21,16 @@ import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-toastify'
-import { addGeneralProject } from '../../api/projects';
-import '../../styles/datepicker.css';
+import { addGeneralProject } from 'Api/projects';
+import 'Styles/datepicker.css';
 import { useMutation } from '@tanstack/react-query';
-import { url_ui_prefix } from '../../config/general';
+import { url_ui_prefix } from 'Config/general';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../components/AuthContextProvider';
-import ModalAreYouSure from '../../components/ModalAreYouSure';
-import validateDomainAndFields from '../../utils/validate-domain-fields';
-import validateRequestDates from '../../utils/validate-dates-startend';
-import { convertToAmerican } from '../../utils/dates.jsx';
+import { AuthContext } from 'Components/AuthContextProvider';
+import ModalAreYouSure from 'Components/ModalAreYouSure';
+import validateDomainAndFields from 'Utils/validate-domain-fields';
+import validateRequestDates from 'Utils/validate-dates-startend';
+import { convertToAmerican } from 'Utils/dates.jsx';
 import * as yup from "yup";
 
 
