@@ -60,7 +60,7 @@ const UserProjectsTable = ({projects}) => {
               projects.map((pro, index) =>
                 <tr key={ index }>
                   <td className="p-3 align-middle text-center">
-                    { index }
+                    { projects.length - index }
                   </td>
                   <td className="p-3 align-middle text-center">
                     { StateIcons(pro.project.state.name) }
