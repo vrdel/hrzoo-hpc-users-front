@@ -213,14 +213,19 @@ const UserChange = () => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
 
-  if (status === 'success' && userData)
+  if (status === 'success' && userData) {
+    let interestedProjecs = userData.userproject_set.filter(pro => pro.project.state.name !== 'deny' && pro.project.state.name !== 'submit')
+
     return (
       <>
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
         <StatusInfo myInfo={false} userDetails={userData} />
-        <UserProjectsTable projects={userData.userproject_set} />
+        {
+          interestedProjecs.length > 0 &&
+          <UserProjectsTable projects={interestedProjecs} />
+        }
         <InstituteTableInfo myInfo={false} userDetails={userData} />
         {
           statusCroRis === 'loading' ?
@@ -234,6 +239,7 @@ const UserChange = () => {
         }
       </>
     )
+  }
 };
 
 export default UserChange;
