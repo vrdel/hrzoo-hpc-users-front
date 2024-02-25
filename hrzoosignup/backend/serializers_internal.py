@@ -39,28 +39,7 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
         model = get_user_model()
 
 
-class UserSerializerFiltered(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'id',
-            'username',
-            'person_mail',
-            'first_name',
-            'last_name',
-            'person_oib',
-            'person_uniqueid',
-            'person_username',
-            'person_affiliation',
-            'person_mail',
-            'croris_mbz',
-            'person_institution',
-            'person_organisation',
-            'status',
-            'is_active',
-            'is_staff',
-            'is_superuser'
-        )
-        model = get_user_model()
+
 
 
 class SshKeysSerializer(serializers.ModelSerializer):
@@ -120,7 +99,7 @@ class RoleSerializer(serializers.ModelSerializer):
         model = models.Role
 
 
-class UserProjectSerializer(serializers.ModelSerializer):
+class UsersProjectSerializer(serializers.ModelSerializer):
     role = RoleSerializer()
     user = UsersSerializerFiltered()
 
@@ -135,7 +114,7 @@ class UserProjectSerializer(serializers.ModelSerializer):
 
 
 class UsersSerializer(serializers.ModelSerializer):
-    userproject_set = UserProjectSerializer(many=True, read_only=True)
+    userproject_set = UsersProjectSerializer(many=True, read_only=True)
 
     class Meta:
         fields = (
@@ -195,7 +174,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
     state = StateSerializer()
     project_type = ProjectTypeSerializer()
-    userproject_set = UserProjectSerializer(many=True, read_only=True)
+    userproject_set = UsersProjectSerializer(many=True, read_only=True)
     staffcomment_set = StaffComment(many=True, read_only=True)
 
     class Meta:
@@ -239,3 +218,53 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'users',
         )
         model = models.Project
+
+
+class ProjectSerializerFiltered(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'date_approved',
+            'date_end',
+            'date_start',
+            'date_submitted',
+            'id',
+            'identifier',
+            'institute',
+            'is_active',
+            'name',
+            'project_type',
+            'staff_resources_type',
+            'state',
+        )
+        model = models.Project
+
+
+class UserProjectSerializer(UsersProjectSerializer):
+    project = ProjectSerializerFiltered()
+
+
+class UserSerializerFiltered(serializers.ModelSerializer):
+    userproject_set = UserProjectSerializer(many=True, read_only=True)
+
+    class Meta:
+        fields = (
+            'id',
+            'username',
+            'person_mail',
+            'first_name',
+            'last_name',
+            'person_oib',
+            'person_uniqueid',
+            'person_username',
+            'person_affiliation',
+            'person_mail',
+            'croris_mbz',
+            'person_institution',
+            'person_organisation',
+            'status',
+            'is_active',
+            'is_staff',
+            'is_superuser',
+            'userproject_set',
+        )
+        model = get_user_model()
