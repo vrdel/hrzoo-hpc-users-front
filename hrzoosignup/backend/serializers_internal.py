@@ -221,8 +221,12 @@ class ProjectSerializerGet(serializers.ModelSerializer):
 
 
 class ProjectSerializerFiltered(serializers.ModelSerializer):
+    project_type = ProjectTypeSerializer()
+    state = StateSerializer()
+
     class Meta:
         fields = (
+            'croris_finance',
             'date_approved',
             'date_end',
             'date_start',
