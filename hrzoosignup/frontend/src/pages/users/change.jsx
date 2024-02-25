@@ -4,11 +4,192 @@ import { fetchCroRISUser } from "Api/croris";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from 'react-router-dom';
 import { SharedData } from 'Pages/root';
-import { Row } from 'reactstrap';
+import { Row, Col, Table, Badge } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import StatusInfo from 'Components/user-info/StatusInfo';
 import InstituteTableInfo from 'Components/user-info/UserInstitute';
 import { EmptyCroRis, CroRisInfo } from 'Components/user-info/CroRis';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { TypeString, TypeColor } from 'Config/map-projecttypes';
+import { StateIcons } from "Config/map-states";
+import { Link } from 'react-router-dom';
+import { convertToEuropean } from 'Utils/dates';
+import { copyToClipboard } from 'Utils/copy-clipboard';
+import {
+  faCopy,
+} from '@fortawesome/free-solid-svg-icons';
+import { MiniButton } from 'Components/MiniButton';
+import _ from "lodash";
+
+
+const UserProjectsTable = ({projects}) => {
+  return (
+    <Row className="mt-4 ms-2 me-3 g-0">
+      <Col>
+        <Table responsive hover className="shadow-sm">
+          <thead id="hzsi-thead" className="align-middle text-center text-white">
+            <tr>
+              <th className="fw-normal"  style={{width: '52px'}}>
+                #
+              </th>
+              <th className="fw-normal" style={{width: '92px'}}>
+                Stanje
+              </th>
+              <th className="fw-normal">
+                Naziv projekta i institucija nositelj
+              </th>
+              <th className="fw-normal">
+                Šifra
+              </th>
+              <th className="fw-normal">
+                Tip
+              </th>
+              <th className="fw-normal" style={{maxWidth: '100px'}}>
+                Resursi
+              </th>
+              <th className="fw-normal">
+                Uloga
+              </th>
+              <th className="fw-normal">
+                Trajanje
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              projects.map((pro, index) =>
+                <tr key={ index }>
+                  <td className="p-3 align-middle text-center">
+                    { index }
+                  </td>
+                  <td className="p-3 align-middle text-center">
+                    { StateIcons(pro.project.state.name) }
+                  </td>
+                  <td className="p-3 align-middle fw-bold text-center">
+                    <Row>
+                      <Col>
+                        <Link className="text-dark" to={encodeURIComponent(pro.project.identifier)}>
+                          { pro.project.name}
+                        </Link>
+                      </Col>
+                    </Row>
+                    <Row className="pt-1">
+                      <Col className="fw-medium fst-italic">
+                        <small>{ pro.project.institute }</small>
+                      </Col>
+                    </Row>
+                  </td>
+                  <td className="align-middle text-center">
+                    <Row className="g-0 d-flex justify-content-center align-items-center">
+                      <Col className="d-flex justify-content-center align-items-center align-self-center">
+                        <Badge color="secondary" className="fw-normal">
+                          { pro.project.identifier }
+                        </Badge>
+                        <MiniButton
+                          childClassName="me-3"
+                          onClick={(e) => copyToClipboard(
+                            e, pro.project.identifier,
+                            "Šifra projekta kopirana u međuspremnik",
+                            "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                            "id-uid"
+                          )}
+                        >
+                          <FontAwesomeIcon size="xs" icon={faCopy} />
+                        </MiniButton>
+                      </Col>
+                    </Row>
+                  </td>
+                  <td className="align-middle text-center">
+                    <span className={ `badge fw-normal position-relative ${TypeColor(pro.project.project_type.name)}` }>
+                      { TypeString(pro.project.project_type.name) }
+                      {
+                        _.findIndex(pro.project.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
+                        <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+                          EU
+                          <span className="visually-hidden">EU</span>
+                        </span>
+                      }
+                    </span>
+                  </td>
+                  <td className="align-middle text-center">
+                    <Row>
+                      <Col>
+                        {
+                          pro.project.staff_resources_type.map((rtype, i) =>
+                            i <= 2 &&
+                            <span className="ms-1 p-1 fw-normal" key={i}
+                              style={{
+                                backgroundColor: '#feb272',
+                                color: '#303030',
+                                borderRadius: '2px',
+                                fontSize: '0.83rem'
+                              }}>
+                              {rtype.value}
+                            </span>)
+                        }
+                      </Col>
+                    </Row>
+                    <Row className="mt-1">
+                      <Col>
+                        {
+                          pro.project.staff_resources_type.map((rtype, i) =>
+                            i > 2 && i <=5 &&
+                            <span className="ms-1 p-1 fw-normal" key={i}
+                              style={{
+                                backgroundColor: '#feb272',
+                                color: '#303030',
+                                borderRadius: '2px',
+                                fontSize: '0.83rem'
+                              }}>
+                              {rtype.value}
+                            </span>)
+                        }
+                      </Col>
+                    </Row>
+                    <Row className="mt-1">
+                      <Col>
+                        {
+                          pro.project.staff_resources_type.map((rtype, i) =>
+                            i > 5 &&
+                            <span className="ms-1 p-1 fw-normal" key={i}
+                              style={{
+                                backgroundColor: '#feb272',
+                                color: '#303030',
+                                borderRadius: '2px',
+                                fontSize: '0.83rem'
+                              }}>
+                              {rtype.value}
+                            </span>)
+                        }
+                      </Col>
+                    </Row>
+                  </td>
+                  <td className="align-middle text-center">
+                    {
+                      pro.role.name === 'lead' ?
+                        <Badge className="fw-normal" color="success">
+                          voditelj
+                        </Badge>
+                      :
+                        <Badge className="fw-normal" color="primary">
+                          suradnik
+                        </Badge>
+                    }
+                  </td>
+                  <td className="align-middle text-center fs-6 font-monospace">
+                    { convertToEuropean(pro.project.date_start) }
+                    <br/>
+                    { convertToEuropean(pro.project.date_end) }
+                  </td>
+                </tr>
+              )
+            }
+          </tbody>
+        </Table>
+      </Col>
+    </Row>
+  )
+}
 
 
 const UserChange = () => {
@@ -39,6 +220,7 @@ const UserChange = () => {
           <PageTitle pageTitle={pageTitle}/>
         </Row>
         <StatusInfo myInfo={false} userDetails={userData} />
+        <UserProjectsTable projects={userData.userproject_set} />
         <InstituteTableInfo myInfo={false} userDetails={userData} />
         {
           statusCroRis === 'loading' ?
