@@ -51,7 +51,7 @@ const UserProjectsTable = ({projects}) => {
                 Uloga
               </th>
               <th className="fw-normal">
-                Trajanje
+                Odobren
               </th>
             </tr>
           </thead>
@@ -177,9 +177,7 @@ const UserProjectsTable = ({projects}) => {
                     }
                   </td>
                   <td className="align-middle text-center fs-6 font-monospace">
-                    { convertToEuropean(pro.project.date_start) }
-                    <br/>
-                    { convertToEuropean(pro.project.date_end) }
+                    { convertToEuropean(pro.project.date_approved) }
                   </td>
                 </tr>
               )
@@ -215,6 +213,7 @@ const UserChange = () => {
 
   if (status === 'success' && userData) {
     let interestedProjecs = userData.userproject_set.filter(pro => pro.project.state.name !== 'deny' && pro.project.state.name !== 'submit')
+    interestedProjecs = _.orderBy(interestedProjecs, ['project.date_approved'], ['desc'])
 
     return (
       <>
