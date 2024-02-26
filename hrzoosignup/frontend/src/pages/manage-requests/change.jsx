@@ -828,9 +828,13 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               approvedBy ? approvedBy.first_name + ' ' + approvedBy.last_name : '\u2212'
             :
               initialProjectState === 'deny' ?
-                deniedBy ? deniedBy.first_name + ' ' + deniedBy.last_name :  '\u2212'
-              :
-                '\u2212'
+                approvedBy ?
+                  approvedBy.first_name + ' ' + approvedBy.last_name
+                :
+                  deniedBy ?
+                    deniedBy.first_name + ' ' + deniedBy.last_name
+                  :  '\u2212'
+              :  '\u2212'
           }
         </Col>
       </Row>
