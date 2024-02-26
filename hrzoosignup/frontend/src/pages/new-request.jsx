@@ -138,6 +138,17 @@ const NewRequest = () => {
                 )
                 setContinueButtonDisabled(true)
               }
+              else if (e.value === 'izrada-rada') {
+                toast.info(
+                  <span className="font-monospace text-dark">
+                    Izrada rada se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.
+                  </span>, {
+                    toastId: 'newreq-thesis',
+                    autoClose: 5000,
+                  }
+                )
+                setContinueButtonDisabled(false)
+              }
               else
                 setContinueButtonDisabled(false)
 
