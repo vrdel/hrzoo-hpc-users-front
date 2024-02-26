@@ -21,4 +21,4 @@ def generate_username(sender, instance, created, **kwargs):
         cache.delete("usersinfo-get")
 
 
-post_save.connect(generate_username, sender=UserProject)
+# post_save.connect(generate_username, sender=UserProject)

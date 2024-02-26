@@ -12,9 +12,10 @@ from django.conf import settings
 from django.core.cache import cache
 from django.utils import timezone
 
-from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
 from backend import models
 from backend.email import project
+from backend.serializers import ProjectSerializer, ProjectSerializerGet, UserProjectSerializer
+from backend.utils.gen_username import gen_username
 
 import json
 import datetime
@@ -294,6 +295,8 @@ class Projects(APIView):
                     project.email_approve_project(person_mail, p_obj.name,
                                                   p_obj.project_type)
                 lead_user.status = True
+                if not lead_user.person_username:
+                    lead_user.person_username = gen_username(lead_user.first_name, lead_user.last_name)
                 p_obj.is_active = True
                 lead_user.save()
 
