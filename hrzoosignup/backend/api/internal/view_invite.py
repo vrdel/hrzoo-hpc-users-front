@@ -11,6 +11,7 @@ from invitations.utils import get_invitation_model
 from backend import models
 from backend.email import user as useremail
 from backend.serializers import InvitesSerializer
+from backend.utils.gen_username import gen_username
 from .view_croris import CroRISInfo
 
 import json
@@ -34,6 +35,8 @@ def associate_user_to_project(user, project):
                                          date_joined=timezone.make_aware(datetime.datetime.now()))
     userproject_obj.save()
     user.status = True
+    if not user.person_username:
+        user.person_username = gen_username(user.first_name, user.last_name)
     user.save()
 
 
