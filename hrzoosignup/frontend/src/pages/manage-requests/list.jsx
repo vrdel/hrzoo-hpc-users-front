@@ -312,7 +312,8 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                         </Row>
                       </td>
                       <td className="p-3 align-middle text-center">
-                        <Link rel="noopener noreferrer" className="text-dark" to={`/ui/korisnici/${extractLeaderName(project.userproject_set).user.username}`}>
+                        <Link rel="noopener noreferrer" className="text-dark"
+                          to={`/ui/korisnici/${extractLeaderName(project.userproject_set).user.status ? '' : 'neaktivni/'}${extractLeaderName(project.userproject_set).user.username}`}>
                           { extractLeaderName(project.userproject_set, true) }
                         </Link>
                       </td>

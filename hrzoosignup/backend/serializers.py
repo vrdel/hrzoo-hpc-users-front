@@ -138,7 +138,8 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
             'person_institution',
             'person_organisation',
             'person_affiliation',
-            'sshkeys'
+            'sshkeys',
+            'status'
         )
         model = get_user_model()
 
