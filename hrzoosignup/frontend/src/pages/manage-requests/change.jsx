@@ -821,7 +821,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row className="justify-content-end fst-italic">
         <Col md={{size: 4}} className="fs-6 mt-3">
           <span className="fw-bold">
-            Obradio{'  '}
+            Obradio:{'  '}
           </span>
           {
             ['approve', 'extend', 'expire'].indexOf(initialProjectState) >= 0 ?
