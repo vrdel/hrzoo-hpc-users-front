@@ -37,6 +37,7 @@ def associate_user_to_project(user, project):
     user.status = True
     if not user.person_username:
         user.person_username = gen_username(user.first_name, user.last_name)
+        logger.info(f"Generated username {user.person_username} for {user.username}")
     user.save()
 
 

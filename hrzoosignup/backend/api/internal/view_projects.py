@@ -297,6 +297,7 @@ class Projects(APIView):
                 lead_user.status = True
                 if not lead_user.person_username:
                     lead_user.person_username = gen_username(lead_user.first_name, lead_user.last_name)
+                    logger.info(f"Generated username {lead_user.person_username} for {lead_user.username}")
                 p_obj.is_active = True
                 lead_user.save()
 
