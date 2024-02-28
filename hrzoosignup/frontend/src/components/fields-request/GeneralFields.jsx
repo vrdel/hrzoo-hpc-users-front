@@ -110,35 +110,129 @@ const GeneralProjectUsers = ({projectInfo}) => {
 }
 
 
-const CrorisProjectUsers = ({projectInfo}) =>
-  <Row>
-    <Col md={{offset: 1, size: 10}}>
-      {
-        projectInfo.userproject_set.map((user, i) =>
-          user.role.name === 'lead' &&
-          <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
-            {
-              user['user']['first_name'] + ' ' + user['user']['last_name']
-            }
-          </Badge>
-        )
-      }
-      {'   '}
-      {
-        projectInfo.croris_collaborators.map((user, i) =>
-          <React.Fragment key={`wrap-project-users-${i}`}>
-            <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
-              {
-                user &&
-                user['first_name'] + ' ' + user['last_name']
-              }
-            </Badge>
-            {'  '}
-          </React.Fragment>
-        )
-      }
-    </Col>
-  </Row>
+const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
+  const [popoverOpened, setPopoverOpened] = useState(undefined);
+  const showPopover = (popid) => {
+    let showed = new Object()
+    if (popoverOpened === undefined && popid) {
+      showed[popid] = true
+      setPopoverOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(popoverOpened))
+      showed[popid] = !showed[popid]
+      setPopoverOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (popoverOpened !== undefined)
+      return popoverOpened[toolid]
+  }
+
+  if (manageProject)
+    return (
+      <Row>
+        <Col md={{offset: 1, size: 10}}>
+          {
+            projectInfo.userproject_set.map((user, index) =>
+              user.role.name === 'lead' &&
+              <Badge
+                color="secondary"
+                className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
+                key={`project-users-${index}`}
+                style={{cursor: 'pointer'}}
+                id={`pop-lead-${index}-${user.user.id}`}
+              >
+                {
+                  user['user']['first_name'] + ' ' + user['user']['last_name']
+                }
+                <Popover
+                  placement="top"
+                  isOpen={isOpened(`${index}-${user.user.id}`)}
+                  target={`pop-lead-${index}-${user.user.id}`}
+                  toggle={() => {
+                    showPopover(`${index}-${user.user.id}`)
+                  }}
+                >
+                  <PopoverUserInfo
+                    rhfId={`${index}-${user.user.id}`}
+                    userName={user.user.username}
+                    showPopover={showPopover}
+                  />
+                </Popover>
+              </Badge>
+            )
+          }
+          {'   '}
+          {
+            projectInfo.userproject_set.map((user, index) =>
+              user.role.name === 'collaborator' &&
+              <React.Fragment key={`wrap-project-users-${index}`}>
+                <Badge
+                  color="secondary"
+                  className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
+                  key={`project-users-${index}`}
+                  style={{cursor: 'pointer'}}
+                  id={`pop-collab-${index}-${user.user.id}`}
+                >
+                  {
+                    user &&
+                    user['user']['first_name'] + ' ' + user['user']['last_name']
+                  }
+                  <Popover
+                    placement="top"
+                    isOpen={isOpened(`${index}-${user.user.id}`)}
+                    target={`pop-collab-${index}-${user.user.id}`}
+                    toggle={() => {
+                      showPopover(`${index}-${user.user.id}`)
+                    }}
+                  >
+                    <PopoverUserInfo
+                      rhfId={`${index}-${user.user.id}`}
+                      userName={user.user.username}
+                      showPopover={showPopover}
+                    />
+                  </Popover>
+                </Badge>
+                {'  '}
+              </React.Fragment>
+            )
+          }
+        </Col>
+      </Row>
+    )
+  else
+    return (
+      <Row>
+        <Col md={{offset: 1, size: 10}}>
+          {
+            projectInfo.userproject_set.map((user, i) =>
+              user.role.name === 'lead' &&
+              <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+                {
+                  user['user']['first_name'] + ' ' + user['user']['last_name']
+                }
+              </Badge>
+            )
+          }
+          {'   '}
+          {
+            projectInfo.croris_collaborators.map((user, i) =>
+              <React.Fragment key={`wrap-project-users-${i}`}>
+                <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+                  {
+                    user &&
+                    user['first_name'] + ' ' + user['last_name']
+                  }
+                </Badge>
+                {'  '}
+              </React.Fragment>
+            )
+          }
+        </Col>
+      </Row>
+    )
+}
 
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
@@ -347,17 +441,17 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             <>
               <Row className="mt-4">
                 <Col md={{offset: 1}}>
-                  Korisnici - CroRIS:
+                  Korisnici:
                 </Col>
               </Row>
-              <CrorisProjectUsers projectInfo={projectInfo} />
+              <CrorisProjectUsers projectInfo={projectInfo} manageProject={manageProject} />
             </>
           :
             manageProject ?
               <>
                 <Row className="mt-4">
                   <Col md={{offset: 1}}>
-                    Korisnici - Vulgaris:
+                    Korisnici:
                   </Col>
                 </Row>
                 <GeneralProjectUsers projectInfo={projectInfo} />
