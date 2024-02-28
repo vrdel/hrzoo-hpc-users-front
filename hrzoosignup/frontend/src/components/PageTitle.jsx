@@ -2,7 +2,6 @@ import React from 'react'
 import { Col } from 'reactstrap';
 
 export const PageTitle = ({pageTitle, isEditing=false, children}) => {
-
   if (isEditing)
     pageTitle = pageTitle.replace(/\w* /, 'Uređivanje ')
 

@@ -13,10 +13,10 @@ import {
   HZSIPagination
 } from "Components/TableHelpers";
 import { convertToEuropean } from "Utils/dates";
-import { Badge, Col, Input, Row, Table, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+import { Badge, Col, Input, Row, Table, Popover } from "reactstrap";
 import { PageTitle } from "Components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faCopy, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { CustomReactSelect } from "Components/CustomReactSelect";
 import { TypeColor, TypeString } from "Config/map-projecttypes";
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
@@ -26,7 +26,7 @@ import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
-import { fetchSpecificUser } from "Api/users";
+import PopoverUserInfo from 'Components/PopoverUserInfo';
 import _ from "lodash";
 
 
@@ -58,85 +58,6 @@ const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
       </Popover>
     </Badge>
   )
-}
-
-
-const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
-  const {status, data: userData, error} = useQuery({
-      queryKey: ['change-user', userName],
-      queryFn: () => fetchSpecificUser(userName),
-  })
-
-  if (status === 'success' && userData) {
-    return (
-      <>
-        <PopoverHeader className="d-flex align-items-center font-monospace justify-content-between">
-          { userName }
-        </PopoverHeader>
-        <PopoverBody>
-          <Row>
-            <Col className="fw-bold">
-              Ime i prezime
-            </Col>
-          </Row>
-          <Row>
-            <Col className="ms-2 me-2 fs-6 fst-italic">
-              {`${userData.first_name} ${userData.last_name}`}
-            </Col>
-          </Row>
-          <Row className="mt-2">
-            <Col className="fw-bold">
-              Ustanova
-            </Col>
-          </Row>
-          <Row>
-            <Col className="ms-2 me-2 fs-6 fst-italic">
-              {`${userData.person_institution}`}<br/>
-              <small>{`${userData.person_affiliation}`}</small>
-            </Col>
-          </Row>
-          <Row className="mt-2">
-            <Col className="fw-bold">
-              Email
-            </Col>
-          </Row>
-          <Row>
-            <Col className="d-flex font-monospace align-items-center ms-2 me-2 fs-6 fst-italic">
-              {`${userData.person_mail}`}
-              <MiniButton
-                childClassName="me-3"
-                onClick={(e) => copyToClipboard(
-                  e, userData.person_mail,
-                  "Email korisnika kopiran u međuspremnik",
-                  "Greška prilikom kopiranja emaila korisnika u međuspremnik",
-                  "id-emailuser"
-                )}
-              >
-                <FontAwesomeIcon size="xs" icon={faCopy} />
-              </MiniButton>
-            </Col>
-          </Row>
-          <Row className="mt-4">
-            <Col className="d-flex justify-content-center align-items-center align-self-center">
-              <a className="btn btn-primary btn-sm"
-                target="_blank"
-                style={{'textDecoration': 'none'}}
-                rel="noopener noreferrer"
-                role="button"
-                onClick={() => showPopover(rhfId)}
-                href={`/ui/korisnici/${userData.username}`}
-              >
-                <FontAwesomeIcon icon={faArrowRight}/>{' '}
-                Detalji korisnika
-              </a>
-            </Col>
-          </Row>
-        </PopoverBody>
-      </>
-    )
-  }
-  else
-    return null
 }
 
 
