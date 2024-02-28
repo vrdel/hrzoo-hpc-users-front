@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSave,
   faCog,
+  faCopy,
   faTimes,
   faTimeline,
   faCalendarXmark,
@@ -34,6 +35,8 @@ import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import 'Styles/staff-change-disabled.css';
 import { AuthContext } from 'Components/AuthContextProvider.jsx';
 import { convertToAmerican } from "Utils/dates";
+import { copyToClipboard } from 'Utils/copy-clipboard';
+import { MiniButton } from 'Components/MiniButton';
 
 
 function setInitialState() {
@@ -104,11 +107,41 @@ const LeadBasicInfo = ({leadInfo}) => {
                 <td className="ms-0 ps-0">
                   { user.last_name ? user.last_name :  '\u2212' }
                 </td>
-                <td className="ms-0 ps-0">
-                  { user.person_mail ? user.person_mail : '\u2212' }
+                <td className="ms-0 ps-0 font-monospace align-middle">
+                  <Row className="g-0 d-flex justify-content-left">
+                    <Col className="d-flex justify-content-left align-items-center align-self-center">
+                      { user.person_mail ? user.person_mail : '\u2212' }
+                      <MiniButton
+                        childClassName="me-3"
+                        onClick={(e) => copyToClipboard(
+                          e, user.person_mail,
+                          "Email korisnika kopiran u međuspremnik",
+                          "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                          "id-email"
+                        )}
+                      >
+                        <FontAwesomeIcon size="xs" icon={faCopy} />
+                      </MiniButton>
+                    </Col>
+                  </Row>
                 </td>
-                <td className="ms-0 ps-0">
-                  { user.person_uniqueid ? user.person_uniqueid :  '\u2212' }
+                <td className="ms-0 ps-0 font-monospace align-middle">
+                  <Row className="g-0 d-flex justify-content-left">
+                    <Col className="d-flex justify-content-left align-items-center align-self-center">
+                      { user.person_uniqueid ? user.person_uniqueid :  '\u2212' }
+                      <MiniButton
+                        childClassName="me-3"
+                        onClick={(e) => copyToClipboard(
+                          e, user.person_uniqueid,
+                          "Korisnička oznaka kopirana u međuspremnik",
+                          "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                          "id-uid"
+                        )}
+                      >
+                        <FontAwesomeIcon size="xs" icon={faCopy} />
+                      </MiniButton>
+                    </Col>
+                  </Row>
                 </td>
               </tr>
             </tbody>
