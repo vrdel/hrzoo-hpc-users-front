@@ -9,42 +9,105 @@ import {
   FormFeedback,
   Label,
   Row,
+  Popover
 } from 'reactstrap';
 import { ErrorMessage } from '@hookform/error-message';
 import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
+import PopoverUserInfo from 'Components/PopoverUserInfo';
 
 
-const GeneralProjectUsers = ({projectInfo}) =>
-  <Row>
-    <Col md={{offset: 1, size: 10}}>
-      {
-        projectInfo.userproject_set.map((user, i) =>
-          user.role.name === 'lead' &&
-          <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
-            {
-              user['user']['first_name'] + ' ' + user['user']['last_name']
-            }
-          </Badge>
-        )
-      }
-      {'   '}
-      {
-        projectInfo.userproject_set.map((user, i) =>
-          user.role.name === 'collaborator' &&
-          <React.Fragment key={`wrap-project-users-${i}`}>
-            <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+const GeneralProjectUsers = ({projectInfo}) => {
+  const [popoverOpened, setPopoverOpened] = useState(undefined);
+  const showPopover = (popid) => {
+    let showed = new Object()
+    if (popoverOpened === undefined && popid) {
+      showed[popid] = true
+      setPopoverOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(popoverOpened))
+      showed[popid] = !showed[popid]
+      setPopoverOpened(showed)
+    }
+  }
+  const isOpened = (toolid) => {
+    if (popoverOpened !== undefined)
+      return popoverOpened[toolid]
+  }
+
+  return (
+    <Row>
+      <Col md={{offset: 1, size: 10}}>
+        {
+          projectInfo.userproject_set.map((user, index) =>
+            user.role.name === 'lead' &&
+            <Badge
+              color="secondary"
+              className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
+              style={{cursor: 'pointer'}}
+              key={`project-users-${index}`}
+              id={`pop-lead-${index}-${user.user.id}`}
+            >
               {
                 user['user']['first_name'] + ' ' + user['user']['last_name']
               }
+              <Popover
+                placement="top"
+                isOpen={isOpened(`${index}-${user.user.id}`)}
+                target={`pop-lead-${index}-${user.user.id}`}
+                toggle={() => {
+                  showPopover(`${index}-${user.user.id}`)
+                }}
+              >
+                <PopoverUserInfo
+                  rhfId={`${index}-${user.user.id}`}
+                  userName={user.user.username}
+                  showPopover={showPopover}
+                />
+              </Popover>
             </Badge>
-            {'  '}
-          </React.Fragment>
-        )
-      }
-    </Col>
-  </Row>
+          )
+        }
+        {'   '}
+        {
+          projectInfo.userproject_set.map((user, index) =>
+            user.role.name === 'collaborator' &&
+            <React.Fragment key={`wrap-project-users-${index}`}>
+              <Badge
+                color="secondary"
+                className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
+                style={{cursor: 'pointer'}}
+                key={`project-users-${index}`}
+                id={`pop-collab-${index}-${user.user.id}`}
+              >
+                {
+                  user['user']['first_name'] + ' ' + user['user']['last_name']
+                }
+                <Popover
+                  placement="top"
+                  isOpen={isOpened(`${index}-${user.user.id}`)}
+                  target={`pop-collab-${index}-${user.user.id}`}
+                  toggle={() => {
+                    showPopover(`${index}-${user.user.id}`)
+                  }}
+                >
+                  <PopoverUserInfo
+                    rhfId={`${index}-${user.user.id}`}
+                    userName={user.user.username}
+                    showPopover={showPopover}
+                  />
+                </Popover>
+              </Badge>
+              {'  '}
+            </React.Fragment>
+          )
+        }
+      </Col>
+    </Row>
+  )
+}
 
 
 const CrorisProjectUsers = ({projectInfo}) =>
@@ -284,7 +347,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             <>
               <Row className="mt-4">
                 <Col md={{offset: 1}}>
-                  Korisnici:
+                  Korisnici - CroRIS:
                 </Col>
               </Row>
               <CrorisProjectUsers projectInfo={projectInfo} />
@@ -294,7 +357,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
               <>
                 <Row className="mt-4">
                   <Col md={{offset: 1}}>
-                    Korisnici:
+                    Korisnici - Vulgaris:
                   </Col>
                 </Row>
                 <GeneralProjectUsers projectInfo={projectInfo} />
