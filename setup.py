@@ -46,6 +46,7 @@ setup(name=NAME,
       scripts=['bin/hzsi-db', 'bin/hzsi-genseckey', 'bin/hzsi-manage'],
       data_files=[
           ('bin/', glob.glob('bin/*')),
+          ('etc/httpd/conf.d/', ['apache/vhost-hrzoosignup.conf']),
           ('etc/hrzoosignup', ['etc/email_invite_message.txt',
                                'etc/email_invite_subject.txt',
                                'etc/hzsi.conf.template', 'etc/signature',
