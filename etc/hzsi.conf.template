@@ -22,6 +22,7 @@ CaFile = /etc/pki/tls/certs/ca-bundle.crt
 
 [SAML2]
 Metadata = %(VENV)s/etc/hrzoosignup/metadata.xml
+MetadataEduGain = %(VENV)s/etc/hrzoosignup/metadata_edugain.xml
 
 [SUPERUSER]
 Username = hzsi

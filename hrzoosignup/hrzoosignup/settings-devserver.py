@@ -46,6 +46,7 @@ try:
     CAFILE = config.get('SECURITY', 'CaFile')
 
     SAML_METADATA = config.get('SAML2', 'Metadata')
+    SAML_METADATAEDUGAIN = config.get('SAML2', 'MetadataEduGain')
 
     CONNECTION_TIMEOUT = config.getint('CONNECTION', 'Timeout')
     CONNECTION_RETRY = config.getint('CONNECTION', 'Retry')
