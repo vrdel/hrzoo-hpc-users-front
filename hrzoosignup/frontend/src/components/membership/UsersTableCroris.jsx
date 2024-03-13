@@ -158,7 +158,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
 
     return (
       <>
-        <Row className={amILead && missingCollab.length > 0 ? 'mt-4 ms-0 me-0 mb-2 p-0' : 'p-0 mt-4 ms-0 me-0 mb-5'}>
+        <Row className={amILead ? 'mt-4 ms-0 me-0 mb-2 p-0' : 'p-0 mt-4 ms-0 me-0 mb-5'}>
           <Col>
             <Table responsive hover className="shadow-sm bg-white m-0">
               <thead id="hzsi-thead" className="align-middle text-center text-white">
@@ -449,7 +449,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
           </Col>
         </Row>
         {
-          amILead && missingCollab.length > 0 &&
+          amILead > 0 &&
             <Form onSubmit={handleSubmit(onTableSubmit)} className="needs-validation">
               <Row className="mt-3 mb-5">
                 <Col>
