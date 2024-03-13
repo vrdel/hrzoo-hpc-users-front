@@ -17,6 +17,7 @@ import ResearchProjectRequestSelected from 'Pages/new-requests/research-project-
 import GeneralRequest from 'Pages/new-requests/general';
 import InstituteRequest from 'Pages/new-requests/institute-project';
 import InternalRequest from 'Pages/new-requests/internal-project';
+import SrceWorkShopRequest from 'Pages/new-requests/srce-workshop';
 import NewRequestIndex from 'Pages/new-requests/index';
 import EmailInvitation from 'Pages/email-invite';
 import Saml2LoginRedirect from 'Pages/saml2-login-redirect';
@@ -162,6 +163,11 @@ const BaseRoutes = () => {
                 <Route path="interni-projekt" element={
                   <ProtectedRoute sessionData={sessionData}>
                     <InternalRequest/>
+                  </ProtectedRoute> }
+                />
+                <Route path="srce-radionica" element={
+                  <ProtectedRoute sessionData={sessionData}>
+                    <SrceWorkShopRequest />
                   </ProtectedRoute> }
                 />
               </Route>
