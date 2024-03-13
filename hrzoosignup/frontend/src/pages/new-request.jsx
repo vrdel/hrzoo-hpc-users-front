@@ -30,7 +30,7 @@ const NewRequest = () => {
   let requestTypesToSelect = RequestTypesToSelect
   if (!userDetails.is_staff && !userDetails.is_superuser) {
     requestTypesToSelect = RequestTypesToSelect.filter((e) =>
-      e.value !== 'interni-projekt'
+      e.value !== 'interni-projekt' && e.value !== 'srce-radionica'
     )
   }
 

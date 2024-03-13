@@ -50,13 +50,13 @@ class ProjectsGeneral(APIView):
         else:
             request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
 
-        if type_obj.name == 'internal':
+        if type_obj.name == 'internal' or type_obj.name == 'srce-workshop':
             if not request.user.is_staff and not request.user.is_superuser:
                 err_status = status.HTTP_401_UNAUTHORIZED
                 err_response = {
                     'status': {
                         'code': err_status,
-                        'message': 'Not allowed to submit internal project'
+                        'message': 'Not allowed to submit internal or srce-workshop project'
                     }
                 }
                 return Response(err_response, status=err_status)
