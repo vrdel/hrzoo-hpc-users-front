@@ -33,5 +33,12 @@
     "fields": {
       "name": "internal"
      }
+  },
+  {
+    "model": "backend.ProjectType",
+    "pk": 6,
+    "fields": {
+      "name": "srce-workshop"
+     }
   }
 ]
