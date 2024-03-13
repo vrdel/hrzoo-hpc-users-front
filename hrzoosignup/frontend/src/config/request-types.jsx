@@ -20,6 +20,10 @@ let internalProject = {
     "label": "Interni projekt",
     "value": "interni-projekt"
   }
+let srceWorkshop = {
+    "label": "Srce radionica",
+    "value": "srce-radionica"
+  }
 
 
 export const RequestTypesToSelect = [
@@ -28,6 +32,7 @@ export const RequestTypesToSelect = [
   internalProject,
   thesisProject,
   practicalClasses,
+  srceWorkshop
 ]
 
 
@@ -37,7 +42,8 @@ export function UrlToRequestType(loc) {
     [url_ui_prefix + '/novi-zahtjev/institucijski-projekt']: institutionalProject,
     [url_ui_prefix + '/novi-zahtjev/interni-projekt']: internalProject,
     [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: practicalClasses,
-    [url_ui_prefix + '/novi-zahtjev/izrada-rada']: thesisProject
+    [url_ui_prefix + '/novi-zahtjev/izrada-rada']: thesisProject,
+    [url_ui_prefix + '/novi-zahtjev/srce-radionica']: srceWorkshop
   }
 
   if (loc.includes(url_ui_prefix + '/novi-zahtjev/istrazivacki-projekt')

@@ -10,6 +10,7 @@ export function LinkTitles(loc) {
     [url_ui_prefix + '/novi-zahtjev/interni-projekt']: 'Novi zahtjev temeljem internog projekta',
     [url_ui_prefix + '/novi-zahtjev/prakticna-nastava']: 'Novi zahtjev temeljem praktične nastave',
     [url_ui_prefix + '/novi-zahtjev/izrada-rada']: 'Novi zahtjev temeljem izrade rada',
+    [url_ui_prefix + '/novi-zahtjev/srce-radionica']: 'Novi zahtjev za Srce radionicu',
     [url_ui_prefix + '/javni-kljucevi']: 'Upravljanje javnim ključevima',
     [url_ui_prefix + '/javni-kljucevi/novi']: 'Dodavanje novog javnog ključa',
     [url_ui_prefix + '/moji-podaci']: 'Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS',
