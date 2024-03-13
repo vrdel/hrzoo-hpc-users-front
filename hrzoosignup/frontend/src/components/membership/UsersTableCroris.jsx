@@ -71,6 +71,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     onSubmit({
       email, projectid, inviterid, type
     })
+    setIsOpen(false)
   }
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
@@ -471,7 +472,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                   </Row>
                   <Row className="mt-4">
                     <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
-                      <Collapse isOpen={isOpen} style={{width: '80%'}}>
+                      <Collapse isOpen={isOpen && missingCollab.length !== 0} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
                             Odaberi email adrese suradnika koje želiš pozvati na projekt
