@@ -45,6 +45,8 @@ class ProjectsGeneral(APIView):
             request.data['identifier'] = 'NRI-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
         elif type_obj.name == 'internal':
             request.data['identifier'] = 'NRM-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
+        elif type_obj.name == 'srce-workshop':
+            request.data['identifier'] = 'NRR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
         else:
             request.data['identifier'] = 'NR-{}-{:03}'.format(timezone.now().strftime('%Y-%m'), cobj.counter)
 
