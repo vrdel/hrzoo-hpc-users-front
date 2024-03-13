@@ -61,6 +61,8 @@ def email_new_project(name, lead, prtype, prident):
         project_type_subject = "novog institucijskog projekta"
     elif prtype.name == 'internal':
         project_type_subject = "novog internog projekta"
+    elif prtype.name == 'srce-workshop':
+        project_type_subject = "nove Srce radionice"
 
     body = \
 f"""\
