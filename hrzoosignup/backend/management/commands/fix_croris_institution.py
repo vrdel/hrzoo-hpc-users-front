@@ -122,34 +122,38 @@ class Command(BaseCommand):
             if eu_finance:
                 userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
                 userlead_institution = userproj[0].user.person_institution
-                if project.institute != userlead_institution and options.get('confirm_yes', None):
-                    project.institute = userlead_institution
+                if project.institute != userlead_institution:
                     self.stdout.write(self.style.NOTICE(f'Changing EU research project {project.identifier} institute of lead institute: {project.institute}'))
-                    any_changed = True
-                    project.save()
+                    if options.get('confirm_yes', None):
+                        project.institute = userlead_institution
+                        any_changed = True
+                        project.save()
             else:
                 holder = [hold for hold in project.croris_institute if hold['class'].lower() == 'nositelj'.lower()]
-                if len(holder) == 1 and project.institute != holder[0]['name'] and options.get('confirm_yes', None):
-                    project.institute = holder[0]['name']
+                if len(holder) == 1 and project.institute != holder[0]['name']:
                     self.stdout.write(self.style.NOTICE(f"Changing research project {project.identifier} institute of holder: {holder[0]['name']}"))
-                    any_changed = True
-                    project.save()
+                    if options.get('confirm_yes', None):
+                        project.institute = holder[0]['name']
+                        any_changed = True
+                        project.save()
                 if len(holder) > 1:
                     userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
                     userlead_institution = userproj[0].user.person_institution
-                    if project.institute != userlead_institution and options.get('confirm_yes', None):
-                        project.institute = userlead_institution
+                    if project.institute != userlead_institution:
                         self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} institute with multiple holders to that of lead institute: {project.institute}'))
-                        any_changed = True
-                        project.save()
+                        if options.get('confirm_yes', None):
+                            project.institute = userlead_institution
+                            any_changed = True
+                            project.save()
         for project in projects_other:
             userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
             userlead_institution = userproj[0].user.person_institution
-            if project.institute != userlead_institution and options.get('confirm_yes', None):
-                project.institute = userlead_institution
+            if project.institute != userlead_institution:
                 self.stdout.write(self.style.NOTICE(f'Changing project {project.identifier} institute of lead institute: {project.institute}'))
-                any_changed = True
-                project.save()
+                if options.get('confirm_yes', None):
+                    project.institute = userlead_institution
+                    any_changed = True
+                    project.save()
 
         return any_changed
 
@@ -274,8 +278,9 @@ class Command(BaseCommand):
                     if user.person_institution_realm and not inst_croris.realm:
                         inst_croris.realm = user.person_institution_realm
                         self.stdout.write(self.style.NOTICE(f'Setting realm for {inst_croris.name_short} to {inst_croris.realm}'))
-                        any_changed = True
-                        inst_croris.save()
+                        if options.get('confirm_yes', None):
+                            any_changed = True
+                            inst_croris.save()
                     visited_inst.add(inst_oib)
                 except CrorisInstitutions.DoesNotExist:
                     pass
