@@ -159,7 +159,7 @@ class Command(BaseCommand):
         for user in users:
             try:
                 email_domain = user.person_mail.split('@')[1]
-                if 'gmail' in email_domain:
+                if 'gmail' in email_domain or 'biocentre' in email_domain:
                     continue
                 person_id_domain = user.person_uniqueid.split('@')[1]
             except IndexError:
