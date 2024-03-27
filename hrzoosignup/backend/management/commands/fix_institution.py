@@ -58,7 +58,7 @@ class Command(BaseCommand):
             "--set-realm-institutions",
             action="store_true",
             dest="realm_yes",
-            help="Make changes",
+            help="Set realm for project institution",
         )
         parser.add_argument(
             "--yes",
