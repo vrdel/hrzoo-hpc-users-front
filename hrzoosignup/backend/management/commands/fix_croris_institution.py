@@ -178,6 +178,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {found.name_short}'))
                     any_changed = True
                     if options.get('confirm_yes', None):
+                        user.person_institution_manual_set = True
                         user.save()
             except CrorisInstitutions.MultipleObjectsReturned:
                 if 'pmf' in person_id_domain or 'ffzg' in person_id_domain:
@@ -193,6 +194,7 @@ class Command(BaseCommand):
                             user.person_institution = found.name_short
                             self.stdout.write(self.style.NOTICE(f'Resolving active institution for {user.username} to {found.name_short}'))
                             if options.get('confirm_yes', None):
+                                user.person_institution_manual_set = True
                                 user.save()
             except CrorisInstitutions.DoesNotExist:
                 try:
@@ -204,6 +206,7 @@ class Command(BaseCommand):
                         user.person_institution = found.name_short
                         self.stdout.write(self.style.NOTICE(f'Setting inactive institution for {user.username} to {found.name_short}'))
                         if options.get('confirm_yes', None):
+                            user.person_institution_manual_set = True
                             user.save()
                             any_changed = True
                 except CrorisInstitutions.MultipleObjectsReturned:
@@ -218,6 +221,7 @@ class Command(BaseCommand):
                                 self.stdout.write(self.style.NOTICE(f'Resolving inactive institution for {user.username} to {found.name_short}'))
                                 if options.get('confirm_yes', None):
                                     any_changed = True
+                                    user.person_institution_manual_set = True
                                     user.save()
                 except CrorisInstitutions.DoesNotExist:
                     pass
@@ -226,6 +230,7 @@ class Command(BaseCommand):
                 user.person_institution = self.inst_maps.get(user.person_institution)
                 self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
                 if options.get('confirm_yes', None):
+                    user.person_institution_manual_set = True
                     any_changed = True
                     user.save()
 
@@ -242,6 +247,7 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.NOTICE(f'Joining institution and organisation for {user.username} to {user.person_institution}'))
                     if options.get('confirm_yes', None):
                         any_changed = True
+                        user.person_institution_manual_set = True
                         user.save()
 
         return any_changed
