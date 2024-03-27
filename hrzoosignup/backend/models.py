@@ -62,6 +62,7 @@ class User(AbstractUser):
         max_length=11,
         blank=True,
     )
+    person_institution_manual_set = models.BooleanField(default=False)
     person_institution_realm = models.CharField(
         _('Institution realm - hrEduPersonHomeOrg'),
         max_length=64,
