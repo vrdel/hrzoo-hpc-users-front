@@ -7,11 +7,12 @@ from backend.models import CrorisInstitutions
 class SAML2Backend(Saml2Backend):
     def _update_user(self, user, attributes, attribute_mapping, force_save=False):
         try:
-            hreduorgoib = attributes.get('hrEduOrgOIB', '')
-            instit_croris = CrorisInstitutions.objects.get(oib=hreduorgoib[0])
-            if user.person_institution != instit_croris.name_short:
-                user.person_institution = instit_croris.name_short
-                force_save = True
+            if not user.person_institution_manual_set:
+                hreduorgoib = attributes.get('hrEduOrgOIB', '')
+                instit_croris = CrorisInstitutions.objects.get(oib=hreduorgoib[0])
+                if user.person_institution != instit_croris.name_short:
+                    user.person_institution = instit_croris.name_short
+                    force_save = True
 
         except CrorisInstitutions.DoesNotExist:
             try:
