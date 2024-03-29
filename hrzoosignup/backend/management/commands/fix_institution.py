@@ -123,7 +123,7 @@ class Command(BaseCommand):
                 userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
                 userlead_institution = userproj[0].user.person_institution
                 if project.institute != userlead_institution:
-                    self.stdout.write(self.style.NOTICE(f'Changing EU research project {project.identifier} institute of lead institute: {project.institute}'))
+                    self.stdout.write(self.style.NOTICE(f'Changing EU research project {project.identifier} institute of lead institute: {userlead_institution}'))
                     if options.get('confirm_yes', None):
                         project.institute = userlead_institution
                         any_changed = True
