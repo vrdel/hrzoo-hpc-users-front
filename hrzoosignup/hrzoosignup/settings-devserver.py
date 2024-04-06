@@ -304,6 +304,7 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
 LOGIN_REDIRECT_URL = '{}/ui/saml2-login-redirect'.format(RELATIVE_PATH)
 LOGOUT_REDIRECT_URL = '{}/ui/prijava'.format(RELATIVE_PATH)
 SAML_CONFIG_LOADER = 'backend.auth.saml2.config_dev.get_saml_config'
+SAML_ACS_FAILURE_RESPONSE_FUNCTION = 'backend.views_saml2acs.custom_acs_failure'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_COOKIE_SAMESITE = None
 LOGIN_URL = '/saml2/login/'

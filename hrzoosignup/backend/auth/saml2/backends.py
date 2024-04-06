@@ -27,6 +27,7 @@ class SAML2Backend(Saml2Backend):
                 if self.user_can_authenticate(user_found):
                     return user_found
             except user_model.DoesNotExist:
+                # TODO: create_user()
                 pass
 
         else:
