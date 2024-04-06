@@ -3,6 +3,16 @@ from django.contrib.auth import get_user_model
 from django.conf import settings
 
 from backend.models import CrorisInstitutions
+from backend.utils.various import flatten
+
+
+def is_authn_via_aaieduhr(session_info):
+    authn_info = session_info.get('authn_info', None)
+    flat_auth_info = list(flatten(authn_info))
+    found = list(filter(lambda el: settings.SAML_AAIEDUHRIDPMATCH in el, flat_auth_info))
+    if len(found) > 0:
+        return True
+    return False
 
 
 class SAML2Backend(Saml2Backend):
@@ -11,7 +21,7 @@ class SAML2Backend(Saml2Backend):
         idp_entityid = session_info["issuer"]
 
         if idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
-            if not settings.SAML_EDUGAINALLOWAAIEDUHR:
+            if not settings.SAML_EDUGAINALLOWAAIEDUHR and is_authn_via_aaieduhr(session_info):
                 return None
 
             attributes = session_info['ava']
