@@ -39,6 +39,9 @@ class SAML2Backend(Saml2Backend):
             except user_model.DoesNotExist:
                 # TODO: create_user()
                 pass
+            except user_model.MultipleObjectsReturned:
+                request.saml2_backend_multiple = True
+                return None
 
         else:
             return super().authenticate(request, session_info, attribute_mapping, create_unknown_user, assertion_info, **kwargs)

@@ -82,7 +82,9 @@ const BaseRoutes = () => {
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate sessionData={sessionData} />}/>
             <Route path="prijava" element={<LoginOffical sessionData={sessionData} />}/>
-            <Route path="saml2-not-allowed" element={<Saml2NotAllowed />}/>
+            <Route path="saml2-not-allowed/" element={<Saml2NotAllowed />}>
+              <Route path=":errorType" element={<Saml2NotAllowed />}/>
+            </Route>
             <Route path="prijava-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} /> }
             />
