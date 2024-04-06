@@ -28,15 +28,15 @@ const Saml2NotAllowed = () => {
           <Card className="shadow-lg">
             <CardHeader
               id='hzsi-loginheader'
-              className="d-sm-inline-flex align-items-center justify-content-around"
+              className="d-sm-inline-flex align-items-center justify-content-center"
             >
               <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
-              <h4 className="text-dark"><strong>Napredno računanje</strong></h4>
+              <h4 className="ps-5 ms-5 text-dark"><strong>Napredno računanje</strong></h4>
             </CardHeader>
             <CardBody className="pt-5 pb-5">
               <Alert color="danger">
                 <p className="fs-4 mb-4 text-center">
-                  Autentikacija s eduGAIN AAIEduHR nije dozvoljena. Molimo nastavite dalje s regularnom AAIEduHR autentikacijom.
+                  Autentikacija s <b>eduGAIN AAIEduHR</b> <mark>nije dozvoljena</mark>. Molimo nastavite dalje s <b>regularnom AAIEduHR</b> autentikacijom.
                 </p>
               </Alert>
               <a className="btn mt-5 fs-3 btn-success btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava s regularnim AAI@EduHR</a>
