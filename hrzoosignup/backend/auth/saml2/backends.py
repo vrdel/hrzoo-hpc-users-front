@@ -5,6 +5,10 @@ from django.conf import settings
 from backend.models import CrorisInstitutions
 from backend.utils.various import flatten
 
+import logging
+
+logger = logging.getLogger('hrzoosignup.views')
+
 
 def is_authn_via_aaieduhr(session_info):
     authn_info = session_info.get('authn_info', None)
@@ -39,7 +43,8 @@ class SAML2Backend(Saml2Backend):
             except user_model.DoesNotExist:
                 # TODO: create_user()
                 pass
-            except user_model.MultipleObjectsReturned:
+            except user_model.MultipleObjectsReturned as exc:
+                logger.error(f'Failed eduGAIN login: {attributes} - {repr(exc)}')
                 request.saml2_backend_multiple = True
                 return None
 
