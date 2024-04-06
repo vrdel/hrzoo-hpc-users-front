@@ -49,6 +49,7 @@ try:
     SAML_METADATAEDUGAIN = config.get('SAML2', 'MetadataEduGain')
     SAML_EDUGAINALLOWAAIEDUHR = config.getboolean('SAML2', 'EduGainAllowAAIEduHR')
     SAML_EDUGAINIDPMATCH = config.get('SAML2', 'EduGainIdPMatch')
+    SAML_AAIEDUHRIDPMATCH = config.get('SAML2', 'AAIEduHRIdPMatch')
 
     CONNECTION_TIMEOUT = config.getint('CONNECTION', 'Timeout')
     CONNECTION_RETRY = config.getint('CONNECTION', 'Retry')
@@ -298,7 +299,6 @@ CSRF_USE_SESSIONS = True
 AUTH_USER_MODEL = 'backend.User'
 AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
                            'backend.auth.saml2.backends.SAML2Backend']
-                           # 'djangosaml2.backends.Saml2Backend']
 # AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend']
 # load SAML settings
 LOGIN_REDIRECT_URL = '{}/ui/saml2-login-redirect'.format(RELATIVE_PATH)
