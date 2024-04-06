@@ -31,7 +31,7 @@ class SAML2Backend(Saml2Backend):
                 pass
 
         else:
-            return super().authenticate(request, session_info, attribute_mapping, create_unknown_user, assertion_info, kwargs)
+            return super().authenticate(request, session_info, attribute_mapping, create_unknown_user, assertion_info, **kwargs)
 
     def _update_user(self, user, attributes, attribute_mapping, force_save=False):
         try:

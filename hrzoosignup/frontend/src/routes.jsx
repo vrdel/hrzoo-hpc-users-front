@@ -21,6 +21,7 @@ import SrceWorkShopRequest from 'Pages/new-requests/srce-workshop';
 import NewRequestIndex from 'Pages/new-requests/index';
 import EmailInvitation from 'Pages/email-invite';
 import Saml2LoginRedirect from 'Pages/saml2-login-redirect';
+import Saml2NotAllowed from 'Pages/saml2-not-allowed';
 import PublicKeys from 'Pages/public-keys/list';
 import NewPublicKey from 'Pages/public-keys/add';
 import Memberships from 'Pages/memberships';
@@ -81,6 +82,7 @@ const BaseRoutes = () => {
           <Route path="ui" element={<Root />}>
             <Route path="prijava-priv" element={<LoginPrivate sessionData={sessionData} />}/>
             <Route path="prijava" element={<LoginOffical sessionData={sessionData} />}/>
+            <Route path="saml2-not-allowed" element={<Saml2NotAllowed />}/>
             <Route path="prijava-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} /> }
             />
