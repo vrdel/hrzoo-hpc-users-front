@@ -1,5 +1,6 @@
 from djangosaml2.backends import Saml2Backend
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from backend.models import CrorisInstitutions
 
@@ -9,7 +10,10 @@ class SAML2Backend(Saml2Backend):
                      create_unknown_user=True, assertion_info=None, **kwargs):
         idp_entityid = session_info["issuer"]
 
-        if idp_entityid.startswith('https://edugainproxy.srce.hr/saml2/idp/'):
+        if idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
+            if not settings.SAML_EDUGAINALLOWAAIEDUHR:
+                return None
+
             attributes = session_info['ava']
             user_model = get_user_model()
             first_name = attributes.get('givenName', None)

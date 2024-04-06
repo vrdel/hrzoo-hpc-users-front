@@ -23,6 +23,8 @@ CaFile = /etc/pki/tls/certs/ca-bundle.crt
 [SAML2]
 Metadata = %(VENV)s/etc/hrzoosignup/metadata.xml
 MetadataEduGain = %(VENV)s/etc/hrzoosignup/metadata_edugain.xml
+EduGainAllowAAIEduHR = False
+EduGainIdPMatch = https://edugainproxy.srce.hr/saml2/idp/
 
 [SUPERUSER]
 Username = hzsi
