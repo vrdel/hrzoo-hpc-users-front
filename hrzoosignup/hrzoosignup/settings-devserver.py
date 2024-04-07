@@ -309,7 +309,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_COOKIE_SAMESITE = None
 LOGIN_URL = '/saml2/login/'
 SAML_ATTRIBUTE_MAPPING = {
-    'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
+ 'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
     'mail': ('person_mail', ),
     # 'o': ('person_institution', ),
     'hrEduPersonOIB': ('person_oib', ),
@@ -317,6 +317,15 @@ SAML_ATTRIBUTE_MAPPING = {
     'hrEduPersonHomeOrg': ('person_institution_realm', ),
     'ou': ('person_organisation', ),
     'hrEduPersonAffiliation': ('person_affiliation', ),
+    'givenName': ('first_name', ),
+    'sn': ('last_name', ),
+}
+EDUGAIN_SAML_ATTRIBUTE_MAPPING = {
+    'eduPersonPrincipalName': ('username', 'person_uniqueid', ),
+    'mail': ('person_mail', ),
+    # 'o': ('person_institution', ),
+    'schacHomeOrganization': ('person_institution_realm', ),
+    'eduPersonAffiliation': ('person_affiliation', ),
     'givenName': ('first_name', ),
     'sn': ('last_name', ),
 }

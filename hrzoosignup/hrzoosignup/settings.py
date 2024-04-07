@@ -317,6 +317,15 @@ SAML_ATTRIBUTE_MAPPING = {
     'givenName': ('first_name', ),
     'sn': ('last_name', ),
 }
+EDUGAIN_SAML_ATTRIBUTE_MAPPING = {
+    'eduPersonPrincipalName': ('username', 'person_uniqueid', ),
+    'mail': ('person_mail', ),
+    # 'o': ('person_institution', ),
+    'schacHomeOrganization': ('person_institution_realm', ),
+    'eduPersonAffiliation': ('person_affiliation', ),
+    'givenName': ('first_name', ),
+    'sn': ('last_name', ),
+}
 SAML_CREATE_UNKNOWN_USER = True
 SAML_DJANGO_USER_MAIN_ATTRIBUTE = 'person_oib'
 
