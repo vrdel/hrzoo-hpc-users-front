@@ -59,8 +59,12 @@ const BasePage = ({sessionData=undefined}) => {
     if (onYesCall === 'dologout') {
       await doLogout(sessionData.csrftoken)
       doLogoutContext()
-      if (loginType === 'saml2')
-        window.location = '/saml2/logout'
+      if (loginType === 'saml2') {
+        if (sessionData.saml2_idp.toLowerCase().includes('edugainproxy'))
+          window.location = '/saml2/edugain/logout'
+        else
+          window.location = '/saml2/logout'
+      }
       else
         window.location = defaultUnAuthnRedirect
     }
