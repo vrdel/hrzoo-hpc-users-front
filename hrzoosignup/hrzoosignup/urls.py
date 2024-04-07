@@ -20,11 +20,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponseRedirect
 
+from backend.views_saml2acs import CustomSaml2Acs
+
 
 urlpatterns = [
     re_path(r'^$', lambda x: HttpResponseRedirect('/ui/prijava')),
     path('auth/', include('dj_rest_auth.urls')),
+    path('saml2/acs/', CustomSaml2Acs.as_view(), name='saml2_customacs'),
     re_path(r'^saml2/', include(('djangosaml2.urls', 'backend'), namespace='saml2')),
+    path('saml2/edugain/acs/', CustomSaml2Acs.as_view(), name='saml2_customacs'),
     re_path(r'^saml2/edugain/', include(('djangosaml2.urls', 'backend'), namespace='saml2_edugain')),
     re_path(r'^ui', TemplateView.as_view(template_name='index.html')),
     re_path(r'^api/v1/internal/', include('backend.api.internal.urls', namespace='internalapi')),

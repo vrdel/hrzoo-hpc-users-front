@@ -29,11 +29,13 @@ class IsSessionActive(APIView):
             user = get_user_model().objects.get(id=self.request.user.id)
             serializer = serializers.UsersSerializer(user)
             userdetails.update(serializer.data)
+            saml2_idp = request.session.get('saml2_idp')
 
             return Response(
                 {
                     'active': True,
                     'userdetails': userdetails,
-                    'csrftoken': get_token(request)
+                    'csrftoken': get_token(request),
+                    'saml2_idp': saml2_idp
                 },
                 status=status.HTTP_200_OK)
