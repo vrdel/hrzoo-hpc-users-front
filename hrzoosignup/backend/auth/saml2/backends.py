@@ -22,9 +22,7 @@ def is_authn_via_aaieduhr(session_info):
 class SAML2Backend(Saml2Backend):
     def authenticate(self, request, session_info=None, attribute_mapping=None,
                      create_unknown_user=True, assertion_info=None, **kwargs):
-        idp_entityid = session_info["issuer"]
-
-        if idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
+        if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
             if not settings.SAML_EDUGAINALLOWAAIEDUHR and is_authn_via_aaieduhr(session_info):
                 return None
 
@@ -32,18 +30,40 @@ class SAML2Backend(Saml2Backend):
             user_model = get_user_model()
             first_name = attributes.get('givenName', None)
             last_name = attributes.get('sn', None)
+            username = attributes.get('eduPersonPrincipalName', None)
+            email = attributes.get('mail', None)
+            affiliation = attributes.get('eduPersonAffiliation', None)
             if isinstance(first_name, list):
                 first_name = first_name[0]
             if isinstance(last_name, list):
                 last_name = last_name[0]
+            if isinstance(username, list):
+                username = username[0]
+            if isinstance(email, list):
+                email = email[0]
+            if isinstance(affiliation, list):
+                affiliation = affiliation[0]
+
             try:
                 user_found = user_model.objects.get(first_name=first_name, last_name=last_name)
-                # TODO: _update_user() with edugain attr_map
+                if user_found:
+                    self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
                 if self.user_can_authenticate(user_found):
                     return user_found
+
             except user_model.DoesNotExist:
-                # TODO: create_user()
-                pass
+                user_new = user_model.objects.create(
+                    first_name=first_name,
+                    last_name=last_name,
+                    username=username,
+                    person_uniqueid=username,
+                    status=False,
+                    mailinglist_subscribe=False,
+                    person_mail=email,
+                    person_affiliation=affiliation
+                )
+                return user_new
+
             except user_model.MultipleObjectsReturned as exc:
                 logger.error(f'Failed eduGAIN login: {attributes} - {repr(exc)}')
                 request.saml2_backend_multiple = True
@@ -56,14 +76,18 @@ class SAML2Backend(Saml2Backend):
         try:
             if not user.person_institution_manual_set:
                 hreduorgoib = attributes.get('hrEduOrgOIB', '')
-                instit_croris = CrorisInstitutions.objects.get(oib=hreduorgoib[0])
-                if user.person_institution != instit_croris.name_short:
-                    user.person_institution = instit_croris.name_short
-                    force_save = True
+                if hreduorgoib:
+                    instit_croris = CrorisInstitutions.objects.get(oib=hreduorgoib[0])
+                    if user.person_institution != instit_croris.name_short:
+                        user.person_institution = instit_croris.name_short
+                        force_save = True
 
         except CrorisInstitutions.DoesNotExist:
             try:
-                user_email = user.person_mail[0]
+                if isinstance(user.person_mail, list):
+                    user_email = user.person_mail[0]
+                else:
+                    user_email = user.person_mail
                 user_email_domain = user_email.split('@')[1]
                 found = CrorisInstitutions.objects.get(contact_web__contains=user_email_domain)
                 user.person_institution = found.name_short
