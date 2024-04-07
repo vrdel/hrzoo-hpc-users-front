@@ -51,6 +51,10 @@ const LoginOfficial = ({sessionData=undefined}) => {
                 </a>
               </p>
               <a className="btn mt-5 fs-3 btn-success btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>AAI@EduHR</a>
+              {
+               // <a className="btn mt-3 fs-3 text-white bg-success btn-lg btn-block bg-opacity-75" style={{width: '100%'}} role="button" href= {`/saml2/edugain/login`}>eduGAIN</a>
+              }
+              <a className="btn mt-3 fs-3 text-white btn-primary btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/edugain/login`}>eduGAIN</a>
             </CardBody>
           </Card>
         </Col>

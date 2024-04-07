@@ -20,7 +20,7 @@ const AlertRegular= () =>
   <>
     <Alert color="danger">
       <p className="fs-4 mb-4 text-center">
-        Autentikacija s <b>eduGAIN AAIEduHR</b> <mark>nije dozvoljena</mark>. Molimo nastavite dalje s <b>regularnom AAIEduHR</b> autentikacijom.
+        Autentikacija s <b>eduGAIN AAI@EduHR</b> <mark>nije dozvoljena</mark>. Molimo nastavite dalje s <b>regularnom AAI@EduHR</b> autentikacijom.
       </p>
     </Alert>
     <a className="btn mt-5 fs-3 btn-success btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava s regularnim AAI@EduHR</a>

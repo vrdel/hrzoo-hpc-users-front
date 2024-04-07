@@ -38,6 +38,7 @@ class SAML2Backend(Saml2Backend):
                 last_name = last_name[0]
             try:
                 user_found = user_model.objects.get(first_name=first_name, last_name=last_name)
+                # TODO: _update_user() with edugain attr_map
                 if self.user_can_authenticate(user_found):
                     return user_found
             except user_model.DoesNotExist:
