@@ -106,7 +106,6 @@ except ImproperlyConfigured as e:
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 
-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = DEBUG_OPTION
 
@@ -128,13 +127,6 @@ except FileNotFoundError as e:
     raise SystemExit(1)
 
 try:
-    with open(REALM_MAP, mode='r', encoding='utf-8') as fp:
-        MAP_REALMS = json.loads(fp.read())
-except FileNotFoundError as e:
-    print(REALM_MAP + ': %s' % repr(e))
-    raise SystemExit(1)
-
-try:
     with open(INSTITUTION_MAP, mode='r', encoding='utf-8') as fp:
         MAP_INSTITUTIONS = json.loads(fp.read())
 except FileNotFoundError as e:
@@ -142,9 +134,17 @@ except FileNotFoundError as e:
     raise SystemExit(1)
 
 try:
+    with open(REALM_MAP, mode='r', encoding='utf-8') as fp:
+        MAP_REALMS = json.loads(fp.read())
+except FileNotFoundError as e:
+    print(REALM_MAP + ': %s' % repr(e))
+    raise SystemExit(1)
+
+try:
     with open(PROJECT_IDENTIFIER_MAP, mode='r', encoding='utf-8') as fp:
         PROJECT_IDENTIFIER_MAP = json.loads(fp.read())
         PROJECT_IDENTIFIER_MAP = [field for field in PROJECT_IDENTIFIER_MAP if field.get('field').startswith('project.')]
+
 except FileNotFoundError as e:
     print(PROJECT_IDENTIFIER_MAP + ': %s' % repr(e))
     raise SystemExit(1)

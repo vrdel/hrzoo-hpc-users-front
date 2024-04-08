@@ -35,8 +35,8 @@ try:
     # General
     DEBUG_OPTION = bool(config.getboolean('GENERAL', 'Debug'))
     RELATIVE_PATH = config.get('GENERAL', 'RelativePath')
-    INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
     REALM_MAP = config.get('GENERAL', 'RealmMap')
+    INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
     PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
@@ -104,7 +104,6 @@ except ImproperlyConfigured as e:
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -302,6 +301,7 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
 LOGIN_REDIRECT_URL = '{}/ui/saml2-login-redirect'.format(RELATIVE_PATH)
 LOGOUT_REDIRECT_URL = '{}/ui/prijava'.format(RELATIVE_PATH)
 SAML_CONFIG_LOADER = 'backend.auth.saml2.config.get_saml_config'
+SAML_ACS_FAILURE_RESPONSE_FUNCTION = 'backend.views_saml2acs.custom_acs_failure'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_COOKIE_SAMESITE = None
 LOGIN_URL = '/saml2/login/'
