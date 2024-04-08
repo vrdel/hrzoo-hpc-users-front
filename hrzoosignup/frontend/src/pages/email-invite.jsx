@@ -71,6 +71,10 @@ const EmailInvitation = ({sessionData=undefined}) => {
         setCustomMessage('Prijava neuspješna: Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS')
         setInviteAlertFail(true)
       }
+      else if (err.message.toLowerCase().includes("edugain authenticated only practical")) {
+        setCustomMessage('Prijava neuspješna: Autenticirani ste eduGAIN-om stoga možete potvrditi prijavu samo na praktičnu nastavu')
+        setInviteAlertFail(true)
+      }
       else if (err.message.toLowerCase().includes("user institute project")) {
         setCustomMessage('Prijava neuspješna: Već ste prijavljeni na jedan institucijski projekt')
         setInviteAlertFail(true)
