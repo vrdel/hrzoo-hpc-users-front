@@ -14,7 +14,7 @@ def get_hostname(request):
 def get_saml_config(request):
     hostname = get_hostname(request)
 
-    if 'edugain' in request.path:
+    if 'edugain' in request.get_full_path():
         config = {
             'xmlsec_binary': '/usr/bin/xmlsec1',
             'entityid': 'https://{}{}/saml2/edugain/metadata/'.format(hostname, settings.RELATIVE_PATH),
