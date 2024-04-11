@@ -48,6 +48,7 @@ try:
     SAML_METADATA = config.get('SAML2', 'Metadata')
     SAML_METADATAEDUGAIN = config.get('SAML2', 'MetadataEduGain')
     SAML_EDUGAINALLOWAAIEDUHR = config.getboolean('SAML2', 'EduGainAllowAAIEduHR')
+    SAML_EDUGAINENABLE = config.getboolean('SAML2', 'EduGainEnable')
     SAML_EDUGAINIDPMATCH = config.get('SAML2', 'EduGainIdPMatch')
     SAML_AAIEDUHRIDPMATCH = config.get('SAML2', 'AAIEduHRIdPMatch')
 
