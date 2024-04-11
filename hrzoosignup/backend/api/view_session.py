@@ -5,8 +5,9 @@ from rest_framework import status
 
 from backend import serializers
 
-from django.contrib.auth.models import AnonymousUser
+from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import AnonymousUser
 from django.middleware.csrf import get_token
 
 
@@ -21,7 +22,10 @@ class IsSessionActive(APIView):
             return Response(
                 {
                     "active": False,
-                    "error": "Session not active"
+                    "error": "Session not active",
+                    'config': {
+                        'enable_edugain': settings.SAML_EDUGAINENABLE
+                    }
                 },
                 status=status.HTTP_200_OK
             )
@@ -36,6 +40,9 @@ class IsSessionActive(APIView):
                     'active': True,
                     'userdetails': userdetails,
                     'csrftoken': get_token(request),
-                    'saml2_idp': saml2_idp
+                    'saml2_idp': saml2_idp,
+                    'config': {
+                        'enable_edugain': settings.SAML_EDUGAINENABLE
+                    }
                 },
                 status=status.HTTP_200_OK)
