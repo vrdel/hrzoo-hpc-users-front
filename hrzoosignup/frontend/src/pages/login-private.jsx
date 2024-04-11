@@ -114,7 +114,13 @@ const LoginPrivate = ({sessionData=undefined}) => {
                 </div>
                 <FormGroup>
                   <Button color="success" type="submit" block className="mb-3">Prijava korisničkim imenom i lozinkom</Button>
-                  <a className="btn btn-success btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava AAI @ EduHR</a>
+                  <a className="btn btn-success btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava AAI@EduHR</a>
+                  {
+                    sessionData?.config?.enable_edugain ?
+                      <a className="mt-3 btn btn-primary btn-block" style={{width: '100%'}} role="button" href= {`/saml2/edugain/login`}>Prijava eduGAIN</a>
+                    :
+                      ''
+                  }
                 </FormGroup>
               </Form>
             </CardBody>
