@@ -34,6 +34,7 @@ setup(name=NAME,
       install_requires=[
         'aiohttp',
         'Django==4.*',
+        'dj-rest-auth==5.*',
         'django-invitations',
         'django-webpack-loader',
         'djangorestframework',
