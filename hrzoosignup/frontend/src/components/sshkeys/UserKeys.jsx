@@ -19,12 +19,6 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 
 export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
   const [showedKeys, setShowedKeys] = useState(undefined)
-  const [fetchedKeys, setFetchedKeys] = useState(undefined)
-
-  useEffect(() => {
-    if (statusSshKeys === 'success')
-      setFetchedKeys(sshKeys)
-  }, [statusSshKeys])
 
   const showKey = (keyname) => {
     let showed = new Object()
@@ -64,7 +58,7 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
             </tr>
           </thead>
           <tbody>
-            { fetchedKeys && fetchedKeys.length > 0 && fetchedKeys.map((key, index) =>
+            { sshKeys && sshKeys.length > 0 && sshKeys.map((key, index) =>
               <React.Fragment key={index}>
                 <tr key={index}>
                   <td className="p-3 align-middle text-center">
@@ -119,7 +113,7 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
               </React.Fragment>
             )}
             {
-              fetchedKeys && fetchedKeys.length === 0 &&
+              sshKeys && sshKeys.length === 0 &&
                 <tr key="4">
                   <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-5">
                     Korisnik nema javnih ključeva dodanih
