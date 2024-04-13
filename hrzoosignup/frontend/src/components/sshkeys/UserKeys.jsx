@@ -61,13 +61,13 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
             { sshKeys && sshKeys.length > 0 && sshKeys.map((key, index) =>
               <React.Fragment key={index}>
                 <tr key={index}>
-                  <td className="p-3 align-middle fs-5 text-center">
+                  <td className="p-3 align-middle text-center">
                     { key.name }
                   </td>
-                  <td className="p-3 align-middle fs-5 text-center font-monospace" style={{maxLength: '5'}}>
+                  <td className="p-3 align-middle text-center font-monospace" style={{maxLength: '5'}}>
                     { key.fingerprint }
                   </td>
-                  <td className="align-middle fs-5 text-center">
+                  <td className="align-middle text-center">
                     { key.public_key.split(' ')[0] }
                   </td>
                   <td className="align-middle text-center">
