@@ -1,4 +1,4 @@
-import { url_api_prefix } from '../config/general';
+import { url_api_prefix } from 'Config/general';
 
 
 export async function deleteSshKey(name, csrftoken)
@@ -84,12 +84,16 @@ export async function addSshKey(data, csrftoken)
 }
 
 
-export async function fetchSshKeys()
+export async function fetchSshKeys(username=null)
 {
   let error_msg = ''
 
   try {
-    let response = await fetch(`${url_api_prefix}/api/v1/internal/keys/`)
+    let response = undefined
+    if (username)
+      response = await fetch(`${url_api_prefix}/api/v1/internal/keys/${username}`)
+    else
+      response = await fetch(`${url_api_prefix}/api/v1/internal/keys/`)
 
     if (response.ok)
       return await response.json()
