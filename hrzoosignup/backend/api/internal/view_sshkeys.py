@@ -36,7 +36,7 @@ class SshKeys(APIView):
             if query_username == 'all':
                 serializer = SshKeysSerializer(SSHPublicKey.objects.all(), many=True)
             else:
-                serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user__username=query_username), many=True)
+                serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user__person_username=query_username), many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:

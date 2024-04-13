@@ -210,7 +210,7 @@ const UserChange = () => {
       enabled: !!targetOib
   })
 
-  const targetUsername = userData?.username
+  const targetUsername = userData?.person_username
   const {status: statusSshKeys, data: userSshKeys} = useQuery({
       queryKey: ['user-ssh-keys', targetUsername],
       queryFn: () => fetchSshKeys(targetUsername),
@@ -235,7 +235,10 @@ const UserChange = () => {
           interestedProjecs.length > 0 &&
           <UserProjectsTable projects={interestedProjecs} />
         }
-        <TableUserKeys sshKeys={userSshKeys} statusSshKeys={statusSshKeys} />
+        {
+          userData.person_username &&
+          <TableUserKeys sshKeys={userSshKeys} statusSshKeys={statusSshKeys}/>
+        }
         <InstituteTableInfo myInfo={false} userDetails={userData} />
         {
           statusCroRis === 'loading' ?
