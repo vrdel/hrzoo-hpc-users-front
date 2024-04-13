@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Col,
   Row,
@@ -7,6 +7,7 @@ import {
   Button,
   InputGroup,
   InputGroupText,
+  Spinner
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -16,7 +17,7 @@ import {
 import { copyToClipboard } from 'Utils/copy-clipboard';
 
 
-export const TableUserKeys = ({sshKeys}) => {
+export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
   const [showedKeys, setShowedKeys] = useState(undefined);
 
   const showKey = (keyname) => {
@@ -57,7 +58,7 @@ export const TableUserKeys = ({sshKeys}) => {
             </tr>
           </thead>
           <tbody>
-            { sshKeys.map((key, index) =>
+            { sshKeys && sshKeys.length > 0 && sshKeys.map((key, index) =>
               <React.Fragment key={index}>
                 <tr key={index}>
                   <td className="p-3 align-middle fs-5 text-center">
@@ -111,6 +112,29 @@ export const TableUserKeys = ({sshKeys}) => {
                 </tr>
               </React.Fragment>
             )}
+            {
+              sshKeys && sshKeys.length === 0 &&
+                <tr key="4">
+                  <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-5">
+                    Korisnik nema javnih ključeva dodanih
+                  </td>
+                </tr>
+            }
+            {
+              statusSshKeys === 'loading' &&
+                <tr key="4">
+                  <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-5">
+                    <Spinner
+                      style={{
+                        height: '3rem',
+                        width: '3rem',
+                        borderColor: '#b04c46',
+                        borderRightColor: 'transparent'
+                      }}
+                    />
+                  </td>
+                </tr>
+            }
           </tbody>
         </Table>
       </Col>

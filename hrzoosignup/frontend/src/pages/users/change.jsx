@@ -235,13 +235,7 @@ const UserChange = () => {
           interestedProjecs.length > 0 &&
           <UserProjectsTable projects={interestedProjecs} />
         }
-        {
-          statusSshKeys === 'success'
-          ?
-            <TableUserKeys sshKeys={userSshKeys} />
-          :
-            ''
-        }
+        <TableUserKeys sshKeys={userSshKeys} statusSshKeys={statusSshKeys} />
         <InstituteTableInfo myInfo={false} userDetails={userData} />
         {
           statusCroRis === 'loading' ?
