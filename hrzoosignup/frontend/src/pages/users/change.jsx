@@ -20,7 +20,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { url_ui_prefix } from 'Config/general';
 import { MiniButton } from 'Components/MiniButton';
+import { TableUserKeys } from 'Components/sshkeys/UserKeys';
 import _ from "lodash";
+import { fetchSshKeys } from 'Api/sshkeys';
 
 
 const UserProjectsTable = ({projects}) => {
@@ -208,6 +210,13 @@ const UserChange = () => {
       enabled: !!targetOib
   })
 
+  const targetUsername = userData?.username
+  const {status: statusSshKeys, data: userSshKeys} = useQuery({
+      queryKey: ['user-ssh-keys', targetUsername],
+      queryFn: () => fetchSshKeys(targetUsername),
+      enabled: !!targetUsername
+  })
+
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname))
   }, [location.pathname])
@@ -225,6 +234,13 @@ const UserChange = () => {
         {
           interestedProjecs.length > 0 &&
           <UserProjectsTable projects={interestedProjecs} />
+        }
+        {
+          statusSshKeys === 'success'
+          ?
+            <TableUserKeys sshKeys={userSshKeys} />
+          :
+            ''
         }
         <InstituteTableInfo myInfo={false} userDetails={userData} />
         {
