@@ -204,7 +204,7 @@ const UserChange = () => {
   const targetOib = userData?.person_oib
   const {status: statusCroRis, data: croRisData} = useQuery({
       queryKey: ['croris-info', userId],
-      queryFn: () => fetchCroRISUser(userData.person_oib),
+      queryFn: () => fetchCroRISUser(targetOib),
       enabled: !!targetOib
   })
 

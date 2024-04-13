@@ -29,10 +29,16 @@ class SshKeys(APIView):
         if not kwargs:
             serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user=request.user.pk), many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
-        elif (kwargs.get('all', False)
+
+        elif (kwargs.get('username', False)
               and (request.user.is_staff or request.user.is_superuser)):
-            serializer = SshKeysSerializer(SSHPublicKey.objects.all(), many=True)
+            query_username = kwargs['username']
+            if query_username == 'all':
+                serializer = SshKeysSerializer(SSHPublicKey.objects.all(), many=True)
+            else:
+                serializer = SshKeysSerializer(SSHPublicKey.objects.filter(user__username=query_username), many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+
         else:
             err_status = status.HTTP_400_BAD_REQUEST
             err_response = {
