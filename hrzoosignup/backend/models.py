@@ -336,7 +336,7 @@ class DateExtend(models.Model):
         blank=True,
         null=True
     )
-    name =  models.CharField(
+    name = models.CharField(
         _("Project state when the comment was made"),
         max_length=24,
         blank=True,

@@ -47,24 +47,32 @@ class SAML2Backend(Saml2Backend):
                 affiliation = affiliation[0]
 
             try:
-                user_found = user_model.objects.get(first_name=first_name, last_name=last_name)
+                user_found = user_model.objects.get(person_mail=email)
                 if user_found:
                     self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
                 if self.user_can_authenticate(user_found):
                     return user_found
 
             except user_model.DoesNotExist:
-                user_new = user_model.objects.create(
-                    first_name=first_name,
-                    last_name=last_name,
-                    username=username,
-                    person_uniqueid=username,
-                    status=False,
-                    mailinglist_subscribe=False,
-                    person_mail=email,
-                    person_affiliation=affiliation
-                )
-                return user_new
+                try:
+                    user_found = user_model.objects.get(first_name=first_name, last_name=last_name)
+                    if user_found:
+                        self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
+                    if self.user_can_authenticate(user_found):
+                        return user_found
+
+                except user_model.DoesNotExist:
+                    user_new = user_model.objects.create(
+                        first_name=first_name,
+                        last_name=last_name,
+                        username=username,
+                        person_uniqueid=username,
+                        status=False,
+                        mailinglist_subscribe=False,
+                        person_mail=email,
+                        person_affiliation=affiliation
+                    )
+                    return user_new
 
             except user_model.MultipleObjectsReturned as exc:
                 logger.error(f'Failed eduGAIN login: {attributes} - {repr(exc)}')
