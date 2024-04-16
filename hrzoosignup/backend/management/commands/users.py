@@ -100,7 +100,7 @@ class Command(BaseCommand):
                 if not user.person_username:
                     user.person_username = gen_username(options['first'], options['last'])
                 user.save()
-                self.stdout.write('User {} with username {} assigned to project {}'.format(user.username, user.person_username, project.identifier))
+                self.stdout.write('User {} with person_username {} assigned to project {}'.format(user.username, user.person_username, project.identifier))
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
 
@@ -108,6 +108,13 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
                 self.stdout.write(self.style.NOTICE(repr(exc)))
                 raise SystemExit(1)
+
+        if options['person_username']:
+            if not user.person_username:
+                user.person_username = gen_username(options['first'], options['last'])
+                self.stdout.write('Set person_username for user {}'.format(user.person_username))
+            else:
+                self.stdout.write('person_username previously generated {}'.format(user.person_username))
 
         if options['password']:
             user.set_password(options['password'])
