@@ -664,7 +664,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   setRequestState, initialProjectState, commentDisabled, setCommentDisabled,
   modalProps, manageProject}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
-  const { ResourceTypesToSelect } = useContext(SharedData);
+  const { ResourceTypesToSelectAdmin } = useContext(SharedData);
 
   const deniedBy = getValues('denied_by')
   const approvedBy = getValues('approved_by')
@@ -786,7 +786,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                 forwardedRef={field.ref}
                 id="staff_requestResourceType"
                 isMulti
-                options={ResourceTypesToSelect}
+                options={ResourceTypesToSelectAdmin}
                 placeholder="Odaberi"
                 value={getValues('staff_requestResourceType')}
                 onChange={(e) => setValue('staff_requestResourceType', e)}
