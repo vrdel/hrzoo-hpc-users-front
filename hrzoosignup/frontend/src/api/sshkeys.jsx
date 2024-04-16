@@ -84,16 +84,44 @@ export async function addSshKey(data, csrftoken)
 }
 
 
+export async function fetchMySshKeys()
+{
+  let error_msg = ''
+
+  try {
+    let response = undefined
+    response = await fetch(`${url_api_prefix}/api/v1/internal/keys/`)
+
+    if (response.ok)
+      return await response.json()
+
+    if (!response.ok) {
+      try {
+        await response.json();
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+    }
+
+  }
+  catch (err) {
+    error_msg = `${err} in GET`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error fetching SSHKeys data: ${error_msg}`)
+}
+
+
 export async function fetchSshKeys(username=null)
 {
   let error_msg = ''
 
   try {
     let response = undefined
-    if (username)
-      response = await fetch(`${url_api_prefix}/api/v1/internal/keys/${username}`)
-    else
-      response = await fetch(`${url_api_prefix}/api/v1/internal/keys/`)
+    response = await fetch(`${url_api_prefix}/api/v1/internal/keys/${username}`)
 
     if (response.ok)
       return await response.json()

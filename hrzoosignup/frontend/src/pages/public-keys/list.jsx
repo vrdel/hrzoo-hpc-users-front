@@ -12,7 +12,7 @@ import {
 } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchSshKeys, deleteSshKey } from 'Api/sshkeys';
+import { fetchMySshKeys, deleteSshKey } from 'Api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -69,7 +69,7 @@ const PublicKeys = () => {
 
   const {status, data: sshKeysData, error, isFetching} = useQuery({
       queryKey: ['ssh-keys'],
-      queryFn: fetchSshKeys,
+      queryFn: fetchMySshKeys,
       staleTime: 15 * 60 * 1000
   })
 
