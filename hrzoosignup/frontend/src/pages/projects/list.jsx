@@ -64,7 +64,7 @@ const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
 const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
-  const { ResourceTypesToSelect } = useContext(SharedData)
+  const { ResourceTypesToSelectAdmin } = useContext(SharedData)
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -261,7 +261,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                             closeMenuOnSelect={false}
                             resourceTypeMultiValue={true}
                             isClearable={false}
-                            options={ResourceTypesToSelect}
+                            options={ResourceTypesToSelectAdmin}
                             onChange={ e => setValue("searchResourceTypes", e) }
                           />
                         }
