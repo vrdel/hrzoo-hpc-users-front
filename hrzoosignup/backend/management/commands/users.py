@@ -1,21 +1,17 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Permission
 from django.core.cache import cache
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 
 from backend.models import Project, UserProject, Role
-from backend.serializers import SshKeysSerializer, get_ssh_key_fingerprint
+from backend.serializers import SshKeysSerializer
 from backend.models import SSHPublicKey
 from backend.utils.gen_username import gen_username
 
 import argparse
 import datetime
-import random
-
-ALPHACHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 
 
 class Command(BaseCommand):
@@ -282,7 +278,7 @@ class Command(BaseCommand):
         parser_create.add_argument('--staff', dest='staff', action='store_true',
                                    default=False, required=False,
                                    help='Flag user as staff')
-        parser_create.add_argument('--oib', dest='oib', type=str, default='0',
+        parser_create.add_argument('--oib', dest='oib', type=str, default=get_random_string(length=11),
                                    required=False, help='OIB of the user')
         parser_create.add_argument('--password', dest='password', type=str,
                                    required=False, help='Password for the user')
