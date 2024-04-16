@@ -9,6 +9,7 @@ from django.utils import timezone
 from backend.models import Project, UserProject, Role
 from backend.serializers import SshKeysSerializer, get_ssh_key_fingerprint
 from backend.models import SSHPublicKey
+from backend.utils.gen_username import gen_username
 
 import argparse
 import datetime
@@ -49,6 +50,7 @@ class Command(BaseCommand):
                 croris_mail=options['email'],
                 person_oib=options['oib'],
                 is_staff=options['staff'],
+                mailinglist_subscribe=False,
                 status=False,
                 person_institution=options['institution'],
                 person_organisation=options['organisation'],
@@ -95,8 +97,10 @@ class Command(BaseCommand):
                     date_joined=timezone.make_aware(datetime.datetime.now())
                 )
                 user.status = True
+                if not user.person_username:
+                    user.person_username = gen_username(options['first'], options['last'])
                 user.save()
-                self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
+                self.stdout.write('User {} with username {} assigned to project {}'.format(user.username, user.person_username, project.identifier))
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
 
@@ -279,6 +283,7 @@ class Command(BaseCommand):
                                    required=True, help='SSO Unique ID of the user')
         parser_create.add_argument('--key-name', dest='keyname', type=str, default='', nargs='+',
                                    required=False, help='SSH key name')
+        parser_create.add_argument('--person-username', dest='person_username', action='store_true', default=False, required=False, help='Generate person_username from first and last name')
 
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
         parser_delete.add_argument('--username', dest='username', type=str,

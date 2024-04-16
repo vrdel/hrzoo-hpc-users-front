@@ -5,4 +5,5 @@ PYTHON=$(which python)
 DJANGO_SETTINGS="export DJANGO_SETTINGS_MODULE=hrzoosignup.settings"
 MANAGEPY=$SITEPACK/hrzoosignup/manage.py
 
-$DJANGO_SETTINGS && $PYTHON $MANAGEPY users $*
+# TODO: introduce projects mgmt
+$DJANGO_SETTINGS && $PYTHON $MANAGEPY projects $*
