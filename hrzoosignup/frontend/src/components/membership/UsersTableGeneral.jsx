@@ -418,7 +418,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       Pozovi suradnike
                     </Button>
                     {
-                      project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop'
+                      (project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop')
                       && (userDetails.is_staff || userDetails.is_superuser) &&
                       <Button color="success" active={isOpen2} onClick={toggle2} className="ms-3">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
@@ -460,7 +460,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </Col>
                 </Row>
                 {
-                  project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop'
+                  (project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop')
                   && (userDetails.is_staff || userDetails.is_superuser) &&
                   <Row className="mt-4">
                     <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
