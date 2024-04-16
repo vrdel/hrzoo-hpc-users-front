@@ -41,13 +41,28 @@ class SAML2Backend(Saml2Backend):
                 last_name = last_name[0]
             if isinstance(username, list):
                 username = username[0]
-            if isinstance(email, list):
-                email = email[0]
             if isinstance(affiliation, list):
                 affiliation = affiliation[0]
 
             try:
-                user_found = user_model.objects.get(person_mail=email)
+                if isinstance(email, list):
+                    nm = len(email)
+                    i = 1
+                    for mail in email:
+                        try:
+                            user_found = user_model.objects.get(person_mail=mail)
+                            if user_found:
+                                break
+                        except user_model.DoesNotExist as exc:
+                            if i == nm:
+                                raise exc
+                            else:
+                                i += 1
+                                pass
+
+                else:
+                    user_found = user_model.objects.get(person_mail=email)
+
                 if user_found:
                     self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
                 if self.user_can_authenticate(user_found):
