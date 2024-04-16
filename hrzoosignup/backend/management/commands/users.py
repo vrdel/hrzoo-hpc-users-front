@@ -54,7 +54,7 @@ class Command(BaseCommand):
                 status=False,
                 person_institution=options['institution'],
                 person_organisation=options['organisation'],
-                person_affiliation='šljaker'
+                person_affiliation='zaposlenik'
             )
             self.stdout.write('Created user {}'.format(user.username))
             cache.delete("usersinfoinactive-get")
@@ -270,7 +270,7 @@ class Command(BaseCommand):
                                    required=True, help='Email of the user')
         parser_create.add_argument('--institution', dest='institution', type=str,
                                    required=True, help='Institution of the user')
-        parser_create.add_argument('--organisation', dest='organisation', type=str, default='Istraživanje ruda i gubljenje vremena',
+        parser_create.add_argument('--organisation', dest='organisation', type=str, default='Nepoznato',
                                    required=False, help='Organisation of the user')
         parser_create.add_argument('--staff', dest='staff', action='store_true',
                                    default=False, required=False,
