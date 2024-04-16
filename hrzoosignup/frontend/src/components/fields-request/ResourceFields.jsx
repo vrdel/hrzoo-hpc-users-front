@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { CustomReactSelect } from 'Components/CustomReactSelect';
 import { SharedData } from 'Pages/root';
+import { AuthContext } from 'Components/AuthContextProvider';
 import {
   Col,
   Input,
@@ -469,7 +470,8 @@ export const HpcFields = ({fieldsDisabled=false}) => {
 
 export const ResourceFields = ({fieldsDisabled=false}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
-  const { ResourceTypesToSelect } = useContext(SharedData);
+  const { ResourceTypesToSelect, ResourceTypesToSelectAdmin } = useContext(SharedData);
+  const { userDetails } = useContext(AuthContext);
 
   return (
     <>
@@ -498,7 +500,7 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
                 id="requestResourceType"
                 isMulti
                 isDisabled={fieldsDisabled}
-                options={ResourceTypesToSelect}
+                options={userDetails.is_staff || userDetails.is_superuser ? ResourceTypesToSelectAdmin : ResourceTypesToSelect}
                 placeholder="Odaberi"
                 value={getValues('requestResourceType')}
                 onChange={(e) => setValue('requestResourceType', e)}
