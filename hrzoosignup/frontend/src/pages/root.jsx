@@ -2,7 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { LinkTitles } from 'Config/link-titles';
 import { RequestTypesToSelect, UrlToRequestType } from 'Config/request-types';
-import { ResourceTypesToSelect } from 'Config/resource-types';
+import { ResourceTypesToSelect, ResourceTypesToSelectAdmin } from 'Config/resource-types';
 import { listScientificDomain, mapDomainsToFields } from 'Config/scientific-domain';
 import { buildOptionsFromArray } from 'Utils/select-tools';
 import { AuthContextProvider } from 'Components/AuthContextProvider';
@@ -18,6 +18,7 @@ const Root = () => {
       RequestTypesToSelect,
       UrlToRequestType,
       ResourceTypesToSelect,
+      ResourceTypesToSelectAdmin,
       listScientificDomain,
       mapDomainsToFields,
       buildOptionsFromArray,

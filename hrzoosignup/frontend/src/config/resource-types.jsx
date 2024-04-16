@@ -32,6 +32,11 @@ let padobranResource = {
   "value": "PADOBRAN"
 }
 
+let penkalaResource = {
+  "label": "PENKALA",
+  "value": "PENKALA"
+}
+
 export const ResourceTypesToSelect = [
   gpuResource,
   cpuResource,
@@ -40,4 +45,15 @@ export const ResourceTypesToSelect = [
   cloudGpuResource,
   cloudBigMemResource,
   padobranResource
+]
+
+export const ResourceTypesToSelectAdmin = [
+  gpuResource,
+  cpuResource,
+  bigMemResource,
+  cloudResource,
+  cloudGpuResource,
+  cloudBigMemResource,
+  padobranResource,
+  penkalaResource
 ]
