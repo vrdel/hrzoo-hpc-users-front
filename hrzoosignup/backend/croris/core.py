@@ -306,18 +306,8 @@ class CroRISCore(object):
             for project in self.projects_associate_info_apidata:
                 prjs = json.loads(project)
                 if prjs['id'] in self.projects_associate_ids:
-                    eufunded = None
                     finance = prjs['financijerResources']
                     if finance and finance.get('_embedded', False):
-                        finances = finance['_embedded']['financijeri']
-                        for fin in finances:
-                            belong = fin.get('nadleznost', False)
-                            if belong:
-                                for bel in belong:
-                                    if bel['cfLangCode'] == 'hr' and bel['naziv'] == 'Europska unija':
-                                        eufunded = True
-                                        break
-                    if eufunded:
                         project_have_main_leader = None
                         iam_lead_institute = False
                         for person in prjs['osobeResources']['_embedded']['osobe']:
