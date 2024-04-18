@@ -48,7 +48,7 @@ class Command(BaseCommand):
                 is_staff=options['staff'],
                 mailinglist_subscribe=False,
                 status=False,
-                person_institution=options['institution'],
+                person_institution=' '.join(options['institution']),
                 person_organisation=options['organisation'],
                 person_affiliation='zaposlenik'
             )
@@ -271,7 +271,7 @@ class Command(BaseCommand):
                                    help='File path od public key component')
         parser_create.add_argument('--email', dest='email', type=str,
                                    required=True, help='Email of the user')
-        parser_create.add_argument('--institution', dest='institution', type=str,
+        parser_create.add_argument('--institution', dest='institution', nargs='+',
                                    required=True, help='Institution of the user')
         parser_create.add_argument('--organisation', dest='organisation', type=str, default='Nepoznato',
                                    required=False, help='Organisation of the user')
