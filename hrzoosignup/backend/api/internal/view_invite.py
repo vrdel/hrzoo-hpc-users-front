@@ -111,7 +111,10 @@ class Invites(APIView):
         ))
         try:
             res = ret.raise_for_status()
-            edugain_authn = 'edugain' in request.session.get('saml2_idp')
+            edugain_authn = False
+
+            if request.session:
+                edugain_authn = 'edugain' in request.session.get('saml2_idp')
 
             if ret.status_code == 200 and 'invites-userlink' in ret.url:
                 Invitation = get_invitation_model()
