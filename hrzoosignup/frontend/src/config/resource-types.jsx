@@ -37,23 +37,30 @@ let penkalaResource = {
   "value": "PENKALA"
 }
 
+let jupyterResource = {
+  "label": "JUPYTER",
+  "value": "JUPYTER"
+}
+
 export const ResourceTypesToSelect = [
-  gpuResource,
-  cpuResource,
   bigMemResource,
-  cloudResource,
-  cloudGpuResource,
   cloudBigMemResource,
-  padobranResource
+  cloudGpuResource,
+  cloudResource,
+  cpuResource,
+  gpuResource,
+  jupyterResource,
+  padobranResource,
 ]
 
 export const ResourceTypesToSelectAdmin = [
-  gpuResource,
-  cpuResource,
   bigMemResource,
-  cloudResource,
-  cloudGpuResource,
   cloudBigMemResource,
+  cloudGpuResource,
+  cloudResource,
+  cpuResource,
+  gpuResource,
+  jupyterResource,
   padobranResource,
   penkalaResource
 ]
