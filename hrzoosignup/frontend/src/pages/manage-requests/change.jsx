@@ -672,7 +672,8 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
 
   let sendEmailDisabled = true
   setValue('staff_emailSend', false)
-  if (!requestState['approve'] && !requestState['deny'] && !requestState['extend'])
+
+  if (initialProjectState === 'submit' && requestState['deny'])
     setValue('staff_requestResourceType', '')
 
   if (initialProjectState === 'approve' && requestState['approve']) {
