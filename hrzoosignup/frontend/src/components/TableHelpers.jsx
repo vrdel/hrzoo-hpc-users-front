@@ -44,7 +44,8 @@ export const optionsTypes = [
   { label: "Institucijski", value: "research-institutional" },
   { label: "Interni", value: "internal" },
   { label: "Rad", value: "thesis" },
-  { label: "Nastava", value: "practical" }
+  { label: "Nastava", value: "practical" },
+  { label: "Srce Radionica", value: "srce-workshop" }
 ]
 
 
@@ -56,7 +57,7 @@ export const optionsStatesProjects = [
 ]
 
 export const allStates = ["submit", "approve", "deny", "expire", "extend"]
-export const allProjectTypes = ["research-croris", "thesis", "practical", "research-institutional", "internal"]
+export const allProjectTypes = ["research-croris", "thesis", "practical", "research-institutional", "internal", "srce-workshop"]
 
 export class TablePaginationHelper {
   searchLen = 0
