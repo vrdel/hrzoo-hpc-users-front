@@ -43,7 +43,7 @@ RUN passwd -d root
 VOLUME [ "/sys/fs/cgroup" ]
 RUN sed -r -i 's/(^Defaults.*always_set_home)/# \1/' /etc/sudoers
 RUN echo -e "user ALL=(ALL) NOPASSWD: ALL\nDefaults env_keep += \"HOME\"" >> /etc/sudoers
-COPY collectstatic.sh run-django-server.sh run-frontdev-server.sh syncsite.sh /home/user
+COPY collectstatic.sh run-django-server.sh run-frontdev-server.sh syncsite.sh safety.sh /home/user
 USER user
 WORKDIR /home/user
 RUN sudo python3.9 -m venv /opt/hrzoo-signup
