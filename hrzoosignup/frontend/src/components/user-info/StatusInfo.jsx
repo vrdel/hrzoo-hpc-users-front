@@ -3,6 +3,7 @@ import { Col, Badge, Row, Table, Label, Tooltip, Button } from 'reactstrap';
 import { faCheckCircle, faStopCircle, faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyToClipboard } from 'Utils/copy-clipboard';
+import {  FormattedMessage } from 'react-intl';
 
 
 const TooltipMsgActive = ({myInfo=true}) => {
@@ -65,7 +66,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
         <Row>
           <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{size:3}}>
             <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-              Status
+              <FormattedMessage defaultMessage="Status" />
             </Label>
             <div className="fs-5 ps-2 d-flex align-items-center">
               {
@@ -105,7 +106,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                   <thead>
                     <tr>
                       <th className="fw-bold fs-5">
-                        Korisničko ime
+                        <FormattedMessage defaultMessage="Korisničko ime" />
                       </th>
                     </tr>
                   </thead>
@@ -121,8 +122,10 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                               target={'Tooltip-' + userDetails.person_username}
                               toggle={() => showTooltip(userDetails.person_username)}
                             >
-                              Dodijeljeno korisničko ime za
-                              pristup resursima
+                              <FormattedMessage
+                                defaultMessage="Dodijeljeno
+                                  korisničko ime za pristup resursima"
+                              />
                             </Tooltip>
                           </Badge>
                           <Button
