@@ -9,13 +9,25 @@ import { IntlProvider } from 'react-intl';
 import 'Styles/bootstrap-custom.scss'
 
 const queryClient = new QueryClient()
-const defaultLocale = "hr-HR"
+const defaultLocale = "hr"
 
+
+function loadLocaleData(locale) {
+  switch (locale) {
+    case 'hr':
+      return import('./compiled-lang/hr.json')
+    //default:
+      //return import('compiled-lang/en.json')
+  }
+}
+
+const messages = await loadLocaleData(defaultLocale)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <IntlProvider
       defaultLocale={defaultLocale}
+      messages={messages}
     >
       <HelmetProvider>
         <QueryClientProvider client={queryClient}>
