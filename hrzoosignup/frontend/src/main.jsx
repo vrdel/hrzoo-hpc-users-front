@@ -14,11 +14,15 @@ const defaultLocale = "hr-HR"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <BaseRoutes />
-      </QueryClientProvider>
-    </HelmetProvider>
+    <IntlProvider
+      defaultLocale={defaultLocale}
+    >
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <BaseRoutes />
+        </QueryClientProvider>
+      </HelmetProvider>
+    </IntlProvider>
   </React.StrictMode>
 )
