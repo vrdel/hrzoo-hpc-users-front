@@ -10,7 +10,8 @@
     "build-prod": "webpack --config webpack.config.js --progress --colors --mode production",
     "watch": "webpack --config webpack.config.js --watch --mode development",
     "test": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageDirectory coverage",
-    "extract": "formatjs extract"
+    "extract": "formatjs extract",
+    "compile": "formatjs compile"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
