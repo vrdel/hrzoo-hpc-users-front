@@ -9,7 +9,8 @@
     "build-devel": "webpack --config webpack.config.js --progress --colors --mode development",
     "build-prod": "webpack --config webpack.config.js --progress --colors --mode production",
     "watch": "webpack --config webpack.config.js --watch --mode development",
-    "test": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageDirectory coverage"
+    "test": "jest --ci --reporters=default --reporters=jest-junit --coverage --coverageDirectory coverage",
+    "extract": "formatjs extract"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
@@ -42,6 +43,7 @@
     "@babel/plugin-transform-runtime": "^7.24.3",
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-react": "^7.24.1",
+    "@formatjs/cli": "^6.2.10",
     "@getify/eslint-plugin-proper-arrows": "^11.0.3",
     "@tanstack/react-query-devtools": "^4.36.1",
     "@types/react": "^18.3.1",
