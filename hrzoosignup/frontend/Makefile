@@ -45,3 +45,6 @@ devel-webpack-server-hmr:
 npm:
 	docker exec -t $(container_name) bash -c 'cd /home/user/frontend && npm $(ARGS)'
 
+formatjs-extract:
+	docker exec -t $(container_name) bash -c "cd /home/user/frontend/ && npm run extract -- 'src/**/*.jsx' --out-file lang/hr.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+
