@@ -18,12 +18,38 @@ import 'Styles/nav.css';
 import { ModalContext } from 'Components/BasePage'
 import { AuthContext } from 'Components/AuthContextProvider';
 import UserDetailsPopover from 'Components/UserDetailsPopover';
+import { IntlContext } from 'Components/IntlContextProvider';
+
+
+const LanguageButton = ({locale, setLocale}) => {
+  let currentLang = ''
+
+  function alternateLocale() {
+    if (locale === 'en')
+      setLocale('hr')
+    else
+      setLocale('en')
+  }
+
+  if (locale === 'hr')
+    currentLang = 'HR'
+  else if (locale === 'en')
+    currentLang = 'EN'
+
+  return (
+    <Button size="sm" color="light"
+      onClick={ () => alternateLocale() } >
+      { currentLang }
+    </Button>
+  )
+}
 
 
 const Navigation = () => {
   const [popoverOpen, setPopoverOpen] = useState(false)
   const modalContext = useContext(ModalContext)
   const { userDetails } = useContext(AuthContext)
+  const { locale, setLocale } = useContext(IntlContext)
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="shadow-sm border rounded d-flex justify-content-between mt-2 mb-2 pt-3 pb-3">
@@ -38,7 +64,10 @@ const Navigation = () => {
           </h2>
         </span>
       </Nav>
-      <Nav navbar >
+      <Nav navbar>
+        <NavItem className="d-flex align-items-center me-3">
+          <LanguageButton locale={locale} setLocale={setLocale} />
+        </NavItem>
         <NavItem className='m-2 text-dark'>
           <>
             Dobrodošli,
@@ -57,7 +86,7 @@ const Navigation = () => {
             </Popover>
           </>
         </NavItem>
-        <NavItem className='m-2 text-light'>
+        <NavItem className='d-flex align-items-center me-3 m-2 text-light'>
           <Button
             size="sm"
             aria-label="Odjava"

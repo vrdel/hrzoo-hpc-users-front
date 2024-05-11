@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Row } from 'reactstrap';
+import { Row, Button } from 'reactstrap';
 import { SharedData } from 'Pages/root';
 import { PageTitle } from 'Components/PageTitle';
 import { AuthContext } from 'Components/AuthContextProvider'
@@ -12,9 +12,9 @@ import { EmptyCroRis, CroRisInfo } from 'Components/user-info/CroRis';
 
 const MyInfo = () => {
   const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
+  const [pageTitle, setPageTitle] = useState(undefined)
 
-  const { userDetails } = useContext(AuthContext);
+  const { userDetails } = useContext(AuthContext)
 
   const {status, data: croRisProjects, error, isFetching} = useQuery({
       queryKey: ['croris-info'],

@@ -5,7 +5,7 @@ export const IntlContext = React.createContext({
   locale: '',
   setLocale: () => {}
 });
-const defaultLocale = 'en'
+const defaultLocale = 'hr'
 
 
 export const IntlContextProvider = ( {children} ) => {
