@@ -19,6 +19,7 @@ import { ModalContext } from 'Components/BasePage'
 import { AuthContext } from 'Components/AuthContextProvider';
 import UserDetailsPopover from 'Components/UserDetailsPopover';
 import { IntlContext } from 'Components/IntlContextProvider';
+import {  FormattedMessage } from 'react-intl';
 
 
 const LanguageButton = ({locale, setLocale}) => {
@@ -60,7 +61,9 @@ const Navigation = () => {
       <Nav navbar className="m-1">
         <span className="pl-3 font-weight-bold text-center">
           <h2>
-            Zahtjev za korištenje usluge Napredno računanje
+            <FormattedMessage
+              defaultMessage="Zahtjev za korištenje usluge Napredno računanje"
+            />
           </h2>
         </span>
       </Nav>
@@ -70,7 +73,7 @@ const Navigation = () => {
         </NavItem>
         <NavItem className='m-2 text-dark'>
           <>
-            Dobrodošli,
+            <FormattedMessage defaultMessage="Dobrodošli" />,
             <br/>
             <span onClick ={() => setPopoverOpen(!popoverOpen)} id="userPopover">
               <Badge href="#" className="text-dark" color="light"
