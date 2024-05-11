@@ -38,7 +38,7 @@ const LanguageButton = ({locale, setLocale}) => {
     currentLang = 'EN'
 
   return (
-    <Button size="sm" color="light"
+    <Button size="sm" color="light" style={{color: "#c00000"}}
       onClick={ () => alternateLocale() } >
       { currentLang }
     </Button>
