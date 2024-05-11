@@ -51,3 +51,6 @@ formatjs-extract:
 formatjs-compile:
 	docker exec -t $(container_name) bash -c "cd /home/user/frontend/ && npm run compile -- src/lang/hr.json --out-file src/compiled-lang/hr.json"
 
+formatjs-compile-en:
+	docker exec -t $(container_name) bash -c "cd /home/user/frontend/ && npm run compile -- src/lang/en.json --out-file src/compiled-lang/en.json"
+
