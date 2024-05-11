@@ -3,9 +3,17 @@
     "defaultMessage": "Korisničko ime",
     "description": "statusinfo-username"
   },
+  "2OMlOQ": {
+    "defaultMessage": "Novi zahtjev",
+    "description": "navlinks-newrequests"
+  },
   "CinYsf": {
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
+  },
+  "NF44j4": {
+    "defaultMessage": "Članstva",
+    "description": "navlinks-memberships"
   },
   "OxYLwa": {
     "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
@@ -15,8 +23,36 @@
     "defaultMessage": "Status",
     "description": "statusinfo"
   },
+  "T7YuXQ": {
+    "defaultMessage": "Projekti",
+    "description": "navlinks-projects"
+  },
   "Tu8G3o": {
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
+  },
+  "h41Ik7": {
+    "defaultMessage": "Softver",
+    "description": "navlinks-software"
+  },
+  "jLfsnD": {
+    "defaultMessage": "Javni ključevi",
+    "description": "navlinks-pubkeys"
+  },
+  "lD0Ggq": {
+    "defaultMessage": "Moji zahtjevi",
+    "description": "navlinks-myrequests"
+  },
+  "lqL8gP": {
+    "defaultMessage": "Korisnici",
+    "description": "navlinks-users"
+  },
+  "n4ooiQ": {
+    "defaultMessage": "Zahtjevi",
+    "description": "navlinks-requests"
+  },
+  "z/MmC8": {
+    "defaultMessage": "Moji podaci",
+    "description": "navlinks-myinfo"
   }
 }
