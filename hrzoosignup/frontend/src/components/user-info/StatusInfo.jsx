@@ -66,7 +66,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
         <Row>
           <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{size:3}}>
             <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-              <FormattedMessage defaultMessage="Status" />
+              <FormattedMessage description="statusinfo" defaultMessage="Status" />
             </Label>
             <div className="fs-5 ps-2 d-flex align-items-center">
               {
@@ -106,7 +106,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                   <thead>
                     <tr>
                       <th className="fw-bold fs-5">
-                        <FormattedMessage defaultMessage="Korisničko ime" />
+                        <FormattedMessage description="statusinfo-username" defaultMessage="Korisničko ime" />
                       </th>
                     </tr>
                   </thead>
@@ -123,6 +123,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                               toggle={() => showTooltip(userDetails.person_username)}
                             >
                               <FormattedMessage
+                                description="statusinfo-tooltip"
                                 defaultMessage="Dodijeljeno
                                   korisničko ime za pristup resursima"
                               />

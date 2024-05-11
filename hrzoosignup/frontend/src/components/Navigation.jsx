@@ -19,12 +19,10 @@ import { ModalContext } from 'Components/BasePage'
 import { AuthContext } from 'Components/AuthContextProvider';
 import UserDetailsPopover from 'Components/UserDetailsPopover';
 import { IntlContext } from 'Components/IntlContextProvider';
-import {  FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 
 const LanguageButton = ({locale, setLocale}) => {
-  let currentLang = ''
-
   function alternateLocale() {
     if (locale === 'en')
       setLocale('hr')
@@ -32,15 +30,10 @@ const LanguageButton = ({locale, setLocale}) => {
       setLocale('en')
   }
 
-  if (locale === 'hr')
-    currentLang = 'HR'
-  else if (locale === 'en')
-    currentLang = 'EN'
-
   return (
     <Button size="sm" color="light" style={{color: "#c00000"}}
       onClick={ () => alternateLocale() } >
-      { currentLang }
+      { locale.toUpperCase() }
     </Button>
   )
 }
@@ -62,6 +55,7 @@ const Navigation = () => {
         <span className="pl-3 font-weight-bold text-center">
           <h2>
             <FormattedMessage
+              description="navigation-title"
               defaultMessage="Zahtjev za korištenje usluge Napredno računanje"
             />
           </h2>
@@ -73,7 +67,10 @@ const Navigation = () => {
         </NavItem>
         <NavItem className='m-2 text-dark'>
           <>
-            <FormattedMessage defaultMessage="Dobrodošli" />,
+            <FormattedMessage
+              description="navigation-welcome"
+              defaultMessage="Dobrodošli"
+            />,
             <br/>
             <span onClick ={() => setPopoverOpen(!popoverOpen)} id="userPopover">
               <Badge href="#" className="text-dark" color="light"

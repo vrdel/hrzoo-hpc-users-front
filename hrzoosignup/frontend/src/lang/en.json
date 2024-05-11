@@ -1,17 +1,22 @@
 {
-  "3ZJM7H": {
-    "defaultMessage": "Welcome"
+  "1r5OsY": {
+    "defaultMessage": "Username",
+    "description": "statusinfo-username"
   },
-  "8ARUtC": {
-    "defaultMessage": "Generated username to be used to access resources"
+  "CinYsf": {
+    "defaultMessage": "Welcome",
+    "description": "navigation-welcome"
   },
-  "JWhSq7": {
-    "defaultMessage": "Request for Advanced Computing service usage"
+  "OxYLwa": {
+    "defaultMessage": "Request for Advanced Computing service usage",
+    "description": "navigation-title"
   },
-  "t38Jav": {
-    "defaultMessage": "Username"
+  "R7WXFa": {
+    "defaultMessage": "Status",
+    "description": "statusinfo"
   },
-  "tzMNF3": {
-    "defaultMessage": "Status"
+  "Tu8G3o": {
+    "defaultMessage": "Generated username to be used to access resources",
+    "description": "statusinfo-tooltip"
   }
 }

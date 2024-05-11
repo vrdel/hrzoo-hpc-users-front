@@ -1,17 +1,22 @@
 {
-  "3ZJM7H": {
-    "defaultMessage": "Dobrodošli"
+  "1r5OsY": {
+    "defaultMessage": "Korisničko ime",
+    "description": "statusinfo-username"
   },
-  "8ARUtC": {
-    "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima"
+  "CinYsf": {
+    "defaultMessage": "Dobrodošli",
+    "description": "navigation-welcome"
   },
-  "JWhSq7": {
-    "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje"
+  "OxYLwa": {
+    "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
+    "description": "navigation-title"
   },
-  "t38Jav": {
-    "defaultMessage": "Korisničko ime"
+  "R7WXFa": {
+    "defaultMessage": "Status",
+    "description": "statusinfo"
   },
-  "tzMNF3": {
-    "defaultMessage": "Status"
+  "Tu8G3o": {
+    "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
+    "description": "statusinfo-tooltip"
   }
 }
