@@ -89,7 +89,7 @@ const ResearchProjectRequest = () => {
                                 color="success"
                                 className="ms-3"
                                 onClick={() => {
-                                  navigate(`/ui/novi-zahtjev/istrazivacki-projekt/${project.croris_id}`)
+                                  navigate(`/ui/new-request/research-project/${project.croris_id}`)
                                 }}>
                                 <FontAwesomeIcon icon={faArrowRight}/>{' '}
                                 Odaberi

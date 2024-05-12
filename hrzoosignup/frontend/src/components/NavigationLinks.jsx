@@ -30,11 +30,11 @@ import { FormattedMessage } from 'react-intl';
 const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
   return (
     <>
-      <NavItem key='moji-zahtjevi' className='ms-3 mt-1'>
+      <NavItem key='my-requests' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/moji-zahtjevi'>
+          to='/ui/my-requests'>
           <FontAwesomeIcon icon={faBook} />{' '}
           <FormattedMessage
             description="navlinks-myrequests"
@@ -42,11 +42,11 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key='novi-zahtjev' className='mt-1'>
+      <NavItem key='new-request' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/novi-zahtjev'>
+          to='/ui/new-request'>
           <FontAwesomeIcon icon={faFileSignature} />{' '}
           <FormattedMessage
             description="navlinks-newrequests"
@@ -54,11 +54,11 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key='clanstva' className='mt-1'>
+      <NavItem key='memberships' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/clanstva'>
+          to='/ui/memberships'>
           <FontAwesomeIcon icon={faUsers} />{' '}
           <FormattedMessage
             description="navlinks-memberships"
@@ -66,11 +66,11 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key='javni-kljucevi' className='mt-1'>
+      <NavItem key='public-keys' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/javni-kljucevi'>
+          to='/ui/public-keys'>
           <FontAwesomeIcon icon={faKey} />{' '}
           <FormattedMessage
             description="navlinks-pubkeys"
@@ -78,11 +78,11 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key='moji-podaci' className={isAdmin ? 'mt-1 ms-xs-0 ms-sm-0 ms-md-auto ms-xl-auto' : 'mt-1 ms-auto me-3 me-xs-0 ms-xs-0'}>
+      <NavItem key='my-info' className={isAdmin ? 'mt-1 ms-xs-0 ms-sm-0 ms-md-auto ms-xl-auto' : 'mt-1 ms-auto me-3 me-xs-0 ms-xs-0'}>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/moji-podaci'>
+          to='/ui/my-info'>
           <FontAwesomeIcon icon={faCircleInfo} />{' '}
           <FormattedMessage
             description="navlinks-myinfo"
@@ -98,11 +98,11 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
 const NavigationLinksAdmin = ({activeBgColor}) => {
   return (
     <>
-      <NavItem key='zahtjevi' className='ms-3 mt-1'>
+      <NavItem key='requests' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/zahtjevi'>
+          to='/ui/requests'>
           <FontAwesomeIcon icon={faStamp} />{' '}
           <FormattedMessage
             description="navlinks-requests"
@@ -110,11 +110,11 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key="projekti" className="mt-1">
+      <NavItem key="projects" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/projekti'
+          to='/ui/projects'
         >
           <FontAwesomeIcon icon={faCertificate} />{" "}
           <FormattedMessage
@@ -123,11 +123,11 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key="korisnici" className="mt-1">
+      <NavItem key="users" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/korisnici'
+          to='/ui/users'
         >
           <FontAwesomeIcon icon={faUsers} />{" "}
           <FormattedMessage
@@ -136,11 +136,11 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key="softver" className="mt-1">
+      <NavItem key="software" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/softver'
+          to='/ui/software'
         >
           <FontAwesomeIcon icon={faWindowRestore} />{" "}
           <FormattedMessage

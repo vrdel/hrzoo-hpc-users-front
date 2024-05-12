@@ -92,7 +92,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
 
   if (isLoggedIn || sessionData.active) {
     if (progress === 140)
-      navigate(url_ui_prefix + '/clanstva')
+      navigate(url_ui_prefix + '/memberships')
 
     return (
       <>
@@ -131,7 +131,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
                         isOpen={inviteAlertSuccess}
                         toggle={() => {
                           setInviteAlertSucces(!inviteAlertSuccess)
-                          setTimeout(() => {navigate(url_ui_prefix + '/clanstva')}, 800)
+                          setTimeout(() => {navigate(url_ui_prefix + '/memberships')}, 800)
                         }}
                         fade={true}>
                         <p className="text-center fs-5">

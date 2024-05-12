@@ -80,111 +80,111 @@ const BaseRoutes = () => {
       <BrowserRouter>
         <Routes>
           <Route path="ui" element={<Root />}>
-            <Route path="prijava-priv" element={<LoginPrivate sessionData={sessionData} />}/>
-            <Route path="prijava" element={<LoginOffical sessionData={sessionData} />}/>
+            <Route path="login-priv" element={<LoginPrivate sessionData={sessionData} />}/>
+            <Route path="login" element={<LoginOffical sessionData={sessionData} />}/>
             <Route path="saml2-not-allowed/" element={<Saml2NotAllowed />}>
               <Route path=":errorType" element={<Saml2NotAllowed />}/>
             </Route>
-            <Route path="prijava-email/:inviteKey" element={
+            <Route path="login-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} /> }
             />
             <Route element={<BasePage sessionData={sessionData} />}>
               <Route path="saml2-login-redirect" element={
                 <Saml2LoginRedirect sessionData={sessionData} /> }
               />
-              <Route path="zahtjevi" element={
+              <Route path="requests" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsList />
                 </ProtectedRoute> }
               />
-              <Route path="zahtjevi/:projId" element={
+              <Route path="requests/:projId" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <ManageRequestsChange />
                 </ProtectedRoute> }
               />
-              <Route path="projekti" element={
+              <Route path="projects" element={
                 <ProtectedRoute sessionData={ sessionData }>
                   <ProjectsList />
                 </ProtectedRoute> }
               />
-              <Route path="projekti/:projId" element={
+              <Route path="projects/:projId" element={
                 <ProtectedRoute sessionData={ sessionData }>
                   <ProjectChange />
                 </ProtectedRoute> }
               />
-              <Route path="korisnici" element={
+              <Route path="users" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UsersList />
                 </ProtectedRoute> }
               />
-              <Route path="korisnici/:userId" element={
+              <Route path="users/:userId" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UserChange />
                 </ProtectedRoute> }
               />
-              <Route path="korisnici/neaktivni" element={
+              <Route path="users/inactive" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UsersInactiveList />
                 </ProtectedRoute> }
               />
-              <Route path="korisnici/neaktivni/:userId" element={
+              <Route path="users/inactive/:userId" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UserChange />
                 </ProtectedRoute> }
               />
-              <Route path="softver" element={
+              <Route path="software" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <SoftwareList />
                 </ProtectedRoute> }
               />
-              <Route path="moji-zahtjevi" element={
+              <Route path="my-requests" element={
                 <MyRequestsList /> }
               />
-              <Route path="moji-zahtjevi/:projId" element={
+              <Route path="my-requests/:projId" element={
                 <MyRequestChange /> }
               />
-              <Route path="novi-zahtjev" element={
+              <Route path="new-request" element={
                 <NewRequest /> }
               >
                 <Route index element={
                   <NewRequestIndex /> }
                 />
-                <Route path="istrazivacki-projekt" element={
+                <Route path="research-project" element={
                   <ResearchProjectRequest /> }
                 />
-                <Route path="istrazivacki-projekt/:projId" element={
+                <Route path="research-project/:projId" element={
                   <ResearchProjectRequestSelected projectType="research-croris" /> }
                 />
-                <Route path="prakticna-nastava" element={
+                <Route path="practical-class" element={
                   <GeneralRequest projectType="practical" /> }
                 />
-                <Route path="izrada-rada" element={
+                <Route path="thesis-project" element={
                   <GeneralRequest projectType="thesis" /> }
                 />
-                <Route path="institucijski-projekt" element={
+                <Route path="institutional-project" element={
                   <InstituteRequest /> }
                 />
-                <Route path="interni-projekt" element={
+                <Route path="internal-project" element={
                   <ProtectedRoute sessionData={sessionData}>
                     <InternalRequest/>
                   </ProtectedRoute> }
                 />
-                <Route path="srce-radionica" element={
+                <Route path="srce-workshop" element={
                   <ProtectedRoute sessionData={sessionData}>
                     <SrceWorkShopRequest />
                   </ProtectedRoute> }
                 />
               </Route>
-              <Route path="javni-kljucevi" element={
+              <Route path="public-keys" element={
                 <PublicKeys /> }
               />
-              <Route path="javni-kljucevi/novi" element={
+              <Route path="public-keys/new" element={
                 <NewPublicKey /> }
               />
-              <Route path="clanstva" element={
+              <Route path="memberships" element={
                 <Memberships /> }
               />
-              <Route path="moji-podaci" element={
+              <Route path="my-info" element={
                 <MyInfo /> }
               />
             </Route>

@@ -271,7 +271,7 @@ const PublicKeys = () => {
           <Row className="mb-5 mt-5">
             <Col className="d-flex justify-content-center">
               <Button size="lg" color="success" onClick={() => {
-                  navigate('novi')
+                  navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}
                 Dodaj javni ključ
@@ -337,7 +337,7 @@ const PublicKeys = () => {
           <Row className="mb-2 mt-3">
             <Col className="d-flex justify-content-center">
               <Button size="lg" color="success" onClick={() => {
-                  navigate('novi')
+                  navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}
                 Dodaj javni ključ

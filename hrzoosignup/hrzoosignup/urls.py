@@ -24,7 +24,7 @@ from backend.views_saml2acs import CustomSaml2Acs
 
 
 urlpatterns = [
-    re_path(r'^$', lambda x: HttpResponseRedirect('/ui/prijava')),
+    re_path(r'^$', lambda x: HttpResponseRedirect('/ui/login')),
     path('auth/', include('dj_rest_auth.urls')),
     path('saml2/acs/', CustomSaml2Acs.as_view(), name='saml2_customacs'),
     re_path(r'^saml2/', include(('djangosaml2.urls', 'backend'), namespace='saml2')),

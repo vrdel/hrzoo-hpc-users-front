@@ -138,7 +138,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
                 rel="noopener noreferrer"
                 role="button"
                 onClick={() => showPopover(rhfId)}
-                href={`/ui/${isRequest ? 'zahtjevi' : 'projekti'}/${projectData.identifier}`}
+                href={`/ui/${isRequest ? 'requests' : 'projects'}/${projectData.identifier}`}
               >
                 <FontAwesomeIcon icon={faArrowRight}/>{' '}
                 {`Detalji ${isRequest ? 'zahtjeva' : 'projekta'}`}
@@ -161,13 +161,13 @@ const ButtonGroupActiveInactive = ({activeList}) => {
     <ButtonGroup size="sm">
       <Button className="mt-1 mb-1 mr-3" color="light"
         active={ activeList }
-        onClick={ () => { navigate('/ui/korisnici') } }>
+        onClick={ () => { navigate('/ui/users') } }>
         <FontAwesomeIcon icon={ faCheck } />{' '}
         Aktivni
       </Button>
       <Button className="ml-1 mt-1 mb-1" color="light"
         active={ !activeList }
-        onClick={ () => { navigate('/ui/korisnici/neaktivni') } }>
+        onClick={ () => { navigate('/ui/users/inactive') } }>
         <FontAwesomeIcon icon={ faXmark } />{' '}
         Neaktivni
       </Button>

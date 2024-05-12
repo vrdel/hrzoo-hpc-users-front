@@ -71,7 +71,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
                 rel="noopener noreferrer"
                 role="button"
                 onClick={() => showPopover(rhfId)}
-                href={`/ui/korisnici/${userData.username}`}
+                href={`/ui/users/${userData.username}`}
               >
                 <FontAwesomeIcon icon={faArrowRight}/>{' '}
                 Detalji korisnika

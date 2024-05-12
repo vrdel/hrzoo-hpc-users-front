@@ -16,7 +16,7 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
   useEffect(() => {
     const inviteKey = localStorage.getItem('invitation-key-set')
     if (inviteKey)
-      navigate(url_ui_prefix + '/prijava-email/' + inviteKey)
+      navigate(url_ui_prefix + '/login-email/' + inviteKey)
     else {
       setLoginType('saml2')
       const defaultRedirect = sessionData.userdetails.is_staff

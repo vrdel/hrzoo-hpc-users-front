@@ -400,7 +400,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
             toastId: 'manreq-ok-delete',
             autoClose: 2500,
             delay: 500,
-            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projekti' : '/zahtjevi'}`)}, 1500)
+            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projects' : '/requests'}`)}, 1500)
           }
         )
       },
@@ -431,7 +431,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
             delay: 500,
-            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projekti' : '/zahtjevi'}`)}, 1500)
+            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projects' : '/requests'}`)}, 1500)
           }
         )
       },

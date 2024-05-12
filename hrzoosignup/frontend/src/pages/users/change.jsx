@@ -71,7 +71,7 @@ const UserProjectsTable = ({projects}) => {
                   <td className="p-3 align-middle fw-bold text-center">
                     <Row>
                       <Col>
-                        <Link className="text-dark" to={`${url_ui_prefix}/projekti/${encodeURIComponent(pro.project.identifier)}`}>
+                        <Link className="text-dark" to={`${url_ui_prefix}/projects/${encodeURIComponent(pro.project.identifier)}`}>
                           { pro.project.name}
                         </Link>
                       </Col>
