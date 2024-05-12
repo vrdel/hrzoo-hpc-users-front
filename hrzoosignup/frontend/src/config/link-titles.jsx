@@ -33,7 +33,7 @@ export function LinkTitles(loc, locale='hr') {
         [url_ui_prefix + '/new-request/srce-radionica']: 'New request on behalf of Srce workshop',
         [url_ui_prefix + '/public-keys']: 'Public keys management',
         [url_ui_prefix + '/public-keys/novi']: 'Add public key',
-        [url_ui_prefix + '/my-info']: 'My service status, digital identity information and CroRIS data',
+        [url_ui_prefix + '/my-info']: 'My service status, digital identity and CroRIS information',
         [url_ui_prefix + '/memberships']: 'List and handle membershis on approved requests/projects',
         [url_ui_prefix + '/users']: 'List of all users on active projects',
         [url_ui_prefix + '/users/inactive']: 'List of all users without any active project',

@@ -28,6 +28,7 @@ import { fetchNrProjects } from 'Api/projects';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
+import { IntlContext } from 'Components/IntlContextProvider'
 
 
 const PublicKeys = () => {
@@ -42,8 +43,8 @@ const PublicKeys = () => {
   const [sshKeys, setSshKeys] = useState(undefined)
   const navigate = useNavigate();
   const { csrfToken } = useContext(AuthContext)
-
   const queryClient = useQueryClient();
+  const { locale } = useContext(IntlContext);
 
   const showKey = (keyname) => {
     let showed = new Object()
@@ -74,12 +75,12 @@ const PublicKeys = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, locale))
     if (sshKeysData?.length > 0)
       setSshKeys(sshKeysData)
     else if (sshKeysData?.length === 0)
       setSshKeys(new Array())
-  }, [location.pathname, sshKeysData])
+  }, [location.pathname, sshKeysData, locale])
 
   const deleteMutation = useMutation({
     mutationFn: (keyname) => {
