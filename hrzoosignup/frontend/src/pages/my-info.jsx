@@ -8,11 +8,13 @@ import { useQuery } from '@tanstack/react-query';
 import StatusInfo from 'Components/user-info/StatusInfo';
 import InstituteTableInfo from 'Components/user-info/UserInstitute';
 import { EmptyCroRis, CroRisInfo } from 'Components/user-info/CroRis';
+import { IntlContext } from 'Components/IntlContextProvider'
 
 
 const MyInfo = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined)
+  const { locale } = useContext(IntlContext);
 
   const { userDetails } = useContext(AuthContext)
 
@@ -23,8 +25,8 @@ const MyInfo = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+    setPageTitle(LinkTitles(location.pathname, locale))
+  }, [location.pathname, locale])
 
   return (
     <>
