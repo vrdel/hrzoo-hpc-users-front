@@ -3,7 +3,7 @@ import { Col, Badge, Row, Table, Label, Tooltip, Button } from 'reactstrap';
 import { faCheckCircle, faStopCircle, faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyToClipboard } from 'Utils/copy-clipboard';
-import {  FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 
 const TooltipMsgActive = ({myInfo=true}) => {

@@ -11,6 +11,10 @@
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
   },
+  "MGR8er": {
+    "defaultMessage": "Upravljanje zahtjevima",
+    "description": "linktitle-managerequests"
+  },
   "NF44j4": {
     "defaultMessage": "Članstva",
     "description": "navlinks-memberships"
@@ -38,6 +42,10 @@
   "jLfsnD": {
     "defaultMessage": "Javni ključevi",
     "description": "navlinks-pubkeys"
+  },
+  "kZb+W5": {
+    "defaultMessage": "Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS",
+    "description": "linktitle-myinfo"
   },
   "lD0Ggq": {
     "defaultMessage": "Moji zahtjevi",

@@ -11,6 +11,10 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "MGR8er": {
+    "defaultMessage": "Requests management",
+    "description": "linktitle-managerequests"
+  },
   "NF44j4": {
     "defaultMessage": "Memberships",
     "description": "navlinks-memberships"
@@ -38,6 +42,10 @@
   "jLfsnD": {
     "defaultMessage": "Public keys",
     "description": "navlinks-pubkeys"
+  },
+  "kZb+W5": {
+    "defaultMessage": "My service status, digital identity and CroRIS metadata",
+    "description": "linktitle-myinfo"
   },
   "lD0Ggq": {
     "defaultMessage": "My requests",
