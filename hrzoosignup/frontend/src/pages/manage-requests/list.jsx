@@ -29,6 +29,7 @@ import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
+import { useIntl } from 'react-intl'
 import _ from "lodash";
 
 
@@ -371,6 +372,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
 export const ManageRequestsList = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const intl = useIntl()
   const navigate = useNavigate()
 
   const { status, error, data: nrProjects } = useQuery({
@@ -379,10 +381,10 @@ export const ManageRequestsList = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status])
+  }, [location.pathname, status, intl])
 
 
   if (status === 'success' && nrProjects && pageTitle)
