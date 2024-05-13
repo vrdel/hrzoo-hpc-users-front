@@ -31,8 +31,13 @@ const LanguageButton = ({locale, setLocale}) => {
   }
 
   return (
-    <Button size="sm" color="light" style={{color: "#c00000"}}
+    <Button size="sm" color="light"
       onClick={ () => alternateLocale() } >
+      <span className="fs-7 m-0 p-0">
+        { locale === 'hr' && '🇭🇷'}
+        { locale === 'en' && '🇬🇧'}
+      </span>
+      <br/>
       { locale.toUpperCase() }
     </Button>
   )
@@ -62,7 +67,7 @@ const Navigation = () => {
         </span>
       </Nav>
       <Nav navbar>
-        <NavItem className="d-flex align-items-center me-3">
+        <NavItem className="d-flex align-items-center">
           <LanguageButton locale={locale} setLocale={setLocale} />
         </NavItem>
         <NavItem className='m-2 text-dark'>

@@ -44,8 +44,8 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Pregledavanje zahtjeva {identifier}',
         description: 'linktitle-managerequests-change'
       },
-      {identifier
-    })
+      {identifier}
+    )
   }
 
   if (loc.includes('/projects/') && loc.match(/[%\w.\d-_]+$/)) {
