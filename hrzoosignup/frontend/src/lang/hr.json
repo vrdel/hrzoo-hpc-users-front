@@ -59,6 +59,10 @@
     "defaultMessage": "Zahtjevi",
     "description": "navlinks-requests"
   },
+  "pyGIbR": {
+    "defaultMessage": "Pregledavanje zahtjeva {identifier}",
+    "description": "linktitle-managerequests-change"
+  },
   "z/MmC8": {
     "defaultMessage": "Moji podaci",
     "description": "navlinks-myinfo"

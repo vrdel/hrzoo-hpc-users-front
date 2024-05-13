@@ -59,6 +59,10 @@
     "defaultMessage": "Requests",
     "description": "navlinks-requests"
   },
+  "pyGIbR": {
+    "defaultMessage": "Viewing request {identifier}",
+    "description": "linktitle-managerequests-change"
+  },
   "z/MmC8": {
     "defaultMessage": "My info",
     "description": "navlinks-myinfo"

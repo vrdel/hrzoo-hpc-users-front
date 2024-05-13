@@ -37,6 +37,7 @@ import { AuthContext } from 'Components/AuthContextProvider.jsx';
 import { convertToAmerican } from "Utils/dates";
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
+import { useIntl } from 'react-intl'
 
 
 function setInitialState() {
@@ -195,6 +196,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
   const [disabledFields, setDisabledFields] = useState(true)
   const [requestState, setRequestState] = useState(undefined)
   const { csrfToken } = useContext(AuthContext)
+  const intl = useIntl()
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -338,11 +340,11 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       setRequestState(newState)
     }
 
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, intl))
 
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, nrProject, status])
+  }, [location.pathname, nrProject, status, intl])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState
