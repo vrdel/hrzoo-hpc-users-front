@@ -8,16 +8,56 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Upravljanje zahtjevima',
         description: 'linktitle-managerequests'
       }),
-    [url_ui_prefix + '/my-requests']: 'Moji zahtjevi',
-    [url_ui_prefix + '/new-request']: 'Novi zahtjev',
-    [url_ui_prefix + '/new-request/research-project']: 'Novi zahtjev temeljem istraživačkog projekta',
-    [url_ui_prefix + '/new-request/institutional-project']: 'Novi zahtjev temeljem institucijskog projekta',
-    [url_ui_prefix + '/new-request/internal-project']: 'Novi zahtjev temeljem internog projekta',
-    [url_ui_prefix + '/new-request/practical-class']: 'Novi zahtjev temeljem praktične nastave',
-    [url_ui_prefix + '/new-request/thesis-project']: 'Novi zahtjev temeljem izrade rada',
-    [url_ui_prefix + '/new-request/srce-workhop']: 'Novi zahtjev za Srce radionicu',
-    [url_ui_prefix + '/public-keys']: 'Upravljanje javnim ključevima',
-    [url_ui_prefix + '/public-keys/new']: 'Dodavanje novog javnog ključa',
+    [url_ui_prefix + '/my-requests']:
+      intl.formatMessage({
+        defaultMessage: 'Moji zahtjevi',
+        description: 'linktitle-myrequests'
+      }),
+    [url_ui_prefix + '/new-request']:
+      intl.formatMessage({
+        defaultMessage: 'Novi zahtjev',
+        description: 'linktitle-newrequest'
+      }),
+    [url_ui_prefix + '/new-request/research-project']:
+      intl.formatMessage({
+        defaultMessage: 'Novi zahtjev temeljem istraživačkog projekta',
+        description: 'linktitle-newrequest-research'
+      }),
+    [url_ui_prefix + '/new-request/institutional-project']:
+      intl.formatMessage({
+        defaultMessage: 'Novi zahtjev temeljem institucijskog projekta',
+        description: 'linktitle-newrequest-institutional'
+      }),
+    [url_ui_prefix + '/new-request/internal-project']:
+      intl.formatMessage({
+        defaultMessage: 'Novi zahtjev temeljem internog projekta',
+        description: 'linktitle-newrequest-internal'
+      }),
+    [url_ui_prefix + '/new-request/practical-class']:
+      intl.formatMessage({
+        defaultMessage: 'Novi zahtjev temeljem praktične nastave',
+        description: 'linktitle-newrequest-class'
+      }),
+    [url_ui_prefix + '/new-request/thesis-project']:
+      intl.formatMessage({
+        defaultMessage: 'Novi zahtjev temeljem izrade rada',
+        description: 'linktitle-newrequest-thesis'
+      }),
+    [url_ui_prefix + '/new-request/srce-workhop']:
+      intl.formatMessage({
+        defaultMessage: 'Novi zahtjev za Srce radionicu',
+        description: 'linktitle-newrequest-srceworkshop'
+      }),
+    [url_ui_prefix + '/public-keys']:
+      intl.formatMessage({
+        defaultMessage: 'Upravljanje javnim ključevima',
+        description: 'linktitle-pubkeys'
+      }),
+    [url_ui_prefix + '/public-keys/new']:
+      intl.formatMessage({
+        defaultMessage: 'Dodavanje novog javnog ključa',
+        description: 'linktitle-pubkeys-add'
+      }),
     [url_ui_prefix + '/my-info']: intl.formatMessage({
       defaultMessage: 'Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS',
       description: 'linktitle-myinfo'
@@ -38,7 +78,12 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Popis svih odobrenih projekata',
         description: 'linktitle-projects'
       }),
-    [url_ui_prefix + '/software']: 'Popis aplikacija dostupnih na klasteru',
+    [url_ui_prefix + '/software']:
+      intl.formatMessage({
+        defaultMessage: 'Popis aplikacija dostupnih na klasteru',
+        description: 'linktitle-software'
+      }),
+
   }
 
   if (loc.includes('/my-requests/') && loc.match(/[%\w.\d-_]+$/)) {
@@ -92,7 +137,10 @@ export function LinkTitles(loc, intl) {
   }
 
   if (loc.includes('/new-request/research-project/') && loc.match(/[0-9]$/))
-    return 'New request on behalf of selected research project'
+      return intl.formatMessage({
+        defaultMessage: 'Novi zahtjev temeljem odabranog istraživačkog projekta',
+        description: 'linktitle-newreq-research'
+      })
 
   return url2linktitle[loc]
 }

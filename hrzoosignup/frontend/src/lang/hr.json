@@ -1,4 +1,8 @@
 {
+  "0fF2qV": {
+    "defaultMessage": "Novi zahtjev temeljem praktične nastave",
+    "description": "linktitle-newrequest-class"
+  },
   "1r5OsY": {
     "defaultMessage": "Korisničko ime",
     "description": "statusinfo-username"
@@ -11,9 +15,17 @@
     "defaultMessage": "Lozinka:",
     "description": "loginpriv-password"
   },
+  "5HA1Kv": {
+    "defaultMessage": "Novi zahtjev temeljem internog projekta",
+    "description": "linktitle-newrequest-internal"
+  },
   "6V4xYT": {
     "defaultMessage": "Detalji neaktivnog korisnika {identifier}",
     "description": "linktitle-usersinactive-view"
+  },
+  "8dPx+P": {
+    "defaultMessage": "Popis aplikacija dostupnih na klasteru",
+    "description": "linktitle-software"
   },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
@@ -67,6 +79,10 @@
     "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
     "description": "navigation-title"
   },
+  "Pxvi7f": {
+    "defaultMessage": "Moji zahtjevi",
+    "description": "linktitle-myrequests"
+  },
   "Q1aE8s": {
     "defaultMessage": "Napredno računanje",
     "description": "loginofficial-servicename"
@@ -75,6 +91,10 @@
     "defaultMessage": "Status",
     "description": "statusinfo"
   },
+  "SSxmVJ": {
+    "defaultMessage": "Dodavanje novog javnog ključa",
+    "description": "linktitle-pubkeys-add"
+  },
   "T7YuXQ": {
     "defaultMessage": "Projekti",
     "description": "navlinks-projects"
@@ -82,6 +102,22 @@
   "Tu8G3o": {
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
+  },
+  "W99Dmu": {
+    "defaultMessage": "Novi zahtjev za Srce radionicu",
+    "description": "linktitle-newrequest-srceworkshop"
+  },
+  "cQTqIM": {
+    "defaultMessage": "Novi zahtjev temeljem institucijskog projekta",
+    "description": "linktitle-newrequest-institutional"
+  },
+  "dUFVR+": {
+    "defaultMessage": "Novi zahtjev temeljem istraživačkog projekta",
+    "description": "linktitle-newrequest-research"
+  },
+  "gNm8yt": {
+    "defaultMessage": "Novi zahtjev temeljem izrade rada",
+    "description": "linktitle-newrequest-thesis"
   },
   "glIPfH": {
     "defaultMessage": "Popis svih korisnika koji nisu ni na jednom aktivnom projektu",
@@ -99,9 +135,17 @@
     "defaultMessage": "Softver",
     "description": "navlinks-software"
   },
+  "hj4YOP": {
+    "defaultMessage": "Novi zahtjev",
+    "description": "linktitle-newrequest"
+  },
   "jLfsnD": {
     "defaultMessage": "Javni ključevi",
     "description": "navlinks-pubkeys"
+  },
+  "jRGl3a": {
+    "defaultMessage": "Novi zahtjev temeljem odabranog istraživačkog projekta",
+    "description": "linktitle-newreq-research"
   },
   "kCbCrR": {
     "defaultMessage": "Prijava AAI@EduHR",
@@ -126,6 +170,10 @@
   "oRqoRe": {
     "defaultMessage": "Napredno računanje",
     "description": "loginpriv-servicename"
+  },
+  "pFrauD": {
+    "defaultMessage": "Upravljanje javnim ključevima",
+    "description": "linktitle-pubkeys"
   },
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",

@@ -11,9 +11,17 @@
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
   },
+  "5HA1Kv": {
+    "defaultMessage": "New request of behalf of internal project",
+    "description": "linktitle-newrequest-internal"
+  },
   "6V4xYT": {
     "defaultMessage": "Details of inactive user {identifier}",
     "description": "linktitle-usersinactive-view"
+  },
+  "8dPx+P": {
+    "defaultMessage": "Lisft of scientific software available on HPC clusters",
+    "description": "linktitle-software"
   },
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
@@ -32,7 +40,7 @@
     "description": "navigation-welcome"
   },
   "DJN4Jp": {
-    "defaultMessage": "List of all approved projects",
+    "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
   },
   "FqGoP3": {
@@ -67,6 +75,10 @@
     "defaultMessage": "Request for Advanced computing service usage",
     "description": "navigation-title"
   },
+  "Pxvi7f": {
+    "defaultMessage": "Moji zahtjevi",
+    "description": "linktitle-myrequests"
+  },
   "Q1aE8s": {
     "defaultMessage": "Advanced computing",
     "description": "loginofficial-servicename"
@@ -75,6 +87,10 @@
     "defaultMessage": "Status",
     "description": "statusinfo"
   },
+  "SSxmVJ": {
+    "defaultMessage": "Adding new public key",
+    "description": "linktitle-pubkeys-add"
+  },
   "T7YuXQ": {
     "defaultMessage": "Projects",
     "description": "navlinks-projects"
@@ -82,6 +98,22 @@
   "Tu8G3o": {
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
+  },
+  "W99Dmu": {
+    "defaultMessage": "New request on behalf of Srce workshop",
+    "description": "linktitle-newrequest-srceworkshop"
+  },
+  "cQTqIM": {
+    "defaultMessage": "New request on behalf of institute project",
+    "description": "linktitle-newrequest-institutional"
+  },
+  "dUFVR+": {
+    "defaultMessage": "New request on behalf of research project",
+    "description": "linktitle-newrequest-research"
+  },
+  "gNm8yt": {
+    "defaultMessage": "New request on behalf of thesis project",
+    "description": "linktitle-newrequest-thesis"
   },
   "glIPfH": {
     "defaultMessage": "List of users not active on any project",
