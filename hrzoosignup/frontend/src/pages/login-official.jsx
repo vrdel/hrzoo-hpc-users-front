@@ -62,7 +62,7 @@ const LoginOfficial = ({sessionData=undefined}) => {
                 />{' '}
                 <a href="https://www.srce.unizg.hr/napredno-racunanje/pravila" target="_blank" rel="noopener noreferrer">
                   <FormattedMessage
-                    description="loginoffical-terms"
+                    description="loginofficial-terms"
                     defaultMessage="Pravila korištenja usluge Napredno računanje"
                   />
                 </a>

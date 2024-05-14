@@ -11,6 +11,10 @@
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
   },
+  "KssuSi": {
+    "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
+    "description": "loginofficial-termsstring"
+  },
   "MGR8er": {
     "defaultMessage": "Upravljanje zahtjevima",
     "description": "linktitle-managerequests"
@@ -22,6 +26,10 @@
   "OxYLwa": {
     "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
     "description": "navigation-title"
+  },
+  "Q1aE8s": {
+    "defaultMessage": "Napredno računanje",
+    "description": "loginofficial-servicename"
   },
   "R7WXFa": {
     "defaultMessage": "Status",
@@ -62,6 +70,10 @@
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-managerequests-change"
+  },
+  "vhUojX": {
+    "defaultMessage": "Pravila korištenja usluge Napredno računanje",
+    "description": "loginofficial-terms"
   },
   "z/MmC8": {
     "defaultMessage": "Moji podaci",

@@ -11,6 +11,10 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "KssuSi": {
+    "defaultMessage": "By logging into the system, you confirm that you accept",
+    "description": "loginofficial-termsstring"
+  },
   "MGR8er": {
     "defaultMessage": "Requests management",
     "description": "linktitle-managerequests"
@@ -20,8 +24,12 @@
     "description": "navlinks-memberships"
   },
   "OxYLwa": {
-    "defaultMessage": "Request for Advanced Computing service usage",
+    "defaultMessage": "Request for Advanced computing service usage",
     "description": "navigation-title"
+  },
+  "Q1aE8s": {
+    "defaultMessage": "Advanced computing",
+    "description": "loginofficial-servicename"
   },
   "R7WXFa": {
     "defaultMessage": "Status",
@@ -62,6 +70,10 @@
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-managerequests-change"
+  },
+  "vhUojX": {
+    "defaultMessage": "Terms of use of Advanced computing service",
+    "description": "loginofficial-terms"
   },
   "z/MmC8": {
     "defaultMessage": "My info",
