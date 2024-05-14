@@ -11,6 +11,10 @@
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
   },
+  "6V4xYT": {
+    "defaultMessage": "Details of inactive user {identifier}",
+    "description": "linktitle-usersinactive-view"
+  },
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
@@ -79,9 +83,17 @@
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
   },
+  "glIPfH": {
+    "defaultMessage": "List of users not active on any project",
+    "description": "linktitle-usersinactive"
+  },
   "gx5Ush": {
     "defaultMessage": "Logout",
     "description": "navigation-modaltitle"
+  },
+  "h2f8JS": {
+    "defaultMessage": "List of users on active projects",
+    "description": "linktitle-users"
   },
   "h41Ik7": {
     "defaultMessage": "Software",
@@ -118,6 +130,10 @@
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-managerequests-change"
+  },
+  "uttk9z": {
+    "defaultMessage": "Details of active user {identifier}",
+    "description": "linktitle-usersactive-view"
   },
   "vhUojX": {
     "defaultMessage": "Terms of use of Advanced computing service",

@@ -2,6 +2,7 @@
   "1r5OsY": "Username",
   "2OMlOQ": "New request",
   "52shcW": "Password:",
+  "6V4xYT": "Details of inactive user {identifier}",
   "9D1eT/": "Login error, wrong username and password",
   "AGfSj3": "No",
   "C6FjhE": "Yes",
@@ -19,7 +20,9 @@
   "R7WXFa": "Status",
   "T7YuXQ": "Projects",
   "Tu8G3o": "Generated username to be used to access resources",
+  "glIPfH": "List of users not active on any project",
   "gx5Ush": "Logout",
+  "h2f8JS": "List of users on active projects",
   "h41Ik7": "Software",
   "jLfsnD": "Public keys",
   "kCbCrR": "Login AAI@EduHR",
@@ -29,6 +32,7 @@
   "n4ooiQ": "Requests",
   "oRqoRe": "Advanced computing",
   "pyGIbR": "Viewing request {identifier}",
+  "uttk9z": "Details of active user {identifier}",
   "vhUojX": "Terms of use of Advanced computing service",
   "z/MmC8": "My info"
 }

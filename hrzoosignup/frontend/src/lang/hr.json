@@ -11,6 +11,10 @@
     "defaultMessage": "Lozinka:",
     "description": "loginpriv-password"
   },
+  "6V4xYT": {
+    "defaultMessage": "Detalji neaktivnog korisnika {identifier}",
+    "description": "linktitle-usersinactive-view"
+  },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
@@ -79,9 +83,17 @@
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
   },
+  "glIPfH": {
+    "defaultMessage": "Popis svih korisnika koji nisu ni na jednom aktivnom projektu",
+    "description": "linktitle-usersinactive"
+  },
   "gx5Ush": {
     "defaultMessage": "Odjava",
     "description": "navigation-modaltitle"
+  },
+  "h2f8JS": {
+    "defaultMessage": "Popis svih korisnika na aktivnim projektima",
+    "description": "linktitle-users"
   },
   "h41Ik7": {
     "defaultMessage": "Softver",
@@ -118,6 +130,10 @@
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-managerequests-change"
+  },
+  "uttk9z": {
+    "defaultMessage": "Detalji aktivnog korisnika {identifier}",
+    "description": "linktitle-usersactive-view"
   },
   "vhUojX": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",

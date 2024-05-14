@@ -23,8 +23,16 @@ export function LinkTitles(loc, intl) {
       description: 'linktitle-myinfo'
     }),
     [url_ui_prefix + '/memberships']: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
-    [url_ui_prefix + '/users']: 'Popis svih korisnika na aktivnim projektima',
-    [url_ui_prefix + '/users/inactive']: 'Popis svih korisnika koji nisu ni na jednom aktivnom projektu',
+    [url_ui_prefix + '/users']:
+      intl.formatMessage({
+        defaultMessage: 'Popis svih korisnika na aktivnim projektima',
+        description: 'linktitle-users'
+      }),
+    [url_ui_prefix + '/users/inactive']:
+      intl.formatMessage({
+        defaultMessage: 'Popis svih korisnika koji nisu ni na jednom aktivnom projektu',
+        description: 'linktitle-usersinactive'
+      }),
     [url_ui_prefix + '/projects']:
       intl.formatMessage({
         defaultMessage: 'Popis svih odobrenih projekata',
@@ -63,14 +71,24 @@ export function LinkTitles(loc, intl) {
     let identifier = loc.match(/[%@\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = decodeURIComponent(identifier[0])
-    return 'Details of inactive user ' + identifier
+    return intl.formatMessage({
+        defaultMessage: 'Detalji neaktivnog korisnika {identifier}',
+        description: 'linktitle-usersinactive-view'
+      },
+      {identifier}
+    )
   }
   else if (loc.includes('/users/') && loc.match(/[@%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%@\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = decodeURIComponent(identifier[0])
     if (identifier[0] !== 'inactive')
-      return 'Details of active user ' + identifier
+      return intl.formatMessage({
+          defaultMessage: 'Detalji aktivnog korisnika {identifier}',
+          description: 'linktitle-usersactive-view'
+        },
+        {identifier}
+      )
   }
 
   if (loc.includes('/new-request/research-project/') && loc.match(/[0-9]$/))
