@@ -22,6 +22,7 @@ import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
+import { useIntl } from 'react-intl'
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 
 
@@ -29,6 +30,7 @@ const MyRequestsList = () => {
   const { LinkTitles } = useContext(SharedData)
   const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
+  const intl = useIntl()
 
   const {status, data: nrProjects, error} = useQuery({
       queryKey: ['projects-lead'],
@@ -55,10 +57,10 @@ const MyRequestsList = () => {
   }
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status])
+  }, [location.pathname, status, intl])
 
   if (status === 'loading' && pageTitle)
     return (

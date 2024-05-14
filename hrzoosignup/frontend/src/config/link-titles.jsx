@@ -90,7 +90,12 @@ export function LinkTitles(loc, intl) {
     let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = decodeURIComponent(identifier[0])
-    return 'Viewing request ' + identifier
+    return intl.formatMessage({
+        defaultMessage: 'Pregledavanje zahtjeva {identifier}',
+        description: 'linktitle-myrequests-view'
+      },
+      {identifier}
+    )
   }
 
   if (loc.includes('/requests/') && loc.match(/[%\w.\d-_]+$/)) {
