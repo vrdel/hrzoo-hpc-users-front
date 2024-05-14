@@ -16,6 +16,7 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify'
+import { useIntl } from 'react-intl'
 import _ from 'lodash';
 
 
@@ -464,6 +465,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
 export const SoftwareList = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
+  const intl = useIntl()
 
   const { status: statusSoftware, data: dataSoftware} = useQuery({
     queryKey: ['science-software-list'],
@@ -476,8 +478,8 @@ export const SoftwareList = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+    setPageTitle(LinkTitles(location.pathname, intl))
+  }, [location.pathname, intl])
 
   if (statusSoftware === 'success' && statusOpsUsers === 'success')
     return <SoftwareListTableForm

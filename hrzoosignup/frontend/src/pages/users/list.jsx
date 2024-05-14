@@ -31,6 +31,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
 import { StateIcons } from 'Config/map-states';
+import { useIntl } from 'react-intl'
 import _ from 'lodash';
 
 
@@ -674,6 +675,7 @@ export const UsersList = () => {
   const { LinkTitles } = useContext(SharedData)
 	const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
+  const intl = useIntl()
 
 	const { status, error, data } = useQuery({
 		queryKey: ["active-users"],
@@ -681,10 +683,10 @@ export const UsersList = () => {
 	})
 
 	useEffect(() => {
-		setPageTitle(LinkTitles(location.pathname))
+		setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-	}, [location.pathname, status])
+	}, [location.pathname, status, intl])
 
   if (status === 'loading' && pageTitle)
     return (
