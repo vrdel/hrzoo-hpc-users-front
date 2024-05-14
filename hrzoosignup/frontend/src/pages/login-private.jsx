@@ -22,6 +22,8 @@ import { doUserPassLogin } from 'Api/auth';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
+import { LanguageButtonLoginPriv } from 'Components/LocaleButton';
+import { IntlContext } from 'Components/IntlContextProvider';
 
 
 const LoginPrivate = ({sessionData=undefined}) => {
@@ -33,6 +35,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
     }
   });
   const { login: doLoginContext, setLoginType } = useContext(AuthContext);
+  const { locale, setLocale } = useContext(IntlContext)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,7 +67,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
       <Row className="login-first-row">
         <Col>
           <Row style={{'height': '110px'}}/>
-          <Card className="shadow-lg p-2" style={{minHeight: '475px', width: '450px'}}>
+          <Card className="shadow-lg ps-2 pe-2 pt-2" style={{minHeight: '475px', width: '450px'}}>
             <CardHeader
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"
@@ -123,6 +126,9 @@ const LoginPrivate = ({sessionData=undefined}) => {
                   }
                 </FormGroup>
               </Form>
+              <div className="m-2 mt-4 d-flex align-items-center justify-content-center">
+                <LanguageButtonLoginPriv locale={locale} setLocale={setLocale} />
+              </div>
             </CardBody>
           </Card>
         </Col>

@@ -6,10 +6,15 @@ import {
 
 export const LanguageButtonLoginOfficial = ({locale, setLocale}) => {
   function alternateLocale() {
-    if (locale === 'en')
+    if (locale === 'en') {
       setLocale('hr')
+      localStorage.setItem('loginLocaleSet', 'en')
+    }
     else
+    {
       setLocale('en')
+      localStorage.setItem('loginLocaleSet', 'en')
+    }
   }
 
   return (
@@ -21,6 +26,35 @@ export const LanguageButtonLoginOfficial = ({locale, setLocale}) => {
       </span>
       {' '}
       <span className="fs-5">
+        { locale.toUpperCase() }
+      </span>
+    </Button>
+  )
+}
+
+
+export const LanguageButtonLoginPriv = ({locale, setLocale}) => {
+  function alternateLocale() {
+    if (locale === 'en') {
+      setLocale('hr')
+      localStorage.setItem('loginLocaleSet', 'en')
+    }
+    else
+    {
+      setLocale('en')
+      localStorage.setItem('loginLocaleSet', 'en')
+    }
+  }
+
+  return (
+    <Button size="sm" color="light"
+      onClick={ () => alternateLocale() } >
+      <span className="fs-5 m-0 p-0">
+        { locale === 'hr' && '🇭🇷'}
+        { locale === 'en' && '🇬🇧'}
+      </span>
+      {' '}
+      <span className="fs-6">
         { locale.toUpperCase() }
       </span>
     </Button>
