@@ -28,7 +28,6 @@ import { fetchNrProjects } from 'Api/projects';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
-import { IntlContext } from 'Components/IntlContextProvider'
 import { useIntl } from 'react-intl'
 
 

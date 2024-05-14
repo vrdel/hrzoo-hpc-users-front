@@ -27,7 +27,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { url_ui_prefix } from '../../config/general';
 import { AuthContext } from '../../components/AuthContextProvider';
-import { IntlContext } from 'Components/IntlContextProvider'
+import { useIntl } from 'react-intl'
 
 
 const NewPublicKey = () => {
@@ -43,7 +43,7 @@ const NewPublicKey = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const refFileInput = useRef(null)
-  const { locale } = useContext(IntlContext);
+  const intl = useIntl()
 
   const { control, setValue, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
@@ -109,10 +109,10 @@ const NewPublicKey = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, locale))
+    setPageTitle(LinkTitles(location.pathname, intl))
     if (sshKeyFile)
       setValue('public_key', sshKeyFile)
-  }, [location.pathname, sshKeyFile, locale])
+  }, [location.pathname, sshKeyFile, intl])
 
   return (
     <>
