@@ -13,6 +13,7 @@ import { fetchCroRISMe } from 'Api/croris';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useQuery } from '@tanstack/react-query';
+import { IntlContext } from 'Components/IntlContextProvider';
 import HeadTitle from 'Components/HeadTitle';
 
 export const ModalContext = React.createContext();
@@ -31,6 +32,7 @@ const BasePage = ({sessionData=undefined}) => {
     isLoggedIn, setUserdetails,
     setCsrfToken, loginType } = useContext(AuthContext)
   const navigate = useNavigate()
+  const { locale, setLocale } = useContext(IntlContext)
 
   const {status, data: croRisData, error, failureReason, isFetching} = useQuery({
       queryKey: ['croris-info'],
@@ -76,6 +78,11 @@ const BasePage = ({sessionData=undefined}) => {
     else {
       sessionData?.userdetails && setUserdetails(sessionData.userdetails)
       sessionData?.csrftoken && setCsrfToken(sessionData.csrftoken)
+      const loginLocaleSet = localStorage.getItem('loginLocaleSet')
+      if (loginLocaleSet && loginLocaleSet !== locale) {
+        setLocale(loginLocaleSet)
+        localStorage.removeItem('loginLocaleSet')
+      }
     }
   }, [sessionData, isLoggedIn])
 
