@@ -14,6 +14,7 @@ import { canSubmitInstituteProject } from 'Api/projects';
 import { toast } from 'react-toastify';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
+import { useIntl } from 'react-intl'
 
 
 const NewRequest = () => {
@@ -26,6 +27,7 @@ const NewRequest = () => {
     RequestTypesToSelect,
     UrlToRequestType } = useContext(SharedData);
   const { userDetails } = useContext(AuthContext);
+  const intl = useIntl()
 
   let requestTypesToSelect = RequestTypesToSelect
   if (!userDetails.is_staff && !userDetails.is_superuser) {
@@ -48,7 +50,7 @@ const NewRequest = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, intl))
     if (location.pathname.endsWith('new-request'))
       setButtonDisabled(false)
     else {
@@ -57,7 +59,7 @@ const NewRequest = () => {
     }
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status])
+  }, [location.pathname, status, intl])
 
   return (
     <>
