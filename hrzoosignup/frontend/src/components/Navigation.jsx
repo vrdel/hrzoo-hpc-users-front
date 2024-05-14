@@ -19,29 +19,8 @@ import { ModalContext } from 'Components/BasePage'
 import { AuthContext } from 'Components/AuthContextProvider';
 import UserDetailsPopover from 'Components/UserDetailsPopover';
 import { IntlContext } from 'Components/IntlContextProvider';
+import { LanguageButtonNav } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
-
-
-const LanguageButton = ({locale, setLocale}) => {
-  function alternateLocale() {
-    if (locale === 'en')
-      setLocale('hr')
-    else
-      setLocale('en')
-  }
-
-  return (
-    <Button size="sm" color="light"
-      onClick={ () => alternateLocale() } >
-      <span className="fs-7 m-0 p-0">
-        { locale === 'hr' && '🇭🇷'}
-        { locale === 'en' && '🇬🇧'}
-      </span>
-      <br/>
-      { locale.toUpperCase() }
-    </Button>
-  )
-}
 
 
 const Navigation = () => {
@@ -68,7 +47,7 @@ const Navigation = () => {
       </Nav>
       <Nav navbar>
         <NavItem className="d-flex align-items-center">
-          <LanguageButton locale={locale} setLocale={setLocale} />
+          <LanguageButtonNav locale={locale} setLocale={setLocale} />
         </NavItem>
         <NavItem className='m-2 text-dark'>
           <>
