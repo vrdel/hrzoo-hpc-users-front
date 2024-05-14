@@ -7,6 +7,14 @@
     "defaultMessage": "New request",
     "description": "navlinks-newrequests"
   },
+  "AGfSj3": {
+    "defaultMessage": "No",
+    "description": "modal-buttonno"
+  },
+  "C6FjhE": {
+    "defaultMessage": "Yes",
+    "description": "modal-buttonyes"
+  },
   "CinYsf": {
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"

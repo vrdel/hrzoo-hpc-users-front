@@ -7,6 +7,7 @@ import {
   ModalHeader,
 }
 from 'reactstrap';
+import {FormattedMessage} from 'react-intl';
 
 
 export const ModalAreYouSure = ({isOpen, toggle, title, msg, onYes}) => (
@@ -19,8 +20,12 @@ export const ModalAreYouSure = ({isOpen, toggle, title, msg, onYes}) => (
       <Button color="primary" onClick={() => {
         onYes();
         toggle();
-      }}>Da</Button>{' '}
-      <Button color="secondary" onClick={toggle}>Ne</Button>
+      }}>
+        <FormattedMessage defaultMessage="Da" description="modal-buttonyes" />
+      </Button>{' '}
+      <Button color="secondary" onClick={toggle}>
+        <FormattedMessage defaultMessage="Ne" description="modal-buttonno" />
+      </Button>
     </ModalFooter>
   </Modal>
 )

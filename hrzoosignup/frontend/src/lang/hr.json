@@ -7,6 +7,14 @@
     "defaultMessage": "Novi zahtjev",
     "description": "navlinks-newrequests"
   },
+  "AGfSj3": {
+    "defaultMessage": "Ne",
+    "description": "modal-buttonno"
+  },
+  "C6FjhE": {
+    "defaultMessage": "Da",
+    "description": "modal-buttonyes"
+  },
   "CinYsf": {
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
