@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Col,
@@ -13,11 +13,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
+import { IntlContext } from 'Components/IntlContextProvider';
+import { LanguageButtonLoginOfficial } from 'Components/LocaleButton';
 import 'Styles/login-official.css';
 
 
 const LoginOfficial = ({sessionData=undefined}) => {
   const navigate = useNavigate();
+  const { locale, setLocale } = useContext(IntlContext)
 
   useEffect(() => {
     if (sessionData?.active && sessionData?.userdetails)
@@ -43,7 +46,7 @@ const LoginOfficial = ({sessionData=undefined}) => {
               <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
               <h2 className="ms-5 text-dark"><strong>Napredno računanje</strong></h2>
             </CardHeader>
-            <CardBody className="pt-5 pb-5">
+            <CardBody className="pt-5 pb-2">
               <p className="fs-4 mb-4 text-center">
                 Prijavom u sustav potvrđujete da prihvaćate{' '}
                 <a href="https://www.srce.unizg.hr/napredno-racunanje/pravila" target="_blank" rel="noopener noreferrer">
@@ -60,6 +63,9 @@ const LoginOfficial = ({sessionData=undefined}) => {
                 :
                   ''
               }
+              <div className="m-2 mt-4 d-flex align-items-center justify-content-center">
+                <LanguageButtonLoginOfficial locale={locale} setLocale={setLocale} />
+              </div>
             </CardBody>
           </Card>
         </Col>
