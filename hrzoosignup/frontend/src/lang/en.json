@@ -7,6 +7,14 @@
     "defaultMessage": "New request",
     "description": "navlinks-newrequests"
   },
+  "52shcW": {
+    "defaultMessage": "Password:",
+    "description": "loginpriv-password"
+  },
+  "9D1eT/": {
+    "defaultMessage": "Login error, wrong username and password",
+    "description": "loginpriv-error"
+  },
   "AGfSj3": {
     "defaultMessage": "No",
     "description": "modal-buttonno"
@@ -19,17 +27,29 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "FqGoP3": {
+    "defaultMessage": "Login with username and password",
+    "description": "loginpriv-labelusernamepassword"
+  },
   "FsZBiz": {
     "defaultMessage": "Are you sure you want to logout?",
     "description": "navigation-modalquestion"
   },
+  "HcOwzH": {
+    "defaultMessage": "Username:",
+    "description": "loginpriv-username"
+  },
   "KssuSi": {
-    "defaultMessage": "By logging into the system, you confirm that you accept",
+    "defaultMessage": "By login into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
   },
   "MGR8er": {
     "defaultMessage": "Requests management",
     "description": "linktitle-managerequests"
+  },
+  "MTd8cf": {
+    "defaultMessage": "Login eduGAIN",
+    "description": "loginpriv-labeledugain"
   },
   "NF44j4": {
     "defaultMessage": "Memberships",
@@ -67,6 +87,10 @@
     "defaultMessage": "Public keys",
     "description": "navlinks-pubkeys"
   },
+  "kCbCrR": {
+    "defaultMessage": "Login AAI@EduHR",
+    "description": "loginpriv-labelaaieduhr"
+  },
   "kZb+W5": {
     "defaultMessage": "My service status, digital identity and CroRIS metadata",
     "description": "linktitle-myinfo"
@@ -82,6 +106,10 @@
   "n4ooiQ": {
     "defaultMessage": "Requests",
     "description": "navlinks-requests"
+  },
+  "oRqoRe": {
+    "defaultMessage": "Advanced computing",
+    "description": "loginpriv-servicename"
   },
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",

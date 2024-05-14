@@ -24,6 +24,7 @@ import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-
 import { useNavigate } from 'react-router-dom';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { IntlContext } from 'Components/IntlContextProvider';
+import {FormattedMessage} from 'react-intl';
 
 
 const LoginPrivate = ({sessionData=undefined}) => {
@@ -62,6 +63,9 @@ const LoginPrivate = ({sessionData=undefined}) => {
     doLogin(data.username, data.password)
   }
 
+
+  console.log('VRDEL DEBUG', locale)
+
   return (
     <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
       <Row className="login-first-row">
@@ -73,12 +77,21 @@ const LoginPrivate = ({sessionData=undefined}) => {
               className="d-sm-inline-flex align-items-center justify-content-around"
             >
               <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-              <h4 className="text-dark"><strong>Napredno računanje</strong></h4>
+              <h4 className="text-dark"><strong>
+                <FormattedMessage
+                  defaultMessage="Napredno računanje"
+                  description="loginpriv-servicename" />
+              </strong></h4>
             </CardHeader>
             <CardBody className="pt-5">
               <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
                 <FormGroup className="text-start">
-                  <Label for="username">Korisničko ime: </Label>
+                  <Label for="username">
+                    <FormattedMessage
+                      defaultMessage="Korisničko ime:"
+                      description="loginpriv-username"
+                    />
+                  </Label>
                   <Controller
                     name="username"
                     control={control}
@@ -91,7 +104,12 @@ const LoginPrivate = ({sessionData=undefined}) => {
                   />
                 </FormGroup>
                 <FormGroup className="text-start">
-                  <Label for="password">Lozinka: </Label>
+                  <Label for="password">
+                    <FormattedMessage
+                      defaultMessage="Lozinka:"
+                      description="loginpriv-password"
+                    />
+                  </Label>
                   <Controller
                     name="password"
                     control={control}
@@ -109,18 +127,36 @@ const LoginPrivate = ({sessionData=undefined}) => {
                     isOpen={loginFailedVisible}
                     toggle={() => setLoginFailedVisible(false)} fade={false}>
                     <p className="text-center">
-                      Prijava neuspjela, pogrešno korisničko ime i lozinka
+                      <FormattedMessage
+                        defaultMessage="Prijava neuspjela, pogrešno korisničko ime i lozinka"
+                        description="loginpriv-error"
+                      />
                     </p>
                   </Alert>
                 </FormGroup>
                 <div className="pt-4">
                 </div>
                 <FormGroup>
-                  <Button color="success" type="submit" block className="mb-3">Prijava korisničkim imenom i lozinkom</Button>
-                  <a className="btn btn-success btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava AAI@EduHR</a>
+                  <Button color="success" type="submit" block className="mb-3">
+                    <FormattedMessage
+                      defaultMessage="Prijava korisničkim imenom i lozinkom"
+                      description="loginpriv-labelusernamepassword"
+                    />
+                  </Button>
+                  <a className="btn btn-success btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>
+                    <FormattedMessage
+                      defaultMessage="Prijava AAI@EduHR"
+                      description="loginpriv-labelaaieduhr"
+                    />
+                  </a>
                   {
                     sessionData?.config?.enable_edugain ?
-                      <a className="mt-3 btn btn-primary btn-block" style={{width: '100%'}} role="button" href= {`/saml2/edugain/login`}>Prijava eduGAIN</a>
+                      <a className="mt-3 btn btn-primary btn-block" style={{width: '100%'}} role="button" href= {`/saml2/edugain/login`}>
+                        <FormattedMessage
+                          defaultMessage="Prijava eduGAIN"
+                          description="loginpriv-labeledugain"
+                        />
+                      </a>
                     :
                       ''
                   }

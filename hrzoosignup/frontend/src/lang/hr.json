@@ -7,6 +7,14 @@
     "defaultMessage": "Novi zahtjev",
     "description": "navlinks-newrequests"
   },
+  "52shcW": {
+    "defaultMessage": "Lozinka:",
+    "description": "loginpriv-password"
+  },
+  "9D1eT/": {
+    "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
+    "description": "loginpriv-error"
+  },
   "AGfSj3": {
     "defaultMessage": "Ne",
     "description": "modal-buttonno"
@@ -19,9 +27,17 @@
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
   },
+  "FqGoP3": {
+    "defaultMessage": "Prijava korisničkim imenom i lozinkom",
+    "description": "loginpriv-labelusernamepassword"
+  },
   "FsZBiz": {
     "defaultMessage": "Da li ste sigurni da se želite odjaviti?",
     "description": "navigation-modalquestion"
+  },
+  "HcOwzH": {
+    "defaultMessage": "Korisničko ime:",
+    "description": "loginpriv-username"
   },
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
@@ -30,6 +46,10 @@
   "MGR8er": {
     "defaultMessage": "Upravljanje zahtjevima",
     "description": "linktitle-managerequests"
+  },
+  "MTd8cf": {
+    "defaultMessage": "Prijava eduGAIN",
+    "description": "loginpriv-labeledugain"
   },
   "NF44j4": {
     "defaultMessage": "Članstva",
@@ -67,6 +87,10 @@
     "defaultMessage": "Javni ključevi",
     "description": "navlinks-pubkeys"
   },
+  "kCbCrR": {
+    "defaultMessage": "Prijava AAI@EduHR",
+    "description": "loginpriv-labelaaieduhr"
+  },
   "kZb+W5": {
     "defaultMessage": "Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS",
     "description": "linktitle-myinfo"
@@ -82,6 +106,10 @@
   "n4ooiQ": {
     "defaultMessage": "Zahtjevi",
     "description": "navlinks-requests"
+  },
+  "oRqoRe": {
+    "defaultMessage": "Napredno računanje",
+    "description": "loginpriv-servicename"
   },
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
