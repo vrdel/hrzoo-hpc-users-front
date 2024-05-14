@@ -29,6 +29,7 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { IntlContext } from 'Components/IntlContextProvider'
+import { useIntl } from 'react-intl'
 
 
 const PublicKeys = () => {
@@ -44,7 +45,7 @@ const PublicKeys = () => {
   const navigate = useNavigate();
   const { csrfToken } = useContext(AuthContext)
   const queryClient = useQueryClient();
-  const { locale } = useContext(IntlContext);
+  const intl = useIntl()
 
   const showKey = (keyname) => {
     let showed = new Object()
@@ -75,12 +76,12 @@ const PublicKeys = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, locale))
+    setPageTitle(LinkTitles(location.pathname, intl))
     if (sshKeysData?.length > 0)
       setSshKeys(sshKeysData)
     else if (sshKeysData?.length === 0)
       setSshKeys(new Array())
-  }, [location.pathname, sshKeysData, locale])
+  }, [location.pathname, sshKeysData, intl])
 
   const deleteMutation = useMutation({
     mutationFn: (keyname) => {

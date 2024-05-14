@@ -27,6 +27,7 @@ import { StateIcons, StateStringUser } from "Config/map-states";
 import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 
 
@@ -170,6 +171,7 @@ const Memberships = () => {
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
   const { csrfToken } = useContext(AuthContext);
+  const intl = useIntl()
 
   const queryClient = useQueryClient();
 
@@ -355,9 +357,9 @@ const Memberships = () => {
   }
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, intl))
     setInvitesSent(myInvites)
-  }, [location.pathname, myInvites])
+  }, [location.pathname, myInvites, intl])
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'
