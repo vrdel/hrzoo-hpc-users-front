@@ -11,6 +11,10 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "FsZBiz": {
+    "defaultMessage": "Are you sure you want to logout?",
+    "description": "navigation-modalquestion"
+  },
   "KssuSi": {
     "defaultMessage": "By logging into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
@@ -42,6 +46,10 @@
   "Tu8G3o": {
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
+  },
+  "gx5Ush": {
+    "defaultMessage": "Logout",
+    "description": "navigation-modaltitle"
   },
   "h41Ik7": {
     "defaultMessage": "Software",

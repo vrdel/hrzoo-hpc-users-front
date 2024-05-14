@@ -21,6 +21,7 @@ import UserDetailsPopover from 'Components/UserDetailsPopover';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { LanguageButtonNav } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl'
 
 
 const Navigation = () => {
@@ -28,6 +29,7 @@ const Navigation = () => {
   const modalContext = useContext(ModalContext)
   const { userDetails } = useContext(AuthContext)
   const { locale, setLocale } = useContext(IntlContext)
+  const intl = useIntl()
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="shadow-sm border rounded d-flex justify-content-between mt-2 mb-2 pt-3 pb-3">
@@ -77,8 +79,14 @@ const Navigation = () => {
             className='btn-danger'
             onClick={() => {
               modalContext.setAreYouSureModal(!modalContext.areYouSureModal)
-              modalContext.setModalTitle("Odjava")
-              modalContext.setModalMsg("Da li ste sigurni da se želite odjaviti?")
+              modalContext.setModalTitle(intl.formatMessage({
+                defaultMessage: 'Odjava',
+                description: 'navigation-modaltitle'
+              }))
+              modalContext.setModalMsg(intl.formatMessage({
+                defaultMessage: 'Da li ste sigurni da se želite odjaviti?',
+                description: 'navigation-modalquestion'
+              }))
               modalContext.setOnYesCall('dologout')
             }}>
             <FontAwesomeIcon icon={faSignOutAlt} color="white" />

@@ -11,6 +11,10 @@
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
   },
+  "FsZBiz": {
+    "defaultMessage": "Da li ste sigurni da se želite odjaviti?",
+    "description": "navigation-modalquestion"
+  },
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
     "description": "loginofficial-termsstring"
@@ -42,6 +46,10 @@
   "Tu8G3o": {
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
+  },
+  "gx5Ush": {
+    "defaultMessage": "Odjava",
+    "description": "navigation-modaltitle"
   },
   "h41Ik7": {
     "defaultMessage": "Softver",
