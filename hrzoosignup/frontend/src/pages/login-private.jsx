@@ -22,7 +22,7 @@ import { doUserPassLogin } from 'Api/auth';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
-import { LanguageButtonLoginPriv } from 'Components/LocaleButton';
+import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { IntlContext } from 'Components/IntlContextProvider';
 
 
@@ -127,7 +127,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
                 </FormGroup>
               </Form>
               <div className="m-2 mt-4 d-flex align-items-center justify-content-center">
-                <LanguageButtonLoginPriv locale={locale} setLocale={setLocale} />
+                <LanguageButtonLogin locale={locale} setLocale={setLocale} small={true} />
               </div>
             </CardBody>
           </Card>

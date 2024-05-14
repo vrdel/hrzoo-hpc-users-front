@@ -4,14 +4,13 @@ import {
 } from 'reactstrap';
 
 
-export const LanguageButtonLoginOfficial = ({locale, setLocale}) => {
+export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
   function alternateLocale() {
     if (locale === 'en') {
       setLocale('hr')
       localStorage.setItem('loginLocaleSet', 'en')
     }
-    else
-    {
+    else {
       setLocale('en')
       localStorage.setItem('loginLocaleSet', 'en')
     }
@@ -20,41 +19,12 @@ export const LanguageButtonLoginOfficial = ({locale, setLocale}) => {
   return (
     <Button size="sm" color="light"
       onClick={ () => alternateLocale() } >
-      <span className="fs-4 m-0 p-0">
+      <span className={`${small ? 'fs-5 m-0 p-0' : 'fs-4 m-0 p-0'}`}>
         { locale === 'hr' && '🇭🇷'}
         { locale === 'en' && '🇬🇧'}
       </span>
       {' '}
-      <span className="fs-5">
-        { locale.toUpperCase() }
-      </span>
-    </Button>
-  )
-}
-
-
-export const LanguageButtonLoginPriv = ({locale, setLocale}) => {
-  function alternateLocale() {
-    if (locale === 'en') {
-      setLocale('hr')
-      localStorage.setItem('loginLocaleSet', 'en')
-    }
-    else
-    {
-      setLocale('en')
-      localStorage.setItem('loginLocaleSet', 'en')
-    }
-  }
-
-  return (
-    <Button size="sm" color="light"
-      onClick={ () => alternateLocale() } >
-      <span className="fs-5 m-0 p-0">
-        { locale === 'hr' && '🇭🇷'}
-        { locale === 'en' && '🇬🇧'}
-      </span>
-      {' '}
-      <span className="fs-6">
+      <span className={`${small ? 'fs-6' : 'fs-5'}`}>
         { locale.toUpperCase() }
       </span>
     </Button>

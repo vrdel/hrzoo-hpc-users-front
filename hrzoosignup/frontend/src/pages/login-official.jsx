@@ -14,7 +14,7 @@ import {
 import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
 import { IntlContext } from 'Components/IntlContextProvider';
-import { LanguageButtonLoginOfficial } from 'Components/LocaleButton';
+import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
 import 'Styles/login-official.css';
 
@@ -78,7 +78,7 @@ const LoginOfficial = ({sessionData=undefined}) => {
                   ''
               }
               <div className="m-2 mt-4 d-flex align-items-center justify-content-center">
-                <LanguageButtonLoginOfficial locale={locale} setLocale={setLocale} />
+                <LanguageButtonLogin locale={locale} setLocale={setLocale} />
               </div>
             </CardBody>
           </Card>
