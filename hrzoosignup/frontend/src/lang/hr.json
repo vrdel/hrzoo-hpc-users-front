@@ -27,6 +27,10 @@
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
   },
+  "DJN4Jp": {
+    "defaultMessage": "Popis svih odobrenih projekata",
+    "description": "linktitle-projects"
+  },
   "FqGoP3": {
     "defaultMessage": "Prijava korisničkim imenom i lozinkom",
     "description": "loginpriv-labelusernamepassword"

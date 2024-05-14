@@ -25,7 +25,11 @@ export function LinkTitles(loc, intl) {
     [url_ui_prefix + '/memberships']: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
     [url_ui_prefix + '/users']: 'Popis svih korisnika na aktivnim projektima',
     [url_ui_prefix + '/users/inactive']: 'Popis svih korisnika koji nisu ni na jednom aktivnom projektu',
-    [url_ui_prefix + '/projects']: 'Popis svih odobrenih projekata',
+    [url_ui_prefix + '/projects']:
+      intl.formatMessage({
+        defaultMessage: 'Popis svih odobrenih projekata',
+        description: 'linktitle-projects'
+      }),
     [url_ui_prefix + '/software']: 'Popis aplikacija dostupnih na klasteru',
   }
 

@@ -27,6 +27,10 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "DJN4Jp": {
+    "defaultMessage": "List of all approved projects",
+    "description": "linktitle-projects"
+  },
   "FqGoP3": {
     "defaultMessage": "Login with username and password",
     "description": "loginpriv-labelusernamepassword"

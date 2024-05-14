@@ -27,6 +27,7 @@ import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
+import { useIntl } from 'react-intl'
 import _ from "lodash";
 
 
@@ -453,6 +454,7 @@ export const ProjectsList = () => {
   const { LinkTitles } = useContext(SharedData)
   const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
+  const intl = useIntl()
 
   const { status, error, data } = useQuery({
     queryKey: ["all-projects"],
@@ -460,10 +462,10 @@ export const ProjectsList = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status])
+  }, [location.pathname, status, intl])
 
 
   if (status === 'success' && data && pageTitle)
