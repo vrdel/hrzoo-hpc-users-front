@@ -58,7 +58,10 @@ class AccountingUserProjectAPI(APIView):
     def _generate_response(self, projects):
         ret_data = []
         for project in projects:
-            realm_inst = models.CrorisInstitutions.objects.get(name_short=project.institute).realm
+            try:
+                realm_inst = models.CrorisInstitutions.objects.get(name_short=project.institute).realm
+            except models.CrorisInstitutions.DoesNotExist:
+                realm_inst = ''
             if not realm_inst:
                 realm_inst = self._set_realm_from_map(project.institute)
             fields_project = dict()
