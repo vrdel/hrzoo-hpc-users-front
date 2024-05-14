@@ -1,4 +1,8 @@
 {
+  "0fF2qV": {
+    "defaultMessage": "New request on behalf of thesis project",
+    "description": "linktitle-newrequest-class"
+  },
   "1r5OsY": {
     "defaultMessage": "Username",
     "description": "statusinfo-username"
@@ -76,7 +80,7 @@
     "description": "navigation-title"
   },
   "Pxvi7f": {
-    "defaultMessage": "Moji zahtjevi",
+    "defaultMessage": "My requests",
     "description": "linktitle-myrequests"
   },
   "Q1aE8s": {
@@ -94,6 +98,10 @@
   "T7YuXQ": {
     "defaultMessage": "Projects",
     "description": "navlinks-projects"
+  },
+  "TH7L+k": {
+    "defaultMessage": "Viewing request{identifier}",
+    "description": "linktitle-myrequests-view"
   },
   "Tu8G3o": {
     "defaultMessage": "Generated username to be used to access resources",
@@ -131,9 +139,17 @@
     "defaultMessage": "Software",
     "description": "navlinks-software"
   },
+  "hj4YOP": {
+    "defaultMessage": "New request",
+    "description": "linktitle-newrequest"
+  },
   "jLfsnD": {
     "defaultMessage": "Public keys",
     "description": "navlinks-pubkeys"
+  },
+  "jRGl3a": {
+    "defaultMessage": "New requests on behalf of research project",
+    "description": "linktitle-newreq-research"
   },
   "kCbCrR": {
     "defaultMessage": "Login AAI@EduHR",
@@ -159,6 +175,10 @@
     "defaultMessage": "Advanced computing",
     "description": "loginpriv-servicename"
   },
+  "pFrauD": {
+    "defaultMessage": "Public keys management",
+    "description": "linktitle-pubkeys"
+  },
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-managerequests-change"
@@ -175,5 +195,4 @@
     "defaultMessage": "My info",
     "description": "navlinks-myinfo"
   }
-
 }

@@ -99,6 +99,10 @@
     "defaultMessage": "Projekti",
     "description": "navlinks-projects"
   },
+  "TH7L+k": {
+    "defaultMessage": "Pregledavanje zahtjeva {identifier}",
+    "description": "linktitle-myrequests-view"
+  },
   "Tu8G3o": {
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
