@@ -311,7 +311,12 @@ const ResearchProjectRequestSelected = ({projectType}) => {
             <RequestHorizontalRuler />
             <Row>
               <Col>
-                <h4 className="ms-4 mb-3 mt-4">Opći dio</h4><br/>
+                <h4 className="ms-4 mb-3 mt-4">
+                  <FormattedMessage
+                    description="researchselected-general"
+                    defaultMessage="Opći dio"
+                  />
+                </h4><br/>
               </Col>
             </Row>
             <Row>
@@ -358,14 +363,20 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
           <Label
             htmlFor="projectTitle"
             aria-label="projectTitle">
-            Naziv:
+            <FormattedMessage
+              description="researchselected-projecttitle"
+              defaultMessage="Naziv:"
+            />
           </Label>
         </Col>
         <Col className="text-left" md={{size: 2}}>
           <Label
             htmlFor="projectIdentifier"
             aria-label="projectIdentifier">
-            Šifra:
+            <FormattedMessage
+              description="researchselected-projectid"
+              defaultMessage="Šifra:"
+            />
           </Label>
         </Col>
         <div className="w-100"/>
@@ -394,7 +405,10 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             htmlFor="projectTime"
             aria-label="projectTime"
             className="mr-1">
-            Period korištenja:
+            <FormattedMessage
+              description="researchselected-usageperiod"
+              defaultMessage="Period korištenja:"
+            />
           </Label>
         </Col>
         <Col md={{size: 8}}>
@@ -402,7 +416,10 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             htmlFor="projectTime"
             aria-label="projectTime"
             className="mr-1">
-            Osobe:
+            <FormattedMessage
+              description="researchselected-users"
+              defaultMessage="Osobe:"
+            />
           </Label>
         </Col>
         <div className="w-100"/>
@@ -424,7 +441,10 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
           <Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
-            Obrazloženje:
+            <FormattedMessage
+              description="researchselected-explain"
+              defaultMessage="Obrazloženje:"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Controller

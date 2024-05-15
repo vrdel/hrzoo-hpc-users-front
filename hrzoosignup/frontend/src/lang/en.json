@@ -87,6 +87,10 @@
     "defaultMessage": "No",
     "description": "modal-buttonno"
   },
+  "Aa0C40": {
+    "defaultMessage": "People:",
+    "description": "researchselected-users"
+  },
   "C6FjhE": {
     "defaultMessage": "Yes",
     "description": "modal-buttonyes"
@@ -115,6 +119,10 @@
     "defaultMessage": "https://www.srce.unizg.hr/en/advanced-computing",
     "description": "navigation-brand-link"
   },
+  "FVhGIC": {
+    "defaultMessage": "Usage period:",
+    "description": "researchselected-usageperiod"
+  },
   "FqGoP3": {
     "defaultMessage": "Login with username and password",
     "description": "loginpriv-labelusernamepassword"
@@ -138,6 +146,14 @@
   "IP7pZp": {
     "defaultMessage": "Users:",
     "description": "generalfields-userslist"
+  },
+  "IX8Pax": {
+    "defaultMessage": "Project identifier:",
+    "description": "researchselected-projectid"
+  },
+  "JE8/B2": {
+    "defaultMessage": "General",
+    "description": "researchselected-general"
   },
   "JLRdCo": {
     "defaultMessage": "Scientific software",
@@ -371,6 +387,10 @@
     "defaultMessage": "Public keys management",
     "description": "linktitle-pubkeys"
   },
+  "pO80G/": {
+    "defaultMessage": "Name:",
+    "description": "researchselected-projecttitle"
+  },
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-managerequests-change"
@@ -394,6 +414,10 @@
   "sVu3Vi": {
     "defaultMessage": "Total amount of storage space required for the project (GB):",
     "description": "resourcefields-disk"
+  },
+  "tdeUEL": {
+    "defaultMessage": "Explanation:",
+    "description": "researchselected-explain"
   },
   "uttk9z": {
     "defaultMessage": "Details of active user {identifier}",

@@ -87,6 +87,10 @@
     "defaultMessage": "Ne",
     "description": "modal-buttonno"
   },
+  "Aa0C40": {
+    "defaultMessage": "Osobe:",
+    "description": "researchselected-users"
+  },
   "C6FjhE": {
     "defaultMessage": "Da",
     "description": "modal-buttonyes"
@@ -115,6 +119,10 @@
     "defaultMessage": "https://www.srce.unizg.hr/napredno-racunanje",
     "description": "navigation-brand-link"
   },
+  "FVhGIC": {
+    "defaultMessage": "Period korištenja:",
+    "description": "researchselected-usageperiod"
+  },
   "FqGoP3": {
     "defaultMessage": "Prijava korisničkim imenom i lozinkom",
     "description": "loginpriv-labelusernamepassword"
@@ -138,6 +146,14 @@
   "IP7pZp": {
     "defaultMessage": "Korisnici:",
     "description": "generalfields-userslist"
+  },
+  "IX8Pax": {
+    "defaultMessage": "Šifra:",
+    "description": "researchselected-projectid"
+  },
+  "JE8/B2": {
+    "defaultMessage": "Opći dio",
+    "description": "researchselected-general"
   },
   "JLRdCo": {
     "defaultMessage": "Znanstveni softver",
@@ -371,6 +387,10 @@
     "defaultMessage": "Upravljanje javnim ključevima",
     "description": "linktitle-pubkeys"
   },
+  "pO80G/": {
+    "defaultMessage": "Naziv:",
+    "description": "researchselected-projecttitle"
+  },
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-managerequests-change"
@@ -394,6 +414,10 @@
   "sVu3Vi": {
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
     "description": "resourcefields-disk"
+  },
+  "tdeUEL": {
+    "defaultMessage": "Obrazloženje:",
+    "description": "researchselected-explain"
   },
   "uttk9z": {
     "defaultMessage": "Detalji aktivnog korisnika {identifier}",
