@@ -199,7 +199,12 @@ const NewRequestIndex = () => {
       </Row>
       <Row className="mt-5">
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Znanstveni softver</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">
+            <FormattedMessage
+              description="sciencesoftware-title"
+              defaultMessage="Znanstveni softver"
+            />
+          </h4><br/>
         </Col>
       </Row>
       <Row className="mt-1">
@@ -208,7 +213,10 @@ const NewRequestIndex = () => {
             htmlFor="requestScientificSoftware"
             aria-label="requestScientificSoftware"
             className="mr-2 text-right form-label">
-            Aplikacije koje će se koristiti:
+            <FormattedMessage
+              description="sciencesoftware-list"
+              defaultMessage="Aplikacije koje će se koristiti:"
+            />
           </Label>
           <Input
             aria-label="requestScientificSoftware"
@@ -223,7 +231,10 @@ const NewRequestIndex = () => {
           <Label
             htmlFor="requestScientificSoftwareExtra"
             aria-label="requestScientificSoftwareExtra">
-            Dodatne aplikacije koje će biti potrebno instalirati:
+            <FormattedMessage
+              description="sciencesoftware-list"
+              defaultMessage="Dodatne aplikacije koje će biti potrebno instalirati:"
+            />
           </Label>
           <textarea
             id="requestScientificSoftwareExtra"
@@ -241,7 +252,10 @@ const NewRequestIndex = () => {
             htmlFor="requestScientificSoftwareHelp"
             aria-label="requestScientificSoftwareHelp"
             className="mr-2 text-right form-label">
-            Potrebna pomoć pri instalaciji:
+            <FormattedMessage
+              description="sciencesoftware-help"
+              defaultMessage="Potrebna pomoć pri instalaciji:"
+            />
           </Label>
           <Input disabled={true} type="checkbox" className="ms-3 fw-bold"/>
         </Col>
@@ -249,7 +263,12 @@ const NewRequestIndex = () => {
       </Row>
       <Row className="mt-5">
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Resursi</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">
+            <FormattedMessage
+              description="resourcefields-title"
+              defaultMessage="Resursi"
+            />
+          </h4><br/>
         </Col>
       </Row>
       <Row className="mt-3">
