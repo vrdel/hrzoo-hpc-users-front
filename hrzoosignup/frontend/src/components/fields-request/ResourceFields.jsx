@@ -17,6 +17,7 @@ import {
   useFormContext
 } from "react-hook-form";
 import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl'
 
 
 export const CloudFields = ({fieldsDisabled=false}) => {
@@ -509,12 +510,18 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { ResourceTypesToSelect, ResourceTypesToSelectAdmin } = useContext(SharedData);
   const { userDetails } = useContext(AuthContext);
+  const intl = useIntl()
 
   return (
     <>
       <Row className="mt-5">
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Resursi</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">
+            <FormattedMessage
+              description="resourcefields-title"
+              defaultMessage="Resursi"
+            />
+          </h4><br/>
         </Col>
       </Row>
       <Row className="mt-2">
@@ -541,7 +548,10 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
                 isMulti
                 isDisabled={fieldsDisabled}
                 options={userDetails.is_staff || userDetails.is_superuser ? ResourceTypesToSelectAdmin : ResourceTypesToSelect}
-                placeholder="Odaberi"
+                placeholder={intl.formatMessage({
+                  defaultMessage: "Odaberi",
+                  description: "resourcefields-placeholder"
+                })}
                 value={getValues('requestResourceType')}
                 onChange={(e) => setValue('requestResourceType', e)}
                 resourceTypeMultiValue={true}

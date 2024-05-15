@@ -151,6 +151,10 @@
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
     "description": "loginofficial-termsstring"
   },
+  "LiONnn": {
+    "defaultMessage": "Odaberi",
+    "description": "resourcefields-placeholder"
+  },
   "MGR8er": {
     "defaultMessage": "Upravljanje zahtjevima",
     "description": "linktitle-managerequests"
@@ -378,6 +382,10 @@
   "qFLN1G": {
     "defaultMessage": "Istraživački projekt",
     "description": "requesttype-label-research"
+  },
+  "rZtsm+": {
+    "defaultMessage": "Resursi",
+    "description": "resourcefields-title"
   },
   "sVu3Vi": {
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",

@@ -151,6 +151,10 @@
     "defaultMessage": "By login into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
   },
+  "LiONnn": {
+    "defaultMessage": "Choose",
+    "description": "resourcefields-placeholder"
+  },
   "MGR8er": {
     "defaultMessage": "Requests management",
     "description": "linktitle-managerequests"
@@ -378,6 +382,10 @@
   "qFLN1G": {
     "defaultMessage": "Research project",
     "description": "requesttype-label-research"
+  },
+  "rZtsm+": {
+    "defaultMessage": "Resources",
+    "description": "resourcefields-title"
   },
   "sVu3Vi": {
     "defaultMessage": "Total amount of storage space required for the project (GB):",
