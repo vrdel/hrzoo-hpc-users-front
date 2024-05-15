@@ -235,6 +235,10 @@
     "defaultMessage": "Korisnici",
     "description": "navlinks-users"
   },
+  "n32QyA": {
+    "defaultMessage": "https://www.srce.unizg.hr/",
+    "description": "footer-link"
+  },
   "n4ooiQ": {
     "defaultMessage": "Zahtjevi",
     "description": "navlinks-requests"

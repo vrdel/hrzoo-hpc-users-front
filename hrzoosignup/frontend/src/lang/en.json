@@ -235,6 +235,10 @@
     "defaultMessage": "Users",
     "description": "navlinks-users"
   },
+  "n32QyA": {
+    "defaultMessage": "https://www.srce.unizg.hr/en",
+    "description": "footer-link"
+  },
   "n4ooiQ": {
     "defaultMessage": "Requests",
     "description": "navlinks-requests"
