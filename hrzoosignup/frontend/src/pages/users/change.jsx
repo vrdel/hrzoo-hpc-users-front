@@ -21,8 +21,9 @@ import {
 import { url_ui_prefix } from 'Config/general';
 import { MiniButton } from 'Components/MiniButton';
 import { TableUserKeys } from 'Components/sshkeys/UserKeys';
-import _ from "lodash";
 import { fetchSshKeys } from 'Api/sshkeys';
+import { useIntl } from 'react-intl'
+import _ from "lodash";
 
 
 const UserProjectsTable = ({projects}) => {
@@ -197,6 +198,7 @@ const UserChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const { userId } = useParams()
+  const intl = useIntl()
 
   const {status, data: userData, error} = useQuery({
       queryKey: ['change-user', userId],
@@ -218,8 +220,8 @@ const UserChange = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname))
-  }, [location.pathname])
+    setPageTitle(LinkTitles(location.pathname, intl))
+  }, [location.pathname, intl])
 
   if (status === 'success' && userData) {
     let interestedProjecs = userData.userproject_set.filter(pro => pro.project.state.name !== 'deny' && pro.project.state.name !== 'submit')
