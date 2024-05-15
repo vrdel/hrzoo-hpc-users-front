@@ -22,6 +22,7 @@ import {
   Placeholder,
 } from 'reactstrap';
 import DatePicker from 'react-date-picker';
+import { FormattedMessage } from 'react-intl';
 
 
 const NewRequestIndex = () => {
@@ -30,7 +31,12 @@ const NewRequestIndex = () => {
       <RequestHorizontalRuler />
       <Row>
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Opći dio</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">
+            <FormattedMessage
+              description="generalfields-title"
+              defaultMessage="Opći dio"
+            />
+          </h4><br/>
         </Col>
       </Row>
       <Row>
@@ -38,7 +44,10 @@ const NewRequestIndex = () => {
           <Label
             htmlFor="requestName"
             aria-label="requestName">
-            Naziv:
+            <FormattedMessage
+              description="generalfields-name"
+              defaultMessage="Naziv:"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <textarea
@@ -56,7 +65,10 @@ const NewRequestIndex = () => {
           <Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
-            Obrazloženje:
+            <FormattedMessage
+              description="generalfields-explanation"
+              defaultMessage="Obrazloženje:"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <textarea
@@ -74,7 +86,10 @@ const NewRequestIndex = () => {
           <Label
             htmlFor="requestName"
             aria-label="requestName">
-            Period korištenja:
+            <FormattedMessage
+              description="generalfields-duration"
+              defaultMessage="Period korištenja:"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
         </Col>
