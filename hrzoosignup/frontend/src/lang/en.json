@@ -107,9 +107,17 @@
     "defaultMessage": "Username:",
     "description": "loginpriv-username"
   },
+  "HiPPun": {
+    "defaultMessage": "Choose",
+    "description": "sciencesoftware-placeholder"
+  },
   "IP7pZp": {
     "defaultMessage": "Users:",
     "description": "generalfields-userslist"
+  },
+  "JLRdCo": {
+    "defaultMessage": "Scientific software",
+    "description": "sciencesoftware-title"
   },
   "KAUZl8": {
     "defaultMessage": "Request type",
@@ -179,6 +187,10 @@
     "defaultMessage": "Projects",
     "description": "navlinks-projects"
   },
+  "TGd1FO": {
+    "defaultMessage": " Assistance required with installation:",
+    "description": "sciencesoftware-help"
+  },
   "TH7L+k": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
@@ -214,6 +226,10 @@
   "eWfkW5": {
     "defaultMessage": "No data from CroRIS system",
     "description": "newrequest-reason-nocroris"
+  },
+  "ejJ5Dy": {
+    "defaultMessage": "Additional applications that will need to be installed:",
+    "description": "sciencesoftware-list"
   },
   "fxdgEp": {
     "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
@@ -330,6 +346,10 @@
   "vhUojX": {
     "defaultMessage": "Terms of use of Advanced Computing service",
     "description": "loginofficial-terms"
+  },
+  "w8BGXa": {
+    "defaultMessage": "Applications to be used:",
+    "description": "sciencesoftware-list"
   },
   "y+MIYq": {
     "defaultMessage": "Lead institution:",

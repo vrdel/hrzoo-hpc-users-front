@@ -107,9 +107,17 @@
     "defaultMessage": "Korisničko ime:",
     "description": "loginpriv-username"
   },
+  "HiPPun": {
+    "defaultMessage": "Odaberi",
+    "description": "sciencesoftware-placeholder"
+  },
   "IP7pZp": {
     "defaultMessage": "Korisnici:",
     "description": "generalfields-userslist"
+  },
+  "JLRdCo": {
+    "defaultMessage": "Znanstveni softver",
+    "description": "sciencesoftware-title"
   },
   "KAUZl8": {
     "defaultMessage": "Tip zahtjeva",
@@ -179,6 +187,10 @@
     "defaultMessage": "Projekti",
     "description": "navlinks-projects"
   },
+  "TGd1FO": {
+    "defaultMessage": "Potrebna pomoć pri instalaciji:",
+    "description": "sciencesoftware-help"
+  },
   "TH7L+k": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
@@ -214,6 +226,10 @@
   "eWfkW5": {
     "defaultMessage": "Nema podataka iz sustava CroRIS",
     "description": "newrequest-reason-nocroris"
+  },
+  "ejJ5Dy": {
+    "defaultMessage": "Dodatne aplikacije koje će biti potrebno instalirati:",
+    "description": "sciencesoftware-list"
   },
   "fxdgEp": {
     "defaultMessage": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
@@ -330,6 +346,10 @@
   "vhUojX": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginofficial-terms"
+  },
+  "w8BGXa": {
+    "defaultMessage": "Aplikacije koje će se koristiti:",
+    "description": "sciencesoftware-list"
   },
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",

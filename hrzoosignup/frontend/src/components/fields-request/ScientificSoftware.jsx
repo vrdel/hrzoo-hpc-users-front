@@ -10,11 +10,13 @@ import {
   Controller,
   useFormContext,
 } from "react-hook-form";
-import { CustomReactSelect } from '../../components/CustomReactSelect';
-import { SharedData } from '../../pages/root';
+import { CustomReactSelect } from 'Components/CustomReactSelect';
+import { SharedData } from 'Pages/root';
 import { ErrorMessage } from '@hookform/error-message';
-import { fetchScienceSoftware } from '../../api/software';
+import { fetchScienceSoftware } from 'Api/software';
 import { useQuery } from '@tanstack/react-query';
+import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl'
 import _ from "lodash";
 
 
@@ -22,6 +24,7 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
   const { control, getValues, setValue, formState: {errors} } = useFormContext();
   const { buildOptionsFromArray } = useContext(SharedData);
   const [ listScientificSoftware, setListScientificSoftware ] = useState(undefined)
+  const intl = useIntl()
 
   const {status, data: scienceSoftwareData } = useQuery({
       queryKey: ['science-software'],
@@ -41,7 +44,12 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
       <>
         <Row className="mt-5">
           <Col>
-            <h4 className="ms-4 mb-3 mt-4">Znanstveni softver</h4><br/>
+            <h4 className="ms-4 mb-3 mt-4">
+              <FormattedMessage
+                description="sciencesoftware-title"
+                defaultMessage="Znanstveni softver"
+              />
+            </h4><br/>
           </Col>
         </Row>
         <Row className="mt-1">
@@ -50,7 +58,10 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
               htmlFor="scientificSoftware"
               aria-label="scientificSoftware"
               className="mr-2 text-right form-label">
-              Aplikacije koje će se koristiti:
+              <FormattedMessage
+                description="sciencesoftware-list"
+                defaultMessage="Aplikacije koje će se koristiti:"
+              />
             </Label>
             <Controller
               name="scientificSoftware"
@@ -66,7 +77,10 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
                   scientificSoftwareMultiValue={true}
                   value={getValues(`scientificSoftware`)}
                   options={buildOptionsFromArray(listScientificSoftware)}
-                  placeholder="Odaberi"
+                  placeholder={intl.formatMessage({
+                    defaultMessage: "Odaberi",
+                    description: "sciencesoftware-placeholder"
+                  })}
                   onChange={(e) => setValue('scientificSoftware', e)}
                 />
               }
@@ -78,7 +92,10 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
             <Label
               htmlFor="scientificSoftwareExtra"
               aria-label="scientificSoftwareExtra">
-              Dodatne aplikacije koje će biti potrebno instalirati:
+              <FormattedMessage
+                description="sciencesoftware-list"
+                defaultMessage="Dodatne aplikacije koje će biti potrebno instalirati:"
+              />
             </Label>
             <Controller
               name="scientificSoftwareExtra"
@@ -112,7 +129,10 @@ const ScientificSoftware = ({fieldsDisabled=false}) => {
               htmlFor="scientificSoftwareHelp"
               aria-label="scientificSoftwareHelp"
               className="mr-2 text-right form-label">
-              Potrebna pomoć pri instalaciji:
+              <FormattedMessage
+                description="sciencesoftware-help"
+                defaultMessage="Potrebna pomoć pri instalaciji:"
+              />
             </Label>
             <Controller
               name="scientificSoftwareHelp"
