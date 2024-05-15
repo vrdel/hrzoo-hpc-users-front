@@ -71,6 +71,10 @@
     "defaultMessage": "Choose",
     "description": "newrequest-select-placeholder"
   },
+  "FV9iTN": {
+    "defaultMessage": "https://www.srce.unizg.hr/en/advanced-computing",
+    "description": "navigation-brand-link"
+  },
   "FqGoP3": {
     "defaultMessage": "Login with username and password",
     "description": "loginpriv-labelusernamepassword"

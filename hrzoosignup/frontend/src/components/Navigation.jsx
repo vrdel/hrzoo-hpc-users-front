@@ -33,8 +33,15 @@ const Navigation = () => {
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="shadow-sm border rounded d-flex justify-content-between mt-2 mb-2 pt-3 pb-3">
-      <NavbarBrand href="https://www.srce.unizg.hr/napredno-racunanje"
-        target="_blank" rel="noopener noreferrer" className="text-dark">
+      <NavbarBrand
+        href={intl.formatMessage({
+          defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje",
+          description: 'navigation-brand-link'
+        })}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-dark"
+      >
         <FontAwesomeIcon className="ps-4" icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
       </NavbarBrand>
       <Nav navbar className="m-1">

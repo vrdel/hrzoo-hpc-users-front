@@ -71,6 +71,10 @@
     "defaultMessage": "Odaberi",
     "description": "newrequest-select-placeholder"
   },
+  "FV9iTN": {
+    "defaultMessage": "https://www.srce.unizg.hr/napredno-racunanje",
+    "description": "navigation-brand-link"
+  },
   "FqGoP3": {
     "defaultMessage": "Prijava korisničkim imenom i lozinkom",
     "description": "loginpriv-labelusernamepassword"
