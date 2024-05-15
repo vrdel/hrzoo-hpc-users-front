@@ -39,6 +39,10 @@
     "defaultMessage": "The request has been successfully submitted",
     "description": "newrequest-toast-ok"
   },
+  "3Jae8P": {
+    "defaultMessage": "Resource type:",
+    "description": "resourcefields-type"
+  },
   "52shcW": {
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
@@ -50,6 +54,10 @@
   "6V4xYT": {
     "defaultMessage": "Details of inactive user {identifier}",
     "description": "linktitle-usersinactive-view"
+  },
+  "7GLux1": {
+    "defaultMessage": "Average amount of working memory per job (GB):",
+    "description": "resourcefields-ram"
   },
   "8dPx+P": {
     "defaultMessage": "Lisft of scientific software available on HPC clusters",
@@ -135,6 +143,10 @@
     "defaultMessage": "Login eduGAIN",
     "description": "loginpriv-labeledugain"
   },
+  "MmESXZ": {
+    "defaultMessage": "Average number of graphics processors per job:",
+    "description": "resourcefields-ngpu"
+  },
   "NF44j4": {
     "defaultMessage": "Memberships",
     "description": "navlinks-memberships"
@@ -198,6 +210,10 @@
   "Tu8G3o": {
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
+  },
+  "UZpSyp": {
+    "defaultMessage": "Average amount of temporary space per job (GB):",
+    "description": "resourcefields-temp"
   },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
@@ -335,6 +351,10 @@
     "defaultMessage": "Research project",
     "description": "requesttype-label-research"
   },
+  "sVu3Vi": {
+    "defaultMessage": "Total amount of storage space required for the project (GB):",
+    "description": "resourcefields-disk"
+  },
   "uttk9z": {
     "defaultMessage": "Details of active user {identifier}",
     "description": "linktitle-usersactive-view"
@@ -342,6 +362,10 @@
   "vMGyAj": {
     "defaultMessage": "General",
     "description": "generalfields-title"
+  },
+  "vW8uNu": {
+    "defaultMessage": "Average number of CPU processing cores per job:",
+    "description": "resourcefields-ncpu"
   },
   "vhUojX": {
     "defaultMessage": "Terms of use of Advanced Computing service",

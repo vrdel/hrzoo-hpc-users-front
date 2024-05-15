@@ -39,6 +39,10 @@
     "defaultMessage": "Zahtjev je uspješno podnesen",
     "description": "newrequest-toast-ok"
   },
+  "3Jae8P": {
+    "defaultMessage": "Tip resursa:",
+    "description": "resourcefields-type"
+  },
   "52shcW": {
     "defaultMessage": "Lozinka:",
     "description": "loginpriv-password"
@@ -50,6 +54,10 @@
   "6V4xYT": {
     "defaultMessage": "Detalji neaktivnog korisnika {identifier}",
     "description": "linktitle-usersinactive-view"
+  },
+  "7GLux1": {
+    "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
+    "description": "resourcefields-ram"
   },
   "8dPx+P": {
     "defaultMessage": "Popis aplikacija dostupnih na klasteru",
@@ -135,6 +143,10 @@
     "defaultMessage": "Prijava eduGAIN",
     "description": "loginpriv-labeledugain"
   },
+  "MmESXZ": {
+    "defaultMessage": "Prosječan broj grafičkih procesora po poslu:",
+    "description": "resourcefields-ngpu"
+  },
   "NF44j4": {
     "defaultMessage": "Članstva",
     "description": "navlinks-memberships"
@@ -198,6 +210,10 @@
   "Tu8G3o": {
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
+  },
+  "UZpSyp": {
+    "defaultMessage": "Prosječna količina privremenog prostora po poslu (GB):",
+    "description": "resourcefields-temp"
   },
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
@@ -335,6 +351,10 @@
     "defaultMessage": "Istraživački projekt",
     "description": "requesttype-label-research"
   },
+  "sVu3Vi": {
+    "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
+    "description": "resourcefields-disk"
+  },
   "uttk9z": {
     "defaultMessage": "Detalji aktivnog korisnika {identifier}",
     "description": "linktitle-usersactive-view"
@@ -342,6 +362,10 @@
   "vMGyAj": {
     "defaultMessage": "Opći dio",
     "description": "generalfields-title"
+  },
+  "vW8uNu": {
+    "defaultMessage": "Prosječan broj procesorskih jezgri po poslu:",
+    "description": "resourcefields-ncpu"
   },
   "vhUojX": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
