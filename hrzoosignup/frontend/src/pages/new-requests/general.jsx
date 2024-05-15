@@ -35,6 +35,7 @@ import {FormattedMessage} from 'react-intl';
 import { useIntl } from 'react-intl'
 import * as yup from "yup";
 
+
 function intlSchemaResolve(intl) {
   let schemaGeneralResolve = yup.object().shape({
     requestName: yup.string().required(
@@ -269,8 +270,6 @@ function intlSchemaResolve(intl) {
 
   return schemaGeneralResolve
 }
-
-
 
 
 export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {

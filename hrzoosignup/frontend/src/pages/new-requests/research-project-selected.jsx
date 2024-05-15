@@ -6,7 +6,7 @@ import {
   useFormContext,
   FormProvider,
 } from "react-hook-form";
-import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
+import RequestHorizontalRuler from 'Components/RequestHorizontalRuler';
 import {
   Badge,
   Button,
@@ -21,22 +21,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFile,
 } from '@fortawesome/free-solid-svg-icons';
-import { fetchCroRISMe } from '../../api/croris';
+import { fetchCroRISMe } from 'Api/croris';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ErrorMessage } from '@hookform/error-message';
-import ResourceFields from '../../components/fields-request/ResourceFields';
-import BaseNewScientificDomain from '../../components/fields-request/ScientificDomain';
-import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
+import ResourceFields from 'Components/fields-request/ResourceFields';
+import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
+import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { toast } from 'react-toastify'
-import { addResearchProject } from '../../api/projects';
-import { convertToIso8601 } from '../../utils/dates';
-import { url_ui_prefix } from '../../config/general';
-import ModalAreYouSure from '../../components/ModalAreYouSure';
-import validateDomainAndFields from '../../utils/validate-domain-fields';
-import { convertToAmerican } from '../../utils/dates.jsx';
+import { addResearchProject } from 'Api/projects';
+import { convertToIso8601 } from 'Utils/dates';
+import { url_ui_prefix } from 'Config/general';
+import ModalAreYouSure from 'Components/ModalAreYouSure';
+import validateDomainAndFields from 'Utils/validate-domain-fields';
+import { convertToAmerican } from 'Utils/dates.jsx';
 import * as yup from "yup";
-import { AuthContext } from '../../components/AuthContextProvider.jsx';
+import { AuthContext } from 'Components/AuthContextProvider.jsx';
 
 
 const ExtractUsers = ({projectUsers}) => {
