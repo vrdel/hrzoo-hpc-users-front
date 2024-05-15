@@ -7,6 +7,10 @@
     "defaultMessage": "Continue",
     "description": "newrequest-continue-label"
   },
+  "/hXMAH": {
+    "defaultMessage": "New request submit",
+    "description": "newrequest-modaltitle"
+  },
   "0fF2qV": {
     "defaultMessage": "New request on behalf of thesis project",
     "description": "linktitle-newrequest-class"
@@ -22,6 +26,10 @@
   "2nzsgl": {
     "defaultMessage": "You have already gained access based on a research project in the CroRIS system.",
     "description": "newrequest-reason-alreadycroris"
+  },
+  "3DZQVv": {
+    "defaultMessage": "The request has been successfully submitted",
+    "description": "newrequest-toast-ok"
   },
   "52shcW": {
     "defaultMessage": "Password:",
@@ -139,6 +147,10 @@
     "defaultMessage": "Status",
     "description": "statusinfo"
   },
+  "RDWYmx": {
+    "defaultMessage": "The request could not be submitted: { errmsg }",
+    "description": "newrequest-toast-fail"
+  },
   "SGXvmn": {
     "defaultMessage": "Practical class",
     "description": "requesttype-label-practicalclass"
@@ -235,6 +247,10 @@
     "defaultMessage": "My requests",
     "description": "navlinks-myrequests"
   },
+  "lUUVcW": {
+    "defaultMessage": "Submit request",
+    "description": "newrequest-general-button-label"
+  },
   "lqL8gP": {
     "defaultMessage": "Users",
     "description": "navlinks-users"
@@ -254,6 +270,10 @@
   "ouf6xV": {
     "defaultMessage": "You must select one type of request to continue",
     "description": "newrequest-norequest-selected"
+  },
+  "p+6Cku": {
+    "defaultMessage": "Are you sure you want to submit a new request?",
+    "description": "newrequest-modalmsg"
   },
   "pFrauD": {
     "defaultMessage": "Public keys management",

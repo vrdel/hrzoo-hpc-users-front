@@ -31,6 +31,8 @@ import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';
 import validateRequestDates from 'Utils/validate-dates-startend';
 import { convertToAmerican } from 'Utils/dates.jsx';
+import {FormattedMessage} from 'react-intl';
+import { useIntl } from 'react-intl'
 import * as yup from "yup";
 
 
@@ -124,7 +126,7 @@ export const GeneralRequest = ({projectType, schemaResolve=schemaGeneralResolve}
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const { userDetails, csrfToken } = useContext(AuthContext)
-
+  const intl = useIntl()
   const navigate = useNavigate()
 
   const rhfProps = useForm({
@@ -169,7 +171,10 @@ export const GeneralRequest = ({projectType, schemaResolve=schemaGeneralResolve}
       //queryClient.invalidateQueries('my-projects');
       toast.success(
         <span className="font-monospace text-dark">
-          Zahtjev je uspješno podnesen
+          <FormattedMessage
+            defaultMessage="Zahtjev je uspješno podnesen"
+            description="newrequest-toast-ok"
+          />
         </span>, {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
@@ -181,8 +186,13 @@ export const GeneralRequest = ({projectType, schemaResolve=schemaGeneralResolve}
     onError: (error) => {
       toast.error(
         <span className="font-monospace text-dark">
-          Zahtjev nije bilo moguće podnijeti:
-          { error.message }
+          <FormattedMessage
+            defaultMessage="Zahtjev nije bilo moguće podnijeti: { errmsg }"
+            description="newrequest-toast-fail"
+            values={{
+              errmsg: error.message
+            }}
+          />
         </span>, {
           toastId: 'genproj-fail-add',
           autoClose: 2500,
@@ -238,8 +248,14 @@ export const GeneralRequest = ({projectType, schemaResolve=schemaGeneralResolve}
     //alert(JSON.stringify(dataToSend, null, 2));
 
     setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Podnošenje novog korisničkog zahtjeva")
-    setModalMsg("Da li ste sigurni da želite podnijeti novi zahtjev?")
+    setModalTitle(intl.formatMessage({
+      defaultMessage: "Podnošenje novog korisničkog zahtjeva",
+      description: "newrequest-modaltitle"
+    }))
+    setModalMsg(intl.formatMessage({
+      defaultMessage: "Da li ste sigurni da želite podnijeti novi zahtjev?",
+      description: "newrequest-modalmsg"
+    }))
     setOnYesCall('doaddreq')
     setOnYesCallArg(dataToSend)
   }
@@ -264,7 +280,10 @@ export const GeneralRequest = ({projectType, schemaResolve=schemaGeneralResolve}
             <Col>
               <Button size="lg" color="success" id="submit-button" type="submit">
                 <FontAwesomeIcon icon={faFile}/>{' '}
-                Podnesi zahtjev
+                <FormattedMessage
+                  defaultMessage="Podnesi zahtjev"
+                  description="newrequest-general-button-label"
+                />
               </Button>
             </Col>
           </Row>

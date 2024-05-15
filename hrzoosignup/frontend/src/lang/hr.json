@@ -7,6 +7,10 @@
     "defaultMessage": "Nastavi",
     "description": "newrequest-continue-label"
   },
+  "/hXMAH": {
+    "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
+    "description": "newrequest-modaltitle"
+  },
   "0fF2qV": {
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
     "description": "linktitle-newrequest-class"
@@ -22,6 +26,10 @@
   "2nzsgl": {
     "defaultMessage": "Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS",
     "description": "newrequest-reason-alreadycroris"
+  },
+  "3DZQVv": {
+    "defaultMessage": "Zahtjev je uspješno podnesen",
+    "description": "newrequest-toast-ok"
   },
   "52shcW": {
     "defaultMessage": "Lozinka:",
@@ -139,6 +147,10 @@
     "defaultMessage": "Status",
     "description": "statusinfo"
   },
+  "RDWYmx": {
+    "defaultMessage": "Zahtjev nije bilo moguće podnijeti: { errmsg }",
+    "description": "newrequest-toast-fail"
+  },
   "SGXvmn": {
     "defaultMessage": "Praktična nastava",
     "description": "requesttype-label-practicalclass"
@@ -235,6 +247,10 @@
     "defaultMessage": "Moji zahtjevi",
     "description": "navlinks-myrequests"
   },
+  "lUUVcW": {
+    "defaultMessage": "Podnesi zahtjev",
+    "description": "newrequest-general-button-label"
+  },
   "lqL8gP": {
     "defaultMessage": "Korisnici",
     "description": "navlinks-users"
@@ -254,6 +270,10 @@
   "ouf6xV": {
     "defaultMessage": "Morate odabrati jedan tip zahtjeva da biste nastavili",
     "description": "newrequest-norequest-selected"
+  },
+  "p+6Cku": {
+    "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
+    "description": "newrequest-modalmsg"
   },
   "pFrauD": {
     "defaultMessage": "Upravljanje javnim ključevima",
