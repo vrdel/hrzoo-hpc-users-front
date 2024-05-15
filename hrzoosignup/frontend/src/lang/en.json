@@ -27,6 +27,10 @@
     "defaultMessage": "Lisft of scientific software available on HPC clusters",
     "description": "linktitle-software"
   },
+  "8jbyYo": {
+    "defaultMessage": "Srce workshop",
+    "description": "requesttype-label-srceworkshop"
+  },
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
@@ -75,6 +79,14 @@
     "defaultMessage": "Memberships",
     "description": "navlinks-memberships"
   },
+  "No5Y5w": {
+    "defaultMessage": "Institutional project",
+    "description": "requesttype-label-institutional"
+  },
+  "Oi5CPK": {
+    "defaultMessage": "Internal project",
+    "description": "requesttype-label-internal"
+  },
   "OxYLwa": {
     "defaultMessage": "Request for Advanced computing service usage",
     "description": "navigation-title"
@@ -91,6 +103,10 @@
     "defaultMessage": "Status",
     "description": "statusinfo"
   },
+  "SGXvmn": {
+    "defaultMessage": "Practical class",
+    "description": "requesttype-label-practicalclass"
+  },
   "SSxmVJ": {
     "defaultMessage": "Adding new public key",
     "description": "linktitle-pubkeys-add"
@@ -100,7 +116,7 @@
     "description": "navlinks-projects"
   },
   "TH7L+k": {
-    "defaultMessage": "Viewing request{identifier}",
+    "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
   },
   "Tu8G3o": {
@@ -182,6 +198,14 @@
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-managerequests-change"
+  },
+  "q/DQi1": {
+    "defaultMessage": "Thesis project",
+    "description": "requesttype-label-thesis"
+  },
+  "qFLN1G": {
+    "defaultMessage": "Research project",
+    "description": "requesttype-label-research"
   },
   "uttk9z": {
     "defaultMessage": "Details of active user {identifier}",

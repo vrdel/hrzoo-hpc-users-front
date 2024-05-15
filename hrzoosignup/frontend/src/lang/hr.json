@@ -27,6 +27,10 @@
     "defaultMessage": "Popis aplikacija dostupnih na klasteru",
     "description": "linktitle-software"
   },
+  "8jbyYo": {
+    "defaultMessage": "Srce radionica",
+    "description": "requesttype-label-srceworkshop"
+  },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
@@ -75,6 +79,14 @@
     "defaultMessage": "Članstva",
     "description": "navlinks-memberships"
   },
+  "No5Y5w": {
+    "defaultMessage": "Institucijski projekt",
+    "description": "requesttype-label-institutional"
+  },
+  "Oi5CPK": {
+    "defaultMessage": "Interni projekt",
+    "description": "requesttype-label-internal"
+  },
   "OxYLwa": {
     "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
     "description": "navigation-title"
@@ -90,6 +102,10 @@
   "R7WXFa": {
     "defaultMessage": "Status",
     "description": "statusinfo"
+  },
+  "SGXvmn": {
+    "defaultMessage": "Praktična nastava",
+    "description": "requesttype-label-practicalclass"
   },
   "SSxmVJ": {
     "defaultMessage": "Dodavanje novog javnog ključa",
@@ -182,6 +198,14 @@
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-managerequests-change"
+  },
+  "q/DQi1": {
+    "defaultMessage": "Izrada rada",
+    "description": "requesttype-label-thesis"
+  },
+  "qFLN1G": {
+    "defaultMessage": "Istraživački projekt",
+    "description": "requesttype-label-research"
   },
   "uttk9z": {
     "defaultMessage": "Detalji aktivnog korisnika {identifier}",

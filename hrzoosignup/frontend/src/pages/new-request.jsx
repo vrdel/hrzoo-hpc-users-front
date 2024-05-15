@@ -29,10 +29,10 @@ const NewRequest = () => {
   const { userDetails } = useContext(AuthContext);
   const intl = useIntl()
 
-  let requestTypesToSelect = RequestTypesToSelect
+  let requestTypesToSelect = RequestTypesToSelect(intl)
   if (!userDetails.is_staff && !userDetails.is_superuser) {
-    requestTypesToSelect = RequestTypesToSelect.filter((e) =>
-      e.value !== 'interni-projekt' && e.value !== 'srce-radionica'
+    requestTypesToSelect = RequestTypesToSelect(intl).filter((e) =>
+      e.value !== 'internal-project' && e.value !== 'srce-workshop'
     )
   }
 
@@ -55,7 +55,7 @@ const NewRequest = () => {
       setButtonDisabled(false)
     else {
       setButtonDisabled(true)
-      setSelectedProject(UrlToRequestType(location.pathname))
+      setSelectedProject(UrlToRequestType(location.pathname, intl))
     }
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
@@ -83,7 +83,7 @@ const NewRequest = () => {
             placeholder="Odaberi"
             controlWidth="40%"
             onChange={(e) => {
-              if (e.value === 'institucijski-projekt'
+              if (e.value === 'institutional-project'
                 && statusSubmitInstitute === 'success'
                 && dataSubmitInstitute?.status?.operation === 'DENY') {
                 // && dataSubmitInstitute?.status?.operation === 'ALLOW') {
@@ -114,7 +114,7 @@ const NewRequest = () => {
                 )
                 setContinueButtonDisabled(true)
               }
-              else if (e.value === 'istrazivacki-projekt'
+              else if (e.value === 'research-project'
                 && status === 'success'
                 && croRisData?.status?.code !== 200) {
                 toast.error(
@@ -127,7 +127,7 @@ const NewRequest = () => {
                 )
                 setContinueButtonDisabled(true)
               }
-              else if (e.value === 'istrazivacki-projekt'
+              else if (e.value === 'research-project'
                 && status === 'success'
                 && croRisData?.data?.person_info?.lead_status !== true) {
                 toast.error(
@@ -140,7 +140,7 @@ const NewRequest = () => {
                 )
                 setContinueButtonDisabled(true)
               }
-              else if (e.value === 'izrada-rada') {
+              else if (e.value === 'thesis-project') {
                 toast.info(
                   <span className="font-monospace text-dark">
                     Zahtjev &quot;Izrada rada&quot; se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.
