@@ -16,6 +16,7 @@ import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
+import { FormattedMessage } from 'react-intl';
 
 
 const GeneralProjectUsers = ({projectInfo}) => {
@@ -273,7 +274,10 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
           <Label
             htmlFor="requestName"
             aria-label="requestName">
-            Naziv:
+            <FormattedMessage
+              description="generalfields-name"
+              defaultMessage="Naziv:"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Controller
@@ -308,7 +312,10 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
           <Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
-            Obrazloženje:
+            <FormattedMessage
+              description="generalfields-explanation"
+              defaultMessage="Obrazloženje:"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Controller
@@ -343,7 +350,10 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
           <Label
             htmlFor="requestName"
             aria-label="requestName">
-            Period korištenja:
+            <FormattedMessage
+              description="generalfields-duration"
+              defaultMessage="Period korištenja:"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <span>
@@ -422,7 +432,10 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
           <Label
             htmlFor="requestInstitute"
             aria-label="requestInstitute">
-            Institucija nositelj:
+            <FormattedMessage
+              description="generalfields-leadinstitution"
+              defaultMessage="Institucija nositelj:"
+            />
           </Label>
           <span className="fst-italic">
             <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2 mt-sm-3" key="project-institute">
@@ -441,7 +454,10 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             <>
               <Row className="mt-4">
                 <Col md={{offset: 1}}>
-                  Korisnici:
+                  <FormattedMessage
+                    description="generalfields-userslist"
+                    defaultMessage="Korisnici:"
+                  />
                 </Col>
               </Row>
               <CrorisProjectUsers projectInfo={projectInfo} manageProject={manageProject} />
@@ -451,7 +467,10 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
               <>
                 <Row className="mt-4">
                   <Col md={{offset: 1}}>
-                    Korisnici:
+                    <FormattedMessage
+                      description="generalfields-userslist"
+                      defaultMessage="Korisnici:"
+                    />
                   </Col>
                 </Row>
                 <GeneralProjectUsers projectInfo={projectInfo} />

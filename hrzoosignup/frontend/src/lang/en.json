@@ -15,6 +15,10 @@
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
   },
+  "0NBrG+": {
+    "defaultMessage": "Explanation:",
+    "description": "generalfields-explanation"
+  },
   "0fF2qV": {
     "defaultMessage": "New request on behalf of thesis project",
     "description": "linktitle-newrequest-class"
@@ -71,6 +75,10 @@
     "defaultMessage": "Yes",
     "description": "modal-buttonyes"
   },
+  "CiaQiU": {
+    "defaultMessage": "Name:",
+    "description": "generalfields-name"
+  },
   "CinYsf": {
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
@@ -98,6 +106,10 @@
   "HcOwzH": {
     "defaultMessage": "Username:",
     "description": "loginpriv-username"
+  },
+  "IP7pZp": {
+    "defaultMessage": "Users:",
+    "description": "generalfields-userslist"
   },
   "KAUZl8": {
     "defaultMessage": "Request type",
@@ -271,6 +283,10 @@
     "defaultMessage": "Requests",
     "description": "navlinks-requests"
   },
+  "n7ujtr": {
+    "defaultMessage": "Usage period:",
+    "description": "generalfields-duration"
+  },
   "oRqoRe": {
     "defaultMessage": "Advanced Computing",
     "description": "loginpriv-servicename"
@@ -310,6 +326,10 @@
   "vhUojX": {
     "defaultMessage": "Terms of use of Advanced Computing service",
     "description": "loginofficial-terms"
+  },
+  "y+MIYq": {
+    "defaultMessage": "Lead institution:",
+    "description": "generalfields-leadinstitution"
   },
   "z/MmC8": {
     "defaultMessage": "My info",

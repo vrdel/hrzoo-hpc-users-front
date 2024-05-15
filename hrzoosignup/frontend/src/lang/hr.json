@@ -15,6 +15,10 @@
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
   },
+  "0NBrG+": {
+    "defaultMessage": "Obrazloženje:",
+    "description": "generalfields-explanation"
+  },
   "0fF2qV": {
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
     "description": "linktitle-newrequest-class"
@@ -71,6 +75,10 @@
     "defaultMessage": "Da",
     "description": "modal-buttonyes"
   },
+  "CiaQiU": {
+    "defaultMessage": "Naziv:",
+    "description": "generalfields-name"
+  },
   "CinYsf": {
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
@@ -98,6 +106,10 @@
   "HcOwzH": {
     "defaultMessage": "Korisničko ime:",
     "description": "loginpriv-username"
+  },
+  "IP7pZp": {
+    "defaultMessage": "Korisnici:",
+    "description": "generalfields-userslist"
   },
   "KAUZl8": {
     "defaultMessage": "Tip zahtjeva",
@@ -271,6 +283,10 @@
     "defaultMessage": "Zahtjevi",
     "description": "navlinks-requests"
   },
+  "n7ujtr": {
+    "defaultMessage": "Period korištenja:",
+    "description": "generalfields-duration"
+  },
   "oRqoRe": {
     "defaultMessage": "Napredno računanje",
     "description": "loginpriv-servicename"
@@ -310,6 +326,10 @@
   "vhUojX": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginofficial-terms"
+  },
+  "y+MIYq": {
+    "defaultMessage": "Institucija nositelj:",
+    "description": "generalfields-leadinstitution"
   },
   "z/MmC8": {
     "defaultMessage": "Moji podaci",
