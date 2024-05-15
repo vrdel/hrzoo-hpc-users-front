@@ -258,7 +258,10 @@ const NewRequestIndex = () => {
             htmlFor="requestResourceType"
             aria-label="requestResourceType"
             className="mr-2 text-right form-label">
-            Tip resursa:
+            <FormattedMessage
+              description="resourcefields-type"
+              defaultMessage="Tip resursa:"
+            />
           </Label>
           <Input
             aria-label="requestResourceType"
@@ -277,7 +280,10 @@ const NewRequestIndex = () => {
             htmlFor="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
             className="mr-2 form-label text-center">
-            Prosječan broj procesorskih jezgri po poslu:
+            <FormattedMessage
+              description="resourcefields-ncpu"
+              defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -295,7 +301,10 @@ const NewRequestIndex = () => {
             htmlFor="HPCnSlotsGPU"
             aria-label="HPCnSlotsGPU"
             className="mr-2 form-label text-center">
-            Prosječan broj grafičkih procesora po poslu:
+            <FormattedMessage
+              description="resourcefields-ngpu"
+              defaultMessage="Prosječan broj grafičkih procesora po poslu:"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -313,7 +322,10 @@ const NewRequestIndex = () => {
             htmlFor="HPCnRAM"
             aria-label="HPCnRAM"
             className="mr-2 form-label text-center">
-            Prosječna količina radne memorije po poslu (GB):
+            <FormattedMessage
+              description="resourcefields-ram"
+              defaultMessage="Prosječna količina radne memorije po poslu (GB):"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -331,7 +343,10 @@ const NewRequestIndex = () => {
             htmlFor="HPCnTempGB"
             aria-label="HPCnTempGB"
             className="mr-2 form-label text-center">
-            Prosječna količina privremenog prostora po poslu (GB):
+            <FormattedMessage
+              description="resourcefields-temp"
+              defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -349,7 +364,10 @@ const NewRequestIndex = () => {
             htmlFor="HPCnDiskGB"
             aria-label="HPCnDiskGB"
             className="mr-2 form-label text-center">
-            Ukupna količina spremišnog prostora potrebna za projekt (GB):
+            <FormattedMessage
+              description="resourcefields-disk"
+              defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -373,7 +391,10 @@ const NewRequestIndex = () => {
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
             className="mr-2 form-label text-center">
-            Broj virtualnih poslužitelja:
+            <FormattedMessage
+              description="cloudfields-nvm"
+              defaultMessage="Broj virtualnih poslužitelja:"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -391,7 +412,10 @@ const NewRequestIndex = () => {
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
             className="mr-2 form-label text-center">
-            Ukupna količina virtualnih procesorskih jezgara:
+            <FormattedMessage
+              description="cloudfields-vcpu"
+              defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -409,7 +433,10 @@ const NewRequestIndex = () => {
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
             className="mr-2 form-label text-center">
-            Ukupna količina radne memorije (GB):
+            <FormattedMessage
+              description="cloudfields-nram"
+              defaultMessage="Ukupna količina radne memorije (GB):"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -427,7 +454,10 @@ const NewRequestIndex = () => {
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
             className="mr-2 form-label text-center">
-            Maksimalna količina radne memorije po poslužitelju (GB):
+            <FormattedMessage
+              description="cloudfields-nramvm"
+              defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -445,7 +475,10 @@ const NewRequestIndex = () => {
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
             className="mr-2 form-label text-center">
-            Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):
+            <FormattedMessage
+              description="cloudfields-ndiskgb"
+              defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -465,7 +498,10 @@ const NewRequestIndex = () => {
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
             className="mr-2 form-label text-center">
-            Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):
+            <FormattedMessage
+              description="cloudfields-nfastdiskgb"
+              defaultMessage="Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -483,7 +519,10 @@ const NewRequestIndex = () => {
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
             className="mr-2 form-label text-center">
-            Broj javnih IPv4 adresa:
+            <FormattedMessage
+              description="cloudfields-nips"
+              defaultMessage=" Broj javnih IPv4 adresa:"
+            />
           </Label>
           <InputGroup>
             <Input
@@ -502,7 +541,10 @@ const NewRequestIndex = () => {
         <Col>
           <Button size="lg" disabled={true} color="success">
             <FontAwesomeIcon icon={faFile}/>{' '}
-            Podnesi zahtjev
+            <FormattedMessage
+              defaultMessage="Podnesi zahtjev"
+              description="researchselected-label-submit"
+            />
           </Button>
         </Col>
       </Row>
