@@ -1,7 +1,8 @@
 import React from 'react'
 import SrceBigLogo from '../assets/pravisrce.png';
 import SrceLogoTiny from '../assets/srce-logo-e-mail-sig.png';
-import '../styles/footer.css';
+import { FormattedMessage } from 'react-intl';
+import 'Styles/footer.css';
 
 
 const Footer = () => {
@@ -23,7 +24,10 @@ const Footer = () => {
         <p>
           <small>Copyright © 2024{' '}
             <a href="https://www.srce.unizg.hr/" target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
-              Sveučilišni računski centar (Srce)
+              <FormattedMessage
+                description="footer-srce"
+                defaultMessage="Sveučilišni računski centar (Srce)"
+              />
             </a>
           </small>
         </p>

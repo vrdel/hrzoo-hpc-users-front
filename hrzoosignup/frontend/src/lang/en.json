@@ -116,7 +116,7 @@
     "description": "requesttype-label-internal"
   },
   "OxYLwa": {
-    "defaultMessage": "Request for Advanced computing service usage",
+    "defaultMessage": "Request for Advanced Computing service usage",
     "description": "navigation-title"
   },
   "Pxvi7f": {
@@ -124,7 +124,7 @@
     "description": "linktitle-myrequests"
   },
   "Q1aE8s": {
-    "defaultMessage": "Advanced computing",
+    "defaultMessage": "Advanced Computing",
     "description": "loginofficial-servicename"
   },
   "QTwRj9": {
@@ -170,6 +170,10 @@
   "dUFVR+": {
     "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newrequest-research"
+  },
+  "e6lTgN": {
+    "defaultMessage": "University Computing Centre",
+    "description": "footer-srce"
   },
   "eWfkW5": {
     "defaultMessage": "No data from CroRIS system",
@@ -236,7 +240,7 @@
     "description": "navlinks-requests"
   },
   "oRqoRe": {
-    "defaultMessage": "Advanced computing",
+    "defaultMessage": "Advanced Computing",
     "description": "loginpriv-servicename"
   },
   "ouf6xV": {
@@ -264,7 +268,7 @@
     "description": "linktitle-usersactive-view"
   },
   "vhUojX": {
-    "defaultMessage": "Terms of use of Advanced computing service",
+    "defaultMessage": "Terms of use of Advanced Computing service",
     "description": "loginofficial-terms"
   },
   "z/MmC8": {

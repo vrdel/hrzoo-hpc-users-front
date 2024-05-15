@@ -171,6 +171,10 @@
     "defaultMessage": "Novi zahtjev temeljem istraživačkog projekta",
     "description": "linktitle-newrequest-research"
   },
+  "e6lTgN": {
+    "defaultMessage": "Sveučilišni računski centar (Srce)",
+    "description": "footer-srce"
+  },
   "eWfkW5": {
     "defaultMessage": "Nema podataka iz sustava CroRIS",
     "description": "newrequest-reason-nocroris"
