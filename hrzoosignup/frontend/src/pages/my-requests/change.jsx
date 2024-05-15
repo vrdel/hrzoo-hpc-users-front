@@ -24,6 +24,7 @@ import { url_ui_prefix } from '../../config/general';
 import { findTrueState } from '../../utils/reqstate';
 import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
 import { defaultUnAuthnRedirect} from '../../config/default-redirect';
+import { useIntl } from 'react-intl'
 import { CroRisDescription } from '../../components/fields-request/GeneralFields';
 
 
@@ -48,6 +49,7 @@ export const MyRequestChange = () => {
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
   const [requestState, setRequestState] = useState(undefined)
+  const intl = useIntl()
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -152,12 +154,12 @@ export const MyRequestChange = () => {
       setRequestState(newState)
     }
 
-    setPageTitle(LinkTitles(location.pathname))
+    setPageTitle(LinkTitles(location.pathname, intl))
 
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
 
-  }, [location.pathname, nrProject, status])
+  }, [location.pathname, nrProject, status, intl])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState
