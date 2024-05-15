@@ -19,6 +19,10 @@
     "defaultMessage": "Novi zahtjev",
     "description": "navlinks-newrequests"
   },
+  "2nzsgl": {
+    "defaultMessage": "Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS",
+    "description": "newrequest-reason-alreadycroris"
+  },
   "52shcW": {
     "defaultMessage": "Lozinka:",
     "description": "loginpriv-password"
@@ -42,6 +46,10 @@
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
+  },
+  "9xTRRJ": {
+    "defaultMessage": "Matični broj znanstvenika (MBZ) nije poznat",
+    "description": "newrequest-reason-mbzunk"
   },
   "AGfSj3": {
     "defaultMessage": "Ne",
@@ -99,6 +107,10 @@
     "defaultMessage": "Institucijski projekt",
     "description": "requesttype-label-institutional"
   },
+  "OMuyxE": {
+    "defaultMessage": "Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
+    "description": "newrequest-reason-alreadyassociate"
+  },
   "Oi5CPK": {
     "defaultMessage": "Interni projekt",
     "description": "requesttype-label-internal"
@@ -114,6 +126,10 @@
   "Q1aE8s": {
     "defaultMessage": "Napredno računanje",
     "description": "loginofficial-servicename"
+  },
+  "QTwRj9": {
+    "defaultMessage": "Jedan institucijski projekt je već prijavljen",
+    "description": "newrequest-reason-institutionalready"
   },
   "R7WXFa": {
     "defaultMessage": "Status",
@@ -155,6 +171,10 @@
     "defaultMessage": "Novi zahtjev temeljem istraživačkog projekta",
     "description": "linktitle-newrequest-research"
   },
+  "eWfkW5": {
+    "defaultMessage": "Nema podataka iz sustava CroRIS",
+    "description": "newrequest-reason-nocroris"
+  },
   "fxdgEp": {
     "defaultMessage": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
@@ -178,6 +198,10 @@
   "h41Ik7": {
     "defaultMessage": "Softver",
     "description": "navlinks-software"
+  },
+  "h78Eiu": {
+    "defaultMessage": "Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
+    "description": "newrequest-reason-alreadylead"
   },
   "hj4YOP": {
     "defaultMessage": "Novi zahtjev",

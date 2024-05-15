@@ -100,18 +100,35 @@ const NewRequest = () => {
                 let reasonDetail = ''
 
                 if (msg === 'MBZ unknown')
-                  reasonDetail = 'Matični broj znanstvenika (MBZ) nije poznat'
+                  reasonDetail = intl.formatMessage({
+                    defaultMessage: 'Matični broj znanstvenika (MBZ) nije poznat',
+                    description: 'newrequest-reason-mbzunk'
+                  })
                 else if (msg === 'Already submitted')
-                  reasonDetail = 'Jedan institucijski projekt je već prijavljen'
+                  reasonDetail = intl.formatMessage({
+                    defaultMessage: 'Jedan institucijski projekt je već prijavljen',
+                    description: 'newrequest-reason-institutionalready'
+                  })
                 else if (msg === 'Access CroRIS')
-                  reasonDetail = 'Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS'
+                  reasonDetail = intl.formatMessage({
+                    defaultMessage: 'Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS',
+                    description: 'newrequest-reason-alreadycroris'
+                  })
                 else if (msg === 'No CroRIS data')
-                  reasonDetail = 'Nema podataka iz sustava CroRIS'
+                  reasonDetail = intl.formatMessage({
+                    defaultMessage: 'Nema podataka iz sustava CroRIS',
+                    description: 'newrequest-reason-nocroris'
+                  })
                 else if (msg === 'Lead CroRIS project')
-                  reasonDetail = 'Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu "Moji podaci" za više detalja.'
+                  reasonDetail = intl.formatMessage({
+                    defaultMessage: 'Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu "Moji podaci" za više detalja.',
+                    description: 'newrequest-reason-alreadylead'
+                  })
                 else if (msg === 'Associate CroRIS project')
-                  reasonDetail = 'Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu "Moji podaci" za više detalja.'
-
+                  reasonDetail = intl.formatMessage({
+                    defaultMessage: 'Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu "Moji podaci" za više detalja.',
+                    description: 'newrequest-reason-alreadyassociate'
+                  })
                 toast.error(
                   <span className="font-monospace text-dark">
                     <FormattedMessage

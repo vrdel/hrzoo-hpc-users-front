@@ -19,6 +19,10 @@
     "defaultMessage": "New request",
     "description": "navlinks-newrequests"
   },
+  "2nzsgl": {
+    "defaultMessage": "You have already gained access based on a research project in the CroRIS system.",
+    "description": "newrequest-reason-alreadycroris"
+  },
   "52shcW": {
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
@@ -42,6 +46,10 @@
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
+  },
+  "9xTRRJ": {
+    "defaultMessage": "The scientist's personal identification number (MBZ) is unknown.",
+    "description": "newrequest-reason-mbzunk"
   },
   "AGfSj3": {
     "defaultMessage": "No",
@@ -99,6 +107,10 @@
     "defaultMessage": "Institutional project",
     "description": "requesttype-label-institutional"
   },
+  "OMuyxE": {
+    "defaultMessage": "You are registered as a collaborator on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
+    "description": "newrequest-reason-alreadyassociate"
+  },
   "Oi5CPK": {
     "defaultMessage": "Internal project",
     "description": "requesttype-label-internal"
@@ -114,6 +126,10 @@
   "Q1aE8s": {
     "defaultMessage": "Advanced computing",
     "description": "loginofficial-servicename"
+  },
+  "QTwRj9": {
+    "defaultMessage": "One institutional project has already been registered.",
+    "description": "newrequest-reason-institutionalready"
   },
   "R7WXFa": {
     "defaultMessage": "Status",
@@ -155,6 +171,10 @@
     "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newrequest-research"
   },
+  "eWfkW5": {
+    "defaultMessage": "No data from CroRIS system",
+    "description": "newrequest-reason-nocroris"
+  },
   "fxdgEp": {
     "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
@@ -178,6 +198,10 @@
   "h41Ik7": {
     "defaultMessage": "Software",
     "description": "navlinks-software"
+  },
+  "h78Eiu": {
+    "defaultMessage": "You are registered as a leader on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
+    "description": "newrequest-reason-alreadylead"
   },
   "hj4YOP": {
     "defaultMessage": "New request",
