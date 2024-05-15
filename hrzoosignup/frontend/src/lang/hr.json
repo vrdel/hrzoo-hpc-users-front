@@ -123,6 +123,10 @@
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
   },
+  "Ute+1D": {
+    "defaultMessage": "Zahtjev &quot;Izrada rada&quot; se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
+    "description": "newrequest-thesis-explanation"
+  },
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
@@ -134,6 +138,10 @@
   "dUFVR+": {
     "defaultMessage": "Novi zahtjev temeljem istraživačkog projekta",
     "description": "linktitle-newrequest-research"
+  },
+  "fxdgEp": {
+    "defaultMessage": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
+    "description": "newrequest-no-instituteproject-titleexplanation"
   },
   "gNm8yt": {
     "defaultMessage": "Novi zahtjev temeljem izrade rada",
@@ -191,6 +199,10 @@
     "defaultMessage": "Napredno računanje",
     "description": "loginpriv-servicename"
   },
+  "ouf6xV": {
+    "defaultMessage": "Morate odabrati jedan tip zahtjeva da biste nastavili",
+    "description": "newrequest-norequest-selected"
+  },
   "pFrauD": {
     "defaultMessage": "Upravljanje javnim ključevima",
     "description": "linktitle-pubkeys"
@@ -218,5 +230,9 @@
   "z/MmC8": {
     "defaultMessage": "Moji podaci",
     "description": "navlinks-myinfo"
+  },
+  "ziaUjB": {
+    "defaultMessage": "Nemate projekata prijavljenih u sustavu CroRIS",
+    "description": "newrequest-no-researchproject"
   }
 }

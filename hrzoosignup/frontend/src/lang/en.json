@@ -123,6 +123,10 @@
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
   },
+  "Ute+1D": {
+    "defaultMessage": "The request &quot;Thesis project&quot; pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
+    "description": "newrequest-thesis-explanation"
+  },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
@@ -134,6 +138,10 @@
   "dUFVR+": {
     "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newrequest-research"
+  },
+  "fxdgEp": {
+    "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
+    "description": "newrequest-no-instituteproject-titleexplanation"
   },
   "gNm8yt": {
     "defaultMessage": "New request on behalf of thesis project",
@@ -191,6 +199,10 @@
     "defaultMessage": "Advanced computing",
     "description": "loginpriv-servicename"
   },
+  "ouf6xV": {
+    "defaultMessage": "You must select one type of request to continue",
+    "description": "newrequest-norequest-selected"
+  },
   "pFrauD": {
     "defaultMessage": "Public keys management",
     "description": "linktitle-pubkeys"
@@ -218,5 +230,9 @@
   "z/MmC8": {
     "defaultMessage": "My info",
     "description": "navlinks-myinfo"
+  },
+  "ziaUjB": {
+    "defaultMessage": "You do not have any projects registered in the CroRIS system",
+    "description": "newrequest-no-researchproject"
   }
 }

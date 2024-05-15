@@ -43,7 +43,7 @@ export const LanguageButtonNav = ({locale, setLocale}) => {
   return (
     <Button size="sm" color="light"
       onClick={ () => alternateLocale() } >
-      <span className="fs-7 m-0 p-0">
+      <span className="fs-6 m-0 p-0">
         { locale === 'hr' && '🇭🇷'}
         { locale === 'en' && '🇬🇧'}
       </span>

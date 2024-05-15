@@ -30,9 +30,11 @@
   "T7YuXQ": "Projekti",
   "TH7L+k": "Pregledavanje zahtjeva {identifier}",
   "Tu8G3o": "Dodijeljeno korisničko ime za pristup resursima",
+  "Ute+1D": "Zahtjev &quot;Izrada rada&quot; se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
   "W99Dmu": "Novi zahtjev za Srce radionicu",
   "cQTqIM": "Novi zahtjev temeljem institucijskog projekta",
   "dUFVR+": "Novi zahtjev temeljem istraživačkog projekta",
+  "fxdgEp": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
   "gNm8yt": "Novi zahtjev temeljem izrade rada",
   "glIPfH": "Popis svih korisnika koji nisu ni na jednom aktivnom projektu",
   "gx5Ush": "Odjava",
@@ -47,11 +49,13 @@
   "lqL8gP": "Korisnici",
   "n4ooiQ": "Zahtjevi",
   "oRqoRe": "Napredno računanje",
+  "ouf6xV": "Morate odabrati jedan tip zahtjeva da biste nastavili",
   "pFrauD": "Upravljanje javnim ključevima",
   "pyGIbR": "Pregledavanje zahtjeva {identifier}",
   "q/DQi1": "Izrada rada",
   "qFLN1G": "Istraživački projekt",
   "uttk9z": "Detalji aktivnog korisnika {identifier}",
   "vhUojX": "Pravila korištenja usluge Napredno računanje",
-  "z/MmC8": "Moji podaci"
+  "z/MmC8": "Moji podaci",
+  "ziaUjB": "Nemate projekata prijavljenih u sustavu CroRIS"
 }
