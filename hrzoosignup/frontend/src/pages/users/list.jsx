@@ -602,6 +602,7 @@ export const UsersInactiveList = () => {
   const { LinkTitles } = useContext(SharedData)
 	const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
+  const intl = useIntl()
 
 	const { status, error, data } = useQuery({
 		queryKey: ["inactive-users"],
@@ -609,10 +610,10 @@ export const UsersInactiveList = () => {
 	})
 
 	useEffect(() => {
-		setPageTitle(LinkTitles(location.pathname))
+		setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-	}, [location.pathname, status])
+	}, [location.pathname, status, intl])
 
   if (status === 'loading' && pageTitle)
     return (
