@@ -195,6 +195,10 @@
     "defaultMessage": "Napredno računanje",
     "description": "loginofficial-servicename"
   },
+  "Q21jEN": {
+    "defaultMessage": "Podnesi zahtjev",
+    "description": "researchselected-label-submit"
+  },
   "QTwRj9": {
     "defaultMessage": "Jedan institucijski projekt je već prijavljen",
     "description": "newrequest-reason-institutionalready"

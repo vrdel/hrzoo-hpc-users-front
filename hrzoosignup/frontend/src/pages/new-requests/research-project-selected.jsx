@@ -35,6 +35,7 @@ import { url_ui_prefix } from 'Config/general';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';
 import { convertToAmerican } from 'Utils/dates.jsx';
+import { FormattedMessage } from 'react-intl';
 import * as yup from "yup";
 import { AuthContext } from 'Components/AuthContextProvider.jsx';
 
@@ -331,7 +332,10 @@ const ResearchProjectRequestSelected = ({projectType}) => {
                 <Col>
                   <Button size="lg" color="success" id="submit-button" type="submit">
                     <FontAwesomeIcon icon={faFile}/>{' '}
-                    Podnesi zahtjev
+                    <FormattedMessage
+                      defaultMessage="Podnesi zahtjev"
+                      description="researchselected-label-submit"
+                    />
                   </Button>
                 </Col>
               </Row>

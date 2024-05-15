@@ -195,6 +195,10 @@
     "defaultMessage": "Advanced Computing",
     "description": "loginofficial-servicename"
   },
+  "Q21jEN": {
+    "defaultMessage": "Submit request",
+    "description": "researchselected-label-submit"
+  },
   "QTwRj9": {
     "defaultMessage": "One institutional project has already been registered.",
     "description": "newrequest-reason-institutionalready"
