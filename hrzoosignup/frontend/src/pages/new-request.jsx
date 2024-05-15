@@ -14,6 +14,7 @@ import { canSubmitInstituteProject } from 'Api/projects';
 import { toast } from 'react-toastify';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
+import { FormattedMessage } from 'react-intl';
 import { useIntl } from 'react-intl'
 
 
@@ -105,8 +106,13 @@ const NewRequest = () => {
 
                 toast.error(
                   <span className="font-monospace text-dark">
-                    Nemate mogućnost prijave institucijskog projekta:{' '}
-                    { reasonDetail }
+                    <FormattedMessage
+                      defaultMessage="Nemate mogućnost prijave institucijskog projekta: { reasonDetail }"
+                      description="newrequest-no-instituteproject-titleexplanation"
+                      values={{
+                        reasonDetail
+                      }}
+                    />
                   </span>, {
                     toastId: 'newreq-no-institute',
                     autoClose: 2500,
@@ -132,7 +138,10 @@ const NewRequest = () => {
                 && croRisData?.data?.person_info?.lead_status !== true) {
                 toast.error(
                   <span className="font-monospace text-dark">
-                    Nemate projekata prijavljenih u sustavu CroRIS
+                    <FormattedMessage
+                      defaultMessage="Nemate projekata prijavljenih u sustavu CroRIS"
+                      description="newrequest-no-researchproject"
+                    />
                   </span>, {
                     toastId: 'newreq-no-croris',
                     autoClose: 2500,
@@ -143,7 +152,10 @@ const NewRequest = () => {
               else if (e.value === 'thesis-project') {
                 toast.info(
                   <span className="font-monospace text-dark">
-                    Zahtjev &quot;Izrada rada&quot; se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.
+                    <FormattedMessage
+                      defaultMessage="Zahtjev &quot;Izrada rada&quot; se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt."
+                      description="newrequest-thesis-explanation"
+                    />
                   </span>, {
                     toastId: 'newreq-thesis',
                     autoClose: 5000,
@@ -168,7 +180,10 @@ const NewRequest = () => {
               if (!selectedProject)
                 toast.warn(
                   <span className="font-monospace text-dark">
-                    Morate odabrati jedan tip zahtjeva da biste nastavili
+                    <FormattedMessage
+                      defaultMessage="Morate odabrati jedan tip zahtjeva da biste nastavili"
+                      description="newrequest-norequest-selected"
+                    />
                   </span>, {
                     toastId: 'newreq-no-croris-data',
                     autoClose: 2500,

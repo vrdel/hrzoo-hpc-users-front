@@ -99,7 +99,6 @@ export function RequestTypesToSelect(intl) {
 }
 
 
-
 export function UrlToRequestType(loc, intl) {
   let url2buttonlabel = {
     [url_ui_prefix + '/new-request/research-project']: labelResearchProject(intl),
