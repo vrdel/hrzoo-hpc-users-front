@@ -1,6 +1,7 @@
 {
   "+3wL+Z": "No data from CroRIS system",
   "+iE1kC": "Continue",
+  "//xZcz": "The number cannot be less than 1",
   "/hXMAH": "New request submit",
   "0fF2qV": "New request on behalf of thesis project",
   "1r5OsY": "Username",
@@ -46,6 +47,7 @@
   "bAhHuU": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
   "cQTqIM": "New request on behalf of institute project",
   "dUFVR+": "New request on behalf of research project",
+  "dWYd5Z": "The number cannot be greater than {number}",
   "e6lTgN": "University Computing Centre",
   "eWfkW5": "No data from CroRIS system",
   "fxdgEp": "You are not allowed to submit institutional project request: { reasonDetail }",
@@ -71,6 +73,7 @@
   "pFrauD": "Public keys management",
   "pyGIbR": "Viewing request {identifier}",
   "q/DQi1": "Thesis project",
+  "q2kpZ6": "Required",
   "qFLN1G": "Research project",
   "uttk9z": "Details of active user {identifier}",
   "vhUojX": "Terms of use of Advanced Computing service",

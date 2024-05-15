@@ -1,6 +1,7 @@
 {
   "+3wL+Z": "Nema podataka iz sustava CroRIS",
   "+iE1kC": "Nastavi",
+  "//xZcz": "Broj ne može biti manji od 1",
   "/hXMAH": "Podnošenje novog korisničkog zahtjeva",
   "0fF2qV": "Novi zahtjev temeljem praktične nastave",
   "1r5OsY": "Korisničko ime",
@@ -46,6 +47,7 @@
   "bAhHuU": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
   "cQTqIM": "Novi zahtjev temeljem institucijskog projekta",
   "dUFVR+": "Novi zahtjev temeljem istraživačkog projekta",
+  "dWYd5Z": "Broj ne može biti veći od {number}",
   "e6lTgN": "Sveučilišni računski centar (Srce)",
   "eWfkW5": "Nema podataka iz sustava CroRIS",
   "fxdgEp": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
@@ -71,6 +73,7 @@
   "pFrauD": "Upravljanje javnim ključevima",
   "pyGIbR": "Pregledavanje zahtjeva {identifier}",
   "q/DQi1": "Izrada rada",
+  "q2kpZ6": "Obvezno",
   "qFLN1G": "Istraživački projekt",
   "uttk9z": "Detalji aktivnog korisnika {identifier}",
   "vhUojX": "Pravila korištenja usluge Napredno računanje",

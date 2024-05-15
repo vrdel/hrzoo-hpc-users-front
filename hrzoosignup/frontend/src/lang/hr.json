@@ -7,6 +7,10 @@
     "defaultMessage": "Nastavi",
     "description": "newrequest-continue-label"
   },
+  "//xZcz": {
+    "defaultMessage": "Broj ne može biti manji od 1",
+    "description": "schema-less-1"
+  },
   "/hXMAH": {
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
@@ -187,6 +191,10 @@
     "defaultMessage": "Novi zahtjev temeljem istraživačkog projekta",
     "description": "linktitle-newrequest-research"
   },
+  "dWYd5Z": {
+    "defaultMessage": "Broj ne može biti veći od {number}",
+    "description": "schema-great-n"
+  },
   "e6lTgN": {
     "defaultMessage": "Sveučilišni računski centar (Srce)",
     "description": "footer-srce"
@@ -286,6 +294,10 @@
   "q/DQi1": {
     "defaultMessage": "Izrada rada",
     "description": "requesttype-label-thesis"
+  },
+  "q2kpZ6": {
+    "defaultMessage": "Obvezno",
+    "description": "schema-mandatory"
   },
   "qFLN1G": {
     "defaultMessage": "Istraživački projekt",
