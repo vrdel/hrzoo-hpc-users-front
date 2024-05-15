@@ -155,13 +155,13 @@
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
   },
-  "Ute+1D": {
-    "defaultMessage": "Zahtjev &quot;Izrada rada&quot; se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
-    "description": "newrequest-thesis-explanation"
-  },
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "bAhHuU": {
+    "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
+    "description": "newrequest-thesis-explanation"
   },
   "cQTqIM": {
     "defaultMessage": "Novi zahtjev temeljem institucijskog projekta",

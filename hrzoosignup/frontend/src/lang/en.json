@@ -155,13 +155,13 @@
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
   },
-  "Ute+1D": {
-    "defaultMessage": "The request &quot;Thesis project&quot; pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
-    "description": "newrequest-thesis-explanation"
-  },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "bAhHuU": {
+    "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
+    "description": "newrequest-thesis-explanation"
   },
   "cQTqIM": {
     "defaultMessage": "New request on behalf of institute project",

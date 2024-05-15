@@ -180,7 +180,7 @@ const NewRequest = () => {
                 toast.info(
                   <span className="font-monospace text-dark">
                     <FormattedMessage
-                      defaultMessage="Zahtjev &quot;Izrada rada&quot; se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt."
+                      defaultMessage='Zahtjev "Izrada rada" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.'
                       description="newrequest-thesis-explanation"
                     />
                   </span>, {
