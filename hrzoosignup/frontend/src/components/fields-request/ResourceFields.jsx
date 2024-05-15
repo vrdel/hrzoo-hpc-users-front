@@ -33,7 +33,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
             className="mr-2 form-label text-center">
-            Broj virtualnih poslužitelja:
+            <FormattedMessage
+              description="cloudfields-nvm"
+              defaultMessage="Broj virtualnih poslužitelja:"
+            />
           </Label>
           <InputGroup>
             <Controller
@@ -68,7 +71,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
             className="mr-2 form-label text-center">
-            Ukupna količina virtualnih procesorskih jezgara:
+            <FormattedMessage
+              description="cloudfields-vcpu"
+              defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
+            />
           </Label>
           <InputGroup>
             <Controller
@@ -103,7 +109,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
             className="mr-2 form-label text-center">
-            Ukupna količina radne memorije (GB):
+            <FormattedMessage
+              description="cloudfields-nram"
+              defaultMessage="Ukupna količina radne memorije (GB):"
+            />
           </Label>
           <InputGroup>
             <Controller
@@ -138,7 +147,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
             className="mr-2 form-label text-center">
-            Maksimalna količina radne memorije po poslužitelju (GB):
+            <FormattedMessage
+              description="cloudfields-nramvm"
+              defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
+            />
           </Label>
           <InputGroup>
             <Controller
@@ -173,7 +185,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
             className="mr-2 form-label text-center">
-            Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):
+            <FormattedMessage
+              description="cloudfields-ndiskgb"
+              defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
+            />
           </Label>
           <InputGroup>
             <Controller
@@ -210,7 +225,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
             className="mr-2 form-label text-center">
-            Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):
+            <FormattedMessage
+              description="cloudfields-nfastdiskgb"
+              defaultMessage="Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):"
+            />
           </Label>
           <InputGroup>
             <Controller
@@ -245,7 +263,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
             className="mr-2 form-label text-center">
-            Broj javnih IPv4 adresa:
+            <FormattedMessage
+              description="cloudfields-nips"
+              defaultMessage=" Broj javnih IPv4 adresa:"
+            />
           </Label>
           <InputGroup>
             <Controller

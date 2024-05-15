@@ -15,6 +15,10 @@
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
   },
+  "0KXCeo": {
+    "defaultMessage": "Total number of virtual processing cores:",
+    "description": "cloudfields-vcpu"
+  },
   "0NBrG+": {
     "defaultMessage": "Explanation:",
     "description": "generalfields-explanation"
@@ -51,6 +55,10 @@
     "defaultMessage": "New request on behalf of internal project",
     "description": "linktitle-newrequest-internal"
   },
+  "5XjDto": {
+    "defaultMessage": "Number of virtual servers:",
+    "description": "cloudfields-nvm"
+  },
   "6V4xYT": {
     "defaultMessage": "Details of inactive user {identifier}",
     "description": "linktitle-usersinactive-view"
@@ -82,6 +90,10 @@
   "C6FjhE": {
     "defaultMessage": "Yes",
     "description": "modal-buttonyes"
+  },
+  "CiElaE": {
+    "defaultMessage": "Number of public IPv4 addresses:",
+    "description": "cloudfields-nips"
   },
   "CiaQiU": {
     "defaultMessage": "Name:",
@@ -118,6 +130,10 @@
   "HiPPun": {
     "defaultMessage": "Choose",
     "description": "sciencesoftware-placeholder"
+  },
+  "IHl9i4": {
+    "defaultMessage": "Total amount of space for virtual servers on fast storage (GB):",
+    "description": "cloudfields-nfastdiskgb"
   },
   "IP7pZp": {
     "defaultMessage": "Users:",
@@ -211,6 +227,10 @@
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
   },
+  "UWKnhL": {
+    "defaultMessage": "Maximum amount of RAM per server (GB):",
+    "description": "cloudfields-nramvm"
+  },
   "UZpSyp": {
     "defaultMessage": "Average amount of temporary space per job (GB):",
     "description": "resourcefields-temp"
@@ -279,6 +299,10 @@
     "defaultMessage": "New request",
     "description": "linktitle-newrequest"
   },
+  "iYVJE/": {
+    "defaultMessage": "Total amount of space for virtual servers on standard storage (GB):",
+    "description": "cloudfields-ndiskgb"
+  },
   "jLfsnD": {
     "defaultMessage": "Public keys",
     "description": "navlinks-pubkeys"
@@ -306,6 +330,10 @@
   "lqL8gP": {
     "defaultMessage": "Users",
     "description": "navlinks-users"
+  },
+  "mHHLJK": {
+    "defaultMessage": "Total amount of RAM (GB):",
+    "description": "cloudfields-nram"
   },
   "n32QyA": {
     "defaultMessage": "https://www.srce.unizg.hr/en",

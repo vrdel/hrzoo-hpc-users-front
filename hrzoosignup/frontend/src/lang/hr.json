@@ -15,6 +15,10 @@
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
   },
+  "0KXCeo": {
+    "defaultMessage": "Ukupna količina virtualnih procesorskih jezgara:",
+    "description": "cloudfields-vcpu"
+  },
   "0NBrG+": {
     "defaultMessage": "Obrazloženje:",
     "description": "generalfields-explanation"
@@ -51,6 +55,10 @@
     "defaultMessage": "Novi zahtjev temeljem internog projekta",
     "description": "linktitle-newrequest-internal"
   },
+  "5XjDto": {
+    "defaultMessage": "Broj virtualnih poslužitelja:",
+    "description": "cloudfields-nvm"
+  },
   "6V4xYT": {
     "defaultMessage": "Detalji neaktivnog korisnika {identifier}",
     "description": "linktitle-usersinactive-view"
@@ -82,6 +90,10 @@
   "C6FjhE": {
     "defaultMessage": "Da",
     "description": "modal-buttonyes"
+  },
+  "CiElaE": {
+    "defaultMessage": "Broj javnih IPv4 adresa:",
+    "description": "cloudfields-nips"
   },
   "CiaQiU": {
     "defaultMessage": "Naziv:",
@@ -118,6 +130,10 @@
   "HiPPun": {
     "defaultMessage": "Odaberi",
     "description": "sciencesoftware-placeholder"
+  },
+  "IHl9i4": {
+    "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):",
+    "description": "cloudfields-nfastdiskgb"
   },
   "IP7pZp": {
     "defaultMessage": "Korisnici:",
@@ -211,6 +227,10 @@
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
   },
+  "UWKnhL": {
+    "defaultMessage": "Maksimalna količina radne memorije po poslužitelju (GB):",
+    "description": "cloudfields-nramvm"
+  },
   "UZpSyp": {
     "defaultMessage": "Prosječna količina privremenog prostora po poslu (GB):",
     "description": "resourcefields-temp"
@@ -279,6 +299,10 @@
     "defaultMessage": "Novi zahtjev",
     "description": "linktitle-newrequest"
   },
+  "iYVJE/": {
+    "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):",
+    "description": "cloudfields-ndiskgb"
+  },
   "jLfsnD": {
     "defaultMessage": "Javni ključevi",
     "description": "navlinks-pubkeys"
@@ -306,6 +330,10 @@
   "lqL8gP": {
     "defaultMessage": "Korisnici",
     "description": "navlinks-users"
+  },
+  "mHHLJK": {
+    "defaultMessage": "Ukupna količina radne memorije (GB):",
+    "description": "cloudfields-nram"
   },
   "n32QyA": {
     "defaultMessage": "https://www.srce.unizg.hr/",
