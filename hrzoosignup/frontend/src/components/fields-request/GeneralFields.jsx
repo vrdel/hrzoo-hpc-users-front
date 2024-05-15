@@ -266,7 +266,12 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
     <>
       <Row>
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Opći dio</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">
+            <FormattedMessage
+              description="generalfields-title"
+              defaultMessage="Opći dio"
+            />
+          </h4><br/>
         </Col>
       </Row>
       <Row>

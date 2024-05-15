@@ -44,7 +44,7 @@
     "description": "loginpriv-password"
   },
   "5HA1Kv": {
-    "defaultMessage": "New request of behalf of internal project",
+    "defaultMessage": "New request on behalf of internal project",
     "description": "linktitle-newrequest-internal"
   },
   "6V4xYT": {
@@ -322,6 +322,10 @@
   "uttk9z": {
     "defaultMessage": "Details of active user {identifier}",
     "description": "linktitle-usersactive-view"
+  },
+  "vMGyAj": {
+    "defaultMessage": "General",
+    "description": "generalfields-title"
   },
   "vhUojX": {
     "defaultMessage": "Terms of use of Advanced Computing service",

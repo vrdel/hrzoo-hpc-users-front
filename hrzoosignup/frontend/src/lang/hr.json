@@ -323,6 +323,10 @@
     "defaultMessage": "Detalji aktivnog korisnika {identifier}",
     "description": "linktitle-usersactive-view"
   },
+  "vMGyAj": {
+    "defaultMessage": "Opći dio",
+    "description": "generalfields-title"
+  },
   "vhUojX": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginofficial-terms"
