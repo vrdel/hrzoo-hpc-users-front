@@ -1,4 +1,12 @@
 {
+  "+3wL+Z": {
+    "defaultMessage": "No data from CroRIS system",
+    "description": "newqrequest-no-crorisdata"
+  },
+  "+iE1kC": {
+    "defaultMessage": "Continue",
+    "description": "newrequest-continue-label"
+  },
   "0fF2qV": {
     "defaultMessage": "New request on behalf of thesis project",
     "description": "linktitle-newrequest-class"
@@ -51,6 +59,10 @@
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
   },
+  "FQLopu": {
+    "defaultMessage": "Choose",
+    "description": "newrequest-select-placeholder"
+  },
   "FqGoP3": {
     "defaultMessage": "Login with username and password",
     "description": "loginpriv-labelusernamepassword"
@@ -62,6 +74,10 @@
   "HcOwzH": {
     "defaultMessage": "Username:",
     "description": "loginpriv-username"
+  },
+  "KAUZl8": {
+    "defaultMessage": "Request type",
+    "description": "newrequest-label"
   },
   "KssuSi": {
     "defaultMessage": "By login into the system, you confirm that you accept",

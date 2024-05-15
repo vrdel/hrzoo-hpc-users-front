@@ -1,4 +1,12 @@
 {
+  "+3wL+Z": {
+    "defaultMessage": "Nema podataka iz sustava CroRIS",
+    "description": "newqrequest-no-crorisdata"
+  },
+  "+iE1kC": {
+    "defaultMessage": "Nastavi",
+    "description": "newrequest-continue-label"
+  },
   "0fF2qV": {
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
     "description": "linktitle-newrequest-class"
@@ -51,6 +59,10 @@
     "defaultMessage": "Popis svih odobrenih projekata",
     "description": "linktitle-projects"
   },
+  "FQLopu": {
+    "defaultMessage": "Odaberi",
+    "description": "newrequest-select-placeholder"
+  },
   "FqGoP3": {
     "defaultMessage": "Prijava korisničkim imenom i lozinkom",
     "description": "loginpriv-labelusernamepassword"
@@ -62,6 +74,10 @@
   "HcOwzH": {
     "defaultMessage": "Korisničko ime:",
     "description": "loginpriv-username"
+  },
+  "KAUZl8": {
+    "defaultMessage": "Tip zahtjeva",
+    "description": "newrequest-label"
   },
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",

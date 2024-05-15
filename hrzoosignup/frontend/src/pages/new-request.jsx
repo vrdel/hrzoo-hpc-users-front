@@ -75,13 +75,21 @@ const NewRequest = () => {
             aria-label="requestType"
             style={{backgroundColor: "#b04c46"}}
           >
-            Tip zahtjeva
+            <FormattedMessage
+              defaultMessage="Tip zahtjeva"
+              description="newrequest-label"
+            />
           </Label>
           <CustomReactSelect
             id="requestType"
             aria-label="requestType"
             className="ms-lg-5 me-lg-0 ms-md-5 me-md-0 me-xs-5 me-sm-5 me-5 ms-xs-0 ms-sm-0 ms-0 mt-lg-0 mt-md-0 mt-xs-2 mt-sm-2 mt-2 shadow-sm"
-            placeholder="Odaberi"
+            placeholder={
+              intl.formatMessage({
+                defaultMessage: "Odaberi",
+                description: "newrequest-select-placeholder"
+              })
+            }
             controlWidth="40%"
             onChange={(e) => {
               if (e.value === 'institutional-project'
@@ -125,7 +133,9 @@ const NewRequest = () => {
                 && croRisData?.status?.code !== 200) {
                 toast.error(
                   <span className="font-monospace text-dark">
-                    Nema podataka iz sustava CroRIS
+                    <FormattedMessage defaultMessage="Nema podataka iz sustava CroRIS"
+                      description="newqrequest-no-crorisdata"
+                    />
                   </span>, {
                     toastId: 'newreq-no-croris-data',
                     autoClose: 2500,
@@ -194,7 +204,10 @@ const NewRequest = () => {
             }}
           >
             <FontAwesomeIcon icon={faArrowRight}/>{' '}
-            Nastavi
+            <FormattedMessage
+              defaultMessage="Nastavi"
+              description="newrequest-continue-label"
+            />
           </Button>
         </Col>
         <Col className="d-md-block" lg={{size: 3}}>
