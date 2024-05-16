@@ -139,6 +139,10 @@
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
   },
+  "FPhsMI": {
+    "defaultMessage": "Approved:",
+    "description": "memberships-project-approved"
+  },
   "FQLopu": {
     "defaultMessage": "Choose",
     "description": "newrequest-select-placeholder"
@@ -335,6 +339,10 @@
     "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
     "description": "newrequest-thesis-explanation"
   },
+  "bMQrfs": {
+    "defaultMessage": "Type:",
+    "description": "memberships-project-type"
+  },
   "cQTqIM": {
     "defaultMessage": "New request on behalf of institute project",
     "description": "linktitle-newrequest-institutional"
@@ -411,6 +419,10 @@
     "defaultMessage": "Total amount of space for virtual servers on standard storage (GB):",
     "description": "cloudfields-ndiskgb"
   },
+  "j6QjlA": {
+    "defaultMessage": "State:",
+    "description": "memberships-project-state"
+  },
   "jLfsnD": {
     "defaultMessage": "Public keys",
     "description": "navlinks-pubkeys"
@@ -423,6 +435,10 @@
     "defaultMessage": "Login AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
   },
+  "kIVxF7": {
+    "defaultMessage": "Duration:",
+    "description": "memberships-project-duration"
+  },
   "kZb+W5": {
     "defaultMessage": "My service status, digital identity and CroRIS metadata",
     "description": "linktitle-myinfo"
@@ -434,6 +450,10 @@
   "lD0Ggq": {
     "defaultMessage": "My requests",
     "description": "navlinks-myrequests"
+  },
+  "lNiKzS": {
+    "defaultMessage": "Resources:",
+    "description": "memberships-project-resources"
   },
   "lUUVcW": {
     "defaultMessage": "Submit request",

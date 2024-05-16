@@ -139,6 +139,10 @@
     "defaultMessage": "Popis svih odobrenih projekata",
     "description": "linktitle-projects"
   },
+  "FPhsMI": {
+    "defaultMessage": "Odobren:",
+    "description": "memberships-project-approved"
+  },
   "FQLopu": {
     "defaultMessage": "Odaberi",
     "description": "newrequest-select-placeholder"
@@ -335,6 +339,10 @@
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
     "description": "newrequest-thesis-explanation"
   },
+  "bMQrfs": {
+    "defaultMessage": "Tip:",
+    "description": "memberships-project-type"
+  },
   "cQTqIM": {
     "defaultMessage": "Novi zahtjev temeljem institucijskog projekta",
     "description": "linktitle-newrequest-institutional"
@@ -411,6 +419,10 @@
     "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):",
     "description": "cloudfields-ndiskgb"
   },
+  "j6QjlA": {
+    "defaultMessage": "Stanje:",
+    "description": "memberships-project-state"
+  },
   "jLfsnD": {
     "defaultMessage": "Javni ključevi",
     "description": "navlinks-pubkeys"
@@ -423,6 +435,10 @@
     "defaultMessage": "Prijava AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
   },
+  "kIVxF7": {
+    "defaultMessage": "Trajanje:",
+    "description": "memberships-project-duration"
+  },
   "kZb+W5": {
     "defaultMessage": "Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS",
     "description": "linktitle-myinfo"
@@ -434,6 +450,10 @@
   "lD0Ggq": {
     "defaultMessage": "Moji zahtjevi",
     "description": "navlinks-myrequests"
+  },
+  "lNiKzS": {
+    "defaultMessage": "Resursi:",
+    "description": "memberships-project-resources"
   },
   "lUUVcW": {
     "defaultMessage": "Podnesi zahtjev",

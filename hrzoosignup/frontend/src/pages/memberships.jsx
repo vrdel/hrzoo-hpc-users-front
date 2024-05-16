@@ -84,7 +84,10 @@ const BriefProjectInfo = ({project}) => {
   return (
     <>
       <Col className="ms-4 text-left" md={{size: 1}} >
-        Stanje:
+        <FormattedMessage
+          defaultMessage="Stanje:"
+          description="memberships-project-state"
+        />
         <div className="p-2 mt-2" id={`Tooltip-${project.identifier.replace(/\/| /g, '-')}`}>
           {
             StateIcons(project.state.name)
@@ -104,7 +107,10 @@ const BriefProjectInfo = ({project}) => {
           htmlFor="projectTime"
           aria-label="projectTime"
           className="mr-1">
-          Trajanje:
+          <FormattedMessage
+            defaultMessage="Trajanje:"
+            description="memberships-project-duration"
+          />
         </Label>
         <div className="p-2 fs-5 font-monospace">
           { convertToEuropean(project.date_start) } &minus; { convertToEuropean(project.date_end) }
@@ -115,7 +121,10 @@ const BriefProjectInfo = ({project}) => {
           htmlFor="projectTime"
           aria-label="projectTime"
           className="mr-1">
-          Odobren:
+          <FormattedMessage
+            defaultMessage="Odobren:"
+            description="memberships-project-approved"
+          />
         </Label>
         <div className="p-2 fs-5 font-monospace">
           { convertToEuropean(project.date_changed) }
@@ -126,7 +135,10 @@ const BriefProjectInfo = ({project}) => {
           htmlFor="projectType"
           aria-label="projectType"
           className="mr-1">
-          Tip:
+          <FormattedMessage
+            defaultMessage="Tip:"
+            description="memberships-project-type"
+          />
         </Label>
         <br/>
         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
@@ -138,7 +150,10 @@ const BriefProjectInfo = ({project}) => {
           htmlFor="projectType"
           aria-label="projectType"
           className="mr-1">
-          Resursi:
+          <FormattedMessage
+            defaultMessage="Resursi:"
+            description="memberships-project-resources"
+          />
         </Label>
         <br/>
         {
