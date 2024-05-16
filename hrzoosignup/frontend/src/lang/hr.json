@@ -107,6 +107,10 @@
     "defaultMessage": "Slanje pozivnica za istraživački projekt",
     "description": "memberships-modaltitle-research"
   },
+  "B8Lcj2": {
+    "defaultMessage": "Šifra projekta kopirana u međuspremnik",
+    "description": "memberships-clipboard-ok"
+  },
   "BC++9m": {
     "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
     "description": "memberships-toast-invitefail"
@@ -155,9 +159,17 @@
     "defaultMessage": "Da li ste sigurni da se želite odjaviti?",
     "description": "navigation-modalquestion"
   },
+  "Fz1XrJ": {
+    "defaultMessage": "Ime projekta",
+    "description": "memberships-project-name"
+  },
   "GbOJbt": {
     "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
+  },
+  "H7x1WL": {
+    "defaultMessage": "Email",
+    "description": "memberships-user-email"
   },
   "HcOwzH": {
     "defaultMessage": "Korisničko ime:",
@@ -190,6 +202,10 @@
   "KAUZl8": {
     "defaultMessage": "Tip zahtjeva",
     "description": "newrequest-label"
+  },
+  "KD+onZ": {
+    "defaultMessage": "Suradnici su uspješno odjavljeni",
+    "description": "memberships-toast-signoff-ok"
   },
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
@@ -307,6 +323,14 @@
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
   },
+  "Wt4fcg": {
+    "defaultMessage": "Prezime",
+    "description": "memberships-user-lastname"
+  },
+  "Yo9uAA": {
+    "defaultMessage": "Nemate prijavljenih sudjelovanja na odobrenim projektima",
+    "description": "memberships-no-assignments"
+  },
   "bAhHuU": {
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
     "description": "newrequest-thesis-explanation"
@@ -346,6 +370,10 @@
   "fxdgEp": {
     "defaultMessage": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
+  },
+  "gHsC0A": {
+    "defaultMessage": "Prijavljen",
+    "description": "memberships-user-registered"
   },
   "gNm8yt": {
     "defaultMessage": "Novi zahtjev temeljem izrade rada",
@@ -399,6 +427,10 @@
     "defaultMessage": "Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS",
     "description": "linktitle-myinfo"
   },
+  "kbJbJF": {
+    "defaultMessage": "Ime",
+    "description": "memberships-user-firstname"
+  },
   "lD0Ggq": {
     "defaultMessage": "Moji zahtjevi",
     "description": "navlinks-myrequests"
@@ -410,6 +442,10 @@
   "lqL8gP": {
     "defaultMessage": "Korisnici",
     "description": "navlinks-users"
+  },
+  "m1ElhA": {
+    "defaultMessage": "Uloga",
+    "description": "memberships-user-role"
   },
   "mHHLJK": {
     "defaultMessage": "Ukupna količina radne memorije (GB):",
@@ -463,6 +499,10 @@
     "defaultMessage": "Istraživački projekt",
     "description": "requesttype-label-research"
   },
+  "qtP2pc": {
+    "defaultMessage": "Greška prilikom kopiranja šifre projekta u međuspremnik",
+    "description": "memberships-clipboard-fail"
+  },
   "rZtsm+": {
     "defaultMessage": "Resursi",
     "description": "resourcefields-title"
@@ -498,6 +538,10 @@
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",
     "description": "generalfields-leadinstitution"
+  },
+  "ysQjtn": {
+    "defaultMessage": "CroRIS registracija",
+    "description": "memberships-user-crorisreg"
   },
   "z/MmC8": {
     "defaultMessage": "Moji podaci",

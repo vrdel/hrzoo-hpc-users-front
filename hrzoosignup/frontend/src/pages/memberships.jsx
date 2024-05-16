@@ -341,7 +341,10 @@ const Memberships = () => {
       queryClient.invalidateQueries('projects')
       toast.success(
         <span className="font-monospace text-dark">
-          Suradnici su uspješno odjavljeni
+          <FormattedMessage
+            defaultMessage="Suradnici su uspješno odjavljeni"
+            description="memberships-toast-signoff-ok"
+          />
         </span>, {
           toastId: 'signoff-ok',
           autoClose: 2500,
@@ -460,8 +463,14 @@ const Memberships = () => {
                           color="light"
                           onClick={(e) => copyToClipboard(
                             e, project.identifier,
-                            "Šifra projekta kopirana u međuspremnik",
-                            "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                            intl.formatMessage({
+                              defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                              description: "memberships-clipboard-ok"
+                            }),
+                            intl.formatMessage({
+                              defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                              description: "memberships-clipboard-fail"
+                            }),
                             "id-request"
                           )}
                         >
@@ -504,7 +513,10 @@ const Memberships = () => {
           :
             <Row className="mt-3 mb-3">
               <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-                Nemate prijavljenih sudjelovanja na odobrenim projektima
+                <FormattedMessage
+                  defaultMessage="Nemate prijavljenih sudjelovanja na odobrenim projektima"
+                  description="memberships-no-assignments"
+                />
               </Col>
             </Row>
         }
@@ -523,7 +535,10 @@ const Memberships = () => {
             <Card className="ms-3 bg-light me-3 shadow-sm">
               <CardHeader className="d-flex justify-content-between">
                 <span className="fs-5 fw-bold text-dark">
-                  Ime projekta
+                  <FormattedMessage
+                    defaultMessage="Ime projekta"
+                    description="memberships-project-name"
+                  />
                 </span>
               </CardHeader>
               <CardBody className="mb-1 bg-light p-0 m-0">
@@ -531,22 +546,40 @@ const Memberships = () => {
                   <thead id="hzsi-thead" className="align-middle text-center text-white">
                     <tr>
                       <th className="fw-normal">
-                        Ime
+                        <FormattedMessage
+                          defaultMessage="Ime"
+                          description="memberships-user-firstname"
+                        />
                       </th>
                       <th className="fw-normal">
-                        Prezime
+                        <FormattedMessage
+                          defaultMessage="Prezime"
+                          description="memberships-user-lastname"
+                        />
                       </th>
                       <th className="fw-normal">
-                        Uloga
+                        <FormattedMessage
+                          defaultMessage="Uloga"
+                          description="memberships-user-role"
+                        />
                       </th>
                       <th className="fw-normal">
-                        Email
+                        <FormattedMessage
+                          defaultMessage="Email"
+                          description="memberships-user-email"
+                        />
                       </th>
                       <th className="fw-normal">
-                        CroRIS registracija
+                        <FormattedMessage
+                          defaultMessage="CroRIS registracija"
+                          description="memberships-user-crorisreg"
+                        />
                       </th>
                       <th className="fw-normal">
-                        Prijavljen
+                        <FormattedMessage
+                          defaultMessage="Prijavljen"
+                          description="memberships-user-registered"
+                        />
                       </th>
                     </tr>
                   </thead>

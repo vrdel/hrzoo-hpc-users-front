@@ -107,6 +107,10 @@
     "defaultMessage": "Sending invitations for a research project",
     "description": "memberships-modaltitle-research"
   },
+  "B8Lcj2": {
+    "defaultMessage": "Project identifier copied to clipboard",
+    "description": "memberships-clipboard-ok"
+  },
   "BC++9m": {
     "defaultMessage": "It was not possible to send the invitations: {br} { error }",
     "description": "memberships-toast-invitefail"
@@ -155,9 +159,17 @@
     "defaultMessage": "Are you sure you want to logout?",
     "description": "navigation-modalquestion"
   },
+  "Fz1XrJ": {
+    "defaultMessage": "Project name",
+    "description": "memberships-project-name"
+  },
   "GbOJbt": {
     "defaultMessage": "The invitation could not be canceled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
+  },
+  "H7x1WL": {
+    "defaultMessage": "Email",
+    "description": "memberships-user-email"
   },
   "HcOwzH": {
     "defaultMessage": "Username:",
@@ -190,6 +202,10 @@
   "KAUZl8": {
     "defaultMessage": "Request type",
     "description": "newrequest-label"
+  },
+  "KD+onZ": {
+    "defaultMessage": "Collaborators have been successfully logged off",
+    "description": "memberships-toast-signoff-ok"
   },
   "KssuSi": {
     "defaultMessage": "By logging into the system, you confirm that you accept",
@@ -307,6 +323,14 @@
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
   },
+  "Wt4fcg": {
+    "defaultMessage": "Last name",
+    "description": "memberships-user-lastname"
+  },
+  "Yo9uAA": {
+    "defaultMessage": "You do not have any registered participations in approved projects",
+    "description": "memberships-no-assignments"
+  },
   "bAhHuU": {
     "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
     "description": "newrequest-thesis-explanation"
@@ -346,6 +370,10 @@
   "fxdgEp": {
     "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
+  },
+  "gHsC0A": {
+    "defaultMessage": "Registered",
+    "description": "memberships-user-registered"
   },
   "gNm8yt": {
     "defaultMessage": "New request on behalf of thesis project",
@@ -399,6 +427,10 @@
     "defaultMessage": "My service status, digital identity and CroRIS metadata",
     "description": "linktitle-myinfo"
   },
+  "kbJbJF": {
+    "defaultMessage": "First name",
+    "description": "memberships-user-firstname"
+  },
   "lD0Ggq": {
     "defaultMessage": "My requests",
     "description": "navlinks-myrequests"
@@ -410,6 +442,10 @@
   "lqL8gP": {
     "defaultMessage": "Users",
     "description": "navlinks-users"
+  },
+  "m1ElhA": {
+    "defaultMessage": "Role",
+    "description": "memberships-user-role"
   },
   "mHHLJK": {
     "defaultMessage": "Total amount of RAM (GB):",
@@ -463,6 +499,10 @@
     "defaultMessage": "Research project",
     "description": "requesttype-label-research"
   },
+  "qtP2pc": {
+    "defaultMessage": "Error while copying the project code to the clipboard",
+    "description": "memberships-clipboard-fail"
+  },
   "rZtsm+": {
     "defaultMessage": "Resources",
     "description": "resourcefields-title"
@@ -498,6 +538,10 @@
   "y+MIYq": {
     "defaultMessage": "Lead institution:",
     "description": "generalfields-leadinstitution"
+  },
+  "ysQjtn": {
+    "defaultMessage": "CroRIS registration",
+    "description": "memberships-user-crorisreg"
   },
   "z/MmC8": {
     "defaultMessage": "My info",
