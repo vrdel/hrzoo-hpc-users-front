@@ -31,9 +31,17 @@
     "defaultMessage": "Username",
     "description": "statusinfo-username"
   },
+  "2DZTTn": {
+    "defaultMessage": "First name",
+    "description": "users-table-general-firstname"
+  },
   "2OMlOQ": {
     "defaultMessage": "New request",
     "description": "navlinks-newrequests"
+  },
+  "2e1c29": {
+    "defaultMessage": "Role",
+    "description": "users-table-general-role"
   },
   "2nzsgl": {
     "defaultMessage": "You have already gained access based on a research project in the CroRIS system.",
@@ -135,6 +143,10 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "D14k5Q": {
+    "defaultMessage": "Public key added",
+    "description": "users-table-general-keyadd"
+  },
   "DJN4Jp": {
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
@@ -211,6 +223,10 @@
     "defaultMessage": "Request type",
     "description": "newrequest-label"
   },
+  "KCyfNy": {
+    "defaultMessage": "Registered",
+    "description": "users-table-general-registered"
+  },
   "KD+onZ": {
     "defaultMessage": "Collaborators have been successfully logged off",
     "description": "memberships-toast-signoff-ok"
@@ -218,6 +234,10 @@
   "KssuSi": {
     "defaultMessage": "By logging into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
+  },
+  "Lb7qIs": {
+    "defaultMessage": "Yes",
+    "description": "users-table-general-isadded"
   },
   "LiONnn": {
     "defaultMessage": "Choose",
@@ -283,6 +303,10 @@
     "defaultMessage": "The request could not be submitted: { errmsg }",
     "description": "newrequest-toast-fail"
   },
+  "RYmgo6": {
+    "defaultMessage": "Email",
+    "description": "users-table-general-email"
+  },
   "S8xrMw": {
     "defaultMessage": "Adding collaborators to an internal project",
     "description": "memberships-modaltitle-internal"
@@ -294,6 +318,10 @@
   "SSxmVJ": {
     "defaultMessage": "Adding new public key",
     "description": "linktitle-pubkeys-add"
+  },
+  "STHLdY": {
+    "defaultMessage": "Checkout",
+    "description": "users-table-general-signoff"
   },
   "T7YuXQ": {
     "defaultMessage": "Projects",
@@ -415,6 +443,10 @@
     "defaultMessage": "You are registered as a leader on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
   },
+  "hVSxeA": {
+    "defaultMessage": "Last name",
+    "description": "users-table-general-lastname"
+  },
   "hgnZAv": {
     "defaultMessage": "Are you sure you want to cancel the invitation?",
     "description": "memberships-modalmsg-inviteoff"
@@ -422,6 +454,14 @@
   "hj4YOP": {
     "defaultMessage": "New request",
     "description": "linktitle-newrequest"
+  },
+  "hut1m1": {
+    "defaultMessage": "Collaborator",
+    "description": "users-table-general-collaborator"
+  },
+  "iRMnQe": {
+    "defaultMessage": "Leader",
+    "description": "users-table-general-leader"
   },
   "iYVJE/": {
     "defaultMessage": "Total amount of space for virtual servers on standard storage (GB):",

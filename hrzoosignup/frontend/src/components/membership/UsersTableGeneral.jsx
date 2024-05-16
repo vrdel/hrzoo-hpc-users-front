@@ -198,24 +198,42 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr>
                 <th className="fw-normal">
-                  Ime
+                  <FormattedMessage
+                    defaultMessage="Ime"
+                    description="users-table-general-firstname"
+                  />
                 </th>
                 <th className="fw-normal">
-                  Prezime
+                  <FormattedMessage
+                    defaultMessage="Prezime"
+                    description="users-table-general-lastname"
+                  />
                 </th>
                 <th className="fw-normal">
-                  Uloga
+                  <FormattedMessage
+                    defaultMessage="Uloga"
+                    description="users-table-general-role"
+                  />
                 </th>
                 <th className="fw-normal">
-                  Email
+                  <FormattedMessage
+                    defaultMessage="Email"
+                    description="users-table-general-email"
+                  />
                 </th>
                 <th className="fw-normal">
-                  Prijavljen
+                  <FormattedMessage
+                    defaultMessage="Prijavljen"
+                    description="users-table-general-registered"
+                  />
                 </th>
                 {
                   amILead &&
                   <th className="fw-normal">
-                    Odjava
+                    <FormattedMessage
+                      defaultMessage="Odjava"
+                      description="users-table-general-signoff"
+                    />
                   </th>
                 }
               </tr>
@@ -242,7 +260,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     ? "align-middle text-center fst-italic border-bottom border-secondary"
                     : "align-middle text-center"
                   }>
-                    Voditelj
+                    <FormattedMessage
+                      defaultMessage="Voditelj"
+                      description="users-table-general-leader"
+                    />
                   </td>
                   <td className={
                     amILead
@@ -268,7 +289,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               target={`Tooltip-key-${999}`}
                               toggle={() => showTooltip(lead['user'].person_mail)}
                             >
-                              Dodan javni ključ
+                              <FormattedMessage
+                                defaultMessage="Dodan javni ključ"
+                                description="users-table-general-keyadd"
+                              />
                             </Tooltip>
                           </div>
                       }
@@ -307,7 +331,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         ? "align-middle text-center fst-italic border-bottom border-secondary"
                         : "align-middle text-center"
                       }>
-                        Suradnik
+                        <FormattedMessage
+                          defaultMessage="Suradnik"
+                          description="users-table-general-collaborator"
+                        />
                       </td>
                       <td className={
                         user['user']['person_oib'] === userDetails.person_oib
@@ -322,7 +349,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         : "align-middle text-center text-success"
                       }>
                         <div className="position-relative">
-                          Da
+                          <FormattedMessage
+                            defaultMessage="Da"
+                            description="users-table-general-isadded"
+                          />
                           {
                             user['user'].sshkeys &&
                               <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
@@ -333,7 +363,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                                   target={`Tooltip-key-${i + 1000}`}
                                   toggle={() => showTooltip(user['user'].person_mail)}
                                 >
-                                  Dodan javni ključ
+                                  <FormattedMessage
+                                    defaultMessage="Dodan javni ključ"
+                                    description="users-table-general-keyadd"
+                                  />
                                 </Tooltip>
                               </div>
                           }
@@ -367,7 +400,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         { '\u2212' }
                       </td>
                       <td className="align-middle text-center">
-                        Suradnik
+                        <FormattedMessage
+                          defaultMessage="Suradnik"
+                          description="users-table-general-collaborator"
+                        />
                       </td>
                       <td className="align-middle text-center">
                         { user.email }
