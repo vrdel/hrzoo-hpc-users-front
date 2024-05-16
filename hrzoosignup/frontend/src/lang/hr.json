@@ -203,6 +203,10 @@
     "defaultMessage": "Znanstveni softver",
     "description": "sciencesoftware-title"
   },
+  "Ja7vrQ": {
+    "defaultMessage": "Projekt nije aktivan pa nije moguće pozivati suradnike",
+    "description": "userstable-general-toast-invite-fail"
+  },
   "KAUZl8": {
     "defaultMessage": "Tip zahtjeva",
     "description": "newrequest-label"
@@ -218,6 +222,10 @@
   "LiONnn": {
     "defaultMessage": "Odaberi",
     "description": "resourcefields-placeholder"
+  },
+  "M8y/Pt": {
+    "defaultMessage": "Projekt nije aktivan pa nije moguće odjavljivati suradnike",
+    "description": "userstable-general-toast-invite-fail-3"
   },
   "MGR8er": {
     "defaultMessage": "Upravljanje zahtjevima",
@@ -418,6 +426,10 @@
   "iYVJE/": {
     "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):",
     "description": "cloudfields-ndiskgb"
+  },
+  "izNmIO": {
+    "defaultMessage": "Projekt nije aktivan pa nije moguće dodati suradnike",
+    "description": "userstable-general-toast-invite-fail-2"
   },
   "j6QjlA": {
     "defaultMessage": "Stanje:",

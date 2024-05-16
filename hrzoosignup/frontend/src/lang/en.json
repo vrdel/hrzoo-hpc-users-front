@@ -203,6 +203,10 @@
     "defaultMessage": "Scientific software",
     "description": "sciencesoftware-title"
   },
+  "Ja7vrQ": {
+    "defaultMessage": "The project is not active, therefore it is not possible to invite collaborators",
+    "description": "userstable-general-toast-invite-fail"
+  },
   "KAUZl8": {
     "defaultMessage": "Request type",
     "description": "newrequest-label"
@@ -218,6 +222,10 @@
   "LiONnn": {
     "defaultMessage": "Choose",
     "description": "resourcefields-placeholder"
+  },
+  "M8y/Pt": {
+    "defaultMessage": "The project is not active, therefore it is not possible to unregister collaborators",
+    "description": "userstable-general-toast-invite-fail-3"
   },
   "MGR8er": {
     "defaultMessage": "Requests management",
@@ -418,6 +426,10 @@
   "iYVJE/": {
     "defaultMessage": "Total amount of space for virtual servers on standard storage (GB):",
     "description": "cloudfields-ndiskgb"
+  },
+  "izNmIO": {
+    "defaultMessage": "The project is not active, so it is not possible to add collaborators",
+    "description": "userstable-general-toast-invite-fail-2"
   },
   "j6QjlA": {
     "defaultMessage": "State:",

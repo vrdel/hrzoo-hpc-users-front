@@ -18,6 +18,7 @@ import { extractUsers } from 'Utils/invites-extracts';
 import { fetchUsers, fetchUsersInactive } from "Api/users"
 import { useQuery } from "@tanstack/react-query";
 import { toast } from 'react-toastify';
+import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 
 
@@ -35,7 +36,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     else
       toast.error(
         <span className="font-monospace text-white">
-          Projekt nije aktivan pa nije moguće pozivati suradnike<br/>
+          <FormattedMessage
+            defaultMessage="Projekt nije aktivan pa nije moguće pozivati suradnike"
+            description="userstable-general-toast-invite-fail"
+          /><br/>
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
@@ -51,7 +55,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     else
       toast.error(
         <span className="font-monospace text-white">
-          Projekt nije aktivan pa nije moguće dodati suradnike<br/>
+          <FormattedMessage
+            defaultMessage="Projekt nije aktivan pa nije moguće dodati suradnike"
+            description="userstable-general-toast-invite-fail-2"
+          /><br/>
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
@@ -156,7 +163,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     if (!project.is_active)
       toast.error(
         <span className="font-monospace text-white">
-          Projekt nije aktivan pa nije moguće odjavljivati suradnike<br/>
+          <FormattedMessage
+            defaultMessage="Projekt nije aktivan pa nije moguće odjavljivati suradnike"
+            description="userstable-general-toast-invite-fail-3"
+          /><br/>
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
