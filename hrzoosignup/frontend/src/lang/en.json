@@ -35,6 +35,10 @@
     "defaultMessage": "First name",
     "description": "users-table-general-firstname"
   },
+  "2LPtd3": {
+    "defaultMessage": "Enter the email addresses of the collaborators you wish to invite to the project",
+    "description": "users-table-general-cardtitle-1"
+  },
   "2OMlOQ": {
     "defaultMessage": "New request",
     "description": "navlinks-newrequests"
@@ -75,9 +79,17 @@
     "defaultMessage": "Details of inactive user {identifier}",
     "description": "linktitle-usersinactive-view"
   },
+  "7FtUKh": {
+    "defaultMessage": "User identifiers of the collaborators you want on the project",
+    "description": "users-table-general-cardtitle-2"
+  },
   "7GLux1": {
     "defaultMessage": "Average amount of working memory per job (GB):",
     "description": "resourcefields-ram"
+  },
+  "7umJYg": {
+    "defaultMessage": "Remove collaborators",
+    "description": "users-table-general-collabsignoff"
   },
   "7wG2D1": {
     "defaultMessage": "Invitation successfully canceled.",
@@ -110,6 +122,10 @@
   "Aa0C40": {
     "defaultMessage": "People:",
     "description": "researchselected-users"
+  },
+  "Ah5cK0": {
+    "defaultMessage": "Active invitation sent to an email",
+    "description": "users-table-general-invitesent"
   },
   "AuAPIM": {
     "defaultMessage": "Sending invitations for a research project",
@@ -218,6 +234,10 @@
   "Ja7vrQ": {
     "defaultMessage": "The project is not active, therefore it is not possible to invite collaborators",
     "description": "userstable-general-toast-invite-fail"
+  },
+  "Jbj5h7": {
+    "defaultMessage": "Add collaborators",
+    "description": "users-table-general-collabadd"
   },
   "KAUZl8": {
     "defaultMessage": "Request type",
@@ -354,6 +374,10 @@
   "UZpSyp": {
     "defaultMessage": "Average amount of temporary space per job (GB):",
     "description": "resourcefields-temp"
+  },
+  "UmA4EZ": {
+    "defaultMessage": "Confirm",
+    "description": "users-table-general-confirm"
   },
   "UrjVbG": {
     "defaultMessage": "It was not possible to add the collaborators: {br} { error }",
@@ -603,6 +627,10 @@
     "defaultMessage": "Terms of use of Advanced Computing service",
     "description": "loginofficial-terms"
   },
+  "w+EuNz": {
+    "defaultMessage": "Send invitation links",
+    "description": "users-table-general-invite-send"
+  },
   "w8BGXa": {
     "defaultMessage": "Applications to be used:",
     "description": "sciencesoftware-list"
@@ -610,6 +638,10 @@
   "y+MIYq": {
     "defaultMessage": "Lead institution:",
     "description": "generalfields-leadinstitution"
+  },
+  "y5njj6": {
+    "defaultMessage": "Invite collaborators",
+    "description": "users-table-general-collabcall"
   },
   "ysQjtn": {
     "defaultMessage": "CroRIS registration",

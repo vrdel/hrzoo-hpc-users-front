@@ -35,6 +35,10 @@
     "defaultMessage": "Ime",
     "description": "users-table-general-firstname"
   },
+  "2LPtd3": {
+    "defaultMessage": "Upiši email adrese suradnika koje želiš pozvati na projekt",
+    "description": "users-table-general-cardtitle-1"
+  },
   "2OMlOQ": {
     "defaultMessage": "Novi zahtjev",
     "description": "navlinks-newrequests"
@@ -75,9 +79,17 @@
     "defaultMessage": "Detalji neaktivnog korisnika {identifier}",
     "description": "linktitle-usersinactive-view"
   },
+  "7FtUKh": {
+    "defaultMessage": "Korisničke oznake suradnika koje želiš na projektu",
+    "description": "users-table-general-cardtitle-2"
+  },
   "7GLux1": {
     "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
     "description": "resourcefields-ram"
+  },
+  "7umJYg": {
+    "defaultMessage": "Odjavi suradnike",
+    "description": "users-table-general-collabsignoff"
   },
   "7wG2D1": {
     "defaultMessage": "Pozivnica uspješno otkazana",
@@ -110,6 +122,10 @@
   "Aa0C40": {
     "defaultMessage": "Osobe:",
     "description": "researchselected-users"
+  },
+  "Ah5cK0": {
+    "defaultMessage": "Aktivna pozivnica poslana na email",
+    "description": "users-table-general-invitesent"
   },
   "AuAPIM": {
     "defaultMessage": "Slanje pozivnica za istraživački projekt",
@@ -218,6 +234,10 @@
   "Ja7vrQ": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće pozivati suradnike",
     "description": "userstable-general-toast-invite-fail"
+  },
+  "Jbj5h7": {
+    "defaultMessage": "Dodaj suradnike",
+    "description": "users-table-general-collabadd"
   },
   "KAUZl8": {
     "defaultMessage": "Tip zahtjeva",
@@ -354,6 +374,10 @@
   "UZpSyp": {
     "defaultMessage": "Prosječna količina privremenog prostora po poslu (GB):",
     "description": "resourcefields-temp"
+  },
+  "UmA4EZ": {
+    "defaultMessage": "Potvrdi",
+    "description": "users-table-general-confirm"
   },
   "UrjVbG": {
     "defaultMessage": "Suradnike nije bilo moguće dodati: {br} { error }",
@@ -603,6 +627,10 @@
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginofficial-terms"
   },
+  "w+EuNz": {
+    "defaultMessage": "Pošalji poveznice za prijavu",
+    "description": "users-table-general-invite-send"
+  },
   "w8BGXa": {
     "defaultMessage": "Aplikacije koje će se koristiti:",
     "description": "sciencesoftware-list"
@@ -610,6 +638,10 @@
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",
     "description": "generalfields-leadinstitution"
+  },
+  "y5njj6": {
+    "defaultMessage": "Pozovi suradnike",
+    "description": "users-table-general-collabcall"
   },
   "ysQjtn": {
     "defaultMessage": "CroRIS registracija",

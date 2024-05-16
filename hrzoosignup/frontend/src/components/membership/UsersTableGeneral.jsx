@@ -417,7 +417,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                             target={`Tooltip-${i + 100}`}
                             toggle={() => showTooltip(user.email)}
                           >
-                            Aktivna pozivnica poslana na email
+                            <FormattedMessage
+                              defaultMessage="Aktivna pozivnica poslana na email"
+                              description="users-table-general-invitesent"
+                            />
                           </Tooltip>
                           <div className="position-absolute top-0 ms-4 start-50 translate-middle">
                             <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
@@ -457,18 +460,27 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       className="me-2"
                     >
                       <FontAwesomeIcon icon={faXmark}/>{' '}
-                      Odjavi suradnike
+                      <FormattedMessage
+                        defaultMessage="Odjavi suradnike"
+                        description="users-table-general-collabsignoff"
+                      />
                     </Button>
                     <Button color="primary" active={isOpen} onClick={toggle} className="ms-2">
                       <FontAwesomeIcon icon={faArrowDown}/>{' '}
-                      Pozovi suradnike
+                      <FormattedMessage
+                        defaultMessage="Pozovi suradnike"
+                        description="users-table-general-collabcall"
+                      />
                     </Button>
                     {
                       (project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop')
                       && (userDetails.is_staff || userDetails.is_superuser) &&
                       <Button color="success" active={isOpen2} onClick={toggle2} className="ms-3">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
-                        Dodaj suradnike
+                        <FormattedMessage
+                          defaultMessage="Dodaj suradnike"
+                          description="users-table-general-collabadd"
+                        />
                       </Button>
                     }
                   </Col>
@@ -478,7 +490,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     <Collapse isOpen={isOpen} style={{width: '80%'}}>
                       <Card className="ps-4 pe-4 pt-4">
                         <CardTitle>
-                          Upiši email adrese suradnika koje želiš pozvati na projekt
+                          <FormattedMessage
+                            defaultMessage="Upiši email adrese suradnika koje želiš pozvati na projekt"
+                            description="users-table-general-cardtitle-1"
+                          />
                         </CardTitle>
                         <CardBody className="mb-4">
                           <Controller
@@ -497,7 +512,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                           <div className="d-flex align-items-center justify-content-center">
                             <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
                               <FontAwesomeIcon icon={faPaperPlane}/>{' '}
-                              Pošalji poveznice za prijavu
+                              <FormattedMessage
+                                defaultMessage="Pošalji poveznice za prijavu"
+                                description="users-table-general-invite-send"
+                              />
                             </Button>
                           </div>
                         </CardBody>
@@ -513,7 +531,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <Collapse isOpen={isOpen2} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
-                            Korisničke oznake suradnika koje želiš na projektu
+                            <FormattedMessage
+                              defaultMessage="Korisničke oznake suradnika koje želiš na projektu"
+                              description="users-table-general-cardtitle-2"
+                            />
                           </CardTitle>
                           <CardBody className="mb-4">
                             <Controller
@@ -536,7 +557,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                             <div className="d-flex align-items-center justify-content-center">
                               <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
                                 <FontAwesomeIcon icon={faCheck}/>{' '}
-                                Potvrdi
+                                <FormattedMessage
+                                  defaultMessage="Potvrdi"
+                                  description="users-table-general-confirm"
+                                />
                               </Button>
                             </div>
                           </CardBody>
