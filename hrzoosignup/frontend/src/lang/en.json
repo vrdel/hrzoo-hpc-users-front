@@ -47,6 +47,10 @@
     "defaultMessage": "Resource type:",
     "description": "resourcefields-type"
   },
+  "3zl000": {
+    "defaultMessage": "Are you sure you want to add the listed collaborators to the project?",
+    "description": "memberships-modalmsg-internal"
+  },
   "52shcW": {
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
@@ -90,6 +94,10 @@
   "Aa0C40": {
     "defaultMessage": "People:",
     "description": "researchselected-users"
+  },
+  "AuAPIM": {
+    "defaultMessage": "Sending invitations for a research project",
+    "description": "memberships-modaltitle-research"
   },
   "C6FjhE": {
     "defaultMessage": "Yes",
@@ -227,6 +235,10 @@
     "defaultMessage": "The request could not be submitted: { errmsg }",
     "description": "newrequest-toast-fail"
   },
+  "S8xrMw": {
+    "defaultMessage": "Adding collaborators to an internal project",
+    "description": "memberships-modaltitle-internal"
+  },
   "SGXvmn": {
     "defaultMessage": "Practical class",
     "description": "requesttype-label-practicalclass"
@@ -246,6 +258,14 @@
   "TH7L+k": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
+  },
+  "Tbafe8": {
+    "defaultMessage": "Cancellation of the invitation",
+    "description": "memberships-modaltitle-inviteoff"
+  },
+  "Te4H5V": {
+    "defaultMessage": "Removing a collaborator from the research project",
+    "description": "memberships-modaltitle-signoff"
   },
   "Tu8G3o": {
     "defaultMessage": "Generated username to be used to access resources",
@@ -291,6 +311,10 @@
     "defaultMessage": "Additional applications that will need to be installed:",
     "description": "sciencesoftware-list"
   },
+  "fQ6rYw": {
+    "defaultMessage": "Are you sure you want to remove the selected collaborators?",
+    "description": "memberships-modalmsg-signoff"
+  },
   "fxdgEp": {
     "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
@@ -318,6 +342,10 @@
   "h78Eiu": {
     "defaultMessage": "You are registered as a leader on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
+  },
+  "hgnZAv": {
+    "defaultMessage": "Are you sure you want to cancel the invitation?",
+    "description": "memberships-modalmsg-inviteoff"
   },
   "hj4YOP": {
     "defaultMessage": "New request",
@@ -446,6 +474,10 @@
   "z/MmC8": {
     "defaultMessage": "My info",
     "description": "navlinks-myinfo"
+  },
+  "zORxCj": {
+    "defaultMessage": "Are you sure you want to send invitations to the provided email addresses?",
+    "description": "memberships-modalmsg-invite"
   },
   "ziaUjB": {
     "defaultMessage": "You do not have any projects registered in the CroRIS system",

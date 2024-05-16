@@ -23,9 +23,12 @@ import {
 } from 'reactstrap';
 import DatePicker from 'react-date-picker';
 import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl'
 
 
 const NewRequestIndex = () => {
+  const intl = useIntl()
+
   return (
     <>
       <RequestHorizontalRuler />
@@ -222,7 +225,10 @@ const NewRequestIndex = () => {
             aria-label="requestScientificSoftware"
             disabled={true}
             id="requestScientificSoftware"
-            placeholder="Odaberi"
+            placeholder={intl.formatMessage({
+              defaultMessage: "Odaberi",
+              description: 'sciencesoftware-placeholder'
+            })}
           />
         </Col>
       </Row>

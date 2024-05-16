@@ -30,7 +30,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 
-
 export const BriefSummary = ({project, isSubmitted}) => {
   return (
     <>
@@ -159,7 +158,6 @@ const BriefProjectInfo = ({project}) => {
   )
 }
 
-
 const Memberships = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
@@ -188,29 +186,53 @@ const Memberships = () => {
   const onSubmit = (data) => {
     if (data['type'] === 'add') {
       setAreYouSureModal(!areYouSureModal)
-      setModalTitle("Slanje pozivnica za istraživački projekt")
-      setModalMsg("Da li ste sigurni da želite poslati pozivnice na navedene email adrese?")
+      setModalTitle( intl.formatMessage({
+        defaultMessage: "Slanje pozivnica za istraživački projekt",
+        description: "memberships-modaltitle-research"
+      }) )
+      setModalMsg( intl.formatMessage({
+        defaultMessage: "Da li ste sigurni da želite poslati pozivnice na navedene email adrese?",
+        description: "memberships-modalmsg-invite"
+      }) )
       setOnYesCall('doaddinvite')
       setOnYesCallArg(data)
     }
     else if (data['type'] === 'add_internal') {
       setAreYouSureModal(!areYouSureModal)
-      setModalTitle("Dodavanje suradnika na interni projekt")
-      setModalMsg("Da li ste sigurni da želite dodati navedene suradnike na projekt?")
+      setModalTitle( intl.formatMessage({
+        defaultMessage: "Dodavanje suradnika na interni projekt",
+        description: "memberships-modaltitle-internal"
+      }) )
+      setModalMsg( intl.formatMessage({
+        defaultMessage: "Da li ste sigurni da želite dodati navedene suradnike na projekt?",
+        description: "memberships-modalmsg-internal"
+      }) )
       setOnYesCall('doaddinternal')
       setOnYesCallArg(data)
     }
     else if (data['type'] === 'signoff') {
       setAreYouSureModal(!areYouSureModal)
-      setModalTitle("Odjava suradnika sa istraživačkog projekta")
-      setModalMsg("Da li ste sigurni da želite odjaviti označene suradnike?")
+      setModalTitle( intl.formatMessage({
+        defaultMessage: "Odjava suradnika sa istraživačkog projekta",
+        description: "memberships-modaltitle-signoff"
+      }) )
+      setModalMsg( intl.formatMessage({
+        defaultMessage: "Da li ste sigurni da želite odjaviti označene suradnike?",
+        description: "memberships-modalmsg-signoff"
+      }) )
       setOnYesCall('dosignoff')
       setOnYesCallArg(data)
     }
     else if (data['type'] === 'inviterem') {
       setAreYouSureModal(!areYouSureModal)
-      setModalTitle("Otkazivanje pozivnice")
-      setModalMsg("Da li ste sigurni da želite otkazati pozivnicu?")
+      setModalTitle( intl.formatMessage({
+        defaultMessage: "Otkazivanje pozivnice",
+        description: "memberships-modaltitle-inviteoff"
+      }) )
+      setModalMsg( intl.formatMessage({
+        defaultMessage: "Da li ste sigurni da želite otkazati pozivnicu?",
+        description: "memberships-modalmsg-inviteoff"
+      }) )
       setOnYesCall('doinviterem')
       setOnYesCallArg(data)
     }
