@@ -411,6 +411,10 @@
     "defaultMessage": "Novi zahtjev temeljem institucijskog projekta",
     "description": "linktitle-newrequest-institutional"
   },
+  "cvu7tz": {
+    "defaultMessage": "Popis i upravljanje članovima na odobrenim zahtjevima/projektima",
+    "description": "linktitle-memberships"
+  },
   "dUFVR+": {
     "defaultMessage": "Novi zahtjev temeljem istraživačkog projekta",
     "description": "linktitle-newrequest-research"

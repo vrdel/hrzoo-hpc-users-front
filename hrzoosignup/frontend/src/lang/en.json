@@ -24,7 +24,7 @@
     "description": "generalfields-explanation"
   },
   "0fF2qV": {
-    "defaultMessage": "New request on behalf of thesis project",
+    "defaultMessage": "New request on behalf of practical class",
     "description": "linktitle-newrequest-class"
   },
   "1r5OsY": {
@@ -410,6 +410,10 @@
   "cQTqIM": {
     "defaultMessage": "New request on behalf of institute project",
     "description": "linktitle-newrequest-institutional"
+  },
+  "cvu7tz": {
+    "defaultMessage": "List and manage members on approved requests/projects",
+    "description": "linktitle-memberships"
   },
   "dUFVR+": {
     "defaultMessage": "New request on behalf of research project",

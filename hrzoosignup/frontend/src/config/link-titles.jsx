@@ -43,7 +43,7 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Novi zahtjev temeljem izrade rada',
         description: 'linktitle-newrequest-thesis'
       }),
-    [url_ui_prefix + '/new-request/srce-workhop']:
+    [url_ui_prefix + '/new-request/srce-workshop']:
       intl.formatMessage({
         defaultMessage: 'Novi zahtjev za Srce radionicu',
         description: 'linktitle-newrequest-srceworkshop'
@@ -62,7 +62,10 @@ export function LinkTitles(loc, intl) {
       defaultMessage: 'Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS',
       description: 'linktitle-myinfo'
     }),
-    [url_ui_prefix + '/memberships']: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
+    [url_ui_prefix + '/memberships']: intl.formatMessage({
+      defaultMessage: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
+      description: "linktitle-memberships"
+    }),
     [url_ui_prefix + '/users']:
       intl.formatMessage({
         defaultMessage: 'Popis svih korisnika na aktivnim projektima',
