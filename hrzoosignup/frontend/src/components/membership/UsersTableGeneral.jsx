@@ -19,6 +19,7 @@ import { fetchUsers, fetchUsersInactive } from "Api/users"
 import { useQuery } from "@tanstack/react-query";
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl'
 import _ from 'lodash';
 
 
@@ -28,6 +29,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const { userDetails } = useContext(AuthContext);
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
+  const intl = useIntl()
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -278,7 +280,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     : "align-middle text-center text-success"
                   }>
                     <div className="position-relative">
-                      Da
+                      <FormattedMessage
+                        defaultMessage="Da"
+                        description="users-table-general-isadded"
+                      />
                       {
                         lead['user'].sshkeys &&
                           <div id={`Tooltip-key-${999}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
@@ -544,7 +549,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                                 <CustomReactSelect
                                   name="collaboratorUids"
                                   forwardedRef={field.ref}
-                                  placeholder="Odaberi..."
+                                  placeholder={intl.formatMessage({
+                                    defaultMessage: "Odaberi...",
+                                    description: "users-table-general-placeholder"
+                                  })}
                                   fontSize="16px"
                                   closeMenuOnSelect={false}
                                   collaboratorsFixedMultiValue

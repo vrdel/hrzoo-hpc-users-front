@@ -163,6 +163,10 @@
     "defaultMessage": "Public key added",
     "description": "users-table-general-keyadd"
   },
+  "DEfFmS": {
+    "defaultMessage": "Choose...",
+    "description": "users-table-general-placeholder"
+  },
   "DJN4Jp": {
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"

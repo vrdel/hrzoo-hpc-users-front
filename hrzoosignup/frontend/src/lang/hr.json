@@ -163,6 +163,10 @@
     "defaultMessage": "Dodan javni ključ",
     "description": "users-table-general-keyadd"
   },
+  "DEfFmS": {
+    "defaultMessage": "Odaberi...",
+    "description": "users-table-general-placeholder"
+  },
   "DJN4Jp": {
     "defaultMessage": "Popis svih odobrenih projekata",
     "description": "linktitle-projects"
