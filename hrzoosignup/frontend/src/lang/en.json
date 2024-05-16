@@ -115,6 +115,10 @@
     "defaultMessage": "Yes",
     "description": "modal-buttonyes"
   },
+  "CYLEcB": {
+    "defaultMessage": "It was not possible to remove the collaborators: {br} { error }",
+    "description": "memberships-toast-signoff-fail"
+  },
   "CiElaE": {
     "defaultMessage": "Number of public IPv4 addresses:",
     "description": "cloudfields-nips"
@@ -150,6 +154,10 @@
   "FsZBiz": {
     "defaultMessage": "Are you sure you want to logout?",
     "description": "navigation-modalquestion"
+  },
+  "GbOJbt": {
+    "defaultMessage": "The invitation could not be canceled: {br} { error }",
+    "description": "memberships-toast-invitecancel-fail"
   },
   "HcOwzH": {
     "defaultMessage": "Username:",
@@ -298,10 +306,6 @@
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
-  },
-  "aW5M9T": {
-    "defaultMessage": "The invitation could not be canceled.: <br/> { error }",
-    "description": "memberships-toast-invitecancel-fail"
   },
   "bAhHuU": {
     "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
@@ -466,10 +470,6 @@
   "sVu3Vi": {
     "defaultMessage": "Total amount of storage space required for the project (GB):",
     "description": "resourcefields-disk"
-  },
-  "t+/E3Y": {
-    "defaultMessage": "It was not possible to remove the collaborators: <br/> { error }",
-    "description": "memberships-toast-signoff-fail"
   },
   "tdeUEL": {
     "defaultMessage": "Explanation:",

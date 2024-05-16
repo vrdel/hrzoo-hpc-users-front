@@ -115,6 +115,10 @@
     "defaultMessage": "Da",
     "description": "modal-buttonyes"
   },
+  "CYLEcB": {
+    "defaultMessage": "Suradnike nije bilo moguće odjaviti: {br} { error }",
+    "description": "memberships-toast-signoff-fail"
+  },
   "CiElaE": {
     "defaultMessage": "Broj javnih IPv4 adresa:",
     "description": "cloudfields-nips"
@@ -150,6 +154,10 @@
   "FsZBiz": {
     "defaultMessage": "Da li ste sigurni da se želite odjaviti?",
     "description": "navigation-modalquestion"
+  },
+  "GbOJbt": {
+    "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
+    "description": "memberships-toast-invitecancel-fail"
   },
   "HcOwzH": {
     "defaultMessage": "Korisničko ime:",
@@ -298,10 +306,6 @@
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
-  },
-  "aW5M9T": {
-    "defaultMessage": "Pozivnicu nije bilo moguće otkazati: <br/> { error }",
-    "description": "memberships-toast-invitecancel-fail"
   },
   "bAhHuU": {
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
@@ -466,10 +470,6 @@
   "sVu3Vi": {
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
     "description": "resourcefields-disk"
-  },
-  "t+/E3Y": {
-    "defaultMessage": "Suradnike nije bilo moguće odjaviti: <br/> { error }",
-    "description": "memberships-toast-signoff-fail"
   },
   "tdeUEL": {
     "defaultMessage": "Obrazloženje:",

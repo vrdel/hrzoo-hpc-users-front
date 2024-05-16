@@ -353,10 +353,11 @@ const Memberships = () => {
       toast.error(
         <span className="font-monospace text-white">
           <FormattedMessage
-            defaultMessage="Suradnike nije bilo moguće odjaviti: <br/> { error }"
+            defaultMessage="Suradnike nije bilo moguće odjaviti: {br} { error }"
             description="memberships-toast-signoff-fail"
             values={{
-              error: err.message
+              error: err.message,
+              br: <br/>
             }}
           />
         </span>, {
@@ -390,10 +391,11 @@ const Memberships = () => {
       toast.error(
         <span className="font-monospace text-white">
           <FormattedMessage
-            defaultMessage="Pozivnicu nije bilo moguće otkazati: <br/> { error }"
+            defaultMessage="Pozivnicu nije bilo moguće otkazati: {br} { error }"
             description="memberships-toast-invitecancel-fail"
             values={{
-              error: err.message
+              error: err.message,
+              br: <br/>
             }}
           />
         </span>, {
