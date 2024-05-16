@@ -71,8 +71,12 @@
     "defaultMessage": "Average amount of working memory per job (GB):",
     "description": "resourcefields-ram"
   },
+  "7wG2D1": {
+    "defaultMessage": "Invitation successfully canceled.",
+    "description": "memberships-toast-invitecancel-ok"
+  },
   "8dPx+P": {
-    "defaultMessage": "Lisft of scientific software available on HPC clusters",
+    "defaultMessage": "List of scientific software available on HPC clusters",
     "description": "linktitle-software"
   },
   "8jbyYo": {
@@ -91,6 +95,10 @@
     "defaultMessage": "No",
     "description": "modal-buttonno"
   },
+  "AO8KtC": {
+    "defaultMessage": "Collaborators have been successfully added",
+    "description": "memberships-toast-internal-collaboratorsok"
+  },
   "Aa0C40": {
     "defaultMessage": "People:",
     "description": "researchselected-users"
@@ -98,6 +106,10 @@
   "AuAPIM": {
     "defaultMessage": "Sending invitations for a research project",
     "description": "memberships-modaltitle-research"
+  },
+  "BC++9m": {
+    "defaultMessage": "It was not possible to send the invitations: {br} { error }",
+    "description": "memberships-toast-invitefail"
   },
   "C6FjhE": {
     "defaultMessage": "Yes",
@@ -279,9 +291,17 @@
     "defaultMessage": "Average amount of temporary space per job (GB):",
     "description": "resourcefields-temp"
   },
+  "UrjVbG": {
+    "defaultMessage": "It was not possible to add the collaborators: {br} { error }",
+    "description": "memberships-toast-internal-collaboratorsfail"
+  },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "aW5M9T": {
+    "defaultMessage": "The invitation could not be canceled.: <br/> { error }",
+    "description": "memberships-toast-invitecancel-fail"
   },
   "bAhHuU": {
     "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
@@ -310,6 +330,10 @@
   "ejJ5Dy": {
     "defaultMessage": "Additional applications that will need to be installed:",
     "description": "sciencesoftware-list"
+  },
+  "fEvfkf": {
+    "defaultMessage": "The invitations have been successfully sent",
+    "description": "memberships-toast-invitesok"
   },
   "fQ6rYw": {
     "defaultMessage": "Are you sure you want to remove the selected collaborators?",
@@ -443,6 +467,10 @@
     "defaultMessage": "Total amount of storage space required for the project (GB):",
     "description": "resourcefields-disk"
   },
+  "t+/E3Y": {
+    "defaultMessage": "It was not possible to remove the collaborators: <br/> { error }",
+    "description": "memberships-toast-signoff-fail"
+  },
   "tdeUEL": {
     "defaultMessage": "Explanation:",
     "description": "researchselected-explain"
@@ -478,6 +506,10 @@
   "zORxCj": {
     "defaultMessage": "Are you sure you want to send invitations to the provided email addresses?",
     "description": "memberships-modalmsg-invite"
+  },
+  "zba6wi": {
+    "defaultMessage": "Some collaborators have already been added to the project: {br} { error }",
+    "description": "memberships-toast-internal-alreadyadded"
   },
   "ziaUjB": {
     "defaultMessage": "You do not have any projects registered in the CroRIS system",

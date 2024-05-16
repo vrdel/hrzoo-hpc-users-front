@@ -29,6 +29,8 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
+import { FormattedMessage } from 'react-intl';
+
 
 export const BriefSummary = ({project, isSubmitted}) => {
   return (
@@ -244,7 +246,10 @@ const Memberships = () => {
       queryClient.invalidateQueries('invites')
       toast.success(
         <span className="font-monospace text-dark">
-          Pozivnice su uspješno poslane
+          <FormattedMessage
+            defaultMessage="Pozivnice su uspješno poslane"
+            description="memberships-toast-invitesok"
+          />
         </span>, {
           toastId: 'invit-ok-sent',
           autoClose: 2500,
@@ -255,8 +260,14 @@ const Memberships = () => {
     catch (err) {
       toast.error(
         <span className="font-monospace text-white">
-          Pozivnice nije bilo moguće poslati: <br/>
-          { err.message }
+          <FormattedMessage
+            defaultMessage="Pozivnice nije bilo moguće poslati: {br} { error }"
+            description="memberships-toast-invitefail"
+            values={{
+              error: err.message,
+              br: <br/>
+            }}
+          />
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
@@ -273,7 +284,10 @@ const Memberships = () => {
       queryClient.invalidateQueries('projects')
       toast.success(
         <span className="font-monospace text-dark">
-          Suradnici su uspješno dodani
+          <FormattedMessage
+            defaultMessage="Suradnici su uspješno dodani"
+            description="memberships-toast-internal-collaboratorsok"
+          />
         </span>, {
           toastId: 'addint-ok',
           autoClose: 2500,
@@ -285,8 +299,14 @@ const Memberships = () => {
       if (err.message.includes('already added'))
         toast.warn(
           <span className="font-monospace text-dark">
-            Neki suradnici su već dodani na projekt: <br/>
-            { err.message }
+            <FormattedMessage
+              defaultMessage="Neki suradnici su već dodani na projekt: {br} { error }"
+              description="memberships-toast-internal-alreadyadded"
+              values={{
+                error: err.message,
+                br: <br/>
+              }}
+            />
           </span>, {
             theme: 'colored',
             toastId: 'addint-warn',
@@ -297,8 +317,14 @@ const Memberships = () => {
       else
         toast.error(
           <span className="font-monospace text-white">
-            Suradnike nije bilo moguće dodati: <br/>
-            { err.message }
+            <FormattedMessage
+              defaultMessage="Suradnike nije bilo moguće dodati: {br} { error }"
+              description="memberships-toast-internal-collaboratorsfail"
+              values={{
+                error: err.message,
+                br: <br/>
+              }}
+            />
           </span>, {
             theme: 'colored',
             toastId: 'addint-fail',
@@ -326,8 +352,13 @@ const Memberships = () => {
     catch (err) {
       toast.error(
         <span className="font-monospace text-white">
-          Suradnike nije bilo moguće odjaviti: <br/>
-          { err.message }
+          <FormattedMessage
+            defaultMessage="Suradnike nije bilo moguće odjaviti: <br/> { error }"
+            description="memberships-toast-signoff-fail"
+            values={{
+              error: err.message
+            }}
+          />
         </span>, {
           theme: 'colored',
           toastId: 'signoff-fail',
@@ -344,7 +375,10 @@ const Memberships = () => {
       queryClient.invalidateQueries('invites')
       toast.success(
         <span className="font-monospace text-dark">
-          Pozivnica uspješno otkazana
+          <FormattedMessage
+            defaultMessage="Pozivnica uspješno otkazana"
+            description="memberships-toast-invitecancel-ok"
+          />
         </span>, {
           toastId: 'inviterem-ok',
           autoClose: 2500,
@@ -355,8 +389,13 @@ const Memberships = () => {
     catch (err) {
       toast.error(
         <span className="font-monospace text-white">
-          Pozivnicu nije bilo moguće otkazati: <br/>
-          { err.message }
+          <FormattedMessage
+            defaultMessage="Pozivnicu nije bilo moguće otkazati: <br/> { error }"
+            description="memberships-toast-invitecancel-fail"
+            values={{
+              error: err.message
+            }}
+          />
         </span>, {
           theme: 'colored',
           toastId: 'inviterem-fail',

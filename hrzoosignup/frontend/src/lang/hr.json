@@ -71,6 +71,10 @@
     "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
     "description": "resourcefields-ram"
   },
+  "7wG2D1": {
+    "defaultMessage": "Pozivnica uspješno otkazana",
+    "description": "memberships-toast-invitecancel-ok"
+  },
   "8dPx+P": {
     "defaultMessage": "Popis aplikacija dostupnih na klasteru",
     "description": "linktitle-software"
@@ -91,6 +95,10 @@
     "defaultMessage": "Ne",
     "description": "modal-buttonno"
   },
+  "AO8KtC": {
+    "defaultMessage": "Suradnici su uspješno dodani",
+    "description": "memberships-toast-internal-collaboratorsok"
+  },
   "Aa0C40": {
     "defaultMessage": "Osobe:",
     "description": "researchselected-users"
@@ -98,6 +106,10 @@
   "AuAPIM": {
     "defaultMessage": "Slanje pozivnica za istraživački projekt",
     "description": "memberships-modaltitle-research"
+  },
+  "BC++9m": {
+    "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
+    "description": "memberships-toast-invitefail"
   },
   "C6FjhE": {
     "defaultMessage": "Da",
@@ -279,9 +291,17 @@
     "defaultMessage": "Prosječna količina privremenog prostora po poslu (GB):",
     "description": "resourcefields-temp"
   },
+  "UrjVbG": {
+    "defaultMessage": "Suradnike nije bilo moguće dodati: {br} { error }",
+    "description": "memberships-toast-internal-collaboratorsfail"
+  },
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "aW5M9T": {
+    "defaultMessage": "Pozivnicu nije bilo moguće otkazati: <br/> { error }",
+    "description": "memberships-toast-invitecancel-fail"
   },
   "bAhHuU": {
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
@@ -310,6 +330,10 @@
   "ejJ5Dy": {
     "defaultMessage": "Dodatne aplikacije koje će biti potrebno instalirati:",
     "description": "sciencesoftware-list"
+  },
+  "fEvfkf": {
+    "defaultMessage": "Pozivnice su uspješno poslane",
+    "description": "memberships-toast-invitesok"
   },
   "fQ6rYw": {
     "defaultMessage": "Da li ste sigurni da želite odjaviti označene suradnike?",
@@ -443,6 +467,10 @@
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
     "description": "resourcefields-disk"
   },
+  "t+/E3Y": {
+    "defaultMessage": "Suradnike nije bilo moguće odjaviti: <br/> { error }",
+    "description": "memberships-toast-signoff-fail"
+  },
   "tdeUEL": {
     "defaultMessage": "Obrazloženje:",
     "description": "researchselected-explain"
@@ -478,6 +506,10 @@
   "zORxCj": {
     "defaultMessage": "Da li ste sigurni da želite poslati pozivnice na navedene email adrese?",
     "description": "memberships-modalmsg-invite"
+  },
+  "zba6wi": {
+    "defaultMessage": "Neki suradnici su već dodani na projekt: {br} { error }",
+    "description": "memberships-toast-internal-alreadyadded"
   },
   "ziaUjB": {
     "defaultMessage": "Nemate projekata prijavljenih u sustavu CroRIS",
