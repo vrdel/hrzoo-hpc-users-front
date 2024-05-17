@@ -15,6 +15,10 @@
     "defaultMessage": "Broj ne može biti manji od 1",
     "description": "schema-less-1"
   },
+  "/0m2o1": {
+    "defaultMessage": "Radnje",
+    "description": "myreq-list-actions"
+  },
   "/hXMAH": {
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
@@ -191,6 +195,10 @@
     "defaultMessage": "Suradnike nije bilo moguće odjaviti: {br} { error }",
     "description": "memberships-toast-signoff-fail"
   },
+  "CbN4qY": {
+    "defaultMessage": "Podnesen",
+    "description": "myreq-list-submitted"
+  },
   "CiElaE": {
     "defaultMessage": "Broj javnih IPv4 adresa:",
     "description": "cloudfields-nips"
@@ -219,9 +227,17 @@
     "defaultMessage": "Popis svih odobrenih projekata",
     "description": "linktitle-projects"
   },
+  "DJR3ak": {
+    "defaultMessage": "Šifra",
+    "description": "myreq-list-identifier"
+  },
   "DXZ12x": {
     "defaultMessage": "Naziv projekta i CroRIS poveznica",
     "description": "userinfo-croris-nameurl"
+  },
+  "DqpQay": {
+    "defaultMessage": "Tip",
+    "description": "myreq-list-type"
   },
   "FPhsMI": {
     "defaultMessage": "Odobren:",
@@ -366,6 +382,14 @@
   "NF44j4": {
     "defaultMessage": "Članstva",
     "description": "navlinks-memberships"
+  },
+  "NJUEoC": {
+    "defaultMessage": "Naziv",
+    "description": "myreq-list-name"
+  },
+  "NKBtX4": {
+    "defaultMessage": "Nemate podnesenih zahtjeva",
+    "description": "myreq-list-noreqs"
   },
   "No5Y5w": {
     "defaultMessage": "Institucijski projekt",
@@ -515,6 +539,10 @@
     "defaultMessage": "Broj ne može biti veći od {number}",
     "description": "schema-great-n"
   },
+  "dn45ZP": {
+    "defaultMessage": "Trajanje",
+    "description": "myreq-list-duration"
+  },
   "e6lTgN": {
     "defaultMessage": "Sveučilišni računski centar (Srce)",
     "description": "footer-srce"
@@ -538,6 +566,10 @@
   "fxdgEp": {
     "defaultMessage": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
+  },
+  "gGPZfo": {
+    "defaultMessage": "Stanje",
+    "description": "myreq-list-state"
   },
   "gHsC0A": {
     "defaultMessage": "Prijavljen",

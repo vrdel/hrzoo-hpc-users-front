@@ -15,6 +15,10 @@
     "defaultMessage": "The number cannot be less than 1",
     "description": "schema-less-1"
   },
+  "/0m2o1": {
+    "defaultMessage": "Actions",
+    "description": "myreq-list-actions"
+  },
   "/hXMAH": {
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
@@ -191,6 +195,10 @@
     "defaultMessage": "It was not possible to remove the collaborators: {br} { error }",
     "description": "memberships-toast-signoff-fail"
   },
+  "CbN4qY": {
+    "defaultMessage": "Submitted",
+    "description": "myreq-list-submitted"
+  },
   "CiElaE": {
     "defaultMessage": "Number of public IPv4 addresses:",
     "description": "cloudfields-nips"
@@ -219,9 +227,17 @@
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
   },
+  "DJR3ak": {
+    "defaultMessage": "Identifier",
+    "description": "myreq-list-identifier"
+  },
   "DXZ12x": {
     "defaultMessage": "Project name and CroRIS link",
     "description": "userinfo-croris-nameurl"
+  },
+  "DqpQay": {
+    "defaultMessage": "Type",
+    "description": "myreq-list-type"
   },
   "FPhsMI": {
     "defaultMessage": "Approved:",
@@ -366,6 +382,14 @@
   "NF44j4": {
     "defaultMessage": "Memberships",
     "description": "navlinks-memberships"
+  },
+  "NJUEoC": {
+    "defaultMessage": "Name",
+    "description": "myreq-list-name"
+  },
+  "NKBtX4": {
+    "defaultMessage": "You have not submitted any requests",
+    "description": "myreq-list-noreqs"
   },
   "No5Y5w": {
     "defaultMessage": "Institutional project",
@@ -515,6 +539,10 @@
     "defaultMessage": "The number cannot be greater than {number}",
     "description": "schema-great-n"
   },
+  "dn45ZP": {
+    "defaultMessage": "Duration",
+    "description": "myreq-list-duration"
+  },
   "e6lTgN": {
     "defaultMessage": "University Computing Centre",
     "description": "footer-srce"
@@ -538,6 +566,10 @@
   "fxdgEp": {
     "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
+  },
+  "gGPZfo": {
+    "defaultMessage": "State",
+    "description": "myreq-list-state"
   },
   "gHsC0A": {
     "defaultMessage": "Registered",

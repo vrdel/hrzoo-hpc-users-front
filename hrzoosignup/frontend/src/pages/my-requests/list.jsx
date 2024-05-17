@@ -22,7 +22,7 @@ import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 
 
@@ -68,25 +68,46 @@ const MyRequestsList = () => {
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
             <th className="fw-normal">
-              Stanje
+              <FormattedMessage
+                defaultMessage="Stanje"
+                description="myreq-list-state"
+              />
             </th>
             <th className="fw-normal">
-              Podnesen
+              <FormattedMessage
+                defaultMessage="Podnesen"
+                description="myreq-list-submitted"
+              />
             </th>
             <th className="fw-normal">
-              Naziv
+              <FormattedMessage
+                defaultMessage="Naziv"
+                description="myreq-list-name"
+              />
             </th>
             <th className="fw-normal">
-              Šifra
+              <FormattedMessage
+                defaultMessage="Šifra"
+                description="myreq-list-identifier"
+              />
             </th>
             <th className="fw-normal">
-              Tip
+              <FormattedMessage
+                defaultMessage="Tip"
+                description="myreq-list-type"
+              />
             </th>
             <th className="fw-normal">
-              Trajanje
+              <FormattedMessage
+                defaultMessage="Trajanje"
+                description="myreq-list-duration"
+              />
             </th>
             <th className="fw-normal">
-              Radnje
+              <FormattedMessage
+                defaultMessage="Radnje"
+                description="myreq-list-actions"
+              />
             </th>
           </tr>
         </thead>
@@ -105,25 +126,46 @@ const MyRequestsList = () => {
               <thead id="hzsi-thead" className="align-middle text-center text-white">
                 <tr>
                   <th className="fw-normal">
-                    Stanje
+                    <FormattedMessage
+                      defaultMessage="Stanje"
+                      description="myreq-list-state"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Podnesen
+                    <FormattedMessage
+                      defaultMessage="Podnesen"
+                      description="myreq-list-submitted"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Naziv
+                    <FormattedMessage
+                      defaultMessage="Naziv"
+                      description="myreq-list-name"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Šifra
+                    <FormattedMessage
+                      defaultMessage="Šifra"
+                      description="myreq-list-identifier"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Tip
+                    <FormattedMessage
+                      defaultMessage="Tip"
+                      description="myreq-list-type"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Trajanje
+                    <FormattedMessage
+                      defaultMessage="Trajanje"
+                      description="myreq-list-duration"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Radnje
+                    <FormattedMessage
+                      defaultMessage="Radnje"
+                      description="myreq-list-actions"
+                    />
                   </th>
                 </tr>
               </thead>
@@ -206,25 +248,46 @@ const MyRequestsList = () => {
               <thead id="hzsi-thead" className="align-middle text-center text-white">
                 <tr>
                   <th className="fw-normal">
-                    Stanje
+                    <FormattedMessage
+                      defaultMessage="Stanje"
+                      description="myreq-list-state"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Tip
+                    <FormattedMessage
+                      defaultMessage="Tip"
+                      description="myreq-list-type"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Šifra
+                    <FormattedMessage
+                      defaultMessage="Šifra"
+                      description="myreq-list-identifier"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Naziv
+                    <FormattedMessage
+                      defaultMessage="Naziv"
+                      description="myreq-list-name"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Trajanje
+                    <FormattedMessage
+                      defaultMessage="Trajanje"
+                      description="myreq-list-duration"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Podnesen
+                    <FormattedMessage
+                      defaultMessage="Podnesen"
+                      description="myreq-list-submitted"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Radnje
+                    <FormattedMessage
+                      defaultMessage="Radnje"
+                      description="myreq-list-actions"
+                    />
                   </th>
                 </tr>
               </thead>
@@ -240,7 +303,10 @@ const MyRequestsList = () => {
                 }
                 <tr key="4">
                   <td colSpan="7" className="table-light border-0 text-muted text-center p-3 fs-3">
-                    Nemate podnesenih zahtjeva
+                    <FormattedMessage
+                      defaultMessage="Nemate podnesenih zahtjeva"
+                      description="myreq-list-noreqs"
+                    />
                   </td>
                 </tr>
                 {
