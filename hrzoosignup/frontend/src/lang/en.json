@@ -63,6 +63,14 @@
     "defaultMessage": "Are you sure you want to add the listed collaborators to the project?",
     "description": "memberships-modalmsg-internal"
   },
+  "4CJjmv": {
+    "defaultMessage": "Last name",
+    "description": "userinfo-croris-lastname"
+  },
+  "4wuDbg": {
+    "defaultMessage": "leader",
+    "description": "userinfo-croris-badgelead"
+  },
   "52shcW": {
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
@@ -107,6 +115,10 @@
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
   },
+  "9WQZWa": {
+    "defaultMessage": "CroRIS system",
+    "description": "userinfo-croris-title"
+  },
   "9xTRRJ": {
     "defaultMessage": "The scientist's personal identification number (MBZ) is unknown.",
     "description": "newrequest-reason-mbzunk"
@@ -131,6 +143,10 @@
     "defaultMessage": "Sending invitations for a research project",
     "description": "memberships-modaltitle-research"
   },
+  "AyezMg": {
+    "defaultMessage": "First name",
+    "description": "userinfo-croris-firstname"
+  },
   "B8Lcj2": {
     "defaultMessage": "Project identifier copied to clipboard",
     "description": "memberships-clipboard-ok"
@@ -138,6 +154,14 @@
   "BC++9m": {
     "defaultMessage": "It was not possible to send the invitations: {br} { error }",
     "description": "memberships-toast-invitefail"
+  },
+  "BzHbow": {
+    "defaultMessage": "There are no active projects in the CroRIS system in which the user participates",
+    "description": "userinfo-croris-tablefoot-userview-no"
+  },
+  "C5xc0q": {
+    "defaultMessage": "Active projects registered in the CroRIS system that the user participates in",
+    "description": "userinfo-croris-tablefoot-userview"
   },
   "C6FjhE": {
     "defaultMessage": "Yes",
@@ -171,6 +195,10 @@
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
   },
+  "DXZ12x": {
+    "defaultMessage": "Project name and CroRIS link",
+    "description": "userinfo-croris-nameurl"
+  },
   "FPhsMI": {
     "defaultMessage": "Approved:",
     "description": "memberships-project-approved"
@@ -194,6 +222,10 @@
   "FsZBiz": {
     "defaultMessage": "Are you sure you want to logout?",
     "description": "navigation-modalquestion"
+  },
+  "FwpVLM": {
+    "defaultMessage": "There is no data from the CroRIS system",
+    "description": "userinfo-croris-nodata"
   },
   "Fz1XrJ": {
     "defaultMessage": "Project name",
@@ -255,6 +287,10 @@
     "defaultMessage": "Collaborators have been successfully logged off",
     "description": "memberships-toast-signoff-ok"
   },
+  "KkxjH3": {
+    "defaultMessage": "Role",
+    "description": "userinfo-croris-role"
+  },
   "KssuSi": {
     "defaultMessage": "By logging into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
@@ -278,6 +314,10 @@
   "MTd8cf": {
     "defaultMessage": "Login eduGAIN",
     "description": "loginpriv-labeledugain"
+  },
+  "MiXo4k": {
+    "defaultMessage": "collaborator",
+    "description": "userinfo-croris-badgecollab"
   },
   "MmESXZ": {
     "defaultMessage": "Average number of graphics processors per job:",
@@ -314,6 +354,14 @@
   "Q21jEN": {
     "defaultMessage": "Submit request",
     "description": "researchselected-label-submit"
+  },
+  "Q6yZnM": {
+    "defaultMessage": "CroRIS link",
+    "description": "userinfo-croris-url"
+  },
+  "QL5paw": {
+    "defaultMessage": "There is no data for the user in the CroRIS system",
+    "description": "userinfo-croris-nouserdata"
   },
   "QTwRj9": {
     "defaultMessage": "One institutional project has already been registered.",
@@ -475,6 +523,10 @@
     "defaultMessage": "You are registered as a leader on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
   },
+  "hDbgbW": {
+    "defaultMessage": "There are no active projects in the CroRIS system that you are participating in",
+    "description": "userinfo-croris-tablefoot-meview-no"
+  },
   "hVSxeA": {
     "defaultMessage": "Last name",
     "description": "users-table-general-lastname"
@@ -607,6 +659,10 @@
     "defaultMessage": "Error while copying the project code to the clipboard",
     "description": "memberships-clipboard-fail"
   },
+  "r9kEbs": {
+    "defaultMessage": "Active projects registered in the CroRIS system that you are participating in",
+    "description": "userinfo-croris-tablefoot-meview"
+  },
   "rZtsm+": {
     "defaultMessage": "Resources",
     "description": "resourcefields-title"
@@ -618,6 +674,10 @@
   "tdeUEL": {
     "defaultMessage": "Explanation:",
     "description": "researchselected-explain"
+  },
+  "udq7zq": {
+    "defaultMessage": "Duration",
+    "description": "userinfo-croris-duration"
   },
   "uttk9z": {
     "defaultMessage": "Details of active user {identifier}",

@@ -63,6 +63,14 @@
     "defaultMessage": "Da li ste sigurni da želite dodati navedene suradnike na projekt?",
     "description": "memberships-modalmsg-internal"
   },
+  "4CJjmv": {
+    "defaultMessage": "Prezime",
+    "description": "userinfo-croris-lastname"
+  },
+  "4wuDbg": {
+    "defaultMessage": "voditelj",
+    "description": "userinfo-croris-badgelead"
+  },
   "52shcW": {
     "defaultMessage": "Lozinka:",
     "description": "loginpriv-password"
@@ -107,6 +115,10 @@
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
   },
+  "9WQZWa": {
+    "defaultMessage": "Sustav CroRIS",
+    "description": "userinfo-croris-title"
+  },
   "9xTRRJ": {
     "defaultMessage": "Matični broj znanstvenika (MBZ) nije poznat",
     "description": "newrequest-reason-mbzunk"
@@ -131,6 +143,10 @@
     "defaultMessage": "Slanje pozivnica za istraživački projekt",
     "description": "memberships-modaltitle-research"
   },
+  "AyezMg": {
+    "defaultMessage": "Ime",
+    "description": "userinfo-croris-firstname"
+  },
   "B8Lcj2": {
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
     "description": "memberships-clipboard-ok"
@@ -138,6 +154,14 @@
   "BC++9m": {
     "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
     "description": "memberships-toast-invitefail"
+  },
+  "BzHbow": {
+    "defaultMessage": "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
+    "description": "userinfo-croris-tablefoot-userview-no"
+  },
+  "C5xc0q": {
+    "defaultMessage": "Aktivni projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
+    "description": "userinfo-croris-tablefoot-userview"
   },
   "C6FjhE": {
     "defaultMessage": "Da",
@@ -171,6 +195,10 @@
     "defaultMessage": "Popis svih odobrenih projekata",
     "description": "linktitle-projects"
   },
+  "DXZ12x": {
+    "defaultMessage": "Naziv projekta i CroRIS poveznica",
+    "description": "userinfo-croris-nameurl"
+  },
   "FPhsMI": {
     "defaultMessage": "Odobren:",
     "description": "memberships-project-approved"
@@ -194,6 +222,10 @@
   "FsZBiz": {
     "defaultMessage": "Da li ste sigurni da se želite odjaviti?",
     "description": "navigation-modalquestion"
+  },
+  "FwpVLM": {
+    "defaultMessage": "Nema podataka iz sustava CroRIS",
+    "description": "userinfo-croris-nodata"
   },
   "Fz1XrJ": {
     "defaultMessage": "Ime projekta",
@@ -255,6 +287,10 @@
     "defaultMessage": "Suradnici su uspješno odjavljeni",
     "description": "memberships-toast-signoff-ok"
   },
+  "KkxjH3": {
+    "defaultMessage": "Uloga",
+    "description": "userinfo-croris-role"
+  },
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
     "description": "loginofficial-termsstring"
@@ -278,6 +314,10 @@
   "MTd8cf": {
     "defaultMessage": "Prijava eduGAIN",
     "description": "loginpriv-labeledugain"
+  },
+  "MiXo4k": {
+    "defaultMessage": "suradnik",
+    "description": "userinfo-croris-badgecollab"
   },
   "MmESXZ": {
     "defaultMessage": "Prosječan broj grafičkih procesora po poslu:",
@@ -314,6 +354,14 @@
   "Q21jEN": {
     "defaultMessage": "Podnesi zahtjev",
     "description": "researchselected-label-submit"
+  },
+  "Q6yZnM": {
+    "defaultMessage": "CroRIS poveznica",
+    "description": "userinfo-croris-url"
+  },
+  "QL5paw": {
+    "defaultMessage": "Nema podataka za korisnika u sustavu CroRIS",
+    "description": "userinfo-croris-nouserdata"
   },
   "QTwRj9": {
     "defaultMessage": "Jedan institucijski projekt je već prijavljen",
@@ -475,6 +523,10 @@
     "defaultMessage": "Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
     "description": "newrequest-reason-alreadylead"
   },
+  "hDbgbW": {
+    "defaultMessage": "Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete",
+    "description": "userinfo-croris-tablefoot-meview-no"
+  },
   "hVSxeA": {
     "defaultMessage": "Prezime",
     "description": "users-table-general-lastname"
@@ -607,6 +659,10 @@
     "defaultMessage": "Greška prilikom kopiranja šifre projekta u međuspremnik",
     "description": "memberships-clipboard-fail"
   },
+  "r9kEbs": {
+    "defaultMessage": "Aktivni projekti registrirani u sustavu CroRIS na kojima sudjelujete",
+    "description": "userinfo-croris-tablefoot-meview"
+  },
   "rZtsm+": {
     "defaultMessage": "Resursi",
     "description": "resourcefields-title"
@@ -618,6 +674,10 @@
   "tdeUEL": {
     "defaultMessage": "Obrazloženje:",
     "description": "researchselected-explain"
+  },
+  "udq7zq": {
+    "defaultMessage": "Trajanje",
+    "description": "userinfo-croris-duration"
   },
   "uttk9z": {
     "defaultMessage": "Detalji aktivnog korisnika {identifier}",

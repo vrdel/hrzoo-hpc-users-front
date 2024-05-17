@@ -86,7 +86,6 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Popis aplikacija dostupnih na klasteru',
         description: 'linktitle-software'
       }),
-
   }
 
   if (loc.includes('/my-requests/') && loc.match(/[%\w.\d-_]+$/)) {

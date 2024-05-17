@@ -3,21 +3,34 @@ import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import {FormattedMessage} from 'react-intl';
 import { Col, Badge, Placeholder, Row, Table, Label, Spinner } from 'reactstrap';
+import { useIntl } from 'react-intl'
 
 
 const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
+  const intl = useIntl()
+
   const CrorisTableHead = () => (
     <thead id="hzsi-thead" className="align-middle text-center text-white">
       <tr>
         <th className="fw-normal">
-          Naziv projekta i CroRIS poveznica
+          <FormattedMessage
+            defaultMessage="Naziv projekta i CroRIS poveznica"
+            description="userinfo-croris-nameurl"
+          />
         </th>
         <th className="fw-normal">
-          Uloga
+          <FormattedMessage
+            defaultMessage="Uloga"
+            description="userinfo-croris-role"
+          />
         </th>
         <th className="fw-normal">
-          Trajanje
+          <FormattedMessage
+            defaultMessage="Trajanje"
+            description="userinfo-croris-duration"
+          />
         </th>
       </tr>
     </thead>
@@ -49,7 +62,10 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                     </td>
                     <td className="p-3 align-middle text-center">
                       <Badge className="fs-6 fw-normal" color="success">
-                        voditelj
+                        <FormattedMessage
+                          defaultMessage="voditelj"
+                          description="userinfo-croris-badgelead"
+                        />
                       </Badge>
                     </td>
                     <td className="align-middle text-center fs-6 font-monospace">
@@ -77,7 +93,10 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                     </td>
                     <td className="p-3 align-middle text-center">
                       <Badge className="fs-6 fw-normal" color="primary">
-                        suradnik
+                        <FormattedMessage
+                          defaultMessage="suradnik"
+                          description="userinfo-croris-badgecollab"
+                        />
                       </Badge>
                     </td>
                     <td className="align-middle text-center fs-6 font-monospace">
@@ -93,9 +112,15 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
           <small>
             {
               changeView ?
-                "Aktivni projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje"
+                intl.formatMessage({
+                  defaultMessage: "Aktivni projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
+                  description: "userinfo-croris-tablefoot-userview"
+                })
               :
-                "Aktivni projekti registrirani u sustavu CroRIS na kojima sudjelujete"
+                intl.formatMessage({
+                  defaultMessage: "Aktivni projekti registrirani u sustavu CroRIS na kojima sudjelujete",
+                  description: "userinfo-croris-tablefoot-meview"
+                })
             }
           </small>
         </Col>
@@ -121,9 +146,15 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                 <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-3">
                   {
                     changeView ?
-                      "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje"
+                      intl.formatMessage({
+                        defaultMessage: "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
+                        description: "userinfo-croris-tablefoot-userview-no"
+                      })
                     :
-                      "Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete"
+                      intl.formatMessage({
+                        defaultMessage: "Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete",
+                        description: "userinfo-croris-tablefoot-meview-no"
+                      })
                   }
                 </td>
               </tr>
@@ -150,7 +181,10 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Sustav CroRIS
+            <FormattedMessage
+              defaultMessage="Sustav CroRIS"
+              description="userinfo-croris-title"
+            />
           </Label>
         </Col>
       </Row>
@@ -160,10 +194,16 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
             <thead>
               <tr>
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Ime
+                  <FormattedMessage
+                    defaultMessage="Ime"
+                    description="userinfo-croris-firstname"
+                  />
                 </th>
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Prezime
+                  <FormattedMessage
+                    defaultMessage="Prezime"
+                    description="userinfo-croris-lastname"
+                  />
                 </th>
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
                   CroRIS ID
@@ -242,7 +282,10 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
             <thead>
               <tr>
                 <th className="fw-bold fs-5">
-                  CroRIS poveznica
+                  <FormattedMessage
+                    defaultMessage="CroRIS poveznica"
+                    description="userinfo-croris-url"
+                  />
                 </th>
               </tr>
             </thead>
@@ -285,7 +328,10 @@ export const EmptyCroRis = ({changeView=false, spinner=false}) => {
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Sustav CroRIS
+            <FormattedMessage
+              defaultMessage="Sustav CroRIS"
+              description="userinfo-croris-title"
+            />
           </Label>
         </Col>
       </Row>
@@ -304,11 +350,17 @@ export const EmptyCroRis = ({changeView=false, spinner=false}) => {
             :
               changeView ?
                 <div className="fs-3">
-                  Nema podataka za korisnika u sustavu CroRIS
+                  <FormattedMessage
+                    defaultMessage="Nema podataka za korisnika u sustavu CroRIS"
+                    description="userinfo-croris-nouserdata"
+                  />
                 </div>
               :
                 <div className="fs-3">
-                  Nema podataka iz sustava CroRIS
+                  <FormattedMessage
+                    defaultMessage="Nema podataka iz sustava CroRIS"
+                    description="userinfo-croris-nodata"
+                  />
                 </div>
           }
         </Col>
