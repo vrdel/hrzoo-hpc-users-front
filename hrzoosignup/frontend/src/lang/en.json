@@ -63,6 +63,10 @@
     "defaultMessage": "You have already gained access based on a research project in the CroRIS system.",
     "description": "newrequest-reason-alreadycroris"
   },
+  "2oEnoX": {
+    "defaultMessage": "Dodaj javni ključ",
+    "description": "publickeys-list-label-add"
+  },
   "3DZQVv": {
     "defaultMessage": "The request has been successfully submitted",
     "description": "newrequest-toast-ok"
@@ -82,6 +86,10 @@
   "4CJjmv": {
     "defaultMessage": "Last name",
     "description": "userinfo-croris-lastname"
+  },
+  "4jNx7L": {
+    "defaultMessage": "Add public key",
+    "description": "publickeys-list-nokeys"
   },
   "4wuDbg": {
     "defaultMessage": "manager",
@@ -134,6 +142,10 @@
   "9WQZWa": {
     "defaultMessage": "CroRIS system",
     "description": "userinfo-croris-title"
+  },
+  "9vAKOS": {
+    "defaultMessage": "Public key:",
+    "description": "publickeys-list-keycontent"
   },
   "9xTRRJ": {
     "defaultMessage": "The scientist's personal identification number (MBZ) is unknown.",
@@ -363,6 +375,10 @@
     "defaultMessage": "The project is not active, therefore it is not possible to unregister collaborators",
     "description": "userstable-general-toast-invite-fail-3"
   },
+  "M9jPUL": {
+    "defaultMessage": "Error while copying the public key to the clipboard",
+    "description": "publickeys-list-keycopy-fail"
+  },
   "MGR8er": {
     "defaultMessage": "Requests management",
     "description": "linktitle-managerequests"
@@ -403,9 +419,17 @@
     "defaultMessage": "Internal project",
     "description": "requesttype-label-internal"
   },
+  "OtDaFD": {
+    "defaultMessage": "Key name",
+    "description": "publickeys-list-keyname"
+  },
   "OxYLwa": {
     "defaultMessage": "Request for Advanced Computing service usage",
     "description": "navigation-title"
+  },
+  "PCIZl3": {
+    "defaultMessage": "Public key successfully deleted",
+    "description": "publickeys-list-toast-ok"
   },
   "Pxvi7f": {
     "defaultMessage": "My requests",
@@ -499,6 +523,10 @@
     "defaultMessage": "It was not possible to add the collaborators: {br} { error }",
     "description": "memberships-toast-internal-collaboratorsfail"
   },
+  "VOeDTJ": {
+    "defaultMessage": "Type",
+    "description": "publickeys-list-type"
+  },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
@@ -546,6 +574,10 @@
   "e6lTgN": {
     "defaultMessage": "University Computing Centre",
     "description": "footer-srce"
+  },
+  "e7gwGo": {
+    "defaultMessage": "Key fingerprint",
+    "description": "publickeys-list-fingerprint"
   },
   "eWfkW5": {
     "defaultMessage": "No data from CroRIS system",
@@ -627,6 +659,10 @@
     "defaultMessage": "Total amount of space for virtual servers on standard storage (GB):",
     "description": "cloudfields-ndiskgb"
   },
+  "iZzQAv": {
+    "defaultMessage": "Actions",
+    "description": "publickeys-list-actions"
+  },
   "izNmIO": {
     "defaultMessage": "The project is not active, so it is not possible to add collaborators",
     "description": "userstable-general-toast-invite-fail-2"
@@ -686,6 +722,10 @@
   "mHHLJK": {
     "defaultMessage": "Total amount of RAM (GB):",
     "description": "cloudfields-nram"
+  },
+  "mNOzeP": {
+    "defaultMessage": "The public key could not be deleted: { error}",
+    "description": "publickeys-list-toast-fail"
   },
   "moaMHd": {
     "defaultMessage": "User's email copied to the clipboard",
@@ -779,9 +819,17 @@
     "defaultMessage": "Details of active user {identifier}",
     "description": "linktitle-usersactive-view"
   },
+  "uyuEr2": {
+    "defaultMessage": "You have no registered participation in approved projects",
+    "description": "publickeys-list-emptynotallowed"
+  },
   "vMGyAj": {
     "defaultMessage": "General",
     "description": "generalfields-title"
+  },
+  "vQiG8d": {
+    "defaultMessage": "Public key copied to clipboard",
+    "description": "publickeys-list-keycopy-ok"
   },
   "vW8uNu": {
     "defaultMessage": "Average number of CPU processing cores per job:",

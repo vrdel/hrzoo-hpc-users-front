@@ -28,7 +28,7 @@ import { fetchNrProjects } from 'Api/projects';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 
 
 const PublicKeys = () => {
@@ -92,7 +92,10 @@ const PublicKeys = () => {
       queryClient.invalidateQueries('ssh-keys');
       toast.success(
         <span className="font-monospace text-dark">
-          Javni ključ uspješno izbrisan
+          <FormattedMessage
+            defaultMessage="Javni ključ uspješno izbrisan"
+            description="publickeys-list-toast-ok"
+          />
         </span>, {
           toastId: 'sshkey-ok-delete',
           autoClose: 2500,
@@ -103,8 +106,13 @@ const PublicKeys = () => {
     onError: (error) => {
       toast.error(
         <span className="font-monospace text-dark">
-          Javni ključ nije bilo moguće izbrisati:{' '}
-          { error.message }
+          <FormattedMessage
+            defaultMessage="Javni ključ nije bilo moguće izbrisati: { error}"
+            description="publickeys-list-toast-fail"
+            values={{
+              error: error.message
+            }}
+          />
         </span>, {
           toastId: 'sshkey-fail-delete',
           autoClose: 2500,
@@ -126,16 +134,28 @@ const PublicKeys = () => {
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
             <th className="fw-normal">
-              Ime ključa
+              <FormattedMessage
+                defaultMessage="Ime ključa"
+                description="publickeys-list-keyname"
+              />
             </th>
             <th className="fw-normal">
-              Digitalni otisak ključa
+              <FormattedMessage
+                defaultMessage="Digitalni otisak ključa"
+                description="publickeys-list-fingerprint"
+              />
             </th>
             <th className="fw-normal">
-              Tip
+              <FormattedMessage
+                defaultMessage="Tip"
+                description="publickeys-list-type"
+              />
             </th>
             <th className="fw-normal">
-              Radnje
+              <FormattedMessage
+                defaultMessage="Radnje"
+                description="publickeys-list-actions"
+              />
             </th>
           </tr>
         </thead>
@@ -155,7 +175,10 @@ const PublicKeys = () => {
 
           <Row className="mt-3 mb-3">
             <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-              Nemate prijavljenih sudjelovanja na odobrenim projektima
+              <FormattedMessage
+                defaultMessage="Nemate prijavljenih sudjelovanja na odobrenim projektima"
+                description="publickeys-list-emptynotallowed"
+              />
             </Col>
           </Row>
         </>
@@ -180,16 +203,28 @@ const PublicKeys = () => {
                 <thead id="hzsi-thead" className="align-middle text-center text-white">
                   <tr>
                     <th className="fw-normal">
-                      Ime ključa
+                      <FormattedMessage
+                        defaultMessage="Ime ključa"
+                        description="publickeys-list-keyname"
+                      />
                     </th>
                     <th className="fw-normal">
-                      Digitalni otisak ključa
+                      <FormattedMessage
+                        defaultMessage="Digitalni otisak ključa"
+                        description="publickeys-list-fingerprint"
+                      />
                     </th>
                     <th className="fw-normal">
-                      Tip
+                      <FormattedMessage
+                        defaultMessage="Tip"
+                        description="publickeys-list-type"
+                      />
                     </th>
                     <th className="fw-normal">
-                      Radnje
+                      <FormattedMessage
+                        defaultMessage="Radnje"
+                        description="publickeys-list-actions"
+                      />
                     </th>
                   </tr>
                 </thead>
@@ -228,7 +263,10 @@ const PublicKeys = () => {
                               <Col sm={{size: 11}}>
                                 <InputGroup>
                                   <InputGroupText>
-                                    Javni ključ:
+                                    <FormattedMessage
+                                      defaultMessage="Javni ključ:"
+                                      description="publickeys-list-keycontent"
+                                    />
                                   </InputGroupText>
                                   <textarea
                                     className="font-monospace form-control"
@@ -243,8 +281,14 @@ const PublicKeys = () => {
                                 <Button size="sm" className="ms-3" color="success"
                                   onClick={(e) => copyToClipboard(
                                     e, key.public_key,
-                                    "Javni ključ kopiran u međuspremnik",
-                                    "Greška prilikom kopiranja javnog ključa u međuspremnik",
+                                    intl.formatMessage({
+                                      defaultMessage: "Javni ključ kopiran u međuspremnik",
+                                      description: "publickeys-list-keycopy-ok"
+                                    }),
+                                    intl.formatMessage({
+                                      defaultMessage: "Greška prilikom kopiranja javnog ključa u međuspremnik",
+                                      description: "publickeys-list-keycopy-fail"
+                                    }),
                                     "sshkey"
                                   )}
                                 >
@@ -275,7 +319,10 @@ const PublicKeys = () => {
                   navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}
-                Dodaj javni ključ
+                <FormattedMessage
+                  defaultMessage="Dodaj javni ključ"
+                  description="publickeys-list-label-add"
+                />
               </Button>
             </Col>
           </Row>
@@ -294,16 +341,28 @@ const PublicKeys = () => {
                 <thead id="hzsi-thead" className="align-middle text-center text-white">
                   <tr>
                     <th className="fw-normal">
-                      Ime ključa
+                      <FormattedMessage
+                        defaultMessage="Ime ključa"
+                        description="publickeys-list-keyname"
+                      />
                     </th>
                     <th className="fw-normal">
-                      Digitalni otisak ključa
+                      <FormattedMessage
+                        defaultMessage="Digitalni otisak ključa"
+                        description="publickeys-list-fingerprint"
+                      />
                     </th>
                     <th className="fw-normal">
-                      Tip
+                      <FormattedMessage
+                        defaultMessage="Tip"
+                        description="publickeys-list-type"
+                      />
                     </th>
                     <th className="fw-normal">
-                      Radnje
+                      <FormattedMessage
+                        defaultMessage="Radnje"
+                        description="publickeys-list-actions"
+                      />
                     </th>
                   </tr>
                 </thead>
@@ -319,7 +378,10 @@ const PublicKeys = () => {
                   }
                   <tr key="4">
                     <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-3">
-                      Nemate javnih ključeva dodanih
+                      <FormattedMessage
+                        defaultMessage="Nemate javnih ključeva dodanih"
+                        description="publickeys-list-nokeys"
+                      />
                     </td>
                   </tr>
                   {
@@ -341,7 +403,10 @@ const PublicKeys = () => {
                   navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}
-                Dodaj javni ključ
+                <FormattedMessage
+                  defaultMessage="Dodaj javni ključ"
+                  description="publickeys-list-label-add"
+                />
               </Button>
             </Col>
           </Row>
