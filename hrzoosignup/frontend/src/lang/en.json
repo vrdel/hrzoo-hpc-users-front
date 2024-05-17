@@ -35,6 +35,10 @@
     "defaultMessage": "Username",
     "description": "statusinfo-username"
   },
+  "23jFa3": {
+    "defaultMessage": "Inactive {br} You are not signed into any active project",
+    "description": "statusinfo-tooltipinactive-1"
+  },
   "2DZTTn": {
     "defaultMessage": "First name",
     "description": "users-table-general-firstname"
@@ -63,6 +67,10 @@
     "defaultMessage": "Resource type:",
     "description": "resourcefields-type"
   },
+  "3xP0LN": {
+    "defaultMessage": "Error while copying the username to the clipboard",
+    "description": "statusinfo-clipboard-fail"
+  },
   "3zl000": {
     "defaultMessage": "Are you sure you want to add the listed collaborators to the project?",
     "description": "memberships-modalmsg-internal"
@@ -72,7 +80,7 @@
     "description": "userinfo-croris-lastname"
   },
   "4wuDbg": {
-    "defaultMessage": "leader",
+    "defaultMessage": "manager",
     "description": "userinfo-croris-badgelead"
   },
   "52shcW": {
@@ -187,6 +195,10 @@
     "defaultMessage": "Number of public IPv4 addresses:",
     "description": "cloudfields-nips"
   },
+  "CiICth": {
+    "defaultMessage": "Username copied into the clipboard",
+    "description": "statusinfo-clipboard-ok"
+  },
   "CiaQiU": {
     "defaultMessage": "Name:",
     "description": "generalfields-name"
@@ -250,6 +262,10 @@
   "G6zqS3": {
     "defaultMessage": "Affiliation",
     "description": "userins-affiliation"
+  },
+  "GMPmU7": {
+    "defaultMessage": "Active {br} You are signed into at least one active project",
+    "description": "statusinfo-tooltipactive-1"
   },
   "GbOJbt": {
     "defaultMessage": "The invitation could not be canceled: {br} { error }",
@@ -487,6 +503,10 @@
     "defaultMessage": "List and manage members on approved requests/projects",
     "description": "linktitle-memberships"
   },
+  "dR+vCm": {
+    "defaultMessage": "Inactive {br} User is not signed into any active project",
+    "description": "statusinfo-tooltipinactive-2"
+  },
   "dUFVR+": {
     "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newrequest-research"
@@ -544,7 +564,7 @@
     "description": "navlinks-software"
   },
   "h78Eiu": {
-    "defaultMessage": "You are registered as a leader on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
+    "defaultMessage": "You are registered as a manager on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
   },
   "hDbgbW": {
@@ -568,7 +588,7 @@
     "description": "users-table-general-collaborator"
   },
   "iRMnQe": {
-    "defaultMessage": "Leader",
+    "defaultMessage": "Manager",
     "description": "users-table-general-leader"
   },
   "iYVJE/": {
@@ -694,6 +714,10 @@
   "qFLN1G": {
     "defaultMessage": "Research project",
     "description": "requesttype-label-research"
+  },
+  "qbxldc": {
+    "defaultMessage": "Active {br} User is signed into at least one active project",
+    "description": "statusinfo-tooltipactive-2"
   },
   "qtP2pc": {
     "defaultMessage": "Error while copying the project identifier to the clipboard",

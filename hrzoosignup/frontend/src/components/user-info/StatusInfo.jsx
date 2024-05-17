@@ -3,22 +3,34 @@ import { Col, Badge, Row, Table, Label, Tooltip, Button } from 'reactstrap';
 import { faCheckCircle, faStopCircle, faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyToClipboard } from 'Utils/copy-clipboard';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 
 const TooltipMsgActive = ({myInfo=true}) => {
   if (myInfo)
     return (
       <>
-        Aktivan<br/>
-        Prijavljeni ste na bar jedan aktivan projekt
+        <FormattedMessage
+          defaultMessage="Aktivan {br}
+                          Prijavljeni ste na bar jedan aktivan projekt"
+          description="statusinfo-tooltipactive-1"
+          values={{
+            br: <br/>
+          }}
+        />
       </>
     )
   else
     return (
       <>
-        Aktivan<br/>
-        Korisnik je prijavljen na bar jedan aktivan projekt
+        <FormattedMessage
+          defaultMessage="Aktivan {br}
+                          Korisnik je prijavljen na bar jedan aktivan projekt"
+          description="statusinfo-tooltipactive-2"
+          values={{
+            br: <br/>
+          }}
+        />
       </>
     )
 }
@@ -27,21 +39,34 @@ const TooltipMsgInactive = ({myInfo}) => {
   if (myInfo)
     return (
       <>
-        Neaktivan<br/>
-        Niste prijavljeni ni na jedan aktivan projekt
+        <FormattedMessage
+          defaultMessage="Neaktivan {br}
+                          Niste prijavljeni ni na jedan aktivan projekt"
+          description="statusinfo-tooltipinactive-1"
+          values={{
+            br: <br/>
+          }}
+        />
       </>
     )
   else
     return (
       <>
-        Neaktivan<br/>
-        Korisnik nije prijavljen ni na jedan aktivan projekt
+        <FormattedMessage
+          defaultMessage="Neaktivan {br}
+                          Korisnik nije prijavljen ni na jedan aktivan projekt"
+          description="statusinfo-tooltipinactive-2"
+          values={{
+            br: <br/>
+          }}
+        />
       </>
     )
 }
 
 
 const StatusInfo = ({myInfo=true, userDetails}) => {
+  const intl = useIntl()
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
     let showed = new Object()
@@ -134,8 +159,14 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                             color="light"
                             onClick={(e) => copyToClipboard(
                               e, userDetails.person_username,
-                              "Korisničko ime kopirano u međuspremnik",
-                              "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+                              intl.formatMessage({
+                                defaultMessage: "Korisničko ime kopirano u međuspremnik",
+                                description: "statusinfo-clipboard-ok"
+                              }),
+                              intl.formatMessage({
+                                defaultMessage: "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+                                description: "statusinfo-clipboard-fail"
+                              }),
                               "username"
                             )}
                           >

@@ -4,8 +4,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Table, Label } from 'reactstrap';
-import { FormattedMessage } from 'react-intl';
-import { useIntl } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl';
 
 
 const InstituteTableInfo = ({userDetails}) => {
