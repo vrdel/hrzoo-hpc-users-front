@@ -3,6 +3,10 @@
     "defaultMessage": "Nema podataka iz sustava CroRIS",
     "description": "newqrequest-no-crorisdata"
   },
+  "+Pcbkp": {
+    "defaultMessage": "Korisnička oznaka",
+    "description": "userins-useridentifier"
+  },
   "+iE1kC": {
     "defaultMessage": "Nastavi",
     "description": "newrequest-continue-label"
@@ -123,6 +127,10 @@
     "defaultMessage": "Matični broj znanstvenika (MBZ) nije poznat",
     "description": "newrequest-reason-mbzunk"
   },
+  "A9dlqP": {
+    "defaultMessage": "Organizacijska jedinica",
+    "description": "userins-organizationalunit"
+  },
   "AGfSj3": {
     "defaultMessage": "Ne",
     "description": "modal-buttonno"
@@ -166,6 +174,10 @@
   "C6FjhE": {
     "defaultMessage": "Da",
     "description": "modal-buttonyes"
+  },
+  "CMCbwE": {
+    "defaultMessage": "Prezime",
+    "description": "userins-lastname"
   },
   "CYLEcB": {
     "defaultMessage": "Suradnike nije bilo moguće odjaviti: {br} { error }",
@@ -215,6 +227,10 @@
     "defaultMessage": "Period korištenja:",
     "description": "researchselected-usageperiod"
   },
+  "Fm39Xq": {
+    "defaultMessage": "Ime",
+    "description": "userins-firstname"
+  },
   "FqGoP3": {
     "defaultMessage": "Prijava korisničkim imenom i lozinkom",
     "description": "loginpriv-labelusernamepassword"
@@ -231,6 +247,10 @@
     "defaultMessage": "Ime projekta",
     "description": "memberships-project-name"
   },
+  "G6zqS3": {
+    "defaultMessage": "Povezanost",
+    "description": "userins-affiliation"
+  },
   "GbOJbt": {
     "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
@@ -238,6 +258,10 @@
   "H7x1WL": {
     "defaultMessage": "Email",
     "description": "memberships-user-email"
+  },
+  "HJxPuz": {
+    "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
+    "description": "usersins-clipboard-ok"
   },
   "HcOwzH": {
     "defaultMessage": "Korisničko ime:",
@@ -563,6 +587,10 @@
     "defaultMessage": "Javni ključevi",
     "description": "navlinks-pubkeys"
   },
+  "jOJDOA": {
+    "defaultMessage": "Imenik",
+    "description": "userins-directory"
+  },
   "jRGl3a": {
     "defaultMessage": "Novi zahtjev temeljem odabranog istraživačkog projekta",
     "description": "linktitle-newreq-research"
@@ -634,6 +662,10 @@
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
     "description": "newrequest-modalmsg"
+  },
+  "p6s1xb": {
+    "defaultMessage": "Naziv ustanove",
+    "description": "userins-institution"
   },
   "pFrauD": {
     "defaultMessage": "Upravljanje javnim ključevima",
@@ -710,6 +742,10 @@
   "w8BGXa": {
     "defaultMessage": "Aplikacije koje će se koristiti:",
     "description": "sciencesoftware-list"
+  },
+  "xGaESM": {
+    "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+    "description": "userins-clipboard-fail"
   },
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",

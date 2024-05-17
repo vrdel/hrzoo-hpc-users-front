@@ -3,6 +3,10 @@
     "defaultMessage": "No data from CroRIS system",
     "description": "newqrequest-no-crorisdata"
   },
+  "+Pcbkp": {
+    "defaultMessage": "User identifier",
+    "description": "userins-useridentifier"
+  },
   "+iE1kC": {
     "defaultMessage": "Continue",
     "description": "newrequest-continue-label"
@@ -123,6 +127,10 @@
     "defaultMessage": "The scientist's personal identification number (MBZ) is unknown.",
     "description": "newrequest-reason-mbzunk"
   },
+  "A9dlqP": {
+    "defaultMessage": "Organisational unit",
+    "description": "userins-organizationalunit"
+  },
   "AGfSj3": {
     "defaultMessage": "No",
     "description": "modal-buttonno"
@@ -166,6 +174,10 @@
   "C6FjhE": {
     "defaultMessage": "Yes",
     "description": "modal-buttonyes"
+  },
+  "CMCbwE": {
+    "defaultMessage": "Last name",
+    "description": "userins-lastname"
   },
   "CYLEcB": {
     "defaultMessage": "It was not possible to remove the collaborators: {br} { error }",
@@ -215,6 +227,10 @@
     "defaultMessage": "Usage period:",
     "description": "researchselected-usageperiod"
   },
+  "Fm39Xq": {
+    "defaultMessage": "First name",
+    "description": "userins-firstname"
+  },
   "FqGoP3": {
     "defaultMessage": "Login with username and password",
     "description": "loginpriv-labelusernamepassword"
@@ -231,6 +247,10 @@
     "defaultMessage": "Project name",
     "description": "memberships-project-name"
   },
+  "G6zqS3": {
+    "defaultMessage": "Affiliation",
+    "description": "userins-affiliation"
+  },
   "GbOJbt": {
     "defaultMessage": "The invitation could not be canceled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
@@ -238,6 +258,10 @@
   "H7x1WL": {
     "defaultMessage": "Email",
     "description": "memberships-user-email"
+  },
+  "HJxPuz": {
+    "defaultMessage": "User's identifier copied to the clipboard",
+    "description": "usersins-clipboard-ok"
   },
   "HcOwzH": {
     "defaultMessage": "Username:",
@@ -563,6 +587,10 @@
     "defaultMessage": "Public keys",
     "description": "navlinks-pubkeys"
   },
+  "jOJDOA": {
+    "defaultMessage": "Institution directory",
+    "description": "userins-directory"
+  },
   "jRGl3a": {
     "defaultMessage": "New requests on behalf of research project",
     "description": "linktitle-newreq-research"
@@ -634,6 +662,10 @@
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit a new request?",
     "description": "newrequest-modalmsg"
+  },
+  "p6s1xb": {
+    "defaultMessage": "Name of the Institution",
+    "description": "userins-institution"
   },
   "pFrauD": {
     "defaultMessage": "Public keys management",
@@ -710,6 +742,10 @@
   "w8BGXa": {
     "defaultMessage": "Applications to be used:",
     "description": "sciencesoftware-list"
+  },
+  "xGaESM": {
+    "defaultMessage": "Error while copying user's identifier to the clipboard",
+    "description": "userins-clipboard-fail"
   },
   "y+MIYq": {
     "defaultMessage": "Lead institution:",

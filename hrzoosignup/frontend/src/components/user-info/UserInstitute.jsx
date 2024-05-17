@@ -4,15 +4,22 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Table, Label } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl'
 
 
 const InstituteTableInfo = ({userDetails}) => {
+  const intl = useIntl()
+
   return (
     <React.Fragment>
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
           <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-            Imenik
+            <FormattedMessage
+              defaultMessage="Imenik"
+              description="userins-directory"
+            />
           </Label>
         </Col>
       </Row>
@@ -22,13 +29,22 @@ const InstituteTableInfo = ({userDetails}) => {
             <thead>
               <tr>
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Ime
+                  <FormattedMessage
+                    defaultMessage="Ime"
+                    description="userins-firstname"
+                  />
                 </th>
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Prezime
+                  <FormattedMessage
+                    defaultMessage="Prezime"
+                    description="userins-lastname"
+                  />
                 </th>
                 <th className="fw-bold fs-5" style={{width: '30%'}}>
-                  Korisnička oznaka
+                  <FormattedMessage
+                    defaultMessage="Korisnička oznaka"
+                    description="userins-useridentifier"
+                  />
                 </th>
                 <th className="fw-bold fs-5">
                   Email
@@ -62,8 +78,14 @@ const InstituteTableInfo = ({userDetails}) => {
                           childClassName="me-3"
                           onClick={(e) => copyToClipboard(
                             e, userDetails.person_uniqueid,
-                            "Korisnička oznaka kopirana u međuspremnik",
-                            "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                            intl.formatMessage({
+                              defaultMessage: "Korisnička oznaka kopirana u međuspremnik",
+                              description: "usersins-clipboard-ok"
+                            }),
+                            intl.formatMessage({
+                              defaultMessage: "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                              description: "userins-clipboard-fail"
+                            }),
                             "id-uid"
                           )}
                         >
@@ -83,8 +105,14 @@ const InstituteTableInfo = ({userDetails}) => {
                           childClassName="me-3"
                           onClick={(e) => copyToClipboard(
                             e, userDetails.person_mail,
-                            "Email korisnika kopiran u međuspremnik",
-                            "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                            intl.formatMessage({
+                              defaultMessage: "Email korisnika kopiran u međuspremnik",
+                              description: "userinfo-croris-clipboard-ok"
+                            }),
+                            intl.formatMessage({
+                              defaultMessage: "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                              description: "userinfo-croris-clipboard-fail"
+                            }),
                             "id-emailuser"
                           )}
                         >
@@ -106,15 +134,24 @@ const InstituteTableInfo = ({userDetails}) => {
             <thead>
               <tr>
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Povezanost
+                  <FormattedMessage
+                    defaultMessage="Povezanost"
+                    description="userins-affiliation"
+                  />
                 </th>
                 <th className="fw-bold fs-5" style={{width: '20%'}}>
-                  Naziv ustanove
+                  <FormattedMessage
+                    defaultMessage="Naziv ustanove"
+                    description="userins-institution"
+                  />
                 </th>
                 <th className="fw-bold fs-5" style={{width: '30%'}}>
                 </th>
                 <th className="fw-bold fs-5" style={{width: '30%'}}>
-                  Organizacijska jedinica
+                  <FormattedMessage
+                    defaultMessage="Organizacijska jedinica"
+                    description="userins-organizationalunit"
+                  />
                 </th>
               </tr>
             </thead>
