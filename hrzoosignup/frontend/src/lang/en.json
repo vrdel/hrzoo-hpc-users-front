@@ -23,6 +23,10 @@
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
   },
+  "09Nk19": {
+    "defaultMessage": "Paste the public key component (id_rsa.pub) into the form or upload it from a file on local disk",
+    "description": "publickeys-add-remarkmsg"
+  },
   "0KXCeo": {
     "defaultMessage": "Total number of virtual processing cores:",
     "description": "cloudfields-vcpu"
@@ -64,7 +68,7 @@
     "description": "newrequest-reason-alreadycroris"
   },
   "2oEnoX": {
-    "defaultMessage": "Dodaj javni ključ",
+    "defaultMessage": "Add public key",
     "description": "publickeys-list-label-add"
   },
   "3DZQVv": {
@@ -250,6 +254,10 @@
   "DqpQay": {
     "defaultMessage": "Type",
     "description": "myreq-list-type"
+  },
+  "ECc0zn": {
+    "defaultMessage": "The public key could not be added: { error }",
+    "description": "public-keys-add-toast-fail"
   },
   "FPhsMI": {
     "defaultMessage": "Approved:",
@@ -531,9 +539,17 @@
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
   },
+  "WnDAVG": {
+    "defaultMessage": "Public key",
+    "description": "publickeys-add-keycontent"
+  },
   "Wt4fcg": {
     "defaultMessage": "Last name",
     "description": "memberships-user-lastname"
+  },
+  "XZis0B": {
+    "defaultMessage": "Public key successfully added",
+    "description": "public-keys-add-toast-ok"
   },
   "Yo9uAA": {
     "defaultMessage": "You do not have any registered participations in approved projects",
@@ -554,6 +570,10 @@
   "cvu7tz": {
     "defaultMessage": "List and manage members on approved requests/projects",
     "description": "linktitle-memberships"
+  },
+  "d8E55+": {
+    "defaultMessage": "Note:",
+    "description": "publickeys-add-remarktitle"
   },
   "dR+vCm": {
     "defaultMessage": "Inactive {br} User is not signed into any active project",
@@ -586,6 +606,10 @@
   "ejJ5Dy": {
     "defaultMessage": "Additional applications that will need to be installed:",
     "description": "sciencesoftware-list"
+  },
+  "f4ZyJh": {
+    "defaultMessage": "Add",
+    "description": "publickeys-add-label"
   },
   "fEvfkf": {
     "defaultMessage": "The invitations have been successfully sent",
@@ -634,6 +658,10 @@
   "hDbgbW": {
     "defaultMessage": "There are no active projects in the CroRIS system that you are participating in",
     "description": "userinfo-croris-tablefoot-meview-no"
+  },
+  "hJ2xID": {
+    "defaultMessage": "Upload",
+    "description": "publickeys-add-load"
   },
   "hVSxeA": {
     "defaultMessage": "Last name",
@@ -743,6 +771,10 @@
     "defaultMessage": "Usage period:",
     "description": "generalfields-duration"
   },
+  "nLyu7f": {
+    "defaultMessage": "Are you sure you want to add the public key?",
+    "description": "publickeys-add-modalmsg"
+  },
   "oRqoRe": {
     "defaultMessage": "Advanced Computing",
     "description": "loginpriv-servicename"
@@ -794,6 +826,10 @@
   "qtP2pc": {
     "defaultMessage": "Error while copying the project identifier to the clipboard",
     "description": "memberships-clipboard-fail"
+  },
+  "r3CoR2": {
+    "defaultMessage": "Adding a public key",
+    "description": "publickeys-add-modaltitle"
   },
   "r9kEbs": {
     "defaultMessage": "Active projects registered in the CroRIS system that you are participating in",

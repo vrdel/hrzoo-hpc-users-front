@@ -10,24 +10,24 @@ import {
   Form,
   FormFeedback
 } from 'reactstrap';
-import { PageTitle } from '../../components/PageTitle';
+import { PageTitle } from 'Components/PageTitle';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addSshKey } from '../../api/sshkeys';
+import { addSshKey } from 'Api/sshkeys';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlus,
   faFile,
   faKey,
 } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/content.css';
-import ModalAreYouSure from '../../components/ModalAreYouSure';
+import 'Styles/content.css';
+import ModalAreYouSure from 'Components/ModalAreYouSure';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { url_ui_prefix } from '../../config/general';
-import { AuthContext } from '../../components/AuthContextProvider';
-import { useIntl } from 'react-intl'
+import { url_ui_prefix } from 'Config/general';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { useIntl, FormattedMessage } from 'react-intl'
 
 
 const NewPublicKey = () => {
@@ -55,8 +55,14 @@ const NewPublicKey = () => {
 
   const onSubmit = (data) => {
     setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Dodavanje javnog ključa")
-    setModalMsg("Da li ste sigurni da želite dodati javni ključ?")
+    setModalTitle( intl.formatMessage({
+      defaultMessage: "Dodavanje javnog ključa",
+      description: "publickeys-add-modaltitle"
+    }) )
+    setModalMsg( intl.formatMessage({
+      defaultMessage: "Da li ste sigurni da želite dodati javni ključ?",
+      description: "publickeys-add-modalmsg"
+    }) )
     setOnYesCall('doaddsshkey')
     setOnYesCallArg(data)
   }
@@ -85,7 +91,10 @@ const NewPublicKey = () => {
       queryClient.invalidateQueries('ssh-keys');
       toast.success(
         <span className="font-monospace text-dark">
-          Javni ključ uspješno dodan
+          <FormattedMessage
+            defaultMessage="Javni ključ uspješno dodan"
+            description="public-keys-add-toast-ok"
+          />
         </span>, {
           toastId: 'sshkey-ok-add',
           autoClose: 2500,
@@ -97,8 +106,13 @@ const NewPublicKey = () => {
     onError: (error) => {
       toast.error(
         <span className="font-monospace text-dark">
-          Javni ključ nije bilo moguće dodati:{' '}
-          { error.message }
+          <FormattedMessage
+            defaultMessage="Javni ključ nije bilo moguće dodati: { error }"
+            description="public-keys-add-toast-fail"
+            values={{
+              error: error.message
+            }}
+          />
         </span>, {
           toastId: 'sshkey-fail-add',
           autoClose: 2500,
@@ -131,7 +145,10 @@ const NewPublicKey = () => {
         <Row>
           <Col className="mt-4" sm={{size: 3, offset: 1}}>
             <Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
-              Ime ključa
+              <FormattedMessage
+                defaultMessage="Ime ključa"
+                description="publickeys-list-keyname"
+              />
             </Label>
             <InputGroup>
               <Controller
@@ -167,7 +184,10 @@ const NewPublicKey = () => {
           <Col className="ms-4 g-0" sm={{size: 7}}>
             <div className="d-flex justify-content-between">
               <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
-                Javni ključ
+                <FormattedMessage
+                  defaultMessage="Javni ključ"
+                  description="publickeys-add-keycontent"
+                />
               </Label>
               <Input
                 type='file'
@@ -180,7 +200,10 @@ const NewPublicKey = () => {
               />
               <Button color="success" className="mt-3 mb-2 me-5 me-sm-0 me-md-0 me-xl-0" onClick={() => refFileInput.current.click()}>
                 <FontAwesomeIcon icon={faFile}/>{' '}
-                Učitaj
+                <FormattedMessage
+                  defaultMessage="Učitaj"
+                  description="publickeys-add-load"
+                />
               </Button>
             </div>
             <InputGroup>
@@ -213,7 +236,16 @@ const NewPublicKey = () => {
             <Row className="g-0 mt-1 me-2 me-sm-2 me-md-2 me-xl-2">
               <Col md={{size: 12}} sm={{size: 12}} xl={{size: 12}}  >
                 <small className="fst-italic">
-                  <span className="fw-bold">Napomena:</span> U formu se zalijepi javna komponenta ključa (id_rsa.pub) ili se ista može učitati iz datoteke
+                  <span className="fw-bold">
+                    <FormattedMessage
+                      defaultMessage="Napomena: "
+                      description="publickeys-add-remarktitle"
+                    />
+                  </span>{' '}
+                  <FormattedMessage
+                    defaultMessage="U formu se zalijepi javna komponenta ključa (id_rsa.pub) ili se ista može učitati iz datoteke"
+                    description="publickeys-add-remarkmsg"
+                  />
                 </small>
               </Col>
             </Row>
@@ -223,7 +255,10 @@ const NewPublicKey = () => {
           <Col className="text-center">
             <Button size="lg" className="mt-3" color="success" type="submit">
               <FontAwesomeIcon icon={faPlus}/>{' '}
-              Dodaj
+              <FormattedMessage
+                defaultMessage="Dodaj"
+                description="publickeys-add-label"
+              />
             </Button>
           </Col>
         </Row>

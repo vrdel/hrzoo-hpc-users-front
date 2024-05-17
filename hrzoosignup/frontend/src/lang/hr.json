@@ -23,6 +23,10 @@
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
   },
+  "09Nk19": {
+    "defaultMessage": "U formu se zalijepi javna komponenta ključa (id_rsa.pub) ili se ista može učitati iz datoteke",
+    "description": "publickeys-add-remarkmsg"
+  },
   "0KXCeo": {
     "defaultMessage": "Ukupna količina virtualnih procesorskih jezgara:",
     "description": "cloudfields-vcpu"
@@ -250,6 +254,10 @@
   "DqpQay": {
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
+  },
+  "ECc0zn": {
+    "defaultMessage": "Javni ključ nije bilo moguće dodati: { error }",
+    "description": "public-keys-add-toast-fail"
   },
   "FPhsMI": {
     "defaultMessage": "Odobren:",
@@ -531,9 +539,17 @@
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
   },
+  "WnDAVG": {
+    "defaultMessage": "Javni ključ",
+    "description": "publickeys-add-keycontent"
+  },
   "Wt4fcg": {
     "defaultMessage": "Prezime",
     "description": "memberships-user-lastname"
+  },
+  "XZis0B": {
+    "defaultMessage": "Javni ključ uspješno dodan",
+    "description": "public-keys-add-toast-ok"
   },
   "Yo9uAA": {
     "defaultMessage": "Nemate prijavljenih sudjelovanja na odobrenim projektima",
@@ -554,6 +570,10 @@
   "cvu7tz": {
     "defaultMessage": "Popis i upravljanje članovima na odobrenim zahtjevima/projektima",
     "description": "linktitle-memberships"
+  },
+  "d8E55+": {
+    "defaultMessage": "Napomena:",
+    "description": "publickeys-add-remarktitle"
   },
   "dR+vCm": {
     "defaultMessage": "Neaktivan {br} Korisnik nije prijavljen ni na jedan aktivan projekt",
@@ -586,6 +606,10 @@
   "ejJ5Dy": {
     "defaultMessage": "Dodatne aplikacije koje će biti potrebno instalirati:",
     "description": "sciencesoftware-list"
+  },
+  "f4ZyJh": {
+    "defaultMessage": "Dodaj",
+    "description": "publickeys-add-label"
   },
   "fEvfkf": {
     "defaultMessage": "Pozivnice su uspješno poslane",
@@ -634,6 +658,10 @@
   "hDbgbW": {
     "defaultMessage": "Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete",
     "description": "userinfo-croris-tablefoot-meview-no"
+  },
+  "hJ2xID": {
+    "defaultMessage": "Učitaj",
+    "description": "publickeys-add-load"
   },
   "hVSxeA": {
     "defaultMessage": "Prezime",
@@ -743,6 +771,10 @@
     "defaultMessage": "Period korištenja:",
     "description": "generalfields-duration"
   },
+  "nLyu7f": {
+    "defaultMessage": "Da li ste sigurni da želite dodati javni ključ?",
+    "description": "publickeys-add-modalmsg"
+  },
   "oRqoRe": {
     "defaultMessage": "Napredno računanje",
     "description": "loginpriv-servicename"
@@ -794,6 +826,10 @@
   "qtP2pc": {
     "defaultMessage": "Greška prilikom kopiranja šifre projekta u međuspremnik",
     "description": "memberships-clipboard-fail"
+  },
+  "r3CoR2": {
+    "defaultMessage": "Dodavanje javnog ključa",
+    "description": "publickeys-add-modaltitle"
   },
   "r9kEbs": {
     "defaultMessage": "Aktivni projekti registrirani u sustavu CroRIS na kojima sudjelujete",
