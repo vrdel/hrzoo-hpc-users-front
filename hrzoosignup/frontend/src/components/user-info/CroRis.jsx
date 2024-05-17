@@ -176,6 +176,8 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
 
 
 export const CroRisInfo = ({croRisProjects, changeView=false}) => {
+  const intl = useIntl()
+
   return (
     <>
       <Row>
@@ -259,8 +261,14 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
                           childClassName="me-3"
                           onClick={(e) => copyToClipboard(
                             e, croRisProjects['person_info']['email'],
-                            "Email korisnika kopiran u međuspremnik",
-                            "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                            intl.formatMessage({
+                              defaultMessage: "Email korisnika kopiran u međuspremnik",
+                              description: "userinfo-croris-clipboard-ok"
+                            }),
+                            intl.formatMessage({
+                              defaultMessage: "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                              description: "userinfo-croris-clipboard-fail"
+                            }),
                             "id-emailuser"
                           )}
                         >

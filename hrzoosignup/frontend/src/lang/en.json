@@ -607,6 +607,10 @@
     "defaultMessage": "Total amount of RAM (GB):",
     "description": "cloudfields-nram"
   },
+  "moaMHd": {
+    "defaultMessage": "User's email copied to the clipboard",
+    "description": "userinfo-croris-clipboard-ok"
+  },
   "n32QyA": {
     "defaultMessage": "https://www.srce.unizg.hr/en",
     "description": "footer-link"
@@ -651,12 +655,16 @@
     "defaultMessage": "Required",
     "description": "schema-mandatory"
   },
+  "q711/n": {
+    "defaultMessage": "Error while copying the user's email to the clipboard",
+    "description": "userinfo-croris-clipboard-fail"
+  },
   "qFLN1G": {
     "defaultMessage": "Research project",
     "description": "requesttype-label-research"
   },
   "qtP2pc": {
-    "defaultMessage": "Error while copying the project code to the clipboard",
+    "defaultMessage": "Error while copying the project identifier to the clipboard",
     "description": "memberships-clipboard-fail"
   },
   "r9kEbs": {

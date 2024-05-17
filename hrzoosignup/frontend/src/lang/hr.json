@@ -607,6 +607,10 @@
     "defaultMessage": "Ukupna količina radne memorije (GB):",
     "description": "cloudfields-nram"
   },
+  "moaMHd": {
+    "defaultMessage": "Email korisnika kopiran u međuspremnik",
+    "description": "userinfo-croris-clipboard-ok"
+  },
   "n32QyA": {
     "defaultMessage": "https://www.srce.unizg.hr/",
     "description": "footer-link"
@@ -650,6 +654,10 @@
   "q2kpZ6": {
     "defaultMessage": "Obvezno",
     "description": "schema-mandatory"
+  },
+  "q711/n": {
+    "defaultMessage": "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+    "description": "userinfo-croris-clipboard-fail"
   },
   "qFLN1G": {
     "defaultMessage": "Istraživački projekt",
