@@ -1,6 +1,6 @@
 import React from 'react'
-import SrceBigLogo from '../assets/pravisrce.png';
-import SrceLogoTiny from '../assets/srce-logo-e-mail-sig.png';
+import SrceBigLogo from 'Assets/pravisrce.png';
+import SrceLogoTiny from 'Assets/srce-logo-e-mail-sig.png';
 import { FormattedMessage } from 'react-intl';
 import 'Styles/footer.css';
 import { useIntl } from 'react-intl'
