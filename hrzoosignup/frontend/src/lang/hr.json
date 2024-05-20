@@ -39,6 +39,14 @@
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
     "description": "linktitle-newrequest-class"
   },
+  "1F7b3y": {
+    "defaultMessage": "Osobe:",
+    "description": "generalproject-persons"
+  },
+  "1YGy6A": {
+    "defaultMessage": "Vrsta:",
+    "description": "generalproject-type"
+  },
   "1r5OsY": {
     "defaultMessage": "Korisničko ime",
     "description": "statusinfo-username"
@@ -255,6 +263,10 @@
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
   },
+  "E1mSaj": {
+    "defaultMessage": "Opis:",
+    "description": "generalproject-description"
+  },
   "ECc0zn": {
     "defaultMessage": "Javni ključ nije bilo moguće dodati: { error }",
     "description": "public-keys-add-toast-fail"
@@ -322,6 +334,10 @@
   "HiPPun": {
     "defaultMessage": "Odaberi",
     "description": "sciencesoftware-placeholder"
+  },
+  "I/dgYm": {
+    "defaultMessage": "Trajanje:",
+    "description": "generalproject-duration"
   },
   "IHl9i4": {
     "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):",
@@ -443,6 +459,10 @@
     "defaultMessage": "Moji zahtjevi",
     "description": "linktitle-myrequests"
   },
+  "Q/vQRr": {
+    "defaultMessage": "Financijer:",
+    "description": "generalproject-finance"
+  },
   "Q1aE8s": {
     "defaultMessage": "Napredno računanje",
     "description": "loginofficial-servicename"
@@ -515,6 +535,10 @@
     "defaultMessage": "Dodijeljeno korisničko ime za pristup resursima",
     "description": "statusinfo-tooltip"
   },
+  "Twq096": {
+    "defaultMessage": "Šifra:",
+    "description": "generalproject-identifier"
+  },
   "UWKnhL": {
     "defaultMessage": "Maksimalna količina radne memorije po poslužitelju (GB):",
     "description": "cloudfields-nramvm"
@@ -563,6 +587,10 @@
     "defaultMessage": "Tip:",
     "description": "memberships-project-type"
   },
+  "cNIEbm": {
+    "defaultMessage": "Odaberi",
+    "description": "researchproj-button-label"
+  },
   "cQTqIM": {
     "defaultMessage": "Novi zahtjev temeljem institucijskog projekta",
     "description": "linktitle-newrequest-institutional"
@@ -610,6 +638,10 @@
   "f4ZyJh": {
     "defaultMessage": "Dodaj",
     "description": "publickeys-add-label"
+  },
+  "fCdY/g": {
+    "defaultMessage": "Istraživački projekt",
+    "description": "researchproj-cardtitle"
   },
   "fEvfkf": {
     "defaultMessage": "Pozivnice su uspješno poslane",
@@ -843,6 +875,10 @@
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
     "description": "resourcefields-disk"
   },
+  "t1IsHN": {
+    "defaultMessage": "Ustanova:",
+    "description": "generalproject-institute"
+  },
   "tdeUEL": {
     "defaultMessage": "Obrazloženje:",
     "description": "researchselected-explain"
@@ -866,6 +902,10 @@
   "vQiG8d": {
     "defaultMessage": "Javni ključ kopiran u međuspremnik",
     "description": "publickeys-list-keycopy-ok"
+  },
+  "vUXFv6": {
+    "defaultMessage": "CroRIS poveznica:",
+    "description": "generalproject-crorislink"
   },
   "vW8uNu": {
     "defaultMessage": "Prosječan broj procesorskih jezgri po poslu:",

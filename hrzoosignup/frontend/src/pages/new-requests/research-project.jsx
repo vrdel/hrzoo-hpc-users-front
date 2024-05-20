@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { GeneralInfo, Persons, Finance, Summary, CrorisUrl } from 'Components/GeneralProjectInfo';
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
+import {FormattedMessage} from 'react-intl';
 
 
 const ResearchProjectRequest = () => {
@@ -92,7 +93,10 @@ const ResearchProjectRequest = () => {
                                   navigate(`/ui/new-request/research-project/${project.croris_id}`)
                                 }}>
                                 <FontAwesomeIcon icon={faArrowRight}/>{' '}
-                                Odaberi
+                                <FormattedMessage
+                                  defaultMessage="Odaberi"
+                                  description="researchproj-button-label"
+                                />
                               </Button>
                             </Col>
                           </Row>
@@ -114,7 +118,10 @@ const ResearchProjectRequest = () => {
           <Col>
             <Card className="ms-3 mb-4 bg-success">
               <CardHeader className="d-flex fs-5 text-white justify-content-between align-items-center">
-                Istraživački projekt
+                <FormattedMessage
+                  defaultMessage="Istraživački projekt"
+                  description="researchproj-cardtitle"
+                />
               </CardHeader>
               <CardBody className="mb-1 bg-white">
                 <Row>

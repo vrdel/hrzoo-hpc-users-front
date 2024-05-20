@@ -5,6 +5,7 @@ import {
   Label,
 } from 'reactstrap';
 import { TypeString, TypeColor } from 'Config/map-projecttypes';
+import { FormattedMessage } from 'react-intl';
 import _ from "lodash";
 
 
@@ -35,14 +36,20 @@ export const GeneralInfo = ({project, isSubmitted}) => {
   return (
     <>
       <Col className="text-left fw-bold" md={{size: 2}}>
-        Šifra:
+        <FormattedMessage
+          defaultMessage="Šifra:"
+          description="generalproject-identifier"
+        />
       </Col>
       <Col md={{size: 3}}>
         <Label
           htmlFor="projectTime"
           aria-label="projectTime"
           className="mr-1 fw-bold">
-          Trajanje:
+          <FormattedMessage
+            defaultMessage="Trajanje:"
+            description="generalproject-duration"
+          />
         </Label>
       </Col>
       <Col md={{size: 3}}>
@@ -50,7 +57,10 @@ export const GeneralInfo = ({project, isSubmitted}) => {
           htmlFor="projectType"
           aria-label="projectType"
           className="mr-1 fw-bold">
-          Vrsta:
+          <FormattedMessage
+            defaultMessage="Vrsta:"
+            description="generalproject-type"
+          />
         </Label>
       </Col>
       <Col md={{size: 4}}>
@@ -58,7 +68,10 @@ export const GeneralInfo = ({project, isSubmitted}) => {
           htmlFor="projectInstitution"
           aria-label="projectInstitution"
           className="mr-1 fw-bold">
-          Ustanova:
+          <FormattedMessage
+            defaultMessage="Ustanova:"
+            description="generalproject-institute"
+          />
         </Label>
       </Col>
 
@@ -107,7 +120,10 @@ export const Persons = ({project, person_info, projectsLeadUsers}) => {
           htmlFor="projectPersons"
           aria-label="projectPersons"
           className="mr-1 form-label fw-bold">
-          Osobe:
+          <FormattedMessage
+            defaultMessage="Osobe:"
+            description="generalproject-persons"
+          />
         </Label>
       </Col>
 
@@ -129,7 +145,10 @@ export const Finance = ({project}) => {
           htmlFor="projectFinance"
           aria-label="projectFinance"
           className="mr-1 mt-3 form-label fw-bold">
-          Financijer:
+          <FormattedMessage
+            defaultMessage="Financijer:"
+            description="generalproject-finance"
+          />
         </Label>
       </Col>
       <Col md={{size: 12}} className="mb-2">
@@ -166,7 +185,10 @@ export const CrorisUrl = ({project}) => {
           htmlFor="projectCrorisUrl"
           aria-label="projectCrorisUrl"
           className="mr-1 mt-3 form-label fw-bold">
-          CroRIS poveznica:
+          <FormattedMessage
+            defaultMessage="CroRIS poveznica:"
+            description="generalproject-crorislink"
+          />
         </Label>
       </Col>
       <Col md={{size: 10}}>
@@ -187,7 +209,10 @@ export const Summary = ({project, isSubmitted}) => {
           htmlFor="projectSummary"
           aria-label="projectSummary"
           className="mr-1 mt-2 form-label fw-bold">
-          Opis:
+          <FormattedMessage
+            defaultMessage="Opis:"
+            description="generalproject-description"
+          />
         </Label>
       </Col>
       <Col md={{size: 12}} className="mb-3">

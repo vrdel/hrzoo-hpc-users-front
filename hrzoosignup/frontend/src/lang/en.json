@@ -39,6 +39,14 @@
     "defaultMessage": "New request on behalf of practical class",
     "description": "linktitle-newrequest-class"
   },
+  "1F7b3y": {
+    "defaultMessage": "Persons:",
+    "description": "generalproject-persons"
+  },
+  "1YGy6A": {
+    "defaultMessage": "Type:",
+    "description": "generalproject-type"
+  },
   "1r5OsY": {
     "defaultMessage": "Username",
     "description": "statusinfo-username"
@@ -255,6 +263,10 @@
     "defaultMessage": "Type",
     "description": "myreq-list-type"
   },
+  "E1mSaj": {
+    "defaultMessage": "Description:",
+    "description": "generalproject-description"
+  },
   "ECc0zn": {
     "defaultMessage": "The public key could not be added: { error }",
     "description": "public-keys-add-toast-fail"
@@ -280,7 +292,7 @@
     "description": "userins-firstname"
   },
   "FqGoP3": {
-    "defaultMessage": "Login with username and password",
+    "defaultMessage": "Login username and password",
     "description": "loginpriv-labelusernamepassword"
   },
   "FsZBiz": {
@@ -322,6 +334,10 @@
   "HiPPun": {
     "defaultMessage": "Choose",
     "description": "sciencesoftware-placeholder"
+  },
+  "I/dgYm": {
+    "defaultMessage": "Duration:",
+    "description": "generalproject-duration"
   },
   "IHl9i4": {
     "defaultMessage": "Total amount of space for virtual servers on fast storage (GB):",
@@ -443,6 +459,10 @@
     "defaultMessage": "My requests",
     "description": "linktitle-myrequests"
   },
+  "Q/vQRr": {
+    "defaultMessage": "Finance:",
+    "description": "generalproject-finance"
+  },
   "Q1aE8s": {
     "defaultMessage": "Advanced Computing",
     "description": "loginofficial-servicename"
@@ -515,6 +535,10 @@
     "defaultMessage": "Generated username to be used to access resources",
     "description": "statusinfo-tooltip"
   },
+  "Twq096": {
+    "defaultMessage": "Identifier:",
+    "description": "generalproject-identifier"
+  },
   "UWKnhL": {
     "defaultMessage": "Maximum amount of RAM per server (GB):",
     "description": "cloudfields-nramvm"
@@ -563,6 +587,10 @@
     "defaultMessage": "Type:",
     "description": "memberships-project-type"
   },
+  "cNIEbm": {
+    "defaultMessage": "Choose",
+    "description": "researchproj-button-label"
+  },
   "cQTqIM": {
     "defaultMessage": "New request on behalf of institute project",
     "description": "linktitle-newrequest-institutional"
@@ -610,6 +638,10 @@
   "f4ZyJh": {
     "defaultMessage": "Add",
     "description": "publickeys-add-label"
+  },
+  "fCdY/g": {
+    "defaultMessage": "Research project",
+    "description": "researchproj-cardtitle"
   },
   "fEvfkf": {
     "defaultMessage": "The invitations have been successfully sent",
@@ -843,6 +875,10 @@
     "defaultMessage": "Total amount of storage space required for the project (GB):",
     "description": "resourcefields-disk"
   },
+  "t1IsHN": {
+    "defaultMessage": "Institute:",
+    "description": "generalproject-institute"
+  },
   "tdeUEL": {
     "defaultMessage": "Explanation:",
     "description": "researchselected-explain"
@@ -866,6 +902,10 @@
   "vQiG8d": {
     "defaultMessage": "Public key copied to clipboard",
     "description": "publickeys-list-keycopy-ok"
+  },
+  "vUXFv6": {
+    "defaultMessage": "CroRIS link:",
+    "description": "generalproject-crorislink"
   },
   "vW8uNu": {
     "defaultMessage": "Average number of CPU processing cores per job:",
