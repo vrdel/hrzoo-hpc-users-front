@@ -32,6 +32,7 @@ import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
 import { StateIcons } from 'Config/map-states';
 import { useIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 
 
@@ -164,13 +165,19 @@ const ButtonGroupActiveInactive = ({activeList}) => {
         active={ activeList }
         onClick={ () => { navigate('/ui/users') } }>
         <FontAwesomeIcon icon={ faCheck } />{' '}
-        Aktivni
+        <FormattedMessage
+          defaultMessage="Aktivni"
+          description="userlist-button-active"
+        />
       </Button>
       <Button className="ml-1 mt-1 mb-1" color="light"
         active={ !activeList }
         onClick={ () => { navigate('/ui/users/inactive') } }>
         <FontAwesomeIcon icon={ faXmark } />{' '}
-        Neaktivni
+        <FormattedMessage
+          defaultMessage="Neaktivni"
+          description="userlist-button-inactive"
+        />
       </Button>
     </ButtonGroup>
   )
@@ -219,6 +226,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   const searchEmail = useWatch({ control, name: "searchEmail" })
   const searchProject = useWatch({ control, name: "searchProject" })
   const searchSSHKey = useWatch({ control, name: "searchSSHKey" })
+  const intl = useIntl()
 
   const { fields } = useFieldArray({ control, name: "users" })
 
@@ -305,21 +313,33 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   }}
                 >
                   <div className="flex-grow-1">
-                    Ime, prezime i email
+                    <FormattedMessage
+                      defaultMessage="Ime, prezime i email"
+                      description="userslist-column-header-1"
+                    />
                   </div>
                   <div>
                     { SortArrow(sortName) }
                   </div>
                 </th>
                 <th className="fw-normal" style={{minWidth: '306px'}}>
-                  Institucija
+                  <FormattedMessage
+                    defaultMessage="Institucija"
+                    description="userlist-column-header-2"
+                  />
                 </th>
                 <th className="fw-normal"  style={{minWidth: '296px'}}>
                   {
                     activeList ?
-                      'Korisničko ime i AAI oznaka'
+                      <FormattedMessage
+                        defaultMessage="Korisničko ime i AAI oznaka"
+                        description="userlist-column-header-3-1"
+                      />
                     :
-                      'AAI oznaka'
+                      <FormattedMessage
+                        defaultMessage="AAI oznaka"
+                        description="userlist-column-header-3-2"
+                      />
                   }
                 </th>
                 <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
@@ -329,7 +349,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   }}
                 >
                   <div className="flex-grow-1">
-                    Dodan
+                    <FormattedMessage
+                      defaultMessage="Dodan"
+                      description="userlist-column-header-4"
+                    />
                   </div>
                   <div>
                     { SortArrow(sortJoined) }
@@ -338,13 +361,22 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                 <th className="fw-normal"  style={{minWidth: '180px'}}>
                   {
                     activeList ?
-                      "Projekti"
+                      <FormattedMessage
+                        defaultMessage="Projekti"
+                        description="userlist-column-header-5-1"
+                      />
                     :
-                      "Prošli projekti"
+                      <FormattedMessage
+                        defaultMessage="Prošli projekti"
+                        description="userlist-column-header-5-2"
+                      />
                   }
                 </th>
                 <th className="fw-normal"  style={{minWidth: '116px'}}>
-                  Javni ključ
+                  <FormattedMessage
+                    defaultMessage="Javni ključ"
+                    description="userlist-column-header-6"
+                  />
                 </th>
               </tr>
             </thead>
@@ -360,7 +392,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "userlist-placeholder-search"
+                        })}
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -374,7 +409,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "userlist-placeholder-search"
+                        })}
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -388,7 +426,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "userlist-placeholder-search"
+                        })}
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -403,7 +444,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                       <Input
                         { ...field }
                         className="form-control"
-                        placeholder="Traži"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "userlist-placeholder-search"
+                        })}
                         style={{fontSize: '0.83rem'}}
                       />
                     }
@@ -416,7 +460,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "userlist-placeholder-search"
+                        })}
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -430,7 +477,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     render={ ({ field }) =>
                       <CustomReactSelect
                         forwardedRef={ field.ref }
-                        placeholder="Odaberi"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Odaberi",
+                          description: "userlist-placeholder-choose"
+                        })}
                         controlWidth="116px"
                         options={ buildOptionsFromArray(["Svi", "Da", "Ne"]) }
                         onChange={ (e) => setValue("searchSSHKey", e.value) }
@@ -460,8 +510,14 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                             <MiniButton
                               onClick={(e) => copyToClipboard(
                                 e, user.person_mail,
-                                "Email kopiran u međuspremnik",
-                                "Greška prilikom kopiranja emaila u međuspremnik",
+                                intl.formatMessage({
+                                  defaultMessage: "Email kopiran u međuspremnik",
+                                  description: "userlist-minibutton-title-1"
+                                }),
+                                intl.formatMessage({
+                                  defaultMessage: "Greška prilikom kopiranja emaila u međuspremnik",
+                                  description: "userlist-minibutton-msg-1"
+                                }),
                                 "id-email"
                               )}
                             >
@@ -482,8 +538,14 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                               <MiniButton
                                 onClick={(e) => copyToClipboard(
                                   e, user.person_username,
-                                  "Korisničko ime kopirano u međuspremnik",
-                                  "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+                                  intl.formatMessage({
+                                    defaultMessage: "Korisničko ime kopirano u međuspremnik",
+                                    description: "userlist-minibutton-title-2"
+                                  }),
+                                  intl.formatMessage({
+                                    defaultMessage: "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+                                    description: "userlist-minibutton-msg-2"
+                                  }),
                                   "id-uid"
                                 )}
                               >
@@ -498,8 +560,14 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                             <MiniButton
                               onClick={(e) => copyToClipboard(
                                 e, user.username,
-                                "Korisnička oznaka kopirana u međuspremnik",
-                                "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                                intl.formatMessage({
+                                  defaultMessage: "Korisnička oznaka kopirana u međuspremnik",
+                                  description: "userlist-minibutton-title-3"
+                                }),
+                                intl.formatMessage({
+                                  defaultMessage: "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                                  description: "userlist-minibutton-msg-3"
+                                }),
                                 "id-uid"
                               )}
                             >
@@ -544,8 +612,14 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                     color="light"
                                     onClick={(e) => copyToClipboard(
                                       e, proj.identifier,
-                                      "Šifra projekta kopirana u međuspremnik",
-                                      "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                                      intl.formatMessage({
+                                        defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                                        description: "userlist-minibutton-title-4"
+                                      }),
+                                      intl.formatMessage({
+                                        defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                                        description: "userlist-minibutton-msg-4"
+                                      }),
                                       "id-request"
                                     )}
                                   >
@@ -575,9 +649,17 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                   )
                 :
                   data.length > 0 && isSearched ?
-                    <EmptyTable colspan="7" msg="Nijedan korisnik ne zadovoljava pretragu" />
+                    <EmptyTable colspan="7" msg={intl.formatMessage({
+                      defaultMessage: "Nijedan korisnik ne zadovoljava pretragu",
+                      description: "userlist-emptytable-msg-1"
+                      })}
+                    />
                   :
-                    <EmptyTable colspan="7" msg="Nema korisnika prijavljenih na projekt" />
+                    <EmptyTable colspan="7" msg={intl.formatMessage({
+                      defaultMessage: "Nema korisnika prijavljenih na projekt",
+                      description: "userlist-emptytable-msg-2"
+                      })}
+                    />
               }
             </tbody>
           </Table>

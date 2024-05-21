@@ -19,6 +19,10 @@
     "defaultMessage": "Radnje",
     "description": "myreq-list-actions"
   },
+  "/4hBqG": {
+    "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
+    "description": "userlist-minibutton-title-3"
+  },
   "/hXMAH": {
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
@@ -99,6 +103,10 @@
     "defaultMessage": "Prezime",
     "description": "userinfo-croris-lastname"
   },
+  "4GOam0": {
+    "defaultMessage": "Šifra projekta kopirana u međuspremnik",
+    "description": "userlist-minibutton-title-4"
+  },
   "4jNx7L": {
     "defaultMessage": "Nemate javnih ključeva dodanih",
     "description": "publickeys-list-nokeys"
@@ -115,6 +123,10 @@
     "defaultMessage": "Novi zahtjev temeljem internog projekta",
     "description": "linktitle-newrequest-internal"
   },
+  "5VvPbt": {
+    "defaultMessage": "AAI oznaka",
+    "description": "userlist-column-header-3-2"
+  },
   "5XjDto": {
     "defaultMessage": "Broj virtualnih poslužitelja:",
     "description": "cloudfields-nvm"
@@ -122,6 +134,10 @@
   "6V4xYT": {
     "defaultMessage": "Detalji neaktivnog korisnika {identifier}",
     "description": "linktitle-usersinactive-view"
+  },
+  "6XfV4P": {
+    "defaultMessage": "Institucija",
+    "description": "userlist-column-header-2"
   },
   "7FtUKh": {
     "defaultMessage": "Korisničke oznake suradnika koje želiš na projektu",
@@ -139,6 +155,10 @@
     "defaultMessage": "Pozivnica uspješno otkazana",
     "description": "memberships-toast-invitecancel-ok"
   },
+  "8+JF6y": {
+    "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+    "description": "userlist-minibutton-msg-3"
+  },
   "8dPx+P": {
     "defaultMessage": "Popis aplikacija dostupnih na klasteru",
     "description": "linktitle-software"
@@ -150,6 +170,10 @@
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
+  },
+  "9Dxntz": {
+    "defaultMessage": "Greška prilikom kopiranja šifre projekta u međuspremnik",
+    "description": "userlist-minibutton-msg-4"
   },
   "9WQZWa": {
     "defaultMessage": "Sustav CroRIS",
@@ -198,6 +222,10 @@
   "BC++9m": {
     "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
     "description": "memberships-toast-invitefail"
+  },
+  "ByrMw3": {
+    "defaultMessage": "Ime, prezime i email",
+    "description": "userslist-column-header-1"
   },
   "BzHbow": {
     "defaultMessage": "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
@@ -255,6 +283,10 @@
     "defaultMessage": "Šifra",
     "description": "myreq-list-identifier"
   },
+  "DXST2s": {
+    "defaultMessage": "Projekti",
+    "description": "userlist-column-header-5-1"
+  },
   "DXZ12x": {
     "defaultMessage": "Naziv projekta i CroRIS poveznica",
     "description": "userinfo-croris-nameurl"
@@ -274,6 +306,10 @@
   "FPhsMI": {
     "defaultMessage": "Odobren:",
     "description": "memberships-project-approved"
+  },
+  "FQJQDZ": {
+    "defaultMessage": "Dodan",
+    "description": "userlist-column-header-4"
   },
   "FQLopu": {
     "defaultMessage": "Odaberi",
@@ -315,6 +351,10 @@
     "defaultMessage": "Aktivan {br} Prijavljeni ste na bar jedan aktivan projekt",
     "description": "statusinfo-tooltipactive-1"
   },
+  "GMkmMZ": {
+    "defaultMessage": "Prošli projekti",
+    "description": "userlist-column-header-5-2"
+  },
   "GbOJbt": {
     "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
@@ -342,6 +382,10 @@
   "IHl9i4": {
     "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):",
     "description": "cloudfields-nfastdiskgb"
+  },
+  "IOuMna": {
+    "defaultMessage": "Korisničko ime kopirano u međuspremnik",
+    "description": "userlist-minibutton-title-2"
   },
   "IP7pZp": {
     "defaultMessage": "Korisnici:",
@@ -382,6 +426,10 @@
   "KkxjH3": {
     "defaultMessage": "Uloga",
     "description": "userinfo-croris-role"
+  },
+  "KnyhrF": {
+    "defaultMessage": "Aktivni",
+    "description": "userlist-button-active"
   },
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
@@ -443,6 +491,10 @@
     "defaultMessage": "Interni projekt",
     "description": "requesttype-label-internal"
   },
+  "OqGoEt": {
+    "defaultMessage": "Greška prilikom kopiranja emaila u međuspremnik",
+    "description": "userlist-minibutton-msg-1"
+  },
   "OtDaFD": {
     "defaultMessage": "Ime ključa",
     "description": "publickeys-list-keyname"
@@ -450,6 +502,10 @@
   "OxYLwa": {
     "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
     "description": "navigation-title"
+  },
+  "P+pTgU": {
+    "defaultMessage": "Email kopiran u međuspremnik",
+    "description": "userlist-minibutton-title-1"
   },
   "PCIZl3": {
     "defaultMessage": "Javni ključ uspješno izbrisan",
@@ -495,9 +551,17 @@
     "defaultMessage": "Email",
     "description": "users-table-general-email"
   },
+  "Rpn5b/": {
+    "defaultMessage": "Traži",
+    "description": "userlist-placeholder-search"
+  },
   "S8xrMw": {
     "defaultMessage": "Dodavanje suradnika na interni projekt",
     "description": "memberships-modaltitle-internal"
+  },
+  "SDkknt": {
+    "defaultMessage": "Nijedan korisnik ne zadovoljava pretragu",
+    "description": "userlist-emptytable-msg-1"
   },
   "SGXvmn": {
     "defaultMessage": "Praktična nastava",
@@ -510,6 +574,10 @@
   "STHLdY": {
     "defaultMessage": "Odjava",
     "description": "users-table-general-signoff"
+  },
+  "T73nyd": {
+    "defaultMessage": "Javni ključ",
+    "description": "userlist-column-header-6"
   },
   "T7YuXQ": {
     "defaultMessage": "Projekti",
@@ -539,6 +607,10 @@
     "defaultMessage": "Šifra:",
     "description": "generalproject-identifier"
   },
+  "UKD/0e": {
+    "defaultMessage": "Korisničko ime i AAI oznaka",
+    "description": "userlist-column-header-3-1"
+  },
   "UWKnhL": {
     "defaultMessage": "Maksimalna količina radne memorije po poslužitelju (GB):",
     "description": "cloudfields-nramvm"
@@ -562,6 +634,10 @@
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "WL9MPg": {
+    "defaultMessage": "Nema korisnika prijavljenih na projekt",
+    "description": "userlist-emptytable-msg-2"
   },
   "WnDAVG": {
     "defaultMessage": "Javni ključ",
@@ -587,6 +663,10 @@
     "defaultMessage": "Tip:",
     "description": "memberships-project-type"
   },
+  "bWWHsM": {
+    "defaultMessage": "Neaktivni",
+    "description": "userlist-button-inactive"
+  },
   "cNIEbm": {
     "defaultMessage": "Odaberi",
     "description": "researchproj-button-label"
@@ -602,6 +682,10 @@
   "d8E55+": {
     "defaultMessage": "Napomena:",
     "description": "publickeys-add-remarktitle"
+  },
+  "dGEddM": {
+    "defaultMessage": "Odaberi",
+    "description": "userlist-placeholder-choose"
   },
   "dR+vCm": {
     "defaultMessage": "Neaktivan {br} Korisnik nije prijavljen ni na jedan aktivan projekt",
@@ -826,6 +910,10 @@
   "pFrauD": {
     "defaultMessage": "Upravljanje javnim ključevima",
     "description": "linktitle-pubkeys"
+  },
+  "pK6D9K": {
+    "defaultMessage": "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+    "description": "userlist-minibutton-msg-2"
   },
   "pO80G/": {
     "defaultMessage": "Naziv:",

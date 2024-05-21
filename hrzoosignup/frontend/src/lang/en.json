@@ -19,6 +19,10 @@
     "defaultMessage": "Actions",
     "description": "myreq-list-actions"
   },
+  "/4hBqG": {
+    "defaultMessage": "User's identifier copied to the clipboard",
+    "description": "userlist-minibutton-title-3"
+  },
   "/hXMAH": {
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
@@ -99,6 +103,10 @@
     "defaultMessage": "Last name",
     "description": "userinfo-croris-lastname"
   },
+  "4GOam0": {
+    "defaultMessage": "Project's identifier copied to the clipboard",
+    "description": "userlist-minibutton-title-4"
+  },
   "4jNx7L": {
     "defaultMessage": "Add public key",
     "description": "publickeys-list-nokeys"
@@ -115,6 +123,10 @@
     "defaultMessage": "New request on behalf of internal project",
     "description": "linktitle-newrequest-internal"
   },
+  "5VvPbt": {
+    "defaultMessage": "AAI identifier",
+    "description": "userlist-column-header-3-2"
+  },
   "5XjDto": {
     "defaultMessage": "Number of virtual servers:",
     "description": "cloudfields-nvm"
@@ -122,6 +134,10 @@
   "6V4xYT": {
     "defaultMessage": "Details of inactive user {identifier}",
     "description": "linktitle-usersinactive-view"
+  },
+  "6XfV4P": {
+    "defaultMessage": "Institution",
+    "description": "userlist-column-header-2"
   },
   "7FtUKh": {
     "defaultMessage": "User identifiers of the collaborators you want on the project",
@@ -139,6 +155,10 @@
     "defaultMessage": "Invitation successfully canceled.",
     "description": "memberships-toast-invitecancel-ok"
   },
+  "8+JF6y": {
+    "defaultMessage": "Error while copying user's identifier to the clipboard",
+    "description": "userlist-minibutton-msg-3"
+  },
   "8dPx+P": {
     "defaultMessage": "List of scientific software available on HPC clusters",
     "description": "linktitle-software"
@@ -150,6 +170,10 @@
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
+  },
+  "9Dxntz": {
+    "defaultMessage": "Error while copying the project identifier to the clipboard",
+    "description": "userlist-minibutton-msg-4"
   },
   "9WQZWa": {
     "defaultMessage": "CroRIS system",
@@ -198,6 +222,10 @@
   "BC++9m": {
     "defaultMessage": "It was not possible to send the invitations: {br} { error }",
     "description": "memberships-toast-invitefail"
+  },
+  "ByrMw3": {
+    "defaultMessage": "First name, last name and email",
+    "description": "userslist-column-header-1"
   },
   "BzHbow": {
     "defaultMessage": "There are no active projects in the CroRIS system in which the user participates",
@@ -255,6 +283,10 @@
     "defaultMessage": "Identifier",
     "description": "myreq-list-identifier"
   },
+  "DXST2s": {
+    "defaultMessage": "Projects",
+    "description": "userlist-column-header-5-1"
+  },
   "DXZ12x": {
     "defaultMessage": "Project name and CroRIS link",
     "description": "userinfo-croris-nameurl"
@@ -274,6 +306,10 @@
   "FPhsMI": {
     "defaultMessage": "Approved:",
     "description": "memberships-project-approved"
+  },
+  "FQJQDZ": {
+    "defaultMessage": "Added",
+    "description": "userlist-column-header-4"
   },
   "FQLopu": {
     "defaultMessage": "Choose",
@@ -315,6 +351,10 @@
     "defaultMessage": "Active {br} You are signed into at least one active project",
     "description": "statusinfo-tooltipactive-1"
   },
+  "GMkmMZ": {
+    "defaultMessage": "Previous projects",
+    "description": "userlist-column-header-5-2"
+  },
   "GbOJbt": {
     "defaultMessage": "The invitation could not be canceled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
@@ -342,6 +382,10 @@
   "IHl9i4": {
     "defaultMessage": "Total amount of space for virtual servers on fast storage (GB):",
     "description": "cloudfields-nfastdiskgb"
+  },
+  "IOuMna": {
+    "defaultMessage": "username copied to the clipboard",
+    "description": "userlist-minibutton-title-2"
   },
   "IP7pZp": {
     "defaultMessage": "Users:",
@@ -382,6 +426,10 @@
   "KkxjH3": {
     "defaultMessage": "Role",
     "description": "userinfo-croris-role"
+  },
+  "KnyhrF": {
+    "defaultMessage": "Active",
+    "description": "userlist-button-active"
   },
   "KssuSi": {
     "defaultMessage": "By logging into the system, you confirm that you accept",
@@ -443,6 +491,10 @@
     "defaultMessage": "Internal project",
     "description": "requesttype-label-internal"
   },
+  "OqGoEt": {
+    "defaultMessage": "Error while copying user's email to the clipboard",
+    "description": "userlist-minibutton-msg-1"
+  },
   "OtDaFD": {
     "defaultMessage": "Key name",
     "description": "publickeys-list-keyname"
@@ -450,6 +502,10 @@
   "OxYLwa": {
     "defaultMessage": "Request for Advanced Computing service usage",
     "description": "navigation-title"
+  },
+  "P+pTgU": {
+    "defaultMessage": "Email copied to the clipboard",
+    "description": "userlist-minibutton-title-1"
   },
   "PCIZl3": {
     "defaultMessage": "Public key successfully deleted",
@@ -495,9 +551,17 @@
     "defaultMessage": "Email",
     "description": "users-table-general-email"
   },
+  "Rpn5b/": {
+    "defaultMessage": "Search",
+    "description": "userlist-placeholder-search"
+  },
   "S8xrMw": {
     "defaultMessage": "Adding collaborators to an internal project",
     "description": "memberships-modaltitle-internal"
+  },
+  "SDkknt": {
+    "defaultMessage": "No users meet the search criteria",
+    "description": "userlist-emptytable-msg-1"
   },
   "SGXvmn": {
     "defaultMessage": "Practical class",
@@ -510,6 +574,10 @@
   "STHLdY": {
     "defaultMessage": "Checkout",
     "description": "users-table-general-signoff"
+  },
+  "T73nyd": {
+    "defaultMessage": "Public key",
+    "description": "userlist-column-header-6"
   },
   "T7YuXQ": {
     "defaultMessage": "Projects",
@@ -539,6 +607,10 @@
     "defaultMessage": "Identifier:",
     "description": "generalproject-identifier"
   },
+  "UKD/0e": {
+    "defaultMessage": "Username and AAI identifier",
+    "description": "userlist-column-header-3-1"
+  },
   "UWKnhL": {
     "defaultMessage": "Maximum amount of RAM per server (GB):",
     "description": "cloudfields-nramvm"
@@ -562,6 +634,10 @@
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "WL9MPg": {
+    "defaultMessage": "There are no users signed up for the project",
+    "description": "userlist-emptytable-msg-2"
   },
   "WnDAVG": {
     "defaultMessage": "Public key",
@@ -587,6 +663,10 @@
     "defaultMessage": "Type:",
     "description": "memberships-project-type"
   },
+  "bWWHsM": {
+    "defaultMessage": "Inactive",
+    "description": "userlist-button-inactive"
+  },
   "cNIEbm": {
     "defaultMessage": "Choose",
     "description": "researchproj-button-label"
@@ -602,6 +682,10 @@
   "d8E55+": {
     "defaultMessage": "Note:",
     "description": "publickeys-add-remarktitle"
+  },
+  "dGEddM": {
+    "defaultMessage": "Choose",
+    "description": "userlist-placeholder-choose"
   },
   "dR+vCm": {
     "defaultMessage": "Inactive {br} User is not signed into any active project",
@@ -826,6 +910,10 @@
   "pFrauD": {
     "defaultMessage": "Public keys management",
     "description": "linktitle-pubkeys"
+  },
+  "pK6D9K": {
+    "defaultMessage": "Error while copying username to the clipboard",
+    "description": "userlist-minibutton-msg-2"
   },
   "pO80G/": {
     "defaultMessage": "Name:",
