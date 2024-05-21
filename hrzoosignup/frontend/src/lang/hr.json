@@ -219,6 +219,10 @@
     "defaultMessage": "Ime",
     "description": "userinfo-croris-firstname"
   },
+  "AzOt44": {
+    "defaultMessage": "Detalji projekta",
+    "description": "popover-projectinfo"
+  },
   "B8Lcj2": {
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
     "description": "memberships-clipboard-ok"
@@ -670,6 +674,10 @@
   "Z3Agwx": {
     "defaultMessage": "Resursi",
     "description": "popover-projectinfo-resources"
+  },
+  "aiSJvp": {
+    "defaultMessage": "Detalji zahtjeva",
+    "description": "popover-requestinfo"
   },
   "bAhHuU": {
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",

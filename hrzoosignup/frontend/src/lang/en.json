@@ -219,6 +219,10 @@
     "defaultMessage": "First name",
     "description": "userinfo-croris-firstname"
   },
+  "AzOt44": {
+    "defaultMessage": "Project details",
+    "description": "popover-projectinfo"
+  },
   "B8Lcj2": {
     "defaultMessage": "Project identifier copied to clipboard",
     "description": "memberships-clipboard-ok"
@@ -670,6 +674,10 @@
   "Z3Agwx": {
     "defaultMessage": "Resources",
     "description": "popover-projectinfo-resources"
+  },
+  "aiSJvp": {
+    "defaultMessage": "Request details",
+    "description": "popover-requestinfo"
   },
   "bAhHuU": {
     "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
