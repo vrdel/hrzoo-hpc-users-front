@@ -696,7 +696,10 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
         pageCount={ paginationHelp.pageCount }
         start={ paginationHelp.start }
         choices={ paginationHelp.choices }
-        resource_name="korisnika"
+        resource_name={intl.formatMessage({
+          defaultMessage: "korisnika",
+          description: "userlist-pagination"
+        })}
       />
     </>
   )

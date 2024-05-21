@@ -1047,6 +1047,10 @@
     "defaultMessage": "Invite collaborators",
     "description": "users-table-general-collabcall"
   },
+  "yQX1Hw": {
+    "defaultMessage": "users",
+    "description": "userlist-pagination"
+  },
   "ysQjtn": {
     "defaultMessage": "CroRIS registration",
     "description": "memberships-user-crorisreg"
