@@ -712,32 +712,50 @@ export const UsersInactiveList = () => {
             </th>
             <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
               <div className="flex-grow-1">
-                Ime, prezime i email
+                <FormattedMessage
+                  defaultMessage="Ime, prezime i email"
+                  description="userslist-column-header-1"
+                />
               </div>
               <div>
                 { SortArrow() }
               </div>
             </th>
             <th className="fw-normal"  style={{width: '306px'}}>
-              Institucija
+              <FormattedMessage
+                defaultMessage="Institucija"
+                description="userlist-column-header-2"
+              />
             </th>
             <th className="fw-normal"  style={{minWidth: '296px'}}>
-              AAI oznaka
+              <FormattedMessage
+                defaultMessage="AAI oznaka"
+                description="userlist-column-header-3-2"
+              />
             </th>
             <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
             >
               <div className="flex-grow-1">
-                Dodan
+                <FormattedMessage
+                  defaultMessage="Dodan"
+                  description="userlist-column-header-4"
+                />
               </div>
               <div>
                 { SortArrow() }
               </div>
             </th>
             <th className="fw-normal"  style={{width: '180px'}}>
-              Prošli projekti
+              <FormattedMessage
+                defaultMessage="Prošli projekti"
+                description="userlist-column-header-5-2"
+              />
             </th>
             <th className="fw-normal"  style={{width: '116px'}}>
-              Javni ključ
+              <FormattedMessage
+                defaultMessage="Javni ključ"
+                description="userlist-column-header-6"
+              />
             </th>
           </tr>
         </thead>
@@ -786,32 +804,50 @@ export const UsersList = () => {
             </th>
             <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
               <div className="flex-grow-1">
-                Ime, prezime i email
+                <FormattedMessage
+                  defaultMessage="Ime, prezime i email"
+                  description="userslist-column-header-1"
+                />
               </div>
               <div>
                 { SortArrow() }
               </div>
             </th>
             <th className="fw-normal"  style={{width: '306px'}}>
-              Institucija
+              <FormattedMessage
+                defaultMessage="Institucija"
+                description="userlist-column-header-2"
+              />
             </th>
             <th className="fw-normal"  style={{minWidth: '296px'}}>
-              Korisničko ime i AAI oznaka
+              <FormattedMessage
+                defaultMessage="Korisničko ime i AAI oznaka"
+                description="userlist-column-header-3-1"
+              />
             </th>
             <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
             >
               <div className="flex-grow-1">
-                Dodan
+                <FormattedMessage
+                  defaultMessage="Dodan"
+                  description="userlist-column-header-4"
+                />
               </div>
               <div>
                 { SortArrow() }
               </div>
             </th>
             <th className="fw-normal"  style={{width: '180px'}}>
-              Projekti
+              <FormattedMessage
+                defaultMessage="Projekti"
+                description="userlist-column-header-5-1"
+              />
             </th>
             <th className="fw-normal"  style={{width: '116px'}}>
-              Javni ključ
+              <FormattedMessage
+                defaultMessage="Javni ključ"
+                description="userlist-column-header-6"
+              />
             </th>
           </tr>
         </thead>
