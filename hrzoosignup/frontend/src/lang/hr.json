@@ -59,6 +59,10 @@
     "defaultMessage": "Neaktivan {br} Niste prijavljeni ni na jedan aktivan projekt",
     "description": "statusinfo-tooltipinactive-1"
   },
+  "2Chv+E": {
+    "defaultMessage": "Suradnici",
+    "description": "popover-projectinfo-collaborators"
+  },
   "2DZTTn": {
     "defaultMessage": "Ime",
     "description": "users-table-general-firstname"
@@ -266,6 +270,10 @@
   "CinYsf": {
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
+  },
+  "D/RQLG": {
+    "defaultMessage": "Voditelj",
+    "description": "popover-projectinfo-manager"
   },
   "D14k5Q": {
     "defaultMessage": "Dodan javni ključ",
@@ -651,9 +659,17 @@
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
   },
+  "YPlMrW": {
+    "defaultMessage": "Naziv",
+    "description": "popover-projectinfo-name"
+  },
   "Yo9uAA": {
     "defaultMessage": "Nemate prijavljenih sudjelovanja na odobrenim projektima",
     "description": "memberships-no-assignments"
+  },
+  "Z3Agwx": {
+    "defaultMessage": "Resursi",
+    "description": "popover-projectinfo-resources"
   },
   "bAhHuU": {
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",

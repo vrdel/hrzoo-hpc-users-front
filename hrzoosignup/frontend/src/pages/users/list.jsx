@@ -64,7 +64,10 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
         <PopoverBody>
           <Row>
             <Col className="fw-bold">
-              Naziv
+              <FormattedMessage
+                defaultMessage="Naziv"
+                description="popover-projectinfo-name"
+              />
             </Col>
           </Row>
           <Row>
@@ -78,7 +81,10 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
               <>
                 <Row className="mt-2">
                   <Col className="fw-bold">
-                    Resursi
+                    <FormattedMessage
+                      defaultMessage="Resursi"
+                      description="popover-projectinfo-resources"
+                    />
                   </Col>
                 </Row>
                 <Row>
@@ -101,7 +107,10 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
           }
           <Row className="mt-4">
             <Col className="fw-bold">
-              Voditelj
+              <FormattedMessage
+                defaultMessage="Voditelj"
+                description="popover-projectinfo-manager"
+              />
             </Col>
           </Row>
           <Row>
@@ -116,7 +125,10 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
               <>
                 <Row className="mt-2">
                   <Col className="fw-bold">
-                    Suradnici
+                    <FormattedMessage
+                      defaultMessage="Suradnici"
+                      description="popover-projectinfo-collaborators"
+                    />
                   </Col>
                 </Row>
                 <Row>

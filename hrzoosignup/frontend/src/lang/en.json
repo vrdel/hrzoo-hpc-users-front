@@ -59,6 +59,10 @@
     "defaultMessage": "Inactive {br} You are not signed into any active project",
     "description": "statusinfo-tooltipinactive-1"
   },
+  "2Chv+E": {
+    "defaultMessage": "Collaborators",
+    "description": "popover-projectinfo-collaborators"
+  },
   "2DZTTn": {
     "defaultMessage": "First name",
     "description": "users-table-general-firstname"
@@ -266,6 +270,10 @@
   "CinYsf": {
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
+  },
+  "D/RQLG": {
+    "defaultMessage": "Manager",
+    "description": "popover-projectinfo-manager"
   },
   "D14k5Q": {
     "defaultMessage": "Public key added",
@@ -651,9 +659,17 @@
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
   },
+  "YPlMrW": {
+    "defaultMessage": "Name",
+    "description": "popover-projectinfo-name"
+  },
   "Yo9uAA": {
     "defaultMessage": "You do not have any registered participations in approved projects",
     "description": "memberships-no-assignments"
+  },
+  "Z3Agwx": {
+    "defaultMessage": "Resources",
+    "description": "popover-projectinfo-resources"
   },
   "bAhHuU": {
     "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
