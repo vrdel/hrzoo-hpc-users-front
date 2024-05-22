@@ -23,6 +23,10 @@
     "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
     "description": "userlist-minibutton-title-3"
   },
+  "/8epZ+": {
+    "defaultMessage": "Spremi promjene",
+    "description": "managereq-change-button-save"
+  },
   "/hXMAH": {
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
@@ -46,6 +50,10 @@
   "1F7b3y": {
     "defaultMessage": "Osobe:",
     "description": "generalproject-persons"
+  },
+  "1KSfnD": {
+    "defaultMessage": "Choose",
+    "description": "managereq-change-choose"
   },
   "1YGy6A": {
     "defaultMessage": "Vrsta:",
@@ -90,6 +98,10 @@
   "2oEnoX": {
     "defaultMessage": "Dodaj javni ključ",
     "description": "publickeys-list-label-add"
+  },
+  "30mjoO": {
+    "defaultMessage": "Email korisnika kopiran u međuspremnik",
+    "description": "managereq-change-minibutton-title-1"
   },
   "3DZQVv": {
     "defaultMessage": "Zahtjev je uspješno podnesen",
@@ -155,6 +167,10 @@
     "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
     "description": "resourcefields-ram"
   },
+  "7oHfZW": {
+    "defaultMessage": "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+    "description": "managereq-change-minibutton-msg-1"
+  },
   "7umJYg": {
     "defaultMessage": "Odjavi suradnike",
     "description": "users-table-general-collabsignoff"
@@ -174,6 +190,10 @@
   "8jbyYo": {
     "defaultMessage": "Srce radionica",
     "description": "requesttype-label-srceworkshop"
+  },
+  "8lLSCM": {
+    "defaultMessage": "Organizacijska jedinica",
+    "description": "managereq-change-orgunit"
   },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
@@ -215,6 +235,10 @@
     "defaultMessage": "Aktivna pozivnica poslana na email",
     "description": "users-table-general-invitesent"
   },
+  "AkXLQK": {
+    "defaultMessage": "Email",
+    "description": "managereq-change-email"
+  },
   "AuAPIM": {
     "defaultMessage": "Slanje pozivnica za istraživački projekt",
     "description": "memberships-modaltitle-research"
@@ -234,6 +258,10 @@
   "BC++9m": {
     "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
     "description": "memberships-toast-invitefail"
+  },
+  "Bt2hYZ": {
+    "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
+    "description": "managereq-change-minibutton-title-2"
   },
   "ByrMw3": {
     "defaultMessage": "Ime, prezime i email",
@@ -287,6 +315,10 @@
     "defaultMessage": "Dodan javni ključ",
     "description": "users-table-general-keyadd"
   },
+  "D7Y1AH": {
+    "defaultMessage": "Šalji email voditelju",
+    "description": "managereq-change-email-manager"
+  },
   "DEfFmS": {
     "defaultMessage": "Odaberi...",
     "description": "users-table-general-placeholder"
@@ -298,6 +330,10 @@
   "DJR3ak": {
     "defaultMessage": "Šifra",
     "description": "myreq-list-identifier"
+  },
+  "DJm+Ci": {
+    "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+    "description": "managereq-change-minibutton-msg-2"
   },
   "DXST2s": {
     "defaultMessage": "Projekti",
@@ -318,6 +354,10 @@
   "ECc0zn": {
     "defaultMessage": "Javni ključ nije bilo moguće dodati: { error }",
     "description": "public-keys-add-toast-fail"
+  },
+  "ENvJpe": {
+    "defaultMessage": "Ime",
+    "description": "managereq-change-firstname"
   },
   "FPhsMI": {
     "defaultMessage": "Odobren:",
@@ -375,6 +415,10 @@
     "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
   },
+  "GwsDrw": {
+    "defaultMessage": "Naziv ustanove",
+    "description": "managereq-change-institution"
+  },
   "H7x1WL": {
     "defaultMessage": "Email",
     "description": "memberships-user-email"
@@ -414,6 +458,14 @@
   "IX8Pax": {
     "defaultMessage": "Šifra:",
     "description": "researchselected-projectid"
+  },
+  "Im/hLO": {
+    "defaultMessage": "Istekao",
+    "description": "managereq-change-expire"
+  },
+  "IqwjN5": {
+    "defaultMessage": "Prezime",
+    "description": "managereq-change-lastname"
   },
   "JE8/B2": {
     "defaultMessage": "Opći dio",
@@ -571,6 +623,10 @@
     "defaultMessage": "Zahtjev nije bilo moguće podnijeti: { errmsg }",
     "description": "newrequest-toast-fail"
   },
+  "RHg+U2": {
+    "defaultMessage": "Brisanje korisničkog zahtjeva",
+    "description": "managereq-change-modaldelete-title"
+  },
   "RYmgo6": {
     "defaultMessage": "Email",
     "description": "users-table-general-email"
@@ -655,6 +711,10 @@
     "defaultMessage": "Suradnike nije bilo moguće dodati: {br} { error }",
     "description": "memberships-toast-internal-collaboratorsfail"
   },
+  "V//ozu": {
+    "defaultMessage": "Obradio:",
+    "description": "managereq-change-handled"
+  },
   "VOeDTJ": {
     "defaultMessage": "Tip",
     "description": "publickeys-list-type"
@@ -699,6 +759,18 @@
     "defaultMessage": "Resursi",
     "description": "popover-projectinfo-resources"
   },
+  "ZG4yGb": {
+    "defaultMessage": "Odobren",
+    "description": "managereq-change-approve"
+  },
+  "aPSUqH": {
+    "defaultMessage": "Napomena:",
+    "description": "managereq-change-remark"
+  },
+  "aaATlq": {
+    "defaultMessage": "Voditelj će biti obaviješten emailom o promjeni stanja u \"Odobren\" ili \"Odbijen\".",
+    "description": "managereq-change-remark-msg"
+  },
   "aiSJvp": {
     "defaultMessage": "Detalji zahtjeva",
     "description": "popover-requestinfo"
@@ -714,6 +786,10 @@
   "bWWHsM": {
     "defaultMessage": "Neaktivni",
     "description": "userlist-button-inactive"
+  },
+  "c883uu": {
+    "defaultMessage": "Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:",
+    "description": "managereq-change-extra-comment"
   },
   "cNIEbm": {
     "defaultMessage": "Odaberi",
@@ -775,6 +851,10 @@
     "defaultMessage": "Dodaj",
     "description": "publickeys-add-label"
   },
+  "f5TbbX": {
+    "defaultMessage": "Povezanost",
+    "description": "managereq-change-affiliation"
+  },
   "fCdY/g": {
     "defaultMessage": "Istraživački projekt",
     "description": "researchproj-cardtitle"
@@ -818,6 +898,10 @@
   "h41Ik7": {
     "defaultMessage": "Softver",
     "description": "navlinks-software"
+  },
+  "h5uXWs": {
+    "defaultMessage": "Produljenje",
+    "description": "managereq-change-extend"
   },
   "h78Eiu": {
     "defaultMessage": "Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
@@ -919,6 +1003,10 @@
     "defaultMessage": "Korisnici",
     "description": "navlinks-users"
   },
+  "lrtv+B": {
+    "defaultMessage": "Obrada",
+    "description": "managereq-change-process"
+  },
   "m1ElhA": {
     "defaultMessage": "Uloga",
     "description": "memberships-user-role"
@@ -951,6 +1039,10 @@
     "defaultMessage": "Da li ste sigurni da želite dodati javni ključ?",
     "description": "publickeys-add-modalmsg"
   },
+  "o01eOJ": {
+    "defaultMessage": "Da li ste sigurni da želite brisati korisnički zahtjev?",
+    "description": "managereq-change-modaldelete-msg"
+  },
   "oRqoRe": {
     "defaultMessage": "Napredno računanje",
     "description": "loginpriv-servicename"
@@ -962,6 +1054,10 @@
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
     "description": "newrequest-modalmsg"
+  },
+  "p4bsWB": {
+    "defaultMessage": "Odbijen",
+    "description": "managareq-change-deny"
   },
   "p6s1xb": {
     "defaultMessage": "Naziv ustanove",
@@ -1083,9 +1179,21 @@
     "defaultMessage": "Pošalji poveznice za prijavu",
     "description": "users-table-general-invite-send"
   },
+  "w6qX6t": {
+    "defaultMessage": "Inicijalno stanje zahtjeva:",
+    "description": "managereq-change-remark-initialstate"
+  },
   "w8BGXa": {
     "defaultMessage": "Aplikacije koje će se koristiti:",
     "description": "sciencesoftware-list"
+  },
+  "wIxA6K": {
+    "defaultMessage": "Dodijeljeni tip resursa:",
+    "description": "managereq-change-resource-given"
+  },
+  "xA75np": {
+    "defaultMessage": "Korisnička oznaka",
+    "description": "managereq-change-userident"
   },
   "xGaESM": {
     "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
@@ -1118,6 +1226,10 @@
   "zORxCj": {
     "defaultMessage": "Da li ste sigurni da želite poslati pozivnice na navedene email adrese?",
     "description": "memberships-modalmsg-invite"
+  },
+  "zSKRJA": {
+    "defaultMessage": "Promijenio:",
+    "description": "managereq-change-changed"
   },
   "zba6wi": {
     "defaultMessage": "Neki suradnici su već dodani na projekt: {br} { error }",

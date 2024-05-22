@@ -23,6 +23,10 @@
     "defaultMessage": "User's identifier copied to the clipboard",
     "description": "userlist-minibutton-title-3"
   },
+  "/8epZ+": {
+    "defaultMessage": "Save changes",
+    "description": "managereq-change-button-save"
+  },
   "/hXMAH": {
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
@@ -46,6 +50,10 @@
   "1F7b3y": {
     "defaultMessage": "Persons:",
     "description": "generalproject-persons"
+  },
+  "1KSfnD": {
+    "defaultMessage": "Choose",
+    "description": "managereq-change-choose"
   },
   "1YGy6A": {
     "defaultMessage": "Type:",
@@ -90,6 +98,10 @@
   "2oEnoX": {
     "defaultMessage": "Add public key",
     "description": "publickeys-list-label-add"
+  },
+  "30mjoO": {
+    "defaultMessage": "User's email copied to the clipboard",
+    "description": "managereq-change-minibutton-title-1"
   },
   "3DZQVv": {
     "defaultMessage": "The request has been successfully submitted",
@@ -155,6 +167,10 @@
     "defaultMessage": "Average amount of working memory per job (GB):",
     "description": "resourcefields-ram"
   },
+  "7oHfZW": {
+    "defaultMessage": "Error while copying user's email to the clipboard",
+    "description": "managereq-change-minibutton-msg-1"
+  },
   "7umJYg": {
     "defaultMessage": "Remove collaborators",
     "description": "users-table-general-collabsignoff"
@@ -174,6 +190,10 @@
   "8jbyYo": {
     "defaultMessage": "Srce workshop",
     "description": "requesttype-label-srceworkshop"
+  },
+  "8lLSCM": {
+    "defaultMessage": "Organisational unit",
+    "description": "managereq-change-orgunit"
   },
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
@@ -215,6 +235,10 @@
     "defaultMessage": "Active invitation sent to an email",
     "description": "users-table-general-invitesent"
   },
+  "AkXLQK": {
+    "defaultMessage": "Email",
+    "description": "managereq-change-email"
+  },
   "AuAPIM": {
     "defaultMessage": "Sending invitations for a research project",
     "description": "memberships-modaltitle-research"
@@ -234,6 +258,10 @@
   "BC++9m": {
     "defaultMessage": "It was not possible to send the invitations: {br} { error }",
     "description": "memberships-toast-invitefail"
+  },
+  "Bt2hYZ": {
+    "defaultMessage": "User's identifier copied to the clipboard",
+    "description": "managereq-change-minibutton-title-2"
   },
   "ByrMw3": {
     "defaultMessage": "First, last name and email",
@@ -287,6 +315,10 @@
     "defaultMessage": "Public key added",
     "description": "users-table-general-keyadd"
   },
+  "D7Y1AH": {
+    "defaultMessage": "Send email to the manager",
+    "description": "managereq-change-email-manager"
+  },
   "DEfFmS": {
     "defaultMessage": "Choose...",
     "description": "users-table-general-placeholder"
@@ -298,6 +330,10 @@
   "DJR3ak": {
     "defaultMessage": "Identifier",
     "description": "myreq-list-identifier"
+  },
+  "DJm+Ci": {
+    "defaultMessage": "Error while copying user's identifier to the clipboard",
+    "description": "managereq-change-minibutton-msg-2"
   },
   "DXST2s": {
     "defaultMessage": "Projects",
@@ -318,6 +354,10 @@
   "ECc0zn": {
     "defaultMessage": "The public key could not be added: { error }",
     "description": "public-keys-add-toast-fail"
+  },
+  "ENvJpe": {
+    "defaultMessage": "First name",
+    "description": "managereq-change-firstname"
   },
   "FPhsMI": {
     "defaultMessage": "Approved:",
@@ -375,6 +415,10 @@
     "defaultMessage": "The invitation could not be canceled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
   },
+  "GwsDrw": {
+    "defaultMessage": "Institution",
+    "description": "managereq-change-institution"
+  },
   "H7x1WL": {
     "defaultMessage": "Email",
     "description": "memberships-user-email"
@@ -414,6 +458,14 @@
   "IX8Pax": {
     "defaultMessage": "Project identifier:",
     "description": "researchselected-projectid"
+  },
+  "Im/hLO": {
+    "defaultMessage": "Expired",
+    "description": "managereq-change-expire"
+  },
+  "IqwjN5": {
+    "defaultMessage": "Last name",
+    "description": "managereq-change-lastname"
   },
   "JE8/B2": {
     "defaultMessage": "General",
@@ -571,6 +623,10 @@
     "defaultMessage": "The request could not be submitted: { errmsg }",
     "description": "newrequest-toast-fail"
   },
+  "RHg+U2": {
+    "defaultMessage": "Delete user's request",
+    "description": "managereq-change-modaldelete-title"
+  },
   "RYmgo6": {
     "defaultMessage": "Email",
     "description": "users-table-general-email"
@@ -655,6 +711,10 @@
     "defaultMessage": "It was not possible to add the collaborators: {br} { error }",
     "description": "memberships-toast-internal-collaboratorsfail"
   },
+  "V//ozu": {
+    "defaultMessage": "Handled:",
+    "description": "managereq-change-handled"
+  },
   "VOeDTJ": {
     "defaultMessage": "Type",
     "description": "publickeys-list-type"
@@ -699,6 +759,18 @@
     "defaultMessage": "Resources",
     "description": "popover-projectinfo-resources"
   },
+  "ZG4yGb": {
+    "defaultMessage": "Approved",
+    "description": "managereq-change-approve"
+  },
+  "aPSUqH": {
+    "defaultMessage": "Remark:",
+    "description": "managereq-change-remark"
+  },
+  "aaATlq": {
+    "defaultMessage": "The lead will be notified by email about the change of status to \"Approved\" or \"Denied\".",
+    "description": "managereq-change-remark-msg"
+  },
   "aiSJvp": {
     "defaultMessage": "Request details",
     "description": "popover-requestinfo"
@@ -714,6 +786,10 @@
   "bWWHsM": {
     "defaultMessage": "Inactive",
     "description": "userlist-button-inactive"
+  },
+  "c883uu": {
+    "defaultMessage": "Extra comment on request <u><i>deny</i></u>:",
+    "description": "managereq-change-extra-comment"
   },
   "cNIEbm": {
     "defaultMessage": "Choose",
@@ -775,6 +851,10 @@
     "defaultMessage": "Add",
     "description": "publickeys-add-label"
   },
+  "f5TbbX": {
+    "defaultMessage": "Affiliation",
+    "description": "managereq-change-affiliation"
+  },
   "fCdY/g": {
     "defaultMessage": "Research project",
     "description": "researchproj-cardtitle"
@@ -818,6 +898,10 @@
   "h41Ik7": {
     "defaultMessage": "Software",
     "description": "navlinks-software"
+  },
+  "h5uXWs": {
+    "defaultMessage": "Time extension",
+    "description": "managereq-change-extend"
   },
   "h78Eiu": {
     "defaultMessage": "You are registered as a manager on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
@@ -919,6 +1003,10 @@
     "defaultMessage": "Users",
     "description": "navlinks-users"
   },
+  "lrtv+B": {
+    "defaultMessage": "Processing",
+    "description": "managereq-change-process"
+  },
   "m1ElhA": {
     "defaultMessage": "Role",
     "description": "memberships-user-role"
@@ -951,6 +1039,10 @@
     "defaultMessage": "Are you sure you want to add the public key?",
     "description": "publickeys-add-modalmsg"
   },
+  "o01eOJ": {
+    "defaultMessage": "Are you sure you want to delete user's request?",
+    "description": "managereq-change-modaldelete-msg"
+  },
   "oRqoRe": {
     "defaultMessage": "Advanced Computing",
     "description": "loginpriv-servicename"
@@ -962,6 +1054,10 @@
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit a new request?",
     "description": "newrequest-modalmsg"
+  },
+  "p4bsWB": {
+    "defaultMessage": "Denied",
+    "description": "managareq-change-deny"
   },
   "p6s1xb": {
     "defaultMessage": "Name of the Institution",
@@ -1083,9 +1179,21 @@
     "defaultMessage": "Send invitation links",
     "description": "users-table-general-invite-send"
   },
+  "w6qX6t": {
+    "defaultMessage": "Initial state of request:",
+    "description": "managereq-change-remark-initialstate"
+  },
   "w8BGXa": {
     "defaultMessage": "Applications to be used:",
     "description": "sciencesoftware-list"
+  },
+  "wIxA6K": {
+    "defaultMessage": "Assigned resource type:",
+    "description": "managereq-change-resource-given"
+  },
+  "xA75np": {
+    "defaultMessage": "User identifier",
+    "description": "managereq-change-userident"
   },
   "xGaESM": {
     "defaultMessage": "Error while copying user's identifier to the clipboard",
@@ -1118,6 +1226,10 @@
   "zORxCj": {
     "defaultMessage": "Are you sure you want to send invitations to the provided email addresses?",
     "description": "memberships-modalmsg-invite"
+  },
+  "zSKRJA": {
+    "defaultMessage": "Changed:",
+    "description": "managereq-change-changed"
   },
   "zba6wi": {
     "defaultMessage": "Some collaborators have already been added to the project: {br} { error }",

@@ -37,7 +37,7 @@ import { AuthContext } from 'Components/AuthContextProvider.jsx';
 import { convertToAmerican } from "Utils/dates";
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 
 
 function setInitialState() {
@@ -73,6 +73,8 @@ function ToggleState(request_state, which) {
 }
 
 const LeadBasicInfo = ({leadInfo}) => {
+  const intl = useIntl()
+
   const user = leadInfo['user']
   return (
     <>
@@ -87,16 +89,28 @@ const LeadBasicInfo = ({leadInfo}) => {
             <thead>
               <tr>
                 <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
-                  Ime
+                  <FormattedMessage
+                    defaultMessage="Ime"
+                    description="managereq-change-firstname"
+                  />
                 </th>
                 <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
-                  Prezime
+                  <FormattedMessage
+                    defaultMessage="Prezime"
+                    description="managereq-change-lastname"
+                  />
                 </th>
                 <th className="ms-0 ps-0 fw-bold" style={{width: '30%'}}>
-                  Email
+                  <FormattedMessage
+                    defaultMessage="Email"
+                    description="managereq-change-email"
+                  />
                 </th>
                 <th className="ms-0 ps-0 fw-bold">
-                  Korisnička oznaka
+                  <FormattedMessage
+                    defaultMessage="Korisnička oznaka"
+                    description="managereq-change-userident"
+                  />
                 </th>
               </tr>
             </thead>
@@ -116,8 +130,14 @@ const LeadBasicInfo = ({leadInfo}) => {
                         childClassName="me-3"
                         onClick={(e) => copyToClipboard(
                           e, user.person_mail,
-                          "Email korisnika kopiran u međuspremnik",
-                          "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                          intl.formatMessage({
+                            defaultMessage: "Email korisnika kopiran u međuspremnik",
+                            description: "managereq-change-minibutton-title-1"
+                          }),
+                          intl.formatMessage({
+                            defaultMessage: "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                            description: "managereq-change-minibutton-msg-1"
+                          }),
                           "id-email"
                         )}
                       >
@@ -134,8 +154,14 @@ const LeadBasicInfo = ({leadInfo}) => {
                         childClassName="me-3"
                         onClick={(e) => copyToClipboard(
                           e, user.person_uniqueid,
-                          "Korisnička oznaka kopirana u međuspremnik",
-                          "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                          intl.formatMessage({
+                            defaultMessage: "Korisnička oznaka kopirana u međuspremnik",
+                            description: "managereq-change-minibutton-title-2"
+                          }),
+                          intl.formatMessage({
+                            defaultMessage: "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                            description: "managereq-change-minibutton-msg-2"
+                          }),
                           "id-uid"
                         )}
                       >
@@ -155,15 +181,24 @@ const LeadBasicInfo = ({leadInfo}) => {
             <thead>
               <tr>
                 <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
-                  Povezanost
+                  <FormattedMessage
+                    defaultMessage="Povezanost"
+                    description="managereq-change-affiliation"
+                  />
                 </th>
                 <th className="ms-0 ps-0 fw-bold" style={{width: '20%'}}>
-                  Naziv ustanove
+                  <FormattedMessage
+                    defaultMessage="Naziv ustanove"
+                    description="managereq-change-institution"
+                  />
                 </th>
                 <th className="ms-0 ps-0 fw-bold" style={{width: '30%'}}>
                 </th>
                 <th className="ms-0 ps-0 fw-bold" style={{width: '30%'}}>
-                  Organizacijska jedinica
+                  <FormattedMessage
+                    defaultMessage="Organizacijska jedinica"
+                    description="managereq-change-orgunit"
+                  />
                 </th>
               </tr>
             </thead>
@@ -518,7 +553,10 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
         <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
         <br/>
         <p className="fs-5">
-          Odobren
+          <FormattedMessage
+            defaultMessage="Odobren"
+            description="managereq-change-approve"
+          />
         </p>
         <Button
           style={{height: '30px', width: '30px'}}
@@ -536,7 +574,10 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
           icon={faTimeline}/>{' '}
         <br/>
         <p className="fs-5">
-          Produljenje
+          <FormattedMessage
+            defaultMessage="Produljenje"
+            description="managereq-change-extend"
+          />
         </p>
         <Button
           outline={!requestState['extend']}
@@ -553,7 +594,10 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
           icon={faCalendarXmark}/>{' '}
         <br/>
         <p className="fs-5">
-          Istekao
+          <FormattedMessage
+            defaultMessage="Istekao"
+            description="managereq-change-expire"
+          />
         </p>
         <Button
           outline={!requestState['expire']}
@@ -576,7 +620,10 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
         <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
         <br/>
         <p className="fs-5">
-          Odobren
+          <FormattedMessage
+            defaultMessage="Odobren"
+            description="managereq-change-approve"
+          />
         </p>
         <Button
           style={{height: '30px', width: '30px'}}
@@ -593,8 +640,11 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           className="fa-3x text-warning"
           icon={faCog}/>{' '}
         <br/>
-        <p className="fs-<br/>5">
-          Obrada
+        <p className="fs-5">
+          <FormattedMessage
+            defaultMessage="Obrada"
+            description="managereq-change-process"
+          />
         </p>
         <Button
           style={{height: '30px', width: '30px'}}
@@ -612,7 +662,10 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           icon={faTimeline}/>{' '}
         <br/>
         <p className="fs-5">
-          Produljenje
+          <FormattedMessage
+            defaultMessage="Produljenje"
+            description="managereq-change-extend"
+          />
         </p>
         <Button
           outline={!requestState['extend']}
@@ -629,7 +682,10 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           icon={faTimes}/>{' '}
         <br/>
         <p className="fs-5">
-          Odbijen
+          <FormattedMessage
+            defaultMessage="Odbijen"
+            description="managareq-change-deny"
+          />
         </p>
         <Button
           outline={!requestState['deny']}
@@ -646,7 +702,10 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           icon={faCalendarXmark}/>{' '}
         <br/>
         <p className="fs-5">
-          Istekao
+          <FormattedMessage
+            defaultMessage="Istekao"
+            description="managereq-change-expire"
+          />
         </p>
         <Button
           outline={!requestState['expire']}
@@ -671,6 +730,8 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   const deniedBy = getValues('denied_by')
   const approvedBy = getValues('approved_by')
   const changedBy = getValues('changed_by')
+
+  const intl = useIntl()
 
   let sendEmailDisabled = true
   setValue('staff_emailSend', false)
@@ -715,8 +776,14 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         <Col md={{size: 6}} lg={{size: 5}} xl={{size: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 mt-3 justify-content-center">
           <Button color="danger" className="me-lg-1 me-md-1 me-sm-1 me-1" onClick={() => {
             modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
-            modalProps.setModalTitle('Brisanje korisničkog zahtjeva')
-            modalProps.setModalMsg('Da li ste sigurni da želite brisati korisnički zahtjev?')
+            modalProps.setModalTitle(intl.formatMessage({
+              defaultMessage: 'Brisanje korisničkog zahtjeva',
+              description: "managereq-change-modaldelete-title"
+            }))
+            modalProps.setModalMsg(intl.formatMessage({
+              defaultMessage: 'Da li ste sigurni da želite brisati korisnički zahtjev?',
+              description: "managereq-change-modaldelete-msg"
+            }))
             modalProps.setOnYesCall('dodeletereq')}}
           >
             {`Obriši ${manageProject ? 'projekt' : 'zahtjev'}`}
@@ -771,9 +838,25 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         !manageProject &&
         <Row>
           <Col className="d-flex justify-content-center fst-italic">
-            <p className="fw-bold">Napomena:</p>&nbsp;
-            <p>Inicijalno stanje zahtjeva: <span className="text-decoration-underline">{ StateShortString(initialProjectState) }</span><br/>
-              Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".
+            <p className="fw-bold">
+              <FormattedMessage
+                defaultMessage="Napomena:"
+                description="managereq-change-remark"
+              />
+            </p>&nbsp;
+            <p>
+              <FormattedMessage
+                defaultMessage="Inicijalno stanje zahtjeva: "
+                description="managereq-change-remark-initialstate"
+              />
+              <span className="text-decoration-underline">
+                { StateShortString(initialProjectState) }
+              </span>
+              <br/>
+              <FormattedMessage
+                defaultMessage='Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".'
+                description="managereq-change-remark-msg"
+              />
             </p>
           </Col>
         </Row>
@@ -785,7 +868,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             htmlFor="staff_requestResourceType"
             aria-label="staff_requestResourceType"
             className="fw-bold mt-3 fs-5 text-right form-label">
-            Dodijeljeni tip resursa:
+            <FormattedMessage
+              defaultMessage="Dodijeljeni tip resursa:"
+              description="managereq-change-resource-given"
+            />
           </Label>
           <Controller
             name="staff_requestResourceType"
@@ -798,7 +884,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                 id="staff_requestResourceType"
                 isMulti
                 options={ResourceTypesToSelectAdmin}
-                placeholder="Odaberi"
+                placeholder={ intl.formatMessage({
+                  defaultMessage: "Choose",
+                  description: "managereq-change-choose"
+                })}
                 value={getValues('staff_requestResourceType')}
                 onChange={(e) => setValue('staff_requestResourceType', e)}
                 resourceTypeMultiValue={true}
@@ -817,7 +906,14 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                 htmlFor="staff_comment"
                 className="fw-bold mt-3 fs-5 form-label"
                 aria-label="staff_comment">
-                Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:
+                <FormattedMessage
+                  defaultMessage="Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:"
+                  description="managereq-change-extra-comment"
+                  values={{
+                    u: (chunks) => <u>{chunks}</u>,
+                    i: (chunks) => <i>{chunks}</i>
+                  }}
+                />
               </Label>
               <Controller
                 name="staff_comment"
@@ -854,7 +950,12 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                     />
                   }
                 />
-                <Label className="fw-bold fst-italic" check>Šalji email voditelju</Label>
+                <Label className="fw-bold fst-italic" check>
+                  <FormattedMessage
+                    defaultMessage="Šalji email voditelju"
+                    description="managereq-change-email-manager"
+                  />
+                </Label>
               </FormGroup>
             </Col>
           </Row>
@@ -865,7 +966,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row className="justify-content-end fst-italic">
         <Col md={{size: 4}} className="fs-6 mt-3">
           <span className="fw-bold">
-            Obradio:{'  '}
+            <FormattedMessage
+              defaultMessage="Obradio:"
+              description="managereq-change-handled"
+            />{'  '}
           </span>
           {
             ['approve', 'extend', 'expire'].indexOf(initialProjectState) >= 0 ?
@@ -887,7 +991,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         <Row className="justify-content-end fst-italic">
           <Col md={{size: 4}} className="fs-6 mt-1">
             <span className="fw-bold">
-              Promijenio:{'  '}
+              <FormattedMessage
+                defaultMessage="Promijenio:"
+                description="managereq-change-changed"
+              />{'  '}
             </span>
             {
               changedBy ? changedBy.first_name + ' ' + changedBy.last_name : '\u2212'
@@ -900,7 +1007,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           <Button disabled={!disabledFields} size="lg" color="success"
             id="submit-button" type="submit">
             <FontAwesomeIcon icon={faSave}/>{' '}
-            Spremi promjene
+            <FormattedMessage
+              defaultMessage="Spremi promjene"
+              description="managereq-change-button-save"
+            />
           </Button>
         </Col>
       </Row>
