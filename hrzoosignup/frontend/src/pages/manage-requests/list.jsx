@@ -29,13 +29,14 @@ import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import _ from "lodash";
 
 
 const ManageRequestsTable = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
+  const intl = useIntl()
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
@@ -151,25 +152,46 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                   #
                 </th>
                 <th className="fw-normal" style={{width: '92px'}}>
-                  Stanje
+                  <FormattedMessage
+                    defaultMessage="Stanje"
+                    description="managereq-column-state"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '100px'}}>
-                  Podnesen
+                  <FormattedMessage
+                    defaultMessage="Podnesen"
+                    description="managereq-column-submitted"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '714px'}}>
-                  Naziv, institucija i šifra
+                  <FormattedMessage
+                    defaultMessage="Naziv, institucija i šifra"
+                    description="managereq-column-nameinstid"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '158px'}}>
-                  Voditelj
+                  <FormattedMessage
+                    defaultMessage="Voditelj"
+                    description="managereq-column-manager"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '126px'}}>
-                  Tip
+                  <FormattedMessage
+                    defaultMessage="Tip"
+                    description="managereq-column-type"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '120px'}}>
-                  Trajanje
+                  <FormattedMessage
+                    defaultMessage="Trajanje"
+                    description="managereq-column-duration"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '88px'}}>
-                  Promjena
+                  <FormattedMessage
+                    defaultMessage="Promjena"
+                    description="managereq-column-changed"
+                  />
                 </th>
               </tr>
             </thead>
@@ -187,7 +209,10 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                         forwardedRef={ field.ref }
                         controlWidth="92px"
                         customPadding="0.2rem"
-                        placeholder="Odaberi"
+                        placeholder= {intl.formatMessage({
+                          defaultMessage: "Odaberi",
+                          description: "managereq-placeholder-choose"
+                        })}
                         options={ optionsStates }
                         onChange={ e => setValue("searchState", e.value) }
                       />
@@ -202,7 +227,10 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder= {intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "managereq-placeholder-search"
+                        })}
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -216,7 +244,10 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder= {intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "managereq-placeholder-search"
+                        })}
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -231,7 +262,10 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                       <CustomReactSelect
                         forwardedRef={ field.ref }
                         controlWidth="126px"
-                        placeholder="Odaberi"
+                        placeholder= {intl.formatMessage({
+                          defaultMessage: "Odaberi",
+                          description: "managereq-placeholder-choose"
+                        })}
                         customPadding="0.2rem"
                         options={ optionsTypes }
                         onChange={ e => setValue("searchType", e.value) }
@@ -246,7 +280,10 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder= {intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "managereq-placeholder-search"
+                        })}
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -302,8 +339,14 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                               color="light"
                               onClick={(e) => copyToClipboard(
                                 e, project.identifier,
-                                "Šifra zahtjeva kopirana u međuspremnik",
-                                "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
+                                intl.formatMessage({
+                                  defaultMessage: "Šifra zahtjeva kopirana u međuspremnik",
+                                  description: "managereq-minibutton-title"
+                                }),
+                                intl.formatMessage({
+                                  defaultMessage: "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
+                                  description: "managereq-minibutton-msg"
+                                }),
                                 "id-request"
                               )}
                             >
@@ -346,9 +389,15 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                   )
                 :
                   data.length > 0 && isSearched ?
-                    <EmptyTable colspan="9" msg="Nijedan zahtjev ne zadovoljava pretragu" />
+                    <EmptyTable colspan="9" msg={intl.formatMessage({
+                      defaultMessage: "Nijedan zahtjev ne zadovoljava pretragu",
+                      description: "managereq-emptytable-msg-1"
+                    })} />
                   :
-                    <EmptyTable colspan="9" msg="Nema podnesenih zahtjeva" />
+                    <EmptyTable colspan="9" msg={intl.formatMessage({
+                      defaultMessage: "Nema podnesenih zahtjeva",
+                      description: "managereq-emptytable-msg-2"
+                    })} />
               }
             </tbody>
           </Table>
@@ -362,7 +411,10 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
         pageCount={ paginationHelp.pageCount }
         start={ paginationHelp.start }
         choices={ paginationHelp.choices }
-        resource_name="zahtjeva"
+        resource_name={intl.formatMessage({
+          defaultMessage: "zahtjeva",
+          description: "managereq-pagination"
+        })}
       />
     </>
   )
@@ -403,25 +455,46 @@ export const ManageRequestsList = () => {
               #
             </th>
             <th className="fw-normal" style={{width: '92px'}}>
-              Stanje
+              <FormattedMessage
+                defaultMessage="Stanje"
+                description="managereq-column-state"
+              />
             </th>
             <th className="fw-normal" style={{width: '100px'}}>
-              Podnesen
+              <FormattedMessage
+                defaultMessage="Podnesen"
+                description="managereq-column-submitted"
+              />
             </th>
             <th className="fw-normal" style={{width: '714px'}}>
-              Naziv, institucija i šifra
+              <FormattedMessage
+                defaultMessage="Naziv, institucija i šifra"
+                description="managereq-column-nameinstid"
+              />
             </th>
             <th className="fw-normal" style={{width: '158px'}}>
-              Voditelj
+              <FormattedMessage
+                defaultMessage="Voditelj"
+                description="managereq-column-manager"
+              />
             </th>
             <th className="fw-normal" style={{width: '126px'}}>
-              Tip
+              <FormattedMessage
+                defaultMessage="Tip"
+                description="managereq-column-type"
+              />
             </th>
             <th className="fw-normal" style={{width: '120px'}}>
-              Trajanje
+              <FormattedMessage
+                defaultMessage="Trajanje"
+                description="managereq-column-duration"
+              />
             </th>
             <th className="fw-normal" style={{width: '88px'}}>
-              Promjena
+              <FormattedMessage
+                defaultMessage="Promjena"
+                description="managereq-column-changed"
+              />
             </th>
           </tr>
         </thead>

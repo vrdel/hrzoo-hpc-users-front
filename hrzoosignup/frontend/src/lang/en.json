@@ -79,6 +79,10 @@
     "defaultMessage": "Role",
     "description": "users-table-general-role"
   },
+  "2hvgDl": {
+    "defaultMessage": "Choose",
+    "description": "managereq-placeholder-choose"
+  },
   "2nzsgl": {
     "defaultMessage": "You have already gained access based on a research project in the CroRIS system.",
     "description": "newrequest-reason-alreadycroris"
@@ -387,6 +391,10 @@
     "defaultMessage": "Choose",
     "description": "sciencesoftware-placeholder"
   },
+  "HpiAmO": {
+    "defaultMessage": "No requests meet the search criteria",
+    "description": "managereq-emptytable-msg-1"
+  },
   "I/dgYm": {
     "defaultMessage": "Duration:",
     "description": "generalproject-duration"
@@ -434,6 +442,10 @@
   "KD+onZ": {
     "defaultMessage": "Collaborators have been successfully logged off",
     "description": "memberships-toast-signoff-ok"
+  },
+  "KSnYoa": {
+    "defaultMessage": "Name, institution and identifier",
+    "description": "managereq-column-nameinstid"
   },
   "KkxjH3": {
     "defaultMessage": "Role",
@@ -603,6 +615,10 @@
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TbVb2h": {
+    "defaultMessage": "Manager",
+    "description": "managereq-column-manager"
+  },
   "Tbafe8": {
     "defaultMessage": "Cancellation of the invitation",
     "description": "memberships-modaltitle-inviteoff"
@@ -643,6 +659,10 @@
     "defaultMessage": "Type",
     "description": "publickeys-list-type"
   },
+  "VoiHBn": {
+    "defaultMessage": "State",
+    "description": "managereq-column-state"
+  },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
@@ -650,6 +670,10 @@
   "WL9MPg": {
     "defaultMessage": "There are no users signed up for the project",
     "description": "userlist-emptytable-msg-2"
+  },
+  "WVblfa": {
+    "defaultMessage": "Duration",
+    "description": "managereq-column-duration"
   },
   "WnDAVG": {
     "defaultMessage": "Public key",
@@ -735,6 +759,10 @@
     "defaultMessage": "Key fingerprint",
     "description": "publickeys-list-fingerprint"
   },
+  "eTxqlY": {
+    "defaultMessage": "No submitted requests",
+    "description": "managereq-emptytable-msg-2"
+  },
   "eWfkW5": {
     "defaultMessage": "No data from CroRIS system",
     "description": "newrequest-reason-nocroris"
@@ -802,6 +830,10 @@
   "hJ2xID": {
     "defaultMessage": "Upload",
     "description": "publickeys-add-load"
+  },
+  "hKMqzG": {
+    "defaultMessage": "Search",
+    "description": "managereq-placeholder-search"
   },
   "hVSxeA": {
     "defaultMessage": "Last name",
@@ -878,6 +910,10 @@
   "lUUVcW": {
     "defaultMessage": "Submit request",
     "description": "newrequest-general-button-label"
+  },
+  "lZilmr": {
+    "defaultMessage": "Change",
+    "description": "managereq-column-changed"
   },
   "lqL8gP": {
     "defaultMessage": "Users",
@@ -971,6 +1007,10 @@
     "defaultMessage": "Error while copying the project identifier to the clipboard",
     "description": "memberships-clipboard-fail"
   },
+  "r/Gb5S": {
+    "defaultMessage": "Type",
+    "description": "managereq-column-type"
+  },
   "r3CoR2": {
     "defaultMessage": "Adding a public key",
     "description": "publickeys-add-modaltitle"
@@ -987,6 +1027,10 @@
     "defaultMessage": "Total amount of storage space required for the project (GB):",
     "description": "resourcefields-disk"
   },
+  "syIEnC": {
+    "defaultMessage": "requests",
+    "description": "managereq-pagination"
+  },
   "t1IsHN": {
     "defaultMessage": "Institute:",
     "description": "generalproject-institute"
@@ -994,6 +1038,14 @@
   "tdeUEL": {
     "defaultMessage": "Explanation:",
     "description": "researchselected-explain"
+  },
+  "toXzY7": {
+    "defaultMessage": "Request identifier copied to the clipboard",
+    "description": "managereq-minibutton-title"
+  },
+  "u25Zo7": {
+    "defaultMessage": "Error while copying request identifier to the clipboard",
+    "description": "managereq-minibutton-msg"
   },
   "udq7zq": {
     "defaultMessage": "Duration",
@@ -1038,6 +1090,10 @@
   "xGaESM": {
     "defaultMessage": "Error while copying user's identifier to the clipboard",
     "description": "userins-clipboard-fail"
+  },
+  "xRLsQA": {
+    "defaultMessage": "Submitted",
+    "description": "managereq-column-submitted"
   },
   "y+MIYq": {
     "defaultMessage": "Lead institution:",

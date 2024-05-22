@@ -79,6 +79,10 @@
     "defaultMessage": "Uloga",
     "description": "users-table-general-role"
   },
+  "2hvgDl": {
+    "defaultMessage": "Odaberi",
+    "description": "managereq-placeholder-choose"
+  },
   "2nzsgl": {
     "defaultMessage": "Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS",
     "description": "newrequest-reason-alreadycroris"
@@ -387,6 +391,10 @@
     "defaultMessage": "Odaberi",
     "description": "sciencesoftware-placeholder"
   },
+  "HpiAmO": {
+    "defaultMessage": "Nijedan zahtjev ne zadovoljava pretragu",
+    "description": "managereq-emptytable-msg-1"
+  },
   "I/dgYm": {
     "defaultMessage": "Trajanje:",
     "description": "generalproject-duration"
@@ -434,6 +442,10 @@
   "KD+onZ": {
     "defaultMessage": "Suradnici su uspješno odjavljeni",
     "description": "memberships-toast-signoff-ok"
+  },
+  "KSnYoa": {
+    "defaultMessage": "Naziv, institucija i šifra",
+    "description": "managereq-column-nameinstid"
   },
   "KkxjH3": {
     "defaultMessage": "Uloga",
@@ -603,6 +615,10 @@
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TbVb2h": {
+    "defaultMessage": "Voditelj",
+    "description": "managereq-column-manager"
+  },
   "Tbafe8": {
     "defaultMessage": "Otkazivanje pozivnice",
     "description": "memberships-modaltitle-inviteoff"
@@ -643,6 +659,10 @@
     "defaultMessage": "Tip",
     "description": "publickeys-list-type"
   },
+  "VoiHBn": {
+    "defaultMessage": "Stanje",
+    "description": "managereq-column-state"
+  },
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
@@ -650,6 +670,10 @@
   "WL9MPg": {
     "defaultMessage": "Nema korisnika prijavljenih na projekt",
     "description": "userlist-emptytable-msg-2"
+  },
+  "WVblfa": {
+    "defaultMessage": "Trajanje",
+    "description": "managereq-column-duration"
   },
   "WnDAVG": {
     "defaultMessage": "Javni ključ",
@@ -735,6 +759,10 @@
     "defaultMessage": "Digitalni otisak ključa",
     "description": "publickeys-list-fingerprint"
   },
+  "eTxqlY": {
+    "defaultMessage": "Nema podnesenih zahtjeva",
+    "description": "managereq-emptytable-msg-2"
+  },
   "eWfkW5": {
     "defaultMessage": "Nema podataka iz sustava CroRIS",
     "description": "newrequest-reason-nocroris"
@@ -802,6 +830,10 @@
   "hJ2xID": {
     "defaultMessage": "Učitaj",
     "description": "publickeys-add-load"
+  },
+  "hKMqzG": {
+    "defaultMessage": "Traži",
+    "description": "managereq-placeholder-search"
   },
   "hVSxeA": {
     "defaultMessage": "Prezime",
@@ -878,6 +910,10 @@
   "lUUVcW": {
     "defaultMessage": "Podnesi zahtjev",
     "description": "newrequest-general-button-label"
+  },
+  "lZilmr": {
+    "defaultMessage": "Promjena",
+    "description": "managereq-column-changed"
   },
   "lqL8gP": {
     "defaultMessage": "Korisnici",
@@ -971,6 +1007,10 @@
     "defaultMessage": "Greška prilikom kopiranja šifre projekta u međuspremnik",
     "description": "memberships-clipboard-fail"
   },
+  "r/Gb5S": {
+    "defaultMessage": "Tip",
+    "description": "managereq-column-type"
+  },
   "r3CoR2": {
     "defaultMessage": "Dodavanje javnog ključa",
     "description": "publickeys-add-modaltitle"
@@ -987,6 +1027,10 @@
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
     "description": "resourcefields-disk"
   },
+  "syIEnC": {
+    "defaultMessage": "zahtjeva",
+    "description": "managereq-pagination"
+  },
   "t1IsHN": {
     "defaultMessage": "Ustanova:",
     "description": "generalproject-institute"
@@ -994,6 +1038,14 @@
   "tdeUEL": {
     "defaultMessage": "Obrazloženje:",
     "description": "researchselected-explain"
+  },
+  "toXzY7": {
+    "defaultMessage": "Šifra zahtjeva kopirana u međuspremnik",
+    "description": "managereq-minibutton-title"
+  },
+  "u25Zo7": {
+    "defaultMessage": "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
+    "description": "managereq-minibutton-msg"
   },
   "udq7zq": {
     "defaultMessage": "Trajanje",
@@ -1038,6 +1090,10 @@
   "xGaESM": {
     "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
     "description": "userins-clipboard-fail"
+  },
+  "xRLsQA": {
+    "defaultMessage": "Podnesen",
+    "description": "managereq-column-submitted"
   },
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",
