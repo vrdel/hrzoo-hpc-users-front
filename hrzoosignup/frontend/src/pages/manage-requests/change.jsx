@@ -80,7 +80,12 @@ const LeadBasicInfo = ({leadInfo}) => {
     <>
       <Row>
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Voditelj</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">
+            <FormattedMessage
+              defaultMessage="Voditelj"
+              description="managereq-change-title-lead"
+            />
+          </h4><br/>
         </Col>
       </Row>
       <Row className="gx-0">
@@ -799,9 +804,15 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
             {
               manageProject ?
-                "Promjena"
+                intl.formatMessage({
+                  defaultMessage: "Promjena",
+                  description: "managereq-change-process-title-1"
+                })
               :
-                "Obrada"
+                intl.formatMessage({
+                  defaultMessage: "Obrada",
+                  description: "managereq-change-process-title-2"
+                })
             }
           </span>
         </Col>
@@ -820,14 +831,38 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             }))
             modalProps.setOnYesCall('dodeletereq')}}
           >
-            {`Obriši ${manageProject ? 'projekt' : 'zahtjev'}`}
+            {
+              manageProject
+                ?
+                  intl.formatMessage({
+                    defaultMessage: "Obriši projekt" ,
+                    description: "managereq-change-buttonlabel-delete-1"
+                  })
+                :
+                  intl.formatMessage({
+                    defaultMessage: "Obriši zahtjev",
+                    description: "managereq-change-buttonlabel-delete-2"
+                  })
+            }
           </Button>
           <Button color="danger"
             className="me-lg-1 me-md-3 me-sm-3"
             onClick={() => setDisabledFields(!disabledFields)}
             active={!disabledFields}
           >
-            {`Uredi ${manageProject ? 'projekt' : 'zahtjev'}`}
+            {
+              manageProject
+                ?
+                  intl.formatMessage({
+                    defaultMessage: "Uredi projekt" ,
+                    description: "managereq-change-buttonlabel-edit-1"
+                  })
+                :
+                  intl.formatMessage({
+                    defaultMessage: "Uredi zahtjev",
+                    description: "managereq-change-buttonlabel-edit-2"
+                  })
+            }
           </Button>
         </Col>
       </Row>
@@ -845,7 +880,19 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
         <Col md={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
           <span >
-            {`Stanje ${manageProject ? 'projekta:' : 'zahtjeva:'}`}
+            {
+              manageProject
+                ?
+                  intl.formatMessage({
+                    defaultMessage: "Stanje projekta" ,
+                    description: "managereq-change-process-title-3"
+                  })
+                :
+                  intl.formatMessage({
+                    defaultMessage: "Stanje zahtjeva",
+                    description: "managereq-change-process-title-4"
+                  })
+            }
           </span>
         </Col>
       </Row>
@@ -919,7 +966,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                 isMulti
                 options={ResourceTypesToSelectAdmin}
                 placeholder={ intl.formatMessage({
-                  defaultMessage: "Choose",
+                  defaultMessage: "Odaberi",
                   description: "managereq-change-choose"
                 })}
                 value={getValues('staff_requestResourceType')}

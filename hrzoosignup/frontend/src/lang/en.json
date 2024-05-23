@@ -47,13 +47,13 @@
     "defaultMessage": "New request on behalf of practical class",
     "description": "linktitle-newrequest-class"
   },
+  "12utV4": {
+    "defaultMessage": "Edit request",
+    "description": "managereq-change-buttonlabel-edit-2"
+  },
   "1F7b3y": {
     "defaultMessage": "Persons:",
     "description": "generalproject-persons"
-  },
-  "1KSfnD": {
-    "defaultMessage": "Select",
-    "description": "managereq-change-choose"
   },
   "1YGy6A": {
     "defaultMessage": "Type:",
@@ -136,7 +136,7 @@
     "description": "publickeys-list-nokeys"
   },
   "4wuDbg": {
-    "defaultMessage": "manager",
+    "defaultMessage": "leader",
     "description": "userinfo-croris-badgelead"
   },
   "52shcW": {
@@ -162,6 +162,10 @@
   "6XfV4P": {
     "defaultMessage": "Institution",
     "description": "userlist-column-header-2"
+  },
+  "6doVi6": {
+    "defaultMessage": "Request state",
+    "description": "managereq-change-process-title-4"
   },
   "7FtUKh": {
     "defaultMessage": "User identifiers of the collaborators you want on the project",
@@ -320,7 +324,7 @@
     "description": "navigation-welcome"
   },
   "D/RQLG": {
-    "defaultMessage": "Manager",
+    "defaultMessage": "Leader",
     "description": "popover-projectinfo-manager"
   },
   "D14k5Q": {
@@ -332,11 +336,11 @@
     "description": "managereq-change-deny"
   },
   "D7Y1AH": {
-    "defaultMessage": "Send email to the manager",
+    "defaultMessage": "Send email to the leader",
     "description": "managereq-change-email-manager"
   },
   "DEfFmS": {
-    "defaultMessage": "Choose...",
+    "defaultMessage": "Select...",
     "description": "users-table-general-placeholder"
   },
   "DJN4Jp": {
@@ -358,6 +362,10 @@
   "DXZ12x": {
     "defaultMessage": "Project name and CroRIS link",
     "description": "userinfo-croris-nameurl"
+  },
+  "DZE+2s": {
+    "defaultMessage": "Edit project",
+    "description": "managereq-change-buttonlabel-edit-1"
   },
   "DqpQay": {
     "defaultMessage": "Type",
@@ -551,6 +559,10 @@
     "defaultMessage": "Requests management",
     "description": "linktitle-managerequests"
   },
+  "MLgK3x": {
+    "defaultMessage": "Process",
+    "description": "managereq-change-process-title-2"
+  },
   "MTd8cf": {
     "defaultMessage": "Login eduGAIN",
     "description": "loginpriv-labeledugain"
@@ -692,7 +704,7 @@
     "description": "linktitle-myrequests-view"
   },
   "TbVb2h": {
-    "defaultMessage": "Manager",
+    "defaultMessage": "Leader",
     "description": "managereq-column-manager"
   },
   "Tbafe8": {
@@ -770,6 +782,10 @@
   "XZis0B": {
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
+  },
+  "YFbSAM": {
+    "defaultMessage": "Delete project",
+    "description": "managereq-change-buttonlabel-delete-1"
   },
   "YPlMrW": {
     "defaultMessage": "Name",
@@ -907,6 +923,10 @@
     "defaultMessage": "New request on behalf of thesis project",
     "description": "linktitle-newrequest-thesis"
   },
+  "gPgPbx": {
+    "defaultMessage": "Delete request",
+    "description": "managereq-change-buttonlabel-delete-2"
+  },
   "glIPfH": {
     "defaultMessage": "List of users not active on any project",
     "description": "linktitle-usersinactive"
@@ -928,7 +948,7 @@
     "description": "managereq-change-extend"
   },
   "h78Eiu": {
-    "defaultMessage": "You are registered as a manager on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
+    "defaultMessage": "You are registered as a leader on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
   },
   "hDbgbW": {
@@ -959,8 +979,12 @@
     "defaultMessage": "Collaborator",
     "description": "users-table-general-collaborator"
   },
+  "iDrBFO": {
+    "defaultMessage": "Select",
+    "description": "managereq-change-choose"
+  },
   "iRMnQe": {
-    "defaultMessage": "Manager",
+    "defaultMessage": "Leader",
     "description": "users-table-general-leader"
   },
   "iYVJE/": {
@@ -994,6 +1018,10 @@
   "kCbCrR": {
     "defaultMessage": "Login AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
+  },
+  "kDxvBn": {
+    "defaultMessage": "Project state",
+    "description": "managereq-change-process-title-3"
   },
   "kIVxF7": {
     "defaultMessage": "Duration:",
@@ -1155,6 +1183,10 @@
     "defaultMessage": "Institute:",
     "description": "generalproject-institute"
   },
+  "tMWDpG": {
+    "defaultMessage": "Leader",
+    "description": "managereq-change-title-lead"
+  },
   "tdeUEL": {
     "defaultMessage": "Explanation:",
     "description": "researchselected-explain"
@@ -1230,6 +1262,10 @@
   "y+MIYq": {
     "defaultMessage": "Lead institution:",
     "description": "generalfields-leadinstitution"
+  },
+  "y4Tv/g": {
+    "defaultMessage": "Change",
+    "description": "managereq-change-process-title-1"
   },
   "y5njj6": {
     "defaultMessage": "Invite collaborators",

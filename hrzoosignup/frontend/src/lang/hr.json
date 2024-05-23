@@ -47,13 +47,13 @@
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
     "description": "linktitle-newrequest-class"
   },
+  "12utV4": {
+    "defaultMessage": "Uredi zahtjev",
+    "description": "managereq-change-buttonlabel-edit-2"
+  },
   "1F7b3y": {
     "defaultMessage": "Osobe:",
     "description": "generalproject-persons"
-  },
-  "1KSfnD": {
-    "defaultMessage": "Choose",
-    "description": "managereq-change-choose"
   },
   "1YGy6A": {
     "defaultMessage": "Vrsta:",
@@ -162,6 +162,10 @@
   "6XfV4P": {
     "defaultMessage": "Institucija",
     "description": "userlist-column-header-2"
+  },
+  "6doVi6": {
+    "defaultMessage": "Stanje zahtjeva",
+    "description": "managereq-change-process-title-4"
   },
   "7FtUKh": {
     "defaultMessage": "Korisničke oznake suradnika koje želiš na projektu",
@@ -359,6 +363,10 @@
     "defaultMessage": "Naziv projekta i CroRIS poveznica",
     "description": "userinfo-croris-nameurl"
   },
+  "DZE+2s": {
+    "defaultMessage": "Uredi projekt",
+    "description": "managereq-change-buttonlabel-edit-1"
+  },
   "DqpQay": {
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
@@ -550,6 +558,10 @@
   "MGR8er": {
     "defaultMessage": "Upravljanje zahtjevima",
     "description": "linktitle-managerequests"
+  },
+  "MLgK3x": {
+    "defaultMessage": "Obrada",
+    "description": "managereq-change-process-title-2"
   },
   "MTd8cf": {
     "defaultMessage": "Prijava eduGAIN",
@@ -771,6 +783,10 @@
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
   },
+  "YFbSAM": {
+    "defaultMessage": "Obriši projekt",
+    "description": "managereq-change-buttonlabel-delete-1"
+  },
   "YPlMrW": {
     "defaultMessage": "Naziv",
     "description": "popover-projectinfo-name"
@@ -907,6 +923,10 @@
     "defaultMessage": "Novi zahtjev temeljem izrade rada",
     "description": "linktitle-newrequest-thesis"
   },
+  "gPgPbx": {
+    "defaultMessage": "Obriši zahtjev",
+    "description": "managereq-change-buttonlabel-delete-2"
+  },
   "glIPfH": {
     "defaultMessage": "Popis svih korisnika koji nisu ni na jednom aktivnom projektu",
     "description": "linktitle-usersinactive"
@@ -959,6 +979,10 @@
     "defaultMessage": "Suradnik",
     "description": "users-table-general-collaborator"
   },
+  "iDrBFO": {
+    "defaultMessage": "Odaberi",
+    "description": "managereq-change-choose"
+  },
   "iRMnQe": {
     "defaultMessage": "Voditelj",
     "description": "users-table-general-leader"
@@ -994,6 +1018,10 @@
   "kCbCrR": {
     "defaultMessage": "Prijava AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
+  },
+  "kDxvBn": {
+    "defaultMessage": "Stanje projekta",
+    "description": "managereq-change-process-title-3"
   },
   "kIVxF7": {
     "defaultMessage": "Trajanje:",
@@ -1155,6 +1183,10 @@
     "defaultMessage": "Ustanova:",
     "description": "generalproject-institute"
   },
+  "tMWDpG": {
+    "defaultMessage": "Voditelj",
+    "description": "managereq-change-title-lead"
+  },
   "tdeUEL": {
     "defaultMessage": "Obrazloženje:",
     "description": "researchselected-explain"
@@ -1230,6 +1262,10 @@
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",
     "description": "generalfields-leadinstitution"
+  },
+  "y4Tv/g": {
+    "defaultMessage": "Promjena",
+    "description": "managereq-change-process-title-1"
   },
   "y5njj6": {
     "defaultMessage": "Pozovi suradnike",
