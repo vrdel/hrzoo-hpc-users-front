@@ -11,6 +11,10 @@
     "defaultMessage": "Continue",
     "description": "newrequest-continue-label"
   },
+  "+isZan": {
+    "defaultMessage": "Name, institution, identifier and assigned resources",
+    "description": "project-list-nameinstidres"
+  },
   "//xZcz": {
     "defaultMessage": "The number cannot be less than 1",
     "description": "schema-less-1"
@@ -138,6 +142,10 @@
   "4jkyMa": {
     "defaultMessage": "Request expired",
     "description": "statestring-expire"
+  },
+  "4sQ+vh": {
+    "defaultMessage": "No project meet the search criteria",
+    "description": "project-list-emptytable-noresults"
   },
   "4wuDbg": {
     "defaultMessage": "leader",
@@ -267,6 +275,10 @@
     "defaultMessage": "Email",
     "description": "managereq-change-email"
   },
+  "Au3Nvj": {
+    "defaultMessage": "Resources",
+    "description": "project-list-resources"
+  },
   "AuAPIM": {
     "defaultMessage": "Sending invitations for a research project",
     "description": "memberships-modaltitle-research"
@@ -346,6 +358,10 @@
   "D14k5Q": {
     "defaultMessage": "Public key added",
     "description": "users-table-general-keyadd"
+  },
+  "D1wDM8": {
+    "defaultMessage": "Select",
+    "description": "project-list-choose"
   },
   "D42QSA": {
     "defaultMessage": "Denied",
@@ -655,6 +671,10 @@
     "defaultMessage": "Public key successfully deleted",
     "description": "publickeys-list-toast-ok"
   },
+  "PLases": {
+    "defaultMessage": "Search",
+    "description": "project-list-find"
+  },
   "Pxvi7f": {
     "defaultMessage": "My requests",
     "description": "linktitle-myrequests"
@@ -702,6 +722,10 @@
   "Rpn5b/": {
     "defaultMessage": "Search",
     "description": "userlist-placeholder-search"
+  },
+  "RsRJka": {
+    "defaultMessage": "State",
+    "description": "project-list-state"
   },
   "S8xrMw": {
     "defaultMessage": "Adding collaborators to an internal project",
@@ -827,6 +851,10 @@
     "defaultMessage": "Delete project",
     "description": "managereq-change-buttonlabel-delete-1"
   },
+  "YNdSpQ": {
+    "defaultMessage": "Duration",
+    "description": "project-list-duration"
+  },
   "YPlMrW": {
     "defaultMessage": "Name",
     "description": "popover-projectinfo-name"
@@ -858,6 +886,10 @@
   "bAhHuU": {
     "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
     "description": "newrequest-thesis-explanation"
+  },
+  "bDGuzC": {
+    "defaultMessage": "No active projects",
+    "description": "project-list-emptytable-no-active"
   },
   "bMQrfs": {
     "defaultMessage": "Type:",
@@ -946,6 +978,10 @@
   "fQ6rYw": {
     "defaultMessage": "Are you sure you want to remove the selected collaborators?",
     "description": "memberships-modalmsg-signoff"
+  },
+  "fqbo7A": {
+    "defaultMessage": "projects",
+    "description": "project-list-pagination"
   },
   "fxdgEp": {
     "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
@@ -1090,6 +1126,10 @@
   "lUUVcW": {
     "defaultMessage": "Submit request",
     "description": "newrequest-general-button-label"
+  },
+  "lVIjAF": {
+    "defaultMessage": "Persons",
+    "description": "project-list-persons"
   },
   "lZilmr": {
     "defaultMessage": "Change",
@@ -1358,5 +1398,9 @@
   "ziaUjB": {
     "defaultMessage": "You do not have any projects registered in the CroRIS system",
     "description": "newrequest-no-researchproject"
+  },
+  "zz+Gai": {
+    "defaultMessage": "Type",
+    "description": "project-list-type"
   }
 }

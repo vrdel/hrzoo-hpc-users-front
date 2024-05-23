@@ -27,7 +27,7 @@ import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import _ from "lodash";
 
 
@@ -66,6 +66,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
+  const intl = useIntl()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -195,19 +196,34 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   #
                 </th>
                 <th className="fw-normal" style={{width: '92px'}}>
-                  Stanje
+                  <FormattedMessage
+                    defaultMessage="Stanje"
+                    description="project-list-state"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '650px'}}>
-                  Naziv, institucija, šifra i dodijeljeni resursi
+                  <FormattedMessage
+                    defaultMessage="Naziv, institucija, šifra i dodijeljeni resursi"
+                    description="project-list-nameinstidres"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '126px'}}>
-                  Tip
+                  <FormattedMessage
+                    defaultMessage="Tip"
+                    description="project-list-type"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '120px'}}>
-                  Trajanje
+                  <FormattedMessage
+                    defaultMessage="Trajanje"
+                    description="project-list-duration"
+                  />
                 </th>
                 <th className="fw-normal" style={{width: '380px'}}>
-                  Osobe
+                  <FormattedMessage
+                    defaultMessage="Osobe"
+                    description="project-list-persons"
+                  />
                 </th>
               </tr>
             </thead>
@@ -224,7 +240,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                       <CustomReactSelect
                         forwardedRef={ field.ref }
                         controlWidth="92px"
-                        placeholder="Odaberi"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Odaberi",
+                          description: "project-list-choose"
+                        })}
                         customPadding="0.2rem"
                         options={ optionsStatesProjects }
                         onChange={ e => setValue("searchState", e.value) }
@@ -241,7 +260,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         render={ ({ field }) =>
                           <Input
                             { ...field }
-                            placeholder="Traži"
+                            placeholder={intl.formatMessage({
+                              defaultMessage: "Traži",
+                              description: "project-list-find"
+                            })}
                             className="form-control"
                             style={{ fontSize: "0.83rem" }}
                           />
@@ -256,7 +278,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                           <CustomReactSelect
                             forwardedRef={ field.ref }
                             customPadding="0.2rem"
-                            placeholder="Resursi"
+                            placeholder={intl.formatMessage({
+                              defaultMessage: "Resursi",
+                              description: "project-list-resources"
+                            })}
                             isMulti={true}
                             fontSize="0.83rem"
                             closeMenuOnSelect={false}
@@ -279,7 +304,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         forwardedRef={ field.ref }
                         controlWidth="126px"
                         customPadding="0.2rem"
-                        placeholder="Odaberi"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Odaberi",
+                          description: "project-list-choose"
+                        })}
                         options={ optionsTypes }
                         onChange={ e => setValue("searchType", e.value) }
                       />
@@ -293,7 +321,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "project-list-find"
+                        })}
                         className="form-control"
                         style={{ fontSize: "0.83rem" }}
                       />
@@ -307,7 +338,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "project-list-find"
+                        })}
                         className="form-control"
                         style={{ fontSize: "0.83rem" }}
                       />
@@ -427,9 +461,15 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                   )
                 :
                   data.length > 0 && isSearched ?
-                    <EmptyTable colspan="7" msg="Nijedan projekt ne zadovoljava pretragu" />
+                    <EmptyTable colspan="7" msg={intl.formatMessage({
+                      defaultMessage: "Nijedan projekt ne zadovoljava pretragu",
+                      description: "project-list-emptytable-noresults"
+                    })}/>
                   :
-                    <EmptyTable colspan="7" msg="Nema aktivnih projekata" />
+                    <EmptyTable colspan="7" msg={intl.formatMessage({
+                      defaultMessage: "Nema aktivnih projekata",
+                      description: "project-list-emptytable-no-active"
+                    })}/>
               }
             </tbody>
           </Table>
@@ -443,7 +483,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
         pageCount={ paginationHelp.pageCount }
         start={ paginationHelp.start }
         choices={ paginationHelp.choices }
-        resource_name="projekata"
+        resource_name={intl.formatMessage({
+          defaultMessage: "projekata",
+          description: "project-list-pagination"
+        })}
       />
     </>
   )
@@ -484,19 +527,34 @@ export const ProjectsList = () => {
               #
             </th>
             <th className="fw-normal" style={{width: '92px'}}>
-              Stanje
+              <FormattedMessage
+                defaultMessage="Stanje"
+                description="project-list-state"
+              />
             </th>
             <th className="fw-normal" style={{width: '650px'}}>
-              Naziv, institucija, šifra i dodijeljeni resursi
+              <FormattedMessage
+                defaultMessage="Naziv, institucija, šifra i dodijeljeni resursi"
+                description="project-list-nameinstidres"
+              />
             </th>
             <th className="fw-normal" style={{width: '126px'}}>
-              Tip
+              <FormattedMessage
+                defaultMessage="Tip"
+                description="project-list-type"
+              />
             </th>
             <th className="fw-normal" style={{width: '120px'}}>
-              Trajanje
+              <FormattedMessage
+                defaultMessage="Trajanje"
+                description="project-list-duration"
+              />
             </th>
             <th className="fw-normal" style={{width: '380px'}}>
-              Osobe
+              <FormattedMessage
+                defaultMessage="Osobe"
+                description="project-list-persons"
+              />
             </th>
           </tr>
         </thead>
