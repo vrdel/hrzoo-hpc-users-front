@@ -388,7 +388,17 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       && (!data['staff_requestResourceType'] || data['staff_requestResourceType'].length === 0)) {
       toast.error(
         <span className="font-monospace text-dark">
-          {`Pri odobravanju ${manageProject ? 'projekta' : 'zahtjeva'} morate se izjasniti o dodijeljenom tipu resursa.`}
+          {
+            manageProject
+              ? intl.formatMessage({
+                defaultMessage: "Pri odobravanju projekta morate se izjasniti o dodijeljenom tipu resursa.",
+                description: "managereq-change-toast-msg1"
+              })
+              : intl.formatMessage({
+                defaultMessage: "Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.",
+                description: "managereq-change-toast-msg2"
+              })
+          }
         </span>, {
           autoClose: false,
           toastId: 'manreq-change-no-reqtype',
@@ -400,7 +410,19 @@ export const ManageRequestsChange = ({manageProject=false}) => {
     if (whichState === 'deny' && !data['staff_comment']) {
       toast.error(
         <span className="font-monospace text-dark">
-          {`Pri odbijanju ${manageProject ? 'projekta' : 'zahtjeva'} morate se izjasniti o razlogu.`}
+          {
+            manageProject
+              ?
+                intl.formatMessage({
+                  defaultMessage: "Pri odbijanju projekta morate se izjasniti o razlogu.",
+                  description: "managereq-change-toast-msg3"
+                })
+              :
+                intl.formatMessage({
+                  defaultMessage: "Pri odbijanju zahtjeva morate se izjasniti o razlogu.",
+                  description: "managereq-change-toast-msg4"
+                })
+          }
         </span>, {
           autoClose: false,
           toastId: 'manreq-change-no-reqcomment',
@@ -410,7 +432,19 @@ export const ManageRequestsChange = ({manageProject=false}) => {
     }
 
     setAreYouSureModal(!areYouSureModal)
-    setModalTitle(`${manageProject ? 'Obrada projekta' : 'Obrada korisničkog zahtjeva'}`)
+    setModalTitle(
+      `${manageProject ?
+          intl.formatMessage({
+            defaultMessage: 'Obrada projekta',
+            description: "managereq-change-modal-title-1"
+          })
+        :
+          intl.formatMessage({
+            defaultMessage: 'Obrada korisničkog zahtjeva',
+            description: "managereq-change-modal-title-2"
+          })
+      }`
+    )
     setModalMsg(`Da li ste sigurni da želite mijenjati ${manageProject ? 'projekt' : 'korisnički zahtjev?'}`)
     setOnYesCall('dochangereq')
     setOnYesCallArg(data)
@@ -684,7 +718,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
         <p className="fs-5">
           <FormattedMessage
             defaultMessage="Odbijen"
-            description="managareq-change-deny"
+            description="managereq-change-deny"
           />
         </p>
         <Button

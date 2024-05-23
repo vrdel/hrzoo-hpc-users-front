@@ -111,6 +111,10 @@
     "defaultMessage": "Tip resursa:",
     "description": "resourcefields-type"
   },
+  "3afKCi": {
+    "defaultMessage": "Obrada korisničkog zahtjeva",
+    "description": "managereq-change-modal-title-2"
+  },
   "3xP0LN": {
     "defaultMessage": "Greška prilikom kopiranja korisničkog imena u međuspremnik",
     "description": "statusinfo-clipboard-fail"
@@ -195,6 +199,10 @@
     "defaultMessage": "Organizacijska jedinica",
     "description": "managereq-change-orgunit"
   },
+  "8vx/9w": {
+    "defaultMessage": "Obrada projekta",
+    "description": "managereq-change-modal-title-1"
+  },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
@@ -214,6 +222,10 @@
   "9xTRRJ": {
     "defaultMessage": "Matični broj znanstvenika (MBZ) nije poznat",
     "description": "newrequest-reason-mbzunk"
+  },
+  "A5yn+p": {
+    "defaultMessage": "Pri odobravanju projekta morate se izjasniti o dodijeljenom tipu resursa.",
+    "description": "managereq-change-toast-msg1"
   },
   "A9dlqP": {
     "defaultMessage": "Organizacijska jedinica",
@@ -314,6 +326,10 @@
   "D14k5Q": {
     "defaultMessage": "Dodan javni ključ",
     "description": "users-table-general-keyadd"
+  },
+  "D42QSA": {
+    "defaultMessage": "Odbijen",
+    "description": "managereq-change-deny"
   },
   "D7Y1AH": {
     "defaultMessage": "Šalji email voditelju",
@@ -510,6 +526,10 @@
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
     "description": "loginofficial-termsstring"
+  },
+  "LSB0GB": {
+    "defaultMessage": "Pri odbijanju projekta morate se izjasniti o razlogu.",
+    "description": "managereq-change-toast-msg3"
   },
   "Lb7qIs": {
     "defaultMessage": "Da",
@@ -742,6 +762,10 @@
   "Wt4fcg": {
     "defaultMessage": "Prezime",
     "description": "memberships-user-lastname"
+  },
+  "WwITbA": {
+    "defaultMessage": "Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.",
+    "description": "managereq-change-toast-msg2"
   },
   "XZis0B": {
     "defaultMessage": "Javni ključ uspješno dodan",
@@ -1043,6 +1067,10 @@
     "defaultMessage": "Da li ste sigurni da želite brisati korisnički zahtjev?",
     "description": "managereq-change-modaldelete-msg"
   },
+  "o7+x5+": {
+    "defaultMessage": "Pri odbijanju zahtjeva morate se izjasniti o razlogu.",
+    "description": "managereq-change-toast-msg4"
+  },
   "oRqoRe": {
     "defaultMessage": "Napredno računanje",
     "description": "loginpriv-servicename"
@@ -1054,10 +1082,6 @@
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
     "description": "newrequest-modalmsg"
-  },
-  "p4bsWB": {
-    "defaultMessage": "Odbijen",
-    "description": "managareq-change-deny"
   },
   "p6s1xb": {
     "defaultMessage": "Naziv ustanove",

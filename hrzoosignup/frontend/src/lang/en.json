@@ -52,7 +52,7 @@
     "description": "generalproject-persons"
   },
   "1KSfnD": {
-    "defaultMessage": "Choose",
+    "defaultMessage": "Select",
     "description": "managereq-change-choose"
   },
   "1YGy6A": {
@@ -88,7 +88,7 @@
     "description": "users-table-general-role"
   },
   "2hvgDl": {
-    "defaultMessage": "Choose",
+    "defaultMessage": "Select",
     "description": "managereq-placeholder-choose"
   },
   "2nzsgl": {
@@ -110,6 +110,10 @@
   "3Jae8P": {
     "defaultMessage": "Resource type:",
     "description": "resourcefields-type"
+  },
+  "3afKCi": {
+    "defaultMessage": "Processing of user request",
+    "description": "managereq-change-modal-title-2"
   },
   "3xP0LN": {
     "defaultMessage": "Error while copying the username to the clipboard",
@@ -195,6 +199,10 @@
     "defaultMessage": "Organisational unit",
     "description": "managereq-change-orgunit"
   },
+  "8vx/9w": {
+    "defaultMessage": "Processing of project",
+    "description": "managereq-change-modal-title-1"
+  },
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
@@ -214,6 +222,10 @@
   "9xTRRJ": {
     "defaultMessage": "The scientist's personal identification number (MBZ) is unknown.",
     "description": "newrequest-reason-mbzunk"
+  },
+  "A5yn+p": {
+    "defaultMessage": "When approving the project, you must specify your allocation of the assigned resource type.",
+    "description": "managereq-change-toast-msg1"
   },
   "A9dlqP": {
     "defaultMessage": "Organisational unit",
@@ -315,6 +327,10 @@
     "defaultMessage": "Public key added",
     "description": "users-table-general-keyadd"
   },
+  "D42QSA": {
+    "defaultMessage": "Denied",
+    "description": "managereq-change-deny"
+  },
   "D7Y1AH": {
     "defaultMessage": "Send email to the manager",
     "description": "managereq-change-email-manager"
@@ -368,7 +384,7 @@
     "description": "userlist-column-header-4"
   },
   "FQLopu": {
-    "defaultMessage": "Choose",
+    "defaultMessage": "Select",
     "description": "newrequest-select-placeholder"
   },
   "FV9iTN": {
@@ -432,7 +448,7 @@
     "description": "loginpriv-username"
   },
   "HiPPun": {
-    "defaultMessage": "Choose",
+    "defaultMessage": "Select",
     "description": "sciencesoftware-placeholder"
   },
   "HpiAmO": {
@@ -511,12 +527,16 @@
     "defaultMessage": "By logging into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
   },
+  "LSB0GB": {
+    "defaultMessage": "When denying the project, you must state the reason.",
+    "description": "managereq-change-toast-msg3"
+  },
   "Lb7qIs": {
     "defaultMessage": "Yes",
     "description": "users-table-general-isadded"
   },
   "LiONnn": {
-    "defaultMessage": "Choose",
+    "defaultMessage": "Select",
     "description": "resourcefields-placeholder"
   },
   "M8y/Pt": {
@@ -743,6 +763,10 @@
     "defaultMessage": "Last name",
     "description": "memberships-user-lastname"
   },
+  "WwITbA": {
+    "defaultMessage": "When approving the request, you must specify the type of resource allocated.",
+    "description": "managereq-change-toast-msg2"
+  },
   "XZis0B": {
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
@@ -792,7 +816,7 @@
     "description": "managereq-change-extra-comment"
   },
   "cNIEbm": {
-    "defaultMessage": "Choose",
+    "defaultMessage": "Select",
     "description": "researchproj-button-label"
   },
   "cQTqIM": {
@@ -808,7 +832,7 @@
     "description": "publickeys-add-remarktitle"
   },
   "dGEddM": {
-    "defaultMessage": "Choose",
+    "defaultMessage": "Select",
     "description": "userlist-placeholder-choose"
   },
   "dR+vCm": {
@@ -900,7 +924,7 @@
     "description": "navlinks-software"
   },
   "h5uXWs": {
-    "defaultMessage": "Time extension",
+    "defaultMessage": "Extended",
     "description": "managereq-change-extend"
   },
   "h78Eiu": {
@@ -1043,6 +1067,10 @@
     "defaultMessage": "Are you sure you want to delete user's request?",
     "description": "managereq-change-modaldelete-msg"
   },
+  "o7+x5+": {
+    "defaultMessage": "When denying the request, you must provide a reason.",
+    "description": "managereq-change-toast-msg4"
+  },
   "oRqoRe": {
     "defaultMessage": "Advanced Computing",
     "description": "loginpriv-servicename"
@@ -1054,10 +1082,6 @@
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit a new request?",
     "description": "newrequest-modalmsg"
-  },
-  "p4bsWB": {
-    "defaultMessage": "Denied",
-    "description": "managareq-change-deny"
   },
   "p6s1xb": {
     "defaultMessage": "Name of the Institution",
