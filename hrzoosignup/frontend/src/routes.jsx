@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
   Routes, Route, BrowserRouter
 } from 'react-router-dom';
@@ -34,6 +34,8 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { UsersList, UsersInactiveList } from 'Pages/users/list';
 import UserChange from 'Pages/users/change';
 import { ProjectsList } from 'Pages/projects/list';
+
+
 
 
 function getAndSetReferrer() {
@@ -72,6 +74,7 @@ const BaseRoutes = () => {
     queryKey: ['sessionactive'],
     queryFn: isActiveSession,
   })
+
 
   getAndSetReferrer();
 
