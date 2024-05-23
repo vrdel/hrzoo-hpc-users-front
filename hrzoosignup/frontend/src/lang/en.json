@@ -135,6 +135,10 @@
     "defaultMessage": "Add public key",
     "description": "publickeys-list-nokeys"
   },
+  "4jkyMa": {
+    "defaultMessage": "Request expired",
+    "description": "statestring-expire"
+  },
   "4wuDbg": {
     "defaultMessage": "leader",
     "description": "userinfo-croris-badgelead"
@@ -146,6 +150,10 @@
   "5HA1Kv": {
     "defaultMessage": "New request on behalf of internal project",
     "description": "linktitle-newrequest-internal"
+  },
+  "5Vrpin": {
+    "defaultMessage": "Request approved",
+    "description": "statestring-approve"
   },
   "5VvPbt": {
     "defaultMessage": "AAI identifier",
@@ -162,6 +170,10 @@
   "6XfV4P": {
     "defaultMessage": "Institution",
     "description": "userlist-column-header-2"
+  },
+  "6a/Ajm": {
+    "defaultMessage": "Processing",
+    "description": "stateshort-submit"
   },
   "6doVi6": {
     "defaultMessage": "Request state",
@@ -270,6 +282,10 @@
   "B8Lcj2": {
     "defaultMessage": "Project identifier copied to clipboard",
     "description": "memberships-clipboard-ok"
+  },
+  "BALnqr": {
+    "defaultMessage": "Editing",
+    "description": "pagetitle-replace"
   },
   "BC++9m": {
     "defaultMessage": "It was not possible to send the invitations: {br} { error }",
@@ -383,6 +399,10 @@
     "defaultMessage": "First name",
     "description": "managereq-change-firstname"
   },
+  "Egkdj/": {
+    "defaultMessage": "Approved",
+    "description": "stateshort-approved"
+  },
   "FPhsMI": {
     "defaultMessage": "Approved:",
     "description": "memberships-project-approved"
@@ -426,6 +446,10 @@
   "G6zqS3": {
     "defaultMessage": "Affiliation",
     "description": "userins-affiliation"
+  },
+  "GF7GOs": {
+    "defaultMessage": "Extension",
+    "description": "statestringuser-extend"
   },
   "GMPmU7": {
     "defaultMessage": "Active {br} You are signed into at least one active project",
@@ -483,6 +507,10 @@
     "defaultMessage": "Project identifier:",
     "description": "researchselected-projectid"
   },
+  "Ikm5Es": {
+    "defaultMessage": "Expired",
+    "description": "stateshort-expire"
+  },
   "Im/hLO": {
     "defaultMessage": "Expired",
     "description": "managereq-change-expire"
@@ -535,6 +563,10 @@
     "defaultMessage": "By logging into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
   },
+  "LBM528": {
+    "defaultMessage": "Expired",
+    "description": "statestringuser-expire"
+  },
   "LSB0GB": {
     "defaultMessage": "When denying the project, you must state the reason.",
     "description": "managereq-change-toast-msg3"
@@ -574,6 +606,10 @@
   "MmESXZ": {
     "defaultMessage": "Average number of graphics processors per job:",
     "description": "resourcefields-ngpu"
+  },
+  "Ms6wjU": {
+    "defaultMessage": "Request is submitted and waiting to be processed",
+    "description": "statestring-submit"
   },
   "NF44j4": {
     "defaultMessage": "Memberships",
@@ -702,6 +738,10 @@
   "TH7L+k": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
+  },
+  "TYEFLG": {
+    "defaultMessage": "Denied",
+    "description": "stateshort-deny"
   },
   "TbVb2h": {
     "defaultMessage": "Leader",
@@ -944,7 +984,7 @@
     "description": "navlinks-software"
   },
   "h5uXWs": {
-    "defaultMessage": "Extended",
+    "defaultMessage": "Extension",
     "description": "managereq-change-extend"
   },
   "h78Eiu": {
@@ -998,6 +1038,10 @@
   "izNmIO": {
     "defaultMessage": "The project is not active, so it is not possible to add collaborators",
     "description": "userstable-general-toast-invite-fail-2"
+  },
+  "j/8HUp": {
+    "defaultMessage": "Request is pending extension",
+    "description": "statestring-extend"
   },
   "j6QjlA": {
     "defaultMessage": "State:",
@@ -1066,6 +1110,10 @@
   "mHHLJK": {
     "defaultMessage": "Total amount of RAM (GB):",
     "description": "cloudfields-nram"
+  },
+  "mIOI8m": {
+    "defaultMessage": "Extension",
+    "description": "stateshort-extend"
   },
   "mNOzeP": {
     "defaultMessage": "The public key could not be deleted: { error}",
@@ -1175,6 +1223,10 @@
     "defaultMessage": "Total amount of storage space required for the project (GB):",
     "description": "resourcefields-disk"
   },
+  "srmM1B": {
+    "defaultMessage": "Request has been submitted and is awaiting processing",
+    "description": "statestringuser-submit"
+  },
   "syIEnC": {
     "defaultMessage": "requests",
     "description": "managereq-pagination"
@@ -1182,6 +1234,10 @@
   "t1IsHN": {
     "defaultMessage": "Institute:",
     "description": "generalproject-institute"
+  },
+  "tC8Khg": {
+    "defaultMessage": "Request is denied",
+    "description": "statestring-deny"
   },
   "tMWDpG": {
     "defaultMessage": "Leader",
@@ -1274,6 +1330,10 @@
   "yQX1Hw": {
     "defaultMessage": "users",
     "description": "userlist-pagination"
+  },
+  "ygZapL": {
+    "defaultMessage": "Active",
+    "description": "statestringuser-approve"
   },
   "ysQjtn": {
     "defaultMessage": "CroRIS registration",

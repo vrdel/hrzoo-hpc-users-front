@@ -530,7 +530,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
     return (
       <>
         <Row>
-          <PageTitle pageTitle={pageTitle} isEditing={!disabledFields}/>
+          <PageTitle pageTitle={pageTitle} isEditing={!disabledFields} intl={intl}/>
         </Row>
         <ModalAreYouSure
           isOpen={areYouSureModal}
@@ -927,9 +927,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             </p>&nbsp;
             <p>
               <FormattedMessage
-                defaultMessage="Inicijalno stanje zahtjeva: "
+                defaultMessage="Inicijalno stanje zahtjeva:"
                 description="managereq-change-remark-initialstate"
               />
+              {' '}
               <span className="text-decoration-underline">
                 { StateShortString(initialProjectState) }
               </span>

@@ -7,6 +7,7 @@ import {
   faTimeline,
   faCalendarXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import { FormattedMessage } from 'react-intl'
 
 
 export function StateIcons(state_name, small=false) {
@@ -28,11 +29,26 @@ export function StateIcons(state_name, small=false) {
 
 export function StateString(state_name) {
   let state2string = {
-    'submit': 'Zahtjev je podnesen i čeka na obradu',
-    'approve': 'Zahtjev je odobren',
-    'deny': 'Zahtjev je odbijen',
-    'expire': 'Zahtjev je istekao',
-    'extend': 'Zahtjev čeka na produljenje'
+    'submit': <FormattedMessage
+      defaultMessage="Zahtjev je podnesen i čeka na obradu"
+      description="statestring-submit"
+    />,
+    'approve': <FormattedMessage
+      defaultMessage="Zahtjev je odobren"
+      description="statestring-approve"
+    />,
+    'deny': <FormattedMessage
+      defaultMessage="Zahtjev je odbijen"
+      description="statestring-deny"
+    />,
+    'expire': <FormattedMessage
+      defaultMessage="Zahtjev je istekao"
+      description="statestring-expire"
+    />,
+    'extend': <FormattedMessage
+      defaultMessage="Zahtjev čeka na produljenje"
+      description="statestring-extend"
+    />
   }
 
   return state2string[state_name]
@@ -40,10 +56,22 @@ export function StateString(state_name) {
 
 export function StateStringUser(state_name) {
   let state2string = {
-    'submit': 'Zahtjev je podnesen i čeka na obradu',
-    'approve': 'Aktivan',
-    'expire': 'Istekao',
-    'extend': 'Produljen'
+    'submit': <FormattedMessage
+      defaultMessage="Zahtjev je podnesen i čeka na obradu"
+      description="statestringuser-submit"
+    />,
+    'approve': <FormattedMessage
+      defaultMessage="Aktivan"
+      description="statestringuser-approve"
+    />,
+    'expire': <FormattedMessage
+      defaultMessage="Istekao"
+      description="statestringuser-expire"
+    />,
+    'extend': <FormattedMessage
+      defaultMessage="Produljen"
+      description="statestringuser-extend"
+    />
   }
 
   return state2string[state_name]
@@ -51,11 +79,26 @@ export function StateStringUser(state_name) {
 
 export function StateShortString(state_name) {
   let state2string = {
-    'submit': 'Obrada',
-    'approve': 'Odobren',
-    'deny': 'Odbijen',
-    'expire': 'Istekao',
-    'extend': 'Produljenje',
+    'submit': <FormattedMessage
+      defaultMessage="Obrada"
+      description="stateshort-submit"
+    />,
+    'approve': <FormattedMessage
+      defaultMessage="Odobren"
+      description="stateshort-approved"
+    />,
+    'deny': <FormattedMessage
+      defaultMessage="Odbijen"
+      description="stateshort-deny"
+    />,
+    'expire': <FormattedMessage
+      defaultMessage="Istekao"
+      description="stateshort-expire"
+    />,
+    'extend': <FormattedMessage
+      defaultMessage="Produljenje"
+      description="stateshort-extend"
+    />,
   }
 
   return state2string[state_name]

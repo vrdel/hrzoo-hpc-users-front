@@ -1,9 +1,14 @@
 import React from 'react'
 import { Col } from 'reactstrap';
 
-export const PageTitle = ({pageTitle, isEditing=false, children}) => {
-  if (isEditing)
-    pageTitle = pageTitle.replace(/\w* /, 'Uređivanje ')
+export const PageTitle = ({pageTitle, isEditing=false, intl=undefined, children}) => {
+  if (isEditing && pageTitle && intl) {
+    let toReplace = intl.formatMessage({
+      defaultMessage: "Uređivanje",
+      description: "pagetitle-replace"
+    })
+    pageTitle = pageTitle.replace(/\w* /, `${toReplace} `)
+  }
 
   return (
     <Col className={isEditing

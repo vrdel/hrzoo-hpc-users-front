@@ -135,6 +135,10 @@
     "defaultMessage": "Nemate javnih ključeva dodanih",
     "description": "publickeys-list-nokeys"
   },
+  "4jkyMa": {
+    "defaultMessage": "Zahtjev je istekao",
+    "description": "statestring-expire"
+  },
   "4wuDbg": {
     "defaultMessage": "voditelj",
     "description": "userinfo-croris-badgelead"
@@ -146,6 +150,10 @@
   "5HA1Kv": {
     "defaultMessage": "Novi zahtjev temeljem internog projekta",
     "description": "linktitle-newrequest-internal"
+  },
+  "5Vrpin": {
+    "defaultMessage": "Zahtjev je odobren",
+    "description": "statestring-approve"
   },
   "5VvPbt": {
     "defaultMessage": "AAI oznaka",
@@ -162,6 +170,10 @@
   "6XfV4P": {
     "defaultMessage": "Institucija",
     "description": "userlist-column-header-2"
+  },
+  "6a/Ajm": {
+    "defaultMessage": "Obrada",
+    "description": "stateshort-submit"
   },
   "6doVi6": {
     "defaultMessage": "Stanje zahtjeva",
@@ -270,6 +282,10 @@
   "B8Lcj2": {
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
     "description": "memberships-clipboard-ok"
+  },
+  "BALnqr": {
+    "defaultMessage": "Uređivanje",
+    "description": "pagetitle-replace"
   },
   "BC++9m": {
     "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
@@ -383,6 +399,10 @@
     "defaultMessage": "Ime",
     "description": "managereq-change-firstname"
   },
+  "Egkdj/": {
+    "defaultMessage": "Odobren",
+    "description": "stateshort-approved"
+  },
   "FPhsMI": {
     "defaultMessage": "Odobren:",
     "description": "memberships-project-approved"
@@ -426,6 +446,10 @@
   "G6zqS3": {
     "defaultMessage": "Povezanost",
     "description": "userins-affiliation"
+  },
+  "GF7GOs": {
+    "defaultMessage": "Produljen",
+    "description": "statestringuser-extend"
   },
   "GMPmU7": {
     "defaultMessage": "Aktivan {br} Prijavljeni ste na bar jedan aktivan projekt",
@@ -483,6 +507,10 @@
     "defaultMessage": "Šifra:",
     "description": "researchselected-projectid"
   },
+  "Ikm5Es": {
+    "defaultMessage": "Istekao",
+    "description": "stateshort-expire"
+  },
   "Im/hLO": {
     "defaultMessage": "Istekao",
     "description": "managereq-change-expire"
@@ -535,6 +563,10 @@
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
     "description": "loginofficial-termsstring"
   },
+  "LBM528": {
+    "defaultMessage": "Istekao",
+    "description": "statestringuser-expire"
+  },
   "LSB0GB": {
     "defaultMessage": "Pri odbijanju projekta morate se izjasniti o razlogu.",
     "description": "managereq-change-toast-msg3"
@@ -574,6 +606,10 @@
   "MmESXZ": {
     "defaultMessage": "Prosječan broj grafičkih procesora po poslu:",
     "description": "resourcefields-ngpu"
+  },
+  "Ms6wjU": {
+    "defaultMessage": "Zahtjev je podnesen i čeka na obradu",
+    "description": "statestring-submit"
   },
   "NF44j4": {
     "defaultMessage": "Članstva",
@@ -702,6 +738,10 @@
   "TH7L+k": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
+  },
+  "TYEFLG": {
+    "defaultMessage": "Odbijen",
+    "description": "stateshort-deny"
   },
   "TbVb2h": {
     "defaultMessage": "Voditelj",
@@ -999,6 +1039,10 @@
     "defaultMessage": "Projekt nije aktivan pa nije moguće dodati suradnike",
     "description": "userstable-general-toast-invite-fail-2"
   },
+  "j/8HUp": {
+    "defaultMessage": "Zahtjev čeka na produljenje",
+    "description": "statestring-extend"
+  },
   "j6QjlA": {
     "defaultMessage": "Stanje:",
     "description": "memberships-project-state"
@@ -1066,6 +1110,10 @@
   "mHHLJK": {
     "defaultMessage": "Ukupna količina radne memorije (GB):",
     "description": "cloudfields-nram"
+  },
+  "mIOI8m": {
+    "defaultMessage": "Produljenje",
+    "description": "stateshort-extend"
   },
   "mNOzeP": {
     "defaultMessage": "Javni ključ nije bilo moguće izbrisati: { error}",
@@ -1175,6 +1223,10 @@
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
     "description": "resourcefields-disk"
   },
+  "srmM1B": {
+    "defaultMessage": "Zahtjev je podnesen i čeka na obradu",
+    "description": "statestringuser-submit"
+  },
   "syIEnC": {
     "defaultMessage": "zahtjeva",
     "description": "managereq-pagination"
@@ -1182,6 +1234,10 @@
   "t1IsHN": {
     "defaultMessage": "Ustanova:",
     "description": "generalproject-institute"
+  },
+  "tC8Khg": {
+    "defaultMessage": "Zahtjev je odbijen",
+    "description": "statestring-deny"
   },
   "tMWDpG": {
     "defaultMessage": "Voditelj",
@@ -1274,6 +1330,10 @@
   "yQX1Hw": {
     "defaultMessage": "korisnika",
     "description": "userlist-pagination"
+  },
+  "ygZapL": {
+    "defaultMessage": "Aktivan",
+    "description": "statestringuser-approve"
   },
   "ysQjtn": {
     "defaultMessage": "CroRIS registracija",

@@ -1,31 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { RequestHorizontalRulerRed } from '../../components/RequestHorizontalRuler';
-import GeneralFields from '../../components/fields-request/GeneralFields';
+import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
+import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Label, Row, Button, Form } from 'reactstrap';
-import { PageTitle } from '../../components/PageTitle';
-import { fetchNrSpecificProject, changeProject } from '../../api/projects';
+import { Col, Row, Form } from 'reactstrap';
+import { PageTitle } from 'Components/PageTitle';
+import { fetchNrSpecificProject, changeProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import ScientificSoftware from '../../components/fields-request/ScientificSoftware';
+import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   useForm,
-  useFormContext,
   FormProvider,
-  Controller,
 } from "react-hook-form";
-import ResourceFields from '../../components/fields-request/ResourceFields';
-import { StateShortString } from '../../config/map-states';
-import { CustomReactSelect } from '../../components/CustomReactSelect';
+import ResourceFields from 'Components/fields-request/ResourceFields';
+import { CustomReactSelect } from 'Components/CustomReactSelect';
 import { toast } from 'react-toastify'
-import ModalAreYouSure from '../../components/ModalAreYouSure';
-import { RenderStateIcon } from '../../components/RenderState.jsx';
-import { url_ui_prefix } from '../../config/general';
-import { findTrueState } from '../../utils/reqstate';
-import { convertToEuropean, convertTimeToEuropean } from '../../utils/dates';
-import { defaultUnAuthnRedirect} from '../../config/default-redirect';
+import ModalAreYouSure from 'Components/ModalAreYouSure';
+import { RenderStateIcon } from 'Components/RenderState.jsx';
+import { url_ui_prefix } from 'Config/general';
+import { findTrueState } from 'Utils/reqstate';
+import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
+import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl } from 'react-intl'
-import { CroRisDescription } from '../../components/fields-request/GeneralFields';
+import { CroRisDescription } from 'Components/fields-request/GeneralFields';
 
 
 function setInitialState() {
@@ -45,9 +42,7 @@ function setInitialState() {
 export const MyRequestChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
-  const [commentDisabled, setCommentDisabled] = useState(undefined);
   const { projId } = useParams()
-  const [disabledFields, setDisabledFields] = useState(true)
   const [requestState, setRequestState] = useState(undefined)
   const intl = useIntl()
 
@@ -147,7 +142,6 @@ export const MyRequestChange = () => {
         let last = nrProject.staffcomment_set[lenPr - 1]
         rhfProps.setValue('staff_comment', last.comment)
       }
-      setCommentDisabled(true)
 
       let newState = setInitialState()
       newState[nrProject.state.name] = true,

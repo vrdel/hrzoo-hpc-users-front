@@ -109,7 +109,7 @@ export function LinkTitles(loc, intl) {
         description: 'linktitle-managerequests-change'
       },
       {identifier}
-    )
+    ).join(' ')
   }
 
   if (loc.includes('/projects/') && loc.match(/[%\w.\d-_]+$/)) {
@@ -128,7 +128,7 @@ export function LinkTitles(loc, intl) {
         description: 'linktitle-usersinactive-view'
       },
       {identifier}
-    )
+    ).join(' ')
   }
   else if (loc.includes('/users/') && loc.match(/[@%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%@\w.\d-_]+$/)
@@ -140,14 +140,14 @@ export function LinkTitles(loc, intl) {
           description: 'linktitle-usersactive-view'
         },
         {identifier}
-      )
+      ).join(' ')
   }
 
   if (loc.includes('/new-request/research-project/') && loc.match(/[0-9]$/))
       return intl.formatMessage({
         defaultMessage: 'Novi zahtjev temeljem odabranog istraživačkog projekta',
         description: 'linktitle-newreq-research'
-      })
+      }).join(' ')
 
   return url2linktitle[loc]
 }
