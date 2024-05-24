@@ -95,9 +95,9 @@ const getConfig = () => {
 
 const Root = () => {
 
-  useEffect(() => {
-    CookieConsent.run(getConfig());
-  }, []);
+  //useEffect(() => {
+    //CookieConsent.run(getConfig());
+  //}, []);
 
   return (
     <SharedData.Provider value={{
