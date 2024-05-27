@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Button,
 } from 'reactstrap';
+import Cookies from 'js-cookie';
 
 
 export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
@@ -9,10 +10,12 @@ export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
     if (locale === 'en') {
       setLocale('hr')
       localStorage.setItem('loginLocaleSet', 'en')
+      Cookies.set('hzsi-lang', 'hr')
     }
     else {
       setLocale('en')
       localStorage.setItem('loginLocaleSet', 'en')
+      Cookies.set('hzsi-lang', 'en')
     }
   }
 
@@ -34,10 +37,14 @@ export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
 
 export const LanguageButtonNav = ({locale, setLocale}) => {
   function alternateLocale() {
-    if (locale === 'en')
+    if (locale === 'en') {
       setLocale('hr')
-    else
+      Cookies.set('hzsi-lang', 'hr')
+    }
+    else {
       setLocale('en')
+      Cookies.set('hzsi-lang', 'en')
+    }
   }
 
   return (

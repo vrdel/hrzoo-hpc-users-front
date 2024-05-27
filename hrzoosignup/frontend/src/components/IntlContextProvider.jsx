@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { IntlProvider } from 'react-intl';
+import Cookies from 'js-cookie';
+
 
 export const IntlContext = React.createContext({
   locale: '',
   setLocale: () => {}
 });
-const defaultLocale = 'hr'
+
+
+const defaultLocale = Cookies.get('hzsi-lang') || 'hr'
 
 
 export const IntlContextProvider = ( {children} ) => {
