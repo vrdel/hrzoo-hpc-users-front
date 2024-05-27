@@ -63,11 +63,8 @@ const LoginPrivate = ({sessionData=undefined}) => {
     doLogin(data.username, data.password)
   }
 
-
-  console.log('VRDEL DEBUG', locale)
-
   return (
-    <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
+    <Container fluid className="image-background d-flex justify-content-center pt-4" style={{minHeight: '100vh'}}>
       <Row className="login-first-row">
         <Col>
           <Row style={{'height': '110px'}}/>

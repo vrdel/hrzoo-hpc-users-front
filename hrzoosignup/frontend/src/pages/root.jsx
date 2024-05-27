@@ -14,63 +14,25 @@ export const SharedData = React.createContext()
 
 const getConfig = () => {
   const config = {
-    // root: 'body',
-    // autoShow: true,
-    // disablePageInteraction: true,
-    // hideFromBots: true,
-    // mode: 'opt-in',
-    // revision: 0,
-
     cookie: {
       name: 'hzsi_cookie_consent',
-      // domain: location.hostname,
-      // path: '/',
-      // sameSite: "Lax",
-      // expiresAfterDays: 365,
     },
 
-    /**
-     * Callback functions
-     */
-    onFirstConsent: ({ cookie }) => {
-      console.log('onFirstConsent fired', cookie);
-    },
-
-    onConsent: ({ cookie }) => {
-      console.log('onConsent fired!', cookie);
-    },
-
-    onChange: ({ changedCategories, changedServices }) => {
-      console.log('onChange fired!', changedCategories, changedServices);
-    },
-
-    onModalReady: ({ modalName }) => {
-      console.log('ready:', modalName);
-    },
-
-    onModalShow: ({ modalName }) => {
-      console.log('visible:', modalName);
-    },
-
-    onModalHide: ({ modalName }) => {
-      console.log('hidden:', modalName);
-    },
-
-    // https://cookieconsent.orestbida.com/reference/configuration-reference.html#guioptions
     guiOptions: {
       consentModal: {
         layout: 'bar inline',
         position: 'top',
         equalWeightButtons: false,
-        flipButtons: true,
+        flipButtons: false,
       },
     },
 
     categories: {
       necessary: {
-        enabled: true, // this category is enabled by default
-        readOnly: true, // this category cannot be disabled
+        enabled: true,
+        readOnly: true,
       },
+      analytics: {}
     },
 
     language: {
@@ -78,11 +40,9 @@ const getConfig = () => {
       translations: {
         en: {
           consentModal: {
-            title: 'Cookie are used',
             description:
-              'Web application uses cookies',
-            acceptAllBtn: 'Accept all',
-            acceptNecessaryBtn: 'Reject all',
+              'Web application use cookies to remember your language preferences and to manage your session for a seamless experience. By continuing to use our application, you accept our <a href="https://www.srce.unizg.hr/en/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>',
+            acceptAllBtn: 'Accept',
           },
         },
       },
@@ -95,9 +55,9 @@ const getConfig = () => {
 
 const Root = () => {
 
-  //useEffect(() => {
-    //CookieConsent.run(getConfig());
-  //}, []);
+  useEffect(() => {
+    CookieConsent.run(getConfig());
+  }, []);
 
   return (
     <SharedData.Provider value={{
