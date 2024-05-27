@@ -9,7 +9,15 @@ export const IntlContext = React.createContext({
 });
 
 
-const defaultLocale = Cookies.get('hzsi-lang') || 'hr'
+function extractCookieLang() {
+  let cookieLang = Cookies.get('hzsi-lang')
+
+  if (cookieLang && ['en', 'hr'].indexOf(cookieLang) !== -1)
+    return cookieLang
+  else
+    return 'hr'
+}
+const defaultLocale = extractCookieLang()
 
 
 export const IntlContextProvider = ( {children} ) => {
