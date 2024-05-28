@@ -147,7 +147,7 @@ export function LinkTitles(loc, intl) {
       return intl.formatMessage({
         defaultMessage: 'Novi zahtjev temeljem odabranog istraživačkog projekta',
         description: 'linktitle-newreq-research'
-      }).join(' ')
+      })
 
   return url2linktitle[loc]
 }
