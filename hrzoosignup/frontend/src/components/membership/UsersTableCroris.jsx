@@ -3,7 +3,7 @@ import { Col, Collapse, Row, Card, CardTitle, CardBody,
   Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { AuthContext } from '../../components/AuthContextProvider';
-import { CustomReactSelect } from '../../components/CustomReactSelect';
+import { CustomReactSelect, CustomCreatableSelect } from '../../components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
@@ -41,6 +41,25 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
             description="userstable-croris-toast-invite-fail"
           />
           <br/>
+        </span>, {
+          theme: 'colored',
+          toastId: 'invit-fail-sent',
+          autoClose: 2500,
+        }
+      )
+  }
+
+  const [isOpen2, setIsOpen2] = useState(false);
+  const toggle2 = () => {
+    if (project.is_active)
+      return setIsOpen2(!isOpen2);
+    else
+      toast.error(
+        <span className="font-monospace text-white">
+          <FormattedMessage
+            defaultMessage="Projekt nije aktivan pa nije moguće dodati suradnike"
+            description="userstable-croris-toast-invite-fail-2"
+          /><br/>
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
@@ -533,11 +552,18 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-collabsignoff"
                         />
                       </Button>
-                      <Button disabled={collabNoEmail} color="primary" className="ms-2" onClick={toggle}>
+                      <Button disabled={collabNoEmail} active={isOpen} color="primary" className="ms-2" onClick={toggle}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi CroRIS suradnike"
                           description="users-table-croris-croris-collabcall"
+                        />
+                      </Button>
+                      <Button active={isOpen2} color="primary" className="ms-2" onClick={toggle2}>
+                        <FontAwesomeIcon icon={faArrowDown}/>{' '}
+                        <FormattedMessage
+                          defaultMessage="Pozovi strane suradnike"
+                          description="users-table-croris-foreign-collabcall-2"
                         />
                       </Button>
                     </Col>
@@ -572,6 +598,40 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                         'label': user.email
                                       }
                                     ))}
+                                  onChange={(e) => setValue('collaboratorEmails', e)}
+                                />
+                              }
+                            />
+                            <div className="d-flex align-items-center justify-content-center">
+                              <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                                <FontAwesomeIcon icon={faPaperPlane}/>{' '}
+                                <FormattedMessage
+                                  defaultMessage="Pošalji poveznice za prijavu"
+                                  description="users-table-croris-invite-send"
+                                />
+                              </Button>
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Collapse>
+                      <Collapse isOpen={isOpen2} style={{width: '80%'}}>
+                        <Card className="ps-4 pe-4 pt-4">
+                          <CardTitle>
+                            <FormattedMessage
+                              defaultMessage="Upiši email adrese stranih suradnika koje želiš pozvati na projekt"
+                              description="users-table-croris-cardtitle-2"
+                            />
+                          </CardTitle>
+                          <CardBody className="mb-4">
+                            <Controller
+                              name="collaboratorEmails"
+                              control={control}
+                              render={ ({field}) =>
+                                <CustomCreatableSelect
+                                  name="collaboratorEmails"
+                                  forwardedRef={field.ref}
+                                  placeholder="suradnik1@email.de ENTER/TAB suradnik2@email.uk..."
+                                  fontSize="18px"
                                   onChange={(e) => setValue('collaboratorEmails', e)}
                                 />
                               }
