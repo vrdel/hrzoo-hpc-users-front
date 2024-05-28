@@ -179,6 +179,10 @@
     "defaultMessage": "Broj virtualnih poslužitelja:",
     "description": "cloudfields-nvm"
   },
+  "6SeDVL": {
+    "defaultMessage": "Odaberi email adrese suradnika iz sustava CroRIS koje želiš pozvati na projekt",
+    "description": "users-table-croris-cardtitle-1"
+  },
   "6V4xYT": {
     "defaultMessage": "Detalji neaktivnog korisnika {identifier}",
     "description": "linktitle-usersinactive-view"
@@ -811,10 +815,6 @@
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
   },
-  "TSv2h2": {
-    "defaultMessage": "Odaberi email adrese suradnika koje želiš pozvati na projekt",
-    "description": "users-table-croris-cardtitle-1"
-  },
   "TYEFLG": {
     "defaultMessage": "Odbijen",
     "description": "stateshort-deny"
@@ -1247,6 +1247,10 @@
     "defaultMessage": "Da li ste sigurni da želite dodati javni ključ?",
     "description": "publickeys-add-modalmsg"
   },
+  "nwVFCQ": {
+    "defaultMessage": "Pozovi strane suradnike",
+    "description": "users-table-croris-foreign-collabcall-2"
+  },
   "o01eOJ": {
     "defaultMessage": "Da li ste sigurni da želite brisati korisnički zahtjev?",
     "description": "managereq-change-modaldelete-msg"
@@ -1270,6 +1274,10 @@
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
     "description": "newrequest-modalmsg"
+  },
+  "p5j48z": {
+    "defaultMessage": "Upiši email adrese stranih suradnika koje želiš pozvati na projekt",
+    "description": "users-table-croris-cardtitle-2"
   },
   "p6s1xb": {
     "defaultMessage": "Naziv ustanove",

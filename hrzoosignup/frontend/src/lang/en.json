@@ -179,6 +179,10 @@
     "defaultMessage": "Number of virtual servers:",
     "description": "cloudfields-nvm"
   },
+  "6SeDVL": {
+    "defaultMessage": "Select email addresses of collaborators from CroRIS you wish to invite to the project",
+    "description": "users-table-croris-cardtitle-1"
+  },
   "6V4xYT": {
     "defaultMessage": "Details of inactive user {identifier}",
     "description": "linktitle-usersinactive-view"
@@ -811,10 +815,6 @@
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
   },
-  "TSv2h2": {
-    "defaultMessage": "Select email addresses of collaborators you wish to invite to the project",
-    "description": "users-table-croris-cardtitle-1"
-  },
   "TYEFLG": {
     "defaultMessage": "Denied",
     "description": "stateshort-deny"
@@ -1247,6 +1247,10 @@
     "defaultMessage": "Are you sure you want to add the public key?",
     "description": "publickeys-add-modalmsg"
   },
+  "nwVFCQ": {
+    "defaultMessage": "Invite foreign collaborators",
+    "description": "users-table-croris-foreign-collabcall-2"
+  },
   "o01eOJ": {
     "defaultMessage": "Are you sure you want to delete user's request?",
     "description": "managereq-change-modaldelete-msg"
@@ -1270,6 +1274,10 @@
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit a new request?",
     "description": "newrequest-modalmsg"
+  },
+  "p5j48z": {
+    "defaultMessage": "Enter the email addresses of foreign collaborators you wish to invite to the project",
+    "description": "users-table-croris-cardtitle-2"
   },
   "p6s1xb": {
     "defaultMessage": "Name of the Institution",

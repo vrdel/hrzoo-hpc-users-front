@@ -57,8 +57,8 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
       toast.error(
         <span className="font-monospace text-white">
           <FormattedMessage
-            defaultMessage="Projekt nije aktivan pa nije moguće dodati suradnike"
-            description="userstable-croris-toast-invite-fail-2"
+            defaultMessage="Projekt nije aktivan pa nije moguće pozivati suradnike"
+            description="userstable-croris-toast-invite-fail"
           /><br/>
         </span>, {
           theme: 'colored',
@@ -574,7 +574,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
                             <FormattedMessage
-                              defaultMessage="Odaberi email adrese suradnika koje želiš pozvati na projekt"
+                              defaultMessage="Odaberi email adrese suradnika iz sustava CroRIS koje želiš pozvati na projekt"
                               description="users-table-croris-cardtitle-1"
                             />
                           </CardTitle>
