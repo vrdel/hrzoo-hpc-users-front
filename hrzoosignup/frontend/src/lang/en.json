@@ -419,6 +419,10 @@
     "defaultMessage": "Approved",
     "description": "stateshort-approved"
   },
+  "FGgkJh": {
+    "defaultMessage": "Advanced Computing - Request",
+    "description": "headtitle-main"
+  },
   "FPhsMI": {
     "defaultMessage": "Approved:",
     "description": "memberships-project-approved"
@@ -1092,7 +1096,7 @@
     "description": "userins-directory"
   },
   "jRGl3a": {
-    "defaultMessage": "New requests on behalf of research project",
+    "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newreq-research"
   },
   "kCbCrR": {

@@ -8,10 +8,15 @@ const HeadTitle = () => {
   const { LinkTitles } = useContext(SharedData);
   const intl = useIntl()
 
+  const mainTitle = intl.formatMessage({
+    defaultMessage: "Napredno računanje - Zahtjev",
+    description: "headtitle-main"
+  })
+
   return (
     <Helmet>
       <title>
-        { `Napredno računanje - Zahtjev | ${ LinkTitles(location.pathname, intl) }` }
+        { `${mainTitle} | ${ LinkTitles(location.pathname, intl) }` }
       </title>
     </Helmet>
   )

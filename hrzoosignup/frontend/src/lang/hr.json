@@ -419,6 +419,10 @@
     "defaultMessage": "Odobren",
     "description": "stateshort-approved"
   },
+  "FGgkJh": {
+    "defaultMessage": "Napredno računanje - Zahtjev",
+    "description": "headtitle-main"
+  },
   "FPhsMI": {
     "defaultMessage": "Odobren:",
     "description": "memberships-project-approved"
