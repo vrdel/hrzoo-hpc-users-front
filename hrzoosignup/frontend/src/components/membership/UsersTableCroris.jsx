@@ -14,6 +14,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { extractUsers, extractEmails, emailInInvites } from '../../utils/invites-extracts';
 import { toast } from 'react-toastify';
+import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
 
 
@@ -35,7 +36,11 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     else
       toast.error(
         <span className="font-monospace text-white">
-          Projekt nije aktivan pa nije moguće pozivati suradnike<br/>
+          <FormattedMessage
+            defaultMessage="Projekt nije aktivan pa nije moguće pozivati suradnike"
+            description="userstable-croris-toast-invite-fail"
+          />
+          <br/>
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
@@ -105,7 +110,11 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     if (!project.is_active)
       toast.error(
         <span className="font-monospace text-white">
-          Projekt nije aktivan pa nije moguće odjavljivati suradnike<br/>
+          <FormattedMessage
+            defaultMessage="Projekt nije aktivan pa nije moguće odjavljivati suradnike"
+            description="userstable-croris-toast-invite-fail-2"
+          />
+          <br/>
         </span>, {
           theme: 'colored',
           toastId: 'invit-fail-sent',
@@ -165,27 +174,48 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
               <thead id="hzsi-thead" className="align-middle text-center text-white">
                 <tr>
                   <th className="fw-normal">
-                    Ime
+                    <FormattedMessage
+                      defaultMessage="Ime"
+                      description="users-table-croris-firstname"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Prezime
+                    <FormattedMessage
+                      defaultMessage="Prezime"
+                      description="users-table-croris-lastname"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Uloga
+                    <FormattedMessage
+                      defaultMessage="Uloga"
+                      description="users-table-croris-role"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Email
+                    <FormattedMessage
+                      defaultMessage="Email"
+                      description="users-table-croris-email"
+                    />
                   </th>
                   <th className="fw-normal">
-                    CroRIS registracija
+                    <FormattedMessage
+                      defaultMessage="CroRIS registracija"
+                      description="users-table-croris-crorisreg"
+                    />
                   </th>
                   <th className="fw-normal">
-                    Prijavljen
+                    <FormattedMessage
+                      defaultMessage="Prijavljen"
+                      description="users-table-croris-registered"
+                    />
                   </th>
                   {
                     amILead &&
                     <th className="fw-normal">
-                      Odjava
+                      <FormattedMessage
+                        defaultMessage="Odjava"
+                        description="users-table-croris-signoff"
+                      />
                     </th>
                   }
                 </tr>
@@ -212,7 +242,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       ? 'align-middle text-center fst-italic border-bottom border-secondary'
                       : 'align-middle text-center'
                     }>
-                      Voditelj
+                      <FormattedMessage
+                        defaultMessage="Voditelj"
+                        description="users-table-croris-lead"
+                      />
                     </td>
                     <td className={
                       amILead
@@ -226,7 +259,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       ? 'align-middle text-center text-success fst-italic border-bottom border-secondary'
                       : 'p-3 align-middle text-center text-success'
                     }>
-                      Da
+                      <FormattedMessage
+                        defaultMessage="Da"
+                        description="users-table-croris-yes"
+                      />
                     </td>
                     <td className={
                       amILead
@@ -234,7 +270,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       : 'p-3 align-middle text-center text-success'
                     }>
                       <div className="position-relative">
-                        Da
+                        <FormattedMessage
+                          defaultMessage="Da"
+                          description="users-table-croris-yes"
+                        />
                         {
                           lead['user'].sshkeys &&
                             <div id={`Tooltip-key-${999}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
@@ -245,7 +284,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 target={`Tooltip-key-${999}`}
                                 toggle={() => showTooltip(lead['user'].person_mail)}
                               >
-                                Dodan javni ključ
+                                <FormattedMessage
+                                  defaultMessage="Dodan javni ključ"
+                                  description="users-table-croris-keyadd"
+                                />
                               </Tooltip>
                             </div>
                         }
@@ -284,7 +326,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           ? "align-middle text-center fst-italic border-bottom border-secondary"
                           : "align-middle text-center"
                         }>
-                          Suradnik
+                          <FormattedMessage
+                            defaultMessage="Suradnik"
+                            description="users-table-croris-collaborator"
+                          />
                         </td>
                         <td className={
                           user['user']['person_oib'] === userDetails.person_oib
@@ -306,7 +351,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           : "align-middle text-center text-success"
                         }>
                           <div className="position-relative">
-                            Da
+                            <FormattedMessage
+                              defaultMessage="Da"
+                              description="users-table-croris-yes"
+                            />
                             {
                               user['user'].sshkeys &&
                                 <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
@@ -317,7 +365,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                     target={`Tooltip-key-${i + 1000}`}
                                     toggle={() => showTooltip(user['user'].person_mail)}
                                   >
-                                    Dodan javni ključ
+                                    <FormattedMessage
+                                      defaultMessage="Dodan javni ključ"
+                                      description="users-table-croris-keyadd"
+                                    />
                                   </Tooltip>
                                 </div>
                             }
@@ -365,7 +416,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                               ? "align-middle text-center fst-italic border-bottom border-secondary"
                               : "align-middle text-center"
                             }>
-                              Suradnik
+                              <FormattedMessage
+                                defaultMessage="Suradnik"
+                                description="users-table-croris-collaborator"
+                              />
                             </td>
                             <td className={
                               user['user']?.oib === userDetails.person_oib
@@ -389,11 +443,17 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 user.email
                                   ?
                                     <span className="text-success">
-                                      Da
+                                      <FormattedMessage
+                                        defaultMessage="Da"
+                                        description="users-table-croris-yes"
+                                      />
                                     </span>
                                   :
                                     <span className="text-danger">
-                                      Ne
+                                      <FormattedMessage
+                                        defaultMessage="Ne"
+                                        description="users-table-croris-no"
+                                      />
                                     </span>
                               }
                             </td>
@@ -418,7 +478,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                         target={'Tooltip-' + i + 100}
                                         toggle={() => showTooltip(user.email)}
                                       >
-                                        Aktivna pozivnica poslana na email
+                                        <FormattedMessage
+                                          defaultMessage="Aktivna pozivnica poslana na email"
+                                          description="users-table-croris-invitesent"
+                                        />
                                       </Tooltip>
                                       <div className="position-absolute top-0 ms-4 start-50 translate-middle">
                                         <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
@@ -431,7 +494,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                     </div>
                                   :
                                     <span className="text-danger">
-                                      Ne
+                                      <FormattedMessage
+                                        defaultMessage="Ne"
+                                        description="users-table-croris-no"
+                                      />
                                     </span>
                               }
                             </td>
@@ -462,11 +528,17 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         onClick={() => onUsersCheckout()} className="me-2"
                       >
                         <FontAwesomeIcon icon={faXmark}/>{' '}
-                        Odjavi suradnike
+                        <FormattedMessage
+                          defaultMessage="Odjavi suradnike"
+                          description="users-table-croris-collabsignoff"
+                        />
                       </Button>
                       <Button disabled={collabNoEmail} color="primary" className="ms-2" onClick={toggle}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
-                        Pozovi suradnike
+                        <FormattedMessage
+                          defaultMessage="Pozovi CroRIS suradnike"
+                          description="users-table-croris-croris-collabcall"
+                        />
                       </Button>
                     </Col>
                   </Row>
@@ -475,7 +547,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       <Collapse isOpen={isOpen && missingCollab.length !== 0} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
-                            Odaberi email adrese suradnika koje želiš pozvati na projekt
+                            <FormattedMessage
+                              defaultMessage="Odaberi email adrese suradnika koje želiš pozvati na projekt"
+                              description="users-table-croris-cardtitle-1"
+                            />
                           </CardTitle>
                           <CardBody className="mb-4">
                             <Controller
@@ -504,7 +579,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                             <div className="d-flex align-items-center justify-content-center">
                               <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
                                 <FontAwesomeIcon icon={faPaperPlane}/>{' '}
-                                Pošalji poveznice za prijavu
+                                <FormattedMessage
+                                  defaultMessage="Pošalji poveznice za prijavu"
+                                  description="users-table-croris-invite-send"
+                                />
                               </Button>
                             </div>
                           </CardBody>

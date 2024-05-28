@@ -31,6 +31,10 @@
     "defaultMessage": "Save changes",
     "description": "managereq-change-button-save"
   },
+  "/dYvjB": {
+    "defaultMessage": "Last name",
+    "description": "users-table-croris-lastname"
+  },
   "/hXMAH": {
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
@@ -135,6 +139,10 @@
     "defaultMessage": "Project's identifier copied to the clipboard",
     "description": "userlist-minibutton-title-4"
   },
+  "4jM+Ca": {
+    "defaultMessage": "Role",
+    "description": "users-table-croris-role"
+  },
   "4jNx7L": {
     "defaultMessage": "Add public key",
     "description": "publickeys-list-nokeys"
@@ -186,6 +194,10 @@
   "6doVi6": {
     "defaultMessage": "Request state",
     "description": "managereq-change-process-title-4"
+  },
+  "74EuI6": {
+    "defaultMessage": "Leader",
+    "description": "users-table-croris-lead"
   },
   "7FtUKh": {
     "defaultMessage": "User identifiers of the collaborators you want on the project",
@@ -290,6 +302,10 @@
   "AzOt44": {
     "defaultMessage": "Project details",
     "description": "popover-projectinfo"
+  },
+  "B5kFsW": {
+    "defaultMessage": "Collaborator",
+    "description": "users-table-croris-collaborator"
   },
   "B8Lcj2": {
     "defaultMessage": "Project identifier copied to clipboard",
@@ -463,6 +479,10 @@
     "defaultMessage": "Project name",
     "description": "memberships-project-name"
   },
+  "G+O0qo": {
+    "defaultMessage": "No",
+    "description": "users-table-croris-no"
+  },
   "G6zqS3": {
     "defaultMessage": "Affiliation",
     "description": "userins-affiliation"
@@ -487,6 +507,10 @@
     "defaultMessage": "Institution",
     "description": "managereq-change-institution"
   },
+  "H5oET0": {
+    "defaultMessage": "Yes",
+    "description": "users-table-croris-yes"
+  },
   "H7x1WL": {
     "defaultMessage": "Email",
     "description": "memberships-user-email"
@@ -506,6 +530,10 @@
   "HpiAmO": {
     "defaultMessage": "No requests meet the search criteria",
     "description": "managereq-emptytable-msg-1"
+  },
+  "Hw6hON": {
+    "defaultMessage": "First name",
+    "description": "users-table-croris-firstname"
   },
   "I/dgYm": {
     "defaultMessage": "Duration:",
@@ -554,6 +582,10 @@
   "Jbj5h7": {
     "defaultMessage": "Add collaborators",
     "description": "users-table-general-collabadd"
+  },
+  "Jxlv/R": {
+    "defaultMessage": "Send invitation links",
+    "description": "users-table-croris-invite-send"
   },
   "KAUZl8": {
     "defaultMessage": "Request type",
@@ -631,6 +663,10 @@
     "defaultMessage": "Request is submitted and waiting to be processed",
     "description": "statestring-submit"
   },
+  "Mz13rw": {
+    "defaultMessage": "Checkout",
+    "description": "users-table-croris-signoff"
+  },
   "NF44j4": {
     "defaultMessage": "Memberships",
     "description": "navlinks-memberships"
@@ -674,6 +710,10 @@
   "PCIZl3": {
     "defaultMessage": "Public key successfully deleted",
     "description": "publickeys-list-toast-ok"
+  },
+  "PJa/wP": {
+    "defaultMessage": "Active invitation sent to an email",
+    "description": "users-table-croris-invitesent"
   },
   "PLases": {
     "defaultMessage": "Search",
@@ -723,6 +763,10 @@
     "defaultMessage": "Email",
     "description": "users-table-general-email"
   },
+  "Rp+0kw": {
+    "defaultMessage": "Project is not active, therefore it is not possible to invite collaborators",
+    "description": "userstable-croris-toast-invite-fail"
+  },
   "Rpn5b/": {
     "defaultMessage": "Search",
     "description": "userlist-placeholder-search"
@@ -766,6 +810,10 @@
   "TH7L+k": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
+  },
+  "TSv2h2": {
+    "defaultMessage": "Select email addresses of collaborators you wish to invite to the project",
+    "description": "users-table-croris-cardtitle-1"
   },
   "TYEFLG": {
     "defaultMessage": "Denied",
@@ -823,6 +871,10 @@
     "defaultMessage": "State",
     "description": "managereq-column-state"
   },
+  "W30QiG": {
+    "defaultMessage": "CroRIS registration",
+    "description": "users-table-croris-crorisreg"
+  },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
@@ -875,6 +927,10 @@
     "defaultMessage": "Approved",
     "description": "managereq-change-approve"
   },
+  "ZRMcsw": {
+    "defaultMessage": "The project is not active, therefore it is not possible to unregister collaborators",
+    "description": "userstable-croris-toast-invite-fail-2"
+  },
   "aPSUqH": {
     "defaultMessage": "Remark:",
     "description": "managereq-change-remark"
@@ -902,6 +958,10 @@
   "bWWHsM": {
     "defaultMessage": "Inactive",
     "description": "userlist-button-inactive"
+  },
+  "c2Oeo3": {
+    "defaultMessage": "Email",
+    "description": "users-table-croris-email"
   },
   "c883uu": {
     "defaultMessage": "Extra comment on request <u><i>deny</i></u>:",
@@ -990,6 +1050,10 @@
   "fxdgEp": {
     "defaultMessage": "You are not allowed to submit institutional project request: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
+  },
+  "g0aVVt": {
+    "defaultMessage": "Remove collaborators",
+    "description": "users-table-croris-collabsignoff"
   },
   "gGPZfo": {
     "defaultMessage": "State",
@@ -1195,6 +1259,10 @@
     "defaultMessage": "Advanced Computing",
     "description": "loginpriv-servicename"
   },
+  "oX7IAF": {
+    "defaultMessage": "Registered",
+    "description": "users-table-croris-registered"
+  },
   "ouf6xV": {
     "defaultMessage": "You must select one type of request to continue",
     "description": "newrequest-norequest-selected"
@@ -1271,6 +1339,10 @@
     "defaultMessage": "Request has been submitted and is awaiting processing",
     "description": "statestringuser-submit"
   },
+  "sy0MO9": {
+    "defaultMessage": "Public key added",
+    "description": "users-table-croris-keyadd"
+  },
   "syIEnC": {
     "defaultMessage": "requests",
     "description": "managereq-pagination"
@@ -1298,6 +1370,10 @@
   "u25Zo7": {
     "defaultMessage": "Error while copying request identifier to the clipboard",
     "description": "managereq-minibutton-msg"
+  },
+  "u3ZDMZ": {
+    "defaultMessage": "Invite CroRIS collaborators",
+    "description": "users-table-croris-croris-collabcall"
   },
   "udq7zq": {
     "defaultMessage": "Duration",

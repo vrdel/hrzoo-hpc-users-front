@@ -31,6 +31,10 @@
     "defaultMessage": "Spremi promjene",
     "description": "managereq-change-button-save"
   },
+  "/dYvjB": {
+    "defaultMessage": "Prezime",
+    "description": "users-table-croris-lastname"
+  },
   "/hXMAH": {
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
@@ -135,6 +139,10 @@
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
     "description": "userlist-minibutton-title-4"
   },
+  "4jM+Ca": {
+    "defaultMessage": "Uloga",
+    "description": "users-table-croris-role"
+  },
   "4jNx7L": {
     "defaultMessage": "Nemate javnih ključeva dodanih",
     "description": "publickeys-list-nokeys"
@@ -186,6 +194,10 @@
   "6doVi6": {
     "defaultMessage": "Stanje zahtjeva",
     "description": "managereq-change-process-title-4"
+  },
+  "74EuI6": {
+    "defaultMessage": "Voditelj",
+    "description": "users-table-croris-lead"
   },
   "7FtUKh": {
     "defaultMessage": "Korisničke oznake suradnika koje želiš na projektu",
@@ -290,6 +302,10 @@
   "AzOt44": {
     "defaultMessage": "Detalji projekta",
     "description": "popover-projectinfo"
+  },
+  "B5kFsW": {
+    "defaultMessage": "Suradnik",
+    "description": "users-table-croris-collaborator"
   },
   "B8Lcj2": {
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
@@ -463,6 +479,10 @@
     "defaultMessage": "Ime projekta",
     "description": "memberships-project-name"
   },
+  "G+O0qo": {
+    "defaultMessage": "Ne",
+    "description": "users-table-croris-no"
+  },
   "G6zqS3": {
     "defaultMessage": "Povezanost",
     "description": "userins-affiliation"
@@ -487,6 +507,10 @@
     "defaultMessage": "Naziv ustanove",
     "description": "managereq-change-institution"
   },
+  "H5oET0": {
+    "defaultMessage": "Da",
+    "description": "users-table-croris-yes"
+  },
   "H7x1WL": {
     "defaultMessage": "Email",
     "description": "memberships-user-email"
@@ -506,6 +530,10 @@
   "HpiAmO": {
     "defaultMessage": "Nijedan zahtjev ne zadovoljava pretragu",
     "description": "managereq-emptytable-msg-1"
+  },
+  "Hw6hON": {
+    "defaultMessage": "Ime",
+    "description": "users-table-croris-firstname"
   },
   "I/dgYm": {
     "defaultMessage": "Trajanje:",
@@ -554,6 +582,10 @@
   "Jbj5h7": {
     "defaultMessage": "Dodaj suradnike",
     "description": "users-table-general-collabadd"
+  },
+  "Jxlv/R": {
+    "defaultMessage": "Pošalji poveznice za prijavu",
+    "description": "users-table-croris-invite-send"
   },
   "KAUZl8": {
     "defaultMessage": "Tip zahtjeva",
@@ -631,6 +663,10 @@
     "defaultMessage": "Zahtjev je podnesen i čeka na obradu",
     "description": "statestring-submit"
   },
+  "Mz13rw": {
+    "defaultMessage": "Odjava",
+    "description": "users-table-croris-signoff"
+  },
   "NF44j4": {
     "defaultMessage": "Članstva",
     "description": "navlinks-memberships"
@@ -674,6 +710,10 @@
   "PCIZl3": {
     "defaultMessage": "Javni ključ uspješno izbrisan",
     "description": "publickeys-list-toast-ok"
+  },
+  "PJa/wP": {
+    "defaultMessage": "Aktivna pozivnica poslana na email",
+    "description": "users-table-croris-invitesent"
   },
   "PLases": {
     "defaultMessage": "Traži",
@@ -723,6 +763,10 @@
     "defaultMessage": "Email",
     "description": "users-table-general-email"
   },
+  "Rp+0kw": {
+    "defaultMessage": "Projekt nije aktivan pa nije moguće pozivati suradnike",
+    "description": "userstable-croris-toast-invite-fail"
+  },
   "Rpn5b/": {
     "defaultMessage": "Traži",
     "description": "userlist-placeholder-search"
@@ -766,6 +810,10 @@
   "TH7L+k": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
+  },
+  "TSv2h2": {
+    "defaultMessage": "Odaberi email adrese suradnika koje želiš pozvati na projekt",
+    "description": "users-table-croris-cardtitle-1"
   },
   "TYEFLG": {
     "defaultMessage": "Odbijen",
@@ -823,6 +871,10 @@
     "defaultMessage": "Stanje",
     "description": "managereq-column-state"
   },
+  "W30QiG": {
+    "defaultMessage": "CroRIS registracija",
+    "description": "users-table-croris-crorisreg"
+  },
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
@@ -875,6 +927,10 @@
     "defaultMessage": "Odobren",
     "description": "managereq-change-approve"
   },
+  "ZRMcsw": {
+    "defaultMessage": "Projekt nije aktivan pa nije moguće odjavljivati suradnike",
+    "description": "userstable-croris-toast-invite-fail-2"
+  },
   "aPSUqH": {
     "defaultMessage": "Napomena:",
     "description": "managereq-change-remark"
@@ -902,6 +958,10 @@
   "bWWHsM": {
     "defaultMessage": "Neaktivni",
     "description": "userlist-button-inactive"
+  },
+  "c2Oeo3": {
+    "defaultMessage": "Email",
+    "description": "users-table-croris-email"
   },
   "c883uu": {
     "defaultMessage": "Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:",
@@ -990,6 +1050,10 @@
   "fxdgEp": {
     "defaultMessage": "Nemate mogućnost prijave institucijskog projekta: { reasonDetail }",
     "description": "newrequest-no-instituteproject-titleexplanation"
+  },
+  "g0aVVt": {
+    "defaultMessage": "Odjavi suradnike",
+    "description": "users-table-croris-collabsignoff"
   },
   "gGPZfo": {
     "defaultMessage": "Stanje",
@@ -1195,6 +1259,10 @@
     "defaultMessage": "Napredno računanje",
     "description": "loginpriv-servicename"
   },
+  "oX7IAF": {
+    "defaultMessage": "Prijavljen",
+    "description": "users-table-croris-registered"
+  },
   "ouf6xV": {
     "defaultMessage": "Morate odabrati jedan tip zahtjeva da biste nastavili",
     "description": "newrequest-norequest-selected"
@@ -1271,6 +1339,10 @@
     "defaultMessage": "Zahtjev je podnesen i čeka na obradu",
     "description": "statestringuser-submit"
   },
+  "sy0MO9": {
+    "defaultMessage": "Dodan javni ključ",
+    "description": "users-table-croris-keyadd"
+  },
   "syIEnC": {
     "defaultMessage": "zahtjeva",
     "description": "managereq-pagination"
@@ -1298,6 +1370,10 @@
   "u25Zo7": {
     "defaultMessage": "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
     "description": "managereq-minibutton-msg"
+  },
+  "u3ZDMZ": {
+    "defaultMessage": "Pozovi CroRIS suradnike",
+    "description": "users-table-croris-croris-collabcall"
   },
   "udq7zq": {
     "defaultMessage": "Trajanje",
