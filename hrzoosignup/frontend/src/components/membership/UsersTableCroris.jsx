@@ -185,6 +185,13 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
       if (collab['email'])
         collabNoEmail = false
 
+    let foreignInvites = new Array()
+    let collabEmails = collaborators.map(user => user.email)
+    email_invites.forEach((email) => {
+    if (collabEmails.indexOf(email) === -1)
+      foreignInvites.push(email)
+    })
+
     return (
       <>
         <Row className={amILead ? 'mt-4 ms-0 me-0 mb-2 p-0' : 'p-0 mt-4 ms-0 me-0 mb-5'}>
@@ -528,6 +535,60 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                             }
                           </tr>
                         ))
+                  }
+                  {
+                    foreignInvites.length > 0 && foreignInvites.map((email, i) => (
+                      <tr key={`row-${i + 100}`}>
+                        <td className="p-3 align-middle text-center">
+                          { '\u2212' }
+                        </td>
+                        <td className="p-3 align-middle text-center">
+                          { '\u2212' }
+                        </td>
+                        <td className="align-middle text-center">
+                          <FormattedMessage
+                            defaultMessage="Suradnik"
+                            description="users-table-general-collaborator"
+                          />
+                        </td>
+                        <td className="align-middle text-center">
+                          { email }
+                        </td>
+                        <td className="align-middle text-center">
+                          {'\u2212'}
+                        </td>
+                        <td className="align-middle text-center">
+                          <div className="position-relative">
+                            <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope}/>
+                            <Tooltip
+                              placement='top'
+                              isOpen={isOpened(email)}
+                              target={`Tooltip-${i + 100}`}
+                              toggle={() => showTooltip(email)}
+                            >
+                              <FormattedMessage
+                                defaultMessage="Aktivna pozivnica poslana na email"
+                                description="users-table-general-invitesent"
+                              />
+                            </Tooltip>
+                            <div className="position-absolute top-0 ms-4 start-50 translate-middle">
+                              <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
+                                color="light"
+                                onClick={() => onInviteDelete(email)}
+                              >
+                                <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
+                              </Button>
+                            </div>
+                          </div>
+                        </td>
+                        {
+                          amILead &&
+                          <td className="align-middle text-center">
+                            {'\u2212'}
+                          </td>
+                        }
+                      </tr>
+                    ))
                   }
                 </>
               </tbody>
