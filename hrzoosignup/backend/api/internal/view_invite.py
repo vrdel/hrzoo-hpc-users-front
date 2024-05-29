@@ -371,6 +371,10 @@ class Invites(APIView):
                                                    project=proj,
                                                    person_oib=oib_map[email])
                         invite.send_invitation(request)
+                    else:
+                        invite = Invitation.create(email, inviter=request.user,
+                                                   project=proj)
+                        invite.send_invitation(request)
                     record_invites.append(invite)
 
             else:
