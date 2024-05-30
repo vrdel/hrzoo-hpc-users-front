@@ -39,6 +39,10 @@
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
   },
+  "/uuN9L": {
+    "defaultMessage": "Strani suradnik",
+    "description": "users-table-general-collaborator-foreign"
+  },
   "09Nk19": {
     "defaultMessage": "U formu se zalijepi javna komponenta ključa (id_rsa.pub) ili se ista može učitati iz datoteke",
     "description": "publickeys-add-remarkmsg"

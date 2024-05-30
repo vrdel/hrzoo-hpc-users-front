@@ -39,6 +39,10 @@
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
   },
+  "/uuN9L": {
+    "defaultMessage": "Foreign Collaborator",
+    "description": "users-table-general-collaborator-foreign"
+  },
   "09Nk19": {
     "defaultMessage": "Paste the public key component (id_rsa.pub) into the form or upload it from a file on local disk",
     "description": "publickeys-add-remarkmsg"

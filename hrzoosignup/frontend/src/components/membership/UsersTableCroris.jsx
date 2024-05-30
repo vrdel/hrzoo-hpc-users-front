@@ -547,8 +547,8 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         </td>
                         <td className="align-middle text-center">
                           <FormattedMessage
-                            defaultMessage="Suradnik"
-                            description="users-table-general-collaborator"
+                            defaultMessage="Strani suradnik"
+                            description="users-table-general-collaborator-foreign"
                           />
                         </td>
                         <td className="align-middle text-center">
