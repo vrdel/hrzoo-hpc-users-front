@@ -15,6 +15,7 @@ import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
 import { url_ui_prefix } from 'Config/general';
+import {FormattedMessage, useIntl} from 'react-intl'
 
 
 const EmailInvitation = ({sessionData=undefined}) => {
@@ -25,6 +26,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
   const [inviteAlertSuccess, setInviteAlertSucces] = useState(false);
   const [customMessage, setCustomMessage] = useState(undefined);
   const [progress, setProgress] = useState(0);
+  const intl = useIntl()
 
   useEffect(() => {
     localStorage.setItem('invitation-key-set', inviteKey)
@@ -112,16 +114,26 @@ const EmailInvitation = ({sessionData=undefined}) => {
                 </CardHeader>
                 <CardBody className="pt-5">
                   <p className="fs-5 mb-4 text-center">
-                    Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom
-                    ujedno potvrđujete da prihvaćate{' '}
+                    <FormattedMessage
+                      defaultMessage="Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom
+                                      ujedno potvrđujete da prihvaćate"
+                      description="email-invite-cardbody"
+                    />
+                    {' '}
                     <a href="https://www.srce.unizg.hr/napredno-racunanje/pravila" target="_blank" rel="noopener noreferrer">
-                      Pravila korištenja usluge Napredno računanje
+                      <FormattedMessage
+                        defaultMessage="Pravila korištenja usluge Napredno računanje"
+                        description="loginoffical-terms"
+                      />
                     </a>
                   </p>
                   <Row>
                     <Col className="d-flex align-items-center justify-content-around">
                       <Button className="text-center" size="lg" color="success" onClick={acceptInvite}>
-                        Potvrđujem
+                        <FormattedMessage
+                          defaultMessage="Potvrđujem"
+                          description="email-invite-accept"
+                        />
                       </Button>
                     </Col>
                   </Row>
@@ -135,7 +147,10 @@ const EmailInvitation = ({sessionData=undefined}) => {
                         }}
                         fade={true}>
                         <p className="text-center fs-5">
-                          Prijava uspješna, preusmjeravanje...
+                          <FormattedMessage
+                            defaultMessage="Prijava uspješna, preusmjeravanje..."
+                            description="email-invite-success"
+                          />
                         </p>
                         <Progress
                           striped
@@ -152,7 +167,10 @@ const EmailInvitation = ({sessionData=undefined}) => {
                             customMessage ?
                               customMessage
                             :
-                              "Prijava neuspješna"
+                              intl.formatMessage({
+                                defaultMessage: "Prijava neuspješna",
+                                description: "email-invite-failed"
+                              })
                           }
                         </p>
                       </Alert>

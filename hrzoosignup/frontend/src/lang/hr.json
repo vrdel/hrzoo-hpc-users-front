@@ -87,6 +87,10 @@
     "defaultMessage": "Ime",
     "description": "users-table-general-firstname"
   },
+  "2G5rdP": {
+    "defaultMessage": "Prijava neuspješna",
+    "description": "email-invite-failed"
+  },
   "2LPtd3": {
     "defaultMessage": "Upiši email adrese suradnika koje želiš pozvati na projekt",
     "description": "users-table-general-cardtitle-1"
@@ -675,6 +679,10 @@
     "defaultMessage": "Odjava",
     "description": "users-table-croris-signoff"
   },
+  "N7CK9d": {
+    "defaultMessage": "Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom ujedno potvrđujete da prihvaćate",
+    "description": "email-invite-cardbody"
+  },
   "NF44j4": {
     "defaultMessage": "Članstva",
     "description": "navlinks-memberships"
@@ -882,6 +890,10 @@
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "WL3CC8": {
+    "defaultMessage": "Pravila korištenja usluge Napredno računanje",
+    "description": "loginoffical-terms"
   },
   "WL9MPg": {
     "defaultMessage": "Nema korisnika prijavljenih na projekt",
@@ -1187,6 +1199,10 @@
     "defaultMessage": "Ime",
     "description": "memberships-user-firstname"
   },
+  "kgUSnq": {
+    "defaultMessage": "Potvrđujem",
+    "description": "email-invite-accept"
+  },
   "lD0Ggq": {
     "defaultMessage": "Moji zahtjevi",
     "description": "navlinks-myrequests"
@@ -1390,6 +1406,10 @@
   "udq7zq": {
     "defaultMessage": "Trajanje",
     "description": "userinfo-croris-duration"
+  },
+  "ugqfVt": {
+    "defaultMessage": "Prijava uspješna, preusmjeravanje...",
+    "description": "email-invite-success"
   },
   "uttk9z": {
     "defaultMessage": "Detalji aktivnog korisnika {identifier}",

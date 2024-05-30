@@ -87,6 +87,10 @@
     "defaultMessage": "First name",
     "description": "users-table-general-firstname"
   },
+  "2G5rdP": {
+    "defaultMessage": "Invitation failed",
+    "description": "email-invite-failed"
+  },
   "2LPtd3": {
     "defaultMessage": "Enter the email addresses of the collaborators you wish to invite to the project",
     "description": "users-table-general-cardtitle-1"
@@ -675,6 +679,10 @@
     "defaultMessage": "Checkout",
     "description": "users-table-croris-signoff"
   },
+  "N7CK9d": {
+    "defaultMessage": "You are invited to a project within the Advanced Computing service and by confirming, you also agree to the",
+    "description": "email-invite-cardbody"
+  },
   "NF44j4": {
     "defaultMessage": "Memberships",
     "description": "navlinks-memberships"
@@ -882,6 +890,10 @@
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
+  },
+  "WL3CC8": {
+    "defaultMessage": "Terms of Use of Advanced Computing service",
+    "description": "loginoffical-terms"
   },
   "WL9MPg": {
     "defaultMessage": "There are no users signed up for the project",
@@ -1187,6 +1199,10 @@
     "defaultMessage": "First name",
     "description": "memberships-user-firstname"
   },
+  "kgUSnq": {
+    "defaultMessage": "Confirm",
+    "description": "email-invite-accept"
+  },
   "lD0Ggq": {
     "defaultMessage": "My requests",
     "description": "navlinks-myrequests"
@@ -1391,6 +1407,10 @@
     "defaultMessage": "Duration",
     "description": "userinfo-croris-duration"
   },
+  "ugqfVt": {
+    "defaultMessage": "Invitation successful, redirecting...",
+    "description": "email-invite-success"
+  },
   "uttk9z": {
     "defaultMessage": "Details of active user {identifier}",
     "description": "linktitle-usersactive-view"
@@ -1416,7 +1436,7 @@
     "description": "resourcefields-ncpu"
   },
   "vhUojX": {
-    "defaultMessage": "Terms of use of Advanced Computing service",
+    "defaultMessage": "Terms of Use of Advanced Computing service",
     "description": "loginofficial-terms"
   },
   "w+EuNz": {
