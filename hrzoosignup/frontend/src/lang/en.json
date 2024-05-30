@@ -251,6 +251,10 @@
     "defaultMessage": "Processing of project",
     "description": "managereq-change-modal-title-1"
   },
+  "8wR78t": {
+    "defaultMessage": "Invitation",
+    "description": "email-invite-cardtitle-2"
+  },
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
@@ -1490,6 +1494,10 @@
   "ysQjtn": {
     "defaultMessage": "CroRIS registration",
     "description": "memberships-user-crorisreg"
+  },
+  "yxubiU": {
+    "defaultMessage": "Advanced Computing",
+    "description": "email-invite-cardtitle-1"
   },
   "z/MmC8": {
     "defaultMessage": "My info",

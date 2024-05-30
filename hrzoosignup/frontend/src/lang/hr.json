@@ -251,6 +251,10 @@
     "defaultMessage": "Obrada projekta",
     "description": "managereq-change-modal-title-1"
   },
+  "8wR78t": {
+    "defaultMessage": "Pozivnica",
+    "description": "email-invite-cardtitle-2"
+  },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
@@ -1490,6 +1494,10 @@
   "ysQjtn": {
     "defaultMessage": "CroRIS registracija",
     "description": "memberships-user-crorisreg"
+  },
+  "yxubiU": {
+    "defaultMessage": "Napredno računanje",
+    "description": "email-invite-cardtitle-1"
   },
   "z/MmC8": {
     "defaultMessage": "Moji podaci",
