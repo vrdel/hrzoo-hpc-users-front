@@ -223,7 +223,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
                 <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
                   <Row className="m-1">
                     <Col>
-                      <LanguageButtonLogin locale={locale} setLocale={setLocale} small={true} />
+                      <LanguageButtonLogin locale={locale} setLocale={setLocale} />
                     </Col>
                   </Row>
                 </CardFooter>

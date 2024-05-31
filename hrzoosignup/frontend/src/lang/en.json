@@ -464,7 +464,7 @@
     "description": "stateshort-approved"
   },
   "Eob6Ei": {
-    "defaultMessage": "Prijava neuspješna: Pozivni kod je iskorišten",
+    "defaultMessage": "Registration unsuccessful: The invitation code has been used",
     "description": "email-invite-code-used"
   },
   "FGgkJh": {
@@ -620,7 +620,7 @@
     "description": "users-table-croris-invite-send"
   },
   "K9dABU": {
-    "defaultMessage": "Login unsuccessful: The invitation is intended for foreign collaborators who authenticate using eduGAIN",
+    "defaultMessage": "Registration unsuccessful: The invitation is intended for foreign collaborators who authenticate using eduGAIN",
     "description": "email-invite-fail-edugain"
   },
   "KAUZl8": {
