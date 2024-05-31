@@ -575,7 +575,11 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                             <div className="position-absolute top-0 ms-4 start-50 translate-middle">
                               <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
                                 color="light"
-                                onClick={() => onInviteDelete(email)}
+                                onClick={() => onInviteDelete(
+                                  {
+                                    email
+                                  }
+                                )}
                               >
                                 <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
                               </Button>
