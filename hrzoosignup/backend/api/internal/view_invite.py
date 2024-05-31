@@ -148,18 +148,6 @@ class Invites(APIView):
                     logger.error(msg)
                     return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
-                if (edugain_authn and (proj_type.name == 'research-croris'
-                                       or proj_type.name == 'research-institutional'
-                                       or proj_type.name == 'thesis')):
-                    err_status = status.HTTP_403_FORBIDDEN
-                    err_response = {
-                        'status': {
-                            'code': err_status,
-                            'message': 'eduGAIN authenticated only practical'
-                        }
-                    }
-                    return Response(err_response, status=err_status)
-
                 if (proj_type.name == 'research-croris'):
                     if (inv_oib == request.user.person_oib):
                         associate_user_to_project(user, proj)

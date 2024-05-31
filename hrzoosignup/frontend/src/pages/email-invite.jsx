@@ -104,13 +104,6 @@ const EmailInvitation = ({sessionData=undefined}) => {
         }) )
         setInviteAlertFail(true)
       }
-      else if (err.message.toLowerCase().includes("edugain authenticated only practical")) {
-        setCustomMessage(intl.formatMessage({
-          defaultMessage: "Prijava neuspješna: Autenticirani ste eduGAIN-om stoga možete potvrditi prijavu samo na praktičnu nastavu",
-          description: "email-invite-fail-access-edugain-practical-only"
-        }))
-        setInviteAlertFail(true)
-      }
       else if (err.message.toLowerCase().includes("user institute project")) {
         setCustomMessage(intl.formatMessage({
           defaultMessage: "Prijava neuspješna: Već ste prijavljeni na jedan institucijski projekt",

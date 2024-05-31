@@ -1423,10 +1423,6 @@
     "defaultMessage": "Zahtjev je odbijen",
     "description": "statestring-deny"
   },
-  "tHC/mt": {
-    "defaultMessage": "Prijava neuspješna: Autenticirani ste eduGAIN-om stoga možete potvrditi prijavu samo na praktičnu nastavu",
-    "description": "email-invite-fail-access-edugain-practical-only"
-  },
   "tMWDpG": {
     "defaultMessage": "Voditelj",
     "description": "managereq-change-title-lead"

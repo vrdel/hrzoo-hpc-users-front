@@ -1423,10 +1423,6 @@
     "defaultMessage": "Request is denied",
     "description": "statestring-deny"
   },
-  "tHC/mt": {
-    "defaultMessage": "Registration unsuccessful: You are authenticated with eduGAIN, therefore you can only confirm enrollment for practical classes.",
-    "description": "email-invite-fail-access-edugain-practical-only"
-  },
   "tMWDpG": {
     "defaultMessage": "Leader",
     "description": "managereq-change-title-lead"
