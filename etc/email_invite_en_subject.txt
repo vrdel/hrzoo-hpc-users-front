@@ -1,0 +1,4 @@
+{% load i18n %}
+{% autoescape off %}
+Confirm your registration for the service
+{% endautoescape %}

@@ -1,0 +1,16 @@
+Dear,
+
+Lead researcher {{ first_name }} {{ last_name }} has registered you for the Advanced
+Computing service
+on the project "{{ project_name }}"
+
+Please confirm your registration at the following link:
+{{ invite_url }}
+
+Warm regards,
+-- 
+Advanced Computing
+University of Zagreb, University Computing Centre (Srce), www.srce.unizg.hr
+computing@srce.hr, phone: +385 1 616 5555, fax: +385 1 616 5559
+{% endblocktrans %}
+{% endautoescape %}
