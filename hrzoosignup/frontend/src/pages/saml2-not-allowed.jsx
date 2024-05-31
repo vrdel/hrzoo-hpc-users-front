@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Alert,
@@ -8,6 +8,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter
 } from 'reactstrap';
 import {
   faLaptopCode,
@@ -15,7 +16,8 @@ import {
 import 'Styles/login-official.css';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-
+import { LanguageButtonLogin } from 'Components/LocaleButton';
+import { IntlContext } from 'Components/IntlContextProvider';
 
 const AlertRegular= () =>
   <>
@@ -58,6 +60,7 @@ const AlertMultiple = () =>
 const Saml2NotAllowed = () => {
   const { errorType } = useParams()
   const multipleUsersError = errorType === 'multiple'
+  const { locale, setLocale } = useContext(IntlContext)
 
   return (
     <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
@@ -89,6 +92,13 @@ const Saml2NotAllowed = () => {
                   <AlertMultiple />
               }
             </CardBody>
+            <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+              <Row className="m-1">
+                <Col>
+                  <LanguageButtonLogin locale={locale} setLocale={setLocale}/>
+                </Col>
+              </Row>
+            </CardFooter>
           </Card>
         </Col>
         <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
