@@ -421,10 +421,11 @@ class CustomInvitation(AbstractBaseInvitation):
         current_site = get_current_site(request)
         invite_url = reverse(app_settings.CONFIRMATION_URL_NAME, args=[self.key])
         invite_url = request.build_absolute_uri(invite_url)
+
         ctx = kwargs
         ctx.update(
             {
-                "invite_url": '{}://{}/ui/prijava-email/{}'.format(
+                "invite_url": '{}://{}/ui/login-email/{}'.format(
                     request.scheme,
                     request.get_host(),
                     self.key

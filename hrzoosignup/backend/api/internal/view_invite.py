@@ -331,6 +331,7 @@ class Invites(APIView):
 
         try:
             record_invites = list()
+
             if proj_type.name == 'research-croris':
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
                 foreign_emails = [col['value'] for col in request.data['foreignCollaboratorEmails']]

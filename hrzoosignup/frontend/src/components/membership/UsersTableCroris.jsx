@@ -625,7 +625,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-croris-collabcall"
                         />
                       </Button>
-                      <Button active={isOpen2} color="primary" className="ms-2" onClick={toggle2}>
+                      <Button active={isOpen2} color="info" className="ms-2" onClick={toggle2}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi strane suradnike"
