@@ -123,6 +123,17 @@ class Invites(APIView):
                 inv_oib = get_invite.person_oib
                 proj_type = models.ProjectType.objects.get(project=proj)
 
+                # foreign collaborators must authn via eduGAIN
+                if proj_type.name == 'research-croris' and not inv_oib and not edugain_authn:
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_400_BAD_REQUEST,
+                            'message': '{} - Invitation for foreign collaborators that must authn via eduGAIN'.format(request.user.username)
+                        }
+                    }
+                    logger.error(msg)
+                    return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
                 already_assigned = models.UserProject.objects.filter(
                     user__person_oib=user.person_oib,
                     project__id=proj.id
