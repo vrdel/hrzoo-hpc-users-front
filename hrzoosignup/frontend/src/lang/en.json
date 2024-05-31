@@ -31,6 +31,10 @@
     "defaultMessage": "Save changes",
     "description": "managereq-change-button-save"
   },
+  "/N26lV": {
+    "defaultMessage": "Registration unsucessful: Invitation code expired",
+    "description": "email-invite-code-expired"
+  },
   "/dYvjB": {
     "defaultMessage": "Last name",
     "description": "users-table-croris-lastname"
@@ -291,6 +295,10 @@
     "defaultMessage": "Collaborators have been successfully added",
     "description": "memberships-toast-internal-collaboratorsok"
   },
+  "AX+E3h": {
+    "defaultMessage": "Registration unsuccessful: You are registered as a lead researcher on projects within the CroRIS system",
+    "description": "email-invite-registered-leader-croris"
+  },
   "Aa0C40": {
     "defaultMessage": "People:",
     "description": "researchselected-users"
@@ -451,6 +459,10 @@
     "defaultMessage": "Approved",
     "description": "stateshort-approved"
   },
+  "Eob6Ei": {
+    "defaultMessage": "Prijava neuspješna: Pozivni kod je iskorišten",
+    "description": "email-invite-code-used"
+  },
   "FGgkJh": {
     "defaultMessage": "Advanced Computing - Request",
     "description": "headtitle-main"
@@ -603,6 +615,10 @@
     "defaultMessage": "Send invitation links",
     "description": "users-table-croris-invite-send"
   },
+  "K9dABU": {
+    "defaultMessage": "Login unsuccessful: The invitation is intended for foreign collaborators who authenticate using eduGAIN",
+    "description": "email-invite-fail-edugain"
+  },
   "KAUZl8": {
     "defaultMessage": "Request type",
     "description": "newrequest-label"
@@ -682,6 +698,10 @@
   "Mz13rw": {
     "defaultMessage": "Checkout",
     "description": "users-table-croris-signoff"
+  },
+  "MzXg8R": {
+    "defaultMessage": "You are already a collaborator on the invited project",
+    "description": "email-invite-already-assigned-2"
   },
   "N7CK9d": {
     "defaultMessage": "You are invited to a project within the Advanced Computing service and by confirming, you also agree to the",
@@ -891,6 +911,10 @@
     "defaultMessage": "CroRIS registration",
     "description": "users-table-croris-crorisreg"
   },
+  "W63CGG": {
+    "defaultMessage": "Registration unsuccessful: You are already registered for an institutional project",
+    "description": "email-invite-fail-already-institutional"
+  },
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
@@ -923,6 +947,10 @@
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
   },
+  "Y5ZpM6": {
+    "defaultMessage": "You are already a participant in the invited project.",
+    "description": "email-invite-already-assigned-1"
+  },
   "YFbSAM": {
     "defaultMessage": "Delete project",
     "description": "managereq-change-buttonlabel-delete-1"
@@ -950,6 +978,10 @@
   "ZRMcsw": {
     "defaultMessage": "The project is not active, therefore it is not possible to unregister collaborators",
     "description": "userstable-croris-toast-invite-fail-2"
+  },
+  "a62iXN": {
+    "defaultMessage": "Registration unsuccessful: You are registered as a collaborator on research projects in the CroRIS system",
+    "description": "email-invite-registered-associate-croris"
   },
   "aPSUqH": {
     "defaultMessage": "Remark:",
@@ -1074,6 +1106,10 @@
   "g0aVVt": {
     "defaultMessage": "Remove collaborators",
     "description": "users-table-croris-collabsignoff"
+  },
+  "gC8Wnk": {
+    "defaultMessage": "Registration unsuccessful: You have already gained access through a research project in the CroRIS system",
+    "description": "email-invite-fail-access-already-granted-research-project"
   },
   "gGPZfo": {
     "defaultMessage": "State",
@@ -1386,6 +1422,10 @@
   "tC8Khg": {
     "defaultMessage": "Request is denied",
     "description": "statestring-deny"
+  },
+  "tHC/mt": {
+    "defaultMessage": "Registration unsuccessful: You are authenticated with eduGAIN, therefore you can only confirm enrollment for practical classes.",
+    "description": "email-invite-fail-access-edugain-practical-only"
   },
   "tMWDpG": {
     "defaultMessage": "Leader",

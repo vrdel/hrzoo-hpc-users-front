@@ -31,6 +31,10 @@
     "defaultMessage": "Spremi promjene",
     "description": "managereq-change-button-save"
   },
+  "/N26lV": {
+    "defaultMessage": "Prijava neuspješna: Pozivni kod je istekao",
+    "description": "email-invite-code-expired"
+  },
   "/dYvjB": {
     "defaultMessage": "Prezime",
     "description": "users-table-croris-lastname"
@@ -291,6 +295,10 @@
     "defaultMessage": "Suradnici su uspješno dodani",
     "description": "memberships-toast-internal-collaboratorsok"
   },
+  "AX+E3h": {
+    "defaultMessage": "Prijava neuspješna: Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS",
+    "description": "email-invite-registered-leader-croris"
+  },
   "Aa0C40": {
     "defaultMessage": "Osobe:",
     "description": "researchselected-users"
@@ -451,6 +459,10 @@
     "defaultMessage": "Odobren",
     "description": "stateshort-approved"
   },
+  "Eob6Ei": {
+    "defaultMessage": "Prijava neuspješna: Pozivni kod je iskorišten",
+    "description": "email-invite-code-used"
+  },
   "FGgkJh": {
     "defaultMessage": "Napredno računanje - Zahtjev",
     "description": "headtitle-main"
@@ -603,6 +615,10 @@
     "defaultMessage": "Pošalji poveznice za prijavu",
     "description": "users-table-croris-invite-send"
   },
+  "K9dABU": {
+    "defaultMessage": "Prijava neuspješna: Pozivnica je namijenjena stranim suradnicima koji se autenticiraju eduGAIN-om",
+    "description": "email-invite-fail-edugain"
+  },
   "KAUZl8": {
     "defaultMessage": "Tip zahtjeva",
     "description": "newrequest-label"
@@ -682,6 +698,10 @@
   "Mz13rw": {
     "defaultMessage": "Odjava",
     "description": "users-table-croris-signoff"
+  },
+  "MzXg8R": {
+    "defaultMessage": "Već jeste suradnik na pozvanom projektu",
+    "description": "email-invite-already-assigned-2"
   },
   "N7CK9d": {
     "defaultMessage": "Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom ujedno potvrđujete da prihvaćate",
@@ -891,6 +911,10 @@
     "defaultMessage": "CroRIS registracija",
     "description": "users-table-croris-crorisreg"
   },
+  "W63CGG": {
+    "defaultMessage": "Prijava neuspješna: Već ste prijavljeni na jedan institucijski projekt",
+    "description": "email-invite-fail-already-institutional"
+  },
   "W99Dmu": {
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
@@ -923,6 +947,10 @@
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
   },
+  "Y5ZpM6": {
+    "defaultMessage": "Već jeste sudionik pozvanog projekta",
+    "description": "email-invite-already-assigned-1"
+  },
   "YFbSAM": {
     "defaultMessage": "Obriši projekt",
     "description": "managereq-change-buttonlabel-delete-1"
@@ -950,6 +978,10 @@
   "ZRMcsw": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće odjavljivati suradnike",
     "description": "userstable-croris-toast-invite-fail-2"
+  },
+  "a62iXN": {
+    "defaultMessage": "Prijava neuspješna: Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS",
+    "description": "email-invite-registered-associate-croris"
   },
   "aPSUqH": {
     "defaultMessage": "Napomena:",
@@ -1074,6 +1106,10 @@
   "g0aVVt": {
     "defaultMessage": "Odjavi suradnike",
     "description": "users-table-croris-collabsignoff"
+  },
+  "gC8Wnk": {
+    "defaultMessage": "Prijava neuspješna: Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS",
+    "description": "email-invite-fail-access-already-granted-research-project"
   },
   "gGPZfo": {
     "defaultMessage": "Stanje",
@@ -1386,6 +1422,10 @@
   "tC8Khg": {
     "defaultMessage": "Zahtjev je odbijen",
     "description": "statestring-deny"
+  },
+  "tHC/mt": {
+    "defaultMessage": "Prijava neuspješna: Autenticirani ste eduGAIN-om stoga možete potvrditi prijavu samo na praktičnu nastavu",
+    "description": "email-invite-fail-access-edugain-practical-only"
   },
   "tMWDpG": {
     "defaultMessage": "Voditelj",

@@ -49,43 +49,73 @@ const EmailInvitation = ({sessionData=undefined}) => {
     }
     catch (err) {
       if (err.message.toLowerCase().includes("invitation code already used")) {
-        setCustomMessage('Prijava neuspješna: Pozivni kod je iskorišten')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Pozivni kod je iskorišten",
+          description: "email-invite-code-used"
+        }))
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("invitation code expired")) {
-        setCustomMessage('Prijava neuspješna: Pozivni kod je istekao')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Pozivni kod je istekao",
+          description: "email-invite-code-expired"
+        }))
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("invitation for foreign collaborators")) {
-        setCustomMessage('Prijava neuspješna: Pozivnica je namijenjena stranim suradnicima koji se autenticiraju eduGAIN-om')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Pozivnica je namijenjena stranim suradnicima koji se autenticiraju eduGAIN-om",
+          description: "email-invite-fail-edugain"
+        }))
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("already assigned to project")) {
-        setCustomMessage('Već jeste sudionik pozvanog projekta')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: 'Već jeste sudionik pozvanog projekta',
+          description: "email-invite-already-assigned-1"
+        }))
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("duplicate key")) {
-        setCustomMessage('Već jeste suradnik na pozvanom projektu')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Već jeste suradnik na pozvanom projektu",
+          description: "email-invite-already-assigned-2"
+        }))
         setInviteAlertSucces(true)
       }
       else if (err.message.toLowerCase().includes("lead croris project")) {
-        setCustomMessage('Prijava neuspješna: Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS",
+          description: "email-invite-registered-leader-croris"
+        }))
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("associate croris project")) {
-        setCustomMessage('Prijava neuspješna: Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS",
+          description: "email-invite-registered-associate-croris"
+        }))
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("user croris project")) {
-        setCustomMessage('Prijava neuspješna: Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS')
+        setCustomMessage( intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Pristup ste već ostvarili temeljem istraživačkog projekta u sustavu CroRIS",
+          description: "email-invite-fail-access-already-granted-research-project"
+        }) )
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("edugain authenticated only practical")) {
-        setCustomMessage('Prijava neuspješna: Autenticirani ste eduGAIN-om stoga možete potvrditi prijavu samo na praktičnu nastavu')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Autenticirani ste eduGAIN-om stoga možete potvrditi prijavu samo na praktičnu nastavu",
+          description: "email-invite-fail-access-edugain-practical-only"
+        }))
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("user institute project")) {
-        setCustomMessage('Prijava neuspješna: Već ste prijavljeni na jedan institucijski projekt')
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Već ste prijavljeni na jedan institucijski projekt",
+          description: "email-invite-fail-already-institutional"
+        }))
         setInviteAlertFail(true)
       }
       else
