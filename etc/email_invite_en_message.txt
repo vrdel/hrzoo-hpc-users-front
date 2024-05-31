@@ -1,7 +1,10 @@
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans %}
+
 Dear,
 
-Lead researcher {{ first_name }} {{ last_name }} has registered you for the Advanced
-Computing service
+Lead researcher {{ first_name }} {{ last_name }} has registered you for the Advanced Computing service
 on the project "{{ project_name }}"
 
 Please confirm your registration at the following link:
