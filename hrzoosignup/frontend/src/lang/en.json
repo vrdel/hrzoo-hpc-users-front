@@ -71,6 +71,10 @@
     "defaultMessage": "Persons:",
     "description": "generalproject-persons"
   },
+  "1MRvzG": {
+    "defaultMessage": "Please contact us",
+    "description": "saml2-not-allowed-alertmulti-2"
+  },
   "1YGy6A": {
     "defaultMessage": "Type:",
     "description": "generalproject-type"
@@ -723,6 +727,10 @@
     "defaultMessage": "Institutional project",
     "description": "requesttype-label-institutional"
   },
+  "NsHq0r": {
+    "defaultMessage": "Advanced Computing",
+    "description": "saml2-not-allowed-cardtitle"
+  },
   "OMuyxE": {
     "defaultMessage": "You are registered as a collaborator on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
     "description": "newrequest-reason-alreadyassociate"
@@ -982,6 +990,10 @@
   "a62iXN": {
     "defaultMessage": "Registration unsuccessful: You are registered as a collaborator on research projects in the CroRIS system",
     "description": "email-invite-registered-associate-croris"
+  },
+  "aAbUGj": {
+    "defaultMessage": "Login with regular AAI@EduHR account",
+    "description": "saml2-not-allowed-button-label-regular"
   },
   "aPSUqH": {
     "defaultMessage": "Remark:",
@@ -1479,6 +1491,10 @@
     "defaultMessage": "Terms of Use of Advanced Computing service",
     "description": "loginofficial-terms"
   },
+  "vuGizy": {
+    "defaultMessage": "eduGAIN authentication failed.",
+    "description": "saml2-not-allowed-alertmulti-1"
+  },
   "w+EuNz": {
     "defaultMessage": "Send invitation links",
     "description": "users-table-general-invite-send"
@@ -1522,6 +1538,10 @@
   "yQX1Hw": {
     "defaultMessage": "users",
     "description": "userlist-pagination"
+  },
+  "yaVl1p": {
+    "defaultMessage": "Authentication with <b>eduGAIN AAI@EduHR</b> <mark>is not permitted</mark>. Please proceed with <b>regular AAI@EduHR</b> authentication.",
+    "description": "saml2-not-allowed-alertregular"
   },
   "ygZapL": {
     "defaultMessage": "Active",

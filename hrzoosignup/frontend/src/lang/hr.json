@@ -71,6 +71,10 @@
     "defaultMessage": "Osobe:",
     "description": "generalproject-persons"
   },
+  "1MRvzG": {
+    "defaultMessage": "Molimo obratite se na",
+    "description": "saml2-not-allowed-alertmulti-2"
+  },
   "1YGy6A": {
     "defaultMessage": "Vrsta:",
     "description": "generalproject-type"
@@ -723,6 +727,10 @@
     "defaultMessage": "Institucijski projekt",
     "description": "requesttype-label-institutional"
   },
+  "NsHq0r": {
+    "defaultMessage": "Napredno računanje",
+    "description": "saml2-not-allowed-cardtitle"
+  },
   "OMuyxE": {
     "defaultMessage": "Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
     "description": "newrequest-reason-alreadyassociate"
@@ -982,6 +990,10 @@
   "a62iXN": {
     "defaultMessage": "Prijava neuspješna: Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS",
     "description": "email-invite-registered-associate-croris"
+  },
+  "aAbUGj": {
+    "defaultMessage": "Prijava s regularnim AAI@EduHR",
+    "description": "saml2-not-allowed-button-label-regular"
   },
   "aPSUqH": {
     "defaultMessage": "Napomena:",
@@ -1479,6 +1491,10 @@
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginofficial-terms"
   },
+  "vuGizy": {
+    "defaultMessage": "Autentikacija eduGAIN-om nije uspjela.",
+    "description": "saml2-not-allowed-alertmulti-1"
+  },
   "w+EuNz": {
     "defaultMessage": "Pošalji poveznice za prijavu",
     "description": "users-table-general-invite-send"
@@ -1522,6 +1538,10 @@
   "yQX1Hw": {
     "defaultMessage": "korisnika",
     "description": "userlist-pagination"
+  },
+  "yaVl1p": {
+    "defaultMessage": "Autentikacija s <b>eduGAIN AAI@EduHR</b> <mark>nije dozvoljena</mark>. Molimo nastavite dalje s <b>regularnom AAI@EduHR</b> autentikacijom.",
+    "description": "saml2-not-allowed-alertregular"
   },
   "ygZapL": {
     "defaultMessage": "Aktivan",

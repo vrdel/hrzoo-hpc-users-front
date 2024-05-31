@@ -14,24 +14,43 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import 'Styles/login-official.css';
 import { useParams } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 
 const AlertRegular= () =>
   <>
     <Alert color="danger">
       <p className="fs-4 mb-4 text-center">
-        Autentikacija s <b>eduGAIN AAI@EduHR</b> <mark>nije dozvoljena</mark>. Molimo nastavite dalje s <b>regularnom AAI@EduHR</b> autentikacijom.
+        <FormattedMessage
+          defaultMessage="Autentikacija s <b>eduGAIN AAI@EduHR</b> <mark>nije dozvoljena</mark>. Molimo nastavite dalje s <b>regularnom AAI@EduHR</b> autentikacijom."
+          description="saml2-not-allowed-alertregular"
+          values={{
+            b: (chunks) => <b>{chunks}</b>,
+            mark: (chunks) => <mark>{chunks}</mark>
+          }}
+        />
       </p>
     </Alert>
-    <a className="btn mt-5 fs-3 btn-success btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>Prijava s regularnim AAI@EduHR</a>
+    <a className="btn mt-5 fs-3 btn-success btn-lg btn-block" style={{width: '100%'}} role="button" href= {`/saml2/login`}>
+      <FormattedMessage
+        defaultMessage="Prijava s regularnim AAI@EduHR"
+        description="saml2-not-allowed-button-label-regular"
+      />
+    </a>
   </>
 
 
 const AlertMultiple = () =>
   <Alert color="danger">
     <p className="fs-4 mb-4 text-center">
-      Autentikacija eduGAIN-om nije uspjela.
-      Molimo obratite se na <a href="mailto:computing.srce.hr">computing@srce.hr</a>
+      <FormattedMessage
+        defaultMessage="Autentikacija eduGAIN-om nije uspjela."
+        description="saml2-not-allowed-alertmulti-1"
+      />
+      <FormattedMessage
+        defaultMessage="Molimo obratite se na"
+        description="saml2-not-allowed-alertmulti-2"
+      /> <a href="mailto:computing.srce.hr">computing@srce.hr</a>
     </p>
   </Alert>
 
@@ -53,7 +72,14 @@ const Saml2NotAllowed = () => {
               className="d-sm-inline-flex align-items-center justify-content-center"
             >
               <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
-              <h4 className="ps-5 ms-5 text-dark"><strong>Napredno računanje</strong></h4>
+              <h4 className="ps-5 ms-5 text-dark">
+                <strong>
+                  <FormattedMessage
+                    defaultMessage="Napredno računanje"
+                    description="saml2-not-allowed-cardtitle"
+                  />
+                </strong>
+              </h4>
             </CardHeader>
             <CardBody className="pt-5 pb-5">
               {
