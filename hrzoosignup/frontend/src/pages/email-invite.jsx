@@ -3,7 +3,7 @@ import { Col, Row,
   Button,
   Alert, Container,
   Card, CardHeader,
-  CardBody, Progress } from 'reactstrap';
+  CardBody, CardFooter, Progress } from 'reactstrap';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from 'Components/AuthContextProvider';
@@ -15,7 +15,9 @@ import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
 import { url_ui_prefix } from 'Config/general';
-import {FormattedMessage, useIntl} from 'react-intl'
+import { IntlContext } from 'Components/IntlContextProvider';
+import { FormattedMessage, useIntl } from 'react-intl'
+import { LanguageButtonLogin } from 'Components/LocaleButton';
 
 
 const EmailInvitation = ({sessionData=undefined}) => {
@@ -26,6 +28,7 @@ const EmailInvitation = ({sessionData=undefined}) => {
   const [inviteAlertSuccess, setInviteAlertSucces] = useState(false);
   const [customMessage, setCustomMessage] = useState(undefined);
   const [progress, setProgress] = useState(0);
+  const { locale, setLocale } = useContext(IntlContext)
   const intl = useIntl()
 
   useEffect(() => {
@@ -51,6 +54,10 @@ const EmailInvitation = ({sessionData=undefined}) => {
       }
       else if (err.message.toLowerCase().includes("invitation code expired")) {
         setCustomMessage('Prijava neuspješna: Pozivni kod je istekao')
+        setInviteAlertFail(true)
+      }
+      else if (err.message.toLowerCase().includes("invitation for foreign collaborators")) {
+        setCustomMessage('Prijava neuspješna: Pozivnica je namijenjena stranim suradnicima koji se autenticiraju eduGAIN-om')
         setInviteAlertFail(true)
       }
       else if (err.message.toLowerCase().includes("already assigned to project")) {
@@ -190,6 +197,13 @@ const EmailInvitation = ({sessionData=undefined}) => {
                     </Col>
                   </Row>
                 </CardBody>
+                <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+                  <Row className="m-1">
+                    <Col>
+                      <LanguageButtonLogin locale={locale} setLocale={setLocale} small={true} />
+                    </Col>
+                  </Row>
+                </CardFooter>
               </Card>
             </Col>
             <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>

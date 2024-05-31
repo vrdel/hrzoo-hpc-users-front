@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { SharedData } from '../pages/root';
+import { SharedData } from 'Pages/root';
 import { Helmet } from 'react-helmet-async'
 import { useIntl } from 'react-intl'
 

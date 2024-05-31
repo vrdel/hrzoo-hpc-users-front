@@ -9,7 +9,7 @@ export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
   function alternateLocale() {
     if (locale === 'en') {
       setLocale('hr')
-      localStorage.setItem('loginLocaleSet', 'en')
+      localStorage.setItem('loginLocaleSet', 'hr')
       Cookies.set('hzsi-lang', 'hr')
     }
     else {

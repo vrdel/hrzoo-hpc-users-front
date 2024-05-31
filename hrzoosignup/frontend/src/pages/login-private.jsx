@@ -24,7 +24,7 @@ import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-
 import { useNavigate } from 'react-router-dom';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { IntlContext } from 'Components/IntlContextProvider';
-import {FormattedMessage} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 
 const LoginPrivate = ({sessionData=undefined}) => {
