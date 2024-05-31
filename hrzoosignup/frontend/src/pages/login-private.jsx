@@ -10,6 +10,7 @@ import {
   Card,
   CardHeader,
   CardBody,
+  CardFooter,
   Input,
   Label,
   Form,
@@ -159,10 +160,14 @@ const LoginPrivate = ({sessionData=undefined}) => {
                   }
                 </FormGroup>
               </Form>
-              <div className="m-2 mt-4 d-flex align-items-center justify-content-center">
-                <LanguageButtonLogin locale={locale} setLocale={setLocale} small={true} />
-              </div>
             </CardBody>
+            <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+              <Row className="m-1">
+                <Col>
+                  <LanguageButtonLogin locale={locale} setLocale={setLocale} small={true}/>
+                </Col>
+              </Row>
+            </CardFooter>
           </Card>
         </Col>
       </Row>

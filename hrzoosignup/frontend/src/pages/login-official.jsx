@@ -6,6 +6,7 @@ import {
   Row,
   Card,
   CardHeader,
+  CardFooter,
   CardBody,
 } from 'reactstrap';
 import {
@@ -54,7 +55,7 @@ const LoginOfficial = ({sessionData=undefined}) => {
                 </strong>
               </h2>
             </CardHeader>
-            <CardBody className="pt-5 pb-2">
+            <CardBody className="pt-5 pb-2 mb-4">
               <p className="fs-4 mb-4 text-center">
                 <FormattedMessage
                   description="loginofficial-termsstring"
@@ -77,10 +78,14 @@ const LoginOfficial = ({sessionData=undefined}) => {
                 :
                   ''
               }
-              <div className="m-2 mt-4 d-flex align-items-center justify-content-center">
-                <LanguageButtonLogin locale={locale} setLocale={setLocale} />
-              </div>
             </CardBody>
+            <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+              <Row className="m-1">
+                <Col>
+                  <LanguageButtonLogin locale={locale} setLocale={setLocale} />
+                </Col>
+              </Row>
+            </CardFooter>
           </Card>
         </Col>
         <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
