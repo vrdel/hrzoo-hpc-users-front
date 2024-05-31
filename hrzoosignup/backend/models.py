@@ -395,8 +395,6 @@ class ScienceSoftware(models.Model):
 def is_foreign_invite(target_email, request):
     frg_collabs = request.data.get('foreignCollaboratorEmails')
 
-    import ipdb; ipdb.set_trace()
-
     if frg_collabs:
         emails = set([collab['value'] for collab in frg_collabs])
         if target_email in emails:
@@ -465,7 +463,10 @@ class CustomInvitation(AbstractBaseInvitation):
             },
         )
 
-        email_template = "invitations/email/email_invite"
+        if invite_foreigner:
+            email_template = "invitations/email/email_invite_en"
+        else:
+            email_template = "invitations/email/email_invite"
 
         get_invitations_adapter().send_mail(email_template, self.email, ctx)
         self.sent = timezone.now()

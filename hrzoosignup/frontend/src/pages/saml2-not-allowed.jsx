@@ -49,6 +49,7 @@ const AlertMultiple = () =>
         defaultMessage="Autentikacija eduGAIN-om nije uspjela."
         description="saml2-not-allowed-alertmulti-1"
       />
+      {' '}
       <FormattedMessage
         defaultMessage="Molimo obratite se na"
         description="saml2-not-allowed-alertmulti-2"
