@@ -332,9 +332,11 @@ class Invites(APIView):
         try:
             record_invites = list()
             if proj_type.name == 'research-croris':
+                emails = [col['value'] for col in request.data['collaboratorEmails']]
+                foreign_emails = [col['value'] for col in request.data['foreignCollaboratorEmails']]
                 myoib = request.user.person_oib
                 cached = cache.get(f'{myoib}_croris')
-                if not cached:
+                if not cached and emails:
                     msg = {
                         'status': {
                             'code': status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -344,37 +346,40 @@ class Invites(APIView):
                     logger.error(msg)
                     return Response(msg, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-                emails = [col['value'] for col in request.data['collaboratorEmails']]
-                target = cached['projects_lead_users'][proj.croris_id]
-                oib_map = dict()
-                for user in target:
-                    user_email = [user['email']]
-                    if ';' in user['email']:
-                        user_email = [email.strip() for email in user['email'].split(';')]
-                    for email in user_email:
-                        oib_map.update({email: user['oib']})
-                cached_emails = set()
-                for user in target:
-                    indcache_emails = list()
-                    if ';' in user['email']:
-                        targ_emails = user['email'].split(';')
-                        for email in targ_emails:
-                            indcache_emails.append(email.strip())
-                    else:
-                        indcache_emails.append(user['email'])
-                    cached_emails.update(indcache_emails)
+                if emails:
+                    target = cached['projects_lead_users'][proj.croris_id]
+                    oib_map = dict()
+                    for user in target:
+                        user_email = [user['email']]
+                        if ';' in user['email']:
+                            user_email = [email.strip() for email in user['email'].split(';')]
+                        for email in user_email:
+                            oib_map.update({email: user['oib']})
+                    cached_emails = set()
+                    for user in target:
+                        indcache_emails = list()
+                        if ';' in user['email']:
+                            targ_emails = user['email'].split(';')
+                            for email in targ_emails:
+                                indcache_emails.append(email.strip())
+                        else:
+                            indcache_emails.append(user['email'])
+                        cached_emails.update(indcache_emails)
 
-                for email in emails:
-                    if email in cached_emails:
-                        invite = Invitation.create(email, inviter=request.user,
-                                                   project=proj,
-                                                   person_oib=oib_map[email])
-                        invite.send_invitation(request)
-                    else:
+                    for email in emails:
+                        if email in cached_emails:
+                            invite = Invitation.create(email, inviter=request.user,
+                                                       project=proj,
+                                                       person_oib=oib_map[email])
+                            invite.send_invitation(request)
+                            record_invites.append(invite)
+
+                if foreign_emails:
+                    for email in foreign_emails:
                         invite = Invitation.create(email, inviter=request.user,
                                                    project=proj)
                         invite.send_invitation(request)
-                    record_invites.append(invite)
+                        record_invites.append(invite)
 
             else:
                 emails = [col['value'] for col in request.data['collaboratorEmails']]

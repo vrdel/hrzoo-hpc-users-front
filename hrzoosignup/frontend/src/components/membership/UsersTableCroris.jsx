@@ -70,7 +70,8 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
 
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
-      collaboratorEmails: ''
+      collaboratorEmails: '',
+      foreignCollaboratorEmails: ''
     }
   });
 
@@ -693,7 +694,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                   forwardedRef={field.ref}
                                   placeholder="suradnik1@email.de ENTER/TAB suradnik2@email.uk..."
                                   fontSize="18px"
-                                  onChange={(e) => setValue('collaboratorEmails', e)}
+                                  onChange={(e) => setValue('foreignCollaboratorEmails', e)}
                                 />
                               }
                             />

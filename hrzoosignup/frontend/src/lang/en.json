@@ -236,7 +236,7 @@
     "description": "users-table-general-collabsignoff"
   },
   "7wG2D1": {
-    "defaultMessage": "Invitation successfully canceled.",
+    "defaultMessage": "Invitation successfully cancelled.",
     "description": "memberships-toast-invitecancel-ok"
   },
   "8+JF6y": {
@@ -532,7 +532,7 @@
     "description": "userlist-column-header-5-2"
   },
   "GbOJbt": {
-    "defaultMessage": "The invitation could not be canceled: {br} { error }",
+    "defaultMessage": "The invitation could not be cancelled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
   },
   "GwsDrw": {
