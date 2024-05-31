@@ -83,6 +83,11 @@ class User(AbstractUser):
         max_length=64,
         blank=True,
     )
+    person_type = models.CharField(
+        _('Local, Foreigner'),
+        max_length=32,
+        blank=True,
+    )
     person_mail = models.EmailField(
         _('Email - LDAP'),
         max_length=64,
@@ -387,6 +392,19 @@ class ScienceSoftware(models.Model):
     )
 
 
+def is_foreign_invite(target_email, request):
+    frg_collabs = request.data.get('foreignCollaboratorEmails')
+
+    import ipdb; ipdb.set_trace()
+
+    if frg_collabs:
+        emails = set([collab['value'] for collab in frg_collabs])
+        if target_email in emails:
+            return True
+
+    return False
+
+
 # picked from invitations.model and overriden it as I didn't like
 # uniqueness on email as we'll need to send multiple project invitations
 # on the same email. also added relation to project.
@@ -399,6 +417,7 @@ class CustomInvitation(AbstractBaseInvitation):
     )
     created = models.DateTimeField(verbose_name=_("created"), default=timezone.now)
     person_oib = models.CharField(_('OIB number'), max_length=11, blank=True,)
+    invtype = models.CharField(_('Invitation type'), max_length=16, blank=True)
 
     class Meta:
         unique_together = ['project', 'email']
@@ -421,6 +440,12 @@ class CustomInvitation(AbstractBaseInvitation):
         current_site = get_current_site(request)
         invite_url = reverse(app_settings.CONFIRMATION_URL_NAME, args=[self.key])
         invite_url = request.build_absolute_uri(invite_url)
+
+        invite_foreigner = is_foreign_invite(self.email, request)
+        if invite_foreigner:
+            self.invtype = 'foreign'
+        else:
+            self.invtype = 'local'
 
         ctx = kwargs
         ctx.update(
