@@ -22,9 +22,9 @@ def is_authn_via_aaieduhr(session_info):
 class SAML2Backend(Saml2Backend):
     def authenticate(self, request, session_info=None, attribute_mapping=None,
                      create_unknown_user=True, assertion_info=None, **kwargs):
-        idp_entityid = session_info["issuer"]
+        self.idp_entityid = session_info["issuer"]
 
-        if idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
+        if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
             if not settings.SAML_EDUGAINALLOWAAIEDUHR and is_authn_via_aaieduhr(session_info):
                 return None
 
@@ -125,6 +125,13 @@ class SAML2Backend(Saml2Backend):
 
             except IndexError:
                 pass
+
+        if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
+            user.person_type = 'foreign'
+            force_save = True
+        else:
+            user.person_type = 'local'
+            force_save = True
 
         return super()._update_user(user, attributes, attribute_mapping, force_save)
 
