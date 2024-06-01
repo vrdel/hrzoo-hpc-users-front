@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Col, Collapse, Row, Card, CardTitle, CardBody,
   Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { useForm, Controller } from 'react-hook-form';
-import { AuthContext } from '../../components/AuthContextProvider';
-import { CustomReactSelect, CustomCreatableSelect } from '../../components/CustomReactSelect';
+import { AuthContext } from 'Components/AuthContextProvider';
+import { CustomReactSelect, CustomCreatableSelect } from 'Components/CustomReactSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEnvelope,
@@ -12,7 +12,7 @@ import {
   faXmark,
   faKey
 } from '@fortawesome/free-solid-svg-icons';
-import { extractUsers, extractEmails, emailInInvites } from '../../utils/invites-extracts';
+import { extractUsers, extractEmails, emailInInvites } from 'Utils/invites-extracts';
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import _ from 'lodash';
