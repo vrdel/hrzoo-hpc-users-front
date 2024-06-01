@@ -8,6 +8,7 @@ from cryptography.hazmat import backends
 from cryptography.exceptions import UnsupportedAlgorithm
 from django.core.exceptions import ValidationError
 
+from django.conf import settings
 from django.utils import timezone
 from django.utils.crypto import get_random_string
 
@@ -465,8 +466,10 @@ class CustomInvitation(AbstractBaseInvitation):
 
         if invite_foreigner:
             email_template = "invitations/email/email_invite_en"
+            settings.DEFAULT_FROM_EMAIL = 'Advanced Computing <computing@srce.hr>'
         else:
             email_template = "invitations/email/email_invite"
+            settings.DEFAULT_FROM_EMAIL = 'Napredno računanje <computing@srce.hr>'
 
         get_invitations_adapter().send_mail(email_template, self.email, ctx)
         self.sent = timezone.now()

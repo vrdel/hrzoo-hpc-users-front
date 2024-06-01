@@ -219,8 +219,9 @@ INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
 INVITATIONS_INVITATION_EXPIRY = 7
 INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
+# vary this from CustomInvitation
 DEFAULT_FROM_EMAIL = 'Napredno računanje <computing@srce.hr>'
-INVITATIONS_EMAIL_SUBJECT_PREFIX = "[Napredno računanje] "
+INVITATIONS_EMAIL_SUBJECT_PREFIX = ""
 EMAIL_HOST = EMAILHOST
 EMAIL_PORT = EMAILPORT
 EMAIL_HOST_USER = EMAILUSER
