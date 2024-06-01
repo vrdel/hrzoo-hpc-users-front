@@ -690,7 +690,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           </CardTitle>
                           <CardBody className="mb-4">
                             <Controller
-                              name="collaboratorEmails"
+                              name="foreignCollaboratorEmails"
                               control={control}
                               render={ ({field}) =>
                                 <CustomCreatableSelect
