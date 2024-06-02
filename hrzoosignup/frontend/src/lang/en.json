@@ -16,7 +16,7 @@
     "description": "project-list-nameinstidres"
   },
   "//xZcz": {
-    "defaultMessage": "The number cannot be less than 1",
+    "defaultMessage": "Number cannot be less than 1",
     "description": "schema-less-1"
   },
   "/0m2o1": {
@@ -128,12 +128,16 @@
     "description": "managereq-change-minibutton-title-1"
   },
   "3DZQVv": {
-    "defaultMessage": "The request has been successfully submitted",
+    "defaultMessage": "Request has been successfully submitted",
     "description": "newrequest-toast-ok"
   },
   "3Jae8P": {
     "defaultMessage": "Resource type:",
     "description": "resourcefields-type"
+  },
+  "3VCERm": {
+    "defaultMessage": "Project could not be deleted:",
+    "description": "managereq-change-delete-fail-1"
   },
   "3afKCi": {
     "defaultMessage": "Processing of user request",
@@ -215,6 +219,14 @@
     "defaultMessage": "Request state",
     "description": "managereq-change-process-title-4"
   },
+  "6yeF5o": {
+    "defaultMessage": "Request has been successfully changed",
+    "description": "managereq-change-changed-2"
+  },
+  "73nZsu": {
+    "defaultMessage": "Request could not be changed:",
+    "description": "managereq-change-changefail-2"
+  },
   "74EuI6": {
     "defaultMessage": "Leader",
     "description": "users-table-croris-lead"
@@ -280,7 +292,7 @@
     "description": "publickeys-list-keycontent"
   },
   "9xTRRJ": {
-    "defaultMessage": "The scientist's personal identification number (MBZ) is unknown.",
+    "defaultMessage": "Scientist's personal identification number (MBZ) is unknown.",
     "description": "newrequest-reason-mbzunk"
   },
   "A5yn+p": {
@@ -447,12 +459,16 @@
     "defaultMessage": "Type",
     "description": "myreq-list-type"
   },
+  "Dx8jO/": {
+    "defaultMessage": "Request has been successfully deleted",
+    "description": "managereq-change-delete-2"
+  },
   "E1mSaj": {
     "defaultMessage": "Description:",
     "description": "generalproject-description"
   },
   "ECc0zn": {
-    "defaultMessage": "The public key could not be added: { error }",
+    "defaultMessage": "Public key could not be added: { error }",
     "description": "public-keys-add-toast-fail"
   },
   "ENvJpe": {
@@ -532,7 +548,7 @@
     "description": "userlist-column-header-5-2"
   },
   "GbOJbt": {
-    "defaultMessage": "The invitation could not be cancelled: {br} { error }",
+    "defaultMessage": "Invitation could not be cancelled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
   },
   "GwsDrw": {
@@ -608,7 +624,7 @@
     "description": "sciencesoftware-title"
   },
   "Ja7vrQ": {
-    "defaultMessage": "The project is not active, therefore it is not possible to invite collaborators",
+    "defaultMessage": "Project is not active, therefore it is not possible to invite collaborators",
     "description": "userstable-general-toast-invite-fail"
   },
   "Jbj5h7": {
@@ -668,7 +684,7 @@
     "description": "resourcefields-placeholder"
   },
   "M8y/Pt": {
-    "defaultMessage": "The project is not active, therefore it is not possible to unregister collaborators",
+    "defaultMessage": "Project is not active, therefore it is not possible to unregister collaborators",
     "description": "userstable-general-toast-invite-fail-3"
   },
   "M9jPUL": {
@@ -708,7 +724,7 @@
     "description": "email-invite-already-assigned-2"
   },
   "N1eyyE": {
-    "defaultMessage": "The comment goes without formal address and signature because they will be added automatically",
+    "defaultMessage": "Comment goes without formal address and signature because they will be added automatically",
     "description": "managereq-change-staff-comment"
   },
   "N7CK9d": {
@@ -804,7 +820,7 @@
     "description": "statusinfo"
   },
   "RDWYmx": {
-    "defaultMessage": "The request could not be submitted: { errmsg }",
+    "defaultMessage": "Request could not be submitted: { errmsg }",
     "description": "newrequest-toast-fail"
   },
   "RHg+U2": {
@@ -814,6 +830,10 @@
   "RYmgo6": {
     "defaultMessage": "Email",
     "description": "users-table-general-email"
+  },
+  "Riaumt": {
+    "defaultMessage": "Project could not be changed:",
+    "description": "managereq-change-changefail-1"
   },
   "Rp+0kw": {
     "defaultMessage": "Project is not active, therefore it is not possible to invite collaborators",
@@ -859,6 +879,10 @@
     "defaultMessage": " Assistance required with installation:",
     "description": "sciencesoftware-help"
   },
+  "TGtlDa": {
+    "defaultMessage": "Request could not be deleted:",
+    "description": "managereq-change-delete-fail-2"
+  },
   "TH7L+k": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
@@ -890,6 +914,10 @@
   "UKD/0e": {
     "defaultMessage": "Username and AAI identifier",
     "description": "userlist-column-header-3-1"
+  },
+  "UTI/E7": {
+    "defaultMessage": "Project has been successfully deleted",
+    "description": "managereq-change-delete-1"
   },
   "UWKnhL": {
     "defaultMessage": "Maximum amount of RAM per server (GB):",
@@ -988,7 +1016,7 @@
     "description": "managereq-change-approve"
   },
   "ZRMcsw": {
-    "defaultMessage": "The project is not active, therefore it is not possible to unregister collaborators",
+    "defaultMessage": "Project is not active, therefore it is not possible to unregister collaborators",
     "description": "userstable-croris-toast-invite-fail-2"
   },
   "a62iXN": {
@@ -1004,7 +1032,7 @@
     "description": "managereq-change-remark"
   },
   "aaATlq": {
-    "defaultMessage": "The lead will be notified by email about the change of status to \"Approved\" or \"Denied\".",
+    "defaultMessage": "Lead will be notified by email about the change of status to \"Approved\" or \"Denied\".",
     "description": "managereq-change-remark-msg"
   },
   "aiSJvp": {
@@ -1012,7 +1040,7 @@
     "description": "popover-requestinfo"
   },
   "bAhHuU": {
-    "defaultMessage": "The request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
+    "defaultMessage": "Request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
     "description": "newrequest-thesis-explanation"
   },
   "bDGuzC": {
@@ -1064,7 +1092,7 @@
     "description": "linktitle-newrequest-research"
   },
   "dWYd5Z": {
-    "defaultMessage": "The number cannot be greater than {number}",
+    "defaultMessage": "Number cannot be greater than {number}",
     "description": "schema-great-n"
   },
   "dn45ZP": {
@@ -1104,7 +1132,7 @@
     "description": "researchproj-cardtitle"
   },
   "fEvfkf": {
-    "defaultMessage": "The invitations have been successfully sent",
+    "defaultMessage": "Invitations have been successfully sent",
     "description": "memberships-toast-invitesok"
   },
   "fQ6rYw": {
@@ -1212,7 +1240,7 @@
     "description": "publickeys-list-actions"
   },
   "izNmIO": {
-    "defaultMessage": "The project is not active, so it is not possible to add collaborators",
+    "defaultMessage": "Project is not active, so it is not possible to add collaborators",
     "description": "userstable-general-toast-invite-fail-2"
   },
   "j/8HUp": {
@@ -1300,7 +1328,7 @@
     "description": "stateshort-extend"
   },
   "mNOzeP": {
-    "defaultMessage": "The public key could not be deleted: { error}",
+    "defaultMessage": "Public key could not be deleted: { error}",
     "description": "publickeys-list-toast-fail"
   },
   "moaMHd": {
@@ -1418,6 +1446,10 @@
   "sVu3Vi": {
     "defaultMessage": "Total amount of storage space required for the project (GB):",
     "description": "resourcefields-disk"
+  },
+  "sqPgQg": {
+    "defaultMessage": "Project has been successfully changed",
+    "description": "managereq-change-changed-1"
   },
   "srmM1B": {
     "defaultMessage": "Request has been submitted and is awaiting processing",

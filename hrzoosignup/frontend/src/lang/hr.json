@@ -135,6 +135,10 @@
     "defaultMessage": "Tip resursa:",
     "description": "resourcefields-type"
   },
+  "3VCERm": {
+    "defaultMessage": "Projekt nije bilo moguće obrisati:",
+    "description": "managereq-change-delete-fail-1"
+  },
   "3afKCi": {
     "defaultMessage": "Obrada korisničkog zahtjeva",
     "description": "managereq-change-modal-title-2"
@@ -214,6 +218,14 @@
   "6doVi6": {
     "defaultMessage": "Stanje zahtjeva",
     "description": "managereq-change-process-title-4"
+  },
+  "6yeF5o": {
+    "defaultMessage": "Zahtjev je uspješno promijenjen",
+    "description": "managereq-change-changed-2"
+  },
+  "73nZsu": {
+    "defaultMessage": "Zahtjev nije bilo moguće promijeniti:",
+    "description": "managereq-change-changefail-2"
   },
   "74EuI6": {
     "defaultMessage": "Voditelj",
@@ -446,6 +458,10 @@
   "DqpQay": {
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
+  },
+  "Dx8jO/": {
+    "defaultMessage": "Zahtjev je uspješno obrisan",
+    "description": "managereq-change-delete-2"
   },
   "E1mSaj": {
     "defaultMessage": "Opis:",
@@ -815,6 +831,10 @@
     "defaultMessage": "Email",
     "description": "users-table-general-email"
   },
+  "Riaumt": {
+    "defaultMessage": "Projekt nije bilo moguće promijeniti:",
+    "description": "managereq-change-changefail-1"
+  },
   "Rp+0kw": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće pozivati suradnike",
     "description": "userstable-croris-toast-invite-fail"
@@ -859,6 +879,10 @@
     "defaultMessage": "Potrebna pomoć pri instalaciji:",
     "description": "sciencesoftware-help"
   },
+  "TGtlDa": {
+    "defaultMessage": "Zahtjev nije bilo moguće obrisati:",
+    "description": "managereq-change-delete-fail-2"
+  },
   "TH7L+k": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
@@ -890,6 +914,10 @@
   "UKD/0e": {
     "defaultMessage": "Korisničko ime i AAI oznaka",
     "description": "userlist-column-header-3-1"
+  },
+  "UTI/E7": {
+    "defaultMessage": "Projekt je uspješno obrisan",
+    "description": "managereq-change-delete-1"
   },
   "UWKnhL": {
     "defaultMessage": "Maksimalna količina radne memorije po poslužitelju (GB):",
@@ -1418,6 +1446,10 @@
   "sVu3Vi": {
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
     "description": "resourcefields-disk"
+  },
+  "sqPgQg": {
+    "defaultMessage": "Projekt je uspješno promijenjen",
+    "description": "managereq-change-changed-1"
   },
   "srmM1B": {
     "defaultMessage": "Zahtjev je podnesen i čeka na obradu",

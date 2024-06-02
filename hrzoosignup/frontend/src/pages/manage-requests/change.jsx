@@ -471,7 +471,18 @@ export const ManageRequestsChange = ({manageProject=false}) => {
         queryClient.invalidateQueries('all-projects')
         toast.success(
           <span className="font-monospace text-dark">
-            {`${manageProject ? 'Projekt' : 'Zahtjev'} je uspješno obrisan`}
+            {
+              manageProject ?
+                intl.formatMessage({
+                  defaultMessage: "Projekt je uspješno obrisan",
+                  description: "managereq-change-delete-1"
+                })
+              :
+                intl.formatMessage({
+                  defaultMessage: "Zahtjev je uspješno obrisan",
+                  description: "managereq-change-delete-2"
+                })
+            }
           </span>, {
             toastId: 'manreq-ok-delete',
             autoClose: 2500,
@@ -483,7 +494,18 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       onError: (error) => {
         toast.error(
           <span className="font-monospace text-dark">
-            {`${manageProject ? 'Projekt' : 'Zahtjev'} nije bilo moguće obrisati:`}
+            {
+              manageProject ?
+                intl.formatMessage({
+                  defaultMessage: "Projekt nije bilo moguće obrisati:",
+                  description: "managereq-change-delete-fail-1"
+                })
+              :
+                intl.formatMessage({
+                  defaultMessage: "Zahtjev nije bilo moguće obrisati:",
+                  description: "managereq-change-delete-fail-2"
+                })
+            }
             { error.message }
           </span>, {
             toastId: 'manreq-ok-delete',
@@ -502,7 +524,18 @@ export const ManageRequestsChange = ({manageProject=false}) => {
         queryClient.invalidateQueries('change-project')
         toast.success(
           <span className="font-monospace text-dark">
-            {`${manageProject ? 'Projekt' : 'Zahtjev'} je uspješno promijenjen`}
+            {
+              manageProject ?
+                intl.formatMessage({
+                  defaultMessage: "Projekt je uspješno promijenjen",
+                  description: "managereq-change-changed-1"
+                })
+              :
+                intl.formatMessage({
+                  defaultMessage: "Zahtjev je uspješno promijenjen",
+                  description: "managereq-change-changed-2"
+                })
+            }
           </span>, {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
@@ -514,7 +547,18 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       onError: (error) => {
         toast.error(
           <span className="font-monospace text-dark">
-            {`${manageProject ? 'Projekt' : 'Zahtjev'} nije bilo moguće promijeniti:`}
+            {
+              manageProject ?
+                intl.formatMessage({
+                  defaultMessage: "Projekt nije bilo moguće promijeniti:",
+                  description: "managereq-change-changefail-1"
+                })
+              :
+                intl.formatMessage({
+                  defaultMessage: "Zahtjev nije bilo moguće promijeniti:",
+                  description: "managereq-change-changefail-2"
+                })
+            }
             { error.message }
           </span>, {
             toastId: 'manreq-ok-change',
