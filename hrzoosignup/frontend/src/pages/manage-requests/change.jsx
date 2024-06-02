@@ -1007,6 +1007,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                     aria-label="staff_comment"
                     disabled={commentDisabled}
                     type="text"
+                    placeholder={intl.formatMessage({
+                      defaultMessage: "Komentar ide bez persiranja i potpisa jer će oni biti automatski dodani",
+                      description: "managereq-change-staff-comment"
+                    })}
                     className="form-control"
                     rows="10"
                   />

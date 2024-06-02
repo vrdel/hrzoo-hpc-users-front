@@ -707,6 +707,10 @@
     "defaultMessage": "Već jeste suradnik na pozvanom projektu",
     "description": "email-invite-already-assigned-2"
   },
+  "N1eyyE": {
+    "defaultMessage": "Komentar ide bez persiranja i potpisa jer će oni biti automatski dodani",
+    "description": "managereq-change-staff-comment"
+  },
   "N7CK9d": {
     "defaultMessage": "Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom ujedno potvrđujete da prihvaćate",
     "description": "email-invite-cardbody"
@@ -872,7 +876,7 @@
     "description": "memberships-modaltitle-inviteoff"
   },
   "Te4H5V": {
-    "defaultMessage": "Odjava suradnika s projekta",
+    "defaultMessage": "Odjava suradnika sa istraživačkog projekta",
     "description": "memberships-modaltitle-signoff"
   },
   "Tu8G3o": {

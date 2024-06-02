@@ -707,6 +707,10 @@
     "defaultMessage": "You are already a collaborator on the invited project",
     "description": "email-invite-already-assigned-2"
   },
+  "N1eyyE": {
+    "defaultMessage": "The comment goes without formal address and signature because they will be added automatically",
+    "description": "managereq-change-staff-comment"
+  },
   "N7CK9d": {
     "defaultMessage": "You are invited to a project within the Advanced Computing service and by confirming, you also agree to the",
     "description": "email-invite-cardbody"
