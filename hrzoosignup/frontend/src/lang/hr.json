@@ -143,6 +143,10 @@
     "defaultMessage": "Obrada korisničkog zahtjeva",
     "description": "managereq-change-modal-title-2"
   },
+  "3m/2wB": {
+    "defaultMessage": "Stanje zahtjeva:",
+    "description": "manreq-change-request-state"
+  },
   "3xP0LN": {
     "defaultMessage": "Greška prilikom kopiranja korisničkog imena u međuspremnik",
     "description": "statusinfo-clipboard-fail"
@@ -198,6 +202,10 @@
   "5XjDto": {
     "defaultMessage": "Broj virtualnih poslužitelja:",
     "description": "cloudfields-nvm"
+  },
+  "5d/pGK": {
+    "defaultMessage": "Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.",
+    "description": "myreq-change-resource"
   },
   "6SeDVL": {
     "defaultMessage": "Odaberi email adrese suradnika iz sustava CroRIS koje želiš pozvati na projekt",
@@ -359,6 +367,14 @@
     "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
     "description": "memberships-toast-invitefail"
   },
+  "BcQHhM": {
+    "defaultMessage": "Komentar:",
+    "description": "manreq-change-comment"
+  },
+  "BeQYEd": {
+    "defaultMessage": "Vrijeme:",
+    "description": "manreq-change-time"
+  },
   "Bt2hYZ": {
     "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
     "description": "managereq-change-minibutton-title-2"
@@ -483,6 +499,10 @@
     "defaultMessage": "Prijava neuspješna: Pozivni kod je iskorišten",
     "description": "email-invite-code-used"
   },
+  "F40x+m": {
+    "defaultMessage": "Obrada korisničkog zahtjeva",
+    "description": "manreq-change-modaltitle"
+  },
   "FGgkJh": {
     "defaultMessage": "Napredno računanje - Zahtjev",
     "description": "headtitle-main"
@@ -506,6 +526,10 @@
   "FVhGIC": {
     "defaultMessage": "Period korištenja:",
     "description": "researchselected-usageperiod"
+  },
+  "FfxHuD": {
+    "defaultMessage": "Zahtjev je uspješno promijenjen",
+    "description": "manreq-change-success"
   },
   "Fm39Xq": {
     "defaultMessage": "Ime",
@@ -726,6 +750,10 @@
   "N1eyyE": {
     "defaultMessage": "Komentar ide bez persiranja i potpisa jer će oni biti automatski dodani",
     "description": "managereq-change-staff-comment"
+  },
+  "N3feiB": {
+    "defaultMessage": "Da li ste sigurni da želite mijenjati korisnički zahtjev?",
+    "description": "manreq-change-modalmsg"
   },
   "N7CK9d": {
     "defaultMessage": "Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom ujedno potvrđujete da prihvaćate",
@@ -1090,6 +1118,10 @@
   "dUFVR+": {
     "defaultMessage": "Novi zahtjev temeljem istraživačkog projekta",
     "description": "linktitle-newrequest-research"
+  },
+  "dVjgbT": {
+    "defaultMessage": "Obrada",
+    "description": "manreq-change-title"
   },
   "dWYd5Z": {
     "defaultMessage": "Broj ne može biti veći od {number}",
@@ -1467,6 +1499,10 @@
     "defaultMessage": "Ustanova:",
     "description": "generalproject-institute"
   },
+  "t2mUX7": {
+    "defaultMessage": "Zahtjev nije bilo moguće promijeniti:",
+    "description": "manreq-change-fail"
+  },
   "tC8Khg": {
     "defaultMessage": "Zahtjev je odbijen",
     "description": "statestring-deny"
@@ -1558,6 +1594,10 @@
   "xRLsQA": {
     "defaultMessage": "Podnesen",
     "description": "managereq-column-submitted"
+  },
+  "xcGRIN": {
+    "defaultMessage": "Dodijeljeni tip resursa:",
+    "description": "manreq-change-request-resources"
   },
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",

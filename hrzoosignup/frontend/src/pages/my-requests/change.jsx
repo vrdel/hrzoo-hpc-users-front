@@ -23,7 +23,7 @@ import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl } from 'react-intl'
 import { CroRisDescription } from 'Components/fields-request/GeneralFields';
-
+import { FormattedMessage } from 'react-intl'
 
 function setInitialState() {
   let newState = new Object(
@@ -162,7 +162,10 @@ export const MyRequestChange = () => {
       && (!data['staff_requestResourceType'] || data['staff_requestResourceType'].length === 0)) {
       toast.error(
         <span className="font-monospace">
-          Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.
+          <FormattedMessage
+            defaultMessage="Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa."
+            description="myreq-change-resource"
+          />
         </span>, {
           autoClose: false,
           toastId: 'manreq-change-no-reqtype',
@@ -172,8 +175,14 @@ export const MyRequestChange = () => {
     }
 
     setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Obrada korisničkog zahtijeva")
-    setModalMsg("Da li ste sigurni da želite mijenjati korisnički zahtjev?")
+    setModalTitle( intl.formatMessage({
+      defaultMessage: "Obrada korisničkog zahtjeva",
+      description: "manreq-change-modaltitle"
+    }) )
+    setModalMsg( intl.formatMessage({
+      defaultMessage: "Da li ste sigurni da želite mijenjati korisnički zahtjev?",
+      description: "manreq-change-modalmsg"
+    }) )
     setOnYesCall('dochangereq')
     setOnYesCallArg(data)
   }
@@ -190,7 +199,10 @@ export const MyRequestChange = () => {
       onSuccess: () => {
         toast.success(
           <span className="font-monospace text-dark">
-            Zahtjev je uspješno promijenjen
+            <FormattedMessage
+              defaultMessage="Zahtjev je uspješno promijenjen"
+              description="manreq-change-success"
+            />
           </span>, {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
@@ -202,7 +214,10 @@ export const MyRequestChange = () => {
       onError: (error) => {
         toast.error(
           <span className="font-monospace text-dark">
-            Zahtjev nije bilo moguće promijeniti:
+            <FormattedMessage
+              defaultMessage="Zahtjev nije bilo moguće promijeniti:"
+              description="manreq-change-fail"
+            />
             { error.message }
           </span>, {
             toastId: 'manreq-ok-change',
@@ -233,14 +248,20 @@ export const MyRequestChange = () => {
                 <Row>
                   <Col md={{size: 9}} className="mt-4 me-0">
                     <span className="ps-2 pe-2 pt-1 pb-1 fs-5 text-white ms-4 mb-4 mt-3" style={{backgroundColor: "#b04c46"}}>
-                      Obrada
+                      <FormattedMessage
+                        defaultMessage="Obrada"
+                        description="manreq-change-title"
+                      />
                     </span>
                   </Col>
                 </Row>
                 <Row className="mt-4">
                   <Col md={{size: 4}} lg={{size: 2}} className="d-flex flex-column offset-md-0 offset-lg-1 align-items-center ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
-                      Stanje zahtjeva:
+                      <FormattedMessage
+                        defaultMessage="Stanje zahtjeva:"
+                        description="manreq-change-request-state"
+                      />
                     </span>
                     <p className="fw-normal">
                       <RenderStateIcon reqState={requestState} />
@@ -248,7 +269,10 @@ export const MyRequestChange = () => {
                   </Col>
                   <Col sm={{size: 10}} md={{size: 6}} lg={{size: 3}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
-                      Dodijeljeni tip resursa:
+                      <FormattedMessage
+                        defaultMessage="Dodijeljeni tip resursa:"
+                        description="manreq-change-request-resources"
+                      />
                     </span>
                     <CustomReactSelect
                       aria-label="staff_requestResourceType"
@@ -266,7 +290,10 @@ export const MyRequestChange = () => {
                   </Col>
                   <Col md={{size: 3}} lg={{size: 2}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
-                      Vrijeme:
+                      <FormattedMessage
+                        defaultMessage="Vrijeme:"
+                        description="manreq-change-time"
+                      />
                     </span>
                     <p  className={nrProject.date_changed ? "fw-normal font-monospace fs-5" : "fw-normal fs-5"}>
                       {
@@ -285,7 +312,10 @@ export const MyRequestChange = () => {
                   </Col>
                   <Col sm={{size: 11}} md={{size: 8}} lg={{size: 4}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
-                      Komentar:
+                      <FormattedMessage
+                        defaultMessage="Komentar:"
+                        description="manreq-change-comment"
+                      />
                     </span>
                     <p className="fw-normal fs-6">
                       {

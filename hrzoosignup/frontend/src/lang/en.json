@@ -143,6 +143,10 @@
     "defaultMessage": "Processing of user request",
     "description": "managereq-change-modal-title-2"
   },
+  "3m/2wB": {
+    "defaultMessage": "Request state:",
+    "description": "manreq-change-request-state"
+  },
   "3xP0LN": {
     "defaultMessage": "Error while copying the username to the clipboard",
     "description": "statusinfo-clipboard-fail"
@@ -198,6 +202,10 @@
   "5XjDto": {
     "defaultMessage": "Number of virtual servers:",
     "description": "cloudfields-nvm"
+  },
+  "5d/pGK": {
+    "defaultMessage": "When approving the request, you must specify the type of resource allocated",
+    "description": "myreq-change-resource"
   },
   "6SeDVL": {
     "defaultMessage": "Select email addresses of collaborators from CroRIS you wish to invite to the project",
@@ -359,6 +367,14 @@
     "defaultMessage": "It was not possible to send the invitations: {br} { error }",
     "description": "memberships-toast-invitefail"
   },
+  "BcQHhM": {
+    "defaultMessage": "Comment:",
+    "description": "manreq-change-comment"
+  },
+  "BeQYEd": {
+    "defaultMessage": "Changed:",
+    "description": "manreq-change-time"
+  },
   "Bt2hYZ": {
     "defaultMessage": "User's identifier copied to the clipboard",
     "description": "managereq-change-minibutton-title-2"
@@ -483,6 +499,10 @@
     "defaultMessage": "Registration unsuccessful: The invitation code has been used",
     "description": "email-invite-code-used"
   },
+  "F40x+m": {
+    "defaultMessage": "Processing user request",
+    "description": "manreq-change-modaltitle"
+  },
   "FGgkJh": {
     "defaultMessage": "Advanced Computing - Request",
     "description": "headtitle-main"
@@ -506,6 +526,10 @@
   "FVhGIC": {
     "defaultMessage": "Usage period:",
     "description": "researchselected-usageperiod"
+  },
+  "FfxHuD": {
+    "defaultMessage": "Request has been successfully changed",
+    "description": "manreq-change-success"
   },
   "Fm39Xq": {
     "defaultMessage": "First name",
@@ -726,6 +750,10 @@
   "N1eyyE": {
     "defaultMessage": "Comment goes without formal address and signature because they will be added automatically",
     "description": "managereq-change-staff-comment"
+  },
+  "N3feiB": {
+    "defaultMessage": "Are you sure you want to change the user request?",
+    "description": "manreq-change-modalmsg"
   },
   "N7CK9d": {
     "defaultMessage": "You are invited to a project within the Advanced Computing service and by confirming, you also agree to the",
@@ -1090,6 +1118,10 @@
   "dUFVR+": {
     "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newrequest-research"
+  },
+  "dVjgbT": {
+    "defaultMessage": "Processing",
+    "description": "manreq-change-title"
   },
   "dWYd5Z": {
     "defaultMessage": "Number cannot be greater than {number}",
@@ -1467,6 +1499,10 @@
     "defaultMessage": "Institute:",
     "description": "generalproject-institute"
   },
+  "t2mUX7": {
+    "defaultMessage": "Request could not be changed:",
+    "description": "manreq-change-fail"
+  },
   "tC8Khg": {
     "defaultMessage": "Request is denied",
     "description": "statestring-deny"
@@ -1558,6 +1594,10 @@
   "xRLsQA": {
     "defaultMessage": "Submitted",
     "description": "managereq-column-submitted"
+  },
+  "xcGRIN": {
+    "defaultMessage": "Assigned resource type:",
+    "description": "manreq-change-request-resources"
   },
   "y+MIYq": {
     "defaultMessage": "Lead institution:",
