@@ -63,6 +63,10 @@
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
     "description": "linktitle-newrequest-class"
   },
+  "0ypgJm": {
+    "defaultMessage": "Znanstveno područje:",
+    "description": "scientific-domain-title"
+  },
   "12utV4": {
     "defaultMessage": "Uredi zahtjev",
     "description": "managereq-change-buttonlabel-edit-2"
@@ -266,6 +270,10 @@
   "8+JF6y": {
     "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
     "description": "userlist-minibutton-msg-3"
+  },
+  "8TkWjh": {
+    "defaultMessage": "Novo znanstveno područje",
+    "description": "scientific-domain-new-domain"
   },
   "8dPx+P": {
     "defaultMessage": "Popis aplikacija dostupnih na klasteru",
@@ -582,6 +590,10 @@
   "GbOJbt": {
     "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
+  },
+  "Gvyjsl": {
+    "defaultMessage": "Novo znanstveno polje",
+    "description": "scientific-domain-science-field"
   },
   "GwsDrw": {
     "defaultMessage": "Naziv ustanove",

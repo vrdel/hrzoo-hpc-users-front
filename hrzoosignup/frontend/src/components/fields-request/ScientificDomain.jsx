@@ -25,6 +25,8 @@ import {
   useFieldArray
 } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
+import { FormattedMessage } from 'react-intl'
+import { IntlContext } from 'Components/IntlContextProvider';
 
 
 const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
@@ -52,7 +54,10 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
           htmlFor="scientificDomain"
           aria-label="scientificDomain"
           className="mt-2 text-right form-label">
-          Znanstveno područje:
+          <FormattedMessage
+            defaultMessage="Znanstveno područje:"
+            description="scientific-domain-title"
+          />
           <span className="ms-1 fw-bold text-danger">*</span>
         </Label>
         <Row>
@@ -90,15 +95,19 @@ const AddNewScientificDomain = ({fieldsDisabled, append}) => {
         'percent': ''
       }]})}>
       <FontAwesomeIcon icon={faPlus}/>{' '}
-      Novo znanstveno područje
+      <FormattedMessage
+        defaultMessage="Novo znanstveno područje"
+        description="scientific-domain-new-domain"
+      />
     </Button>
   )
 }
 
 const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: domain_item, remove:
   domain_remove}) => {
-  const { listScientificDomain, buildOptionsFromArray } = useContext(SharedData);
+  const { listScientificDomain, listScientificDomainEn, buildOptionsFromArray } = useContext(SharedData);
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
+  const { locale } = useContext(IntlContext)
 
   const {
     fields: fields_scientificfields,
@@ -126,7 +135,11 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                 && errors.scientificDomain[domain_index]
                 && errors.scientificDomain[domain_index]['name'] ? true : false}
               onChange={(e) => setValue(`scientificDomain.${domain_index}.name`, e)}
-              options={buildOptionsFromArray(listScientificDomain)}
+              options={buildOptionsFromArray(
+                locale === 'hr'
+                ? listScientificDomain
+                : listScientificDomainEn
+              )}
               isDisabled={fieldsDisabled}
               value={getValues(`scientificDomain.${domain_index}.name`)}
               placeholder="Područje"
@@ -243,7 +256,10 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
             <Button disabled={fieldsDisabled} className="mt-3" size="sm" outline color="success" onClick={() =>
               field_append({'name': '', 'percent': ''})}>
               <FontAwesomeIcon icon={faPlus}/>{' '}
-              Novo znanstveno polje
+              <FormattedMessage
+                defaultMessage="Novo znanstveno polje"
+                description="scientific-domain-science-field"
+              />
             </Button>
           </Col>
         </Row>
@@ -254,7 +270,8 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
 
 const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => {
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
-  const { mapDomainsToFields, buildOptionsFromArray } = useContext(SharedData);
+  const { mapDomainsToFields, mapDomainsToFieldsEn, buildOptionsFromArray } = useContext(SharedData);
+  const { locale } = useContext(IntlContext)
 
   const selectedDomain = getValues(`scientificDomain.${domain_index}.name`)['value']
 
@@ -278,7 +295,11 @@ const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => 
           onChange={(e) => setValue(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`, e)}
           value={getValues(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`)}
           isDisabled={fieldsDisabled}
-          options={buildOptionsFromArray(mapDomainsToFields[selectedDomain])}
+          options={buildOptionsFromArray(
+            locale === 'hr'
+            ? mapDomainsToFields[selectedDomain]
+            : mapDomainsToFieldsEn[selectedDomain]
+          )}
           placeholder="Polje"
         />
       }

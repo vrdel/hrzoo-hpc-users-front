@@ -63,6 +63,10 @@
     "defaultMessage": "New request on behalf of practical class",
     "description": "linktitle-newrequest-class"
   },
+  "0ypgJm": {
+    "defaultMessage": "Scientific domain:",
+    "description": "scientific-domain-title"
+  },
   "12utV4": {
     "defaultMessage": "Edit request",
     "description": "managereq-change-buttonlabel-edit-2"
@@ -266,6 +270,10 @@
   "8+JF6y": {
     "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userlist-minibutton-msg-3"
+  },
+  "8TkWjh": {
+    "defaultMessage": "New scientific domain",
+    "description": "scientific-domain-new-domain"
   },
   "8dPx+P": {
     "defaultMessage": "List of scientific software available on HPC clusters",
@@ -582,6 +590,10 @@
   "GbOJbt": {
     "defaultMessage": "Invitation could not be cancelled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
+  },
+  "Gvyjsl": {
+    "defaultMessage": "New scientific field",
+    "description": "scientific-domain-science-field"
   },
   "GwsDrw": {
     "defaultMessage": "Institution",
