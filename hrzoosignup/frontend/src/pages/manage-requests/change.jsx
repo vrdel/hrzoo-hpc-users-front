@@ -782,14 +782,15 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
     sendEmailDisabled = false
     setValue('staff_emailSend', false)
   }
-  else if (requestState['approve'] && !getValues('staff_requestResourceType')) {
+  else if (requestState['approve']) {
     sendEmailDisabled = false
     setValue('staff_emailSend', true)
-    setValue('staff_requestResourceType', [
-      {
-        "label": "JUPYTER",
-        "value": "JUPYTER"
-      }
+    if (!getValues('staff_requestResourceType'))
+      setValue('staff_requestResourceType', [
+        {
+          "label": "JUPYTER",
+          "value": "JUPYTER"
+        }
     ])
   }
   else if (requestState['deny']) {
