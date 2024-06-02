@@ -279,9 +279,14 @@ class Projects(APIView):
                 p_obj.is_active = False
                 if settings.EMAIL_SEND and request.data['staff_emailSend']:
                     person_mail = lead_user.person_mail
-                    project.email_deny_project(person_mail, p_obj.name,
-                                               p_obj.project_type,
-                                               staff_comment)
+                    if lead_user.person_type == 'local':
+                        project.email_deny_project(person_mail, p_obj.name,
+                                                   p_obj.project_type,
+                                                   staff_comment)
+                    elif lead_user.person_type == 'foreign':
+                        project.email_deny_project_en(person_mail, p_obj.name,
+                                                      p_obj.project_type,
+                                                      staff_comment)
 
             if state.name == 'approve':
                 if not p_obj.approved_by:
@@ -294,8 +299,13 @@ class Projects(APIView):
                     p_obj.date_approved = timezone.now()
                 if settings.EMAIL_SEND and request.data['staff_emailSend']:
                     person_mail = lead_user.person_mail
-                    project.email_approve_project(person_mail, p_obj.name,
-                                                  p_obj.project_type)
+                    if lead_user.person_type == 'local':
+                        project.email_approve_project(person_mail, p_obj.name,
+                                                      p_obj.project_type)
+                    elif lead_user.person_type == 'foreign':
+                        project.email_approve_project_en(person_mail,
+                                                         p_obj.name,
+                                                         p_obj.project_type)
                 lead_user.status = True
                 if not lead_user.person_username:
                     lead_user.person_username = gen_username(lead_user.first_name, lead_user.last_name)

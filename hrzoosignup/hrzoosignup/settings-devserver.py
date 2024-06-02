@@ -85,6 +85,7 @@ try:
 
     EMAIL_SEND = config.getboolean('EMAIL', 'Send')
     EMAILFROM = config.get('EMAIL', 'From')
+    EMAILFROMEN = config.get('EMAIL', 'FromEn')
     EMAILUS = config.get('EMAIL', 'Us')
     EMAILSIGNATURE = config.get('EMAIL', 'Signature')
     EMAILSIGNATUREEN = config.get('EMAIL', 'SignatureEn')
@@ -155,6 +156,12 @@ try:
     EMAILSIGNATURE = open(EMAILSIGNATURE, 'r', encoding='utf-8').read()
 except FileNotFoundError as e:
     print(EMAILSIGNATURE + ': %s' % repr(e))
+    raise SystemExit(1)
+
+try:
+    EMAILSIGNATUREEN = open(EMAILSIGNATUREEN, 'r', encoding='utf-8').read()
+except FileNotFoundError as e:
+    print(EMAILSIGNATUREEN + ': %s' % repr(e))
     raise SystemExit(1)
 
 # SECURITY WARNING: keep the secret key used in production secret!

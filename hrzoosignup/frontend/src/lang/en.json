@@ -632,7 +632,7 @@
     "description": "users-table-general-registered"
   },
   "KD+onZ": {
-    "defaultMessage": "Collaborators have been successfully logged off",
+    "defaultMessage": "Collaborators have been successfully signed off",
     "description": "memberships-toast-signoff-ok"
   },
   "KSnYoa": {
@@ -872,7 +872,7 @@
     "description": "memberships-modaltitle-inviteoff"
   },
   "Te4H5V": {
-    "defaultMessage": "Removing a collaborator from the research project",
+    "defaultMessage": "Removing a collaborator from the project",
     "description": "memberships-modaltitle-signoff"
   },
   "Tu8G3o": {

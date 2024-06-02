@@ -36,13 +36,13 @@ Dear,
 The collaborator {collab.first_name} {collab.last_name} has confirmed registration for the project
 "{name}".
 
-{settings.EMAILSIGNATURE}
+{settings.EMAILSIGNATUREEN}
 """
 
     em = EmailMessage(\
         subject,
         body,
-        settings.EMAILFROM,
+        settings.EMAILFROMEN,
         [to],
         [settings.EMAILUS]
     )

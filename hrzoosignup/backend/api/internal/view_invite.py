@@ -156,8 +156,13 @@ class Invites(APIView):
                         associate_user_to_project(user, proj)
 
                         if settings.EMAIL_SEND:
-                            useremail.email_approve_membership(get_invite.inviter.person_mail,
-                                                               proj.name, user)
+                            if get_invite.inviter.person_type == 'local':
+                                useremail.email_approve_membership(get_invite.inviter.person_mail,
+                                                                   proj.name, user)
+                            elif get_invite.inviter.person_type == 'foreign':
+                                useremail.email_approve_membership_en(get_invite.inviter.person_mail,
+                                                                      proj.name,
+                                                                      user)
 
                         msg = {
                             'status': {
@@ -270,8 +275,13 @@ class Invites(APIView):
                     associate_user_to_project(user, proj)
 
                     if settings.EMAIL_SEND:
-                        useremail.email_approve_membership(get_invite.inviter.person_mail,
-                                                           proj.name, user)
+                        if get_invite.inviter.person_type == 'local':
+                            useremail.email_approve_membership(get_invite.inviter.person_mail,
+                                                               proj.name, user)
+                        elif get_invite.inviter.person_type == 'foreign':
+                            useremail.email_approve_membership_en(get_invite.inviter.person_mail,
+                                                                  proj.name,
+                                                                  user)
                     msg = {
                         'status': {
                             'code': status.HTTP_201_CREATED,

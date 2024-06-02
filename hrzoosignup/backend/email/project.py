@@ -86,3 +86,50 @@ Pogledaj prijavu: https://computing.srce.hr/ui/requests/{prident}
         [settings.EMAILUS])
 
     return em.send(fail_silently=True)
+
+
+def email_approve_project_en(to, name, prtype):
+    subject = 'Request approved'
+
+    body = \
+f"""\
+Dear,
+
+Your request to use the Advanced Computing service "{name}" has been accepted.
+
+{settings.EMAILSIGNATUREEN}
+"""
+
+    em = EmailMessage(\
+        subject,
+        body,
+        settings.EMAILFROMEN,
+        [to],
+        [settings.EMAILUS])
+
+    return em.send(fail_silently=True)
+
+
+def email_deny_project_en(to, name, prtype, comment):
+    project_type_subject = 'Request denied'
+
+    body = \
+f"""\
+Dear,
+
+Your request to use the Advanced Computing service "{name}" has been rejected with the
+following explanation:
+
+{comment}
+
+{settings.EMAILSIGNATUREEN}
+"""
+
+    em = EmailMessage(\
+        project_type_subject,
+        body,
+        settings.EMAILFROMEN,
+        [to],
+        [settings.EMAILUS])
+
+    return em.send(fail_silently=True)
