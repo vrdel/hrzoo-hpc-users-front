@@ -303,6 +303,10 @@
     "defaultMessage": "Greška prilikom kopiranja šifre projekta u međuspremnik",
     "description": "userlist-minibutton-msg-4"
   },
+  "9TGYAN": {
+    "defaultMessage": "Polje",
+    "description": "scientific-domain-placeholder-field"
+  },
   "9WQZWa": {
     "defaultMessage": "Sustav CroRIS",
     "description": "userinfo-croris-title"
@@ -751,6 +755,10 @@
     "defaultMessage": "Prijava eduGAIN",
     "description": "loginpriv-labeledugain"
   },
+  "MdU9B9": {
+    "defaultMessage": "Udio",
+    "description": "scientific-domain-placeholder-ratio"
+  },
   "MiXo4k": {
     "defaultMessage": "suradnik",
     "description": "userinfo-croris-badgecollab"
@@ -1042,6 +1050,10 @@
   "XZis0B": {
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
+  },
+  "Y+WVo0": {
+    "defaultMessage": "Područje",
+    "description": "scientific-domain-placeholder-field"
   },
   "Y5ZpM6": {
     "defaultMessage": "Već jeste sudionik pozvanog projekta",

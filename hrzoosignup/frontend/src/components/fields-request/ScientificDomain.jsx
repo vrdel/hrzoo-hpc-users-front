@@ -25,7 +25,7 @@ import {
   useFieldArray
 } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { IntlContext } from 'Components/IntlContextProvider';
 
 
@@ -108,6 +108,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
   const { listScientificDomain, listScientificDomainEn, buildOptionsFromArray } = useContext(SharedData);
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
   const { locale } = useContext(IntlContext)
+  const intl = useIntl()
 
   const {
     fields: fields_scientificfields,
@@ -142,7 +143,10 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
               )}
               isDisabled={fieldsDisabled}
               value={getValues(`scientificDomain.${domain_index}.name`)}
-              placeholder="Područje"
+              placeholder={ intl.formatMessage({
+                defaultMessage: "Područje",
+                description: "scientific-domain-placeholder-field"
+              }) }
             />
           }
         />
@@ -167,7 +171,10 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                 className={`ms-1 form-control text-center ${errors && errors.scientificDomain
                   && errors.scientificDomain[domain_index]
                   && errors.scientificDomain[domain_index]['percent'] ? "is-invalid" : ''}`}
-                placeholder="Udio"
+                placeholder={intl.formatMessage({
+                  defaultMessage: "Udio",
+                  description: "scientific-domain-placeholder-ratio"
+                })}
                 disabled={fieldsDisabled}
                 min="0"
                 max="100"
@@ -211,7 +218,10 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                           && errors.scientificDomain[domain_index]['scientificfields']
                           && errors.scientificDomain[domain_index]['scientificfields'][field_index]
                           && errors.scientificDomain[domain_index]['scientificfields'][field_index]['percent'] ? "is-invalid" : ''}`}
-                        placeholder="Udio"
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Udio",
+                          description: "scientific-domain-placeholder-ratio"
+                        })}
                         disabled={fieldsDisabled}
                         min="0"
                         max="100"
@@ -272,6 +282,7 @@ const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => 
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
   const { mapDomainsToFields, mapDomainsToFieldsEn, buildOptionsFromArray } = useContext(SharedData);
   const { locale } = useContext(IntlContext)
+  const intl = useIntl()
 
   const selectedDomain = getValues(`scientificDomain.${domain_index}.name`)['value']
 
@@ -300,7 +311,10 @@ const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => 
             ? mapDomainsToFields[selectedDomain]
             : mapDomainsToFieldsEn[selectedDomain]
           )}
-          placeholder="Polje"
+          placeholder={ intl.formatMessage({
+            defaultMessage: "Polje",
+            description: "scientific-domain-placeholder-field"
+          }) }
         />
       }
     />

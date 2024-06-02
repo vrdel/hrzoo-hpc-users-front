@@ -303,6 +303,10 @@
     "defaultMessage": "Error while copying project identifier to clipboard",
     "description": "userlist-minibutton-msg-4"
   },
+  "9TGYAN": {
+    "defaultMessage": "Field",
+    "description": "scientific-domain-placeholder-field"
+  },
   "9WQZWa": {
     "defaultMessage": "CroRIS system",
     "description": "userinfo-croris-title"
@@ -751,6 +755,10 @@
     "defaultMessage": "Login eduGAIN",
     "description": "loginpriv-labeledugain"
   },
+  "MdU9B9": {
+    "defaultMessage": "Portion",
+    "description": "scientific-domain-placeholder-ratio"
+  },
   "MiXo4k": {
     "defaultMessage": "collaborator",
     "description": "userinfo-croris-badgecollab"
@@ -1042,6 +1050,10 @@
   "XZis0B": {
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
+  },
+  "Y+WVo0": {
+    "defaultMessage": "Domain",
+    "description": "scientific-domain-placeholder-field"
   },
   "Y5ZpM6": {
     "defaultMessage": "You are already participant in invited project.",
