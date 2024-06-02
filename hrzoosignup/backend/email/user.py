@@ -24,3 +24,27 @@ suradnik {collab.first_name} {collab.last_name} je potvrdio prijavu na projekt
     )
 
     return em.send(fail_silently=True)
+
+
+def email_approve_membership_en(to, name, collab):
+    subject = "User Registration Successful"
+
+    body = \
+f"""\
+Dear,
+
+The collaborator {collab.first_name} {collab.last_name} has confirmed registration for the project
+"{name}".
+
+{settings.EMAILSIGNATURE}
+"""
+
+    em = EmailMessage(\
+        subject,
+        body,
+        settings.EMAILFROM,
+        [to],
+        [settings.EMAILUS]
+    )
+
+    return em.send(fail_silently=True)
