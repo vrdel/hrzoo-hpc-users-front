@@ -205,7 +205,7 @@ class Command(BaseCommand):
 
         if options['person_type']:
             user.person_type = options['person_type']
-            self.stdout.write('Set person_type for user to {}'.format(options['person_type']))
+            self.stdout.write('Set person_type for user {} to {}'.format(user.username, options['person_type']))
 
         user.save()
 

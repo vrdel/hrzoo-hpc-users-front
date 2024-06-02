@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {
   Controller,
   useFormContext
@@ -17,6 +17,7 @@ import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain'
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
 import { FormattedMessage } from 'react-intl';
+import { IntlContext } from 'Components/IntlContextProvider';
 
 
 const GeneralProjectUsers = ({projectInfo}) => {
@@ -241,6 +242,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
   const [endDate, setEndDate] = useState('')
+  const { locale } = useContext(IntlContext)
 
   const personInstitution = getValues('requestInstitute')
 
@@ -368,7 +370,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
               rules={{required: true}}
               render={ ({field}) =>
                 <DatePicker
-                  locale="hr-HR"
+                  locale={locale === 'hr' ? 'hr-HR' : 'en-US'}
                   forwardedRef={field.ref}
                   disabled={disabledRemain}
                   maxDate={new Date(2027, 1)}
@@ -415,7 +417,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                           setValue('endDate', '')
                       }}
                       maxDate={new Date(2027, 1)}
-                      locale="hr-HR"
+                      locale={locale === 'hr' ? 'hr-HR' : 'en-US'}
                       value={field.value}
                       className={`ms-0 ms-md-0 ms-xl-0 ms-xxl-3 ms-sm-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
                     />
@@ -426,7 +428,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                   required={true}
                   disabled={true}
                   maxDate={new Date(2027, 1)}
-                  locale="hr-HR"
+                  locale="en-US"
                   value={endDate}
                   className="ms-0 ms-xxl-3 ms-xl-0 ms-sm-3 ms-md-0"
                 />
