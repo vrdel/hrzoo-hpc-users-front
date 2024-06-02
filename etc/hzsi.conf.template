@@ -65,6 +65,7 @@ Send = True
 From = Napredno računanje <computing@srce.hr>
 Us = isabella-dezurni@srce.hr
 Signature = %(VENV)s/etc/hrzoosignup/signature
+SignatureEn = %(VENV)s/etc/hrzoosignup/signature_en
 Host = smtp.srce.hr
 Port = 25
 User =

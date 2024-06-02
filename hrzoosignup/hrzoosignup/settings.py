@@ -87,6 +87,7 @@ try:
     EMAILFROM = config.get('EMAIL', 'From')
     EMAILUS = config.get('EMAIL', 'Us')
     EMAILSIGNATURE = config.get('EMAIL', 'Signature')
+    EMAILSIGNATUREEN = config.get('EMAIL', 'SignatureEn')
     EMAILHOST = config.get('EMAIL', 'Host')
     EMAILPORT = config.getint('EMAIL', 'Port')
     EMAILUSER = config.get('EMAIL', 'User')
