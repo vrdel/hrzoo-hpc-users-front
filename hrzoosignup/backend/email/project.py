@@ -74,7 +74,7 @@ Naziv: {name}
 
 Voditelj: {lead.first_name} {lead.last_name}
 
-Pogledaj prijavu: https://computing.srce.hr/ui/zahtjevi/{prident}
+Pogledaj prijavu: https://computing.srce.hr/ui/requests/{prident}
 
 {settings.EMAILSIGNATURE}
 """
