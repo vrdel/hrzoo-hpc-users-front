@@ -24,7 +24,7 @@
     "description": "myreq-list-actions"
   },
   "/4hBqG": {
-    "defaultMessage": "User's identifier copied to the clipboard",
+    "defaultMessage": "User's identifier copied to clipboard",
     "description": "userlist-minibutton-title-3"
   },
   "/8epZ+": {
@@ -48,7 +48,7 @@
     "description": "users-table-general-collaborator-foreign"
   },
   "09Nk19": {
-    "defaultMessage": "Paste the public key component (id_rsa.pub) into the form or upload it from a file on local disk",
+    "defaultMessage": "Paste the public key component (id_rsa.pub) into the form or upload it from file on local disk",
     "description": "publickeys-add-remarkmsg"
   },
   "0KXCeo": {
@@ -100,7 +100,7 @@
     "description": "email-invite-failed"
   },
   "2LPtd3": {
-    "defaultMessage": "Enter the email addresses of the collaborators you wish to invite to the project",
+    "defaultMessage": "Enter the email addresses of the collaborators you wish to invite to project",
     "description": "users-table-general-cardtitle-1"
   },
   "2OMlOQ": {
@@ -116,7 +116,7 @@
     "description": "managereq-placeholder-choose"
   },
   "2nzsgl": {
-    "defaultMessage": "You have already gained access based on a research project in the CroRIS system.",
+    "defaultMessage": "You have already gained access based on research project in CroRIS system.",
     "description": "newrequest-reason-alreadycroris"
   },
   "2oEnoX": {
@@ -124,7 +124,7 @@
     "description": "publickeys-list-label-add"
   },
   "30mjoO": {
-    "defaultMessage": "User's email copied to the clipboard",
+    "defaultMessage": "User's email copied to clipboard",
     "description": "managereq-change-minibutton-title-1"
   },
   "3DZQVv": {
@@ -148,11 +148,11 @@
     "description": "manreq-change-request-state"
   },
   "3xP0LN": {
-    "defaultMessage": "Error while copying the username to the clipboard",
+    "defaultMessage": "Error while copying username to clipboard",
     "description": "statusinfo-clipboard-fail"
   },
   "3zl000": {
-    "defaultMessage": "Are you sure you want to add the listed collaborators to the project?",
+    "defaultMessage": "Are you sure you want to add listed collaborators to project?",
     "description": "memberships-modalmsg-internal"
   },
   "4CJjmv": {
@@ -160,7 +160,7 @@
     "description": "userinfo-croris-lastname"
   },
   "4GOam0": {
-    "defaultMessage": "Project's identifier copied to the clipboard",
+    "defaultMessage": "Project's identifier copied to clipboard",
     "description": "userlist-minibutton-title-4"
   },
   "4jM+Ca": {
@@ -204,7 +204,7 @@
     "description": "cloudfields-nvm"
   },
   "5d/pGK": {
-    "defaultMessage": "When approving the request, you must specify the type of resource allocated",
+    "defaultMessage": "When approving request, you must specify type of resource allocated",
     "description": "myreq-change-resource"
   },
   "6IgwvN": {
@@ -212,7 +212,7 @@
     "description": "project-type-instit"
   },
   "6SeDVL": {
-    "defaultMessage": "Select email addresses of collaborators from CroRIS you wish to invite to the project",
+    "defaultMessage": "Select email addresses of collaborators from CroRIS you wish to invite to project",
     "description": "users-table-croris-cardtitle-1"
   },
   "6V4xYT": {
@@ -244,7 +244,7 @@
     "description": "users-table-croris-lead"
   },
   "7FtUKh": {
-    "defaultMessage": "User identifiers of the collaborators you want on the project",
+    "defaultMessage": "User identifiers of collaborators you want on project",
     "description": "users-table-general-cardtitle-2"
   },
   "7GLux1": {
@@ -252,7 +252,7 @@
     "description": "resourcefields-ram"
   },
   "7oHfZW": {
-    "defaultMessage": "Error while copying user's email to the clipboard",
+    "defaultMessage": "Error while copying user's email to clipboard",
     "description": "managereq-change-minibutton-msg-1"
   },
   "7umJYg": {
@@ -264,7 +264,7 @@
     "description": "memberships-toast-invitecancel-ok"
   },
   "8+JF6y": {
-    "defaultMessage": "Error while copying user's identifier to the clipboard",
+    "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userlist-minibutton-msg-3"
   },
   "8dPx+P": {
@@ -292,7 +292,7 @@
     "description": "loginpriv-error"
   },
   "9Dxntz": {
-    "defaultMessage": "Error while copying the project identifier to the clipboard",
+    "defaultMessage": "Error while copying project identifier to clipboard",
     "description": "userlist-minibutton-msg-4"
   },
   "9WQZWa": {
@@ -308,7 +308,7 @@
     "description": "newrequest-reason-mbzunk"
   },
   "A5yn+p": {
-    "defaultMessage": "When approving the project, you must specify your allocation of the assigned resource type.",
+    "defaultMessage": "When approving project, you must specify your allocation of assigned resource type.",
     "description": "managereq-change-toast-msg1"
   },
   "A9dlqP": {
@@ -324,7 +324,7 @@
     "description": "memberships-toast-internal-collaboratorsok"
   },
   "AX+E3h": {
-    "defaultMessage": "Registration unsuccessful: You are registered as a lead researcher on projects within the CroRIS system",
+    "defaultMessage": "Registration unsuccessful: You are registered as lead researcher on projects within CroRIS system",
     "description": "email-invite-registered-leader-croris"
   },
   "Aa0C40": {
@@ -344,7 +344,7 @@
     "description": "project-list-resources"
   },
   "AuAPIM": {
-    "defaultMessage": "Sending invitations for a research project",
+    "defaultMessage": "Sending invitations for research project",
     "description": "memberships-modaltitle-research"
   },
   "AyezMg": {
@@ -368,7 +368,7 @@
     "description": "pagetitle-replace"
   },
   "BC++9m": {
-    "defaultMessage": "It was not possible to send the invitations: {br} { error }",
+    "defaultMessage": "It was not possible to send invitations: {br} { error }",
     "description": "memberships-toast-invitefail"
   },
   "BcQHhM": {
@@ -380,7 +380,7 @@
     "description": "manreq-change-time"
   },
   "Bt2hYZ": {
-    "defaultMessage": "User's identifier copied to the clipboard",
+    "defaultMessage": "User's identifier copied to clipboard",
     "description": "managereq-change-minibutton-title-2"
   },
   "ByrMw3": {
@@ -388,11 +388,11 @@
     "description": "userslist-column-header-1"
   },
   "BzHbow": {
-    "defaultMessage": "There are no active projects in the CroRIS system in which the user participates",
+    "defaultMessage": "There are no active projects in CroRIS system in which user participates",
     "description": "userinfo-croris-tablefoot-userview-no"
   },
   "C5xc0q": {
-    "defaultMessage": "Active projects registered in the CroRIS system that the user participates in",
+    "defaultMessage": "Active projects registered in CroRIS system that user participates in",
     "description": "userinfo-croris-tablefoot-userview"
   },
   "C6FjhE": {
@@ -404,7 +404,7 @@
     "description": "userins-lastname"
   },
   "CYLEcB": {
-    "defaultMessage": "It was not possible to remove the collaborators: {br} { error }",
+    "defaultMessage": "It was not possible to remove collaborators: {br} { error }",
     "description": "memberships-toast-signoff-fail"
   },
   "CbN4qY": {
@@ -416,7 +416,7 @@
     "description": "cloudfields-nips"
   },
   "CiICth": {
-    "defaultMessage": "Username copied into the clipboard",
+    "defaultMessage": "Username copied into clipboard",
     "description": "statusinfo-clipboard-ok"
   },
   "CiaQiU": {
@@ -444,7 +444,7 @@
     "description": "managereq-change-deny"
   },
   "D7Y1AH": {
-    "defaultMessage": "Send email to the leader",
+    "defaultMessage": "Send email to leader",
     "description": "managereq-change-email-manager"
   },
   "DEfFmS": {
@@ -460,7 +460,7 @@
     "description": "myreq-list-identifier"
   },
   "DJm+Ci": {
-    "defaultMessage": "Error while copying user's identifier to the clipboard",
+    "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "managereq-change-minibutton-msg-2"
   },
   "DXST2s": {
@@ -500,7 +500,7 @@
     "description": "stateshort-approved"
   },
   "Eob6Ei": {
-    "defaultMessage": "Registration unsuccessful: The invitation code has been used",
+    "defaultMessage": "Registration unsuccessful: Invitation code has been used",
     "description": "email-invite-code-used"
   },
   "F40x+m": {
@@ -552,7 +552,7 @@
     "description": "navigation-modalquestion"
   },
   "FwpVLM": {
-    "defaultMessage": "There is no data from the CroRIS system",
+    "defaultMessage": "There is no data from CroRIS system",
     "description": "userinfo-croris-nodata"
   },
   "Fz1XrJ": {
@@ -596,7 +596,7 @@
     "description": "memberships-user-email"
   },
   "HJxPuz": {
-    "defaultMessage": "User's identifier copied to the clipboard",
+    "defaultMessage": "User's identifier copied to clipboard",
     "description": "usersins-clipboard-ok"
   },
   "HcOwzH": {
@@ -628,7 +628,7 @@
     "description": "cloudfields-nfastdiskgb"
   },
   "IOuMna": {
-    "defaultMessage": "username copied to the clipboard",
+    "defaultMessage": "username copied to clipboard",
     "description": "userlist-minibutton-title-2"
   },
   "IP7pZp": {
@@ -672,7 +672,7 @@
     "description": "users-table-croris-invite-send"
   },
   "K9dABU": {
-    "defaultMessage": "Registration unsuccessful: The invitation is intended for foreign collaborators who authenticate using eduGAIN",
+    "defaultMessage": "Registration unsuccessful: Invitation is intended for foreign collaborators who authenticate using eduGAIN",
     "description": "email-invite-fail-edugain"
   },
   "KAUZl8": {
@@ -708,7 +708,7 @@
     "description": "statestringuser-expire"
   },
   "LSB0GB": {
-    "defaultMessage": "When denying the project, you must state the reason.",
+    "defaultMessage": "When denying project, you must state the reason.",
     "description": "managereq-change-toast-msg3"
   },
   "Lb7qIs": {
@@ -724,7 +724,7 @@
     "description": "userstable-general-toast-invite-fail-3"
   },
   "M9jPUL": {
-    "defaultMessage": "Error while copying the public key to the clipboard",
+    "defaultMessage": "Error while copying public key to clipboard",
     "description": "publickeys-list-keycopy-fail"
   },
   "MGR8er": {
@@ -756,7 +756,7 @@
     "description": "users-table-croris-signoff"
   },
   "MzXg8R": {
-    "defaultMessage": "You are already a collaborator on the invited project",
+    "defaultMessage": "You are already a collaborator on invited project",
     "description": "email-invite-already-assigned-2"
   },
   "N1eyyE": {
@@ -764,11 +764,11 @@
     "description": "managereq-change-staff-comment"
   },
   "N3feiB": {
-    "defaultMessage": "Are you sure you want to change the user request?",
+    "defaultMessage": "Are you sure you want to change user request?",
     "description": "manreq-change-modalmsg"
   },
   "N7CK9d": {
-    "defaultMessage": "You are invited to a project within the Advanced Computing service and by confirming, you also agree to the",
+    "defaultMessage": "You are invited to project within the Advanced Computing service and by confirming, you also agree to the",
     "description": "email-invite-cardbody"
   },
   "NF44j4": {
@@ -792,7 +792,7 @@
     "description": "saml2-not-allowed-cardtitle"
   },
   "OMuyxE": {
-    "defaultMessage": "You are registered as a collaborator on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
+    "defaultMessage": "You are registered as collaborator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadyassociate"
   },
   "Oi5CPK": {
@@ -800,7 +800,7 @@
     "description": "requesttype-label-internal"
   },
   "OqGoEt": {
-    "defaultMessage": "Error while copying user's email to the clipboard",
+    "defaultMessage": "Error while copying user's email to clipboard",
     "description": "userlist-minibutton-msg-1"
   },
   "OtDaFD": {
@@ -812,7 +812,7 @@
     "description": "navigation-title"
   },
   "P+pTgU": {
-    "defaultMessage": "Email copied to the clipboard",
+    "defaultMessage": "Email copied to clipboard",
     "description": "userlist-minibutton-title-1"
   },
   "PCIZl3": {
@@ -848,7 +848,7 @@
     "description": "userinfo-croris-url"
   },
   "QL5paw": {
-    "defaultMessage": "There is no data for the user in the CroRIS system",
+    "defaultMessage": "There is no data for user in CroRIS system",
     "description": "userinfo-croris-nouserdata"
   },
   "QTwRj9": {
@@ -944,7 +944,7 @@
     "description": "memberships-modaltitle-inviteoff"
   },
   "Te4H5V": {
-    "defaultMessage": "Removing a collaborator from the project",
+    "defaultMessage": "Removing collaborator from project",
     "description": "memberships-modaltitle-signoff"
   },
   "Tu8G3o": {
@@ -976,7 +976,7 @@
     "description": "users-table-general-confirm"
   },
   "UrjVbG": {
-    "defaultMessage": "It was not possible to add the collaborators: {br} { error }",
+    "defaultMessage": "It was not possible to add collaborators: {br} { error }",
     "description": "memberships-toast-internal-collaboratorsfail"
   },
   "V//ozu": {
@@ -1008,7 +1008,7 @@
     "description": "loginoffical-terms"
   },
   "WL9MPg": {
-    "defaultMessage": "There are no users signed up for the project",
+    "defaultMessage": "There are no users signed up for project",
     "description": "userlist-emptytable-msg-2"
   },
   "WVblfa": {
@@ -1024,7 +1024,7 @@
     "description": "memberships-user-lastname"
   },
   "WwITbA": {
-    "defaultMessage": "When approving the request, you must specify the type of resource allocated.",
+    "defaultMessage": "When approving request, you must specify type of resource allocated.",
     "description": "managereq-change-toast-msg2"
   },
   "XZis0B": {
@@ -1032,7 +1032,7 @@
     "description": "public-keys-add-toast-ok"
   },
   "Y5ZpM6": {
-    "defaultMessage": "You are already a participant in the invited project.",
+    "defaultMessage": "You are already participant in invited project.",
     "description": "email-invite-already-assigned-1"
   },
   "YFbSAM": {
@@ -1064,7 +1064,7 @@
     "description": "userstable-croris-toast-invite-fail-2"
   },
   "a62iXN": {
-    "defaultMessage": "Registration unsuccessful: You are registered as a collaborator on research projects in the CroRIS system",
+    "defaultMessage": "Registration unsuccessful: You are registered as collaborator on research projects in the CroRIS system",
     "description": "email-invite-registered-associate-croris"
   },
   "aAbUGj": {
@@ -1084,7 +1084,7 @@
     "description": "popover-requestinfo"
   },
   "bAhHuU": {
-    "defaultMessage": "Request \"Thesis project\" pertains to the production of bachelor's, master's, and doctoral theses and is submitted by a mentor. Upon approval of the request, the mentor invites the student or doctoral candidate to the project.",
+    "defaultMessage": "Request \"Thesis project\" pertains to production of bachelor's, master's, and doctoral theses and is submitted by mentor. Upon approval of the request, the mentor invites student or doctoral candidate to project.",
     "description": "newrequest-thesis-explanation"
   },
   "bDGuzC": {
@@ -1184,7 +1184,7 @@
     "description": "memberships-toast-invitesok"
   },
   "fQ6rYw": {
-    "defaultMessage": "Are you sure you want to remove the selected collaborators?",
+    "defaultMessage": "Are you sure you want to remove selected collaborators?",
     "description": "memberships-modalmsg-signoff"
   },
   "fnW5dN": {
@@ -1204,7 +1204,7 @@
     "description": "users-table-croris-collabsignoff"
   },
   "gC8Wnk": {
-    "defaultMessage": "Registration unsuccessful: You have already gained access through a research project in the CroRIS system",
+    "defaultMessage": "Registration unsuccessful: You have already gained access through research project in the CroRIS system",
     "description": "email-invite-fail-access-already-granted-research-project"
   },
   "gGPZfo": {
@@ -1244,11 +1244,11 @@
     "description": "managereq-change-extend"
   },
   "h78Eiu": {
-    "defaultMessage": "You are registered as a leader on research projects in the CroRIS system. Please visit the \"My info\" page for more details.",
+    "defaultMessage": "You are registered as leader on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
   },
   "hDbgbW": {
-    "defaultMessage": "There are no active projects in the CroRIS system that you are participating in",
+    "defaultMessage": "There are no active projects in CroRIS system that you are participating in",
     "description": "userinfo-croris-tablefoot-meview-no"
   },
   "hJ2xID": {
@@ -1396,7 +1396,7 @@
     "description": "project-type-thesis"
   },
   "moaMHd": {
-    "defaultMessage": "User's email copied to the clipboard",
+    "defaultMessage": "User's email copied to clipboard",
     "description": "userinfo-croris-clipboard-ok"
   },
   "n32QyA": {
@@ -1412,7 +1412,7 @@
     "description": "generalfields-duration"
   },
   "nLyu7f": {
-    "defaultMessage": "Are you sure you want to add the public key?",
+    "defaultMessage": "Are you sure you want to add public key?",
     "description": "publickeys-add-modalmsg"
   },
   "nwVFCQ": {
@@ -1424,7 +1424,7 @@
     "description": "managereq-change-modaldelete-msg"
   },
   "o7+x5+": {
-    "defaultMessage": "When denying the request, you must provide a reason.",
+    "defaultMessage": "When denying request, you must provide reason.",
     "description": "managereq-change-toast-msg4"
   },
   "oRqoRe": {
@@ -1440,15 +1440,15 @@
     "description": "newrequest-norequest-selected"
   },
   "p+6Cku": {
-    "defaultMessage": "Are you sure you want to submit a new request?",
+    "defaultMessage": "Are you sure you want to submit new request?",
     "description": "newrequest-modalmsg"
   },
   "p5j48z": {
-    "defaultMessage": "Enter the email addresses of foreign collaborators you wish to invite to the project",
+    "defaultMessage": "Enter email addresses of foreign collaborators you wish to invite to project",
     "description": "users-table-croris-cardtitle-2"
   },
   "p6s1xb": {
-    "defaultMessage": "Name of the Institution",
+    "defaultMessage": "Name of Institution",
     "description": "userins-institution"
   },
   "pFrauD": {
@@ -1456,7 +1456,7 @@
     "description": "linktitle-pubkeys"
   },
   "pK6D9K": {
-    "defaultMessage": "Error while copying username to the clipboard",
+    "defaultMessage": "Error while copying username to clipboard",
     "description": "userlist-minibutton-msg-2"
   },
   "pO80G/": {
@@ -1476,7 +1476,7 @@
     "description": "schema-mandatory"
   },
   "q711/n": {
-    "defaultMessage": "Error while copying the user's email to the clipboard",
+    "defaultMessage": "Error while copying user's email to clipboard",
     "description": "userinfo-croris-clipboard-fail"
   },
   "qFLN1G": {
@@ -1488,7 +1488,7 @@
     "description": "statusinfo-tooltipactive-2"
   },
   "qtP2pc": {
-    "defaultMessage": "Error while copying the project identifier to the clipboard",
+    "defaultMessage": "Error while copying project identifier to clipboard",
     "description": "memberships-clipboard-fail"
   },
   "r/Gb5S": {
@@ -1496,11 +1496,11 @@
     "description": "managereq-column-type"
   },
   "r3CoR2": {
-    "defaultMessage": "Adding a public key",
+    "defaultMessage": "Adding public key",
     "description": "publickeys-add-modaltitle"
   },
   "r9kEbs": {
-    "defaultMessage": "Active projects registered in the CroRIS system that you are participating in",
+    "defaultMessage": "Active projects registered in CroRIS system that you are participating in",
     "description": "userinfo-croris-tablefoot-meview"
   },
   "rZtsm+": {
@@ -1508,7 +1508,7 @@
     "description": "resourcefields-title"
   },
   "sVu3Vi": {
-    "defaultMessage": "Total amount of storage space required for the project (GB):",
+    "defaultMessage": "Total amount of storage space required for project (GB):",
     "description": "resourcefields-disk"
   },
   "sqPgQg": {
@@ -1548,11 +1548,11 @@
     "description": "researchselected-explain"
   },
   "toXzY7": {
-    "defaultMessage": "Request identifier copied to the clipboard",
+    "defaultMessage": "Request identifier copied to clipboard",
     "description": "managereq-minibutton-title"
   },
   "u25Zo7": {
-    "defaultMessage": "Error while copying request identifier to the clipboard",
+    "defaultMessage": "Error while copying request identifier to clipboard",
     "description": "managereq-minibutton-msg"
   },
   "u3ZDMZ": {
@@ -1620,7 +1620,7 @@
     "description": "managereq-change-userident"
   },
   "xGaESM": {
-    "defaultMessage": "Error while copying user's identifier to the clipboard",
+    "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userins-clipboard-fail"
   },
   "xRLsQA": {
@@ -1668,7 +1668,7 @@
     "description": "navlinks-myinfo"
   },
   "zORxCj": {
-    "defaultMessage": "Are you sure you want to send invitations to the provided email addresses?",
+    "defaultMessage": "Are you sure you want to send invitations to provided email addresses?",
     "description": "memberships-modalmsg-invite"
   },
   "zSKRJA": {
@@ -1676,11 +1676,11 @@
     "description": "managereq-change-changed"
   },
   "zba6wi": {
-    "defaultMessage": "Some collaborators have already been added to the project: {br} { error }",
+    "defaultMessage": "Some collaborators have already been added to project: {br} { error }",
     "description": "memberships-toast-internal-alreadyadded"
   },
   "ziaUjB": {
-    "defaultMessage": "You do not have any projects registered in the CroRIS system",
+    "defaultMessage": "You do not have any projects registered in CroRIS system",
     "description": "newrequest-no-researchproject"
   },
   "zz+Gai": {
