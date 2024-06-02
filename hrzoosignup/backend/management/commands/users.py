@@ -50,7 +50,8 @@ class Command(BaseCommand):
                 status=False,
                 person_institution=' '.join(options['institution']),
                 person_organisation=options['organisation'],
-                person_affiliation='zaposlenik'
+                person_affiliation='zaposlenik',
+                person_type=options['person_type']
             )
             self.stdout.write('Created user {}'.format(user.username))
             cache.delete("usersinfoinactive-get")
@@ -202,6 +203,10 @@ class Command(BaseCommand):
             user.set_password(options['password'])
             self.stdout.write('Set password for user')
 
+        if options['person_type']:
+            user.person_type = options['person_type']
+            self.stdout.write('Set person_type for user to {}'.format(options['person_type']))
+
         user.save()
 
     def _user_delete(self, options):
@@ -287,6 +292,8 @@ class Command(BaseCommand):
         parser_create.add_argument('--key-name', dest='keyname', type=str, default='', nargs='+',
                                    required=False, help='SSH key name')
         parser_create.add_argument('--person-username', dest='person_username', action='store_true', default=False, required=False, help='Generate person_username from first and last name')
+        parser_create.add_argument('--person-type', dest='person_type', type=str, default='local',
+                                   required=False, help="User is local or foreign")
 
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
         parser_delete.add_argument('--username', dest='username', type=str,
@@ -314,6 +321,8 @@ class Command(BaseCommand):
                                    required=False, help='OIB of the user')
         parser_update.add_argument('--password', dest='password', type=str, default='',
                                    required=False, help='Password for the user')
+        parser_update.add_argument('--person-type', dest='person_type', type=str, default='',
+                                   required=False, help="User is local or foreign")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
