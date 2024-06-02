@@ -207,6 +207,10 @@
     "defaultMessage": "When approving the request, you must specify the type of resource allocated",
     "description": "myreq-change-resource"
   },
+  "6IgwvN": {
+    "defaultMessage": "Institutional{br}project",
+    "description": "project-type-instit"
+  },
   "6SeDVL": {
     "defaultMessage": "Select email addresses of collaborators from CroRIS you wish to invite to the project",
     "description": "users-table-croris-cardtitle-1"
@@ -607,6 +611,10 @@
     "defaultMessage": "No requests meet the search criteria",
     "description": "managereq-emptytable-msg-1"
   },
+  "HshEqf": {
+    "defaultMessage": "Research{br}project",
+    "description": "project-type-research"
+  },
   "Hw6hON": {
     "defaultMessage": "First name",
     "description": "users-table-croris-firstname"
@@ -858,6 +866,10 @@
   "RHg+U2": {
     "defaultMessage": "Delete user's request",
     "description": "managereq-change-modaldelete-title"
+  },
+  "RQCJvV": {
+    "defaultMessage": "Practical{br}class",
+    "description": "project-type-practical"
   },
   "RYmgo6": {
     "defaultMessage": "Email",
@@ -1263,6 +1275,10 @@
     "defaultMessage": "Collaborator",
     "description": "users-table-general-collaborator"
   },
+  "iDW2N0": {
+    "defaultMessage": "Srce{br}workshop",
+    "description": "project-type-workshop"
+  },
   "iDrBFO": {
     "defaultMessage": "Select",
     "description": "managereq-change-choose"
@@ -1327,6 +1343,10 @@
     "defaultMessage": "Confirm",
     "description": "email-invite-accept"
   },
+  "l/AzBt": {
+    "defaultMessage": "Internal{br}project",
+    "description": "project-type-internal"
+  },
   "lD0Ggq": {
     "defaultMessage": "My requests",
     "description": "navlinks-myrequests"
@@ -1370,6 +1390,10 @@
   "mNOzeP": {
     "defaultMessage": "Public key could not be deleted: { error}",
     "description": "publickeys-list-toast-fail"
+  },
+  "md/SoN": {
+    "defaultMessage": "Thesis project",
+    "description": "project-type-thesis"
   },
   "moaMHd": {
     "defaultMessage": "User's email copied to the clipboard",
