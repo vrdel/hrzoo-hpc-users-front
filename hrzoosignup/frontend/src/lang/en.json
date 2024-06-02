@@ -531,6 +531,10 @@
     "defaultMessage": "Request has been successfully changed",
     "description": "manreq-change-success"
   },
+  "Fl00VD": {
+    "defaultMessage": "collab1@email.de ENTER/TAB collab2@email.uk...",
+    "description": "users-table-croris-placeholder-2"
+  },
   "Fm39Xq": {
     "defaultMessage": "First name",
     "description": "userins-firstname"
@@ -1170,6 +1174,10 @@
   "fQ6rYw": {
     "defaultMessage": "Are you sure you want to remove the selected collaborators?",
     "description": "memberships-modalmsg-signoff"
+  },
+  "fnW5dN": {
+    "defaultMessage": "Select...",
+    "description": "users-table-croris-placeholder-1"
   },
   "fqbo7A": {
     "defaultMessage": "projects",

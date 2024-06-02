@@ -15,6 +15,7 @@ import {
 import { extractUsers, extractEmails, emailInInvites } from 'Utils/invites-extracts';
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl'
 import _ from 'lodash';
 
 
@@ -28,6 +29,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   alreadyJoined.forEach(user => oibsJoined.add(user['user']['person_oib']))
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
+  const intl = useIntl()
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -652,7 +654,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 <CustomReactSelect
                                   name="collaboratorEmails"
                                   forwardedRef={field.ref}
-                                  placeholder="Odaberi..."
+                                  placeholder={intl.formatMessage({
+                                    defaultMessage: "Odaberi...",
+                                    description: "users-table-croris-placeholder-1"
+                                  })}
                                   closeMenuOnSelect={false}
                                   collaboratorsFixedMultiValue
                                   isMulti
@@ -696,7 +701,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 <CustomCreatableSelect
                                   name="collaboratorEmails"
                                   forwardedRef={field.ref}
-                                  placeholder="suradnik1@email.de ENTER/TAB suradnik2@email.uk..."
+                                  placeholder={intl.formatMessage({
+                                    defaultMessage: "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
+                                    description: "users-table-croris-placeholder-2"
+                                  })}
                                   fontSize="18px"
                                   onChange={(e) => setValue('foreignCollaboratorEmails', e)}
                                 />

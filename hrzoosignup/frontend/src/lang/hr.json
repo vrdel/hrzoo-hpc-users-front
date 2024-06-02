@@ -531,6 +531,10 @@
     "defaultMessage": "Zahtjev je uspješno promijenjen",
     "description": "manreq-change-success"
   },
+  "Fl00VD": {
+    "defaultMessage": "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
+    "description": "users-table-croris-placeholder-2"
+  },
   "Fm39Xq": {
     "defaultMessage": "Ime",
     "description": "userins-firstname"
@@ -1170,6 +1174,10 @@
   "fQ6rYw": {
     "defaultMessage": "Da li ste sigurni da želite odjaviti označene suradnike?",
     "description": "memberships-modalmsg-signoff"
+  },
+  "fnW5dN": {
+    "defaultMessage": "Odaberi...",
+    "description": "users-table-croris-placeholder-1"
   },
   "fqbo7A": {
     "defaultMessage": "projekata",
