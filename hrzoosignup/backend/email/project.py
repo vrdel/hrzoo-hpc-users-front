@@ -3,7 +3,7 @@ from django.core.mail import EmailMessage
 
 
 def email_approve_project(to, name, prtype):
-    subject = '[Napredno računanje] Zahtjev odobren'
+    subject = 'Zahtjev odobren'
 
     body = \
 f"""\
@@ -25,7 +25,7 @@ vaš zahtjev za korištenje usluge Napredno računanje "{name}" je prihvaćen.
 
 
 def email_deny_project(to, name, prtype, comment):
-    project_type_subject = '[Napredno računanje] Zahtjev nije odobren'
+    project_type_subject = 'Zahtjev nije odobren'
 
     body = \
 f"""\
@@ -80,7 +80,7 @@ Pogledaj prijavu: https://computing.srce.hr/ui/zahtjevi/{prident}
 """
 
     em = EmailMessage(\
-        '[Napredno računanje] Prijava ' + project_type_subject,
+        'Prijava ' + project_type_subject,
         body,
         settings.EMAILFROM,
         [settings.EMAILUS])

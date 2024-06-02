@@ -3,7 +3,7 @@ from django.core.mail import EmailMessage
 
 
 def email_add_sshkey(user):
-    subject = "[Napredno računanje] Dodan novi javni ključ"
+    subject = "Dodan novi javni ključ"
 
     body = \
 f"""\
