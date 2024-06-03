@@ -70,12 +70,12 @@ const Saml2NotAllowed = () => {
         </Col>
         <Col lg={{size: 6}} md={{size: 8}}>
           <Row className="m-lg-4 p-lg-4 m-md-3 p-md-3 m-sm-1 p-sm-1"/>
-          <Card className="shadow-lg">
+          <Card className="shadow-lg" style={{minWidth: '550px'}}>
             <CardHeader
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-center"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
+              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
               <h4 className="ps-5 ms-5 text-dark">
                 <strong>
                   <FormattedMessage
