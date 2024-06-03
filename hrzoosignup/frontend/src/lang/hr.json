@@ -395,6 +395,10 @@
     "defaultMessage": "Vrijeme:",
     "description": "manreq-change-time"
   },
+  "Bj7/HV": {
+    "defaultMessage": "Prijava neuspješna: Pozivnica je namijenjena domaćim suradnicima koji se autenticiraju s regularnim AAI@EduHR",
+    "description": "email-invite-fail-local-edugain"
+  },
   "Bt2hYZ": {
     "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
     "description": "managereq-change-minibutton-title-2"

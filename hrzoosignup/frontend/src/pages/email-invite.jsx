@@ -69,6 +69,13 @@ const EmailInvitation = ({sessionData=undefined}) => {
         }))
         setInviteAlertFail(true)
       }
+      else if (err.message.toLowerCase().includes("invitation for local collaborators")) {
+        setCustomMessage(intl.formatMessage({
+          defaultMessage: "Prijava neuspješna: Pozivnica je namijenjena domaćim suradnicima koji se autenticiraju s regularnim AAI@EduHR",
+          description: "email-invite-fail-local-edugain"
+        }))
+        setInviteAlertFail(true)
+      }
       else if (err.message.toLowerCase().includes("already assigned to project")) {
         setCustomMessage(intl.formatMessage({
           defaultMessage: 'Već jeste sudionik pozvanog projekta',

@@ -395,6 +395,10 @@
     "defaultMessage": "Changed:",
     "description": "manreq-change-time"
   },
+  "Bj7/HV": {
+    "defaultMessage": "Registration unsuccessful: Invitation is intended for domestic collaborators who authenticate with regular AAI@EduHR credentials",
+    "description": "email-invite-fail-local-edugain"
+  },
   "Bt2hYZ": {
     "defaultMessage": "User's identifier copied to clipboard",
     "description": "managereq-change-minibutton-title-2"
