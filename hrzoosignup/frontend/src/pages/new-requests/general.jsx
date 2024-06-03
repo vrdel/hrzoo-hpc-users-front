@@ -432,7 +432,13 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
           <RequestHorizontalRuler />
           <Row className="mt-2 mb-5 text-center">
             <Col>
-              <Button size="lg" color="success" id="submit-button" type="submit">
+              <Button
+                disabled={userDetails.person_type === 'foreign'}
+                size="lg"
+                color="success"
+                id="submit-button"
+                type="submit"
+              >
                 <FontAwesomeIcon icon={faFile}/>{' '}
                 <FormattedMessage
                   defaultMessage="Podnesi zahtjev"
