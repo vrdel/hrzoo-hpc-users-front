@@ -30,11 +30,11 @@ class SAML2Backend(Saml2Backend):
 
             attributes = session_info['ava']
             user_model = get_user_model()
-            first_name = attributes.get('givenName', None)
-            last_name = attributes.get('sn', None)
-            username = attributes.get('eduPersonPrincipalName', None)
-            email = attributes.get('mail', None)
-            affiliation = attributes.get('eduPersonAffiliation', None)
+            first_name = attributes.get('givenName', '')
+            last_name = attributes.get('sn', '')
+            username = attributes.get('eduPersonPrincipalName', '')
+            email = attributes.get('mail', '')
+            affiliation = attributes.get('eduPersonAffiliation', '')
             if isinstance(first_name, list):
                 first_name = first_name[0]
             if isinstance(last_name, list):
