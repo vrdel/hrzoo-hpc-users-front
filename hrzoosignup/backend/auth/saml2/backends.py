@@ -34,6 +34,7 @@ class SAML2Backend(Saml2Backend):
             last_name = attributes.get('sn', '')
             username = attributes.get('eduPersonPrincipalName', '')
             email = attributes.get('mail', '')
+            institute = attributes.get('o', '')
             affiliation = attributes.get('eduPersonAffiliation', '')
             if isinstance(first_name, list):
                 first_name = first_name[0]
@@ -43,6 +44,10 @@ class SAML2Backend(Saml2Backend):
                 username = username[0]
             if isinstance(affiliation, list):
                 affiliation = affiliation[0]
+            if isinstance(institute, list):
+                institute = institute[0]
+            if isinstance(email, list):
+                person_email = email[0]
 
             if settings.DEBUG:
                 logger.debug('SAML2Backend.authenticate()')
@@ -88,7 +93,8 @@ class SAML2Backend(Saml2Backend):
                         person_uniqueid=username,
                         status=False,
                         mailinglist_subscribe=False,
-                        person_mail=email,
+                        person_mail=person_email,
+                        person_institution=institute,
                         person_affiliation=affiliation
                     )
                     return user_new
