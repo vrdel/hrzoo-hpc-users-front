@@ -31,6 +31,16 @@ class ProjectsGeneral(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        if request.user.person_type == 'foreign':
+            err_status = status.HTTP_401_UNAUTHORIZED
+            err_response = {
+                'status': {
+                    'code': err_status,
+                    'message': 'Not allowed to submit project'
+                }
+            }
+            return Response(err_response, status=err_status)
+
         state_obj = models.State.objects.get(name=request.data['state'])
 
         request.data['state'] = state_obj.pk
