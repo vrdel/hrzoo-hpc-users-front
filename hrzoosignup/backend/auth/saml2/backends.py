@@ -44,6 +44,10 @@ class SAML2Backend(Saml2Backend):
             if isinstance(affiliation, list):
                 affiliation = affiliation[0]
 
+            if settings.DEBUG:
+                logger.debug('SAML2Backend.authenticate()')
+                logger.debug(session_info)
+
             try:
                 if isinstance(email, list):
                     nm = len(email)
