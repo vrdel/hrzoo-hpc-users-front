@@ -83,6 +83,10 @@
     "defaultMessage": "Vrsta:",
     "description": "generalproject-type"
   },
+  "1cK4mi": {
+    "defaultMessage": "Financijer:",
+    "description": "croris-description-financier"
+  },
   "1r5OsY": {
     "defaultMessage": "Korisničko ime",
     "description": "statusinfo-username"
@@ -1058,6 +1062,10 @@
   "Y+WVo0": {
     "defaultMessage": "Područje",
     "description": "scientific-domain-placeholder-field"
+  },
+  "Y3cAAt": {
+    "defaultMessage": "Opis projekta iz sustava CroRIS",
+    "description": "croris-description-title"
   },
   "Y5ZpM6": {
     "defaultMessage": "Već jeste sudionik pozvanog projekta",

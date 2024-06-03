@@ -504,7 +504,12 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
     <>
       <Row className="mt-2">
         <Col>
-          <h4 className="ms-4 mb-3 mt-4">Opis projekta iz sustava CroRIS</h4><br/>
+          <h4 className="ms-4 mb-3 mt-4">
+            <FormattedMessage
+              defaultMessage="Opis projekta iz sustava CroRIS"
+              description="croris-description-title"
+            />
+          </h4><br/>
         </Col>
       </Row>
       <Row className="mt-1 mb-4">
@@ -545,7 +550,11 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
       </Row>
       <Row className="mt-3">
         <Col md={{offset: 1, size: 11}}>
-          Financijer:{' '}
+          <FormattedMessage
+            defaultMessage="Financijer:"
+            description="croris-description-financier"
+          />
+          {' '}
           <span className="fst-italic">
             {
               crorisFinance.length > 1

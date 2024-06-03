@@ -83,6 +83,10 @@
     "defaultMessage": "Type:",
     "description": "generalproject-type"
   },
+  "1cK4mi": {
+    "defaultMessage": "Financier:",
+    "description": "croris-description-financier"
+  },
   "1r5OsY": {
     "defaultMessage": "Username",
     "description": "statusinfo-username"
@@ -1058,6 +1062,10 @@
   "Y+WVo0": {
     "defaultMessage": "Domain",
     "description": "scientific-domain-placeholder-field"
+  },
+  "Y3cAAt": {
+    "defaultMessage": "Description of project from CroRIS system",
+    "description": "croris-description-title"
   },
   "Y5ZpM6": {
     "defaultMessage": "You are already participant in invited project.",
