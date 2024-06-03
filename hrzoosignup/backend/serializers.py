@@ -226,6 +226,7 @@ class UsersSerializer(serializers.ModelSerializer):
             'person_organisation',
             'person_uniqueid',
             'person_username',
+            'person_type',
             'pk',
             'status',
             'username',

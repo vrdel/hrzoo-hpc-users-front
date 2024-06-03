@@ -216,6 +216,18 @@ const NewRequest = () => {
                     autoClose: 2500,
                   }
                 )
+              else if (userDetails.person_type === 'foreign')
+                toast.warn(
+                  <span className="font-monospace text-dark">
+                    <FormattedMessage
+                      defaultMessage="Strani istraživači za sada nemaju mogućnost podnošenja zahtjeva"
+                      description="newrequest-foreign-not-allowed"
+                    />
+                  </span>, {
+                    toastId: 'newreq-no-croris-data',
+                    autoClose: 2500,
+                  }
+                )
               else
                 navigate(selectedProject.value)
             }}

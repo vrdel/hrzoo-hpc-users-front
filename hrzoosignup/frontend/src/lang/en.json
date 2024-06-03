@@ -887,6 +887,10 @@
     "defaultMessage": "Delete user's request",
     "description": "managereq-change-modaldelete-title"
   },
+  "ROsLaq": {
+    "defaultMessage": "Foreign researchers currently do not have the ability to submit applications",
+    "description": "newrequest-foreign-not-allowed"
+  },
   "RQCJvV": {
     "defaultMessage": "Practical{br}class",
     "description": "project-type-practical"
