@@ -124,6 +124,19 @@ class Invites(APIView):
                 inv_type = get_invite.invtype or 'local'
                 proj_type = models.ProjectType.objects.get(project=proj)
 
+                # invitation is only for local collaborators
+                if inv_type == 'local' and edugain_authn:
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_400_BAD_REQUEST,
+                            'message': '{} - Invitation for local collaborators'.format(request.user.username)
+                        }
+                    }
+                    logger.error(msg)
+                    get_invite.accepted = False
+                    get_invite.save()
+                    return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
                 # foreign collaborators must authn via eduGAIN
                 if proj_type.name == 'research-croris' and inv_type == 'foreign' and not edugain_authn:
                     msg = {
