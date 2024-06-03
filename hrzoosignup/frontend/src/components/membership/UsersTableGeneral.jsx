@@ -508,7 +508,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               <CustomCreatableSelect
                                 name="collaboratorEmails"
                                 forwardedRef={field.ref}
-                                placeholder="suradnik1@email.hr ENTER/TAB suradnik2@email.hr..."
+                                placeholder={intl.formatMessage({
+                                  defaultMessage: "suradnik1@email.hr ENTER/TAB suradnik2@email.hr...",
+                                  description: "users-table-general-placeholder-2"
+                                })}
                                 fontSize="18px"
                                 onChange={(e) => setValue('collaboratorEmails', e)}
                               />

@@ -1411,6 +1411,10 @@
     "defaultMessage": "Obrada",
     "description": "managereq-change-process"
   },
+  "ls2Wx0": {
+    "defaultMessage": "suradnik1@email.hr ENTER/TAB suradnik2@email.hr...",
+    "description": "users-table-general-placeholder-2"
+  },
   "m1ElhA": {
     "defaultMessage": "Uloga",
     "description": "memberships-user-role"

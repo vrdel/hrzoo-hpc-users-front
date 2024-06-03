@@ -1411,6 +1411,10 @@
     "defaultMessage": "Processing",
     "description": "managereq-change-process"
   },
+  "ls2Wx0": {
+    "defaultMessage": "collab1@email.hr ENTER/TAB collab2@email.hr...",
+    "description": "users-table-general-placeholder-2"
+  },
   "m1ElhA": {
     "defaultMessage": "Role",
     "description": "memberships-user-role"
