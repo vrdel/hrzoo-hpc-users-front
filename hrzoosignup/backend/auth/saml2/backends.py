@@ -4,6 +4,7 @@ from django.conf import settings
 
 from backend.models import CrorisInstitutions
 from backend.utils.various import flatten
+from unidecode import unidecode
 
 import logging
 
@@ -54,53 +55,39 @@ class SAML2Backend(Saml2Backend):
                 logger.debug(session_info)
 
             try:
-                if isinstance(email, list):
-                    nm = len(email)
-                    i = 1
-                    for mail in email:
-                        try:
-                            user_found = user_model.objects.get(person_mail=mail)
-                            if user_found:
-                                break
-                        except user_model.DoesNotExist as exc:
-                            if i == nm:
-                                raise exc
-                            else:
-                                i += 1
-                                pass
+                all_names = user_model.objects.all().values_list('first_name', 'last_name')
+                all_names = set([
+                    (unidecode(first_name.lower()), unidecode(last_name.lower()))
+                    for first_name, last_name in all_names
+                ])
+                if (unidecode(first_name.lower()), unidecode(last_name.lower())) in all_names:
+                    logger.error('SAML2Backend.authenticate() - Failed eduGAIN login: first_name and last_name already found in DB')
+                    logger.error(attributes)
+                    request.saml2_backend_multiple = True
+                    return None
 
-                else:
-                    user_found = user_model.objects.get(person_mail=email)
-
+                user_found = user_model.objects.get(first_name=first_name, last_name=last_name)
                 if user_found:
                     self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
                 if self.user_can_authenticate(user_found):
                     return user_found
 
             except user_model.DoesNotExist:
-                try:
-                    user_found = user_model.objects.get(first_name=first_name, last_name=last_name)
-                    if user_found:
-                        self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
-                    if self.user_can_authenticate(user_found):
-                        return user_found
-
-                except user_model.DoesNotExist:
-                    user_new = user_model.objects.create(
-                        first_name=first_name,
-                        last_name=last_name,
-                        username=username,
-                        person_uniqueid=username,
-                        status=False,
-                        mailinglist_subscribe=False,
-                        person_mail=person_email,
-                        person_institution=institute,
-                        person_affiliation=affiliation
-                    )
-                    return user_new
+                user_new = user_model.objects.create(
+                    first_name=first_name,
+                    last_name=last_name,
+                    username=username,
+                    person_uniqueid=username,
+                    status=False,
+                    mailinglist_subscribe=False,
+                    person_mail=person_email,
+                    person_institution=institute,
+                    person_affiliation=affiliation
+                )
+                return user_new
 
             except user_model.MultipleObjectsReturned as exc:
-                logger.error(f'Failed eduGAIN login: {attributes} - {repr(exc)}')
+                logger.error(f'SAML2Backend.authenticate() - Failed eduGAIN login: {attributes} - {repr(exc)}')
                 request.saml2_backend_multiple = True
                 return None
 
