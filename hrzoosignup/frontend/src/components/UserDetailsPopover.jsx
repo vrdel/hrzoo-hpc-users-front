@@ -3,6 +3,7 @@ import { Badge } from 'reactstrap';
 import { AuthContext } from '../components/AuthContextProvider';
 import { faCheckCircle, faStopCircle} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FormattedMessage } from 'react-intl';
 
 
 const UserDetailsPopover = () => {
@@ -18,7 +19,10 @@ const UserDetailsPopover = () => {
             </Badge>
           :
             <Badge color="success" className="mb-1 mt-1" pill>
-              Korisnik
+              <FormattedMessage
+                defaultMessage="Korisnik"
+                description="userdetails-popover-user"
+              />
             </Badge>
       }
       </div>

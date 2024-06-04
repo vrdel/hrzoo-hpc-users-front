@@ -287,6 +287,10 @@
     "defaultMessage": "Stanje zahtjeva",
     "description": "managereq-change-process-title-4"
   },
+  "6mOAPi": {
+    "defaultMessage": "Korisnik",
+    "description": "userdetails-popover-user"
+  },
   "6yeF5o": {
     "defaultMessage": "Zahtjev je uspješno promijenjen",
     "description": "managereq-change-changed-2"

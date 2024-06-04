@@ -287,6 +287,10 @@
     "defaultMessage": "Request state",
     "description": "managereq-change-process-title-4"
   },
+  "6mOAPi": {
+    "defaultMessage": "User",
+    "description": "userdetails-popover-user"
+  },
   "6yeF5o": {
     "defaultMessage": "Request has been successfully changed",
     "description": "managereq-change-changed-2"
@@ -888,7 +892,7 @@
     "description": "loginpriv-labeledugain"
   },
   "MdU9B9": {
-    "defaultMessage": "Portion",
+    "defaultMessage": "Ratio",
     "description": "scientific-domain-placeholder-ratio"
   },
   "MiXo4k": {
