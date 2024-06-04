@@ -291,6 +291,10 @@
     "defaultMessage": "Organizacijska jedinica",
     "description": "managereq-change-orgunit"
   },
+  "8nE9qL": {
+    "defaultMessage": "BIOTEHNIČKE ZNANOSTI",
+    "description": "science-domain-map-4"
+  },
   "8vx/9w": {
     "defaultMessage": "Obrada projekta",
     "description": "managereq-change-modal-title-1"
@@ -695,6 +699,10 @@
     "defaultMessage": "Dodaj suradnike",
     "description": "users-table-general-collabadd"
   },
+  "JeYCgh": {
+    "defaultMessage": "HUMANISTIČKE ZNANOSTI",
+    "description": "science-domain-map-6"
+  },
   "Jxlv/R": {
     "defaultMessage": "Pošalji poveznice za prijavu",
     "description": "users-table-croris-invite-send"
@@ -927,6 +935,10 @@
     "defaultMessage": "Stanje",
     "description": "project-list-state"
   },
+  "S4nj/n": {
+    "defaultMessage": "TEHNIČKE ZNANOSTI",
+    "description": "science-domain-map-2"
+  },
   "S8xrMw": {
     "defaultMessage": "Dodavanje suradnika na interni projekt",
     "description": "memberships-modaltitle-internal"
@@ -1146,6 +1158,10 @@
   "c2Oeo3": {
     "defaultMessage": "Email",
     "description": "users-table-croris-email"
+  },
+  "c6HZk5": {
+    "defaultMessage": "BIOMEDICINA I ZDRAVSTVO",
+    "description": "science-domain-map-3"
   },
   "c883uu": {
     "defaultMessage": "Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:",
@@ -1487,6 +1503,10 @@
     "defaultMessage": "Prijavljen",
     "description": "users-table-croris-registered"
   },
+  "odvkpW": {
+    "defaultMessage": "PRIRODNE ZNANOSTI",
+    "description": "science-domain-map-1"
+  },
   "ouf6xV": {
     "defaultMessage": "Morate odabrati jedan tip zahtjeva da biste nastavili",
     "description": "newrequest-norequest-selected"
@@ -1610,6 +1630,10 @@
   "u3ZDMZ": {
     "defaultMessage": "Pozovi CroRIS suradnike",
     "description": "users-table-croris-croris-collabcall"
+  },
+  "uW3ZtA": {
+    "defaultMessage": "DRUŠTVENE ZNANOSTI",
+    "description": "science-domain-map-5"
   },
   "udq7zq": {
     "defaultMessage": "Trajanje",

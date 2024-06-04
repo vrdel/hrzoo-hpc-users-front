@@ -1,6 +1,5 @@
-import React, { useContext } from 'react'
-import { CustomReactSelect } from '../../components/CustomReactSelect';
-import { SharedData } from '../../pages/root';
+import React from 'react'
+import { CustomReactSelect } from 'Components/CustomReactSelect';
 import {
   Card,
   CardHeader,
@@ -25,8 +24,9 @@ import {
   useFieldArray
 } from "react-hook-form";
 import { ErrorMessage } from '@hookform/error-message';
-import { FormattedMessage, useIntl } from 'react-intl'
-import { IntlContext } from 'Components/IntlContextProvider';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { buildMapDomainsToFields, buildListScientificDomain } from 'Config/scientific-domain';
+import { buildOptionsFromArray } from 'Utils/select-tools';
 
 
 const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
@@ -105,9 +105,7 @@ const AddNewScientificDomain = ({fieldsDisabled, append}) => {
 
 const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: domain_item, remove:
   domain_remove}) => {
-  const { listScientificDomain, listScientificDomainEn, buildOptionsFromArray } = useContext(SharedData);
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
-  const { locale } = useContext(IntlContext)
   const intl = useIntl()
 
   const {
@@ -136,11 +134,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                 && errors.scientificDomain[domain_index]
                 && errors.scientificDomain[domain_index]['name'] ? true : false}
               onChange={(e) => setValue(`scientificDomain.${domain_index}.name`, e)}
-              options={buildOptionsFromArray(
-                locale === 'hr'
-                ? listScientificDomain
-                : listScientificDomainEn
-              )}
+              options={buildOptionsFromArray(buildListScientificDomain(intl))}
               isDisabled={fieldsDisabled}
               value={getValues(`scientificDomain.${domain_index}.name`)}
               placeholder={ intl.formatMessage({
@@ -280,8 +274,6 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
 
 const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => {
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
-  const { mapDomainsToFields, mapDomainsToFieldsEn, buildOptionsFromArray } = useContext(SharedData);
-  const { locale } = useContext(IntlContext)
   const intl = useIntl()
 
   const selectedDomain = getValues(`scientificDomain.${domain_index}.name`)['value']
@@ -306,11 +298,7 @@ const ScientificFields = ({fieldsDisabled=false, domain_index, field_index}) => 
           onChange={(e) => setValue(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`, e)}
           value={getValues(`scientificDomain.${domain_index}.scientificfields.${field_index}.name`)}
           isDisabled={fieldsDisabled}
-          options={buildOptionsFromArray(
-            locale === 'hr'
-            ? mapDomainsToFields[selectedDomain]
-            : mapDomainsToFieldsEn[selectedDomain]
-          )}
+          options={buildOptionsFromArray(buildMapDomainsToFields(intl, selectedDomain))}
           placeholder={ intl.formatMessage({
             defaultMessage: "Polje",
             description: "scientific-domain-placeholder-field"

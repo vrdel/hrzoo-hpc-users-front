@@ -40,21 +40,86 @@ let humanitiesFields = [
   "Religijske znanosti (interdisciplinarno polje)", "Interdisciplinarne humanističke znanosti"
 ]
 
-export const listScientificDomain = [
-  "PRIRODNE ZNANOSTI", "TEHNIČKE ZNANOSTI", "BIOMEDICINA I ZDRAVSTVO",
-  "BIOTEHNIČKE ZNANOSTI", "DRUŠTVENE ZNANOSTI", "HUMANISTIČKE ZNANOSTI",
-//  "UMJETNIČKO PODRUČJE", "INTERDISCIPLINARNA PODRUČJA ZNANOSTI",
-//  "INTERDISCIPLINARNA PODRUČJA UMJETNOSTI"
-]
 
-export const mapDomainsToFields = {
-  "PRIRODNE ZNANOSTI": naturalFields,
-  "TEHNIČKE ZNANOSTI": techFields,
-  "BIOMEDICINA I ZDRAVSTVO": bioMedFields,
-  "BIOTEHNIČKE ZNANOSTI": bioTechFields,
-  "DRUŠTVENE ZNANOSTI": socialFields,
-  "HUMANISTIČKE ZNANOSTI": humanitiesFields,
-//  "UMJETNIČKO PODRUČJE": [],
-//  "INTERDISCIPLINARNA PODRUČJA ZNANOSTI": [],
-//  "INTERDISCIPLINARNA PODRUČJA UMJETNOSTI": [],
+
+export function buildListScientificDomain(intl) {
+  let prirodne_znanosti = intl.formatMessage({
+    defaultMessage: "PRIRODNE ZNANOSTI",
+    description: "science-domain-map-1"
+  })
+  let tehnicke_znanosti = intl.formatMessage({
+    defaultMessage: "TEHNIČKE ZNANOSTI",
+    description: "science-domain-map-2"
+  })
+  let biomedicina_zdravstvo = intl.formatMessage({
+    defaultMessage: "BIOMEDICINA I ZDRAVSTVO",
+    description: "science-domain-map-3"
+  })
+  let biotehnicke_znanosti = intl.formatMessage({
+    defaultMessage: "BIOTEHNIČKE ZNANOSTI",
+    description: "science-domain-map-4"
+  })
+  let drustvene_znanosti = intl.formatMessage({
+    defaultMessage: "DRUŠTVENE ZNANOSTI",
+    description: "science-domain-map-5"
+  })
+  let humanisticke_znanosti = intl.formatMessage({
+    defaultMessage: "HUMANISTIČKE ZNANOSTI",
+    description: "science-domain-map-6"
+  })
+
+  const listScientificDomain = [
+    [prirodne_znanosti],
+    [tehnicke_znanosti],
+    [biomedicina_zdravstvo],
+    [biotehnicke_znanosti],
+    [drustvene_znanosti],
+    [humanisticke_znanosti],
+  //  "UMJETNIČKO PODRUČJE", "INTERDISCIPLINARNA PODRUČJA ZNANOSTI",
+  //  "INTERDISCIPLINARNA PODRUČJA UMJETNOSTI"
+  ]
+
+  return listScientificDomain
+
+}
+
+export function buildMapDomainsToFields(intl, selectedDomain) {
+  let prirodne_znanosti = intl.formatMessage({
+    defaultMessage: "PRIRODNE ZNANOSTI",
+    description: "science-domain-map-1"
+  })
+  let tehnicke_znanosti = intl.formatMessage({
+    defaultMessage: "TEHNIČKE ZNANOSTI",
+    description: "science-domain-map-2"
+  })
+  let biomedicina_zdravstvo = intl.formatMessage({
+    defaultMessage: "BIOMEDICINA I ZDRAVSTVO",
+    description: "science-domain-map-3"
+  })
+  let biotehnicke_znanosti = intl.formatMessage({
+    defaultMessage: "BIOTEHNIČKE ZNANOSTI",
+    description: "science-domain-map-4"
+  })
+  let drustvene_znanosti = intl.formatMessage({
+    defaultMessage: "DRUŠTVENE ZNANOSTI",
+    description: "science-domain-map-5"
+  })
+  let humanisticke_znanosti = intl.formatMessage({
+    defaultMessage: "HUMANISTIČKE ZNANOSTI",
+    description: "science-domain-map-6"
+  })
+
+  const mapDomainsToFields = {
+    [prirodne_znanosti]: naturalFields,
+    [tehnicke_znanosti]: techFields,
+    [biomedicina_zdravstvo]: bioMedFields,
+    [biotehnicke_znanosti]: bioTechFields,
+    [drustvene_znanosti]: socialFields,
+    [humanisticke_znanosti]: humanitiesFields,
+  //  "UMJETNIČKO PODRUČJE": [],
+  //  "INTERDISCIPLINARNA PODRUČJA ZNANOSTI": [],
+  //  "INTERDISCIPLINARNA PODRUČJA UMJETNOSTI": [],
+  }
+
+  return mapDomainsToFields[selectedDomain]
 }
