@@ -27,6 +27,7 @@ EduGainEnable = True
 EduGainAllowAAIEduHR = False
 EduGainIdPMatch = https://edugainproxy.srce.hr/saml2/idp/
 AAIEduHRIdPMatch = https://login.aaiedu.hr
+EduGainUserMap = %(VENV)s/etc/hrzoosignup/edugain_user_map.json
 
 [SUPERUSER]
 Username = hzsi

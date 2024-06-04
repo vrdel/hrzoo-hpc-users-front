@@ -60,16 +60,27 @@ class SAML2Backend(Saml2Backend):
                 for first_name, last_name in all_names
             ])
             if (unidecode(first_name.lower()), unidecode(last_name.lower())) in all_names:
+
                 try:
                     user_found = user_model.objects.get(username=username)
-                    self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
                     if self.user_can_authenticate(user_found):
+                        self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
                         return user_found
                 except user_model.DoesNotExist:
-                    logger.error('SAML2Backend.authenticate() - Failed eduGAIN login - manual action needed: first_name and last_name already found but not with the same username')
-                    logger.error(attributes)
-                    request.saml2_backend_multiple = True
-                    return None
+                    usermapped = set([username['from'] for username in settings.SAML_MAPEDUGAIN])
+                    if username not in usermapped:
+                        logger.error('SAML2Backend.authenticate() - Failed eduGAIN login - manual action needed: first_name and last_name already found but not with the same username')
+                        logger.error(attributes)
+                        request.saml2_backend_multiple = True
+                        return None
+                    else:
+                        target_username = [mapuser for mapuser in settings.SAML_MAPEDUGAIN if mapuser['from'] == username][0]
+                        user_found = user_model.objects.get(username=target_username['to'])
+                        import ipdb; ipdb.set_trace()
+                        if self.user_can_authenticate(user_found):
+                            self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
+                            return user_found
+
             else:
                 user_new = user_model.objects.create(
                     first_name=first_name,

@@ -51,6 +51,7 @@ try:
     SAML_EDUGAINENABLE = config.getboolean('SAML2', 'EduGainEnable')
     SAML_EDUGAINIDPMATCH = config.get('SAML2', 'EduGainIdPMatch')
     SAML_AAIEDUHRIDPMATCH = config.get('SAML2', 'AAIEduHRIdPMatch')
+    SAML_EDUGAINMAP = config.get('SAML2', 'EduGainUserMap')
 
     CONNECTION_TIMEOUT = config.getint('CONNECTION', 'Timeout')
     CONNECTION_RETRY = config.getint('CONNECTION', 'Retry')
@@ -134,6 +135,13 @@ try:
         MAP_INSTITUTIONS = json.loads(fp.read())
 except FileNotFoundError as e:
     print(INSTITUTION_MAP + ': %s' % repr(e))
+    raise SystemExit(1)
+
+try:
+    with open(SAML_EDUGAINMAP, mode='r', encoding='utf-8') as fp:
+        SAML_MAPEDUGAIN = json.loads(fp.read())
+except FileNotFoundError as e:
+    print(SAML_EDUGAINMAP + ': %s' % repr(e))
     raise SystemExit(1)
 
 try:
