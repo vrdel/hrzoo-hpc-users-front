@@ -76,28 +76,30 @@ class SAML2Backend(Saml2Backend):
                         request.saml2_backend_multiple = True
                         return None
                     else:
-                        target_username = [mapuser for mapuser in settings.SAML_MAPEDUGAIN if mapuser['from'] == username][0]
-                        user_found = user_model.objects.get(username=target_username['to'])
-                        if self.user_can_authenticate(user_found):
-                            copy_edugain_map = copy.deepcopy(settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING)
-                            # remove username map so it does not get overwritten
-                            del copy_edugain_map['eduPersonPrincipalName']
-                            self._update_user(user_found, attributes, copy_edugain_map, force_save=True)
-                            return user_found
+                        target_username = [mapuser for mapuser in settings.SAML_MAPEDUGAIN if mapuser['from'] == username]
+                        if target_username:
+                            target_username = target_username[0]
+                        if target_username['to'] != 'new':
+                            user_found = user_model.objects.get(username=target_username['to'])
+                            if self.user_can_authenticate(user_found):
+                                copy_edugain_map = copy.deepcopy(settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING)
+                                # remove username map so it does not get overwritten
+                                del copy_edugain_map['eduPersonPrincipalName']
+                                self._update_user(user_found, attributes, copy_edugain_map, force_save=True)
+                                return user_found
 
-            else:
-                user_new = user_model.objects.create(
-                    first_name=first_name,
-                    last_name=last_name,
-                    username=username,
-                    person_uniqueid=username,
-                    status=False,
-                    mailinglist_subscribe=False,
-                    person_mail=person_email,
-                    person_institution=institute,
-                    person_affiliation=affiliation
-                )
-                return user_new
+            user_new = user_model.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                person_uniqueid=username,
+                status=False,
+                mailinglist_subscribe=False,
+                person_mail=person_email,
+                person_institution=institute,
+                person_affiliation=affiliation
+            )
+            return user_new
 
         else:
             return super().authenticate(request, session_info, attribute_mapping, create_unknown_user, assertion_info, **kwargs)
