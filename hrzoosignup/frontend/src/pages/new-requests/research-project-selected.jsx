@@ -35,7 +35,7 @@ import { url_ui_prefix } from 'Config/general';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';
 import { convertToAmerican } from 'Utils/dates.jsx';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import * as yup from "yup";
 import { AuthContext } from 'Components/AuthContextProvider.jsx';
 
@@ -145,6 +145,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
   const { userDetails, csrfToken } = useContext(AuthContext)
+  const intl = useIntl()
 
   const { projId } = useParams()
   const rhfProps = useForm({
@@ -286,8 +287,14 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     // alert(JSON.stringify(dataToSend, null, 2));
 
     setAreYouSureModal(!areYouSureModal)
-    setModalTitle("Podnošenje novog korisničkog zahtjeva")
-    setModalMsg("Da li ste sigurni da želite podnijeti novi zahtjev?")
+    setModalTitle(intl.formatMessage({
+      defaultMessage: "Podnošenje novog korisničkog zahtjeva",
+      description: "research-project-selected-modaltitle"
+    }))
+    setModalMsg(intl.formatMessage({
+      defaultMessage: "Da li ste sigurni da želite podnijeti novi zahtjev?",
+      description: "research-project-selected-modalmsg"
+    }))
     setOnYesCall('doaddreq')
     setOnYesCallArg(dataToSend)
   }

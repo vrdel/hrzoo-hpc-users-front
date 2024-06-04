@@ -463,6 +463,10 @@
     "defaultMessage": "Denied",
     "description": "managereq-change-deny"
   },
+  "D5H8KG": {
+    "defaultMessage": "Are you sure you want to submit new request?",
+    "description": "research-project-selected-modalmsg"
+  },
   "D7Y1AH": {
     "defaultMessage": "Send email to leader",
     "description": "managereq-change-email-manager"
@@ -1166,6 +1170,10 @@
   "dGEddM": {
     "defaultMessage": "Select",
     "description": "userlist-placeholder-choose"
+  },
+  "dHOcum": {
+    "defaultMessage": "Submission of new user request",
+    "description": "research-project-selected-modaltitle"
   },
   "dR+vCm": {
     "defaultMessage": "Inactive {br} User is not signed into any active project",
