@@ -7,6 +7,10 @@
     "defaultMessage": "Korisnička oznaka",
     "description": "userins-useridentifier"
   },
+  "+W4inD": {
+    "defaultMessage": "Filozofija",
+    "description": "science-field-51"
+  },
   "+iE1kC": {
     "defaultMessage": "Nastavi",
     "description": "newrequest-continue-label"
@@ -35,6 +39,10 @@
     "defaultMessage": "Prijava neuspješna: Pozivni kod je istekao",
     "description": "email-invite-code-expired"
   },
+  "/TwgpH": {
+    "defaultMessage": "Biologija",
+    "description": "science-field-5"
+  },
   "/dYvjB": {
     "defaultMessage": "Prezime",
     "description": "users-table-croris-lastname"
@@ -58,6 +66,10 @@
   "0NBrG+": {
     "defaultMessage": "Obrazloženje:",
     "description": "generalfields-explanation"
+  },
+  "0RKlYA": {
+    "defaultMessage": "Sigurnosne i obrambene znanosti",
+    "description": "science-field-49"
   },
   "0fF2qV": {
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
@@ -87,9 +99,17 @@
     "defaultMessage": "Financijer:",
     "description": "croris-description-financier"
   },
+  "1qh3HK": {
+    "defaultMessage": "Povijest umjetnosti",
+    "description": "science-field-55"
+  },
   "1r5OsY": {
     "defaultMessage": "Korisničko ime",
     "description": "statusinfo-username"
+  },
+  "2/Zwcg": {
+    "defaultMessage": "Geofizika",
+    "description": "science-field-6"
   },
   "23jFa3": {
     "defaultMessage": "Neaktivan {br} Niste prijavljeni ni na jedan aktivan projekt",
@@ -99,17 +119,33 @@
     "defaultMessage": "Suradnici",
     "description": "popover-projectinfo-collaborators"
   },
+  "2D+vMM": {
+    "defaultMessage": "Šumarstvo",
+    "description": "science-field-31"
+  },
   "2DZTTn": {
     "defaultMessage": "Ime",
     "description": "users-table-general-firstname"
+  },
+  "2EhfDo": {
+    "defaultMessage": "Interdisciplinarne tehničke znanosti",
+    "description": "science-field-23"
   },
   "2G5rdP": {
     "defaultMessage": "Prijava neuspješna",
     "description": "email-invite-failed"
   },
+  "2LK5hw": {
+    "defaultMessage": "Pravo",
+    "description": "science-field-38"
+  },
   "2LPtd3": {
     "defaultMessage": "Upiši email adrese suradnika koje želiš pozvati na projekt",
     "description": "users-table-general-cardtitle-1"
+  },
+  "2OIK/D": {
+    "defaultMessage": "Biotehnologija",
+    "description": "science-field-33"
   },
   "2OMlOQ": {
     "defaultMessage": "Novi zahtjev",
@@ -171,6 +207,10 @@
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
     "description": "userlist-minibutton-title-4"
   },
+  "4KdjRw": {
+    "defaultMessage": "Politologija",
+    "description": "science-field-39"
+  },
   "4jM+Ca": {
     "defaultMessage": "Uloga",
     "description": "users-table-croris-role"
@@ -195,6 +235,10 @@
     "defaultMessage": "Lozinka:",
     "description": "loginpriv-password"
   },
+  "5FyewV": {
+    "defaultMessage": "Interdisciplinarne humanističke znanosti",
+    "description": "science-field-60"
+  },
   "5HA1Kv": {
     "defaultMessage": "Novi zahtjev temeljem internog projekta",
     "description": "linktitle-newrequest-internal"
@@ -210,6 +254,10 @@
   "5XjDto": {
     "defaultMessage": "Broj virtualnih poslužitelja:",
     "description": "cloudfields-nvm"
+  },
+  "5bl62/": {
+    "defaultMessage": "Nutricionizam",
+    "description": "science-field-35"
   },
   "5d/pGK": {
     "defaultMessage": "Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.",
@@ -242,6 +290,10 @@
   "6yeF5o": {
     "defaultMessage": "Zahtjev je uspješno promijenjen",
     "description": "managereq-change-changed-2"
+  },
+  "6zlEaK": {
+    "defaultMessage": "Znanost o umjetnosti",
+    "description": "science-field-56"
   },
   "73nZsu": {
     "defaultMessage": "Zahtjev nije bilo moguće promijeniti:",
@@ -282,6 +334,10 @@
   "8dPx+P": {
     "defaultMessage": "Popis aplikacija dostupnih na klasteru",
     "description": "linktitle-software"
+  },
+  "8g6QYF": {
+    "defaultMessage": "Brodogradnja",
+    "description": "science-field-9"
   },
   "8jbyYo": {
     "defaultMessage": "Srce radionica",
@@ -391,6 +447,14 @@
     "defaultMessage": "Pozivnice nije bilo moguće poslati: {br} { error }",
     "description": "memberships-toast-invitefail"
   },
+  "BHgbqS": {
+    "defaultMessage": "Edukacijsko-rehabilitacijske znanosti",
+    "description": "science-field-44"
+  },
+  "BQvEOS": {
+    "defaultMessage": "Socijalne djelatnosti",
+    "description": "science-field-48"
+  },
   "BcQHhM": {
     "defaultMessage": "Komentar:",
     "description": "manreq-change-comment"
@@ -414,6 +478,10 @@
   "BzHbow": {
     "defaultMessage": "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
     "description": "userinfo-croris-tablefoot-userview-no"
+  },
+  "C/eBnN": {
+    "defaultMessage": "Etnologija i antropologija",
+    "description": "science-field-58"
   },
   "C5xc0q": {
     "defaultMessage": "Aktivni projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
@@ -458,6 +526,10 @@
   "D14k5Q": {
     "defaultMessage": "Dodan javni ključ",
     "description": "users-table-general-keyadd"
+  },
+  "D1nQG5": {
+    "defaultMessage": "Dentalna medicina",
+    "description": "science-field-28"
   },
   "D1wDM8": {
     "defaultMessage": "Odaberi",
@@ -519,17 +591,33 @@
     "defaultMessage": "Javni ključ nije bilo moguće dodati: { error }",
     "description": "public-keys-add-toast-fail"
   },
+  "EHi/e9": {
+    "defaultMessage": "Farmacija",
+    "description": "science-field-29"
+  },
   "ENvJpe": {
     "defaultMessage": "Ime",
     "description": "managereq-change-firstname"
+  },
+  "EdocTe": {
+    "defaultMessage": "Ekonomija",
+    "description": "science-field-37"
   },
   "Egkdj/": {
     "defaultMessage": "Odobren",
     "description": "stateshort-approved"
   },
+  "EmU9WN": {
+    "defaultMessage": "Javno zdravstvo i zdravstvena zaštita",
+    "description": "science-field-26"
+  },
   "Eob6Ei": {
     "defaultMessage": "Prijava neuspješna: Pozivni kod je iskorišten",
     "description": "email-invite-code-used"
+  },
+  "Eu2qEW": {
+    "defaultMessage": "Temeljne tehničke znanosti",
+    "description": "science-field-22"
   },
   "F40x+m": {
     "defaultMessage": "Obrada korisničkog zahtjeva",
@@ -619,6 +707,10 @@
     "defaultMessage": "Naziv ustanove",
     "description": "managereq-change-institution"
   },
+  "GyYVmo": {
+    "defaultMessage": "Zrakoplovstvo, raketna i svemirska tehnika",
+    "description": "science-field-21"
+  },
   "H5oET0": {
     "defaultMessage": "Da",
     "description": "users-table-croris-yes"
@@ -630,6 +722,10 @@
   "HJxPuz": {
     "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
     "description": "usersins-clipboard-ok"
+  },
+  "HUczW1": {
+    "defaultMessage": "Psihologija",
+    "description": "science-field-42"
   },
   "HcOwzH": {
     "defaultMessage": "Korisničko ime:",
@@ -654,6 +750,10 @@
   "I/dgYm": {
     "defaultMessage": "Trajanje:",
     "description": "generalproject-duration"
+  },
+  "IAAUkx": {
+    "defaultMessage": "Teologija",
+    "description": "science-field-52"
   },
   "IHl9i4": {
     "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):",
@@ -727,6 +827,10 @@
     "defaultMessage": "Naziv, institucija i šifra",
     "description": "managereq-column-nameinstid"
   },
+  "KT0hUG": {
+    "defaultMessage": "Demografija",
+    "description": "science-field-47"
+  },
   "KkxjH3": {
     "defaultMessage": "Uloga",
     "description": "userinfo-croris-role"
@@ -743,6 +847,10 @@
     "defaultMessage": "Istekao",
     "description": "statestringuser-expire"
   },
+  "LK4ilW": {
+    "defaultMessage": "Interdisciplinarne društvene znanosti",
+    "description": "science-field-50"
+  },
   "LSB0GB": {
     "defaultMessage": "Pri odbijanju projekta morate se izjasniti o razlogu.",
     "description": "managereq-change-toast-msg3"
@@ -750,6 +858,10 @@
   "Lb7qIs": {
     "defaultMessage": "Da",
     "description": "users-table-general-isadded"
+  },
+  "LdwVX2": {
+    "defaultMessage": "Arheologija",
+    "description": "science-field-57"
   },
   "LiONnn": {
     "defaultMessage": "Odaberi",
@@ -895,6 +1007,10 @@
     "defaultMessage": "Jedan institucijski projekt je već prijavljen",
     "description": "newrequest-reason-institutionalready"
   },
+  "QU9bH3": {
+    "defaultMessage": "Metalurgija",
+    "description": "science-field-15"
+  },
   "R7WXFa": {
     "defaultMessage": "Status",
     "description": "statusinfo"
@@ -906,6 +1022,10 @@
   "RHg+U2": {
     "defaultMessage": "Brisanje korisničkog zahtjeva",
     "description": "managereq-change-modaldelete-title"
+  },
+  "RI9sYO": {
+    "defaultMessage": "Kliničke medicinske znanosti",
+    "description": "science-field-25"
   },
   "ROsLaq": {
     "defaultMessage": "Strani istraživači za sada nemaju mogućnost podnošenja zahtjeva",
@@ -1007,6 +1127,10 @@
     "defaultMessage": "Korisničko ime i AAI oznaka",
     "description": "userlist-column-header-3-1"
   },
+  "ULnxNB": {
+    "defaultMessage": "Građevinarstvo",
+    "description": "science-field-12"
+  },
   "UTI/E7": {
     "defaultMessage": "Projekt je uspješno obrisan",
     "description": "managereq-change-delete-1"
@@ -1043,6 +1167,10 @@
     "defaultMessage": "CroRIS registracija",
     "description": "users-table-croris-crorisreg"
   },
+  "W3Nj84": {
+    "defaultMessage": "Rudarstvo, nafta i geološko inženjerstvo",
+    "description": "science-field-17"
+  },
   "W63CGG": {
     "defaultMessage": "Prijava neuspješna: Već ste prijavljeni na jedan institucijski projekt",
     "description": "email-invite-fail-already-institutional"
@@ -1058,6 +1186,10 @@
   "WL9MPg": {
     "defaultMessage": "Nema korisnika prijavljenih na projekt",
     "description": "userlist-emptytable-msg-2"
+  },
+  "WVRJHK": {
+    "defaultMessage": "Strojarstvo",
+    "description": "science-field-18"
   },
   "WVblfa": {
     "defaultMessage": "Trajanje",
@@ -1078,6 +1210,10 @@
   "XZis0B": {
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
+  },
+  "XeJRUi": {
+    "defaultMessage": "Logopedija",
+    "description": "science-field-45"
   },
   "Y+WVo0": {
     "defaultMessage": "Područje",
@@ -1131,6 +1267,10 @@
     "defaultMessage": "Napomena:",
     "description": "managereq-change-remark"
   },
+  "aUUNEi": {
+    "defaultMessage": "Arhitektura i urbanizam",
+    "description": "science-field-8"
+  },
   "aaATlq": {
     "defaultMessage": "Voditelj će biti obaviješten emailom o promjeni stanja u \"Odobren\" ili \"Odbijen\".",
     "description": "managereq-change-remark-msg"
@@ -1159,6 +1299,10 @@
     "defaultMessage": "Email",
     "description": "users-table-croris-email"
   },
+  "c5xWMn": {
+    "defaultMessage": "Tehnologija prometa i transporta",
+    "description": "science-field-19"
+  },
   "c6HZk5": {
     "defaultMessage": "BIOMEDICINA I ZDRAVSTVO",
     "description": "science-domain-map-3"
@@ -1167,6 +1311,10 @@
     "defaultMessage": "Dodatni komentar prilikom <u><i>odbijanja</i></u> zahtjeva:",
     "description": "managereq-change-extra-comment"
   },
+  "cIUsvW": {
+    "defaultMessage": "Interdisciplinarne prirodne znanosti",
+    "description": "science-field-7"
+  },
   "cNIEbm": {
     "defaultMessage": "Odaberi",
     "description": "researchproj-button-label"
@@ -1174,6 +1322,10 @@
   "cQTqIM": {
     "defaultMessage": "Novi zahtjev temeljem institucijskog projekta",
     "description": "linktitle-newrequest-institutional"
+  },
+  "cTvw8s": {
+    "defaultMessage": "Tekstilna tehnologija",
+    "description": "science-field-20"
   },
   "cvu7tz": {
     "defaultMessage": "Popis i upravljanje članovima na odobrenim zahtjevima/projektima",
@@ -1246,6 +1398,10 @@
   "fEvfkf": {
     "defaultMessage": "Pozivnice su uspješno poslane",
     "description": "memberships-toast-invitesok"
+  },
+  "fK7Wia": {
+    "defaultMessage": "Veterinarska medicina",
+    "description": "science-field-27"
   },
   "fQ6rYw": {
     "defaultMessage": "Da li ste sigurni da želite odjaviti označene suradnike?",
@@ -1335,6 +1491,10 @@
     "defaultMessage": "Novi zahtjev",
     "description": "linktitle-newrequest"
   },
+  "hrHnbY": {
+    "defaultMessage": "Interdisciplinarne biotehničke znanosti",
+    "description": "science-field-36"
+  },
   "hut1m1": {
     "defaultMessage": "Suradnik",
     "description": "users-table-general-collaborator"
@@ -1382,6 +1542,14 @@
   "jRGl3a": {
     "defaultMessage": "Novi zahtjev temeljem odabranog istraživačkog projekta",
     "description": "linktitle-newreq-research"
+  },
+  "jTZM0w": {
+    "defaultMessage": "Informacijske i komunikacijske znanosti",
+    "description": "science-field-40"
+  },
+  "k0Z6h0": {
+    "defaultMessage": "Temeljne medicinske znanosti",
+    "description": "science-field-24"
   },
   "kCbCrR": {
     "defaultMessage": "Prijava AAI@EduHR",
@@ -1483,6 +1651,10 @@
     "defaultMessage": "Da li ste sigurni da želite dodati javni ključ?",
     "description": "publickeys-add-modalmsg"
   },
+  "nSWV6N": {
+    "defaultMessage": "Geodezija",
+    "description": "science-field-11"
+  },
   "nwVFCQ": {
     "defaultMessage": "Pozovi strane suradnike",
     "description": "users-table-croris-foreign-collabcall-2"
@@ -1503,6 +1675,10 @@
     "defaultMessage": "Prijavljen",
     "description": "users-table-croris-registered"
   },
+  "oa0T9j": {
+    "defaultMessage": "Filologija",
+    "description": "science-field-53"
+  },
   "odvkpW": {
     "defaultMessage": "PRIRODNE ZNANOSTI",
     "description": "science-domain-map-1"
@@ -1510,6 +1686,10 @@
   "ouf6xV": {
     "defaultMessage": "Morate odabrati jedan tip zahtjeva da biste nastavili",
     "description": "newrequest-norequest-selected"
+  },
+  "oxcI3+": {
+    "defaultMessage": "Matematika",
+    "description": "science-field-1"
   },
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
@@ -1535,6 +1715,10 @@
     "defaultMessage": "Naziv:",
     "description": "researchselected-projecttitle"
   },
+  "pOPWsf": {
+    "defaultMessage": "Fizika",
+    "description": "science-field-2"
+  },
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-managerequests-change"
@@ -1554,6 +1738,14 @@
   "qFLN1G": {
     "defaultMessage": "Istraživački projekt",
     "description": "requesttype-label-research"
+  },
+  "qT1C5v": {
+    "defaultMessage": "Računarstvo",
+    "description": "science-field-16"
+  },
+  "qWvZqN": {
+    "defaultMessage": "Poljoprivreda (agronomija)",
+    "description": "science-field-30"
   },
   "qbxldc": {
     "defaultMessage": "Aktivan {br} Korisnik je prijavljen na bar jedan aktivan projekt",
@@ -1578,6 +1770,10 @@
   "rZtsm+": {
     "defaultMessage": "Resursi",
     "description": "resourcefields-title"
+  },
+  "s/Dic5": {
+    "defaultMessage": "Sociologija",
+    "description": "science-field-41"
   },
   "sVu3Vi": {
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
@@ -1623,6 +1819,14 @@
     "defaultMessage": "Šifra zahtjeva kopirana u međuspremnik",
     "description": "managereq-minibutton-title"
   },
+  "tsfxC+": {
+    "defaultMessage": "Kemijsko inženjerstvo",
+    "description": "science-field-14"
+  },
+  "tyAaUL": {
+    "defaultMessage": "Geologija",
+    "description": "science-field-3"
+  },
   "u25Zo7": {
     "defaultMessage": "Greška prilikom kopiranja šifre zahtjeva u međuspremnik",
     "description": "managereq-minibutton-msg"
@@ -1631,9 +1835,17 @@
     "defaultMessage": "Pozovi CroRIS suradnike",
     "description": "users-table-croris-croris-collabcall"
   },
+  "u6Rz3Z": {
+    "defaultMessage": "Povijest",
+    "description": "science-field-54"
+  },
   "uW3ZtA": {
     "defaultMessage": "DRUŠTVENE ZNANOSTI",
     "description": "science-domain-map-5"
+  },
+  "uY0ULv": {
+    "defaultMessage": "Prehrambena tehnologija",
+    "description": "science-field-34"
   },
   "udq7zq": {
     "defaultMessage": "Trajanje",
@@ -1671,6 +1883,14 @@
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginofficial-terms"
   },
+  "vo4MPK": {
+    "defaultMessage": "Religijske znanosti (interdisciplinarno polje)",
+    "description": "science-field-59"
+  },
+  "vrEohW": {
+    "defaultMessage": "Drvna tehnologija",
+    "description": "science-field-32"
+  },
   "vuGizy": {
     "defaultMessage": "Autentikacija eduGAIN-om nije uspjela.",
     "description": "saml2-not-allowed-alertmulti-1"
@@ -1707,6 +1927,10 @@
     "defaultMessage": "Dodijeljeni tip resursa:",
     "description": "manreq-change-request-resources"
   },
+  "xzEckc": {
+    "defaultMessage": "Kemija",
+    "description": "science-field-4"
+  },
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",
     "description": "generalfields-leadinstitution"
@@ -1718,6 +1942,10 @@
   "y5njj6": {
     "defaultMessage": "Pozovi suradnike",
     "description": "users-table-general-collabcall"
+  },
+  "yDf4qQ": {
+    "defaultMessage": "Elektrotehnika",
+    "description": "science-field-10"
   },
   "yQX1Hw": {
     "defaultMessage": "korisnika",
@@ -1743,6 +1971,10 @@
     "defaultMessage": "Moji podaci",
     "description": "navlinks-myinfo"
   },
+  "zDbfN8": {
+    "defaultMessage": "Kineziologija",
+    "description": "science-field-46"
+  },
   "zORxCj": {
     "defaultMessage": "Da li ste sigurni da želite poslati pozivnice na navedene email adrese?",
     "description": "memberships-modalmsg-invite"
@@ -1758,6 +1990,14 @@
   "ziaUjB": {
     "defaultMessage": "Nemate projekata prijavljenih u sustavu CroRIS",
     "description": "newrequest-no-researchproject"
+  },
+  "zvW+Ar": {
+    "defaultMessage": "Grafička tehnologija",
+    "description": "science-field-13"
+  },
+  "zyxgc2": {
+    "defaultMessage": "Pedagogija",
+    "description": "science-field-43"
   },
   "zz+Gai": {
     "defaultMessage": "Tip",

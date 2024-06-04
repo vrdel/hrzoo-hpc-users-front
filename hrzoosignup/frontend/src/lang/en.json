@@ -7,6 +7,10 @@
     "defaultMessage": "User identifier",
     "description": "userins-useridentifier"
   },
+  "+W4inD": {
+    "defaultMessage": "Philosophy",
+    "description": "science-field-51"
+  },
   "+iE1kC": {
     "defaultMessage": "Continue",
     "description": "newrequest-continue-label"
@@ -35,6 +39,10 @@
     "defaultMessage": "Registration unsucessful: Invitation code expired",
     "description": "email-invite-code-expired"
   },
+  "/TwgpH": {
+    "defaultMessage": "Biology",
+    "description": "science-field-5"
+  },
   "/dYvjB": {
     "defaultMessage": "Last name",
     "description": "users-table-croris-lastname"
@@ -58,6 +66,10 @@
   "0NBrG+": {
     "defaultMessage": "Explanation:",
     "description": "generalfields-explanation"
+  },
+  "0RKlYA": {
+    "defaultMessage": "Security and Defense Sciences",
+    "description": "science-field-49"
   },
   "0fF2qV": {
     "defaultMessage": "New request on behalf of practical class",
@@ -87,9 +99,17 @@
     "defaultMessage": "Financier:",
     "description": "croris-description-financier"
   },
+  "1qh3HK": {
+    "defaultMessage": "Art History",
+    "description": "science-field-55"
+  },
   "1r5OsY": {
     "defaultMessage": "Username",
     "description": "statusinfo-username"
+  },
+  "2/Zwcg": {
+    "defaultMessage": "Geophysics",
+    "description": "science-field-6"
   },
   "23jFa3": {
     "defaultMessage": "Inactive {br} You are not signed into any active project",
@@ -99,17 +119,33 @@
     "defaultMessage": "Collaborators",
     "description": "popover-projectinfo-collaborators"
   },
+  "2D+vMM": {
+    "defaultMessage": "Forestry",
+    "description": "science-field-31"
+  },
   "2DZTTn": {
     "defaultMessage": "First name",
     "description": "users-table-general-firstname"
+  },
+  "2EhfDo": {
+    "defaultMessage": "Interdisciplinary Technical Sciences",
+    "description": "science-field-23"
   },
   "2G5rdP": {
     "defaultMessage": "Invitation failed",
     "description": "email-invite-failed"
   },
+  "2LK5hw": {
+    "defaultMessage": "Law",
+    "description": "science-field-38"
+  },
   "2LPtd3": {
     "defaultMessage": "Enter the email addresses of the collaborators you wish to invite to project",
     "description": "users-table-general-cardtitle-1"
+  },
+  "2OIK/D": {
+    "defaultMessage": "Biotechnology",
+    "description": "science-field-33"
   },
   "2OMlOQ": {
     "defaultMessage": "New request",
@@ -171,6 +207,10 @@
     "defaultMessage": "Project's identifier copied to clipboard",
     "description": "userlist-minibutton-title-4"
   },
+  "4KdjRw": {
+    "defaultMessage": "Political Science",
+    "description": "science-field-39"
+  },
   "4jM+Ca": {
     "defaultMessage": "Role",
     "description": "users-table-croris-role"
@@ -195,6 +235,10 @@
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
   },
+  "5FyewV": {
+    "defaultMessage": "Interdisciplinary Humanities",
+    "description": "science-field-60"
+  },
   "5HA1Kv": {
     "defaultMessage": "New request on behalf of internal project",
     "description": "linktitle-newrequest-internal"
@@ -210,6 +254,10 @@
   "5XjDto": {
     "defaultMessage": "Number of virtual servers:",
     "description": "cloudfields-nvm"
+  },
+  "5bl62/": {
+    "defaultMessage": "Nutrition",
+    "description": "science-field-35"
   },
   "5d/pGK": {
     "defaultMessage": "When approving request, you must specify type of resource allocated",
@@ -242,6 +290,10 @@
   "6yeF5o": {
     "defaultMessage": "Request has been successfully changed",
     "description": "managereq-change-changed-2"
+  },
+  "6zlEaK": {
+    "defaultMessage": "Art History",
+    "description": "science-field-56"
   },
   "73nZsu": {
     "defaultMessage": "Request could not be changed:",
@@ -282,6 +334,10 @@
   "8dPx+P": {
     "defaultMessage": "List of scientific software available on HPC clusters",
     "description": "linktitle-software"
+  },
+  "8g6QYF": {
+    "defaultMessage": "Naval Architecture",
+    "description": "science-field-9"
   },
   "8jbyYo": {
     "defaultMessage": "Srce workshop",
@@ -391,6 +447,14 @@
     "defaultMessage": "It was not possible to send invitations: {br} { error }",
     "description": "memberships-toast-invitefail"
   },
+  "BHgbqS": {
+    "defaultMessage": "Educational-Rehabilitation Sciences",
+    "description": "science-field-44"
+  },
+  "BQvEOS": {
+    "defaultMessage": "Social Work",
+    "description": "science-field-48"
+  },
   "BcQHhM": {
     "defaultMessage": "Comment:",
     "description": "manreq-change-comment"
@@ -414,6 +478,10 @@
   "BzHbow": {
     "defaultMessage": "There are no active projects in CroRIS system in which user participates",
     "description": "userinfo-croris-tablefoot-userview-no"
+  },
+  "C/eBnN": {
+    "defaultMessage": "Ethnology and Anthropology",
+    "description": "science-field-58"
   },
   "C5xc0q": {
     "defaultMessage": "Active projects registered in CroRIS system that user participates in",
@@ -458,6 +526,10 @@
   "D14k5Q": {
     "defaultMessage": "Public key added",
     "description": "users-table-general-keyadd"
+  },
+  "D1nQG5": {
+    "defaultMessage": "Dental Medicine",
+    "description": "science-field-28"
   },
   "D1wDM8": {
     "defaultMessage": "Select",
@@ -519,17 +591,33 @@
     "defaultMessage": "Public key could not be added: { error }",
     "description": "public-keys-add-toast-fail"
   },
+  "EHi/e9": {
+    "defaultMessage": "Pharmacy",
+    "description": "science-field-29"
+  },
   "ENvJpe": {
     "defaultMessage": "First name",
     "description": "managereq-change-firstname"
+  },
+  "EdocTe": {
+    "defaultMessage": "Economics",
+    "description": "science-field-37"
   },
   "Egkdj/": {
     "defaultMessage": "Approved",
     "description": "stateshort-approved"
   },
+  "EmU9WN": {
+    "defaultMessage": "Public Health and Health Care",
+    "description": "science-field-26"
+  },
   "Eob6Ei": {
     "defaultMessage": "Registration unsuccessful: Invitation code has been used",
     "description": "email-invite-code-used"
+  },
+  "Eu2qEW": {
+    "defaultMessage": "Fundamental Technical Sciences",
+    "description": "science-field-22"
   },
   "F40x+m": {
     "defaultMessage": "Processing user request",
@@ -619,6 +707,10 @@
     "defaultMessage": "Institution",
     "description": "managereq-change-institution"
   },
+  "GyYVmo": {
+    "defaultMessage": "Aeronautics, Rocket and Space Technology",
+    "description": "science-field-21"
+  },
   "H5oET0": {
     "defaultMessage": "Yes",
     "description": "users-table-croris-yes"
@@ -630,6 +722,10 @@
   "HJxPuz": {
     "defaultMessage": "User's identifier copied to clipboard",
     "description": "usersins-clipboard-ok"
+  },
+  "HUczW1": {
+    "defaultMessage": "Psychology",
+    "description": "science-field-42"
   },
   "HcOwzH": {
     "defaultMessage": "Username:",
@@ -654,6 +750,10 @@
   "I/dgYm": {
     "defaultMessage": "Duration:",
     "description": "generalproject-duration"
+  },
+  "IAAUkx": {
+    "defaultMessage": "Theology",
+    "description": "science-field-52"
   },
   "IHl9i4": {
     "defaultMessage": "Total amount of space for virtual servers on fast storage (GB):",
@@ -727,6 +827,10 @@
     "defaultMessage": "Name, institution and identifier",
     "description": "managereq-column-nameinstid"
   },
+  "KT0hUG": {
+    "defaultMessage": "Demography",
+    "description": "science-field-47"
+  },
   "KkxjH3": {
     "defaultMessage": "Role",
     "description": "userinfo-croris-role"
@@ -743,6 +847,10 @@
     "defaultMessage": "Expired",
     "description": "statestringuser-expire"
   },
+  "LK4ilW": {
+    "defaultMessage": "Interdisciplinary Humanities",
+    "description": "science-field-50"
+  },
   "LSB0GB": {
     "defaultMessage": "When denying project, you must state the reason.",
     "description": "managereq-change-toast-msg3"
@@ -750,6 +858,10 @@
   "Lb7qIs": {
     "defaultMessage": "Yes",
     "description": "users-table-general-isadded"
+  },
+  "LdwVX2": {
+    "defaultMessage": "Archaeology",
+    "description": "science-field-57"
   },
   "LiONnn": {
     "defaultMessage": "Select",
@@ -895,6 +1007,10 @@
     "defaultMessage": "One institutional project has already been registered.",
     "description": "newrequest-reason-institutionalready"
   },
+  "QU9bH3": {
+    "defaultMessage": "Metallurgy",
+    "description": "science-field-15"
+  },
   "R7WXFa": {
     "defaultMessage": "Status",
     "description": "statusinfo"
@@ -906,6 +1022,10 @@
   "RHg+U2": {
     "defaultMessage": "Delete user's request",
     "description": "managereq-change-modaldelete-title"
+  },
+  "RI9sYO": {
+    "defaultMessage": "Clinical Medical Sciences",
+    "description": "science-field-25"
   },
   "ROsLaq": {
     "defaultMessage": "Foreign researchers currently do not have the ability to submit applications",
@@ -1007,6 +1127,10 @@
     "defaultMessage": "Username and AAI identifier",
     "description": "userlist-column-header-3-1"
   },
+  "ULnxNB": {
+    "defaultMessage": "Civil Engineering",
+    "description": "science-field-12"
+  },
   "UTI/E7": {
     "defaultMessage": "Project has been successfully deleted",
     "description": "managereq-change-delete-1"
@@ -1043,6 +1167,10 @@
     "defaultMessage": "CroRIS registration",
     "description": "users-table-croris-crorisreg"
   },
+  "W3Nj84": {
+    "defaultMessage": "Mining, Petroleum and Geological Engineering",
+    "description": "science-field-17"
+  },
   "W63CGG": {
     "defaultMessage": "Registration unsuccessful: You are already registered for an institutional project",
     "description": "email-invite-fail-already-institutional"
@@ -1058,6 +1186,10 @@
   "WL9MPg": {
     "defaultMessage": "There are no users signed up for project",
     "description": "userlist-emptytable-msg-2"
+  },
+  "WVRJHK": {
+    "defaultMessage": "Mechanical Engineering",
+    "description": "science-field-18"
   },
   "WVblfa": {
     "defaultMessage": "Duration",
@@ -1078,6 +1210,10 @@
   "XZis0B": {
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
+  },
+  "XeJRUi": {
+    "defaultMessage": "Speech Therapy",
+    "description": "science-field-45"
   },
   "Y+WVo0": {
     "defaultMessage": "Domain",
@@ -1131,6 +1267,10 @@
     "defaultMessage": "Remark:",
     "description": "managereq-change-remark"
   },
+  "aUUNEi": {
+    "defaultMessage": "Architecture and Urbanism",
+    "description": "science-field-8"
+  },
   "aaATlq": {
     "defaultMessage": "Lead will be notified by email about the change of status to \"Approved\" or \"Denied\".",
     "description": "managereq-change-remark-msg"
@@ -1159,6 +1299,10 @@
     "defaultMessage": "Email",
     "description": "users-table-croris-email"
   },
+  "c5xWMn": {
+    "defaultMessage": "Traffic and Transport Technology",
+    "description": "science-field-19"
+  },
   "c6HZk5": {
     "defaultMessage": "BIOMEDICINE AND HEALTH",
     "description": "science-domain-map-3"
@@ -1167,6 +1311,10 @@
     "defaultMessage": "Extra comment on request <u><i>deny</i></u>:",
     "description": "managereq-change-extra-comment"
   },
+  "cIUsvW": {
+    "defaultMessage": "Interdisciplinary Natural Sciences",
+    "description": "science-field-7"
+  },
   "cNIEbm": {
     "defaultMessage": "Select",
     "description": "researchproj-button-label"
@@ -1174,6 +1322,10 @@
   "cQTqIM": {
     "defaultMessage": "New request on behalf of institute project",
     "description": "linktitle-newrequest-institutional"
+  },
+  "cTvw8s": {
+    "defaultMessage": "Textile Technology",
+    "description": "science-field-20"
   },
   "cvu7tz": {
     "defaultMessage": "List and manage members on approved requests/projects",
@@ -1246,6 +1398,10 @@
   "fEvfkf": {
     "defaultMessage": "Invitations have been successfully sent",
     "description": "memberships-toast-invitesok"
+  },
+  "fK7Wia": {
+    "defaultMessage": "Veterinary Medicine",
+    "description": "science-field-27"
   },
   "fQ6rYw": {
     "defaultMessage": "Are you sure you want to remove selected collaborators?",
@@ -1335,6 +1491,10 @@
     "defaultMessage": "New request",
     "description": "linktitle-newrequest"
   },
+  "hrHnbY": {
+    "defaultMessage": "Interdisciplinary Biotechnical Sciences",
+    "description": "science-field-36"
+  },
   "hut1m1": {
     "defaultMessage": "Collaborator",
     "description": "users-table-general-collaborator"
@@ -1382,6 +1542,14 @@
   "jRGl3a": {
     "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newreq-research"
+  },
+  "jTZM0w": {
+    "defaultMessage": "Information and Communication Sciences",
+    "description": "science-field-40"
+  },
+  "k0Z6h0": {
+    "defaultMessage": "Fundamental Medical Sciences",
+    "description": "science-field-24"
   },
   "kCbCrR": {
     "defaultMessage": "Login AAI@EduHR",
@@ -1483,6 +1651,10 @@
     "defaultMessage": "Are you sure you want to add public key?",
     "description": "publickeys-add-modalmsg"
   },
+  "nSWV6N": {
+    "defaultMessage": "Geodesy",
+    "description": "science-field-11"
+  },
   "nwVFCQ": {
     "defaultMessage": "Invite foreign collaborators",
     "description": "users-table-croris-foreign-collabcall-2"
@@ -1503,6 +1675,10 @@
     "defaultMessage": "Registered",
     "description": "users-table-croris-registered"
   },
+  "oa0T9j": {
+    "defaultMessage": "Philology",
+    "description": "science-field-53"
+  },
   "odvkpW": {
     "defaultMessage": "NATURAL SCIENCES",
     "description": "science-domain-map-1"
@@ -1510,6 +1686,10 @@
   "ouf6xV": {
     "defaultMessage": "You must select one type of request to continue",
     "description": "newrequest-norequest-selected"
+  },
+  "oxcI3+": {
+    "defaultMessage": "Mathematics",
+    "description": "science-field-1"
   },
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit new request?",
@@ -1535,6 +1715,10 @@
     "defaultMessage": "Name:",
     "description": "researchselected-projecttitle"
   },
+  "pOPWsf": {
+    "defaultMessage": "Physics",
+    "description": "science-field-2"
+  },
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-managerequests-change"
@@ -1554,6 +1738,14 @@
   "qFLN1G": {
     "defaultMessage": "Research project",
     "description": "requesttype-label-research"
+  },
+  "qT1C5v": {
+    "defaultMessage": "Computing",
+    "description": "science-field-16"
+  },
+  "qWvZqN": {
+    "defaultMessage": "Agriculture (Agronomy)",
+    "description": "science-field-30"
   },
   "qbxldc": {
     "defaultMessage": "Active {br} User is signed into at least one active project",
@@ -1578,6 +1770,10 @@
   "rZtsm+": {
     "defaultMessage": "Resources",
     "description": "resourcefields-title"
+  },
+  "s/Dic5": {
+    "defaultMessage": "Social Work",
+    "description": "science-field-41"
   },
   "sVu3Vi": {
     "defaultMessage": "Total amount of storage space required for project (GB):",
@@ -1623,6 +1819,14 @@
     "defaultMessage": "Request identifier copied to clipboard",
     "description": "managereq-minibutton-title"
   },
+  "tsfxC+": {
+    "defaultMessage": "Chemical Engineering",
+    "description": "science-field-14"
+  },
+  "tyAaUL": {
+    "defaultMessage": "Geologija",
+    "description": "science-field-3"
+  },
   "u25Zo7": {
     "defaultMessage": "Error while copying request identifier to clipboard",
     "description": "managereq-minibutton-msg"
@@ -1631,9 +1835,17 @@
     "defaultMessage": "Invite CroRIS collaborators",
     "description": "users-table-croris-croris-collabcall"
   },
+  "u6Rz3Z": {
+    "defaultMessage": "History",
+    "description": "science-field-54"
+  },
   "uW3ZtA": {
     "defaultMessage": "SOCIAL SCIENCES",
     "description": "science-domain-map-5"
+  },
+  "uY0ULv": {
+    "defaultMessage": "Food Technology",
+    "description": "science-field-34"
   },
   "udq7zq": {
     "defaultMessage": "Duration",
@@ -1671,6 +1883,14 @@
     "defaultMessage": "Terms of Use of Advanced Computing service",
     "description": "loginofficial-terms"
   },
+  "vo4MPK": {
+    "defaultMessage": "Religious Studies (Interdisciplinary Field)",
+    "description": "science-field-59"
+  },
+  "vrEohW": {
+    "defaultMessage": "Wood Technology",
+    "description": "science-field-32"
+  },
   "vuGizy": {
     "defaultMessage": "eduGAIN authentication failed.",
     "description": "saml2-not-allowed-alertmulti-1"
@@ -1707,6 +1927,10 @@
     "defaultMessage": "Assigned resource type:",
     "description": "manreq-change-request-resources"
   },
+  "xzEckc": {
+    "defaultMessage": "Chemistry",
+    "description": "science-field-4"
+  },
   "y+MIYq": {
     "defaultMessage": "Lead institution:",
     "description": "generalfields-leadinstitution"
@@ -1718,6 +1942,10 @@
   "y5njj6": {
     "defaultMessage": "Invite collaborators",
     "description": "users-table-general-collabcall"
+  },
+  "yDf4qQ": {
+    "defaultMessage": "Electrical Engineering",
+    "description": "science-field-10"
   },
   "yQX1Hw": {
     "defaultMessage": "users",
@@ -1743,6 +1971,10 @@
     "defaultMessage": "My info",
     "description": "navlinks-myinfo"
   },
+  "zDbfN8": {
+    "defaultMessage": "Kinesiology",
+    "description": "science-field-46"
+  },
   "zORxCj": {
     "defaultMessage": "Are you sure you want to send invitations to provided email addresses?",
     "description": "memberships-modalmsg-invite"
@@ -1758,6 +1990,14 @@
   "ziaUjB": {
     "defaultMessage": "You do not have any projects registered in CroRIS system",
     "description": "newrequest-no-researchproject"
+  },
+  "zvW+Ar": {
+    "defaultMessage": "Graphic Technology",
+    "description": "science-field-13"
+  },
+  "zyxgc2": {
+    "defaultMessage": "Pedagogy",
+    "description": "science-field-43"
   },
   "zz+Gai": {
     "defaultMessage": "Type",
