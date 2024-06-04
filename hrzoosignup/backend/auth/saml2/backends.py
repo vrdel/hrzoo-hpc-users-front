@@ -6,6 +6,8 @@ from backend.models import CrorisInstitutions
 from backend.utils.various import flatten
 from unidecode import unidecode
 
+import copy
+
 import logging
 
 logger = logging.getLogger('hrzoosignup.views')
@@ -76,9 +78,11 @@ class SAML2Backend(Saml2Backend):
                     else:
                         target_username = [mapuser for mapuser in settings.SAML_MAPEDUGAIN if mapuser['from'] == username][0]
                         user_found = user_model.objects.get(username=target_username['to'])
-                        import ipdb; ipdb.set_trace()
                         if self.user_can_authenticate(user_found):
-                            self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
+                            copy_edugain_map = copy.deepcopy(settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING)
+                            # remove username map so it does not get overwritten
+                            del copy_edugain_map['eduPersonPrincipalName']
+                            self._update_user(user_found, attributes, copy_edugain_map, force_save=True)
                             return user_found
 
             else:
