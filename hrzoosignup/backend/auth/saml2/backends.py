@@ -54,25 +54,23 @@ class SAML2Backend(Saml2Backend):
                 logger.debug('SAML2Backend.authenticate()')
                 logger.debug(session_info)
 
-            try:
-                all_names = user_model.objects.all().values_list('first_name', 'last_name')
-                all_names = set([
-                    (unidecode(first_name.lower()), unidecode(last_name.lower()))
-                    for first_name, last_name in all_names
-                ])
-                if (unidecode(first_name.lower()), unidecode(last_name.lower())) in all_names:
-                    logger.error('SAML2Backend.authenticate() - Failed eduGAIN login: first_name and last_name already found in DB')
+            all_names = user_model.objects.all().values_list('first_name', 'last_name')
+            all_names = set([
+                (unidecode(first_name.lower()), unidecode(last_name.lower()))
+                for first_name, last_name in all_names
+            ])
+            if (unidecode(first_name.lower()), unidecode(last_name.lower())) in all_names:
+                try:
+                    user_found = user_model.objects.get(username=username)
+                    self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
+                    if self.user_can_authenticate(user_found):
+                        return user_found
+                except user_model.DoesNotExist:
+                    logger.error('SAML2Backend.authenticate() - Failed eduGAIN login - manual action needed: first_name and last_name already found but not with the same username')
                     logger.error(attributes)
                     request.saml2_backend_multiple = True
                     return None
-
-                user_found = user_model.objects.get(first_name=first_name, last_name=last_name)
-                if user_found:
-                    self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
-                if self.user_can_authenticate(user_found):
-                    return user_found
-
-            except user_model.DoesNotExist:
+            else:
                 user_new = user_model.objects.create(
                     first_name=first_name,
                     last_name=last_name,
@@ -85,11 +83,6 @@ class SAML2Backend(Saml2Backend):
                     person_affiliation=affiliation
                 )
                 return user_new
-
-            except user_model.MultipleObjectsReturned as exc:
-                logger.error(f'SAML2Backend.authenticate() - Failed eduGAIN login: {attributes} - {repr(exc)}')
-                request.saml2_backend_multiple = True
-                return None
 
         else:
             return super().authenticate(request, session_info, attribute_mapping, create_unknown_user, assertion_info, **kwargs)
