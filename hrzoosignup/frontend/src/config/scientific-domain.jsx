@@ -25,12 +25,12 @@ export function buildListScientificDomain(intl) {
   })
 
   const listScientificDomain = [
-    [prirodne_znanosti],
-    [tehnicke_znanosti],
-    [biomedicina_zdravstvo],
-    [biotehnicke_znanosti],
-    [drustvene_znanosti],
-    [humanisticke_znanosti],
+    prirodne_znanosti,
+    tehnicke_znanosti,
+    biomedicina_zdravstvo,
+    biotehnicke_znanosti,
+    drustvene_znanosti,
+    humanisticke_znanosti,
   //  "UMJETNIČKO PODRUČJE", "INTERDISCIPLINARNA PODRUČJA ZNANOSTI",
   //  "INTERDISCIPLINARNA PODRUČJA UMJETNOSTI"
   ]
