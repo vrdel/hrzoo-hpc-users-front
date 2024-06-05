@@ -165,7 +165,8 @@ class Invites(APIView):
                     return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
                 if (proj_type.name == 'research-croris'):
-                    if (inv_oib == request.user.person_oib):
+                    if ((inv_oib == request.user.person_oib and inv_type == 'local') or
+                       (inv_type == 'foreign' and edugain_authn)):
                         associate_user_to_project(user, proj)
 
                         if settings.EMAIL_SEND:
