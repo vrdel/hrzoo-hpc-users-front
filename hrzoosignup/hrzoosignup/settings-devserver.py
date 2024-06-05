@@ -327,7 +327,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_COOKIE_SAMESITE = None
 LOGIN_URL = '/saml2/login/'
 SAML_ATTRIBUTE_MAPPING = {
- 'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
+    'hrEduPersonUniqueID': ('username', 'person_uniqueid', ),
     'mail': ('person_mail', ),
     # 'o': ('person_institution', ),
     'hrEduPersonOIB': ('person_oib', ),

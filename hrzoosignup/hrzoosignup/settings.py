@@ -138,6 +138,13 @@ except FileNotFoundError as e:
     raise SystemExit(1)
 
 try:
+    with open(SAML_EDUGAINMAP, mode='r', encoding='utf-8') as fp:
+        SAML_MAPEDUGAIN = json.loads(fp.read())
+except FileNotFoundError as e:
+    print(SAML_EDUGAINMAP + ': %s' % repr(e))
+    raise SystemExit(1)
+
+try:
     with open(REALM_MAP, mode='r', encoding='utf-8') as fp:
         MAP_REALMS = json.loads(fp.read())
 except FileNotFoundError as e:
