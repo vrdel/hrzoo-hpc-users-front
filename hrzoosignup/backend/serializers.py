@@ -138,6 +138,7 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
             'person_institution',
             'person_organisation',
             'person_affiliation',
+            'person_type',
             'sshkeys',
             'status'
         )

@@ -138,7 +138,8 @@ class Invites(APIView):
                     return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
                 # foreign collaborators must authn via eduGAIN
-                if proj_type.name == 'research-croris' and inv_type == 'foreign' and not edugain_authn:
+                # if proj_type.name == 'research-croris' and inv_type == 'foreign' and not edugain_authn:
+                if proj_type.name == 'research-croris' and inv_type == 'foreign' and request.user.person_type == 'local':
                     msg = {
                         'status': {
                             'code': status.HTTP_400_BAD_REQUEST,
@@ -164,9 +165,10 @@ class Invites(APIView):
                     logger.error(msg)
                     return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
+                # (inv_type == 'foreign' and edugain_authn)):
                 if (proj_type.name == 'research-croris'):
                     if ((inv_oib == request.user.person_oib and inv_type == 'local') or
-                       (inv_type == 'foreign' and edugain_authn)):
+                        (inv_type == 'foreign' and request.user.person_type == 'foreign')):
                         associate_user_to_project(user, proj)
 
                         if settings.EMAIL_SEND:
