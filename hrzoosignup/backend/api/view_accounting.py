@@ -120,10 +120,12 @@ class AccountingUserProjectAPI(APIView):
                 db_interested = models.Project.objects.filter(staff_resources_type__exact=target_resources).distinct()
             else:
                 db_interested = models.Project.objects.filter(query).distinct()
+            db_interested = db_interested.filter(state__name__in=['approve', 'expire', 'extend'])
             return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
 
         elif tag:
             db_interested = models.Project.objects.filter(staff_resources_type__exact=[{"label": tag, "value": tag}])
+            db_interested = db_interested.filter(state__name__in=['approve', 'expire', 'extend'])
             return Response(self._generate_response(db_interested), status=status.HTTP_200_OK)
 
         else:
