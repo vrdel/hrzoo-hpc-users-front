@@ -355,10 +355,19 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           ? "align-middle text-center fst-italic border-bottom border-secondary"
                           : "align-middle text-center"
                         }>
-                          <FormattedMessage
-                            defaultMessage="Suradnik"
-                            description="users-table-croris-collaborator"
-                          />
+                          {
+                            user['person_type'] === 'local'
+                            ?
+                              <FormattedMessage
+                                defaultMessage="Suradnik"
+                                description="users-table-croris-collaborator"
+                              />
+                            :
+                              <FormattedMessage
+                                defaultMessage="Strani suradnik"
+                                description="users-table-general-collaborator-foreign"
+                              />
+                          }
                         </td>
                         <td className={
                           user['user']['person_oib'] === userDetails.person_oib
@@ -368,11 +377,27 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           { extractEmails(user['user'].person_mail) }
                         </td>
                         <td className={
-                          user['user']['person_oib'] === userDetails.person_oib
+                          user['user']['person_oib'] === userDetails.person_oib && user['user']
                           ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                           : "align-middle text-center text-success"
                         }>
-                          Da
+                          {
+                            user['person_type'] === 'local'
+                            ?
+                              <span className="text-success">
+                                <FormattedMessage
+                                  defaultMessage="Da"
+                                  description="users-table-croris-yes"
+                                />
+                              </span>
+                            :
+                              <span className="text-danger">
+                                <FormattedMessage
+                                  defaultMessage="Ne"
+                                  description="users-table-croris-no"
+                                />
+                              </span>
+                          }
                         </td>
                         <td className={
                           user['user']['person_oib'] === userDetails.person_oib
