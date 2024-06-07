@@ -228,7 +228,7 @@
     "description": "project-list-emptytable-noresults"
   },
   "4wuDbg": {
-    "defaultMessage": "leader",
+    "defaultMessage": "manager",
     "description": "userinfo-croris-badgelead"
   },
   "52shcW": {
@@ -304,7 +304,7 @@
     "description": "managereq-change-changefail-2"
   },
   "74EuI6": {
-    "defaultMessage": "Leader",
+    "defaultMessage": "Manager",
     "description": "users-table-croris-lead"
   },
   "7FtUKh": {
@@ -404,7 +404,7 @@
     "description": "memberships-toast-internal-collaboratorsok"
   },
   "AX+E3h": {
-    "defaultMessage": "Registration unsuccessful: You are registered as lead researcher on projects within CroRIS system",
+    "defaultMessage": "Registration unsuccessful: You are registered as principal investigator on projects within CroRIS system",
     "description": "email-invite-registered-leader-croris"
   },
   "Aa0C40": {
@@ -524,7 +524,7 @@
     "description": "navigation-welcome"
   },
   "D/RQLG": {
-    "defaultMessage": "Leader",
+    "defaultMessage": "Manager",
     "description": "popover-projectinfo-manager"
   },
   "D14k5Q": {
@@ -548,7 +548,7 @@
     "description": "research-project-selected-modalmsg"
   },
   "D7Y1AH": {
-    "defaultMessage": "Send email to leader",
+    "defaultMessage": "Send email to manager",
     "description": "managereq-change-email-manager"
   },
   "DEfFmS": {
@@ -1108,7 +1108,7 @@
     "description": "stateshort-deny"
   },
   "TbVb2h": {
-    "defaultMessage": "Leader",
+    "defaultMessage": "Manager",
     "description": "managereq-column-manager"
   },
   "Tbafe8": {
@@ -1276,7 +1276,7 @@
     "description": "science-field-8"
   },
   "aaATlq": {
-    "defaultMessage": "Lead will be notified by email about the change of status to \"Approved\" or \"Denied\".",
+    "defaultMessage": "Manager will be notified by email about the change of status to \"Approved\" or \"Denied\".",
     "description": "managereq-change-remark-msg"
   },
   "aiSJvp": {
@@ -1468,7 +1468,7 @@
     "description": "managereq-change-extend"
   },
   "h78Eiu": {
-    "defaultMessage": "You are registered as leader on research projects in CroRIS system. Please visit \"My info\" page for more details.",
+    "defaultMessage": "You are registered as principal investigator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
   },
   "hDbgbW": {
@@ -1512,7 +1512,7 @@
     "description": "managereq-change-choose"
   },
   "iRMnQe": {
-    "defaultMessage": "Leader",
+    "defaultMessage": "Manager",
     "description": "users-table-general-leader"
   },
   "iYVJE/": {
@@ -1812,7 +1812,7 @@
     "description": "statestring-deny"
   },
   "tMWDpG": {
-    "defaultMessage": "Leader",
+    "defaultMessage": "Manager",
     "description": "managereq-change-title-lead"
   },
   "tdeUEL": {
@@ -1936,7 +1936,7 @@
     "description": "science-field-4"
   },
   "y+MIYq": {
-    "defaultMessage": "Lead institution:",
+    "defaultMessage": "Manager institution:",
     "description": "generalfields-leadinstitution"
   },
   "y4Tv/g": {
