@@ -1,0 +1,10 @@
+[
+  {
+    "from": "user1@domain1.com",
+    "to": "user1@domain2.com"
+  },
+  {
+    "from": "user2@domain3.com",
+    "to": "new"
+  }
+]
