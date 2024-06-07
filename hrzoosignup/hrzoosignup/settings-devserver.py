@@ -142,7 +142,7 @@ try:
         SAML_MAPEDUGAIN = json.loads(fp.read())
 except FileNotFoundError as e:
     print(SAML_EDUGAINMAP + ': %s' % repr(e))
-    raise SystemExit(1)
+    pass
 
 try:
     with open(REALM_MAP, mode='r', encoding='utf-8') as fp:
