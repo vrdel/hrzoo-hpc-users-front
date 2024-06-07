@@ -179,6 +179,10 @@
     "defaultMessage": "Resource type:",
     "description": "resourcefields-type"
   },
+  "3QA9M4": {
+    "defaultMessage": "Some scientific fields appear multiple times.",
+    "description": "domain-fields-science-field-multi"
+  },
   "3VCERm": {
     "defaultMessage": "Project could not be deleted:",
     "description": "managereq-change-delete-fail-1"
@@ -434,6 +438,10 @@
   "AzOt44": {
     "defaultMessage": "Project details",
     "description": "popover-projectinfo"
+  },
+  "B3IHaF": {
+    "defaultMessage": "Ratio of scientific fields together must total 100%.",
+    "description": "domain-fields-ratio-domains"
   },
   "B5kFsW": {
     "defaultMessage": "Collaborator",
@@ -1211,6 +1219,10 @@
     "defaultMessage": "When approving request, you must specify type of resource allocated.",
     "description": "managereq-change-toast-msg2"
   },
+  "X/kKQf": {
+    "defaultMessage": "Some scientific domains appear multiple times.",
+    "description": "domain-fields-science-area-multi"
+  },
   "XZis0B": {
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
@@ -1447,6 +1459,10 @@
     "defaultMessage": "Delete request",
     "description": "managereq-change-buttonlabel-delete-2"
   },
+  "gZNSSG": {
+    "defaultMessage": "Ratio of scientific fields within scientific domain must total 100%.",
+    "description": "domain-fields-ratio-fields"
+  },
   "glIPfH": {
     "defaultMessage": "List of users not active on any project",
     "description": "linktitle-usersinactive"
@@ -1670,6 +1686,10 @@
   "o7+x5+": {
     "defaultMessage": "When denying request, you must provide reason.",
     "description": "managereq-change-toast-msg4"
+  },
+  "oEvVvn": {
+    "defaultMessage": "Request could not be submitted - validation of scientific domains and fields unsuccessful",
+    "description": "domain-fields-both-fail"
   },
   "oRqoRe": {
     "defaultMessage": "Advanced Computing",

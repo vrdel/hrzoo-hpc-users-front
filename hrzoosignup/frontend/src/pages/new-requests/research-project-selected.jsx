@@ -34,10 +34,10 @@ import { convertToIso8601 } from 'Utils/dates';
 import { url_ui_prefix } from 'Config/general';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';
-import { convertToAmerican } from 'Utils/dates.jsx';
+import { convertToAmerican } from 'Utils/dates';
 import { FormattedMessage, useIntl } from 'react-intl';
 import * as yup from "yup";
-import { AuthContext } from 'Components/AuthContextProvider.jsx';
+import { AuthContext } from 'Components/AuthContextProvider';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -375,7 +375,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
 
   function onYesCallback() {
     if (onYesCall == 'doaddreq') {
-      const res = validateDomainAndFields(onYesCallArg)
+      const res = validateDomainAndFields(onYesCallArg, intl)
       if (res)
         doAdd(onYesCallArg)
     }

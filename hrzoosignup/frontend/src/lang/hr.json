@@ -179,6 +179,10 @@
     "defaultMessage": "Tip resursa:",
     "description": "resourcefields-type"
   },
+  "3QA9M4": {
+    "defaultMessage": "Neka znanstvena polja se pojavljuju više puta.",
+    "description": "domain-fields-science-field-multi"
+  },
   "3VCERm": {
     "defaultMessage": "Projekt nije bilo moguće obrisati:",
     "description": "managereq-change-delete-fail-1"
@@ -434,6 +438,10 @@
   "AzOt44": {
     "defaultMessage": "Detalji projekta",
     "description": "popover-projectinfo"
+  },
+  "B3IHaF": {
+    "defaultMessage": "Udjeli znanstvenih područja zajedno moraju biti 100%.",
+    "description": "domain-fields-ratio-domains"
   },
   "B5kFsW": {
     "defaultMessage": "Suradnik",
@@ -1211,6 +1219,10 @@
     "defaultMessage": "Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.",
     "description": "managereq-change-toast-msg2"
   },
+  "X/kKQf": {
+    "defaultMessage": "Neka znanstvena područja se pojavljuju više puta.",
+    "description": "domain-fields-science-area-multi"
+  },
   "XZis0B": {
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
@@ -1447,6 +1459,10 @@
     "defaultMessage": "Obriši zahtjev",
     "description": "managereq-change-buttonlabel-delete-2"
   },
+  "gZNSSG": {
+    "defaultMessage": "Udjeli znanstvenih polja zajedno u znanstvenom području moraju biti 100%.",
+    "description": "domain-fields-ratio-fields"
+  },
   "glIPfH": {
     "defaultMessage": "Popis svih korisnika koji nisu ni na jednom aktivnom projektu",
     "description": "linktitle-usersinactive"
@@ -1670,6 +1686,10 @@
   "o7+x5+": {
     "defaultMessage": "Pri odbijanju zahtjeva morate se izjasniti o razlogu.",
     "description": "managereq-change-toast-msg4"
+  },
+  "oEvVvn": {
+    "defaultMessage": "Zahtjev nije bilo moguće podnijeti - validacija znanstvenih područja i polja neuspješna",
+    "description": "domain-fields-both-fail"
   },
   "oRqoRe": {
     "defaultMessage": "Napredno računanje",
