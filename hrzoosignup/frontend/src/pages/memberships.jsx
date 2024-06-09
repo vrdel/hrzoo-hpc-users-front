@@ -467,30 +467,32 @@ const Memberships = () => {
                 <Row className="mb-5" key={`row-${i}`}>
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
-                      <CardHeader className="d-flex align-items-center justify-content-between">
+                      <CardHeader className="d-flex align-items-center flex-column flex-md-row justify-content-between">
                         <span className="fs-5 fw-bold text-dark flex-grow-1">
                           { project?.name }
                         </span>
-                        <Badge color={"secondary fw-normal"}>
-                          { project.identifier }
-                        </Badge>
-                        <MiniButton
-                          color="light"
-                          onClick={(e) => copyToClipboard(
-                            e, project.identifier,
-                            intl.formatMessage({
-                              defaultMessage: "Šifra projekta kopirana u međuspremnik",
-                              description: "memberships-clipboard-ok"
-                            }),
-                            intl.formatMessage({
-                              defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
-                              description: "memberships-clipboard-fail"
-                            }),
-                            "id-request"
-                          )}
-                        >
-                          <FontAwesomeIcon size="xs" icon={faCopy} />
-                        </MiniButton>
+                        <span className="d-flex justify-content-center flex-row">
+                          <Badge color={"secondary fw-normal"}>
+                            { project.identifier }
+                          </Badge>
+                          <MiniButton
+                            color="light"
+                            onClick={(e) => copyToClipboard(
+                              e, project.identifier,
+                              intl.formatMessage({
+                                defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                                description: "memberships-clipboard-ok"
+                              }),
+                              intl.formatMessage({
+                                defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                                description: "memberships-clipboard-fail"
+                              }),
+                              "id-request"
+                            )}
+                          >
+                            <FontAwesomeIcon size="xs" icon={faCopy} />
+                          </MiniButton>
+                        </span>
                       </CardHeader>
                       <CardBody className="mb-1 bg-light p-0 m-0">
                         {
