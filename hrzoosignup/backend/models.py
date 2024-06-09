@@ -89,6 +89,7 @@ class User(AbstractUser):
         max_length=32,
         blank=True,
     )
+    person_type_manual_set = models.BooleanField(default=False)
     person_mail = models.EmailField(
         _('Email - LDAP'),
         max_length=64,
