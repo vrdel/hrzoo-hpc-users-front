@@ -16,7 +16,7 @@ from backend.tasks.croris_institutions import FetchCrorisInstitution
 
 
 class Command(BaseCommand):
-    help = "Subscribe eligible users to mailing list"
+    help = "Sync institution names from CroRIS"
 
     def __init__(self):
         super().__init__()

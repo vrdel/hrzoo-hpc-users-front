@@ -41,7 +41,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
             </MiniButton>
           </span>
           {
-            userData.person_type === 'local'?
+            userData.person_type === 'local' ?
               <FontAwesomeIcon color="#777777" icon={ faHome } />
             :
               <FontAwesomeIcon color="#777777" icon={ faGlobe } />
