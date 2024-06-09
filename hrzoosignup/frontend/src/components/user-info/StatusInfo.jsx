@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Badge, Row, Table, Label, Tooltip, Button } from 'reactstrap';
-import { faCheckCircle, faStopCircle, faCopy} from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faStopCircle, faCopy, faHome, faGlobe} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -34,6 +34,31 @@ const TooltipMsgActive = ({myInfo=true}) => {
       </>
     )
 }
+
+
+const TooltipMsgLocal = () => {
+  return (
+    <>
+      <FormattedMessage
+        defaultMessage="Lokalni korisnik"
+        description="statusinfo-tooltiplocal-1"
+      />
+    </>
+  )
+}
+
+
+const TooltipMsgGlobe = () => {
+  return (
+    <>
+      <FormattedMessage
+        defaultMessage="Strani korisnik"
+        description="statusinfo-tooltipglobe-1"
+      />
+    </>
+  )
+}
+
 
 const TooltipMsgInactive = ({myInfo}) => {
   if (myInfo)
@@ -117,6 +142,32 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                       toggle={() => showTooltip(userDetails.first_name)}
                     >
                       <TooltipMsgInactive myInfo={myInfo} />
+                    </Tooltip>
+                  </React.Fragment>
+              }
+              {
+                userDetails.person_type === 'local'?
+                  <React.Fragment>
+                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" icon={ faHome } />
+                    <Tooltip
+                      placement='right'
+                      isOpen={isOpened(`${userDetails.first_name}-type`)}
+                      target={'Tooltip-type-' + userDetails.first_name.replace(/ /g, '-')}
+                      toggle={() => showTooltip(`${userDetails.first_name}-type`)}
+                    >
+                      <TooltipMsgLocal />
+                    </Tooltip>
+                  </React.Fragment>
+                :
+                  <React.Fragment>
+                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" icon={ faGlobe } />
+                    <Tooltip
+                      placement='right'
+                      isOpen={isOpened(`${userDetails.first_name}-type`)}
+                      target={'Tooltip-type-' + userDetails.first_name.replace(/ /g, '-')}
+                      toggle={() => showTooltip(`${userDetails.first_name}-type`)}
+                    >
+                      <TooltipMsgGlobe />
                     </Tooltip>
                   </React.Fragment>
               }
