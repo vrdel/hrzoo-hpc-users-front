@@ -495,6 +495,10 @@
     "defaultMessage": "Social Work",
     "description": "science-field-48"
   },
+  "BYSFpp": {
+    "defaultMessage": "Key fingerprint",
+    "description": "tableuserkeys-fingerprint"
+  },
   "BcQHhM": {
     "defaultMessage": "Comment:",
     "description": "manreq-change-comment"
@@ -971,6 +975,10 @@
     "defaultMessage": "Memberships",
     "description": "navlinks-memberships"
   },
+  "NHcWMx": {
+    "defaultMessage": "User has no public keys added",
+    "description": "tableuserkeys-empty"
+  },
   "NJUEoC": {
     "defaultMessage": "Name",
     "description": "myreq-list-name"
@@ -978,6 +986,10 @@
   "NKBtX4": {
     "defaultMessage": "You have not submitted any requests",
     "description": "myreq-list-noreqs"
+  },
+  "NRqtnq": {
+    "defaultMessage": "Public key:",
+    "description": "tableuserkeys-label"
   },
   "No5Y5w": {
     "defaultMessage": "Institutional project",
@@ -1142,6 +1154,10 @@
   "T7YuXQ": {
     "defaultMessage": "Projects",
     "description": "navlinks-projects"
+  },
+  "TDIXxh": {
+    "defaultMessage": "Public key copied to clipboard",
+    "description": "tableuserkeys-toast-ok"
   },
   "TGd1FO": {
     "defaultMessage": " Assistance required with installation:",
@@ -1395,6 +1411,10 @@
     "defaultMessage": "Textile Technology",
     "description": "science-field-20"
   },
+  "crrunT": {
+    "defaultMessage": "Key name",
+    "description": "tableuserkeys-keyname"
+  },
   "cvu7tz": {
     "defaultMessage": "List and manage members on approved requests/projects",
     "description": "linktitle-memberships"
@@ -1627,6 +1647,10 @@
     "defaultMessage": "Information and Communication Sciences",
     "description": "science-field-40"
   },
+  "jgOdjw": {
+    "defaultMessage": "Actions",
+    "description": "tableuserkeys-actions"
+  },
   "k0Z6h0": {
     "defaultMessage": "Fundamental Medical Sciences",
     "description": "science-field-24"
@@ -1854,6 +1878,10 @@
   "r9kEbs": {
     "defaultMessage": "Active projects registered in CroRIS system that you are participating in",
     "description": "userinfo-croris-tablefoot-meview"
+  },
+  "rTMyro": {
+    "defaultMessage": "Type",
+    "description": "tableuserkeys-type"
   },
   "rZtsm+": {
     "defaultMessage": "Resources",

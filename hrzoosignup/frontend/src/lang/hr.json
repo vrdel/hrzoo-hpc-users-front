@@ -495,6 +495,10 @@
     "defaultMessage": "Socijalne djelatnosti",
     "description": "science-field-48"
   },
+  "BYSFpp": {
+    "defaultMessage": "Digitalni otisak ključa",
+    "description": "tableuserkeys-fingerprint"
+  },
   "BcQHhM": {
     "defaultMessage": "Komentar:",
     "description": "manreq-change-comment"
@@ -971,6 +975,10 @@
     "defaultMessage": "Članstva",
     "description": "navlinks-memberships"
   },
+  "NHcWMx": {
+    "defaultMessage": "Korisnik nema javnih ključeva dodanih",
+    "description": "tableuserkeys-empty"
+  },
   "NJUEoC": {
     "defaultMessage": "Naziv",
     "description": "myreq-list-name"
@@ -978,6 +986,10 @@
   "NKBtX4": {
     "defaultMessage": "Nemate podnesenih zahtjeva",
     "description": "myreq-list-noreqs"
+  },
+  "NRqtnq": {
+    "defaultMessage": "Javni ključ:",
+    "description": "tableuserkeys-label"
   },
   "No5Y5w": {
     "defaultMessage": "Institucijski projekt",
@@ -1067,6 +1079,10 @@
     "defaultMessage": "Metalurgija",
     "description": "science-field-15"
   },
+  "QoBBEg": {
+    "defaultMessage": "Greška prilikom kopiranja javnog ključa u međuspremnik",
+    "description": "tableuserkeys-toast-fail"
+  },
   "R7WXFa": {
     "defaultMessage": "Status",
     "description": "statusinfo"
@@ -1142,6 +1158,10 @@
   "T7YuXQ": {
     "defaultMessage": "Projekti",
     "description": "navlinks-projects"
+  },
+  "TDIXxh": {
+    "defaultMessage": "Javni ključ kopiran u međuspremnik",
+    "description": "tableuserkeys-toast-ok"
   },
   "TGd1FO": {
     "defaultMessage": "Potrebna pomoć pri instalaciji:",
@@ -1395,6 +1415,10 @@
     "defaultMessage": "Tekstilna tehnologija",
     "description": "science-field-20"
   },
+  "crrunT": {
+    "defaultMessage": "Ime ključa",
+    "description": "tableuserkeys-keyname"
+  },
   "cvu7tz": {
     "defaultMessage": "Popis i upravljanje članovima na odobrenim zahtjevima/projektima",
     "description": "linktitle-memberships"
@@ -1627,6 +1651,10 @@
     "defaultMessage": "Informacijske i komunikacijske znanosti",
     "description": "science-field-40"
   },
+  "jgOdjw": {
+    "defaultMessage": "Radnje",
+    "description": "tableuserkeys-actions"
+  },
   "k0Z6h0": {
     "defaultMessage": "Temeljne medicinske znanosti",
     "description": "science-field-24"
@@ -1854,6 +1882,10 @@
   "r9kEbs": {
     "defaultMessage": "Aktivni projekti registrirani u sustavu CroRIS na kojima sudjelujete",
     "description": "userinfo-croris-tablefoot-meview"
+  },
+  "rTMyro": {
+    "defaultMessage": "Tip",
+    "description": "tableuserkeys-type"
   },
   "rZtsm+": {
     "defaultMessage": "Resursi",

@@ -15,10 +15,12 @@ import {
   faArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 import { copyToClipboard } from 'Utils/copy-clipboard';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 
 export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
   const [showedKeys, setShowedKeys] = useState(undefined)
+  const intl = useIntl()
 
   const showKey = (keyname) => {
     let showed = new Object()
@@ -44,16 +46,28 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
           <thead id="hzsi-thead" className="align-middle text-center text-white">
             <tr>
               <th className="fw-normal">
-                Ime ključa
+                <FormattedMessage
+                  defaultMessage="Ime ključa"
+                  description="tableuserkeys-keyname"
+                />
               </th>
               <th className="fw-normal">
-                Digitalni otisak ključa
+                <FormattedMessage
+                  defaultMessage="Digitalni otisak ključa"
+                  description="tableuserkeys-fingerprint"
+                />
               </th>
               <th className="fw-normal">
-                Tip
+                <FormattedMessage
+                  defaultMessage="Tip"
+                  description="tableuserkeys-type"
+                />
               </th>
               <th className="fw-normal">
-                Radnje
+                <FormattedMessage
+                  defaultMessage="Radnje"
+                  description="tableuserkeys-actions"
+                />
               </th>
             </tr>
           </thead>
@@ -83,7 +97,10 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
                         <Col sm={{size: 11}}>
                           <InputGroup>
                             <InputGroupText>
-                              Javni ključ:
+                              <FormattedMessage
+                                defaultMessage="Javni ključ:"
+                                description="tableuserkeys-label"
+                              />
                             </InputGroupText>
                             <textarea
                               className="font-monospace form-control"
@@ -98,8 +115,14 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
                           <Button size="sm" className="ms-3" color="success"
                             onClick={(e) => copyToClipboard(
                               e, key.public_key,
-                              "Javni ključ kopiran u međuspremnik",
-                              "Greška prilikom kopiranja javnog ključa u međuspremnik",
+                              intl.formatMessage({
+                                defaultMessage: "Javni ključ kopiran u međuspremnik",
+                                description: "tableuserkeys-toast-ok"
+                              }),
+                              intl.formatMessage({
+                                defaultMessage: "Greška prilikom kopiranja javnog ključa u međuspremnik",
+                                description: "tableuserkeys-toast-fail"
+                              }),
                               "sshkey"
                             )}
                           >
@@ -116,7 +139,10 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
               sshKeys && sshKeys.length === 0 &&
                 <tr key="4">
                   <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-5">
-                    Korisnik nema javnih ključeva dodanih
+                    <FormattedMessage
+                      defaultMessage="Korisnik nema javnih ključeva dodanih"
+                      description="tableuserkeys-empty"
+                    />
                   </td>
                 </tr>
             }
