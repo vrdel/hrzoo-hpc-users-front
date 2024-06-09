@@ -347,6 +347,10 @@
     "defaultMessage": "Invitation successfully cancelled.",
     "description": "memberships-toast-invitecancel-ok"
   },
+  "7yQsb9": {
+    "defaultMessage": "Request could not be submitted:",
+    "description": "researchselected-toast-msg-fail"
+  },
   "8+JF6y": {
     "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userlist-minibutton-msg-3"
@@ -1770,6 +1774,10 @@
   "oxcI3+": {
     "defaultMessage": "Mathematics",
     "description": "science-field-1"
+  },
+  "oxy1bl": {
+    "defaultMessage": "Request on behalf of research project successfully submitted",
+    "description": "researchselected-toast-msg-success"
   },
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit new request?",

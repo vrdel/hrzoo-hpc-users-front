@@ -349,7 +349,10 @@ const ResearchProjectRequestSelected = ({projectType}) => {
       //queryClient.invalidateQueries('my-projects');
       toast.success(
         <span className="font-monospace text-dark">
-          Zahtjev temeljem istraživačkog projekta je uspješno podnesen
+          <FormattedMessage
+            defaultMessage="Zahtjev temeljem istraživačkog projekta je uspješno podnesen"
+            description="researchselected-toast-msg-success"
+          />
         </span>, {
           toastId: 'researchproj-ok-add',
           autoClose: 2500,
@@ -361,7 +364,10 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     onError: (error) => {
       toast.error(
         <span className="font-monospace text-dark">
-          Zahtjev nije bilo moguće podnijeti:
+          <FormattedMessage
+            defaultMessage="Zahtjev nije bilo moguće podnijeti:"
+            description="researchselected-toast-msg-fail"
+          />
           { error.message }
         </span>, {
           toastId: 'researchproj-fail-add',

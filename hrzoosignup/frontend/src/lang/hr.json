@@ -347,6 +347,10 @@
     "defaultMessage": "Pozivnica uspješno otkazana",
     "description": "memberships-toast-invitecancel-ok"
   },
+  "7yQsb9": {
+    "defaultMessage": "Zahtjev nije bilo moguće podnijeti:",
+    "description": "researchselected-toast-msg-fail"
+  },
   "8+JF6y": {
     "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
     "description": "userlist-minibutton-msg-3"
@@ -1770,6 +1774,10 @@
   "oxcI3+": {
     "defaultMessage": "Matematika",
     "description": "science-field-1"
+  },
+  "oxy1bl": {
+    "defaultMessage": "Zahtjev temeljem istraživačkog projekta je uspješno podnesen",
+    "description": "researchselected-toast-msg-success"
   },
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
