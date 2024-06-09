@@ -18,7 +18,20 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
     return (
       <>
         <PopoverHeader className="d-flex align-items-center font-monospace justify-content-between">
-          { userName }
+          <span className="d-flex flex-row align-items-center">
+            { userName }
+            <MiniButton
+              childClassName="me-3"
+              onClick={(e) => copyToClipboard(
+                e, userName,
+                "Korisnička oznaka kopirana u međuspremnik",
+                "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                "id-username"
+              )}
+            >
+              <FontAwesomeIcon size="xs" icon={faCopy} />
+            </MiniButton>
+          </span>
         </PopoverHeader>
         <PopoverBody>
           <Row>
