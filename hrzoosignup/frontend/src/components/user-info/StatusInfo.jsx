@@ -148,7 +148,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
               {
                 userDetails.person_type === 'local'?
                   <React.Fragment>
-                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" icon={ faHome } />
+                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faHome } />
                     <Tooltip
                       placement='right'
                       isOpen={isOpened(`${userDetails.first_name}-type`)}
@@ -160,7 +160,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                   </React.Fragment>
                 :
                   <React.Fragment>
-                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" icon={ faGlobe } />
+                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faGlobe } />
                     <Tooltip
                       placement='right'
                       isOpen={isOpened(`${userDetails.first_name}-type`)}
