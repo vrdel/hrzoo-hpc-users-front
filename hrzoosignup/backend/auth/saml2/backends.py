@@ -62,7 +62,6 @@ class SAML2Backend(Saml2Backend):
                 for first_name, last_name in all_names
             ])
             if (unidecode(first_name.lower()), unidecode(last_name.lower())) in all_names:
-
                 try:
                     user_found = user_model.objects.get(username=username)
                     if self.user_can_authenticate(user_found):

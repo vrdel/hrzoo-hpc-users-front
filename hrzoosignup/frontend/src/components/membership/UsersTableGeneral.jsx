@@ -457,7 +457,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
             <Row className="mt-3 mb-5">
               <Col>
                 <Row>
-                  <Col className="d-flex justify-content-center">
+                  <Col className="d-flex justify-content-center flex-column flex-md-row align-items-center">
                     <Button
                       color="danger"
                       active={!_.some(checkJoined, (value) => value === true)}
@@ -470,7 +470,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         description="users-table-general-collabsignoff"
                       />
                     </Button>
-                    <Button color="primary" active={isOpen} onClick={toggle} className="ms-2">
+                    <Button color="primary" active={isOpen} onClick={toggle} className="ms-0 ms-md-2 mt-sm-2 mt-md-0">
                       <FontAwesomeIcon icon={faArrowDown}/>{' '}
                       <FormattedMessage
                         defaultMessage="Pozovi suradnike"
@@ -480,7 +480,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     {
                       (project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop')
                       && (userDetails.is_staff || userDetails.is_superuser) &&
-                      <Button color="success" active={isOpen2} onClick={toggle2} className="ms-3">
+                      <Button color="success" active={isOpen2} onClick={toggle2} className="ms-0 ms-md-3 mt-sm-2 mt-md-0">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
                         <FormattedMessage
                           defaultMessage="Dodaj suradnike"

@@ -633,7 +633,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
               <Row className="mt-3 mb-5">
                 <Col>
                   <Row>
-                    <Col className="d-flex justify-content-center">
+                    <Col className="d-flex justify-content-center flex-column flex-lg-row align-items-center">
                       <Button
                         color="danger"
                         active={!_.some(checkJoined, (value) => value === true)}
@@ -645,14 +645,14 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-collabsignoff"
                         />
                       </Button>
-                      <Button disabled={collabNoEmail} active={isOpen} color="primary" className="ms-2" onClick={toggle}>
+                      <Button disabled={collabNoEmail} active={isOpen} color="primary" className="ms-0 ms-md-2 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi CroRIS suradnike"
                           description="users-table-croris-croris-collabcall"
                         />
                       </Button>
-                      <Button active={isOpen2} color="info" className="ms-2" onClick={toggle2}>
+                      <Button active={isOpen2} color="info" className="ms-0 ms-md-3 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle2}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi strane suradnike"
