@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Badge } from 'reactstrap';
-import { AuthContext } from '../components/AuthContextProvider';
-import { faCheckCircle, faStopCircle} from "@fortawesome/free-solid-svg-icons";
+import { AuthContext } from 'Components/AuthContextProvider';
+import { faCheckCircle, faStopCircle, faHome, faGlobe} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FormattedMessage } from 'react-intl';
 
@@ -39,13 +39,18 @@ const UserDetailsPopover = () => {
       <div className="text-center">
         {
           userDetails.status === true ?
-            <FontAwesomeIcon className="ms-3 me-3" color="#198754" icon={ faCheckCircle } />
+            <FontAwesomeIcon className="ms-3" color="#198754" icon={ faCheckCircle } />
           :
-            <FontAwesomeIcon className="ms-3 me-3" color="#DC3545" icon={ faStopCircle } />
+            <FontAwesomeIcon className="ms-3" color="#DC3545" icon={ faStopCircle } />
+        }
+        {
+          userDetails.person_type === 'local' ?
+            <FontAwesomeIcon className="ms-1 me-3" color="#777777" icon={ faHome } />
+          :
+            <FontAwesomeIcon className="ms-1 me-3" color="#777777" icon={ faGlobe } />
         }
       </div>
     </>
-
   )
 }
 
