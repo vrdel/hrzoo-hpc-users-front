@@ -171,6 +171,10 @@
     "defaultMessage": "Dodaj javni ključ",
     "description": "publickeys-list-label-add"
   },
+  "2qQEe3": {
+    "defaultMessage": "Lokalni korisnik",
+    "description": "statusinfo-tooltiplocal-1"
+  },
   "30mjoO": {
     "defaultMessage": "Email korisnika kopiran u međuspremnik",
     "description": "managereq-change-minibutton-title-1"
@@ -2014,6 +2018,10 @@
   "z/MmC8": {
     "defaultMessage": "Moji podaci",
     "description": "navlinks-myinfo"
+  },
+  "z0ojJn": {
+    "defaultMessage": "Strani korisnik",
+    "description": "statusinfo-tooltipglobe-1"
   },
   "zDbfN8": {
     "defaultMessage": "Kineziologija",
