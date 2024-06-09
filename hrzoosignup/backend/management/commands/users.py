@@ -51,7 +51,8 @@ class Command(BaseCommand):
                 person_institution=' '.join(options['institution']),
                 person_organisation=options['organisation'],
                 person_affiliation='zaposlenik',
-                person_type=options['person_type']
+                person_type=options['person_type'],
+                person_type_manual_set=bool(options['person_type_manual_set']),
             )
             self.stdout.write('Created user {}'.format(user.username))
             cache.delete("usersinfoinactive-get")
@@ -207,6 +208,11 @@ class Command(BaseCommand):
             user.person_type = options['person_type']
             self.stdout.write('Set person_type for user {} to {}'.format(user.username, options['person_type']))
 
+        if options['person_type_manual_set'] != None:
+            new = bool(options['person_type_manual_set'])
+            user.person_type_manual_set = new
+            self.stdout.write('Set person_type_manual_set for user {} to {}'.format(user.username, new))
+
         user.save()
 
     def _user_delete(self, options):
@@ -294,6 +300,9 @@ class Command(BaseCommand):
         parser_create.add_argument('--person-username', dest='person_username', action='store_true', default=False, required=False, help='Generate person_username from first and last name')
         parser_create.add_argument('--person-type', dest='person_type', type=str, default='local',
                                    required=False, help="User is local or foreign")
+        parser_create.add_argument('--person-type-manual-set', dest='person_type_manual_set', type=int, default=None,
+                                   required=False, help="Set person_type_manual_set field")
+
 
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
         parser_delete.add_argument('--username', dest='username', type=str,
@@ -323,6 +332,9 @@ class Command(BaseCommand):
                                    required=False, help='Password for the user')
         parser_update.add_argument('--person-type', dest='person_type', type=str, default='',
                                    required=False, help="User is local or foreign")
+        parser_update.add_argument('--person-type-manual-set', dest='person_type_manual_set', type=int, default=None,
+                                   required=False, help="Set person_type_manual_set field")
+
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
