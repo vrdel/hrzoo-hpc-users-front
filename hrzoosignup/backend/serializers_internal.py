@@ -265,6 +265,7 @@ class UserSerializerFiltered(serializers.ModelSerializer):
             'croris_mbz',
             'person_institution',
             'person_organisation',
+            'person_type',
             'status',
             'is_active',
             'is_staff',
