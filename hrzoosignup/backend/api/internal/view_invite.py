@@ -111,10 +111,10 @@ class Invites(APIView):
         ))
         try:
             res = ret.raise_for_status()
-            edugain_authn = False
 
-            if request.session:
-                edugain_authn = 'edugain' in request.session.get('saml2_idp', [])
+            # edugain_authn = False
+            # if request.session:
+                # edugain_authn = 'edugain' in request.session.get('saml2_idp', [])
 
             if ret.status_code == 200 and 'invites-userlink' in ret.url:
                 Invitation = get_invitation_model()
@@ -125,7 +125,7 @@ class Invites(APIView):
                 proj_type = models.ProjectType.objects.get(project=proj)
 
                 # invitation is only for local collaborators
-                if inv_type == 'local' and edugain_authn:
+                if inv_type == 'local' and request.user.person_type == 'foreign':
                     msg = {
                         'status': {
                             'code': status.HTTP_400_BAD_REQUEST,
