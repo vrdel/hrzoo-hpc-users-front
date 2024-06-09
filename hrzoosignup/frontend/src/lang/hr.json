@@ -327,6 +327,10 @@
     "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
     "description": "resourcefields-ram"
   },
+  "7baQax": {
+    "defaultMessage": "suradnik",
+    "description": "userschange-badge-collab"
+  },
   "7cslKR": {
     "defaultMessage": "Novo znanstveno polje",
     "description": "newreqind-scientific-newfield"
@@ -394,6 +398,10 @@
   "9WQZWa": {
     "defaultMessage": "Sustav CroRIS",
     "description": "userinfo-croris-title"
+  },
+  "9ne3G2": {
+    "defaultMessage": "voditelj",
+    "description": "userschange-badge-lead"
   },
   "9vAKOS": {
     "defaultMessage": "Javni ključ:",
@@ -474,6 +482,10 @@
   "BHgbqS": {
     "defaultMessage": "Edukacijsko-rehabilitacijske znanosti",
     "description": "science-field-44"
+  },
+  "BKhlYP": {
+    "defaultMessage": "Šifra",
+    "description": "userschange-project-identifier"
   },
   "BQvEOS": {
     "defaultMessage": "Socijalne djelatnosti",
@@ -867,6 +879,10 @@
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
     "description": "loginofficial-termsstring"
   },
+  "Kzh4nh": {
+    "defaultMessage": "Uloga",
+    "description": "userschange-project-role"
+  },
   "LBM528": {
     "defaultMessage": "Istekao",
     "description": "statestringuser-expire"
@@ -971,6 +987,10 @@
     "defaultMessage": "Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
     "description": "newrequest-reason-alreadyassociate"
   },
+  "OYZJ+e": {
+    "defaultMessage": "Stanje",
+    "description": "userschange-state"
+  },
   "Oi5CPK": {
     "defaultMessage": "Interni projekt",
     "description": "requesttype-label-internal"
@@ -1003,6 +1023,10 @@
     "defaultMessage": "Traži",
     "description": "project-list-find"
   },
+  "Pj1p8q": {
+    "defaultMessage": "Resursi",
+    "description": "userschange-project-resources"
+  },
   "Pxvi7f": {
     "defaultMessage": "Moji zahtjevi",
     "description": "linktitle-myrequests"
@@ -1010,6 +1034,10 @@
   "Q/vQRr": {
     "defaultMessage": "Financijer:",
     "description": "generalproject-finance"
+  },
+  "Q1Qu3u": {
+    "defaultMessage": "Tip",
+    "description": "userschange-project-type"
   },
   "Q1aE8s": {
     "defaultMessage": "Napredno računanje",
@@ -1222,6 +1250,10 @@
   "WVblfa": {
     "defaultMessage": "Trajanje",
     "description": "managereq-column-duration"
+  },
+  "WlzjqD": {
+    "defaultMessage": "Naziv projekta i institucija nositelj",
+    "description": "userschange-projectname-institution"
   },
   "WnDAVG": {
     "defaultMessage": "Javni ključ",
@@ -1570,6 +1602,10 @@
   "j6QjlA": {
     "defaultMessage": "Stanje:",
     "description": "memberships-project-state"
+  },
+  "jIctk0": {
+    "defaultMessage": "Odobren",
+    "description": "userschange-project-approved"
   },
   "jLfsnD": {
     "defaultMessage": "Javni ključevi",

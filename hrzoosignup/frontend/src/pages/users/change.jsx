@@ -22,7 +22,7 @@ import { url_ui_prefix } from 'Config/general';
 import { MiniButton } from 'Components/MiniButton';
 import { TableUserKeys } from 'Components/sshkeys/UserKeys';
 import { fetchSshKeys } from 'Api/sshkeys';
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import _ from "lodash";
 
 
@@ -37,25 +37,46 @@ const UserProjectsTable = ({projects}) => {
                 #
               </th>
               <th className="fw-normal" style={{width: '92px'}}>
-                Stanje
+                <FormattedMessage
+                  defaultMessage="Stanje"
+                  description="userschange-state"
+                />
               </th>
               <th className="fw-normal">
-                Naziv projekta i institucija nositelj
+                <FormattedMessage
+                  defaultMessage="Naziv projekta i institucija nositelj"
+                  description="userschange-projectname-institution"
+                />
               </th>
               <th className="fw-normal">
-                Šifra
+                <FormattedMessage
+                  defaultMessage="Šifra"
+                  description="userschange-project-identifier"
+                />
               </th>
               <th className="fw-normal">
-                Tip
+                <FormattedMessage
+                  defaultMessage="Tip"
+                  description="userschange-project-type"
+                />
               </th>
               <th className="fw-normal" style={{maxWidth: '100px'}}>
-                Resursi
+                <FormattedMessage
+                  defaultMessage="Resursi"
+                  description="userschange-project-resources"
+                />
               </th>
               <th className="fw-normal">
-                Uloga
+                <FormattedMessage
+                  defaultMessage="Uloga"
+                  description="userschange-project-role"
+                />
               </th>
               <th className="fw-normal">
-                Odobren
+                <FormattedMessage
+                  defaultMessage="Odobren"
+                  description="userschange-project-approved"
+                />
               </th>
             </tr>
           </thead>
@@ -172,11 +193,17 @@ const UserProjectsTable = ({projects}) => {
                     {
                       pro.role.name === 'lead' ?
                         <Badge className="fw-normal" color="success">
-                          voditelj
+                          <FormattedMessage
+                            defaultMessage="voditelj"
+                            description="userschange-badge-lead"
+                          />
                         </Badge>
                       :
                         <Badge className="fw-normal" color="primary">
-                          suradnik
+                          <FormattedMessage
+                            defaultMessage="suradnik"
+                            description="userschange-badge-collab"
+                          />
                         </Badge>
                     }
                   </td>

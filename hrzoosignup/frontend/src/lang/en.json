@@ -327,6 +327,10 @@
     "defaultMessage": "Average amount of working memory per job (GB):",
     "description": "resourcefields-ram"
   },
+  "7baQax": {
+    "defaultMessage": "collaborator",
+    "description": "userschange-badge-collab"
+  },
   "7cslKR": {
     "defaultMessage": "New scientific field",
     "description": "newreqind-scientific-newfield"
@@ -394,6 +398,10 @@
   "9WQZWa": {
     "defaultMessage": "CroRIS system",
     "description": "userinfo-croris-title"
+  },
+  "9ne3G2": {
+    "defaultMessage": "manager",
+    "description": "userschange-badge-lead"
   },
   "9vAKOS": {
     "defaultMessage": "Public key:",
@@ -474,6 +482,10 @@
   "BHgbqS": {
     "defaultMessage": "Educational-Rehabilitation Sciences",
     "description": "science-field-44"
+  },
+  "BKhlYP": {
+    "defaultMessage": "Project identifier",
+    "description": "userschange-project-identifier"
   },
   "BQvEOS": {
     "defaultMessage": "Social Work",
@@ -867,6 +879,10 @@
     "defaultMessage": "By logging into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
   },
+  "Kzh4nh": {
+    "defaultMessage": "Role",
+    "description": "userschange-project-role"
+  },
   "LBM528": {
     "defaultMessage": "Expired",
     "description": "statestringuser-expire"
@@ -971,6 +987,10 @@
     "defaultMessage": "You are registered as collaborator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadyassociate"
   },
+  "OYZJ+e": {
+    "defaultMessage": "State",
+    "description": "userschange-state"
+  },
   "Oi5CPK": {
     "defaultMessage": "Internal project",
     "description": "requesttype-label-internal"
@@ -1003,6 +1023,10 @@
     "defaultMessage": "Search",
     "description": "project-list-find"
   },
+  "Pj1p8q": {
+    "defaultMessage": "Resources",
+    "description": "userschange-project-resources"
+  },
   "Pxvi7f": {
     "defaultMessage": "My requests",
     "description": "linktitle-myrequests"
@@ -1010,6 +1034,10 @@
   "Q/vQRr": {
     "defaultMessage": "Finance:",
     "description": "generalproject-finance"
+  },
+  "Q1Qu3u": {
+    "defaultMessage": "Type",
+    "description": "userschange-project-type"
   },
   "Q1aE8s": {
     "defaultMessage": "Advanced Computing",
@@ -1222,6 +1250,10 @@
   "WVblfa": {
     "defaultMessage": "Duration",
     "description": "managereq-column-duration"
+  },
+  "WlzjqD": {
+    "defaultMessage": "Project name and manager institution",
+    "description": "userschange-projectname-institution"
   },
   "WnDAVG": {
     "defaultMessage": "Public key",
@@ -1570,6 +1602,10 @@
   "j6QjlA": {
     "defaultMessage": "State:",
     "description": "memberships-project-state"
+  },
+  "jIctk0": {
+    "defaultMessage": "Approved",
+    "description": "userschange-project-approved"
   },
   "jLfsnD": {
     "defaultMessage": "Public keys",
