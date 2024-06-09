@@ -211,6 +211,10 @@
     "defaultMessage": "Are you sure you want to add listed collaborators to project?",
     "description": "memberships-modalmsg-internal"
   },
+  "43Vm52": {
+    "defaultMessage": "AAI identifier copied to clipboard",
+    "description": "popover-username-copy-ok"
+  },
   "4CJjmv": {
     "defaultMessage": "Last name",
     "description": "userinfo-croris-lastname"
@@ -274,6 +278,10 @@
   "5d/pGK": {
     "defaultMessage": "When approving request, you must specify type of resource allocated",
     "description": "myreq-change-resource"
+  },
+  "60OZPE": {
+    "defaultMessage": "Error while copying user's email to clipboard",
+    "description": "popover-emailuser-copy-fail"
   },
   "6IgwvN": {
     "defaultMessage": "Institutional{br}project",
@@ -867,6 +875,10 @@
     "defaultMessage": "Collaborators have been successfully signed off",
     "description": "memberships-toast-signoff-ok"
   },
+  "KLjH39": {
+    "defaultMessage": "Error while copying AAI identifier to clipboard",
+    "description": "popover-username-copy-fail"
+  },
   "KSnYoa": {
     "defaultMessage": "Name, institution and identifier",
     "description": "managereq-column-nameinstid"
@@ -999,6 +1011,10 @@
     "defaultMessage": "Advanced Computing",
     "description": "saml2-not-allowed-cardtitle"
   },
+  "OA86Kt": {
+    "defaultMessage": "First and last name",
+    "description": "popover-firstlast-name"
+  },
   "OMuyxE": {
     "defaultMessage": "You are registered as collaborator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadyassociate"
@@ -1078,6 +1094,10 @@
   "QU9bH3": {
     "defaultMessage": "Metallurgy",
     "description": "science-field-15"
+  },
+  "QoBBEg": {
+    "defaultMessage": "Error while copying public key to clipboard",
+    "description": "tableuserkeys-toast-fail"
   },
   "R7WXFa": {
     "defaultMessage": "Status",
@@ -1291,6 +1311,10 @@
     "defaultMessage": "Some scientific domains appear multiple times.",
     "description": "domain-fields-science-area-multi"
   },
+  "XNAgu+": {
+    "defaultMessage": "Email",
+    "description": "popover-email"
+  },
   "XZis0B": {
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
@@ -1322,6 +1346,10 @@
   "YPlMrW": {
     "defaultMessage": "Name",
     "description": "popover-projectinfo-name"
+  },
+  "Yn5LNX": {
+    "defaultMessage": "Details",
+    "description": "popover-user-details"
   },
   "Yo9uAA": {
     "defaultMessage": "You do not have any registered participations in approved projects",
@@ -1378,6 +1406,10 @@
   "bWWHsM": {
     "defaultMessage": "Inactive",
     "description": "userlist-button-inactive"
+  },
+  "buMn5E": {
+    "defaultMessage": "Institution",
+    "description": "popover-institution"
   },
   "c2Oeo3": {
     "defaultMessage": "Email",
@@ -1830,6 +1862,10 @@
   "pOPWsf": {
     "defaultMessage": "Physics",
     "description": "science-field-2"
+  },
+  "po6NY6": {
+    "defaultMessage": "User's email copied to clipboard",
+    "description": "popover-emailuser-copy-ok"
   },
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",

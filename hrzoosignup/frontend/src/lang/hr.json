@@ -211,6 +211,10 @@
     "defaultMessage": "Da li ste sigurni da želite dodati navedene suradnike na projekt?",
     "description": "memberships-modalmsg-internal"
   },
+  "43Vm52": {
+    "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
+    "description": "popover-username-copy-ok"
+  },
   "4CJjmv": {
     "defaultMessage": "Prezime",
     "description": "userinfo-croris-lastname"
@@ -274,6 +278,10 @@
   "5d/pGK": {
     "defaultMessage": "Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.",
     "description": "myreq-change-resource"
+  },
+  "60OZPE": {
+    "defaultMessage": "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+    "description": "popover-emailuser-copy-fail"
   },
   "6IgwvN": {
     "defaultMessage": "Institucijski{br}projekt",
@@ -867,6 +875,10 @@
     "defaultMessage": "Suradnici su uspješno odjavljeni",
     "description": "memberships-toast-signoff-ok"
   },
+  "KLjH39": {
+    "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+    "description": "popover-username-copy-fail"
+  },
   "KSnYoa": {
     "defaultMessage": "Naziv, institucija i šifra",
     "description": "managereq-column-nameinstid"
@@ -998,6 +1010,10 @@
   "NsHq0r": {
     "defaultMessage": "Napredno računanje",
     "description": "saml2-not-allowed-cardtitle"
+  },
+  "OA86Kt": {
+    "defaultMessage": "Ime i prezime",
+    "description": "popover-firstlast-name"
   },
   "OMuyxE": {
     "defaultMessage": "Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
@@ -1295,6 +1311,10 @@
     "defaultMessage": "Neka znanstvena područja se pojavljuju više puta.",
     "description": "domain-fields-science-area-multi"
   },
+  "XNAgu+": {
+    "defaultMessage": "Email",
+    "description": "popover-email"
+  },
   "XZis0B": {
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
@@ -1326,6 +1346,10 @@
   "YPlMrW": {
     "defaultMessage": "Naziv",
     "description": "popover-projectinfo-name"
+  },
+  "Yn5LNX": {
+    "defaultMessage": "Detalji korisnika",
+    "description": "popover-user-details"
   },
   "Yo9uAA": {
     "defaultMessage": "Nemate prijavljenih sudjelovanja na odobrenim projektima",
@@ -1382,6 +1406,10 @@
   "bWWHsM": {
     "defaultMessage": "Neaktivni",
     "description": "userlist-button-inactive"
+  },
+  "buMn5E": {
+    "defaultMessage": "Ustanova",
+    "description": "popover-institution"
   },
   "c2Oeo3": {
     "defaultMessage": "Email",
@@ -1834,6 +1862,10 @@
   "pOPWsf": {
     "defaultMessage": "Fizika",
     "description": "science-field-2"
+  },
+  "po6NY6": {
+    "defaultMessage": "Email korisnika kopiran u međuspremnik",
+    "description": "popover-emailuser-copy-ok"
   },
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",

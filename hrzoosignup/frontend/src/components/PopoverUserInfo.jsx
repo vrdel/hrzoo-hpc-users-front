@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchSpecificUser } from "Api/users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faArrowRight, faHome, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { FormattedMessage, useIntl } from 'react-intl';
 
 
 const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
@@ -13,6 +14,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
       queryKey: ['change-user', userName],
       queryFn: () => fetchSpecificUser(userName),
   })
+  const intl = useIntl();
 
   if (status === 'success' && userData) {
     return (
@@ -24,8 +26,14 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
               childClassName="me-3"
               onClick={(e) => copyToClipboard(
                 e, userName,
-                "Korisnička oznaka kopirana u međuspremnik",
-                "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                intl.formatMessage({
+                  defaultMessage: "Korisnička oznaka kopirana u međuspremnik",
+                  description: "popover-username-copy-ok"
+                }),
+                intl.formatMessage({
+                  defaultMessage: "Greška prilikom kopiranja korisničke oznake u međuspremnik",
+                  description: "popover-username-copy-fail"
+                }),
                 "id-username"
               )}
             >
@@ -42,7 +50,10 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
         <PopoverBody>
           <Row>
             <Col className="fw-bold">
-              Ime i prezime
+              <FormattedMessage
+                defaultMessage="Ime i prezime"
+                description="popover-firstlast-name"
+              />
             </Col>
           </Row>
           <Row>
@@ -52,7 +63,10 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
           </Row>
           <Row className="mt-2">
             <Col className="fw-bold">
-              Ustanova
+              <FormattedMessage
+                defaultMessage="Ustanova"
+                description="popover-institution"
+              />
             </Col>
           </Row>
           <Row>
@@ -63,7 +77,10 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
           </Row>
           <Row className="mt-2">
             <Col className="fw-bold">
-              Email
+              <FormattedMessage
+                defaultMessage="Email"
+                description="popover-email"
+              />
             </Col>
           </Row>
           <Row>
@@ -73,8 +90,14 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
                 childClassName="me-3"
                 onClick={(e) => copyToClipboard(
                   e, userData.person_mail,
-                  "Email korisnika kopiran u međuspremnik",
-                  "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                  intl.formatMessage({
+                    defaultMessage: "Email korisnika kopiran u međuspremnik",
+                    description: "popover-emailuser-copy-ok"
+                  }),
+                  intl.formatMessage({
+                    defaultMessage: "Greška prilikom kopiranja emaila korisnika u međuspremnik",
+                    description: "popover-emailuser-copy-fail"
+                  }),
                   "id-emailuser"
                 )}
               >
@@ -93,7 +116,10 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
                 href={`/ui/users/${userData.username}`}
               >
                 <FontAwesomeIcon icon={faArrowRight}/>{' '}
-                Detalji korisnika
+                <FormattedMessage
+                  defaultMessage="Detalji korisnika"
+                  description="popover-user-details"
+                />
               </a>
             </Col>
           </Row>
