@@ -132,12 +132,13 @@ class SAML2Backend(Saml2Backend):
             except IndexError:
                 pass
 
-        if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
-            user.person_type = 'foreign'
-            force_save = True
-        else:
-            user.person_type = 'local'
-            force_save = True
+        if not user.person_type_manual_set:
+            if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
+                user.person_type = 'foreign'
+                force_save = True
+            else:
+                user.person_type = 'local'
+                force_save = True
 
         return super()._update_user(user, attributes, attribute_mapping, force_save)
 
