@@ -5,7 +5,7 @@ import { Col, Row, PopoverHeader, PopoverBody } from "reactstrap";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSpecificUser } from "Api/users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faArrowRight, faHome, faGlobe } from "@fortawesome/free-solid-svg-icons";
 
 
 const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
@@ -32,6 +32,12 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
               <FontAwesomeIcon size="xs" icon={faCopy} />
             </MiniButton>
           </span>
+          {
+            userData.person_type === 'local'?
+              <FontAwesomeIcon color="#777777" icon={ faHome } />
+            :
+              <FontAwesomeIcon color="#777777" icon={ faGlobe } />
+          }
         </PopoverHeader>
         <PopoverBody>
           <Row>
