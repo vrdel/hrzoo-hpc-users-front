@@ -143,6 +143,10 @@
     "defaultMessage": "Enter the email addresses of the collaborators you wish to invite to project",
     "description": "users-table-general-cardtitle-1"
   },
+  "2LXEHx": {
+    "defaultMessage": "Field",
+    "description": "newreqind-scientific-field"
+  },
   "2OIK/D": {
     "defaultMessage": "Biotechnology",
     "description": "science-field-33"
@@ -318,6 +322,10 @@
   "7GLux1": {
     "defaultMessage": "Average amount of working memory per job (GB):",
     "description": "resourcefields-ram"
+  },
+  "7cslKR": {
+    "defaultMessage": "New scientific field",
+    "description": "newreqind-scientific-newfield"
   },
   "7oHfZW": {
     "defaultMessage": "Error while copying user's email to clipboard",
@@ -1111,6 +1119,10 @@
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TVRDUD": {
+    "defaultMessage": "Ratio",
+    "description": "newreqind-scientific-ratio"
+  },
   "TYEFLG": {
     "defaultMessage": "Denied",
     "description": "stateshort-deny"
@@ -1406,6 +1418,10 @@
   "f5TbbX": {
     "defaultMessage": "Affiliation",
     "description": "managereq-change-affiliation"
+  },
+  "fA/llk": {
+    "defaultMessage": "Field",
+    "description": "newreqind-scientific-field"
   },
   "fCdY/g": {
     "defaultMessage": "Research project",
@@ -1834,6 +1850,10 @@
   "tMWDpG": {
     "defaultMessage": "Manager",
     "description": "managereq-change-title-lead"
+  },
+  "tcrLQu": {
+    "defaultMessage": "Scientific domain:",
+    "description": "newreqind-scientific-domain"
   },
   "tdeUEL": {
     "defaultMessage": "Explanation:",

@@ -1,5 +1,5 @@
 import React from 'react'
-import RequestHorizontalRuler from '../../components/RequestHorizontalRuler';
+import RequestHorizontalRuler from 'Components/RequestHorizontalRuler';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFile,
@@ -9,8 +9,6 @@ import {
 import {
   Button,
   Col,
-  Form,
-  FormFeedback,
   Label,
   Row,
   Card,
@@ -19,11 +17,9 @@ import {
   Input,
   InputGroup,
   InputGroupText,
-  Placeholder,
 } from 'reactstrap';
 import DatePicker from 'react-date-picker';
-import { FormattedMessage } from 'react-intl';
-import { useIntl } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl';
 
 
 const NewRequestIndex = () => {
@@ -118,7 +114,10 @@ const NewRequestIndex = () => {
             htmlFor="scientificDomain"
             aria-label="scientificDomain"
             className="mt-2 text-right form-label">
-            Znanstveno područje:
+            <FormattedMessage
+              defaultMessage="Znanstveno područje:"
+              description="newreqind-scientific-domain"
+            />
             <span className="ms-1 fw-bold text-danger">*</span>
           </Label>
           <Row>
@@ -128,7 +127,10 @@ const NewRequestIndex = () => {
                   <Input
                     aria-label="scientificDomain"
                     id="scientificDomain"
-                    placeholder="Područje"
+                    placeholder={ intl.formatMessage({
+                      defaultMessage: "Područje",
+                      description: "newreqind-scientific-field"
+                    }) }
                     disabled={true}
                     style={{maxWidth: '64%'}}
                   />
@@ -136,7 +138,10 @@ const NewRequestIndex = () => {
                     <Input
                       className={`ms-1 form-control text-center`}
                       disabled={true}
-                      placeholder="Udio"
+                      placeholder={ intl.formatMessage({
+                        defaultMessage: "Udio",
+                        description: "newreqind-scientific-ratio"
+                      }) }
                       type="number"
                     />
                     <InputGroupText>
@@ -161,13 +166,19 @@ const NewRequestIndex = () => {
                         disabled={true}
                         className="rounded"
                         id="scientificDomain"
-                        placeholder="Polje"
+                        placeholder={ intl.formatMessage({
+                          defaultMessage: "Polje",
+                          description: "newreqind-scientific-field"
+                        }) }
                         style={{maxWidth: '64%'}}
                       />
                       <InputGroup style={{maxWidth: '30%'}}>
                         <Input
                           className={`ms-1 form-control text-center`}
-                          placeholder="Udio"
+                          placeholder={ intl.formatMessage({
+                            defaultMessage: "Udio",
+                            description: "newreqind-scientific-ratio"
+                          }) }
                           type="number"
                           disabled={true}
                         />
@@ -190,7 +201,10 @@ const NewRequestIndex = () => {
                     <Col className="text-center">
                       <Button className="mt-3" size="sm" disabled={true} outline color="success">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
-                        Novo znanstveno polje
+                        <FormattedMessage
+                          defaultMessage="Novo znanstveno polje"
+                          description="newreqind-scientific-newfield"
+                        />
                       </Button>
                     </Col>
                   </Row>

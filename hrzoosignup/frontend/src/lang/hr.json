@@ -143,6 +143,10 @@
     "defaultMessage": "Upiši email adrese suradnika koje želiš pozvati na projekt",
     "description": "users-table-general-cardtitle-1"
   },
+  "2LXEHx": {
+    "defaultMessage": "Područje",
+    "description": "newreqind-scientific-field"
+  },
   "2OIK/D": {
     "defaultMessage": "Biotehnologija",
     "description": "science-field-33"
@@ -318,6 +322,10 @@
   "7GLux1": {
     "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
     "description": "resourcefields-ram"
+  },
+  "7cslKR": {
+    "defaultMessage": "Novo znanstveno polje",
+    "description": "newreqind-scientific-newfield"
   },
   "7oHfZW": {
     "defaultMessage": "Greška prilikom kopiranja emaila korisnika u međuspremnik",
@@ -1111,6 +1119,10 @@
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TVRDUD": {
+    "defaultMessage": "Udio",
+    "description": "newreqind-scientific-ratio"
+  },
   "TYEFLG": {
     "defaultMessage": "Odbijen",
     "description": "stateshort-deny"
@@ -1406,6 +1418,10 @@
   "f5TbbX": {
     "defaultMessage": "Povezanost",
     "description": "managereq-change-affiliation"
+  },
+  "fA/llk": {
+    "defaultMessage": "Polje",
+    "description": "newreqind-scientific-field"
   },
   "fCdY/g": {
     "defaultMessage": "Istraživački projekt",
@@ -1834,6 +1850,10 @@
   "tMWDpG": {
     "defaultMessage": "Voditelj",
     "description": "managereq-change-title-lead"
+  },
+  "tcrLQu": {
+    "defaultMessage": "Znanstveno područje:",
+    "description": "newreqind-scientific-domain"
   },
   "tdeUEL": {
     "defaultMessage": "Obrazloženje:",
