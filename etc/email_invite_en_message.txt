@@ -10,7 +10,7 @@ on the project "{{ project_name }}"
 Please confirm your registration at the following link:
 {{ invite_url }}
 
-Warm regards,
+Best regards,
 -- 
 Advanced Computing
 University of Zagreb, University Computing Centre (Srce), www.srce.unizg.hr

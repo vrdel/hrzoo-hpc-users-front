@@ -27,12 +27,12 @@ export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
     <Button size="sm" color="light"
       onClick={ () => alternateLocale() } >
       <span className={`${small ? 'fs-5 m-0 p-0' : 'fs-4 m-0 p-0'}`}>
-        { locale === 'hr' && <img src={HrFlag30} alt="Croatian flag"/> }
-        { locale === 'en' && <img src={EnFlag30} alt="English flag"/> }
+        { locale === 'en' && <img src={HrFlag30} alt="Croatian flag"/> }
+        { locale === 'hr' && <img src={EnFlag30} alt="English flag"/> }
       </span>
       {' '}
       <span className={`${small ? 'fs-6' : 'fs-5'}`}>
-        { locale.toUpperCase() }
+        { locale === 'hr' ? 'en'.toUpperCase() : 'hr'.toUpperCase() }
       </span>
     </Button>
   )
@@ -41,13 +41,13 @@ export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
 
 export const LanguageButtonNav = ({locale, setLocale}) => {
   function alternateLocale() {
-    if (locale === 'en') {
-      setLocale('hr')
-      Cookies.set('hzsi-lang', 'hr')
-    }
-    else {
+    if (locale === 'hr') {
       setLocale('en')
       Cookies.set('hzsi-lang', 'en')
+    }
+    else {
+      setLocale('hr')
+      Cookies.set('hzsi-lang', 'hr')
     }
   }
 
@@ -55,11 +55,11 @@ export const LanguageButtonNav = ({locale, setLocale}) => {
     <Button size="sm" color="light"
       onClick={ () => alternateLocale() } >
       <span className="fs-6 m-0 p-0">
-        { locale === 'hr' && <img src={HrFlag20} alt="Croatian flag"/> }
-        { locale === 'en' && <img src={EnFlag20} alt="English flag"/> }
+        { locale === 'en' && <img src={HrFlag20} alt="Croatian flag"/> }
+        { locale === 'hr' && <img src={EnFlag20} alt="English flag"/> }
       </span>
       <br/>
-      { locale.toUpperCase() }
+      { locale === 'hr' ? 'en'.toUpperCase() : 'hr'.toUpperCase() }
     </Button>
   )
 }
