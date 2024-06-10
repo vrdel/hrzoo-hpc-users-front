@@ -73,17 +73,17 @@ const Saml2NotAllowed = () => {
           <Card className="shadow-lg" style={{minWidth: '550px'}}>
             <CardHeader
               id='hzsi-loginheader'
-              className="d-sm-inline-flex align-items-center justify-content-center"
+              className="p-3 d-flex flex-row align-items-center justify-content-center"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-              <h4 className="ps-5 ms-5 text-dark">
+              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
+              <h2 className="ps-5 ms-5 text-dark">
                 <strong>
                   <FormattedMessage
                     defaultMessage="Napredno računanje"
                     description="saml2-not-allowed-cardtitle"
                   />
                 </strong>
-              </h4>
+              </h2>
             </CardHeader>
             <CardBody className="pt-5 pb-5">
               {
