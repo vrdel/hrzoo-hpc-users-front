@@ -25,7 +25,7 @@ def is_authn_via_aaieduhr(session_info):
 class SAML2Backend(Saml2Backend):
     def authenticate(self, request, session_info=None, attribute_mapping=None,
                      create_unknown_user=True, assertion_info=None, **kwargs):
-        self.idp_entityid = session_info["issuer"]
+        self.idp_entityid = session_info.get('issuer', '')
 
         if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
             if not settings.SAML_EDUGAINALLOWAAIEDUHR and is_authn_via_aaieduhr(session_info):
