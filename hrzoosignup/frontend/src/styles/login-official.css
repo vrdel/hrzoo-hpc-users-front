@@ -1,5 +1,11 @@
-.image-background {
-  background-image: url('../assets/login-background.png');
+.image-background-hr {
+  background-image: url('../assets/login-background-24-hr.png');
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Prevent the background image from repeating */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
+.image-background-en {
+  background-image: url('../assets/login-background-24-en.png');
   background-position: center; /* Center the background image */
   background-repeat: no-repeat; /* Prevent the background image from repeating */
   background-size: cover; /* Resize the background image to cover the entire container */

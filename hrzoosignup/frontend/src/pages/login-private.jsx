@@ -65,11 +65,11 @@ const LoginPrivate = ({sessionData=undefined}) => {
   }
 
   return (
-    <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
+    <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
       <Row className="login-first-row">
         <Col>
           <Row style={{'height': '110px'}}/>
-          <Card className="shadow-lg ps-2 pe-2 pt-2" style={{minHeight: '475px', width: '450px'}}>
+          <Card className="shadow-lg ps-2 pe-2" style={{minHeight: '475px', width: '450px'}}>
             <CardHeader
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"

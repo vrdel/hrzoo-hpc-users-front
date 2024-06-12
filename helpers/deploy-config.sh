@@ -23,7 +23,6 @@ do
         s)
             suffix=$OPTARG
              ;;
-
         h)
             usage
             ;;
