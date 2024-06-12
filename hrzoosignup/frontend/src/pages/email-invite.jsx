@@ -18,9 +18,10 @@ import { url_ui_prefix } from 'Config/general';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { FormattedMessage, useIntl } from 'react-intl'
 import { LanguageButtonLogin } from 'Components/LocaleButton';
+import Cookies from 'js-cookie';
 
 
-const EmailInvitation = ({sessionData=undefined}) => {
+const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
   const navigate = useNavigate()
   const { inviteKey } = useParams()
   const { isLoggedIn, setUserdetails } = useContext(AuthContext)
@@ -37,6 +38,10 @@ const EmailInvitation = ({sessionData=undefined}) => {
       navigate(defaultUnAuthnRedirect)
     else {
       sessionData?.userdetails && setUserdetails(sessionData.userdetails)
+      if (lang === 'en') {
+        setLocale('en')
+        Cookies.set('hzsi-lang', 'en')
+      }
    }
   }, [sessionData, isLoggedIn])
 
