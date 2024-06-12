@@ -647,9 +647,17 @@
     "defaultMessage": "Public key could not be added: { error }",
     "description": "public-keys-add-toast-fail"
   },
+  "EHONoZ": {
+    "defaultMessage": "Approved",
+    "description": "renderstate-approve"
+  },
   "EHi/e9": {
     "defaultMessage": "Pharmacy",
     "description": "science-field-29"
+  },
+  "EN67wt": {
+    "defaultMessage": "Extended",
+    "description": "renderstate-extend"
   },
   "ENvJpe": {
     "defaultMessage": "First name",
@@ -1007,6 +1015,10 @@
     "defaultMessage": "Public key:",
     "description": "tableuserkeys-label"
   },
+  "NUvyep": {
+    "defaultMessage": "Denied",
+    "description": "renderstate-denied"
+  },
   "No5Y5w": {
     "defaultMessage": "Institutional project",
     "description": "requesttype-label-institutional"
@@ -1255,6 +1267,10 @@
     "defaultMessage": "Handled:",
     "description": "managereq-change-handled"
   },
+  "VF0fKZ": {
+    "defaultMessage": "Expired",
+    "description": "renderstate-expire"
+  },
   "VOeDTJ": {
     "defaultMessage": "Type",
     "description": "publickeys-list-type"
@@ -1442,6 +1458,10 @@
   "cQTqIM": {
     "defaultMessage": "New request on behalf of institute project",
     "description": "linktitle-newrequest-institutional"
+  },
+  "cRvka0": {
+    "defaultMessage": "Processing",
+    "description": "renderstate-process"
   },
   "cTvw8s": {
     "defaultMessage": "Textile Technology",

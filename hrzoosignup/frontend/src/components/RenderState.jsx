@@ -9,6 +9,7 @@ import {
   faCalendarXmark,
   faCheckDouble,
 } from '@fortawesome/free-solid-svg-icons';
+import { FormattedMessage } from 'react-intl'
 
 
 export const RenderStateIcon = ({reqState}) => {
@@ -22,7 +23,10 @@ export const RenderStateIcon = ({reqState}) => {
           style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
         <br/>
         <p className="fs-5 mt-1">
-          Odobren
+          <FormattedMessage
+            defaultMessage="Odobren"
+            description="renderstate-approve"
+          />
         </p>
       </Col>
     )
@@ -32,7 +36,10 @@ export const RenderStateIcon = ({reqState}) => {
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-warning" icon={faCog}/>{' '}
         <p className="fs-5 mt-1">
-          Obrada
+          <FormattedMessage
+            defaultMessage="Obrada"
+            description="renderstate-process"
+          />
         </p>
       </Col>
     )
@@ -42,7 +49,10 @@ export const RenderStateIcon = ({reqState}) => {
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-warning" icon={faTimeline}/>{' '}
         <p className="fs-5 mt-1">
-          Produljenje
+          <FormattedMessage
+            defaultMessage="Produljenje"
+            description="renderstate-extend"
+          />
         </p>
       </Col>
     )
@@ -52,7 +62,10 @@ export const RenderStateIcon = ({reqState}) => {
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-danger" icon={faTimes}/>{' '}
         <p className="fs-5 mt-1">
-          Odbijen
+          <FormattedMessage
+            defaultMessage="Odbijen"
+            description="renderstate-denied"
+          />
         </p>
       </Col>
     )
@@ -62,7 +75,10 @@ export const RenderStateIcon = ({reqState}) => {
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-danger" icon={faCalendarXmark}/>{' '}
         <p className="fs-5 mt-1">
-          Istekao
+          <FormattedMessage
+            defaultMessage="Istekao"
+            description="renderstate-expire"
+          />
         </p>
       </Col>
     )

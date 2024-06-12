@@ -647,9 +647,17 @@
     "defaultMessage": "Javni ključ nije bilo moguće dodati: { error }",
     "description": "public-keys-add-toast-fail"
   },
+  "EHONoZ": {
+    "defaultMessage": "Odobren",
+    "description": "renderstate-approve"
+  },
   "EHi/e9": {
     "defaultMessage": "Farmacija",
     "description": "science-field-29"
+  },
+  "EN67wt": {
+    "defaultMessage": "Produljenje",
+    "description": "renderstate-extend"
   },
   "ENvJpe": {
     "defaultMessage": "Ime",
@@ -1007,6 +1015,10 @@
     "defaultMessage": "Javni ključ:",
     "description": "tableuserkeys-label"
   },
+  "NUvyep": {
+    "defaultMessage": "Odbijen",
+    "description": "renderstate-denied"
+  },
   "No5Y5w": {
     "defaultMessage": "Institucijski projekt",
     "description": "requesttype-label-institutional"
@@ -1255,6 +1267,10 @@
     "defaultMessage": "Obradio:",
     "description": "managereq-change-handled"
   },
+  "VF0fKZ": {
+    "defaultMessage": "Istekao",
+    "description": "renderstate-expire"
+  },
   "VOeDTJ": {
     "defaultMessage": "Tip",
     "description": "publickeys-list-type"
@@ -1442,6 +1458,10 @@
   "cQTqIM": {
     "defaultMessage": "Novi zahtjev temeljem institucijskog projekta",
     "description": "linktitle-newrequest-institutional"
+  },
+  "cRvka0": {
+    "defaultMessage": "Obrada",
+    "description": "renderstate-process"
   },
   "cTvw8s": {
     "defaultMessage": "Tekstilna tehnologija",
