@@ -140,7 +140,7 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
 
     return (
       <>
-        <Container fluid className="image-background d-flex justify-content-center" style={{minHeight: '100vh'}}>
+        <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
           <Row>
             <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
             </Col>
