@@ -3,6 +3,7 @@
 IFS=" "
 suffix=""
 DJINVIT_MAILTEMP_DIR="/opt/hrzoo-signup/lib64/python3.9/site-packages/invitations/templates/invitations/email"
+CHOWN_USER="apache"
 
 usage()
 {
@@ -16,7 +17,7 @@ then
     usage
 fi
 
-while getopts 'hs:' OPTION
+while getopts 'chs:' OPTION
 do
     case $OPTION in
         s)
@@ -25,6 +26,9 @@ do
 
         h)
             usage
+            ;;
+        c)
+            chown=1
             ;;
         ?)
             usage
@@ -49,8 +53,13 @@ then
     else
         for file in "${files[@]}"
         do
-            echo cp -f $file ${file%.${suffix}}
-            cp -f $file ${file%.${suffix}}
+            echo "cp -f ${file} ${file%.${suffix}}"
+            cp -f ${file} ${file%.${suffix}}
+            if [ ! -z "${chown}" ]
+            then
+                echo "chowning ${CHOWN_USER}: ${file%.${suffix}}"
+                sudo chown ${CHOWN_USER} ${file%.${suffix}}
+            fi
         done
     fi
 
@@ -68,8 +77,8 @@ then
     else
         for file in "${email_templates[@]}"
         do
-            echo cp -f $file $DJINVIT_MAILTEMP_DIR
-            cp -f $file $DJINVIT_MAILTEMP_DIR
+            echo "cp -f ${file} ${DJINVIT_MAILTEMP_DIR}"
+            cp -f ${file} ${DJINVIT_MAILTEMP_DIR}
         done
     fi
 fi
