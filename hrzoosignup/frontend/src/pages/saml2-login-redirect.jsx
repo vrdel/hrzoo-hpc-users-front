@@ -7,16 +7,21 @@ import {
   defaultAuthnRedirectStaff
 } from 'Config/default-redirect';
 import { url_ui_prefix } from 'Config/general';
+import { IntlContext } from 'Components/IntlContextProvider';
 
 
 const Saml2LoginRedirect = ({sessionData=undefined}) => {
   const navigate = useNavigate();
   const { setLoginType } = useContext(AuthContext)
+  const { locale } = useContext(IntlContext)
 
   useEffect(() => {
     const inviteKey = localStorage.getItem('invitation-key-set')
     if (inviteKey)
-      navigate(url_ui_prefix + '/login-email/' + inviteKey)
+      if (locale === 'en')
+        navigate(url_ui_prefix + '/login-email/' + inviteKey + '/en')
+      else
+        navigate(url_ui_prefix + '/login-email/' + inviteKey)
     else {
       setLoginType('saml2')
       const defaultRedirect = sessionData.userdetails.is_staff
