@@ -382,7 +382,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           : "align-middle text-center text-success"
                         }>
                           {
-                            user['person_type'] === 'local'
+                            user['user']['person_type'] === 'local'
                             ?
                               <span className="text-success">
                                 <FormattedMessage
