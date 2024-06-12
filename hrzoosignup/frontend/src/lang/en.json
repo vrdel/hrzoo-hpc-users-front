@@ -259,6 +259,10 @@
     "defaultMessage": "New request on behalf of internal project",
     "description": "linktitle-newrequest-internal"
   },
+  "5PUnMk": {
+    "defaultMessage": "Viewing project {identifier}",
+    "description": "linktitle-manageprojects-change"
+  },
   "5Vrpin": {
     "defaultMessage": "Request approved",
     "description": "statestring-approve"

@@ -101,7 +101,7 @@ export function LinkTitles(loc, intl) {
   }
 
   if (loc.includes('/requests/') && loc.match(/[%\w.\d-_]+$/)) {
-    let identifier = loc.match(/[%\w.\d-_]+$/)
+    let identifier = loc.match(/[%\w.\d-_:]+$/)
     if (identifier[0].includes('%'))
       identifier = decodeURIComponent(identifier[0])
     return intl.formatMessage({
@@ -116,7 +116,12 @@ export function LinkTitles(loc, intl) {
     let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = decodeURIComponent(identifier[0])
-    return 'Viewing project ' + identifier
+    return intl.formatMessage({
+        defaultMessage: 'Pregledavanje projekta {identifier}',
+        description: 'linktitle-manageprojects-change'
+      },
+      {identifier}
+    ).join(' ')
   }
 
   if (loc.includes('/users/inactive/') && loc.match(/[@%\w.\d-_]+$/)) {

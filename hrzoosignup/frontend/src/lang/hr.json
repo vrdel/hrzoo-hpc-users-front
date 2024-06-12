@@ -259,6 +259,10 @@
     "defaultMessage": "Novi zahtjev temeljem internog projekta",
     "description": "linktitle-newrequest-internal"
   },
+  "5PUnMk": {
+    "defaultMessage": "Pregledavanje projekta {identifier}",
+    "description": "linktitle-manageprojects-change"
+  },
   "5Vrpin": {
     "defaultMessage": "Zahtjev je odobren",
     "description": "statestring-approve"
