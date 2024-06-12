@@ -91,6 +91,9 @@ const BaseRoutes = () => {
             <Route path="login-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} /> }
             />
+            <Route path="login-email/:inviteKey/:lang" element={
+              <EmailInvitation sessionData={sessionData} /> }
+            />
             <Route element={<BasePage sessionData={sessionData} />}>
               <Route path="saml2-login-redirect" element={
                 <Saml2LoginRedirect sessionData={sessionData} /> }
