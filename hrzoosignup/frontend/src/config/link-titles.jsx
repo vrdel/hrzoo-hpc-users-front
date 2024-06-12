@@ -91,19 +91,19 @@ export function LinkTitles(loc, intl) {
   if (loc.includes('/my-requests/') && loc.match(/[%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
-      identifier = decodeURIComponent(identifier[0])
+      identifier = Array(decodeURIComponent(identifier[0]))
     return intl.formatMessage({
         defaultMessage: 'Pregledavanje zahtjeva {identifier}',
         description: 'linktitle-myrequests-view'
       },
       {identifier}
-    )
+    ).join(' ')
   }
 
   if (loc.includes('/requests/') && loc.match(/[%\w.\d-_]+$/)) {
-    let identifier = loc.match(/[%\w.\d-_:]+$/)
+    let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
-      identifier = decodeURIComponent(identifier[0])
+      identifier = Array(decodeURIComponent(identifier[0]))
     return intl.formatMessage({
         defaultMessage: 'Pregledavanje zahtjeva {identifier}',
         description: 'linktitle-managerequests-change'
@@ -115,7 +115,7 @@ export function LinkTitles(loc, intl) {
   if (loc.includes('/projects/') && loc.match(/[%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
-      identifier = decodeURIComponent(identifier[0])
+      identifier = Array(decodeURIComponent(identifier[0]))
     return intl.formatMessage({
         defaultMessage: 'Pregledavanje projekta {identifier}',
         description: 'linktitle-manageprojects-change'
@@ -127,7 +127,7 @@ export function LinkTitles(loc, intl) {
   if (loc.includes('/users/inactive/') && loc.match(/[@%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%@\w.\d-_]+$/)
     if (identifier[0].includes('%'))
-      identifier = decodeURIComponent(identifier[0])
+      identifier = Array(decodeURIComponent(identifier[0]))
     return intl.formatMessage({
         defaultMessage: 'Detalji neaktivnog korisnika {identifier}',
         description: 'linktitle-usersinactive-view'
@@ -138,7 +138,7 @@ export function LinkTitles(loc, intl) {
   else if (loc.includes('/users/') && loc.match(/[@%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%@\w.\d-_]+$/)
     if (identifier[0].includes('%'))
-      identifier = decodeURIComponent(identifier[0])
+      identifier = Array(decodeURIComponent(identifier[0]))
     if (identifier[0] !== 'inactive')
       return intl.formatMessage({
           defaultMessage: 'Detalji aktivnog korisnika {identifier}',
