@@ -280,7 +280,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                           htmlFor="newAppModuleName"
                           className="mr-1 mt-3 form-label fw-bold"
                           aria-label="newAppModuleName">
-                          Osoba:
+                          <FormattedMessage
+                            defaultMessage="Osoba:"
+                            description="software-cardbody-person"
+                          />
                         </Label>
                         <Controller
                           name="newAppAddedBy"

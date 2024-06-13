@@ -675,6 +675,10 @@
     "defaultMessage": "Edit project",
     "description": "managereq-change-buttonlabel-edit-1"
   },
+  "Djq0Io": {
+    "defaultMessage": "Person:",
+    "description": "software-cardbody-person"
+  },
   "DqpQay": {
     "defaultMessage": "Type",
     "description": "myreq-list-type"

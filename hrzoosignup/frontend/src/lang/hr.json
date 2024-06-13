@@ -675,6 +675,10 @@
     "defaultMessage": "Uredi projekt",
     "description": "managereq-change-buttonlabel-edit-1"
   },
+  "Djq0Io": {
+    "defaultMessage": "Osoba:",
+    "description": "software-cardbody-person"
+  },
   "DqpQay": {
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
