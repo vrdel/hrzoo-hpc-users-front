@@ -18,7 +18,7 @@ import {
   EmptyTable,
   HZSIPagination,
   TablePaginationHelper,
-  optionsStates,
+  buildOptionsStates,
   optionsTypes,
   allProjectTypes,
   allStates
@@ -213,7 +213,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                           defaultMessage: "Odaberi",
                           description: "managereq-placeholder-choose"
                         })}
-                        options={ optionsStates }
+                        options={ buildOptionsStates(intl) }
                         onChange={ e => setValue("searchState", e.value) }
                       />
                     }

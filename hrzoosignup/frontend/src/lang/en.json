@@ -75,6 +75,10 @@
     "defaultMessage": "New request on behalf of practical class",
     "description": "linktitle-newrequest-class"
   },
+  "0jRLhd": {
+    "defaultMessage": "All",
+    "description": "tablehelpers-optionstates-1"
+  },
   "0ypgJm": {
     "defaultMessage": "Scientific domain:",
     "description": "scientific-domain-title"
@@ -422,6 +426,10 @@
   "9vAKOS": {
     "defaultMessage": "Public key:",
     "description": "publickeys-list-keycontent"
+  },
+  "9vyKuM": {
+    "defaultMessage": "Extended",
+    "description": "tablehelpers-optionstates-6"
   },
   "9xTRRJ": {
     "defaultMessage": "Scientist's personal identification number (MBZ) is unknown.",
@@ -847,6 +855,10 @@
     "defaultMessage": "Last name",
     "description": "managereq-change-lastname"
   },
+  "J9u6lZ": {
+    "defaultMessage": "Submitted",
+    "description": "tablehelpers-optionstates-2"
+  },
   "JE8/B2": {
     "defaultMessage": "General",
     "description": "researchselected-general"
@@ -1159,6 +1171,10 @@
     "defaultMessage": "State",
     "description": "project-list-state"
   },
+  "S4cYVl": {
+    "defaultMessage": "Approved",
+    "description": "tablehelpers-optionstates-3"
+  },
   "S4nj/n": {
     "defaultMessage": "TECHNICAL SCIENCES",
     "description": "science-domain-map-2"
@@ -1395,6 +1411,10 @@
     "defaultMessage": "Login with regular AAI@EduHR account",
     "description": "saml2-not-allowed-button-label-regular"
   },
+  "aEN6CZ": {
+    "defaultMessage": "Expired",
+    "description": "tablehelpers-optionstates-5"
+  },
   "aPSUqH": {
     "defaultMessage": "Remark:",
     "description": "managereq-change-remark"
@@ -1474,6 +1494,10 @@
   "cvu7tz": {
     "defaultMessage": "List and manage members on approved requests/projects",
     "description": "linktitle-memberships"
+  },
+  "d+mmOJ": {
+    "defaultMessage": "Denied",
+    "description": "tablehelpers-optionstates-4"
   },
   "d8E55+": {
     "defaultMessage": "Note:",

@@ -28,14 +28,44 @@ export const SortArrow = (descending=undefined) => {
 }
 
 
-export const optionsStates = [
-  { label: "Svi", value: "all" },
-  { label: "Podnesen", value: "submit" },
-  { label: "Odobren", value: "approve" },
-  { label: "Odbijen", value: "deny" },
-  { label: "Istekao", value: "expire" },
-  { label: "Produžen", value: "extend" },
-]
+export function buildOptionsStates(intl) {
+  let svi = intl.formatMessage({
+    defaultMessage: "Svi",
+    description: "tablehelpers-optionstates-1"
+  })
+  let podnesen = intl.formatMessage({
+    defaultMessage: "Podnesen",
+    description: "tablehelpers-optionstates-2"
+  })
+  let odobren = intl.formatMessage({
+    defaultMessage: "Odobren",
+    description: "tablehelpers-optionstates-3"
+  })
+  let odbijen = intl.formatMessage({
+    defaultMessage: "Odbijen",
+    description: "tablehelpers-optionstates-4"
+  })
+  let istekao = intl.formatMessage({
+    defaultMessage: "Istekao",
+    description: "tablehelpers-optionstates-5"
+  })
+  let produzen = intl.formatMessage({
+    defaultMessage: "Produžen",
+    description: "tablehelpers-optionstates-6"
+  })
+
+  const optionsStates = [
+    { label: svi, value: "all" },
+    { label: podnesen, value: "submit" },
+    { label: odobren, value: "approve" },
+    { label: odbijen, value: "deny" },
+    { label: istekao, value: "expire" },
+    { label: produzen, value: "extend" },
+  ]
+
+  return optionsStates
+}
+
 
 export const optionsTypes = [
   { label: "Svi", value: "all" },

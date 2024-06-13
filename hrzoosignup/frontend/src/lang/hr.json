@@ -75,6 +75,10 @@
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
     "description": "linktitle-newrequest-class"
   },
+  "0jRLhd": {
+    "defaultMessage": "Svi",
+    "description": "tablehelpers-optionstates-1"
+  },
   "0ypgJm": {
     "defaultMessage": "Znanstveno područje:",
     "description": "scientific-domain-title"
@@ -422,6 +426,10 @@
   "9vAKOS": {
     "defaultMessage": "Javni ključ:",
     "description": "publickeys-list-keycontent"
+  },
+  "9vyKuM": {
+    "defaultMessage": "Produžen",
+    "description": "tablehelpers-optionstates-6"
   },
   "9xTRRJ": {
     "defaultMessage": "Matični broj znanstvenika (MBZ) nije poznat",
@@ -847,6 +855,10 @@
     "defaultMessage": "Prezime",
     "description": "managereq-change-lastname"
   },
+  "J9u6lZ": {
+    "defaultMessage": "Podnesen",
+    "description": "tablehelpers-optionstates-2"
+  },
   "JE8/B2": {
     "defaultMessage": "Opći dio",
     "description": "researchselected-general"
@@ -1159,6 +1171,10 @@
     "defaultMessage": "Stanje",
     "description": "project-list-state"
   },
+  "S4cYVl": {
+    "defaultMessage": "Odobren",
+    "description": "tablehelpers-optionstates-3"
+  },
   "S4nj/n": {
     "defaultMessage": "TEHNIČKE ZNANOSTI",
     "description": "science-domain-map-2"
@@ -1395,6 +1411,10 @@
     "defaultMessage": "Prijava s regularnim AAI@EduHR",
     "description": "saml2-not-allowed-button-label-regular"
   },
+  "aEN6CZ": {
+    "defaultMessage": "Istekao",
+    "description": "tablehelpers-optionstates-5"
+  },
   "aPSUqH": {
     "defaultMessage": "Napomena:",
     "description": "managereq-change-remark"
@@ -1474,6 +1494,10 @@
   "cvu7tz": {
     "defaultMessage": "Popis i upravljanje članovima na odobrenim zahtjevima/projektima",
     "description": "linktitle-memberships"
+  },
+  "d+mmOJ": {
+    "defaultMessage": "Odbijen",
+    "description": "tablehelpers-optionstates-4"
   },
   "d8E55+": {
     "defaultMessage": "Napomena:",
