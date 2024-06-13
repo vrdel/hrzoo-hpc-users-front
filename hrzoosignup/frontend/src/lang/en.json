@@ -119,6 +119,10 @@
     "defaultMessage": "Inactive {br} You are not signed into any active project",
     "description": "statusinfo-tooltipinactive-1"
   },
+  "24YkDG": {
+    "defaultMessage": "No applications on HPC cluster",
+    "description": "software-empty-noapp"
+  },
   "2Chv+E": {
     "defaultMessage": "Collaborators",
     "description": "popover-projectinfo-collaborators"
@@ -251,9 +255,17 @@
     "defaultMessage": "manager",
     "description": "userinfo-croris-badgelead"
   },
+  "4yWzsp": {
+    "defaultMessage": "Modulefile or application name:",
+    "description": "software-cardbody-name"
+  },
   "52shcW": {
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
+  },
+  "5CEmst": {
+    "defaultMessage": "New Modulefile successfully added",
+    "description": "software-toast-ok"
   },
   "5FyewV": {
     "defaultMessage": "Interdisciplinary Humanities",
@@ -290,6 +302,10 @@
   "5d/pGK": {
     "defaultMessage": "When approving request, you must specify type of resource allocated",
     "description": "myreq-change-resource"
+  },
+  "5s7i3G": {
+    "defaultMessage": "Modulefile could not be added:",
+    "description": "software-toast-fail"
   },
   "60OZPE": {
     "defaultMessage": "Error while copying user's email to clipboard",
@@ -487,6 +503,10 @@
     "defaultMessage": "Project details",
     "description": "popover-projectinfo"
   },
+  "B0cTLV": {
+    "defaultMessage": "Search",
+    "description": "software-table-placeholder"
+  },
   "B3IHaF": {
     "defaultMessage": "Ratio of scientific fields together must total 100%.",
     "description": "domain-fields-ratio-domains"
@@ -555,6 +575,10 @@
     "defaultMessage": "Ethnology and Anthropology",
     "description": "science-field-58"
   },
+  "C19oGg": {
+    "defaultMessage": "Modulefile or application name",
+    "description": "software-cardbody-placeholder"
+  },
   "C5xc0q": {
     "defaultMessage": "Active projects registered in CroRIS system that user participates in",
     "description": "userinfo-croris-tablefoot-userview"
@@ -590,6 +614,10 @@
   "CinYsf": {
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
+  },
+  "Crgy+E": {
+    "defaultMessage": "Modulefile could not be deleted:",
+    "description": "software-toast-del-fail"
   },
   "D/RQLG": {
     "defaultMessage": "Manager",
@@ -934,6 +962,10 @@
   "Kzh4nh": {
     "defaultMessage": "Role",
     "description": "userschange-project-role"
+  },
+  "L2Z7Eh": {
+    "defaultMessage": "Deletion of the application's Modulefile",
+    "description": "software-modaltitle"
   },
   "LBM528": {
     "defaultMessage": "Expired",
@@ -1323,6 +1355,10 @@
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
   },
+  "WCXZ7v": {
+    "defaultMessage": "Actions",
+    "description": "software-table-actions"
+  },
   "WL3CC8": {
     "defaultMessage": "Terms of Use of Advanced Computing service",
     "description": "loginoffical-terms"
@@ -1703,6 +1739,10 @@
     "defaultMessage": "Select",
     "description": "managereq-change-choose"
   },
+  "iHCTXk": {
+    "defaultMessage": "Modulefile successfully deleted",
+    "description": "software-toast-del-ok"
+  },
   "iRMnQe": {
     "defaultMessage": "Manager",
     "description": "users-table-general-leader"
@@ -1747,6 +1787,10 @@
     "defaultMessage": "Information and Communication Sciences",
     "description": "science-field-40"
   },
+  "jYT96W": {
+    "defaultMessage": "Add",
+    "description": "software-add"
+  },
   "jgOdjw": {
     "defaultMessage": "Actions",
     "description": "tableuserkeys-actions"
@@ -1778,6 +1822,14 @@
   "kgUSnq": {
     "defaultMessage": "Confirm",
     "description": "email-invite-accept"
+  },
+  "kl7PvO": {
+    "defaultMessage": "Added",
+    "description": "software-table-added"
+  },
+  "knAU3C": {
+    "defaultMessage": "applications",
+    "description": "software-pagination"
   },
   "l/AzBt": {
     "defaultMessage": "Internal{br}project",
@@ -1971,6 +2023,10 @@
     "defaultMessage": "Agriculture (Agronomy)",
     "description": "science-field-30"
   },
+  "qbhNam": {
+    "defaultMessage": "Application's Modulefile",
+    "description": "software-table-appname"
+  },
   "qbxldc": {
     "defaultMessage": "Active {br} User is signed into at least one active project",
     "description": "statusinfo-tooltipactive-2"
@@ -2002,6 +2058,10 @@
   "s/Dic5": {
     "defaultMessage": "Social Work",
     "description": "science-field-41"
+  },
+  "sOjilB": {
+    "defaultMessage": "Save",
+    "description": "software-cardbody-save"
   },
   "sVu3Vi": {
     "defaultMessage": "Total amount of storage space required for project (GB):",
@@ -2083,6 +2143,10 @@
     "defaultMessage": "Duration",
     "description": "userinfo-croris-duration"
   },
+  "uetI03": {
+    "defaultMessage": "No applications meet the search criteria",
+    "description": "software-empty-nosearchresult"
+  },
   "ugqfVt": {
     "defaultMessage": "Invitation successful, redirecting...",
     "description": "email-invite-success"
@@ -2159,6 +2223,10 @@
     "defaultMessage": "Assigned resource type:",
     "description": "manreq-change-request-resources"
   },
+  "xz7pNH": {
+    "defaultMessage": "Time",
+    "description": "software-table-time"
+  },
   "xzEckc": {
     "defaultMessage": "Chemistry",
     "description": "science-field-4"
@@ -2195,6 +2263,10 @@
     "defaultMessage": "Active",
     "description": "statestringuser-approve"
   },
+  "yr68G4": {
+    "defaultMessage": "New application",
+    "description": "software-cardheader"
+  },
   "ysQjtn": {
     "defaultMessage": "CroRIS registration",
     "description": "memberships-user-crorisreg"
@@ -2226,6 +2298,10 @@
   "zba6wi": {
     "defaultMessage": "Some collaborators have already been added to project: {br} { error }",
     "description": "memberships-toast-internal-alreadyadded"
+  },
+  "zhTrv8": {
+    "defaultMessage": "Are you sure you want to delete the Modulefile?",
+    "description": "software-modalmsg"
   },
   "ziaUjB": {
     "defaultMessage": "You do not have any projects registered in CroRIS system",

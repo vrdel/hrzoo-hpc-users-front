@@ -16,7 +16,7 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify'
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import _ from 'lodash';
 
 
@@ -28,7 +28,10 @@ const ButtonAdd = ({setShowAddNew, showAddNew, faWindowRestore}) => {
       active={ showAddNew }
     >
       <FontAwesomeIcon className="mt-1" icon={faWindowRestore} />{' '}
-      Dodaj
+      <FormattedMessage
+        defaultMessage="Dodaj"
+        description="software-add"
+      />
     </Button>
   )
 }
@@ -47,6 +50,8 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  const intl = useIntl()
 
   const { userDetails, csrfToken } = useContext(AuthContext)
   const queryClient = useQueryClient()
@@ -116,7 +121,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
       queryClient.invalidateQueries('science-software-list')
       toast.success(
         <span className="font-monospace text-dark">
-          Novi modulefile uspješno dodan
+          <FormattedMessage
+            defaultMessage="Novi modulefile uspješno dodan"
+            description="software-toast-ok"
+          />
         </span>, {
           toastId: 'software-ok-add',
           autoClose: 2500,
@@ -127,7 +135,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     onError: (error) => {
       toast.error(
         <span className="font-monospace text-dark">
-          Modulefile nije bilo moguće dodati:
+          <FormattedMessage
+            defaultMessage="Modulefile nije bilo moguće dodati:"
+            description="software-toast-fail"
+          />
           { error.message }
         </span>, {
           toastId: 'software-fail-add',
@@ -145,7 +156,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
         queryClient.invalidateQueries('science-software-list')
         toast.success(
           <span className="font-monospace text-dark">
-            Modulefile uspješno izbrisan
+            <FormattedMessage
+              defaultMessage="Modulefile uspješno izbrisan"
+              description="software-toast-del-ok"
+            />
           </span>, {
             toastId: 'software-ok-del',
             autoClose: 2500,
@@ -156,7 +170,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
       onError: (error) => {
         toast.error(
           <span className="font-monospace text-dark">
-            Modulefile nije bilo moguće izbrisati:
+            <FormattedMessage
+              defaultMessage="Modulefile nije bilo moguće izbrisati:"
+              description="software-toast-del-fail"
+            />
             { error.message }
           </span>, {
             toastId: 'software-fail-del',
@@ -226,7 +243,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
               <Col xl={{offset: 2, size: 8}}>
                 <Card className="bg-success me-5 mt-4 text-white">
                   <CardHeader>
-                    Nova aplikacija
+                    <FormattedMessage
+                      defaultMessage="Nova aplikacija"
+                      description="software-cardheader"
+                    />
                   </CardHeader>
                   <CardBody className="mb-1 bg-white text-dark">
                     <Row>
@@ -235,7 +255,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                           htmlFor="appName"
                           className="mr-1 mt-3 form-label fw-bold"
                           aria-label="appName">
-                          Modulefile ili ime:
+                          <FormattedMessage
+                            defaultMessage="Modulefile ili ime:"
+                            description="software-cardbody-name"
+                          />
                         </Label>
                         <Controller
                           name="newAppModuleName"
@@ -243,7 +266,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                           render={({field}) =>
                             <Input
                               { ...field }
-                              placeholder="Modulefile ili ime aplikacije"
+                              placeholder={ intl.formatMessage({
+                                defaultMessage: "Modulefile ili ime aplikacije",
+                                description: "software-cardbody-placeholder"
+                              }) }
                               className="form-control"
                             />
                           }
@@ -277,7 +303,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                       <Col>
                         <Button color="success" id="submit-button" type="submit">
                           <FontAwesomeIcon icon={faSave}/>{' '}
-                          Spremi
+                          <FormattedMessage
+                            defaultMessage="Spremi"
+                            description="software-cardbody-save"
+                          />
                         </Button>
                       </Col>
                     </Row>
@@ -306,7 +335,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                   }}
                 >
                   <span>
-                    Modulefile aplikacije
+                    <FormattedMessage
+                      defaultMessage="Modulefile aplikacije"
+                      description="software-table-appname"
+                    />
                   </span>
                   <span className="position-absolute start-100 top-50 translate-middle pe-5">
                     { SortArrow(sortName) }
@@ -320,7 +352,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                   }}
                 >
                   <span>
-                    Vrijeme
+                    <FormattedMessage
+                      defaultMessage="Vrijeme"
+                      description="software-table-time"
+                    />
                   </span>
                   <span className="position-absolute start-100 top-50 translate-middle pe-5">
                     { SortArrow(sortCreated) }
@@ -334,14 +369,20 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                   }}
                 >
                   <span>
-                    Dodao
+                    <FormattedMessage
+                      defaultMessage="Dodao"
+                      description="software-table-added"
+                    />
                   </span>
                   <span className="position-absolute start-100 top-50 translate-middle pe-5">
                     { SortArrow(sortAddedBy) }
                   </span>
                 </th>
                 <th className="fw-normal position-relative" style={{minWidth: '52px',  cursor: 'pointer'}}>
-                  Radnje
+                  <FormattedMessage
+                    defaultMessage="Radnje"
+                    description="software-table-actions"
+                  />
                 </th>
               </tr>
             </thead>
@@ -357,7 +398,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={ intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "software-table-placeholder"
+                        }) }
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -371,7 +415,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={ intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "software-table-placeholder"
+                        }) }
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -385,7 +432,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                     render={ ({ field }) =>
                       <Input
                         { ...field }
-                        placeholder="Traži"
+                        placeholder={ intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "software-table-placeholder"
+                        }) }
                         className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
@@ -420,8 +470,14 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                           color="danger"
                           onClick={() => {
                             setAreYouSureModal(!areYouSureModal)
-                            setModalTitle("Brisanje modulefilea aplikacije")
-                            setModalMsg("Da li ste sigurni da želite obrisati modulefile?")
+                            setModalTitle(intl.formatMessage({
+                              defaultMessage: "Brisanje modulefilea aplikacije",
+                              description: "software-modaltitle"
+                            }))
+                            setModalMsg(intl.formatMessage({
+                              defaultMessage: "Da li ste sigurni da želite obrisati modulefile?",
+                              description: "software-modalmsg"
+                            }))
                             setOnYesCall('doremove')
                             setOnYesCallArg({
                               'index': lookupIndexes[application.id],
@@ -437,9 +493,15 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
                   )
                 :
                   dataSoftware.length > 0 && searchName ?
-                    <EmptyTable colspan="4" msg="Nijedna aplikacija ne zadovoljava pretragu" />
+                    <EmptyTable colspan="4" msg={ intl.formatMessage({
+                      defaultMessage: "Nijedna aplikacija ne zadovoljava pretragu",
+                      description: "software-empty-nosearchresult"
+                    }) } />
                   :
-                    <EmptyTable colspan="4" msg="Nema aplikacija na klasteru" />
+                    <EmptyTable colspan="4" msg={ intl.formatMessage({
+                      defaultMessage: "Nema aplikacija na klasteru",
+                      description: "software-empty-noapp"
+                    }) } />
               }
             </tbody>
           </Table>
@@ -455,7 +517,10 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
         pageCount={ paginationHelp.pageCount }
         start={ paginationHelp.start }
         choices={ paginationHelp.choices }
-        resource_name="aplikacija"
+        resource_name={intl.formatMessage({
+          defaultMessage: "aplikacija",
+          description: "software-pagination"
+        })}
       />
     </React.Fragment>
   )
@@ -508,7 +573,10 @@ export const SoftwareList = () => {
             <th className="fw-normal position-relative"  style={{minWidth: '60%', cursor: 'pointer'}}
             >
               <span>
-                Modulefile aplikacije
+                <FormattedMessage
+                  defaultMessage="Modulefile aplikacije"
+                  description="software-table-appname"
+                />
               </span>
               <span className="position-absolute start-100 top-50 translate-middle pe-5">
                 { SortArrow() }
@@ -517,7 +585,10 @@ export const SoftwareList = () => {
             <th className="fw-normal position-relative" style={{cursor: 'pointer'}}
             >
               <span>
-                Vrijeme
+                <FormattedMessage
+                  defaultMessage="Vrijeme"
+                  description="software-table-time"
+                />
               </span>
               <span className="position-absolute start-100 top-50 translate-middle pe-5">
                 { SortArrow() }
@@ -525,14 +596,20 @@ export const SoftwareList = () => {
             </th>
             <th className="fw-normal position-relative" style={{cursor: 'pointer'}}>
               <span>
-                Dodao
+                <FormattedMessage
+                  defaultMessage="Dodao"
+                  description="software-table-added"
+                />
               </span>
               <span className="position-absolute start-100 top-50 translate-middle pe-5">
                 { SortArrow() }
               </span>
             </th>
             <th className="fw-normal position-relative" style={{minWidth: '52px',  cursor: 'pointer'}}>
-              Radnje
+              <FormattedMessage
+                defaultMessage="Radnje"
+                description="software-table-actions"
+              />
             </th>
           </tr>
         </thead>

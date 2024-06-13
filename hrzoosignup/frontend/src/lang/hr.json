@@ -119,6 +119,10 @@
     "defaultMessage": "Neaktivan {br} Niste prijavljeni ni na jedan aktivan projekt",
     "description": "statusinfo-tooltipinactive-1"
   },
+  "24YkDG": {
+    "defaultMessage": "Nema aplikacija na klasteru",
+    "description": "software-empty-noapp"
+  },
   "2Chv+E": {
     "defaultMessage": "Suradnici",
     "description": "popover-projectinfo-collaborators"
@@ -251,9 +255,17 @@
     "defaultMessage": "voditelj",
     "description": "userinfo-croris-badgelead"
   },
+  "4yWzsp": {
+    "defaultMessage": "Modulefile ili ime:",
+    "description": "software-cardbody-name"
+  },
   "52shcW": {
     "defaultMessage": "Lozinka:",
     "description": "loginpriv-password"
+  },
+  "5CEmst": {
+    "defaultMessage": "Novi modulefile uspješno dodan",
+    "description": "software-toast-ok"
   },
   "5FyewV": {
     "defaultMessage": "Interdisciplinarne humanističke znanosti",
@@ -290,6 +302,10 @@
   "5d/pGK": {
     "defaultMessage": "Pri odobravanju zahtjeva morate se izjasniti o dodijeljenom tipu resursa.",
     "description": "myreq-change-resource"
+  },
+  "5s7i3G": {
+    "defaultMessage": "Modulefile nije bilo moguće dodati:",
+    "description": "software-toast-fail"
   },
   "60OZPE": {
     "defaultMessage": "Greška prilikom kopiranja emaila korisnika u međuspremnik",
@@ -487,6 +503,10 @@
     "defaultMessage": "Detalji projekta",
     "description": "popover-projectinfo"
   },
+  "B0cTLV": {
+    "defaultMessage": "Traži",
+    "description": "software-table-placeholder"
+  },
   "B3IHaF": {
     "defaultMessage": "Udjeli znanstvenih područja zajedno moraju biti 100%.",
     "description": "domain-fields-ratio-domains"
@@ -555,6 +575,10 @@
     "defaultMessage": "Etnologija i antropologija",
     "description": "science-field-58"
   },
+  "C19oGg": {
+    "defaultMessage": "Modulefile ili ime aplikacije",
+    "description": "software-cardbody-placeholder"
+  },
   "C5xc0q": {
     "defaultMessage": "Aktivni projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
     "description": "userinfo-croris-tablefoot-userview"
@@ -590,6 +614,10 @@
   "CinYsf": {
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
+  },
+  "Crgy+E": {
+    "defaultMessage": "Modulefile nije bilo moguće izbrisati:",
+    "description": "software-toast-del-fail"
   },
   "D/RQLG": {
     "defaultMessage": "Voditelj",
@@ -934,6 +962,10 @@
   "Kzh4nh": {
     "defaultMessage": "Uloga",
     "description": "userschange-project-role"
+  },
+  "L2Z7Eh": {
+    "defaultMessage": "Brisanje modulefilea aplikacije",
+    "description": "software-modaltitle"
   },
   "LBM528": {
     "defaultMessage": "Istekao",
@@ -1323,6 +1355,10 @@
     "defaultMessage": "Novi zahtjev za Srce radionicu",
     "description": "linktitle-newrequest-srceworkshop"
   },
+  "WCXZ7v": {
+    "defaultMessage": "Radnje",
+    "description": "software-table-actions"
+  },
   "WL3CC8": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginoffical-terms"
@@ -1703,6 +1739,10 @@
     "defaultMessage": "Odaberi",
     "description": "managereq-change-choose"
   },
+  "iHCTXk": {
+    "defaultMessage": "Modulefile uspješno izbrisan",
+    "description": "software-toast-del-ok"
+  },
   "iRMnQe": {
     "defaultMessage": "Voditelj",
     "description": "users-table-general-leader"
@@ -1747,6 +1787,10 @@
     "defaultMessage": "Informacijske i komunikacijske znanosti",
     "description": "science-field-40"
   },
+  "jYT96W": {
+    "defaultMessage": "Dodaj",
+    "description": "software-add"
+  },
   "jgOdjw": {
     "defaultMessage": "Radnje",
     "description": "tableuserkeys-actions"
@@ -1778,6 +1822,14 @@
   "kgUSnq": {
     "defaultMessage": "Potvrđujem",
     "description": "email-invite-accept"
+  },
+  "kl7PvO": {
+    "defaultMessage": "Dodao",
+    "description": "software-table-added"
+  },
+  "knAU3C": {
+    "defaultMessage": "aplikacija",
+    "description": "software-pagination"
   },
   "l/AzBt": {
     "defaultMessage": "Interni{br}projekt",
@@ -1971,6 +2023,10 @@
     "defaultMessage": "Poljoprivreda (agronomija)",
     "description": "science-field-30"
   },
+  "qbhNam": {
+    "defaultMessage": "Modulefile aplikacije",
+    "description": "software-table-appname"
+  },
   "qbxldc": {
     "defaultMessage": "Aktivan {br} Korisnik je prijavljen na bar jedan aktivan projekt",
     "description": "statusinfo-tooltipactive-2"
@@ -2002,6 +2058,10 @@
   "s/Dic5": {
     "defaultMessage": "Sociologija",
     "description": "science-field-41"
+  },
+  "sOjilB": {
+    "defaultMessage": "Spremi",
+    "description": "software-cardbody-save"
   },
   "sVu3Vi": {
     "defaultMessage": "Ukupna količina spremišnog prostora potrebna za projekt (GB):",
@@ -2083,6 +2143,10 @@
     "defaultMessage": "Trajanje",
     "description": "userinfo-croris-duration"
   },
+  "uetI03": {
+    "defaultMessage": "Nijedna aplikacija ne zadovoljava pretragu",
+    "description": "software-empty-nosearchresult"
+  },
   "ugqfVt": {
     "defaultMessage": "Prijava uspješna, preusmjeravanje...",
     "description": "email-invite-success"
@@ -2159,6 +2223,10 @@
     "defaultMessage": "Dodijeljeni tip resursa:",
     "description": "manreq-change-request-resources"
   },
+  "xz7pNH": {
+    "defaultMessage": "Vrijeme",
+    "description": "software-table-time"
+  },
   "xzEckc": {
     "defaultMessage": "Kemija",
     "description": "science-field-4"
@@ -2195,6 +2263,10 @@
     "defaultMessage": "Aktivan",
     "description": "statestringuser-approve"
   },
+  "yr68G4": {
+    "defaultMessage": "Nova aplikacija",
+    "description": "software-cardheader"
+  },
   "ysQjtn": {
     "defaultMessage": "CroRIS registracija",
     "description": "memberships-user-crorisreg"
@@ -2226,6 +2298,10 @@
   "zba6wi": {
     "defaultMessage": "Neki suradnici su već dodani na projekt: {br} { error }",
     "description": "memberships-toast-internal-alreadyadded"
+  },
+  "zhTrv8": {
+    "defaultMessage": "Da li ste sigurni da želite obrisati modulefile?",
+    "description": "software-modalmsg"
   },
   "ziaUjB": {
     "defaultMessage": "Nemate projekata prijavljenih u sustavu CroRIS",
