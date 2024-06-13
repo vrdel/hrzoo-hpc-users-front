@@ -8,6 +8,7 @@ CHOWN_USER="apache"
 usage()
 {
 	printf "Usage: %s [argument]\n" $(basename $0) >&2
+	printf "       [-c]            - change permissions of copied over files\n" >&2
 	printf "       [-s]            - suffix extension of config files that will be copied over\n" >&2
 	exit 2
 }
@@ -57,7 +58,7 @@ then
             if [ ! -z "${chown}" ]
             then
                 echo "chowning ${CHOWN_USER}: ${file%.${suffix}}"
-                sudo chown ${CHOWN_USER} ${file%.${suffix}}
+                chown ${CHOWN_USER} ${file%.${suffix}}
             fi
         done
     fi
