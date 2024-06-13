@@ -5,7 +5,7 @@ import { fetchAllNrProjects } from "Api/projects";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import {
   TablePaginationHelper,
-  optionsStatesProjects,
+  buildOptionsStatesProjects,
   optionsTypes,
   allProjectTypes,
   allStates,
@@ -245,7 +245,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                           description: "project-list-choose"
                         })}
                         customPadding="0.2rem"
-                        options={ optionsStatesProjects }
+                        options={ buildOptionsStatesProjects(intl) }
                         onChange={ e => setValue("searchState", e.value) }
                       />
                     }

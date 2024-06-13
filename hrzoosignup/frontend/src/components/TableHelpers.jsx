@@ -79,12 +79,34 @@ export const optionsTypes = [
 ]
 
 
-export const optionsStatesProjects = [
-  { label: "Svi", value: "all" },
-  { label: "Odobren", value: "approve" },
-  { label: "Istekao", value: "expire" },
-  { label: "Produžen", value: "extend" },
-]
+export function buildOptionsStatesProjects(intl) {
+  let svi = intl.formatMessage({
+    defaultMessage: "Svi",
+    description: "tablehelpers-optionstates-1"
+  })
+  let odobren = intl.formatMessage({
+    defaultMessage: "Odobren",
+    description: "tablehelpers-optionstates-3"
+  })
+  let istekao = intl.formatMessage({
+    defaultMessage: "Istekao",
+    description: "tablehelpers-optionstates-5"
+  })
+  let produzen = intl.formatMessage({
+    defaultMessage: "Produžen",
+    description: "tablehelpers-optionstates-6"
+  })
+
+  const optionsStatesProjects = [
+    { label: svi, value: "all" },
+    { label: odobren, value: "approve" },
+    { label: istekao, value: "expire" },
+    { label: produzen, value: "extend" },
+  ]
+
+  return optionsStatesProjects
+}
+
 
 export const allStates = ["submit", "approve", "deny", "expire", "extend"]
 export const allProjectTypes = ["research-croris", "thesis", "practical", "research-institutional", "internal", "srce-workshop"]
