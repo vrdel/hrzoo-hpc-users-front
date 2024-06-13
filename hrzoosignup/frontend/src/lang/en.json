@@ -267,6 +267,10 @@
     "defaultMessage": "Viewing project {identifier}",
     "description": "linktitle-manageprojects-change"
   },
+  "5TiNKA": {
+    "defaultMessage": "Institutional",
+    "description": "tablehelpers-optiontypes-4"
+  },
   "5Vrpin": {
     "defaultMessage": "Request approved",
     "description": "statestring-approve"
@@ -534,6 +538,10 @@
   "Bt2hYZ": {
     "defaultMessage": "User's identifier copied to clipboard",
     "description": "managereq-change-minibutton-title-2"
+  },
+  "BwT+7j": {
+    "defaultMessage": "Internal",
+    "description": "tablehelpers-optiontypes-5"
   },
   "ByrMw3": {
     "defaultMessage": "First, last name and email",
@@ -1043,6 +1051,10 @@
     "defaultMessage": "First and last name",
     "description": "popover-firstlast-name"
   },
+  "OEudsO": {
+    "defaultMessage": "Research EU",
+    "description": "tablehelpers-optiontypes-3"
+  },
   "OMuyxE": {
     "defaultMessage": "You are registered as collaborator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadyassociate"
@@ -1407,6 +1419,10 @@
     "defaultMessage": "Registration unsuccessful: You are registered as collaborator on research projects in the CroRIS system",
     "description": "email-invite-registered-associate-croris"
   },
+  "a7WJKU": {
+    "defaultMessage": "Research",
+    "description": "tablehelpers-optiontypes-2"
+  },
   "aAbUGj": {
     "defaultMessage": "Login with regular AAI@EduHR account",
     "description": "saml2-not-allowed-button-label-regular"
@@ -1522,6 +1538,10 @@
   "dVjgbT": {
     "defaultMessage": "Processing",
     "description": "manreq-change-title"
+  },
+  "dWUUtY": {
+    "defaultMessage": "Class",
+    "description": "tablehelpers-optiontypes-7"
   },
   "dWYd5Z": {
     "defaultMessage": "Number cannot be greater than {number}",
@@ -1839,6 +1859,10 @@
     "defaultMessage": "Geodesy",
     "description": "science-field-11"
   },
+  "nThi8h": {
+    "defaultMessage": "All",
+    "description": "tablehelpers-optiontypes-1"
+  },
   "nwVFCQ": {
     "defaultMessage": "Invite foreign collaborators",
     "description": "users-table-croris-foreign-collabcall-2"
@@ -1850,6 +1874,10 @@
   "o7+x5+": {
     "defaultMessage": "When denying request, you must provide reason.",
     "description": "managereq-change-toast-msg4"
+  },
+  "oBW7cy": {
+    "defaultMessage": "Srce Workshop",
+    "description": "tablehelpers-optiontypes-8"
   },
   "oEvVvn": {
     "defaultMessage": "Request could not be submitted - validation of scientific domains and fields unsuccessful",
@@ -2154,6 +2182,10 @@
   "yQX1Hw": {
     "defaultMessage": "users",
     "description": "userlist-pagination"
+  },
+  "yVgzVD": {
+    "defaultMessage": "Thesis",
+    "description": "tablehelpers-optiontypes-6"
   },
   "yaVl1p": {
     "defaultMessage": "Authentication with <b>eduGAIN AAI@EduHR</b> <mark>is not permitted</mark>. Please proceed with <b>regular AAI@EduHR</b> authentication.",

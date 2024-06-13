@@ -67,16 +67,53 @@ export function buildOptionsStates(intl) {
 }
 
 
-export const optionsTypes = [
-  { label: "Svi", value: "all" },
-  { label: "Istraživački", value: "research-croris" },
-  { label: "Istraživački EU", value: "research-eu-croris" },
-  { label: "Institucijski", value: "research-institutional" },
-  { label: "Interni", value: "internal" },
-  { label: "Rad", value: "thesis" },
-  { label: "Nastava", value: "practical" },
-  { label: "Srce Radionica", value: "srce-workshop" }
-]
+export function buildOptionsTypes(intl) {
+  let svi = intl.formatMessage({
+    defaultMessage: "Svi",
+    description: "tablehelpers-optiontypes-1"
+  })
+  let istrazivacki = intl.formatMessage({
+    defaultMessage: "Istraživački",
+    description: "tablehelpers-optiontypes-2"
+  })
+  let istrazivackien = intl.formatMessage({
+    defaultMessage: "Istraživački EU",
+    description: "tablehelpers-optiontypes-3"
+  })
+  let institucijski = intl.formatMessage({
+    defaultMessage: "Institucijski",
+    description: "tablehelpers-optiontypes-4"
+  })
+  let interni = intl.formatMessage({
+    defaultMessage: "Interni",
+    description: "tablehelpers-optiontypes-5"
+  })
+  let rad = intl.formatMessage({
+    defaultMessage: "Rad",
+    description: "tablehelpers-optiontypes-6"
+  })
+  let nastava = intl.formatMessage({
+    defaultMessage: "Nastava",
+    description: "tablehelpers-optiontypes-7"
+  })
+  let srceworkshop = intl.formatMessage({
+    defaultMessage: "Srce Radionica",
+    description: "tablehelpers-optiontypes-8"
+  })
+  const optionsTypes = [
+    { label: svi, value: "all" },
+    { label: istrazivacki, value: "research-croris" },
+    { label: istrazivackien, value: "research-eu-croris" },
+    { label: institucijski, value: "research-institutional" },
+    { label: interni, value: "internal" },
+    { label: rad, value: "thesis" },
+    { label: nastava, value: "practical" },
+    { label: srceworkshop, value: "srce-workshop" }
+  ]
+
+  return optionsTypes
+}
+
 
 
 export function buildOptionsStatesProjects(intl) {

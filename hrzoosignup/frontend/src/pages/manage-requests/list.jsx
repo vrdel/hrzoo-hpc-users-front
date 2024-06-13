@@ -19,7 +19,7 @@ import {
   HZSIPagination,
   TablePaginationHelper,
   buildOptionsStates,
-  optionsTypes,
+  buildOptionsTypes,
   allProjectTypes,
   allStates
 } from 'Components/TableHelpers';
@@ -267,7 +267,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                           description: "managereq-placeholder-choose"
                         })}
                         customPadding="0.2rem"
-                        options={ optionsTypes }
+                        options={ buildOptionsTypes(intl) }
                         onChange={ e => setValue("searchType", e.value) }
                       />
                     }

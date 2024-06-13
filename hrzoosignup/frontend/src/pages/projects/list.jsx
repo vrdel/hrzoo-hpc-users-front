@@ -6,7 +6,7 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import {
   TablePaginationHelper,
   buildOptionsStatesProjects,
-  optionsTypes,
+  buildOptionsTypes,
   allProjectTypes,
   allStates,
   EmptyTable,
@@ -308,7 +308,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                           defaultMessage: "Odaberi",
                           description: "project-list-choose"
                         })}
-                        options={ optionsTypes }
+                        options={ buildOptionsTypes(intl) }
                         onChange={ e => setValue("searchType", e.value) }
                       />
                     }
