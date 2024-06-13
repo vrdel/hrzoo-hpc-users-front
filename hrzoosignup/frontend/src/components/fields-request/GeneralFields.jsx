@@ -451,7 +451,13 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             />
           </Label>
           <span className="fst-italic">
-            <Badge className="bg-secondary-subtle fw-normal text-dark fs-6 me-2 mt-sm-3" key="project-institute">
+            <Badge
+              className="d-inline-block bg-secondary-subtle fw-normal text-dark fs-6 me-2 mt-sm-3"
+              key="project-institute"
+              style={{
+                whiteSpace: "normal",
+              }}
+            >
               { projectInfo ?  projectInfo.institute : personInstitution }
             </Badge>
           </span>
