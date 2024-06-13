@@ -17,7 +17,12 @@ import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain'
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
 import { FormattedMessage } from 'react-intl';
+import { MiniButton } from 'Components/MiniButton';
+import { copyToClipboard } from 'Utils/copy-clipboard';
 import { IntlContext } from 'Components/IntlContextProvider';
+import { useIntl } from 'react-intl';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 
 
 const GeneralProjectUsers = ({projectInfo}) => {
@@ -243,6 +248,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
   let disabledRemain = fieldsDisabled
   const [endDate, setEndDate] = useState('')
   const { locale } = useContext(IntlContext)
+  const intl = useIntl()
 
   const personInstitution = getValues('requestInstitute')
 
@@ -435,7 +441,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             }
           </span>
         </Col>
-        <Col className="d-flex flex-column mt-3" md={{size: 5}}>
+        <Col className="d-flex flex-column mt-3" md={{size: 4}}>
           <Label
             htmlFor="requestInstitute"
             aria-label="requestInstitute">
@@ -450,7 +456,29 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             </Badge>
           </span>
         </Col>
-        <Col className="mt-3">
+        <Col className="mt-3 d-flex flex-column justify-content-start align-items-start">
+          <span className="mb-3 d-flex justify-content-center flex-row">
+            <Badge color={"secondary fw-normal"}>
+              { projectInfo.identifier }
+            </Badge>
+            <MiniButton
+              color="light"
+              onClick={(e) => copyToClipboard(
+                e, projectInfo.identifier,
+                intl.formatMessage({
+                  defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                  description: "memberships-clipboard-ok"
+                }),
+                intl.formatMessage({
+                  defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                  description: "memberships-clipboard-fail"
+                }),
+                "id-request"
+              )}
+            >
+              <FontAwesomeIcon size="xs" icon={faCopy} />
+            </MiniButton>
+          </span>
           <ProjectTypeBadge projectInfo={projectInfo} />
         </Col>
       </Row>
