@@ -1,7 +1,7 @@
 import React from "react";
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
-import { Col, Row, PopoverHeader, PopoverBody } from "reactstrap";
+import { Badge, Col, Row, PopoverHeader, PopoverBody } from "reactstrap";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSpecificUser } from "Api/users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -61,6 +61,43 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
               {`${userData.first_name} ${userData.last_name}`}
             </Col>
           </Row>
+          {
+            userData.person_username &&
+            <>
+              <Row className="mt-2">
+                <Col className="fw-bold">
+                  <FormattedMessage
+                    defaultMessage="Korisničko ime"
+                    description="popover-username"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col className="d-flex font-monospace align-items-center ms-2 me-2 fs-6">
+                  <Badge color="success">
+                    { userData.person_username }
+                  </Badge>
+                  <MiniButton
+                    childClassName="me-3"
+                    onClick={(e) => copyToClipboard(
+                      e, userData.person_mail,
+                      intl.formatMessage({
+                        defaultMessage: "Korisničko ime kopirano u međuspremnik",
+                        description: "popover-username-copy-ok"
+                      }),
+                      intl.formatMessage({
+                        defaultMessage: "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+                        description: "popover-username-copy-fail"
+                      }),
+                      "username"
+                    )}
+                  >
+                    <FontAwesomeIcon size="xs" icon={faCopy} />
+                  </MiniButton>
+                </Col>
+              </Row>
+            </>
+          }
           <Row className="mt-2">
             <Col className="fw-bold">
               <FormattedMessage

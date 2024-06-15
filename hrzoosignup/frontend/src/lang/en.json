@@ -443,6 +443,10 @@
     "defaultMessage": "manager",
     "description": "userschange-badge-lead"
   },
+  "9ozhKB": {
+    "defaultMessage": "Error while copying username to clipboard",
+    "description": "popover-username-copy-fail"
+  },
   "9vAKOS": {
     "defaultMessage": "Public key:",
     "description": "publickeys-list-keycontent"
@@ -758,6 +762,10 @@
   "FVhGIC": {
     "defaultMessage": "Usage period:",
     "description": "researchselected-usageperiod"
+  },
+  "FWFb50": {
+    "defaultMessage": "Username",
+    "description": "popover-username"
   },
   "FfxHuD": {
     "defaultMessage": "Request has been successfully changed",
@@ -1406,6 +1414,10 @@
   "XZis0B": {
     "defaultMessage": "Public key successfully added",
     "description": "public-keys-add-toast-ok"
+  },
+  "XdZPpm": {
+    "defaultMessage": "Username copied into clipboard",
+    "description": "popover-username-copy-ok"
   },
   "XeJRUi": {
     "defaultMessage": "Speech Therapy",

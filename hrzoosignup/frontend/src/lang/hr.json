@@ -443,6 +443,10 @@
     "defaultMessage": "voditelj",
     "description": "userschange-badge-lead"
   },
+  "9ozhKB": {
+    "defaultMessage": "Greška prilikom kopiranja korisničkog imena u međuspremnik",
+    "description": "popover-username-copy-fail"
+  },
   "9vAKOS": {
     "defaultMessage": "Javni ključ:",
     "description": "publickeys-list-keycontent"
@@ -758,6 +762,10 @@
   "FVhGIC": {
     "defaultMessage": "Period korištenja:",
     "description": "researchselected-usageperiod"
+  },
+  "FWFb50": {
+    "defaultMessage": "Korisničko ime",
+    "description": "popover-username"
   },
   "FfxHuD": {
     "defaultMessage": "Zahtjev je uspješno promijenjen",
@@ -1406,6 +1414,10 @@
   "XZis0B": {
     "defaultMessage": "Javni ključ uspješno dodan",
     "description": "public-keys-add-toast-ok"
+  },
+  "XdZPpm": {
+    "defaultMessage": "Korisničko ime kopirano u međuspremnik",
+    "description": "popover-username-copy-ok"
   },
   "XeJRUi": {
     "defaultMessage": "Logopedija",
