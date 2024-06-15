@@ -42,11 +42,16 @@ const Navigation = () => {
         rel="noopener noreferrer"
         className="text-dark"
       >
-        <FontAwesomeIcon className="ps-4" icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
+        <span className="d-none d-md-inline">
+          <FontAwesomeIcon className="ps-4" icon={faLaptopCode} style={{ color: "#c00000" }} size="3x" />
+        </span>
       </NavbarBrand>
       <Nav navbar className="m-1">
         <span className="pl-3 font-weight-bold text-center">
           <h2>
+            <span className="d-inline d-md-none me-3">
+              <FontAwesomeIcon className="ps-4" icon={faLaptopCode} style={{ color: "#c00000" }} size="1x" />
+            </span>
             <FormattedMessage
               description="navigation-title"
               defaultMessage="Zahtjev za korištenje usluge Napredno računanje"
@@ -54,7 +59,7 @@ const Navigation = () => {
           </h2>
         </span>
       </Nav>
-      <Nav navbar>
+      <Nav navbar className="flex-row">
         <NavItem className="d-flex align-items-center">
           <LanguageButtonNav locale={locale} setLocale={setLocale} />
         </NavItem>
