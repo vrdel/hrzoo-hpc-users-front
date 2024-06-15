@@ -80,7 +80,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
                   <MiniButton
                     childClassName="me-3"
                     onClick={(e) => copyToClipboard(
-                      e, userData.person_mail,
+                      e, userData.person_username,
                       intl.formatMessage({
                         defaultMessage: "Korisničko ime kopirano u međuspremnik",
                         description: "popover-username-copy-ok"
