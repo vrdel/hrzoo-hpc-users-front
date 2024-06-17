@@ -329,21 +329,21 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                 <th className="fw-normal"  style={{width: '52px'}}>
                   #
                 </th>
-                <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}
+                <th className="fw-normal" style={{minWidth: '306px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortName(!sortName)
                     setSortJoined(undefined)
                   }}
                 >
-                  <div className="flex-grow-1">
-                    <FormattedMessage
-                      defaultMessage="Ime, prezime i email"
-                      description="userslist-column-header-1"
-                    />
-                  </div>
-                  <div>
+                  <span className="d-flex">
+                    <span className="flex-grow-1">
+                      <FormattedMessage
+                        defaultMessage="Ime, prezime i email"
+                        description="userslist-column-header-1"
+                      />
+                    </span>
                     { SortArrow(sortName) }
-                  </div>
+                  </span>
                 </th>
                 <th className="fw-normal" style={{minWidth: '306px'}}>
                   <FormattedMessage
@@ -365,21 +365,21 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                       />
                   }
                 </th>
-                <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
+                <th className="fw-normal" style={{minWidth: '146px', cursor: 'pointer'}}
                   onClick={() => {
                     setSortJoined(!sortJoined)
                     setSortName(undefined)
                   }}
                 >
-                  <div className="flex-grow-1">
-                    <FormattedMessage
-                      defaultMessage="Dodan"
-                      description="userlist-column-header-4"
-                    />
-                  </div>
-                  <div>
+                  <span className="d-flex">
+                    <span className="flex-grow-1">
+                      <FormattedMessage
+                        defaultMessage="Dodan"
+                        description="userlist-column-header-4"
+                      />
+                    </span>
                     { SortArrow(sortJoined) }
-                  </div>
+                  </span>
                 </th>
                 <th className="fw-normal"  style={{minWidth: '180px'}}>
                   {
@@ -733,19 +733,19 @@ export const UsersInactiveList = () => {
       >
         <thead id="hzsi-thead" className="align-middle text-center text-white">
           <tr>
-            <th className="fw-normal"  style={{width: '52px'}}>
+            <th className="fw-normal" style={{width: '52px'}}>
               #
             </th>
-            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
-              <div className="flex-grow-1">
-                <FormattedMessage
-                  defaultMessage="Ime, prezime i email"
-                  description="userslist-column-header-1"
-                />
-              </div>
-              <div>
+            <th className="fw-normal" style={{minWidth: '306px', cursor: 'pointer'}}>
+              <span className="d-flex">
+                <span className="flex-grow-1">
+                  <FormattedMessage
+                    defaultMessage="Ime, prezime i email"
+                    description="userslist-column-header-1"
+                  />
+                </span>
                 { SortArrow() }
-              </div>
+              </span>
             </th>
             <th className="fw-normal"  style={{width: '306px'}}>
               <FormattedMessage
@@ -759,17 +759,17 @@ export const UsersInactiveList = () => {
                 description="userlist-column-header-3-2"
               />
             </th>
-            <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
+            <th className="fw-normal" style={{minWidth: '146px', cursor: 'pointer'}}
             >
-              <div className="flex-grow-1">
-                <FormattedMessage
-                  defaultMessage="Dodan"
-                  description="userlist-column-header-4"
-                />
-              </div>
-              <div>
+              <span className="d-flex">
+                <span className="flex-grow-1">
+                  <FormattedMessage
+                    defaultMessage="Dodan"
+                    description="userlist-column-header-4"
+                  />
+                </span>
                 { SortArrow() }
-              </div>
+              </span>
             </th>
             <th className="fw-normal"  style={{width: '180px'}}>
               <FormattedMessage
@@ -828,16 +828,16 @@ export const UsersList = () => {
             <th className="fw-normal"  style={{width: '52px'}}>
               #
             </th>
-            <th className="fw-normal d-flex justify-content-center"  style={{minWidth: '306px', cursor: 'pointer'}}>
-              <div className="flex-grow-1">
-                <FormattedMessage
-                  defaultMessage="Ime, prezime i email"
-                  description="userslist-column-header-1"
-                />
-              </div>
-              <div>
+            <th className="fw-normal"  style={{minWidth: '306px', cursor: 'pointer'}}>
+              <span className="d-flex">
+                <span className="flex-grow-1">
+                  <FormattedMessage
+                    defaultMessage="Ime, prezime i email"
+                    description="userslist-column-header-1"
+                  />
+                </span>
                 { SortArrow() }
-              </div>
+              </span>
             </th>
             <th className="fw-normal"  style={{width: '306px'}}>
               <FormattedMessage
@@ -851,17 +851,17 @@ export const UsersList = () => {
                 description="userlist-column-header-3-1"
               />
             </th>
-            <th className="fw-normal d-flex justify-content-center" style={{minWidth: '146px', cursor: 'pointer'}}
+            <th className="fw-normal" style={{minWidth: '146px', cursor: 'pointer'}}
             >
-              <div className="flex-grow-1">
-                <FormattedMessage
-                  defaultMessage="Dodan"
-                  description="userlist-column-header-4"
-                />
-              </div>
-              <div>
+              <span className="d-flex">
+                <span className="flex-grow-1">
+                  <FormattedMessage
+                    defaultMessage="Dodan"
+                    description="userlist-column-header-4"
+                  />
+                </span>
                 { SortArrow() }
-              </div>
+              </span>
             </th>
             <th className="fw-normal"  style={{width: '180px'}}>
               <FormattedMessage
