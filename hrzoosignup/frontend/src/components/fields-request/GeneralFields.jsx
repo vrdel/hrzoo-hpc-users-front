@@ -462,31 +462,34 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             </Badge>
           </span>
         </Col>
-        <Col className="mt-3 d-flex flex-column justify-content-start align-items-start">
-          <span className="mb-3 d-flex justify-content-center flex-row">
-            <Badge color={"secondary fw-normal"}>
-              { projectInfo.identifier }
-            </Badge>
-            <MiniButton
-              color="light"
-              onClick={(e) => copyToClipboard(
-                e, projectInfo.identifier,
-                intl.formatMessage({
-                  defaultMessage: "Šifra projekta kopirana u međuspremnik",
-                  description: "memberships-clipboard-ok"
-                }),
-                intl.formatMessage({
-                  defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
-                  description: "memberships-clipboard-fail"
-                }),
-                "id-request"
-              )}
-            >
-              <FontAwesomeIcon size="xs" icon={faCopy} />
-            </MiniButton>
-          </span>
-          <ProjectTypeBadge projectInfo={projectInfo} />
-        </Col>
+        {
+          projectInfo.identifier &&
+            <Col className="mt-3 d-flex flex-column justify-content-start align-items-start">
+              <span className="mb-3 d-flex justify-content-center flex-row">
+                <Badge color={"secondary fw-normal"}>
+                  { projectInfo.identifier }
+                </Badge>
+                <MiniButton
+                  color="light"
+                  onClick={(e) => copyToClipboard(
+                    e, projectInfo.identifier,
+                    intl.formatMessage({
+                      defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                      description: "memberships-clipboard-ok"
+                    }),
+                    intl.formatMessage({
+                      defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                      description: "memberships-clipboard-fail"
+                    }),
+                    "id-request"
+                  )}
+                >
+                  <FontAwesomeIcon size="xs" icon={faCopy} />
+                </MiniButton>
+              </span>
+              <ProjectTypeBadge projectInfo={projectInfo} />
+            </Col>
+        }
       </Row>
       <Row>
         {
