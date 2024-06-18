@@ -193,6 +193,25 @@ const MyRequestsList = () => {
                         <Link className="text-dark" to={encodeURIComponent(project.identifier)}>
                           { project.name}
                         </Link>
+                        {
+                          project.staff_resources_type?.length > 0 &&
+                          <Row className="g-0 d-flex justify-content-center mt-2">
+                            <Col className="d-flex justify-content-center align-items-center align-self-center">
+                              {
+                                project.staff_resources_type.map((rtype, i) =>
+                                  <span className="ms-2 p-1 fw-normal" key={i}
+                                    style={{
+                                      backgroundColor: '#feb272',
+                                      color: '#303030',
+                                      borderRadius: '2px',
+                                      fontSize: '0.83rem'
+                                    }}>
+                                    {rtype.value}
+                                  </span>)
+                              }
+                            </Col>
+                          </Row>
+                        }
                       </td>
                       <td className="p-3 align-middle text-center">
                         <Badge className="fw-normal" color="secondary">{ project.identifier }</Badge>
