@@ -392,11 +392,11 @@ class Projects(APIView):
                 req_type = kwargs.get('specific')
 
                 if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
-                    serializer = ProjectSerializerGet(models.Project.objects.all().order_by('-date_submitted'), many=True)
                     ret_data = cache.get('projects-get-all')
                     if ret_data:
                         return Response(ret_data, status=status.HTTP_200_OK)
                     else:
+                        serializer = ProjectSerializerGet(models.Project.objects.all().order_by('-date_submitted'), many=True)
                         cache.set('projects-get-all', serializer.data, None)
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
