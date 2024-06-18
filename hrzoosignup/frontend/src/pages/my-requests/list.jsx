@@ -20,10 +20,13 @@ import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
+  faCopy,
 } from '@fortawesome/free-solid-svg-icons';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl, FormattedMessage } from 'react-intl'
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
+import { MiniButton } from 'Components/MiniButton';
+import { copyToClipboard } from 'Utils/copy-clipboard';
 
 
 const MyRequestsList = () => {
@@ -214,7 +217,28 @@ const MyRequestsList = () => {
                         }
                       </td>
                       <td className="p-3 align-middle text-center">
-                        <Badge className="fw-normal" color="secondary">{ project.identifier }</Badge>
+                        <Row className="g-0">
+                          <Col className="d-flex justify-content-center align-items-center align-self-center">
+                            <Badge className="fw-normal" color="secondary">{ project.identifier }</Badge>
+                            <MiniButton
+                              color="light"
+                              onClick={(e) => copyToClipboard(
+                                e, project.identifier,
+                                intl.formatMessage({
+                                  defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                                  description: "userlist-minibutton-title-4"
+                                }),
+                                intl.formatMessage({
+                                  defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                                  description: "userlist-minibutton-msg-4"
+                                }),
+                                "id-request"
+                              )}
+                            >
+                              <FontAwesomeIcon size="xs" icon={faCopy} />
+                            </MiniButton>
+                          </Col>
+                        </Row>
                       </td>
                       <td className="align-middle text-center">
                         <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
