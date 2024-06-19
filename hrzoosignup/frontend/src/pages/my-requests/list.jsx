@@ -142,7 +142,7 @@ const MyRequestsList = () => {
                   </th>
                   <th className="fw-normal">
                     <FormattedMessage
-                      defaultMessage="Naziv"
+                      defaultMessage="Naziv i dodijeljeni resursi"
                       description="myreq-list-name"
                     />
                   </th>

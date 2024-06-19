@@ -2299,6 +2299,10 @@
     "defaultMessage": "Strani korisnik",
     "description": "statusinfo-tooltipglobe-1"
   },
+  "z8K573": {
+    "defaultMessage": "Naziv i dodijeljeni resursi",
+    "description": "myreq-list-name"
+  },
   "zDbfN8": {
     "defaultMessage": "Kineziologija",
     "description": "science-field-46"

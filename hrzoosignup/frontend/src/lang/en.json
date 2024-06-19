@@ -2299,6 +2299,10 @@
     "defaultMessage": "Foreign user",
     "description": "statusinfo-tooltipglobe-1"
   },
+  "z8K573": {
+    "defaultMessage": "Name and assigned resources",
+    "description": "myreq-list-name"
+  },
   "zDbfN8": {
     "defaultMessage": "Kinesiology",
     "description": "science-field-46"
