@@ -28,11 +28,12 @@ services:
       - ../bin/hzsi-manage:$VENV/bin/hzsi-manage
       - ../bin/hzsi-users:$VENV/bin/hzsi-users
       - ../bin/hzsi-projects:$VENV/bin/hzsi-projects
-      - ../docker/collectstatic.sh:/home/user/collectstatic.sh
-      - ../docker/pysitepkg:/home/user/pysitepkg
-      - ../docker/run-django-server.sh:/home/user/run-django-server.sh
-      - ../docker/run-frontdev-server.sh:/home/user/run-frontdev-server.sh
-      - ../docker/syncsite.sh:/home/user/syncsite.sh
+      - ./collectstatic.sh:/home/user/collectstatic.sh
+      - ./pysitepkg:/home/user/pysitepkg
+      - ./run-django-server.sh:/home/user/run-django-server.sh
+      - ./run-frontdev-server.sh:/home/user/run-frontdev-server.sh
+      - ./syncsite.sh:/home/user/syncsite.sh
+      - ./memcache.ini:/etc/supervisord.d/memcache.ini
       - ../etc/:$VENV/etc/hrzoosignup
       - ../hrzoosignup/:$VENV/lib/python3.9/site-packages/hrzoosignup
       - ../hrzoosignup/frontend/:/home/user/frontend
