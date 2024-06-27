@@ -79,9 +79,14 @@ export const GeneralInfo = ({project, isSubmitted}) => {
 
       <Col md={{size: 2}}>
         <div className="p-2 fs-5">
-          <Badge color={isSubmitted ? "secondary" : "primary"} className="fw-normal">
-            { project.identifier }
-          </Badge>
+          {
+            project.identifier ?
+              <Badge color={isSubmitted ? "secondary" : "primary"} className="fw-normal">
+                { project.identifier }
+              </Badge>
+            :
+              '\u2212'
+          }
         </div>
       </Col>
       <Col md={{size: 3}}>

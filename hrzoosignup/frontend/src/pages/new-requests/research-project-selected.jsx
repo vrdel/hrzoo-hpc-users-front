@@ -552,9 +552,14 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
         </Col>
         <Col md={{size: 2}}>
           <div className="p-2 fs-5">
-            <Badge color="secondary" className="fw-normal">
-              { project.identifier }
-            </Badge>
+            {
+              project.identifier ?
+                <Badge color="secondary" className="fw-normal">
+                  { project.identifier }
+                </Badge>
+              :
+                '\u2212'
+            }
           </div>
         </Col>
       </Row>
