@@ -36,9 +36,9 @@ const ResearchProjectRequest = () => {
       queryFn: fetchNrProjects
   })
 
-  function isAlreadySubmitted(projId) {
-    let existingProjectsIds = nrProjects.map(project => project['croris_identifier'])
-    return existingProjectsIds.indexOf(projId) !== -1
+  function isAlreadySubmitted(crorisId) {
+    let existingProjectsIds = nrProjects.map(project => project['croris_id'])
+    return existingProjectsIds.indexOf(crorisId) !== -1
   }
 
   useEffect(() => {
@@ -62,27 +62,27 @@ const ResearchProjectRequest = () => {
           projectsLead.map((project, i) =>
             <Row className="mb-4" key={`row-${i}`}>
               <Col key={`col-${i}`}>
-                <Card className={isAlreadySubmitted(project.identifier)
+                <Card className={isAlreadySubmitted(project.croris_id)
                   ? `ms-3 mb-3 bg-secondary` : `ms-3 mb-4 bg-success`}
                   key={`card-${i}`}>
                   <CardHeader className="d-flex fs-5 text-white justify-content-between align-items-center">
                     { project.title }
-                    { isAlreadySubmitted(project.identifier) && <Badge className="fs-5" color="success">prijavljen</Badge>}
+                    { isAlreadySubmitted(project.croris_id) && <Badge className="fs-5" color="success">prijavljen</Badge>}
                   </CardHeader>
-                  <CardBody className={isAlreadySubmitted(project.identifier) ? "mb-1 bg-light": "mb-1 bg-white"}>
+                  <CardBody className={isAlreadySubmitted(project.croris_id) ? "mb-1 bg-light": "mb-1 bg-white"}>
                     <Row>
-                      <GeneralInfo project={project} isSubmitted={isAlreadySubmitted(project.identifier)} />
+                      <GeneralInfo project={project} isSubmitted={isAlreadySubmitted(project.croris_id)} />
                       <div className="w-100"></div>
                       <Persons project={project} person_info={person_info} projectsLeadUsers={projectsLeadUsers} />
                       <div className="w-100"></div>
                       <Finance project={project}  />
                       <div className="w-100"></div>
-                      <Summary project={project} isSubmitted={isAlreadySubmitted(project.identifier)} />
+                      <Summary project={project} isSubmitted={isAlreadySubmitted(project.croris_id)} />
                       <div className="w-100"></div>
                       <CrorisUrl project={project} />
                     </Row>
                     {
-                      !isAlreadySubmitted(project.identifier)
+                      !isAlreadySubmitted(project.croris_id)
                         ?
                           <Row className="p-2 text-center">
                             <Col>
