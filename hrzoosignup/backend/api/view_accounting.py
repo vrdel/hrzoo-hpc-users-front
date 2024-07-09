@@ -142,20 +142,46 @@ class ResourceUsageAPI(APIView):
 
         data = request.data.getlist("usage")
 
+        error_response = dict()
+        status_code = status.HTTP_201_CREATED
+        missing_users = list()
         for entry in data:
             entry = ast.literal_eval(entry)
-            user = models.User.objects.get(person_username=entry["user"])
+            try:
+                user = models.User.objects.get(person_username=entry["user"])
 
-            for job in entry["jobs"]:
-                job_data = copy.deepcopy(job)
-                job_data.pop("project")
-                models.ResourceUsage.objects.create(
-                    user=user,
-                    project=models.Project.objects.get(
-                        identifier=job["project"]
-                    ),
-                    resource_name=resource,
-                    accounting_record=job_data
-                )
+                for job in entry["jobs"]:
+                    job_data = copy.deepcopy(job)
+                    job_data.pop("project")
+                    models.ResourceUsage.objects.create(
+                        user=user,
+                        project=models.Project.objects.get(
+                            identifier=job["project"]
+                        ),
+                        resource_name=resource,
+                        accounting_record=job_data
+                    )
 
-        return Response(status=status.HTTP_201_CREATED)
+            except models.User.DoesNotExist:
+                missing_users.append(entry["user"])
+                continue
+
+        if len(missing_users) > 0:
+            status_code = status.HTTP_404_NOT_FOUND
+            if len(missing_users) > 1:
+                noun = "Users"
+            else:
+                noun = "User"
+
+            error_response = {
+                "status": {
+                    "code": status_code,
+                    "message": f"{noun} {', '.join(missing_users)} not found"
+                }
+            }
+
+        if error_response:
+            return Response(error_response, status=status_code)
+
+        else:
+            return Response(status=status.HTTP_201_CREATED)
