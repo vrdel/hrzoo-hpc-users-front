@@ -12,4 +12,5 @@ urlpatterns = [
     path("usersprojects", views.UserProjectAPI.as_view(), name="usersprojects"),
     path("sshkeys", views.SshKeysAPI.as_view(), name="sshkeys"),
     path("accounting/projectsusers", views.AccountingUserProjectAPI.as_view(), name="accountingprojectsusers"),
+    path("accounting/usage", views.ResourceUsageAPI.as_view(), name="accountingusage")
 ] + router.urls

@@ -1,9 +1,10 @@
-from backend import serializers
+import ast
+import json
+import copy
+
 from backend import models
-
-from django.db.models import Q
 from django.conf import settings
-
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -131,3 +132,30 @@ class AccountingUserProjectAPI(APIView):
         else:
             projects = models.Project.objects.all().filter(state__name__in=['approve', 'expire', 'extend'])
             return Response(self._generate_response(projects), status=status.HTTP_200_OK)
+
+
+class ResourceUsageAPI(APIView):
+    permission_classes = (HasAPIKey,)
+
+    def post(self, request):
+        resource = request.query_params.get("resource")
+
+        data = request.data.getlist("usage")
+
+        for entry in data:
+            entry = ast.literal_eval(entry)
+            user = models.User.objects.get(person_username=entry["user"])
+
+            for job in entry["jobs"]:
+                job_data = copy.deepcopy(job)
+                job_data.pop("project")
+                models.ResourceUsage.objects.create(
+                    user=user,
+                    project=models.Project.objects.get(
+                        identifier=job["project"]
+                    ),
+                    resource_name=resource,
+                    accounting_record=job_data
+                )
+
+        return Response(status=status.HTTP_201_CREATED)
