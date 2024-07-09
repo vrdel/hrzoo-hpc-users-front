@@ -37,8 +37,8 @@ class Command(BaseCommand):
         try:
             user = self.user_model.objects.create(
                 username=options['username'],
-                first_name=options['first'],
-                last_name=options['last'],
+                first_name=' '.join(options['first']),
+                last_name=' '.join(options['last']),
                 person_uniqueid=options['uniqueid'],
                 person_mail=options['email'],
                 croris_first_name=options['first'],
@@ -96,7 +96,7 @@ class Command(BaseCommand):
                 )
                 user.status = True
                 if not user.person_username:
-                    user.person_username = gen_username(options['first'], options['last'])
+                    user.person_username = gen_username(' '.join(options['first']), ' '.join(options['last']))
                 user.save()
                 self.stdout.write('User {} with person_username {} assigned to project {}'.format(user.username, user.person_username, project.identifier))
                 cache.delete("ext-users-projects")
@@ -109,7 +109,7 @@ class Command(BaseCommand):
 
         if options['person_username']:
             if not user.person_username:
-                user.person_username = gen_username(options['first'], options['last'])
+                user.person_username = gen_username(' '.join(options['first']), ' '.join(options['last']))
                 self.stdout.write('Set person_username for user {}'.format(user.person_username))
             else:
                 self.stdout.write('person_username previously generated {}'.format(user.person_username))
@@ -271,9 +271,9 @@ class Command(BaseCommand):
         parser_create = subparsers.add_parser("create", help="Create user based on passed metadata")
         parser_create.add_argument('--username', dest='username', type=str,
                                    required=True, help='Username of user')
-        parser_create.add_argument('--first', dest='first', type=str,
+        parser_create.add_argument('--first', dest='first', type=str, nargs='+',
                                    required=True, help='First name of user')
-        parser_create.add_argument('--last', dest='last', type=str, required=True,
+        parser_create.add_argument('--last', dest='last', type=str, required=True, nargs='+',
                                    help='Last name of user')
         parser_create.add_argument('--project', dest='project', type=str,
                                    required=False, help='Project identifier that user will be associated to')
