@@ -55,7 +55,7 @@ class ResourceUsageAPITests(TestCase):
     def test_post_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 0)
         request = self.client.post(
-            "/api/v1/accounting/usage?resource=supek",
+            "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
             data={
                 "usage": [
@@ -129,7 +129,7 @@ class ResourceUsageAPITests(TestCase):
     def test_post_data_multiple_users(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 0)
         request = self.client.post(
-            "/api/v1/accounting/usage?resource=supek",
+            "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
             data={
                 "usage": [
@@ -234,7 +234,7 @@ class ResourceUsageAPITests(TestCase):
     def test_post_data_nonexisting_user(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 0)
         request = self.client.post(
-            "/api/v1/accounting/usage?resource=supek",
+            "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
             data={
                 "usage": [
@@ -327,7 +327,7 @@ class ResourceUsageAPITests(TestCase):
     def test_post_data_multiple_nonexisting_user(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 0)
         request = self.client.post(
-            "/api/v1/accounting/usage?resource=supek",
+            "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
             data={
                 "usage": [
@@ -387,6 +387,66 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(
             request.data["status"]["message"],
             "Users user3, user4 not found"
+        )
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 1)
+        usage1 = models.ResourceUsage.objects.filter(
+            accounting_record__jobid="12346"
+        )[0]
+        self.assertEqual(usage1.user, self.user1)
+        self.assertEqual(usage1.project, self.project1)
+        self.assertEqual(usage1.resource_name, "supek")
+        self.assertEqual(usage1.accounting_record, {
+            "jobid": "12346",
+            "walltime": "10",
+            "ncpus": "18",
+            "start_time": "1716001512",
+            "end_time": "1716001522",
+            "queue": "queue1",
+            "wait_time": "2",
+            "qtime": ""
+        })
+
+    def test_post_data_nonexisting_project(self):
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 0)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=supek",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            data={
+                "usage": [
+                    {
+                        "user": "user1",
+                        "jobs": [
+                            {
+                                "jobid": "12345",
+                                "walltime": "3920",
+                                "ncpus": "4",
+                                "project": "project-5",
+                                "start_time": "1717845508",
+                                "end_time": "1717849428",
+                                "queue": "gpu",
+                                "wait_time": "2",
+                                "qtime": "1717796832",
+                                "ngpus": "2"
+                            },
+                            {
+                                "jobid": "12346",
+                                "walltime": "10",
+                                "ncpus": "18",
+                                "project": "project-1",
+                                "start_time": "1716001512",
+                                "end_time": "1716001522",
+                                "queue": "queue1",
+                                "wait_time": "2",
+                                "qtime": ""
+                            }
+                        ]
+                    }
+                ]
+            }
+        )
+        self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(
+            request.data["status"]["message"], "Project project-5 not found"
         )
         self.assertEqual(len(models.ResourceUsage.objects.all()), 1)
         usage1 = models.ResourceUsage.objects.filter(

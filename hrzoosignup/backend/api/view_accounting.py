@@ -1,5 +1,4 @@
 import ast
-import json
 import copy
 
 from backend import models
@@ -145,6 +144,7 @@ class ResourceUsageAPI(APIView):
         error_response = dict()
         status_code = status.HTTP_201_CREATED
         missing_users = list()
+        missing_projects = set()
         for entry in data:
             entry = ast.literal_eval(entry)
             try:
@@ -153,18 +153,40 @@ class ResourceUsageAPI(APIView):
                 for job in entry["jobs"]:
                     job_data = copy.deepcopy(job)
                     job_data.pop("project")
-                    models.ResourceUsage.objects.create(
-                        user=user,
-                        project=models.Project.objects.get(
-                            identifier=job["project"]
-                        ),
-                        resource_name=resource,
-                        accounting_record=job_data
-                    )
+                    try:
+                        models.ResourceUsage.objects.create(
+                            user=user,
+                            project=models.Project.objects.get(
+                                identifier=job["project"]
+                            ),
+                            resource_name=resource,
+                            accounting_record=job_data
+                        )
+
+                    except models.Project.DoesNotExist:
+                        missing_projects.add(job["project"])
+                        continue
 
             except models.User.DoesNotExist:
                 missing_users.append(entry["user"])
                 continue
+
+        if len(missing_projects) > 0:
+            status_code = status.HTTP_404_NOT_FOUND
+            if len(missing_projects) > 1:
+                noun = "Projects"
+
+            else:
+                noun = "Project"
+
+            error_response = {
+                "status": {
+                    "code": status_code,
+                    "message":
+                        f"{noun} {', '.join(sorted(list(missing_projects)))} "
+                        f"not found"
+                }
+            }
 
         if len(missing_users) > 0:
             status_code = status.HTTP_404_NOT_FOUND
