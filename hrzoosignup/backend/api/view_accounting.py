@@ -148,24 +148,22 @@ class ResourceUsageAPI(APIView):
         for entry in data:
             entry = ast.literal_eval(entry)
             try:
+                job_data = copy.deepcopy(entry)
                 user = models.User.objects.get(person_username=entry["user"])
+                job_data.pop("project")
+                job_data.pop("user")
+                models.ResourceUsage.objects.create(
+                    user=user,
+                    project=models.Project.objects.get(
+                        identifier=entry["project"]
+                    ),
+                    resource_name=resource,
+                    accounting_record=job_data
+                )
 
-                for job in entry["jobs"]:
-                    job_data = copy.deepcopy(job)
-                    job_data.pop("project")
-                    try:
-                        models.ResourceUsage.objects.create(
-                            user=user,
-                            project=models.Project.objects.get(
-                                identifier=job["project"]
-                            ),
-                            resource_name=resource,
-                            accounting_record=job_data
-                        )
-
-                    except models.Project.DoesNotExist:
-                        missing_projects.add(job["project"])
-                        continue
+            except models.Project.DoesNotExist:
+                missing_projects.add(entry["project"])
+                continue
 
             except models.User.DoesNotExist:
                 missing_users.append(entry["user"])
