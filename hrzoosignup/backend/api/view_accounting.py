@@ -139,7 +139,7 @@ class ResourceUsageAPI(APIView):
     def post(self, request):
         resource = request.query_params.get("resource")
 
-        data = request.data.getlist("usage")
+        data = request.POST.getlist("usage")
 
         error_response = dict()
         status_code = status.HTTP_201_CREATED
