@@ -39,7 +39,7 @@ const LoginOfficial = ({sessionData=undefined}) => {
         <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
         </Col>
         <Col lg={{size: 6}} md={{size: 8}}>
-          <Row className="m-lg-4 p-lg-4 m-md-3 p-md-3 m-sm-1 p-sm-1"/>
+          <Row className="m-lg-3 p-lg-3 m-md-2 p-md-2 m-sm-1 p-sm-1"/>
           <Card className="shadow-lg">
             <CardHeader
               id='hzsi-loginheader'

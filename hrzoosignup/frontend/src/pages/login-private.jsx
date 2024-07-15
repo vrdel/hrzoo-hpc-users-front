@@ -68,7 +68,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
     <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
       <Row className="login-first-row">
         <Col>
-          <Row style={{'height': '110px'}}/>
+          <Row style={{'height': '60px'}}/>
           <Card className="shadow-lg ps-2 pe-2" style={{minHeight: '475px', width: '450px'}}>
             <CardHeader
               id='hzsi-loginheader'
