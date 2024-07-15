@@ -152,7 +152,7 @@ class UsersSerializerFiltered2(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
-            'username',
+            'person_username',
         )
         model = get_user_model()
 
