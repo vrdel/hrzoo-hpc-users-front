@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_api_key.permissions import HasAPIKey
+import datetime
 
 
 class AccountingUserProjectAPI(APIView):
@@ -136,6 +137,16 @@ class AccountingUserProjectAPI(APIView):
 class ResourceUsageAPI(APIView):
     permission_classes = (HasAPIKey,)
 
+    @staticmethod
+    def _calculate_processor_hour(data, key):
+        return round(int(data[key]) * int(data["walltime"]) / 3600., 4)
+
+    def _calculate_gpuh(self, data):
+        return self._calculate_processor_hour(data=data, key="ngpus")
+
+    def _calculate_cpuh(self, data):
+        return self._calculate_processor_hour(data=data, key="ncpus")
+
     def post(self, request):
         resource = request.query_params.get("resource")
 
@@ -152,6 +163,24 @@ class ResourceUsageAPI(APIView):
                 user = models.User.objects.get(person_username=entry["user"])
                 job_data.pop("project")
                 job_data.pop("user")
+
+                if "ncpus" in job_data:
+                    job_data["cpuh"] = self._calculate_cpuh(data=job_data)
+                else:
+                    job_data["cpuh"] = 0.
+
+                if "ngpus" in job_data:
+                    job_data["gpuh"] = self._calculate_gpuh(data=job_data)
+
+                else:
+                    job_data["gpuh"] = 0.
+
+                end_date = datetime.datetime.utcfromtimestamp(
+                    int(job_data["end_time"])
+                )
+
+                job_data["month"] = f"{end_date.month:02d}/{end_date.year}"
+
                 models.ResourceUsage.objects.create(
                     user=user,
                     project=models.Project.objects.get(

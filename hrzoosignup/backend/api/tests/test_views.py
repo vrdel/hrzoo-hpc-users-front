@@ -73,7 +73,10 @@ class ResourceUsageAPITests(TestCase):
             "queue": "gpu",
             "wait_time": "2",
             "qtime": "1717796832",
-            "ngpus": "2"
+            "ngpus": "2",
+            "cpuh": 4.3556,
+            "gpuh": 2.1778,
+            "month": "06/2024"
         })
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
@@ -86,7 +89,10 @@ class ResourceUsageAPITests(TestCase):
             "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
-            "qtime": ""
+            "qtime": "",
+            "cpuh": 0.05,
+            "gpuh": 0.,
+            "month": "05/2024"
         })
 
     def test_post_data_multiple_users(self):
@@ -159,7 +165,10 @@ class ResourceUsageAPITests(TestCase):
             "queue": "gpu",
             "wait_time": "2",
             "qtime": "1717796832",
-            "ngpus": "2"
+            "ngpus": "2",
+            "cpuh": 4.3556,
+            "gpuh": 2.1778,
+            "month": "06/2024"
         })
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
@@ -172,7 +181,10 @@ class ResourceUsageAPITests(TestCase):
             "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
-            "qtime": ""
+            "qtime": "",
+            "cpuh": 0.05,
+            "gpuh": 0,
+            "month": "05/2024"
         })
         self.assertEqual(usage3.user, self.user2)
         self.assertEqual(usage3.project, self.project2)
@@ -184,7 +196,10 @@ class ResourceUsageAPITests(TestCase):
             "end_time": "1720520659",
             "queue": "queue2",
             "wait_time": "4",
-            "qtime": "8"
+            "qtime": "8",
+            "cpuh": 0.0072,
+            "gpuh": 0,
+            "month": "07/2024"
         })
 
     def test_post_data_nonexisting_user(self):
@@ -257,7 +272,10 @@ class ResourceUsageAPITests(TestCase):
             "queue": "gpu",
             "wait_time": "2",
             "qtime": "1717796832",
-            "ngpus": "2"
+            "ngpus": "2",
+            "cpuh": 4.3556,
+            "gpuh": 2.1778,
+            "month": "06/2024"
         })
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
@@ -270,7 +288,10 @@ class ResourceUsageAPITests(TestCase):
             "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
-            "qtime": ""
+            "qtime": "",
+            "cpuh": 0.05,
+            "gpuh": 0,
+            "month": "05/2024"
         })
 
     def test_post_data_multiple_nonexisting_user(self):
@@ -340,7 +361,10 @@ class ResourceUsageAPITests(TestCase):
             "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
-            "qtime": ""
+            "qtime": "",
+            "cpuh": 0.05,
+            "gpuh": 0,
+            "month": "05/2024"
         })
 
     def test_post_data_nonexisting_project(self):
@@ -397,5 +421,8 @@ class ResourceUsageAPITests(TestCase):
             "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
-            "qtime": ""
+            "qtime": "",
+            "cpuh": 0.05,
+            "gpuh": 0,
+            "month": "05/2024"
         })

@@ -58,7 +58,10 @@ def create_mock_db():
             "queue": "gpu",
             "wait_time": 2,
             "qtime": 1717796832,
-            "ngpus": "2"
+            "ngpus": "2",
+            "cpuh": 0.4356,
+            "gpuh": 0.2178,
+            "month": "06/2024"
         }
     )
     models.ResourceUsage.objects.create(
@@ -73,7 +76,10 @@ def create_mock_db():
             "end_time": 1716001522,
             "queue": "queue1",
             "wait_time": 2,
-            "qtime": 0
+            "qtime": 0,
+            "cpuh": 0.05,
+            "gpuh": 0,
+            "month": "05/2024"
         }
     )
     models.ResourceUsage.objects.create(
@@ -88,6 +94,9 @@ def create_mock_db():
             "end_time": "1720520659",
             "queue": "queue2",
             "wait_time": "4",
-            "qtime": "8"
+            "qtime": "8",
+            "cpuh": 0.0072,
+            "gpuh": 0,
+            "month": "07/2024"
         }
     )
