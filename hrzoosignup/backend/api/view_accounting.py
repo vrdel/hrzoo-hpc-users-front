@@ -1,14 +1,15 @@
 import ast
 import copy
+import datetime
 
 from backend import models
 from django.conf import settings
 from django.db.models import Q
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_api_key.permissions import HasAPIKey
-import datetime
 
 
 class AccountingUserProjectAPI(APIView):
@@ -175,9 +176,14 @@ class ResourceUsageAPI(APIView):
                 else:
                     job_data["gpuh"] = 0.
 
-                end_date = datetime.datetime.utcfromtimestamp(
+                end_date = datetime.datetime.fromtimestamp(
                     int(job_data["end_time"])
                 )
+                aware_end_date = timezone.make_aware(
+                    end_date, timezone=timezone.get_current_timezone()
+                )
+
+                job_data.pop("end_time")
 
                 job_data["month"] = f"{end_date.month:02d}/{end_date.year}"
 
@@ -186,6 +192,7 @@ class ResourceUsageAPI(APIView):
                     project=models.Project.objects.get(
                         identifier=entry["project"]
                     ),
+                    end_time=aware_end_date,
                     resource_name=resource,
                     accounting_record=job_data
                 )

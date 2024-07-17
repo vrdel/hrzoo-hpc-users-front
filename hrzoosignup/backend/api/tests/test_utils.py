@@ -1,4 +1,7 @@
+import datetime
+
 from backend import models
+from django.utils import timezone
 
 
 def create_mock_db():
@@ -49,12 +52,15 @@ def create_mock_db():
         user=user1,
         project=project1,
         resource_name="supek",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1717849428),
+            timezone=timezone.get_current_timezone()
+        ),
         accounting_record={
             "jobid": "1",
             "walltime": 392,
             "ncpus": "4",
             "start_time": 1717845508,
-            "end_time": 1717849428,
             "queue": "gpu",
             "wait_time": 2,
             "qtime": 1717796832,
@@ -68,12 +74,15 @@ def create_mock_db():
         user=user1,
         project=project1,
         resource_name="supek",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1716001522),
+            timezone=timezone.get_current_timezone()
+        ),
         accounting_record={
             "jobid": "2",
             "walltime": 10,
             "ncpus": "18",
             "start_time": 1716001512,
-            "end_time": 1716001522,
             "queue": "queue1",
             "wait_time": 2,
             "qtime": 0,
@@ -86,12 +95,15 @@ def create_mock_db():
         user=user2,
         project=project3,
         resource_name="padobran",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1720520659),
+            timezone=timezone.get_current_timezone()
+        ),
         accounting_record={
             "jobid": "12843",
             "walltime": "13",
             "ncpus": "2",
             "start_time": "1720520646",
-            "end_time": "1720520659",
             "queue": "queue2",
             "wait_time": "4",
             "qtime": "8",

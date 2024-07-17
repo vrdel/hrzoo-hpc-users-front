@@ -1,5 +1,8 @@
+import datetime
+
 from backend import models
 from django.test import TestCase
+from django.utils import timezone
 from rest_framework import status
 from rest_framework_api_key.models import APIKey
 
@@ -64,12 +67,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage1.user, self.user1)
         self.assertEqual(usage1.project, self.project1)
         self.assertEqual(usage1.resource_name, "supek")
+        self.assertEqual(
+            usage1.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1717849428),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage1.accounting_record, {
             "jobid": "12345",
             "walltime": "3920",
             "ncpus": "4",
             "start_time": "1717845508",
-            "end_time": "1717849428",
             "queue": "gpu",
             "wait_time": "2",
             "qtime": "1717796832",
@@ -81,12 +90,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
         self.assertEqual(usage2.resource_name, "supek")
+        self.assertEqual(
+            usage2.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1716001522),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage2.accounting_record, {
             "jobid": "12346",
             "walltime": "10",
             "ncpus": "18",
             "start_time": "1716001512",
-            "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
             "qtime": "",
@@ -156,12 +171,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage1.user, self.user1)
         self.assertEqual(usage1.project, self.project1)
         self.assertEqual(usage1.resource_name, "supek")
+        self.assertEqual(
+            usage1.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1717849428),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage1.accounting_record, {
             "jobid": "12345",
             "walltime": "3920",
             "ncpus": "4",
             "start_time": "1717845508",
-            "end_time": "1717849428",
             "queue": "gpu",
             "wait_time": "2",
             "qtime": "1717796832",
@@ -173,12 +194,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
         self.assertEqual(usage2.resource_name, "supek")
+        self.assertEqual(
+            usage2.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1716001522),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage2.accounting_record, {
             "jobid": "12346",
             "walltime": "10",
             "ncpus": "18",
             "start_time": "1716001512",
-            "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
             "qtime": "",
@@ -188,12 +215,18 @@ class ResourceUsageAPITests(TestCase):
         })
         self.assertEqual(usage3.user, self.user2)
         self.assertEqual(usage3.project, self.project2)
+        self.assertEqual(
+            usage3.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1720520659),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage3.accounting_record, {
             "jobid": "12843",
             "walltime": "13",
             "ncpus": "2",
             "start_time": "1720520646",
-            "end_time": "1720520659",
             "queue": "queue2",
             "wait_time": "4",
             "qtime": "8",
@@ -263,12 +296,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage1.user, self.user1)
         self.assertEqual(usage1.project, self.project1)
         self.assertEqual(usage1.resource_name, "supek")
+        self.assertEqual(
+            usage1.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1717849428),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage1.accounting_record, {
             "jobid": "12345",
             "walltime": "3920",
             "ncpus": "4",
             "start_time": "1717845508",
-            "end_time": "1717849428",
             "queue": "gpu",
             "wait_time": "2",
             "qtime": "1717796832",
@@ -280,12 +319,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
         self.assertEqual(usage2.resource_name, "supek")
+        self.assertEqual(
+            usage2.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1716001522),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage2.accounting_record, {
             "jobid": "12346",
             "walltime": "10",
             "ncpus": "18",
             "start_time": "1716001512",
-            "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
             "qtime": "",
@@ -353,12 +398,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage1.user, self.user1)
         self.assertEqual(usage1.project, self.project1)
         self.assertEqual(usage1.resource_name, "supek")
+        self.assertEqual(
+            usage1.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1716001522),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage1.accounting_record, {
             "jobid": "12346",
             "walltime": "10",
             "ncpus": "18",
             "start_time": "1716001512",
-            "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
             "qtime": "",
@@ -413,12 +464,18 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(usage1.user, self.user1)
         self.assertEqual(usage1.project, self.project1)
         self.assertEqual(usage1.resource_name, "supek")
+        self.assertEqual(
+            usage1.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1716001522),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage1.accounting_record, {
             "jobid": "12346",
             "walltime": "10",
             "ncpus": "18",
             "start_time": "1716001512",
-            "end_time": "1716001522",
             "queue": "queue1",
             "wait_time": "2",
             "qtime": "",
