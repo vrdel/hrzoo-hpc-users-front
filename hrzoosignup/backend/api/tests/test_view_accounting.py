@@ -1,3 +1,6 @@
+import datetime
+from unittest.mock import patch
+
 from backend import models
 from backend.api.internal import views
 from django.test import TestCase
@@ -13,7 +16,9 @@ class ResourceUsageTests(TestCase):
         self.factory = APIRequestFactory()
         self.user = models.User.objects.get(person_username="user1")
 
-    def test_get_data_per_user(self):
+    @patch("backend.api.internal.view_accounting.date_today")
+    def test_get_data_per_user(self, mock_date_today):
+        mock_date_today.return_value = datetime.date(2024, 8, 22)
         request = self.factory.get(
             "/api/v1/internal/accounting/records"
         )
@@ -25,38 +30,38 @@ class ResourceUsageTests(TestCase):
                     "cpuh": [
                         {
                             "month": "05/2024",
-                            "project-1": 0.05,
+                            "project-1": 1.9389,
                             "project-2": 117.115,
                             "project-4": 1.5167
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 0.4856,
+                            "project-1": 2.3745,
                             "project-2": 117.115,
                             "project-4": 1.5167
                         },
                         {
                             "month": "07/2024",
-                            "project-1": 0.4856,
+                            "project-1": 2.3745,
                             "project-2": 117.115
                         }
                     ],
                     "gpuh": [
                         {
                             "month": "05/2024",
-                            "project-1": 0,
+                            "project-1": 0.1181,
                             "project-2": 0,
                             "project-4": 0
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 1.5889,
+                            "project-1": 1.707,
                             "project-2": 0,
                             "project-4": 0
                         },
                         {
                             "month": "07/2024",
-                            "project-1": 1.5889,
+                            "project-1": 1.707,
                             "project-2": 0.1367
                         }
                     ]

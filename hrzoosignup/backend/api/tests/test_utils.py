@@ -73,6 +73,28 @@ def create_mock_db():
         project=project1,
         resource_name="supek",
         end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1704095030),  # 1 Jan 2024
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jobid": "1",
+            "walltime": 425,
+            "ncpus": "16",
+            "start_time": 1704094605,
+            "queue": "gpu",
+            "wait_time": 2,
+            "qtime": 1717,
+            "ngpus": "1",
+            "cpuh": 1.8889,
+            "gpuh": 0.1181,
+            "month": "01/2024"
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user1,
+        project=project1,
+        resource_name="supek",
+        end_time=timezone.make_aware(
             datetime.datetime.fromtimestamp(1717849428),  # 8 Jun 2024
             timezone=timezone.get_current_timezone()
         ),

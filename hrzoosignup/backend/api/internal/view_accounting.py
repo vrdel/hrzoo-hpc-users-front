@@ -1,13 +1,18 @@
-import datetime
 import calendar
+import datetime
 
 import pandas as pd
 from backend import models
+from dateutil.relativedelta import relativedelta
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+
+def date_today():
+    return datetime.date.today()
 
 
 class ResourceUsage(APIView):
@@ -73,15 +78,19 @@ class ResourceUsage(APIView):
                     proj_cpuh = float(df_project["cpuh"].sum(axis=0))
                     proj_gpuh = float(df_project["gpuh"].sum(axis=0))
                     cpu_dict.update({"month": f"{month:02d}/{year}"})
-                    cpu_dict.update({project: proj_cpuh})
+                    cpu_dict.update({project: round(proj_cpuh, 4)})
 
                     gpu_dict.update({"month": f"{month:02d}/{year}"})
-                    gpu_dict.update({project: proj_gpuh})
+                    gpu_dict.update({project: round(proj_gpuh, 4)})
 
-                if cpu_dict:
+                if cpu_dict and datetime.date(year, month, 1) >= (
+                        date_today() - relativedelta(months=6)
+                ):
                     cpuh.append(cpu_dict)
 
-                if gpu_dict:
+                if gpu_dict and datetime.date(year, month, 1) >= (
+                    date_today() - relativedelta(months=6)
+                ):
                     gpuh.append(gpu_dict)
 
             output.update({resource: {
