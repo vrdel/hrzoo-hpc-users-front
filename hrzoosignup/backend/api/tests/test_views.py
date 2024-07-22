@@ -22,7 +22,7 @@ class ResourceUsageAPITests(TestCase):
         self.user2 = models.User.objects.get(username="user2")
 
     def test_post_data(self):
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 3)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 5)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
@@ -57,7 +57,7 @@ class ResourceUsageAPITests(TestCase):
             }
         )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 5)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 7)
         usage1 = models.ResourceUsage.objects.filter(
             accounting_record__jobid="12345"
         )[0]
@@ -111,7 +111,7 @@ class ResourceUsageAPITests(TestCase):
         })
 
     def test_post_data_multiple_users(self):
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 3)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 5)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
@@ -158,7 +158,7 @@ class ResourceUsageAPITests(TestCase):
             }
         )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 6)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
         usage1 = models.ResourceUsage.objects.filter(
             accounting_record__jobid="12345"
         )[0]
@@ -236,7 +236,7 @@ class ResourceUsageAPITests(TestCase):
         })
 
     def test_post_data_nonexisting_user(self):
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 3)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 5)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
@@ -286,7 +286,7 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(
             request.data["status"]["message"], "User user3 not found"
         )
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 5)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 7)
         usage1 = models.ResourceUsage.objects.filter(
             accounting_record__jobid="12345"
         )[0]
@@ -340,7 +340,7 @@ class ResourceUsageAPITests(TestCase):
         })
 
     def test_post_data_multiple_nonexisting_user(self):
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 3)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 5)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
@@ -391,7 +391,7 @@ class ResourceUsageAPITests(TestCase):
             request.data["status"]["message"],
             "Users user3, user4 not found"
         )
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 4)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 6)
         usage1 = models.ResourceUsage.objects.filter(
             accounting_record__jobid="12346"
         )[0]
@@ -419,7 +419,7 @@ class ResourceUsageAPITests(TestCase):
         })
 
     def test_post_data_nonexisting_project(self):
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 3)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 5)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
@@ -457,7 +457,7 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(
             request.data["status"]["message"], "Project project-5 not found"
         )
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 4)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 6)
         usage1 = models.ResourceUsage.objects.filter(
             accounting_record__jobid="12346"
         )[0]
