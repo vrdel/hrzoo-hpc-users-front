@@ -17,7 +17,7 @@ def create_mock_db():
     models.State.objects.create(
         name="extend"
     )
-    models.State.objects.create(
+    state5 = models.State.objects.create(
         name="expire"
     )
     project1 = models.Project.objects.create(
@@ -26,7 +26,8 @@ def create_mock_db():
         institute="Sektor za gubljenje vremena",
         science_extrasoftware_help=False,
         is_active=True,
-        state=state1
+        state=state1,
+        date_end=datetime.date(2024, 7, 31)
     )
     project2 = models.Project.objects.create(
         identifier="project-2",
@@ -34,7 +35,8 @@ def create_mock_db():
         institute="Sektor za gubljenje vremena",
         science_extrasoftware_help=False,
         is_active=True,
-        state=state1
+        state=state1,
+        date_end=datetime.date(2025, 12, 31)
     )
     project3 = models.Project.objects.create(
         identifier="project-3",
@@ -42,7 +44,17 @@ def create_mock_db():
         institute="Sektor za gubljenje vremena",
         science_extrasoftware_help=False,
         is_active=True,
-        state=state1
+        state=state1,
+        date_end=datetime.date(2025, 5, 1)
+    )
+    project4 = models.Project.objects.create(
+        identifier="project-4",
+        name="Project name 4",
+        institute="Sektor za gubljenje vremena",
+        science_extrasoftware_help=False,
+        is_active=True,
+        state=state5,
+        date_end=datetime.date(2024, 6, 30)
     )
     user1 = models.User.objects.create_user(
         username="user1",
@@ -61,7 +73,7 @@ def create_mock_db():
         project=project1,
         resource_name="supek",
         end_time=timezone.make_aware(
-            datetime.datetime.fromtimestamp(1717849428),
+            datetime.datetime.fromtimestamp(1717849428),  # 8 Jun 2024
             timezone=timezone.get_current_timezone()
         ),
         accounting_record={
@@ -80,31 +92,10 @@ def create_mock_db():
     )
     models.ResourceUsage.objects.create(
         user=user1,
-        project=project1,
-        resource_name="supek",
-        end_time=timezone.make_aware(
-            datetime.datetime.fromtimestamp(1716001522),
-            timezone=timezone.get_current_timezone()
-        ),
-        accounting_record={
-            "jobid": "2",
-            "walltime": 10,
-            "ncpus": "18",
-            "start_time": 1716001512,
-            "queue": "queue1",
-            "wait_time": 2,
-            "qtime": 0,
-            "cpuh": 0.05,
-            "gpuh": 0,
-            "month": "05/2024"
-        }
-    )
-    models.ResourceUsage.objects.create(
-        user=user1,
         project=project2,
         resource_name="supek",
         end_time=timezone.make_aware(
-            datetime.datetime.fromtimestamp(1715938231),
+            datetime.datetime.fromtimestamp(1715938231),  # 17 May 2024
             timezone=timezone.get_current_timezone()
         ),
         accounting_record={
@@ -125,11 +116,53 @@ def create_mock_db():
         project=project1,
         resource_name="supek",
         end_time=timezone.make_aware(
-            datetime.datetime.fromtimestamp(1719491452),
+            datetime.datetime.fromtimestamp(1716001522),  # 18 May 2024
             timezone=timezone.get_current_timezone()
         ),
         accounting_record={
-            "jobid": "2",
+            "jobid": "3",
+            "walltime": 10,
+            "ncpus": "18",
+            "start_time": 1716001512,
+            "queue": "queue1",
+            "wait_time": 2,
+            "qtime": 0,
+            "cpuh": 0.05,
+            "gpuh": 0,
+            "month": "05/2024"
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user1,
+        project=project4,
+        resource_name="supek",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1716368913),  # 22 May 2024
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jobid": "4",
+            "walltime": "78",
+            "ncpus": "70",
+            "start_time": "1716368835",
+            "queue": "queue2",
+            "wait_time": "4",
+            "qtime": "8",
+            "cpuh": 1.5167,
+            "gpuh": 0,
+            "month": "05/2024"
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user1,
+        project=project1,
+        resource_name="supek",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1719491452),  # 27 Jun 2024
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jobid": "5",
             "walltime": 1234,
             "start_time": 1719490218,
             "queue": "queue1",
@@ -146,7 +179,7 @@ def create_mock_db():
         project=project3,
         resource_name="padobran",
         end_time=timezone.make_aware(
-            datetime.datetime.fromtimestamp(1720520659),
+            datetime.datetime.fromtimestamp(1720520659),  # 9 Jul 2024
             timezone=timezone.get_current_timezone()
         ),
         accounting_record={
@@ -159,6 +192,27 @@ def create_mock_db():
             "qtime": "8",
             "cpuh": 0.0072,
             "gpuh": 0,
+            "month": "07/2024"
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user1,
+        project=project2,
+        resource_name="supek",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1721641019),  # 22 Jul 2024
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jobid": "6",
+            "walltime": "123",
+            "ngpus": "4",
+            "start_time": "1721640896",
+            "queue": "queue2",
+            "wait_time": "4",
+            "qtime": "8",
+            "cpuh": 0,
+            "gpuh": 0.1367,
             "month": "07/2024"
         }
     )

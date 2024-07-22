@@ -1,3 +1,6 @@
+import datetime
+import calendar
+
 import pandas as pd
 from backend import models
 from rest_framework import status
@@ -20,6 +23,7 @@ class ResourceUsage(APIView):
         df = pd.DataFrame.from_records(
             records.values(
                 "project__identifier",
+                "project__date_end",
                 "resource_name",
                 "end_time",
                 "accounting_record__cpuh",
@@ -29,17 +33,17 @@ class ResourceUsage(APIView):
 
         df = df.rename(columns={
             "project__identifier": "project",
+            "project__date_end": "project_end",
             "resource_name": "resource",
             "accounting_record__cpuh": "cpuh",
             "accounting_record__gpuh": "gpuh"
         })
 
-        df["tt"] = df.apply(
-            lambda rec: f"{rec['end_time'].month:02d}/{rec['end_time'].year}",
-            axis=1
+        df["month"] = df.apply(
+            lambda rec: (rec["end_time"].year, rec["end_time"].month), axis=1
         )
 
-        df = df.sort_values(by=["tt"])
+        df = df.sort_values(by=["end_time"])
 
         resources = df["resource"].unique()
 
@@ -49,9 +53,17 @@ class ResourceUsage(APIView):
             gpuh = list()
             df_resource = df[df["resource"] == resource]
 
-            months = df_resource["tt"].unique()
-            for month in months:
-                df_month = df_resource[df_resource["tt"] == month]
+            dates = df_resource["month"].unique()
+            for date in dates:
+                year, month = date
+                month_date = datetime.date(
+                    year, month, calendar.monthrange(year, month)[1]
+                )
+                df_month = df_resource[
+                    (df_resource["end_time"].dt.date <= month_date) *
+                    (df_resource["project_end"] >= month_date)
+                ]
+
                 projects = df_month["project"].unique()
 
                 cpu_dict = dict()
@@ -60,17 +72,11 @@ class ResourceUsage(APIView):
                     df_project = df_month[df_month["project"] == project]
                     proj_cpuh = float(df_project["cpuh"].sum(axis=0))
                     proj_gpuh = float(df_project["gpuh"].sum(axis=0))
-                    if proj_cpuh > 0:
-                        if "month" not in cpu_dict:
-                            cpu_dict.update({"month": month})
+                    cpu_dict.update({"month": f"{month:02d}/{year}"})
+                    cpu_dict.update({project: proj_cpuh})
 
-                        cpu_dict.update({project: proj_cpuh})
-
-                    if proj_gpuh > 0:
-                        if "month" not in gpu_dict:
-                            gpu_dict.update({"month": month})
-
-                        gpu_dict.update({project: proj_gpuh})
+                    gpu_dict.update({"month": f"{month:02d}/{year}"})
+                    gpu_dict.update({project: proj_gpuh})
 
                 if cpu_dict:
                     cpuh.append(cpu_dict)

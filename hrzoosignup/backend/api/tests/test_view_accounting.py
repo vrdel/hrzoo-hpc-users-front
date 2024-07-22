@@ -26,17 +26,38 @@ class ResourceUsageTests(TestCase):
                         {
                             "month": "05/2024",
                             "project-1": 0.05,
-                            "project-2": 117.115
+                            "project-2": 117.115,
+                            "project-4": 1.5167
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 0.4356,
+                            "project-1": 0.4856,
+                            "project-2": 117.115,
+                            "project-4": 1.5167
+                        },
+                        {
+                            "month": "07/2024",
+                            "project-1": 0.4856,
+                            "project-2": 117.115
                         }
                     ],
                     "gpuh": [
                         {
+                            "month": "05/2024",
+                            "project-1": 0,
+                            "project-2": 0,
+                            "project-4": 0
+                        },
+                        {
                             "month": "06/2024",
-                            "project-1": 1.5889
+                            "project-1": 1.5889,
+                            "project-2": 0,
+                            "project-4": 0
+                        },
+                        {
+                            "month": "07/2024",
+                            "project-1": 1.5889,
+                            "project-2": 0.1367
                         }
                     ]
                 }
