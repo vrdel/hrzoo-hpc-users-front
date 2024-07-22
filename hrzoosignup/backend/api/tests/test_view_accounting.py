@@ -20,33 +20,25 @@ class ResourceUsageTests(TestCase):
         force_authenticate(request, user=self.user)
         response = self.view(request)
         self.assertEqual(
-            response.data, [
-                {
-                    "user": "user1",
-                    "project": "project-1",
-                    "resource_name": "supek",
-                    "jobid": "1",
-                    "walltime": 392,
-                    "ncpus": "4",
-                    "start_time": 1717845508,
-                    "end_time": 1717849428,
-                    "queue": "gpu",
-                    "wait_time": 2,
-                    "qtime": 1717796832,
-                    "ngpus": "2"
-                },
-                {
-                    "user": "user1",
-                    "project": "project-1",
-                    "resource_name": 'supek',
-                    "jobid": "2",
-                    "walltime": 10,
-                    "ncpus": "18",
-                    "start_time": 1716001512,
-                    "end_time": 1716001522,
-                    "queue": "queue1",
-                    "wait_time": 2,
-                    "qtime": 0
+            response.data, {
+                "supek": {
+                    "cpuh": [
+                        {
+                            "month": "05/2024",
+                            "project-1": 0.05,
+                            "project-2": 117.115
+                        },
+                        {
+                            "month": "06/2024",
+                            "project-1": 0.4356,
+                        }
+                    ],
+                    "gpuh": [
+                        {
+                            "month": "06/2024",
+                            "project-1": 1.5889
+                        }
+                    ]
                 }
-            ]
+            }
         )

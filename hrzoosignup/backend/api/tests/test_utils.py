@@ -28,6 +28,14 @@ def create_mock_db():
         is_active=True,
         state=state1
     )
+    project2 = models.Project.objects.create(
+        identifier="project-2",
+        name="Project name 2",
+        institute="Sektor za gubljenje vremena",
+        science_extrasoftware_help=False,
+        is_active=True,
+        state=state1
+    )
     project3 = models.Project.objects.create(
         identifier="project-3",
         name="Project name 3",
@@ -89,6 +97,48 @@ def create_mock_db():
             "cpuh": 0.05,
             "gpuh": 0,
             "month": "05/2024"
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user1,
+        project=project2,
+        resource_name="supek",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1715938231),
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jobid": "2",
+            "walltime": 23423,
+            "ncpus": "18",
+            "start_time": 1715914808,
+            "queue": "queue1",
+            "wait_time": 2,
+            "qtime": 5,
+            "cpuh": 117.115,
+            "gpuh": 0,
+            "month": "05/2024"
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user1,
+        project=project1,
+        resource_name="supek",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1719491452),
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jobid": "2",
+            "walltime": 1234,
+            "start_time": 1719490218,
+            "queue": "queue1",
+            "wait_time": 2,
+            "qtime": 5,
+            "ngpu": 4,
+            "cpuh": 0,
+            "gpuh": 1.3711,
+            "month": "06/2024"
         }
     )
     models.ResourceUsage.objects.create(
