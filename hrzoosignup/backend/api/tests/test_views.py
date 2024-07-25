@@ -1,10 +1,12 @@
 import datetime
+import json
 
 from backend import models
 from django.test import TestCase
 from django.utils import timezone
 from rest_framework import status
 from rest_framework_api_key.models import APIKey
+from rest_framework.test import APIRequestFactory
 
 from .test_utils import create_mock_db
 
@@ -21,11 +23,14 @@ class ResourceUsageAPITests(TestCase):
         self.user1 = models.User.objects.get(username="user1")
         self.user2 = models.User.objects.get(username="user2")
 
+        self.factory = APIRequestFactory()
+
     def test_post_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
             data={
                 "usage": [
                     {
@@ -54,7 +59,8 @@ class ResourceUsageAPITests(TestCase):
                         "qtime": ""
                     }
                 ]
-            }
+            },
+            format="json"
         )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 10)
@@ -115,6 +121,8 @@ class ResourceUsageAPITests(TestCase):
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            format="json",
             data={
                 "usage": [
                     {
@@ -240,6 +248,8 @@ class ResourceUsageAPITests(TestCase):
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            format="json",
             data={
                 "usage": [
                     {
@@ -344,6 +354,8 @@ class ResourceUsageAPITests(TestCase):
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            format="json",
             data={
                 "usage": [
                     {
@@ -423,6 +435,8 @@ class ResourceUsageAPITests(TestCase):
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            format="json",
             data={
                 "usage": [
                     {

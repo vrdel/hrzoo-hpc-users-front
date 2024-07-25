@@ -1,6 +1,7 @@
 import ast
 import copy
 import datetime
+import json
 
 from backend import models
 from django.conf import settings
@@ -151,14 +152,13 @@ class ResourceUsageAPI(APIView):
     def post(self, request):
         resource = request.query_params.get("resource")
 
-        data = request.POST.getlist("usage")
+        data = request.data["usage"]
 
         error_response = dict()
         status_code = status.HTTP_201_CREATED
         missing_users = list()
         missing_projects = set()
         for entry in data:
-            entry = ast.literal_eval(entry)
             try:
                 job_data = copy.deepcopy(entry)
                 user = models.User.objects.get(person_username=entry["user"])
