@@ -29,6 +29,21 @@ class ResourceUsageTests(TestCase):
                 "supek": {
                     "cpuh": [
                         {
+                            "month": "02/2024",
+                            "project-1": 1.8889,
+                            "project-4": 0.
+                        },
+                        {
+                            "month": "03/2024",
+                            "project-1": 1.8889,
+                            "project-4": 0.
+                        },
+                        {
+                            "month": "04/2024",
+                            "project-1": 1.8889,
+                            "project-4": 0.
+                        },
+                        {
                             "month": "05/2024",
                             "project-1": 1.9389,
                             "project-2": 117.115,
@@ -44,24 +59,47 @@ class ResourceUsageTests(TestCase):
                             "month": "07/2024",
                             "project-1": 2.3745,
                             "project-2": 117.115
+                        },
+                        {
+                            "month": "08/2024",
+                            "project-2": 117.115
                         }
                     ],
                     "gpuh": [
                         {
+                            "month": "02/2024",
+                            "project-1": 0.1181,
+                            "project-4": 0.
+                        },
+                        {
+                            "month": "03/2024",
+                            "project-1": 0.1181,
+                            "project-4": 0.
+                        },
+                        {
+                            "month": "04/2024",
+                            "project-1": 0.1181,
+                            "project-4": 0.
+                        },
+                        {
                             "month": "05/2024",
                             "project-1": 0.1181,
-                            "project-2": 0,
-                            "project-4": 0
+                            "project-2": 0.,
+                            "project-4": 0.
                         },
                         {
                             "month": "06/2024",
                             "project-1": 1.707,
-                            "project-2": 0,
-                            "project-4": 0
+                            "project-2": 0.,
+                            "project-4": 0.
                         },
                         {
                             "month": "07/2024",
                             "project-1": 1.707,
+                            "project-2": 0.1367
+                        },
+                        {
+                            "month": "08/2024",
                             "project-2": 0.1367
                         }
                     ]

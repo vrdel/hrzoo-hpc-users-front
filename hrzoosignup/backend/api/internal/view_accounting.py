@@ -20,15 +20,29 @@ class ResourceUsage(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
+        todays_date = date_today()
+        current_month_start = datetime.date(
+            todays_date.year, todays_date.month, 1
+        )
+        current_month_end = datetime.date(
+            todays_date.year,
+            todays_date.month,
+            calendar.monthrange(todays_date.year, todays_date.month)[1]
+        )
+        six_months_ago = current_month_start - relativedelta(months=6)
+        dates = [
+            six_months_ago + relativedelta(months=i) for i in range(7)
+        ]
         user = request.user
         records = models.ResourceUsage.objects.filter(
-            user=models.User.objects.get(person_username=user)
+            user=models.User.objects.get(person_username=user.person_username)
         )
 
         df = pd.DataFrame.from_records(
             records.values(
                 "project__identifier",
                 "project__date_end",
+                "project__date_start",
                 "resource_name",
                 "end_time",
                 "accounting_record__cpuh",
@@ -39,14 +53,11 @@ class ResourceUsage(APIView):
         df = df.rename(columns={
             "project__identifier": "project",
             "project__date_end": "project_end",
+            "project__date_start": "project_start",
             "resource_name": "resource",
             "accounting_record__cpuh": "cpuh",
             "accounting_record__gpuh": "gpuh"
         })
-
-        df["month"] = df.apply(
-            lambda rec: (rec["end_time"].year, rec["end_time"].month), axis=1
-        )
 
         df = df.sort_values(by=["end_time"])
 
@@ -58,18 +69,25 @@ class ResourceUsage(APIView):
             gpuh = list()
             df_resource = df[df["resource"] == resource]
 
-            dates = df_resource["month"].unique()
             for date in dates:
-                year, month = date
-                month_date = datetime.date(
+                month_start = date
+                year = date.year
+                month = date.month
+                month_end = datetime.date(
                     year, month, calendar.monthrange(year, month)[1]
                 )
                 df_month = df_resource[
-                    (df_resource["end_time"].dt.date <= month_date) *
-                    (df_resource["project_end"] >= month_date)
+                    (df_resource["end_time"].dt.date <= month_end) *
+                    (df_resource["project_end"] >= month_start) *
+                    (df_resource["project_start"] <= month_end)
                 ]
 
-                projects = df_month["project"].unique()
+                active_projects_in_month = df_resource[
+                    (df_resource["project_end"] >= month_start) *
+                    (df_resource["project_start"] <= month_end)
+                ]
+
+                projects = active_projects_in_month["project"].unique()
 
                 cpu_dict = dict()
                 gpu_dict = dict()
@@ -83,14 +101,10 @@ class ResourceUsage(APIView):
                     gpu_dict.update({"month": f"{month:02d}/{year}"})
                     gpu_dict.update({project: round(proj_gpuh, 4)})
 
-                if cpu_dict and datetime.date(year, month, 1) >= (
-                        date_today() - relativedelta(months=6)
-                ):
+                if cpu_dict:
                     cpuh.append(cpu_dict)
 
-                if gpu_dict and datetime.date(year, month, 1) >= (
-                    date_today() - relativedelta(months=6)
-                ):
+                if gpu_dict:
                     gpuh.append(gpu_dict)
 
             output.update({resource: {

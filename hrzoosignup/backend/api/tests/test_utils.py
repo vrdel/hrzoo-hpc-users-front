@@ -27,6 +27,7 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        date_start=datetime.date(2023, 5, 1),
         date_end=datetime.date(2024, 7, 31)
     )
     project2 = models.Project.objects.create(
@@ -36,6 +37,7 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        date_start=datetime.date(2024, 5, 7),
         date_end=datetime.date(2025, 12, 31)
     )
     project3 = models.Project.objects.create(
@@ -45,6 +47,7 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        date_start=datetime.date(2024, 3, 1),
         date_end=datetime.date(2025, 5, 1)
     )
     project4 = models.Project.objects.create(
@@ -54,6 +57,7 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state5,
+        date_start=datetime.date(2024, 1, 1),
         date_end=datetime.date(2024, 6, 30)
     )
     user1 = models.User.objects.create_user(
