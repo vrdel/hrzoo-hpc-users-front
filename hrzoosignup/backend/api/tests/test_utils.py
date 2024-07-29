@@ -90,8 +90,7 @@ def create_mock_db():
             "qtime": 1717,
             "ngpus": "1",
             "cpuh": 1.8889,
-            "gpuh": 0.1181,
-            "month": "01/2024"
+            "gpuh": 0.1181
         }
     )
     models.ResourceUsage.objects.create(
@@ -112,8 +111,7 @@ def create_mock_db():
             "qtime": 1717796832,
             "ngpus": "2",
             "cpuh": 0.4356,
-            "gpuh": 0.2178,
-            "month": "06/2024"
+            "gpuh": 0.2178
         }
     )
     models.ResourceUsage.objects.create(
@@ -133,8 +131,7 @@ def create_mock_db():
             "wait_time": 2,
             "qtime": 5,
             "cpuh": 117.115,
-            "gpuh": 0,
-            "month": "05/2024"
+            "gpuh": 0
         }
     )
     models.ResourceUsage.objects.create(
@@ -154,8 +151,7 @@ def create_mock_db():
             "wait_time": 2,
             "qtime": 0,
             "cpuh": 0.05,
-            "gpuh": 0,
-            "month": "05/2024"
+            "gpuh": 0
         }
     )
     models.ResourceUsage.objects.create(
@@ -175,8 +171,7 @@ def create_mock_db():
             "wait_time": "4",
             "qtime": "8",
             "cpuh": 1.5167,
-            "gpuh": 0,
-            "month": "05/2024"
+            "gpuh": 0
         }
     )
     models.ResourceUsage.objects.create(
@@ -196,8 +191,7 @@ def create_mock_db():
             "qtime": 5,
             "ngpu": 4,
             "cpuh": 0,
-            "gpuh": 1.3711,
-            "month": "06/2024"
+            "gpuh": 1.3711
         }
     )
     models.ResourceUsage.objects.create(
@@ -217,8 +211,7 @@ def create_mock_db():
             "wait_time": "4",
             "qtime": "8",
             "cpuh": 0.0072,
-            "gpuh": 0,
-            "month": "07/2024"
+            "gpuh": 0
         }
     )
     models.ResourceUsage.objects.create(
@@ -238,7 +231,6 @@ def create_mock_db():
             "wait_time": "4",
             "qtime": "8",
             "cpuh": 0,
-            "gpuh": 0.1367,
-            "month": "07/2024"
+            "gpuh": 0.1367
         }
     )

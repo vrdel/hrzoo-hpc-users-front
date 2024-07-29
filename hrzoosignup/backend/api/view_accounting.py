@@ -1,8 +1,8 @@
-import ast
 import copy
 import datetime
 import json
 
+import pandas as pd
 from backend import models
 from django.conf import settings
 from django.db.models import Q
@@ -141,13 +141,27 @@ class ResourceUsageAPI(APIView):
 
     @staticmethod
     def _calculate_processor_hour(data, key):
-        return round(int(data[key]) * int(data["walltime"]) / 3600., 4)
+        try:
+            return round(int(data[key]) * int(data["walltime"]) / 3600., 4)
+
+        except ValueError:
+            return 0
 
     def _calculate_gpuh(self, data):
         return self._calculate_processor_hour(data=data, key="ngpus")
 
     def _calculate_cpuh(self, data):
         return self._calculate_processor_hour(data=data, key="ncpus")
+
+    @staticmethod
+    def _prepare_job_data(data):
+        job_data = copy.deepcopy(data)
+
+        job_data.pop("project")
+        job_data.pop("user")
+        job_data.pop("end_time")
+
+        return job_data.to_json()
 
     def post(self, request):
         resource = request.query_params.get("resource")
@@ -156,54 +170,62 @@ class ResourceUsageAPI(APIView):
 
         error_response = dict()
         status_code = status.HTTP_201_CREATED
-        missing_users = list()
+        missing_users = set()
         missing_projects = set()
-        for entry in data:
+        df = pd.DataFrame.from_records(data)
+        users = df["user"].unique()
+        projects = df["project"].unique()
+
+        users_dict = dict()
+        for user in users:
             try:
-                job_data = copy.deepcopy(entry)
-                user = models.User.objects.get(person_username=entry["user"])
-                job_data.pop("project")
-                job_data.pop("user")
-
-                if "ncpus" in job_data:
-                    job_data["cpuh"] = self._calculate_cpuh(data=job_data)
-                else:
-                    job_data["cpuh"] = 0.
-
-                if "ngpus" in job_data:
-                    job_data["gpuh"] = self._calculate_gpuh(data=job_data)
-
-                else:
-                    job_data["gpuh"] = 0.
-
-                end_date = datetime.datetime.fromtimestamp(
-                    int(job_data["end_time"])
-                )
-                aware_end_date = timezone.make_aware(
-                    end_date, timezone=timezone.get_current_timezone()
-                )
-
-                job_data.pop("end_time")
-
-                job_data["month"] = f"{end_date.month:02d}/{end_date.year}"
-
-                models.ResourceUsage.objects.create(
-                    user=user,
-                    project=models.Project.objects.get(
-                        identifier=entry["project"]
-                    ),
-                    end_time=aware_end_date,
-                    resource_name=resource,
-                    accounting_record=job_data
-                )
-
-            except models.Project.DoesNotExist:
-                missing_projects.add(entry["project"])
-                continue
+                users_dict.update({
+                    user: models.User.objects.get(person_username=user)
+                })
 
             except models.User.DoesNotExist:
-                missing_users.append(entry["user"])
+                missing_users.add(user)
                 continue
+
+        projects_dict = dict()
+        for project in projects:
+            try:
+                projects_dict.update({
+                    project: models.Project.objects.get(identifier=project)
+                })
+
+            except models.Project.DoesNotExist:
+                missing_projects.add(project)
+                continue
+
+        df["cpuh"] = df.apply(lambda row: self._calculate_cpuh(row), axis=1)
+        df["gpuh"] = df.apply(lambda row: self._calculate_gpuh(row), axis=1)
+        df["end_time"] = df.apply(
+            lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
+                int(row["end_time"])
+            ), timezone=timezone.get_current_timezone()),
+            axis=1
+        )
+        df["job_data"] = df.apply(
+            lambda row: self._prepare_job_data(row), axis=1
+        )
+
+        df = df[
+            (~df.user.isin(missing_users)) *
+            (~df.project.isin(missing_projects))
+        ]
+
+        model_instances = [
+            models.ResourceUsage(
+                user=users_dict[record["user"]],
+                project=projects_dict[record["project"]],
+                end_time=record["end_time"],
+                resource_name=resource,
+                accounting_record=json.loads(record["job_data"])
+            ) for record in df.to_dict("records")
+        ]
+
+        models.ResourceUsage.objects.bulk_create(model_instances)
 
         if len(missing_projects) > 0:
             status_code = status.HTTP_404_NOT_FOUND
@@ -232,7 +254,9 @@ class ResourceUsageAPI(APIView):
             error_response = {
                 "status": {
                     "code": status_code,
-                    "message": f"{noun} {', '.join(missing_users)} not found"
+                    "message":
+                        f"{noun} "
+                        f"{', '.join(sorted(list(missing_users)))} not found"
                 }
             }
 
