@@ -24,11 +24,6 @@ class ResourceUsage(APIView):
         current_month_start = datetime.date(
             todays_date.year, todays_date.month, 1
         )
-        current_month_end = datetime.date(
-            todays_date.year,
-            todays_date.month,
-            calendar.monthrange(todays_date.year, todays_date.month)[1]
-        )
         six_months_ago = current_month_start - relativedelta(months=6)
         dates = [
             six_months_ago + relativedelta(months=i) for i in range(7)
@@ -95,11 +90,17 @@ class ResourceUsage(APIView):
                     df_project = df_month[df_month["project"] == project]
                     proj_cpuh = float(df_project["cpuh"].sum(axis=0))
                     proj_gpuh = float(df_project["gpuh"].sum(axis=0))
-                    cpu_dict.update({"month": f"{month:02d}/{year}"})
-                    cpu_dict.update({project: round(proj_cpuh, 4)})
+                    if "month" not in cpu_dict:
+                        cpu_dict.update({"month": f"{month:02d}/{year}"})
 
-                    gpu_dict.update({"month": f"{month:02d}/{year}"})
-                    gpu_dict.update({project: round(proj_gpuh, 4)})
+                    if proj_cpuh > 0:
+                        cpu_dict.update({project: round(proj_cpuh, 1)})
+
+                    if "month" not in gpu_dict:
+                        gpu_dict.update({"month": f"{month:02d}/{year}"})
+
+                    if proj_gpuh:
+                        gpu_dict.update({project: round(proj_gpuh, 1)})
 
                 if cpu_dict:
                     cpuh.append(cpu_dict)

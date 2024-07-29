@@ -30,77 +30,67 @@ class ResourceUsageTests(TestCase):
                     "cpuh": [
                         {
                             "month": "02/2024",
-                            "project-1": 1.8889,
-                            "project-4": 0.
+                            "project-1": 1.9
                         },
                         {
                             "month": "03/2024",
-                            "project-1": 1.8889,
-                            "project-4": 0.
+                            "project-1": 1.9
                         },
                         {
                             "month": "04/2024",
-                            "project-1": 1.8889,
-                            "project-4": 0.
+                            "project-1": 1.9
                         },
                         {
                             "month": "05/2024",
-                            "project-1": 1.9389,
-                            "project-2": 117.115,
-                            "project-4": 1.5167
+                            "project-1": 1.9,
+                            "project-2": 117.1,
+                            "project-4": 1.5
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 2.3745,
-                            "project-2": 117.115,
-                            "project-4": 1.5167
+                            "project-1": 2.4,
+                            "project-2": 117.1,
+                            "project-4": 1.5
                         },
                         {
                             "month": "07/2024",
-                            "project-1": 2.3745,
-                            "project-2": 117.115
+                            "project-1": 2.4,
+                            "project-2": 117.1
                         },
                         {
                             "month": "08/2024",
-                            "project-2": 117.115
+                            "project-2": 117.1
                         }
                     ],
                     "gpuh": [
                         {
                             "month": "02/2024",
-                            "project-1": 0.1181,
-                            "project-4": 0.
+                            "project-1": 0.1
                         },
                         {
                             "month": "03/2024",
-                            "project-1": 0.1181,
-                            "project-4": 0.
+                            "project-1": 0.1
                         },
                         {
                             "month": "04/2024",
-                            "project-1": 0.1181,
-                            "project-4": 0.
+                            "project-1": 0.1
                         },
                         {
                             "month": "05/2024",
-                            "project-1": 0.1181,
-                            "project-2": 0.,
-                            "project-4": 0.
+                            "project-1": 0.1
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 1.707,
-                            "project-2": 0.,
-                            "project-4": 0.
+                            "project-1": 1.7
                         },
                         {
                             "month": "07/2024",
-                            "project-1": 1.707,
-                            "project-2": 0.1367
+                            "project-1": 1.7,
+                            "project-2": 0.1
                         },
                         {
                             "month": "08/2024",
-                            "project-2": 0.1367
+                            "project-2": 0.1
                         }
                     ]
                 }
