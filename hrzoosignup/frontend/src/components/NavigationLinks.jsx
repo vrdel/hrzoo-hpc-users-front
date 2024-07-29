@@ -15,7 +15,8 @@ import {
   faCertificate,
   faWindowRestore,
   faToggleOn,
-  faToggleOff
+  faToggleOff,
+  faChartBar
 } from '@fortawesome/free-solid-svg-icons';
 import 'Styles/nav.css';
 import { AuthContext } from 'Components/AuthContextProvider';
@@ -75,6 +76,18 @@ const NavigationLinksUser = ({isAdmin, activeBgColor}) => {
           <FormattedMessage
             description="navlinks-pubkeys"
             defaultMessage="Javni ključevi"
+          />
+        </NavLink>
+      </NavItem>
+      <NavItem key='accounting' className='mt-1'>
+        <NavLink
+          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          to='/ui/accounting'>
+          <FontAwesomeIcon icon={ faChartBar } />{' '}
+          <FormattedMessage
+            description="navlinks-accounting"
+            defaultMessage="Iskorištenje resursa"
           />
         </NavLink>
       </NavItem>
