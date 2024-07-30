@@ -15,24 +15,23 @@ def date_today():
     return datetime.date.today()
 
 
-class ResourceUsage(APIView):
-    authentication_classes = (SessionAuthentication,)
-    permission_classes = (IsAuthenticated,)
+def usage4user(username):
+    todays_date = date_today()
+    current_month_start = datetime.date(
+        todays_date.year, todays_date.month, 1
+    )
+    six_months_ago = current_month_start - relativedelta(months=6)
+    dates = [
+        six_months_ago + relativedelta(months=i) for i in range(7)
+    ]
 
-    def get(self, request):
-        todays_date = date_today()
-        current_month_start = datetime.date(
-            todays_date.year, todays_date.month, 1
-        )
-        six_months_ago = current_month_start - relativedelta(months=6)
-        dates = [
-            six_months_ago + relativedelta(months=i) for i in range(7)
-        ]
-        user = request.user
-        records = models.ResourceUsage.objects.filter(
-            user=models.User.objects.get(person_username=user.person_username)
-        )
+    records = models.ResourceUsage.objects.filter(
+        user=models.User.objects.get(person_username=username)
+    )
 
+    output = dict()
+
+    if len(records) > 0:
         df = pd.DataFrame.from_records(
             records.values(
                 "project__identifier",
@@ -58,7 +57,6 @@ class ResourceUsage(APIView):
 
         resources = df["resource"].unique()
 
-        output = dict()
         for resource in resources:
             cpuh = list()
             gpuh = list()
@@ -75,12 +73,12 @@ class ResourceUsage(APIView):
                     (df_resource["end_time"].dt.date <= month_end) *
                     (df_resource["project_end"] >= month_start) *
                     (df_resource["project_start"] <= month_end)
-                ]
+                    ]
 
                 active_projects_in_month = df_resource[
                     (df_resource["project_end"] >= month_start) *
                     (df_resource["project_start"] <= month_end)
-                ]
+                    ]
 
                 projects = active_projects_in_month["project"].unique()
 
@@ -112,5 +110,17 @@ class ResourceUsage(APIView):
                 "cpuh": cpuh,
                 "gpuh": gpuh
             }})
+
+    return output
+
+
+class ResourceUsage(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+
+        output = usage4user(user.person_username)
 
         return Response(data=output, status=status.HTTP_200_OK)

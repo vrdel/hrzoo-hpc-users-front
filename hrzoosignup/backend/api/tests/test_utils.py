@@ -72,6 +72,12 @@ def create_mock_db():
         status=True,
         mailinglist_subscribe=True
     )
+    models.User.objects.create_user(
+        username="user5",
+        person_username="user5",
+        status=True,
+        mailinglist_subscribe=True
+    )
     models.ResourceUsage.objects.create(
         user=user1,
         project=project1,

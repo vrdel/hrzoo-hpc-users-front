@@ -96,3 +96,14 @@ class ResourceUsageTests(TestCase):
                 }
             }
         )
+
+    @patch("backend.api.internal.view_accounting.date_today")
+    def test_get_data_for_user_without_usage_records(self, mock_date_today):
+        mock_date_today.return_value = datetime.date(2024, 8, 22)
+        user = models.User.objects.get(person_username="user5")
+        request = self.factory.get(
+            "/api/v1/internal/accounting/records"
+        )
+        force_authenticate(request, user=user)
+        response = self.view(request)
+        self.assertEqual(response.data, {})
