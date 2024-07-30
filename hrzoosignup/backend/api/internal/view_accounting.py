@@ -9,6 +9,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.core.cache import cache
 
 
 def date_today():
@@ -121,6 +122,12 @@ class ResourceUsage(APIView):
     def get(self, request):
         user = request.user
 
-        output = usage4user(user.person_username)
+        cached_data = cache.get(user.person_username)
 
-        return Response(data=output, status=status.HTTP_200_OK)
+        if cached_data:
+            return Response(data=cached_data, status=status.HTTP_200_OK)
+
+        else:
+            output = usage4user(user.person_username)
+
+            return Response(data=output, status=status.HTTP_200_OK)
