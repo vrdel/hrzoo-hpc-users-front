@@ -1,5 +1,6 @@
 import calendar
 import datetime
+import math
 
 import pandas as pd
 from backend import models
@@ -93,13 +94,13 @@ def usage4user(username):
                         cpu_dict.update({"month": f"{month:02d}/{year}"})
 
                     if proj_cpuh > 0:
-                        cpu_dict.update({project: round(proj_cpuh, 1)})
+                        cpu_dict.update({project: math.floor(proj_cpuh)})
 
                     if "month" not in gpu_dict:
                         gpu_dict.update({"month": f"{month:02d}/{year}"})
 
                     if proj_gpuh:
-                        gpu_dict.update({project: round(proj_gpuh, 1)})
+                        gpu_dict.update({project: math.floor(proj_gpuh)})
 
                 if cpu_dict:
                     cpuh.append(cpu_dict)

@@ -30,67 +30,67 @@ class ResourceUsageTests(TestCase):
                     "cpuh": [
                         {
                             "month": "02/2024",
-                            "project-1": 1.9
+                            "project-1": 1
                         },
                         {
                             "month": "03/2024",
-                            "project-1": 1.9
+                            "project-1": 1
                         },
                         {
                             "month": "04/2024",
-                            "project-1": 1.9
+                            "project-1": 1
                         },
                         {
                             "month": "05/2024",
-                            "project-1": 1.9,
-                            "project-2": 117.1,
-                            "project-4": 1.5
+                            "project-1": 1,
+                            "project-2": 117,
+                            "project-4": 1
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 2.4,
-                            "project-2": 117.1,
-                            "project-4": 1.5
+                            "project-1": 2,
+                            "project-2": 117,
+                            "project-4": 1
                         },
                         {
                             "month": "07/2024",
-                            "project-1": 2.4,
-                            "project-2": 117.1
+                            "project-1": 2,
+                            "project-2": 117
                         },
                         {
                             "month": "08/2024",
-                            "project-2": 117.1
+                            "project-2": 117
                         }
                     ],
                     "gpuh": [
                         {
                             "month": "02/2024",
-                            "project-1": 0.1
+                            "project-1": 0
                         },
                         {
                             "month": "03/2024",
-                            "project-1": 0.1
+                            "project-1": 0
                         },
                         {
                             "month": "04/2024",
-                            "project-1": 0.1
+                            "project-1": 0
                         },
                         {
                             "month": "05/2024",
-                            "project-1": 0.1
+                            "project-1": 0
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 1.7
+                            "project-1": 1
                         },
                         {
                             "month": "07/2024",
-                            "project-1": 1.7,
-                            "project-2": 0.1
+                            "project-1": 1,
+                            "project-2": 0
                         },
                         {
                             "month": "08/2024",
-                            "project-2": 0.1
+                            "project-2": 0
                         }
                     ]
                 }
