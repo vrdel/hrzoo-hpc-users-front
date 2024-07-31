@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { fetchAccountingData } from "Api/accounting";
-import { Col,Row } from "reactstrap";
+import { Button, Col,Row } from "reactstrap";
 import { PageTitle } from 'Components/PageTitle';
 import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Legend } from 'recharts';
 import { toast } from 'react-toastify';
@@ -16,11 +16,16 @@ const MyAccounting = () => {
   const [padobranProjects, setPadobranProjects] = useState([])
   const [supekCPUProjects, setSupekCPUProjects] = useState([])
   const [supekGPUProjects, setSupekGPUProjects] = useState([])
+  const [useLogScale, setUseLogScale] = useState(false)
 
   const { status, data, error } = useQuery({
     queryKey: ["graph-data", userDetails.username],
     queryFn: () => fetchAccountingData()
   })
+
+  const toggleScale = () => {
+    setUseLogScale(!useLogScale)
+  }
 
   useEffect(() => {
     if (status == "success" && data) {
@@ -60,6 +65,15 @@ const MyAccounting = () => {
         <Row>
           <PageTitle pageTitle="graphs" />
         </Row>
+        <div className="d-flex align-items-center justify-content-between">
+          <div></div>
+          <Button
+            color="secondary"
+            onClick={ toggleScale }
+          >
+            { useLogScale ? "Linear scale" : "Log scale" }
+          </Button>
+        </div>
         {
           (supekCPUProjects.length > 0 || supekGPUProjects.length > 0) &&
             <Row>
@@ -81,7 +95,12 @@ const MyAccounting = () => {
                     >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" />
-                      <YAxis />
+                      {
+                        useLogScale ?
+                          <YAxis scale="log" domain={[1, "dataMax"]} />
+                        :
+                          <YAxis />
+                      }
                       <Legend iconSize={10} />
                       {
                         supekCPUProjects.map((proj, index) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[index] }} dataKey={ proj } fill={ colors[index] } />)
@@ -106,7 +125,12 @@ const MyAccounting = () => {
                     >
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="month" />
-                      <YAxis />
+                      {
+                        useLogScale ?
+                          <YAxis scale="log" domain={[1, "dataMax"]} />
+                        :
+                          <YAxis />
+                      }
                       <Legend iconSize={10} />
                       {
                         supekGPUProjects.map((proj, index) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[index], fontSize: 10 }} fill={ colors[index] } />)
@@ -135,7 +159,12 @@ const MyAccounting = () => {
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
-                  <YAxis />
+                  {
+                    useLogScale ?
+                      <YAxis scale="log" domain={[1, "dataMax"]} />
+                    :
+                      <YAxis />
+                  }
                   <Legend iconSize={10} />
                   {
                     padobranProjects.map((proj, index) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[index], fontSize: 10 }} fill={ colors[index] } />)
