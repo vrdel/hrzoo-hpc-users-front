@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { fetchAccountingData } from "Api/accounting";
-import { Button, Col,Row } from "reactstrap";
+import { Button, Input, Col,Row, Label, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
 import { PageTitle } from 'Components/PageTitle';
 import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Legend } from 'recharts';
 import { toast } from 'react-toastify';
@@ -16,35 +16,60 @@ const MyAccounting = () => {
   const [padobranProjects, setPadobranProjects] = useState([])
   const [supekCPUProjects, setSupekCPUProjects] = useState([])
   const [supekGPUProjects, setSupekGPUProjects] = useState([])
-  const [useLogScale, setUseLogScale] = useState(false)
+  const [useLogScaleSupekCPU, setUseLogScaleSupekCPU] = useState(false)
+  const [useLogScaleSupekGPU, setUseLogScaleSupekGPU] = useState(false)
+  const [useLogScalePadobran, setUseLogScalePadobran] = useState(false)
+  const [listProjects, setListProjects] = useState([])
+  const [subsetOfProjects, setSubsetOfProjects] = useState([])
+  const [isOpen, setIsOpen] = useState(false)
 
   const { status, data, error } = useQuery({
     queryKey: ["graph-data", userDetails.username],
     queryFn: () => fetchAccountingData()
   })
 
-  const toggleScale = () => {
-    setUseLogScale(!useLogScale)
+  const onProjectSelect = (selected) => {
+    let index = subsetOfProjects.indexOf(selected)
+    if (index < 0) {
+      subsetOfProjects.push(selected)
+    } else {
+      subsetOfProjects.splice(index, 1)
+    }
+
+    setSubsetOfProjects([...subsetOfProjects])
   }
 
   useEffect(() => {
     if (status == "success" && data) {
+      let supek_cpu = new Set()
+      let supek_gpu = new Set()
+      let padobran = new Set()
       if ("supek" in data) {
-        let supek_cpu = new Set(...data["supek"]["cpuh"].map(item => Object.keys(item)))
-        let supek_gpu = new Set(...data["supek"]["gpuh"].map(item => Object.keys(item)))
+        supek_cpu = new Set(...data["supek"]["cpuh"].map(item => Object.keys(item)))
+        supek_gpu = new Set(...data["supek"]["gpuh"].map(item => Object.keys(item)))
         supek_cpu.delete("month")
         supek_gpu.delete("month")
-        setSupekCPUProjects(Array.from(supek_cpu).sort())
-        setSupekGPUProjects(Array.from(supek_gpu).sort())
+        if (subsetOfProjects.length > 0) {
+          setSupekCPUProjects([...supek_cpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+          setSupekGPUProjects([...supek_gpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+        } else {
+          setSupekCPUProjects(Array.from(supek_cpu).sort())
+          setSupekGPUProjects(Array.from(supek_gpu).sort())
+        }
       }
 
       if ("padobran" in data) {
-        let padobran = new Set(...data["padobran"]["cpuh"].map(item => Object.keys(item)))
+        padobran = new Set(...data["padobran"]["cpuh"].map(item => Object.keys(item)))
         padobran.delete("month")
         setPadobranProjects(Array.from(padobran).sort())
       }
+
+      setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran])).sort())
     }
-  }, [status, data])
+  }, [status, data, subsetOfProjects])
+
+  useEffect(() => {
+  }, [subsetOfProjects])
 
   if (error) {
     toast.error(
@@ -67,78 +92,106 @@ const MyAccounting = () => {
         </Row>
         <div className="d-flex align-items-center justify-content-between">
           <div></div>
-          <Button
-            color="secondary"
-            onClick={ toggleScale }
-          >
-            { useLogScale ? "Linear scale" : "Log scale" }
-          </Button>
+          <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
+            <DropdownToggle caret>Projekti</DropdownToggle>
+            <DropdownMenu>
+              {
+                listProjects.map((project) => 
+                  <DropdownItem key={ project } toggle={ false }>
+                    <Input 
+                      type="checkbox" 
+                      className="mr-1" 
+                      checked={ subsetOfProjects.indexOf(project) >= 0 } 
+                      onClick={ () => onProjectSelect(project) }
+                    />
+                    <Label check>{ project }</Label>
+                  </DropdownItem>
+                )
+              }
+            </DropdownMenu>
+          </Dropdown>
         </div>
         {
           (supekCPUProjects.length > 0 || supekGPUProjects.length > 0) &&
-            <Row>
-              <h3>Supek</h3> 
-              {
-                supekCPUProjects.length > 0 &&
-                  <Col md={6}>
-                    <h4>CPUH</h4>
-                    <BarChart
-                      width={ 600 }
-                      height={ 300 }
-                      data={ data["supek"]["cpuh"] }
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5
-                      }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" />
-                      {
-                        useLogScale ?
-                          <YAxis scale="log" domain={[1, "dataMax"]} />
-                        :
-                          <YAxis />
-                      }
-                      <Legend iconSize={10} />
-                      {
-                        supekCPUProjects.map((proj, index) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[index] }} dataKey={ proj } fill={ colors[index] } />)
-                      }
-                    </BarChart>
-                  </Col>
-              }
-              {
-                supekGPUProjects.length > 0 &&
-                  <Col md={6}>
-                    <h4>GPUH</h4>
-                    <BarChart
-                      width={ 600 }
-                      height={ 300 }
-                      data={ data["supek"]["gpuh"] }
-                      margin={{
-                        top: 5,
-                        right: 30,
-                        left: 20,
-                        bottom: 5
-                      }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="month" />
-                      {
-                        useLogScale ?
-                          <YAxis scale="log" domain={[1, "dataMax"]} />
-                        :
-                          <YAxis />
-                      }
-                      <Legend iconSize={10} />
-                      {
-                        supekGPUProjects.map((proj, index) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[index], fontSize: 10 }} fill={ colors[index] } />)
-                      }
-                    </BarChart>
-                  </Col>
-              }
-            </Row>
+            <>
+              <Row>
+                <h3>Supek</h3> 
+                {
+                  supekCPUProjects.length > 0 &&
+                    <Col md={6}>
+                      <h4>CPUH</h4>
+                      <Button
+                        color="secondary"
+                        size="sm"
+                        onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
+                      >
+                        { useLogScaleSupekCPU ? "Linear scale" : "Log scale" }
+                      </Button>
+                      <BarChart
+                        width={ 600 }
+                        height={ 300 }
+                        data={ data["supek"]["cpuh"] }
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        {
+                          useLogScaleSupekCPU ?
+                            <YAxis scale="log" domain={[1, "dataMax"]} />
+                          :
+                            <YAxis />
+                        }
+                        <Legend iconSize={10} />
+                        {
+                          supekCPUProjects.map((proj, index) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[index] }} dataKey={ proj } fill={ colors[index] } />)
+                        }
+                      </BarChart>
+                    </Col>
+                }
+                {
+                  supekGPUProjects.length > 0 &&
+                    <Col md={6}>
+                      <h4>GPUH</h4>
+                      <Button
+                        color="secondary"
+                        size="sm"
+                        onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
+                      >
+                        { useLogScaleSupekGPU ? "Linear scale" : "Log scale" }
+                      </Button>
+                      <BarChart
+                        width={ 600 }
+                        height={ 300 }
+                        data={ data["supek"]["gpuh"] }
+                        margin={{
+                          top: 5,
+                          right: 30,
+                          left: 20,
+                          bottom: 5
+                        }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        {
+                          useLogScaleSupekGPU ?
+                            <YAxis scale="log" domain={[1, "dataMax"]} />
+                          :
+                            <YAxis />
+                        }
+                        <Legend iconSize={10} />
+                        {
+                          supekGPUProjects.map((proj, index) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[index], fontSize: 10 }} fill={ colors[index] } />)
+                        }
+                      </BarChart>
+                    </Col>
+                }
+              </Row>
+            </>
         }
         {
           padobranProjects.length > 0 &&
@@ -146,6 +199,13 @@ const MyAccounting = () => {
               <h3>Padobran</h3>
               <Col md={6}>
                 <h4>CPUH</h4>
+                <Button
+                  color="secondary"
+                  size="sm"
+                  onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
+                >
+                  { useLogScalePadobran ? "Linear scale" : "Log scale" }
+                </Button>
                 <BarChart
                   width={ 600 }
                   height={ 300 }
@@ -160,7 +220,7 @@ const MyAccounting = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   {
-                    useLogScale ?
+                    useLogScalePadobran ?
                       <YAxis scale="log" domain={[1, "dataMax"]} />
                     :
                       <YAxis />
