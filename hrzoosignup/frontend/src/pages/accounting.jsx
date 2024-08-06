@@ -142,9 +142,9 @@ const MyAccounting = () => {
                         <XAxis dataKey="month" />
                         {
                           useLogScaleSupekCPU ?
-                            <YAxis scale="log" domain={[1, "dataMax"]} />
+                            <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
                           :
-                            <YAxis />
+                            <YAxis padding={{ top: 10 }} />
                         }
                         <Legend iconSize={10} />
                         {
@@ -179,9 +179,9 @@ const MyAccounting = () => {
                         <XAxis dataKey="month" />
                         {
                           useLogScaleSupekGPU ?
-                            <YAxis scale="log" domain={[1, "dataMax"]} />
+                            <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
                           :
-                            <YAxis />
+                            <YAxis padding={{ top: 10 }} />
                         }
                         <Legend iconSize={10} />
                         {
@@ -221,9 +221,9 @@ const MyAccounting = () => {
                   <XAxis dataKey="month" />
                   {
                     useLogScalePadobran ?
-                      <YAxis scale="log" domain={[1, "dataMax"]} />
+                      <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
                     :
-                      <YAxis />
+                      <YAxis padding={{ top: 10 }} />
                   }
                   <Legend iconSize={10} />
                   {
