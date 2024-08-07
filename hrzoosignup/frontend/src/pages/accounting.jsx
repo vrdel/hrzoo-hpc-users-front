@@ -4,8 +4,10 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { fetchAccountingData } from "Api/accounting";
 import { Button, Input, Col,Row, Label, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
 import { PageTitle } from 'Components/PageTitle';
-import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Legend } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Bar, BarChart } from 'recharts';
 import { toast } from 'react-toastify';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquare } from "@fortawesome/free-solid-svg-icons";
 
 
 const colors = ['#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b', '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b','#fcaf26', '#b4bbc0', '#929597', '#606365']
@@ -146,9 +148,8 @@ const MyAccounting = () => {
                           :
                             <YAxis padding={{ top: 10 }} />
                         }
-                        <Legend iconSize={10} />
                         {
-                          supekCPUProjects.map((proj, index) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[index] }} dataKey={ proj } fill={ colors[index] } />)
+                          supekCPUProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
                         }
                       </BarChart>
                     </Col>
@@ -183,9 +184,8 @@ const MyAccounting = () => {
                           :
                             <YAxis padding={{ top: 10 }} />
                         }
-                        <Legend iconSize={10} />
                         {
-                          supekGPUProjects.map((proj, index) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[index], fontSize: 10 }} fill={ colors[index] } />)
+                          supekGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
                         }
                       </BarChart>
                     </Col>
@@ -225,11 +225,22 @@ const MyAccounting = () => {
                     :
                       <YAxis padding={{ top: 10 }} />
                   }
-                  <Legend iconSize={10} />
                   {
-                    padobranProjects.map((proj, index) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[index], fontSize: 10 }} fill={ colors[index] } />)
+                    padobranProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
                   }
                 </BarChart>
+              </Col>
+              <Col md={ 6 } className="d-flex align-items-center justify-content-left">
+                <div>
+                  {
+                    listProjects.map((proj, index) => (
+                      <p key={ proj }>
+                        <FontAwesomeIcon icon={ faSquare } key={ proj } className="mt-1" color={ colors[index] } />
+                        { " " }{ proj }
+                      </p>
+                    ))
+                  }
+                </div>
               </Col>
             </Row>
         }
