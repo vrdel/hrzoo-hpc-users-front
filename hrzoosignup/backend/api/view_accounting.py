@@ -265,3 +265,13 @@ class ResourceUsageAPI(APIView):
 
         else:
             return Response(status=status.HTTP_201_CREATED)
+
+    def get(self, request):
+        resource = request.query_params.get("resource")
+
+        data = models.ResourceUsage.objects.filter(resource_name=resource)
+        jobids = sorted(
+            list(set(data.values_list("accounting_record__jobid", flat=True)))
+        )
+
+        return Response(jobids)

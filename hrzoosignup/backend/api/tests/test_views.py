@@ -492,3 +492,20 @@ class ResourceUsageAPITests(TestCase):
             "cpuh": 0.05,
             "gpuh": 0
         })
+
+    def test_get_jobids(self):
+        request1 = self.client.get(
+            "/api/v1/accounting/records?resource=supek",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"}
+        )
+        request2 = self.client.get(
+            "/api/v1/accounting/records?resource=padobran",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"}
+        )
+        self.assertEqual(request1.status_code, status.HTTP_200_OK)
+        self.assertEqual(request2.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            [r for r in request1.data],
+            ["1", "2", "3", "4", "5", "6"]
+        )
+        self.assertEqual([r for r in request2.data], ["12843"])
