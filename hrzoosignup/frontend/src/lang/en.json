@@ -391,6 +391,10 @@
     "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userlist-minibutton-msg-3"
   },
+   "8AVSwM": {
+    "defaultMessage": "Usage",
+    "description": "linktitle-accounting"
+  },
   "8TkWjh": {
     "defaultMessage": "New scientific domain",
     "description": "scientific-domain-new-domain"
@@ -1010,6 +1014,10 @@
   "M9jPUL": {
     "defaultMessage": "Error while copying public key to clipboard",
     "description": "publickeys-list-keycopy-fail"
+  },
+  "MEimbx": {
+    "defaultMessage": "Usage",
+    "description": "navlinks-accounting"
   },
   "MGR8er": {
     "defaultMessage": "Requests management",

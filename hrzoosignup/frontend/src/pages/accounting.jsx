@@ -8,6 +8,10 @@ import { XAxis, YAxis, CartesianGrid, Bar, BarChart } from 'recharts';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
+import { SharedData } from "Pages/root";
+import { useIntl } from 'react-intl'
+import { defaultUnAuthnRedirect } from 'Config/default-redirect';
+import { useNavigate } from "react-router-dom";
 
 
 const colors = ['#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b', '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b','#fcaf26', '#b4bbc0', '#929597', '#606365']
@@ -24,11 +28,22 @@ const MyAccounting = () => {
   const [listProjects, setListProjects] = useState([])
   const [subsetOfProjects, setSubsetOfProjects] = useState([])
   const [isOpen, setIsOpen] = useState(false)
+  const { LinkTitles } = useContext(SharedData)
+	const [pageTitle, setPageTitle] = useState(undefined)
+
+  const intl = useIntl()
+  let navigate = useNavigate()
 
   const { status, data, error } = useQuery({
     queryKey: ["graph-data", userDetails.username],
     queryFn: () => fetchAccountingData()
   })
+
+  useEffect(() => {
+    setPageTitle(LinkTitles(location.pathname, intl))
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [location.pathname, intl, status])
 
   const onProjectSelect = (selected) => {
     let index = subsetOfProjects.indexOf(selected)
@@ -94,7 +109,7 @@ const MyAccounting = () => {
     return (
       <>
         <Row>
-          <PageTitle pageTitle="graphs">
+          <PageTitle pageTitle={ pageTitle }>
             <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
               <DropdownToggle caret>Projekti</DropdownToggle>
               <DropdownMenu>

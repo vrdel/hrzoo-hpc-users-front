@@ -86,6 +86,10 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Popis aplikacija dostupnih na klasteru',
         description: 'linktitle-software'
       }),
+    [url_ui_prefix + '/accounting']: intl.formatMessage({
+      defaultMessage: 'Iskorištenje resursa',
+      description: "linktitle-accounting"
+    }),
   }
 
   if (loc.includes('/my-requests/') && loc.match(/[%\w.\d-_]+$/)) {
