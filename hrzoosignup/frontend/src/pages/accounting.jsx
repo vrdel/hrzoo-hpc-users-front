@@ -94,29 +94,27 @@ const MyAccounting = () => {
     return (
       <>
         <Row>
-          <PageTitle pageTitle="graphs" />
+          <PageTitle pageTitle="graphs">
+            <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
+              <DropdownToggle caret>Projekti</DropdownToggle>
+              <DropdownMenu>
+                {
+                  listProjects.map((project) => 
+                    <DropdownItem key={ project } toggle={ false }>
+                      <Input 
+                        type="checkbox" 
+                        className="mr-1" 
+                        checked={ subsetOfProjects.indexOf(project) >= 0 } 
+                        onClick={ () => onProjectSelect(project) }
+                      />
+                      <Label check>{ project }</Label>
+                    </DropdownItem>
+                  )
+                }
+              </DropdownMenu>
+            </Dropdown>
+          </PageTitle>
         </Row>
-        <div className="d-flex align-items-center justify-content-between">
-          <div></div>
-          <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
-            <DropdownToggle caret>Projekti</DropdownToggle>
-            <DropdownMenu>
-              {
-                listProjects.map((project) => 
-                  <DropdownItem key={ project } toggle={ false }>
-                    <Input 
-                      type="checkbox" 
-                      className="mr-1" 
-                      checked={ subsetOfProjects.indexOf(project) >= 0 } 
-                      onClick={ () => onProjectSelect(project) }
-                    />
-                    <Label check>{ project }</Label>
-                  </DropdownItem>
-                )
-              }
-            </DropdownMenu>
-          </Dropdown>
-        </div>
         <h3>Supek</h3> 
         <Row>
           <Col md={6}>
