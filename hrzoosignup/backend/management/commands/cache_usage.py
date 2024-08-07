@@ -20,5 +20,6 @@ class Command(BaseCommand):
         cache.delete_many(users)
 
         cache.set_many({
-            user: usage4user(user) for user in users if usage4user(user)
+            f"usage_{user}": usage4user(user) for user in users
+            if usage4user(user)
         }, timeout=None)

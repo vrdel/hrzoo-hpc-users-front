@@ -123,7 +123,7 @@ class ResourceUsage(APIView):
     def get(self, request):
         user = request.user
 
-        cached_data = cache.get(user.person_username)
+        cached_data = cache.get(f"usage_{user.person_username}")
 
         if cached_data:
             return Response(data=cached_data, status=status.HTTP_200_OK)
