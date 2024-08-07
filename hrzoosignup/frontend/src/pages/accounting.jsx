@@ -9,12 +9,22 @@ import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { SharedData } from "Pages/root";
-import { useIntl } from 'react-intl'
+import { useIntl, FormattedMessage } from 'react-intl'
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { useNavigate } from "react-router-dom";
 
 
 const colors = ['#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b', '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b','#fcaf26', '#b4bbc0', '#929597', '#606365']
+
+const linearScale = <FormattedMessage 
+  description="myaccounting-linearscale-button"
+  defaultMessage="Linearna skala"
+/>
+
+const logScale = <FormattedMessage
+  description="myaccounting-logscale-button"
+  defaultMessage="Log skala"
+/>
 
 
 const MyAccounting = () => {
@@ -111,7 +121,12 @@ const MyAccounting = () => {
         <Row>
           <PageTitle pageTitle={ pageTitle }>
             <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
-              <DropdownToggle caret>Projekti</DropdownToggle>
+              <DropdownToggle caret>
+                <FormattedMessage
+                  description="myaccounting-projects-button"
+                  defaultMessage="Projekti"
+                />
+              </DropdownToggle>
               <DropdownMenu>
                 {
                   listProjects.map((project) => 
@@ -139,7 +154,7 @@ const MyAccounting = () => {
               size="sm"
               onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
             >
-              { useLogScaleSupekCPU ? "Linear scale" : "Log scale" }
+              { useLogScaleSupekCPU ? linearScale : logScale }
             </Button>
             <BarChart
               width={ 600 }
@@ -172,7 +187,7 @@ const MyAccounting = () => {
               size="sm"
               onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
             >
-              { useLogScaleSupekGPU ? "Linear scale" : "Log scale" }
+              { useLogScaleSupekGPU ? linearScale : logScale }
             </Button>
             <BarChart
               width={ 600 }
@@ -208,7 +223,7 @@ const MyAccounting = () => {
               size="sm"
               onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
             >
-              { useLogScalePadobran ? "Linear scale" : "Log scale" }
+              { useLogScalePadobran ? linearScale : logScale }
             </Button>
             <BarChart
               width={ 600 }

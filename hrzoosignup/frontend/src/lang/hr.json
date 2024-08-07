@@ -623,6 +623,10 @@
     "defaultMessage": "Dobrodošli",
     "description": "navigation-welcome"
   },
+  "CqCspj": {
+    "defaultMessage": "Projekti",
+    "description": "myaccounting-projects-button"
+  },
   "Crgy+E": {
     "defaultMessage": "Modulefile nije bilo moguće izbrisati:",
     "description": "software-toast-del-fail"
@@ -682,6 +686,10 @@
   "DZE+2s": {
     "defaultMessage": "Uredi projekt",
     "description": "managereq-change-buttonlabel-edit-1"
+  },
+  "DiKKIM": {
+    "defaultMessage": "Log skala",
+    "description": "myaccounting-logscale-button"
   },
   "Djq0Io": {
     "defaultMessage": "Osoba:",
@@ -990,6 +998,10 @@
   "LK4ilW": {
     "defaultMessage": "Interdisciplinarne društvene znanosti",
     "description": "science-field-50"
+  },
+  "LLTNWB": {
+    "defaultMessage": "Linearna skala",
+    "description": "myaccounting-linearscale-button"
   },
   "LSB0GB": {
     "defaultMessage": "Pri odbijanju projekta morate se izjasniti o razlogu.",

@@ -623,6 +623,10 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "CqCspj": {
+    "defaultMessage": "Projects",
+    "description": "myaccounting-projects-button"
+  },
   "Crgy+E": {
     "defaultMessage": "Modulefile could not be deleted:",
     "description": "software-toast-del-fail"
@@ -682,6 +686,10 @@
   "DZE+2s": {
     "defaultMessage": "Edit project",
     "description": "managereq-change-buttonlabel-edit-1"
+  },
+  "DiKKIM": {
+    "defaultMessage": "Log scale",
+    "description": "myaccounting-logscale-button"
   },
   "Djq0Io": {
     "defaultMessage": "Person:",
@@ -990,6 +998,10 @@
   "LK4ilW": {
     "defaultMessage": "Interdisciplinary Humanities",
     "description": "science-field-50"
+  },
+  "LLTNWB": {
+    "defaultMessage": "Linear scale",
+    "description": "myaccounting-linearscale-button"
   },
   "LSB0GB": {
     "defaultMessage": "When denying project, you must state the reason.",
