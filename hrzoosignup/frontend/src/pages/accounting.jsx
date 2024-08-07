@@ -149,13 +149,16 @@ const MyAccounting = () => {
         <Row>
           <Col md={6}>
             <h4>CPUH</h4>
-            <Button
-              color="secondary"
-              size="sm"
-              onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
-            >
-              { useLogScaleSupekCPU ? linearScale : logScale }
-            </Button>
+            {
+              supekCPUProjects.length > 0 &&
+                <Button
+                  color="secondary"
+                  size="sm"
+                  onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
+                >
+                  { useLogScaleSupekCPU ? linearScale : logScale }
+                </Button>
+            }
             <BarChart
               width={ 600 }
               height={ 300 }
@@ -182,13 +185,16 @@ const MyAccounting = () => {
           </Col>
           <Col md={6}>
             <h4>GPUH</h4>
-            <Button
-              color="secondary"
-              size="sm"
-              onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
-            >
-              { useLogScaleSupekGPU ? linearScale : logScale }
-            </Button>
+            {
+              supekGPUProjects.length > 0 &&
+                <Button
+                  color="secondary"
+                  size="sm"
+                  onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
+                >
+                  { useLogScaleSupekGPU ? linearScale : logScale }
+                </Button>
+            }
             <BarChart
               width={ 600 }
               height={ 300 }
@@ -218,13 +224,16 @@ const MyAccounting = () => {
           <h3>Padobran</h3>
           <Col md={6}>
             <h4>CPUH</h4>
-            <Button
-              color="secondary"
-              size="sm"
-              onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
-            >
-              { useLogScalePadobran ? linearScale : logScale }
-            </Button>
+            {
+              padobranProjects.length > 0 &&
+                <Button
+                  color="secondary"
+                  size="sm"
+                  onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
+                >
+                  { useLogScalePadobran ? linearScale : logScale }
+                </Button>
+            }
             <BarChart
               width={ 600 }
               height={ 300 }
