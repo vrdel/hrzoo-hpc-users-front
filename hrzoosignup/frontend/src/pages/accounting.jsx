@@ -63,7 +63,11 @@ const MyAccounting = () => {
       if ("padobran" in data) {
         padobran = new Set(...data["padobran"]["cpuh"].map(item => Object.keys(item)))
         padobran.delete("month")
-        setPadobranProjects(Array.from(padobran).sort())
+        if (subsetOfProjects.length > 0) {
+          setPadobranProjects([...padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+        } else {
+          setPadobranProjects(Array.from(padobran).sort())
+        }
       }
 
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran])).sort())
