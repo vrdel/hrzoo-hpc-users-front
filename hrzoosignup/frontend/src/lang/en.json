@@ -391,6 +391,10 @@
     "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userlist-minibutton-msg-3"
   },
+   "8AVSwM": {
+    "defaultMessage": "Usage",
+    "description": "linktitle-accounting"
+  },
   "8TkWjh": {
     "defaultMessage": "New scientific domain",
     "description": "scientific-domain-new-domain"
@@ -619,6 +623,10 @@
     "defaultMessage": "Welcome",
     "description": "navigation-welcome"
   },
+  "CqCspj": {
+    "defaultMessage": "Projects",
+    "description": "myaccounting-projects-button"
+  },
   "Crgy+E": {
     "defaultMessage": "Modulefile could not be deleted:",
     "description": "software-toast-del-fail"
@@ -678,6 +686,10 @@
   "DZE+2s": {
     "defaultMessage": "Edit project",
     "description": "managereq-change-buttonlabel-edit-1"
+  },
+  "DiKKIM": {
+    "defaultMessage": "Log scale",
+    "description": "myaccounting-logscale-button"
   },
   "Djq0Io": {
     "defaultMessage": "Person:",
@@ -987,6 +999,10 @@
     "defaultMessage": "Interdisciplinary Humanities",
     "description": "science-field-50"
   },
+  "LLTNWB": {
+    "defaultMessage": "Linear scale",
+    "description": "myaccounting-linearscale-button"
+  },
   "LSB0GB": {
     "defaultMessage": "When denying project, you must state the reason.",
     "description": "managereq-change-toast-msg3"
@@ -1010,6 +1026,10 @@
   "M9jPUL": {
     "defaultMessage": "Error while copying public key to clipboard",
     "description": "publickeys-list-keycopy-fail"
+  },
+  "MEimbx": {
+    "defaultMessage": "Usage",
+    "description": "navlinks-accounting"
   },
   "MGR8er": {
     "defaultMessage": "Requests management",

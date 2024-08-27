@@ -8,6 +8,7 @@ app_name = 'backend'
 router = routers.DefaultRouter()
 
 urlpatterns = [
+    path("accounting/records", views.ResourceUsage.as_view(), name="resourceusage"),
     path("active-users/", views.UsersInfo.as_view(), name="users"),
     path("inactive-users/", views.UsersInfoInactive.as_view(), name="inactiveusers"),
     path("users/<str:username>", views.UserInfo.as_view(), name="specificuser"),

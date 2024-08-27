@@ -1,9 +1,12 @@
-from backend import serializers
+import copy
+import datetime
+import json
+
+import pandas as pd
 from backend import models
-
-from django.db.models import Q
 from django.conf import settings
-
+from django.db.models import Q
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -131,3 +134,144 @@ class AccountingUserProjectAPI(APIView):
         else:
             projects = models.Project.objects.all().filter(state__name__in=['approve', 'expire', 'extend'])
             return Response(self._generate_response(projects), status=status.HTTP_200_OK)
+
+
+class ResourceUsageAPI(APIView):
+    permission_classes = (HasAPIKey,)
+
+    @staticmethod
+    def _calculate_processor_hour(data, key):
+        try:
+            return round(int(data[key]) * int(data["walltime"]) / 3600., 4)
+
+        except ValueError:
+            return 0
+
+    def _calculate_gpuh(self, data):
+        return self._calculate_processor_hour(data=data, key="ngpus")
+
+    def _calculate_cpuh(self, data):
+        return self._calculate_processor_hour(data=data, key="ncpus")
+
+    @staticmethod
+    def _prepare_job_data(data):
+        job_data = copy.deepcopy(data)
+
+        job_data.pop("project")
+        job_data.pop("user")
+        job_data.pop("end_time")
+
+        return job_data.to_json()
+
+    def post(self, request):
+        resource = request.query_params.get("resource")
+
+        data = request.data["usage"]
+
+        error_response = dict()
+        status_code = status.HTTP_201_CREATED
+        missing_users = set()
+        missing_projects = set()
+        df = pd.DataFrame.from_records(data)
+        users = df["user"].unique()
+        projects = df["project"].unique()
+
+        users_dict = dict()
+        for user in users:
+            try:
+                users_dict.update({
+                    user: models.User.objects.get(person_username=user)
+                })
+
+            except models.User.DoesNotExist:
+                missing_users.add(user)
+                continue
+
+        projects_dict = dict()
+        for project in projects:
+            try:
+                projects_dict.update({
+                    project: models.Project.objects.get(identifier=project)
+                })
+
+            except models.Project.DoesNotExist:
+                missing_projects.add(project)
+                continue
+
+        df["cpuh"] = df.apply(lambda row: self._calculate_cpuh(row), axis=1)
+        df["gpuh"] = df.apply(lambda row: self._calculate_gpuh(row), axis=1)
+        df["end_time"] = df.apply(
+            lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
+                int(row["end_time"])
+            ), timezone=timezone.get_current_timezone()),
+            axis=1
+        )
+        df["job_data"] = df.apply(
+            lambda row: self._prepare_job_data(row), axis=1
+        )
+
+        df = df[
+            (~df.user.isin(missing_users)) *
+            (~df.project.isin(missing_projects))
+        ]
+
+        model_instances = [
+            models.ResourceUsage(
+                user=users_dict[record["user"]],
+                project=projects_dict[record["project"]],
+                end_time=record["end_time"],
+                resource_name=resource,
+                accounting_record=json.loads(record["job_data"])
+            ) for record in df.to_dict("records")
+        ]
+
+        models.ResourceUsage.objects.bulk_create(model_instances)
+
+        if len(missing_projects) > 0:
+            status_code = status.HTTP_404_NOT_FOUND
+            if len(missing_projects) > 1:
+                noun = "Projects"
+
+            else:
+                noun = "Project"
+
+            error_response = {
+                "status": {
+                    "code": status_code,
+                    "message":
+                        f"{noun} {', '.join(sorted(list(missing_projects)))} "
+                        f"not found"
+                }
+            }
+
+        if len(missing_users) > 0:
+            status_code = status.HTTP_404_NOT_FOUND
+            if len(missing_users) > 1:
+                noun = "Users"
+            else:
+                noun = "User"
+
+            error_response = {
+                "status": {
+                    "code": status_code,
+                    "message":
+                        f"{noun} "
+                        f"{', '.join(sorted(list(missing_users)))} not found"
+                }
+            }
+
+        if error_response:
+            return Response(error_response, status=status_code)
+
+        else:
+            return Response(status=status.HTTP_201_CREATED)
+
+    def get(self, request):
+        resource = request.query_params.get("resource")
+
+        data = models.ResourceUsage.objects.filter(resource_name=resource)
+        jobids = sorted(
+            list(set(data.values_list("accounting_record__jobid", flat=True)))
+        )
+
+        return Response(jobids)
