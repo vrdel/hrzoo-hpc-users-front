@@ -42,7 +42,8 @@ setup(name=NAME,
         'djangosaml2',
         'psycopg2-binary',
         'pymemcache',
-        'unidecode'
+        'unidecode',
+        'pandas==2.2.2'
       ],
       scripts=['bin/hzsi-db', 'bin/hzsi-genseckey', 'bin/hzsi-manage'],
       data_files=[
