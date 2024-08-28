@@ -6,7 +6,7 @@ module.exports = {
   entry: "./src/main.jsx",
   mode: "development",
   output: {
-    publicPath: 'http://0.0.0.0:3001/',
+    publicPath: 'http://127.0.0.1:3001/',
   },
   devServer: {
     open: false,
