@@ -72,8 +72,8 @@ const MyAccounting = () => {
       let supek_gpu = new Set()
       let padobran = new Set()
       if ("supek" in data) {
-        supek_cpu = new Set(...data["supek"]["cpuh"].map(item => Object.keys(item)))
-        supek_gpu = new Set(...data["supek"]["gpuh"].map(item => Object.keys(item)))
+        supek_cpu = new Set(data["supek"]["cpuh"].map(item => Object.keys(item)).flat())
+        supek_gpu = new Set(data["supek"]["gpuh"].map(item => Object.keys(item)).flat())
         supek_cpu.delete("month")
         supek_gpu.delete("month")
         if (subsetOfProjects.length > 0) {
@@ -86,7 +86,7 @@ const MyAccounting = () => {
       }
 
       if ("padobran" in data) {
-        padobran = new Set(...data["padobran"]["cpuh"].map(item => Object.keys(item)))
+        padobran = new Set(data["padobran"]["cpuh"].map(item => Object.keys(item)).flat())
         padobran.delete("month")
         if (subsetOfProjects.length > 0) {
           setPadobranProjects([...padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
@@ -162,7 +162,7 @@ const MyAccounting = () => {
             <BarChart
               width={ 600 }
               height={ 300 }
-              data={ data["supek"]["cpuh"] }
+              data={ "supek" in data ? data["supek"]["cpuh"] : [] }
               margin={{
                 top: 5,
                 right: 30,
@@ -198,7 +198,7 @@ const MyAccounting = () => {
             <BarChart
               width={ 600 }
               height={ 300 }
-              data={ data["supek"]["gpuh"] }
+              data={ "supek" in data ? data["supek"]["gpuh"] : [] }
               margin={{
                 top: 5,
                 right: 30,
