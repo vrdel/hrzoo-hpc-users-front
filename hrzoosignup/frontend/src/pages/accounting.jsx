@@ -280,8 +280,6 @@ const MyAccounting = () => {
               </div>
             </Col>
           </Row>
-          {
-          }
         </>
       )
   }
