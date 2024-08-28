@@ -94,7 +94,6 @@ const MyAccounting = () => {
           setPadobranProjects(Array.from(padobran).sort())
         }
       }
-      console.log(padobranProjects)
 
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran])).sort())
     }
