@@ -89,7 +89,7 @@ const MyAccounting = () => {
         padobran = new Set(data["padobran"]["cpuh"].map(item => Object.keys(item)).flat())
         padobran.delete("month")
         if (subsetOfProjects.length > 0) {
-          setPadobranProjects([padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+          setPadobranProjects([...padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
         } else {
           setPadobranProjects(Array.from(padobran).sort())
         }
@@ -98,9 +98,6 @@ const MyAccounting = () => {
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran])).sort())
     }
   }, [status, data, subsetOfProjects])
-
-  useEffect(() => {
-  }, [subsetOfProjects])
 
   if (error) {
     toast.error(
