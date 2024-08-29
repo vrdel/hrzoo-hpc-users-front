@@ -117,7 +117,10 @@ const MyAccounting = () => {
       return (
         <Row className="mt-3 mb-3">
           <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-            Nema zabilježenog iskorištenja resursa
+            <FormattedMessage
+              description="myaccounting-emptygraphs"
+              defaultMessage="Nema zabilježenog iskorištenja resursa"
+            />
           </Col>
         </Row>
       )
