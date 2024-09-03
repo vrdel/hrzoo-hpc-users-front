@@ -89,7 +89,7 @@ const MyAccounting = () => {
         padobran = new Set(data["padobran"]["cpuh"].map(item => Object.keys(item)).flat())
         padobran.delete("month")
         if (subsetOfProjects.length > 0) {
-          setPadobranProjects([padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+          setPadobranProjects([...padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
         } else {
           setPadobranProjects(Array.from(padobran).sort())
         }
@@ -98,9 +98,6 @@ const MyAccounting = () => {
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran])).sort())
     }
   }, [status, data, subsetOfProjects])
-
-  useEffect(() => {
-  }, [subsetOfProjects])
 
   if (error) {
     toast.error(
@@ -120,7 +117,10 @@ const MyAccounting = () => {
       return (
         <Row className="mt-3 mb-3">
           <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-            Nema zabilježenog iskorištenja resursa
+            <FormattedMessage
+              description="myaccounting-emptygraphs"
+              defaultMessage="Nema zabilježenog iskorištenja resursa"
+            />
           </Col>
         </Row>
       )

@@ -1711,6 +1711,10 @@
     "defaultMessage": "Udjeli znanstvenih polja zajedno u znanstvenom području moraju biti 100%.",
     "description": "domain-fields-ratio-fields"
   },
+  "gbG7Wl": {
+    "defaultMessage": "Nema zabilježenog iskorištenja resursa",
+    "description": "myaccounting-emptygraphs"
+  },
   "glIPfH": {
     "defaultMessage": "Popis svih korisnika koji nisu ni na jednom aktivnom projektu",
     "description": "linktitle-usersinactive"

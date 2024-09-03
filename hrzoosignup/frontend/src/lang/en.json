@@ -1711,6 +1711,10 @@
     "defaultMessage": "Ratio of scientific fields within scientific domain must total 100%.",
     "description": "domain-fields-ratio-fields"
   },
+  "gbG7Wl": {
+    "defaultMessage": "No usage data",
+    "description": "myaccounting-emptygraphs"
+  },
   "glIPfH": {
     "defaultMessage": "List of users not active on any project",
     "description": "linktitle-usersinactive"
