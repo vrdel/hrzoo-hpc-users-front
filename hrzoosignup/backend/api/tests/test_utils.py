@@ -23,7 +23,7 @@ def create_mock_db():
     project1 = models.Project.objects.create(
         identifier="project-1",
         name="Project name 1",
-        institute="Sektor za gubljenje vremena",
+        institute="Fakultet elektrotehnike i računarstva",
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
@@ -33,7 +33,7 @@ def create_mock_db():
     project2 = models.Project.objects.create(
         identifier="project-2",
         name="Project name 2",
-        institute="Sektor za gubljenje vremena",
+        institute="Fakultet elektrotehnike i računarstva",
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
@@ -43,7 +43,7 @@ def create_mock_db():
     project3 = models.Project.objects.create(
         identifier="project-3",
         name="Project name 3",
-        institute="Sektor za gubljenje vremena",
+        institute="Fakultet elektrotehnike i računarstva",
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
@@ -53,7 +53,7 @@ def create_mock_db():
     project4 = models.Project.objects.create(
         identifier="project-4",
         name="Project name 4",
-        institute="Sektor za gubljenje vremena",
+        institute="Prirodoslovno-matematički fakultet, Zagreb",
         science_extrasoftware_help=False,
         is_active=True,
         state=state5,
@@ -61,20 +61,97 @@ def create_mock_db():
         date_end=datetime.date(2024, 6, 30)
     )
     user1 = models.User.objects.create_user(
-        username="user1",
-        person_username="user1",
+        username="adent",
+        person_uniqueid="user119@fer.hr",
+        croris_first_name="Arthur",
+        croris_last_name="Dent",
+        person_username="adent",
+        person_mail="arthur.dent@fer.hr",
+        person_institution="Fakultet elektrotehnike i računarstva",
         status=True,
         mailinglist_subscribe=True
     )
     user2 = models.User.objects.create_user(
-        username="user2",
-        person_username="user2",
+        username="tmcmilla",
+        person_uniqueid="user454@fer.hr",
+        croris_first_name="Tricia",
+        croris_last_name="McMillan",
+        person_username="tmcmilla",
+        person_mail="trillian@fer.hr",
+        person_institution="Fakultet elektrotehnike i računarstva",
         status=True,
         mailinglist_subscribe=True
     )
     models.User.objects.create_user(
-        username="user5",
-        person_username="user5",
+        username="fprefect",
+        person_uniqueid="user45@fer.hr",
+        croris_first_name="Ford",
+        croris_last_name="Prefect",
+        person_username="fprefect",
+        person_mail="ford.prefect@fer.hr",
+        person_institution="Fakultet elektrotehnike i računarstva",
+        status=True,
+        mailinglist_subscribe=True
+    )
+    models.User.objects.create_user(
+        username="zbeebleb",
+        person_uniqueid="user70@fer.hr",
+        croris_first_name="Zaphod",
+        croris_last_name="Beeblebrox",
+        person_username="zbeebleb",
+        person_mail="zb@fer.hr",
+        person_institution="Fakultet elektrotehnike i računarstva",
+        status=True,
+        mailinglist_subscribe=True
+    )
+    models.User.objects.create_user(
+        username="marvin",
+        person_uniqueid="user42@fer.hr",
+        croris_first_name="Marvin",
+        croris_last_name="The Paranoid Android",
+        person_username="marvin",
+        person_mail="marvin@fer.hr",
+        person_institution="Fakultet elektrotehnike i računarstva",
+        status=True,
+        mailinglist_subscribe=True
+    )
+    models.User.objects.create_user(
+        username="user348",
+        person_uniqueid="user348@fer.hr",
+        person_institution="Fakultet elektrotehnike i računarstva",
+        status=True,
+        mailinglist_subscribe=True
+    )
+    models.User.objects.create_user(
+        username="dtrotter",
+        person_uniqueid="delboy@pmf.hr",
+        croris_first_name="Derek",
+        croris_last_name="Trotter",
+        person_username="dtrotter",
+        person_mail="delboy@biol.pmf.hr",
+        person_institution="Prirodoslovno-matematički fakultet, Zagreb",
+        status=True,
+        mailinglist_subscribe=True
+    )
+    models.User.objects.create_user(
+        username="rtrotter",
+        person_uniqueid="dave@pmf.hr",
+        croris_first_name="Rodney",
+        croris_last_name="Trotter",
+        person_username="rtrotter",
+        person_mail="dave@biol.pmf.hr",
+        person_institution="Prirodoslovno-matematički fakultet, Zagreb",
+        status=True,
+        mailinglist_subscribe=True
+    )
+    models.User.objects.create_user(
+        username="atrotter",
+        person_uniqueid="uncle_albert@pmf.hr",
+        croris_first_name="Albert",
+        croris_last_name="Trotter",
+        person_username="atrotter",
+        person_mail="uncle.albert@biol.pmf.hr",
+        person_institution="Prirodoslovno-matematički fakultet, Zagreb",
         status=True,
         mailinglist_subscribe=True
     )
