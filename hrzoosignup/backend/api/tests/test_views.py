@@ -19,8 +19,8 @@ class ResourceUsageAPITests(TestCase):
 
         self.project1 = models.Project.objects.get(identifier="project-1")
         self.project2 = models.Project.objects.get(identifier="project-3")
-        self.user1 = models.User.objects.get(username="adent")
-        self.user2 = models.User.objects.get(username="tmcmilla")
+        self.user1 = models.User.objects.get(person_username="adent")
+        self.user2 = models.User.objects.get(person_username="tmcmilla")
 
         self.factory = APIRequestFactory()
 
