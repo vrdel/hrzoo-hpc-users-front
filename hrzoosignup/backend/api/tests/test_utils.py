@@ -1,5 +1,6 @@
 import datetime
 
+import pytz
 from backend import models
 from django.utils import timezone
 
@@ -20,6 +21,12 @@ def create_mock_db():
     state5 = models.State.objects.create(
         name="expire"
     )
+    role1 = models.Role.objects.create(
+        name="lead"
+    )
+    role2 = models.Role.objects.create(
+        name="collaborator"
+    )
     project1 = models.Project.objects.create(
         identifier="project-1",
         name="Project name 1",
@@ -28,7 +35,8 @@ def create_mock_db():
         is_active=True,
         state=state1,
         date_start=datetime.date(2023, 5, 1),
-        date_end=datetime.date(2024, 7, 31)
+        date_end=datetime.date(2024, 7, 31),
+        date_approved=datetime.datetime(2023, 5, 3, 0, 0, 0, tzinfo=pytz.UTC)
     )
     project2 = models.Project.objects.create(
         identifier="project-2",
@@ -38,7 +46,8 @@ def create_mock_db():
         is_active=True,
         state=state1,
         date_start=datetime.date(2024, 5, 7),
-        date_end=datetime.date(2025, 12, 31)
+        date_end=datetime.date(2025, 12, 31),
+        date_approved=datetime.datetime(2024, 6, 9, 12, 0, 13, tzinfo=pytz.UTC)
     )
     project3 = models.Project.objects.create(
         identifier="project-3",
@@ -48,7 +57,8 @@ def create_mock_db():
         is_active=True,
         state=state1,
         date_start=datetime.date(2024, 3, 1),
-        date_end=datetime.date(2025, 5, 1)
+        date_end=datetime.date(2025, 5, 1),
+        date_approved=datetime.datetime(2024, 3, 7, 14, 58, 13, tzinfo=pytz.UTC)
     )
     project4 = models.Project.objects.create(
         identifier="project-4",
@@ -58,10 +68,11 @@ def create_mock_db():
         is_active=True,
         state=state5,
         date_start=datetime.date(2024, 1, 1),
-        date_end=datetime.date(2024, 6, 30)
+        date_end=datetime.date(2024, 6, 30),
+        date_approved=datetime.datetime(2024, 2, 2, 15, 8, 28, tzinfo=pytz.UTC)
     )
     user1 = models.User.objects.create_user(
-        username="adent",
+        username="user119@fer.hr",
         person_uniqueid="user119@fer.hr",
         croris_first_name="Arthur",
         croris_last_name="Dent",
@@ -72,7 +83,7 @@ def create_mock_db():
         mailinglist_subscribe=True
     )
     user2 = models.User.objects.create_user(
-        username="tmcmilla",
+        username="user454@fer.hr",
         person_uniqueid="user454@fer.hr",
         croris_first_name="Tricia",
         croris_last_name="McMillan",
@@ -82,8 +93,8 @@ def create_mock_db():
         status=True,
         mailinglist_subscribe=True
     )
-    models.User.objects.create_user(
-        username="fprefect",
+    user3 = models.User.objects.create_user(
+        username="user45@fer.hr",
         person_uniqueid="user45@fer.hr",
         croris_first_name="Ford",
         croris_last_name="Prefect",
@@ -93,8 +104,8 @@ def create_mock_db():
         status=True,
         mailinglist_subscribe=True
     )
-    models.User.objects.create_user(
-        username="zbeebleb",
+    user4 = models.User.objects.create_user(
+        username="user70@fer.hr",
         person_uniqueid="user70@fer.hr",
         croris_first_name="Zaphod",
         croris_last_name="Beeblebrox",
@@ -104,8 +115,8 @@ def create_mock_db():
         status=True,
         mailinglist_subscribe=True
     )
-    models.User.objects.create_user(
-        username="marvin",
+    user5 = models.User.objects.create_user(
+        username="user42@fer.hr",
         person_uniqueid="user42@fer.hr",
         croris_first_name="Marvin",
         croris_last_name="The Paranoid Android",
@@ -115,15 +126,15 @@ def create_mock_db():
         status=True,
         mailinglist_subscribe=True
     )
-    models.User.objects.create_user(
-        username="user348",
+    user6 = models.User.objects.create_user(
+        username="user348@fer.hr",
         person_uniqueid="user348@fer.hr",
         person_institution="Fakultet elektrotehnike i računarstva",
         status=True,
         mailinglist_subscribe=True
     )
-    models.User.objects.create_user(
-        username="dtrotter",
+    user7 = models.User.objects.create_user(
+        username="delboy@pmf.hr",
         person_uniqueid="delboy@pmf.hr",
         croris_first_name="Derek",
         croris_last_name="Trotter",
@@ -133,8 +144,8 @@ def create_mock_db():
         status=True,
         mailinglist_subscribe=True
     )
-    models.User.objects.create_user(
-        username="rtrotter",
+    user8 = models.User.objects.create_user(
+        username="dave@pmf.hr",
         person_uniqueid="dave@pmf.hr",
         croris_first_name="Rodney",
         croris_last_name="Trotter",
@@ -144,8 +155,8 @@ def create_mock_db():
         status=True,
         mailinglist_subscribe=True
     )
-    models.User.objects.create_user(
-        username="atrotter",
+    user9 = models.User.objects.create_user(
+        username="uncle_albert@pmf.hr",
         person_uniqueid="uncle_albert@pmf.hr",
         croris_first_name="Albert",
         croris_last_name="Trotter",
@@ -154,6 +165,82 @@ def create_mock_db():
         person_institution="Prirodoslovno-matematički fakultet, Zagreb",
         status=True,
         mailinglist_subscribe=True
+    )
+    user10 = models.User.objects.create_user(
+        username="j.jameson@daily-bugle.com",
+        person_uniqueid="j.jameson@daily-bugle.com",
+        person_mail="j.jameson@daily-bugle.com",
+        person_username="jjjameso",
+        person_institution="Daily Bugle",
+        status=False,
+        mailinglist_subscribe=True
+    )
+    models.UserProject.objects.create(
+        user=user1,
+        project=project1,
+        role=role1
+    )
+    models.UserProject.objects.create(
+        user=user1,
+        project=project2,
+        role=role2
+    )
+    models.UserProject.objects.create(
+        user=user2,
+        project=project1,
+        role=role2
+    )
+    models.UserProject.objects.create(
+        user=user3,
+        project=project2,
+        role=role2
+    )
+    models.UserProject.objects.create(
+        user=user4,
+        project=project2,
+        role=role1
+    )
+    models.UserProject.objects.create(
+        user=user10,
+        project=project3,
+        role=role2
+    )
+    models.UserProject.objects.create(
+        user=user5,
+        project=project3,
+        role=role1
+    )
+    models.UserProject.objects.create(
+        user=user6,
+        project=project3,
+        role=role2
+    )
+    models.UserProject.objects.create(
+        user=user7,
+        project=project4,
+        role=role1
+    )
+    models.UserProject.objects.create(
+        user=user8,
+        project=project4,
+        role=role2
+    )
+    models.UserProject.objects.create(
+        user=user9,
+        project=project4,
+        role=role2
+    )
+    models.CrorisInstitutions.objects.create(
+        active=True,
+        name_short="Fakultet elektrotehnike i računarstva",
+        oib="01234567890",
+        mbu="036"
+    )
+    models.CrorisInstitutions.objects.create(
+        active=True,
+        name_short="Prirodoslovno-matematički fakultet, Zagreb",
+        oib="12345678901",
+        mbu="119"
     )
     models.ResourceUsage.objects.create(
         user=user1,
