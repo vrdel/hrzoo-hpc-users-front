@@ -26,3 +26,11 @@ class DashboardTests(TestCase):
                 }
             }
         )
+
+    def test_projects(self):
+        self.assertEqual(
+            self.indicators.projects(
+                institution="Fakultet elektrotehnike i računarstva"
+            ),
+            2
+        )

@@ -59,3 +59,9 @@ class DashboardIndicators:
                 institutions.update({item: {"oib": "", "mbu": ""}})
 
         return institutions
+
+    def projects(self, institution):
+        return len([
+            item for item in self._projects_in_period() if
+            item.institute == institution
+        ])
