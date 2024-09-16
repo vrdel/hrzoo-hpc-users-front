@@ -75,7 +75,23 @@ class AccountingUserProjectAPI(APIView):
             fields_project['date_approved'] = project.date_approved.strftime('%Y-%m-%d')
             fields_project['type'] = project.project_type.name
             fields_project['name'] = project.name
-            fields_project['ustanova'] = project.institute
+            try:
+                ustanova = models.CrorisInstitutions.objects.get(
+                    name_short=project.institute
+                )
+                fields_project['ustanova'] = {
+                    "naziv": ustanova.name_short,
+                    "oib": ustanova.oib,
+                    "mbu": ustanova.mbu
+                }
+
+            except models.CrorisInstitutions.DoesNotExist:
+                fields_project['ustanova'] = {
+                    "naziv": project.institute,
+                    "oib": "",
+                    "mbu": ""
+                }
+
             fields_project['croris_url'] = self._croris_url(project.croris_id)
             fields_project['science_field'] = self._flatten_field(project.science_field)
             fields_project['realm'] = realm_inst
