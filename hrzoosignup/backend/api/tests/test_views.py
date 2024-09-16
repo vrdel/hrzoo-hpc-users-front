@@ -19,8 +19,8 @@ class ResourceUsageAPITests(TestCase):
 
         self.project1 = models.Project.objects.get(identifier="project-1")
         self.project2 = models.Project.objects.get(identifier="project-3")
-        self.user1 = models.User.objects.get(username="user1")
-        self.user2 = models.User.objects.get(username="user2")
+        self.user1 = models.User.objects.get(username="adent")
+        self.user2 = models.User.objects.get(username="tmcmilla")
 
         self.factory = APIRequestFactory()
 
@@ -33,7 +33,7 @@ class ResourceUsageAPITests(TestCase):
             data={
                 "usage": [
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12345",
                         "walltime": "3920",
                         "ncpus": "4",
@@ -46,7 +46,7 @@ class ResourceUsageAPITests(TestCase):
                         "ngpus": "2"
                     },
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12346",
                         "walltime": "10",
                         "ncpus": "18",
@@ -124,7 +124,7 @@ class ResourceUsageAPITests(TestCase):
             data={
                 "usage": [
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12345",
                         "walltime": "3920",
                         "ncpus": "4",
@@ -137,7 +137,7 @@ class ResourceUsageAPITests(TestCase):
                         "ngpus": "2"
                     },
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12346",
                         "walltime": "10",
                         "ncpus": "18",
@@ -149,7 +149,7 @@ class ResourceUsageAPITests(TestCase):
                         "qtime": ""
                     },
                     {
-                        "user": "user2",
+                        "user": "tmcmilla",
                         "jobid": "12843",
                         "walltime": "13",
                         "ncpus": "2",
@@ -249,7 +249,7 @@ class ResourceUsageAPITests(TestCase):
             data={
                 "usage": [
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12345",
                         "walltime": "3920",
                         "ncpus": "4",
@@ -262,7 +262,7 @@ class ResourceUsageAPITests(TestCase):
                         "ngpus": "2"
                     },
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12346",
                         "walltime": "10",
                         "ncpus": "18",
@@ -274,7 +274,7 @@ class ResourceUsageAPITests(TestCase):
                         "qtime": ""
                     },
                     {
-                        "user": "user3",
+                        "user": "nonexisting",
                         "jobid": "12843",
                         "walltime": "13",
                         "ncpus": "2",
@@ -290,7 +290,7 @@ class ResourceUsageAPITests(TestCase):
         )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
-            request.data["status"]["message"], "User user3 not found"
+            request.data["status"]["message"], "User nonexisting not found"
         )
         self.assertEqual(len(models.ResourceUsage.objects.all()), 10)
         usage1 = models.ResourceUsage.objects.filter(
@@ -354,7 +354,7 @@ class ResourceUsageAPITests(TestCase):
             data={
                 "usage": [
                     {
-                        "user": "user3",
+                        "user": "nonexisting1",
                         "jobid": "12345",
                         "walltime": "3920",
                         "ncpus": "4",
@@ -367,7 +367,7 @@ class ResourceUsageAPITests(TestCase):
                         "ngpus": "2"
                     },
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12346",
                         "walltime": "10",
                         "ncpus": "18",
@@ -379,7 +379,7 @@ class ResourceUsageAPITests(TestCase):
                         "qtime": ""
                     },
                     {
-                        "user": "user4",
+                        "user": "nonexisting2",
                         "jobid": "12843",
                         "walltime": "13",
                         "ncpus": "2",
@@ -396,7 +396,7 @@ class ResourceUsageAPITests(TestCase):
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             request.data["status"]["message"],
-            "Users user3, user4 not found"
+            "Users nonexisting1, nonexisting2 not found"
         )
         self.assertEqual(len(models.ResourceUsage.objects.all()), 9)
         usage1 = models.ResourceUsage.objects.filter(
@@ -435,7 +435,7 @@ class ResourceUsageAPITests(TestCase):
             data={
                 "usage": [
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12345",
                         "walltime": "3920",
                         "ncpus": "4",
@@ -448,7 +448,7 @@ class ResourceUsageAPITests(TestCase):
                         "ngpus": "2"
                     },
                     {
-                        "user": "user1",
+                        "user": "adent",
                         "jobid": "12346",
                         "walltime": "10",
                         "ncpus": "18",
