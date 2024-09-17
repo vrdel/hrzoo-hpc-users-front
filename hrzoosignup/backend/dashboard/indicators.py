@@ -14,10 +14,10 @@ class DashboardIndicators:
         )
 
     def _projects_in_period(self):
-        all_projects = models.Project.objects.all()
+        active_projects = models.Project.objects.filter(is_active=True)
 
         return [
-            item for item in all_projects if
+            item for item in active_projects if
             item.date_approved <= self.end_date and
             item.date_end >= self.start_date
         ]
