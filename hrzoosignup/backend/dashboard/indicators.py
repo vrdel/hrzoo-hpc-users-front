@@ -60,8 +60,33 @@ class DashboardIndicators:
 
         return institutions
 
-    def projects(self, institution):
-        return len([
+    def _projects(self, institution):
+        return [
             item for item in self._projects_in_period() if
             item.institute == institution
-        ])
+        ]
+
+    def projects(self, institution):
+        return len(self._projects(institution=institution))
+
+    def users(self, institution):
+        institution_users = [
+            user.username for user in
+            models.User.objects.filter(person_institution=institution)
+        ]
+
+        projects = [
+            project.identifier for project in self._projects_in_period()
+        ]
+
+        users = set()
+        for user in institution_users:
+            if len(
+                    models.UserProject.objects.filter(
+                        user__username=user,
+                        project__identifier__in=projects
+                    )
+            ) > 0:
+                users.add(user)
+
+        return len(users)

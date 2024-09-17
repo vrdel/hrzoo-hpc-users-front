@@ -191,6 +191,11 @@ def create_mock_db():
         role=role2
     )
     models.UserProject.objects.create(
+        user=user9,
+        project=project1,
+        role=role2
+    )
+    models.UserProject.objects.create(
         user=user3,
         project=project2,
         role=role2
@@ -222,11 +227,6 @@ def create_mock_db():
     )
     models.UserProject.objects.create(
         user=user8,
-        project=project4,
-        role=role2
-    )
-    models.UserProject.objects.create(
-        user=user9,
         project=project4,
         role=role2
     )

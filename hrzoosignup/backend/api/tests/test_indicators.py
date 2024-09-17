@@ -34,3 +34,17 @@ class DashboardTests(TestCase):
             ),
             2
         )
+
+    def test_users(self):
+        self.assertEqual(
+            self.indicators.users(
+                institution="Fakultet elektrotehnike i računarstva"
+            ),
+            4
+        )
+        self.assertEqual(
+            self.indicators.users(
+                institution="Prirodoslovno-matematički fakultet, Zagreb"
+            ),
+            3
+        )
