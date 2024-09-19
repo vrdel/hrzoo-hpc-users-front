@@ -27,6 +27,10 @@ class SAML2Backend(Saml2Backend):
                      create_unknown_user=True, assertion_info=None, **kwargs):
         self.idp_entityid = session_info.get('issuer', '')
 
+        if settings.DEBUG:
+            logger.debug('SAML2Backend.authenticate()')
+            logger.debug(str(session_info).encode('utf-8'))
+
         if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
             if not settings.SAML_EDUGAINALLOWAAIEDUHR and is_authn_via_aaieduhr(session_info):
                 return None
