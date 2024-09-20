@@ -14,7 +14,7 @@ class ResourceUsageTests(TestCase):
         create_mock_db()
         self.view = views.ResourceUsage.as_view()
         self.factory = APIRequestFactory()
-        self.user = models.User.objects.get(person_username="user1")
+        self.user = models.User.objects.get(person_username="adent")
 
     @patch("backend.api.internal.view_accounting.date_today")
     def test_get_data_per_user(self, mock_date_today):
@@ -100,7 +100,7 @@ class ResourceUsageTests(TestCase):
     @patch("backend.api.internal.view_accounting.date_today")
     def test_get_data_for_user_without_usage_records(self, mock_date_today):
         mock_date_today.return_value = datetime.date(2024, 8, 22)
-        user = models.User.objects.get(person_username="user5")
+        user = models.User.objects.get(person_username="fprefect")
         request = self.factory.get(
             "/api/v1/internal/accounting/records"
         )
