@@ -10,7 +10,11 @@ import copy
 
 import logging
 
-logger = logging.getLogger('hrzoosignup.views')
+logger = logging.getLogger('hrzoosignup.saml2')
+
+
+def byte_enc(s):
+    return s.encode('utf-8')
 
 
 def is_authn_via_aaieduhr(session_info):
@@ -27,14 +31,17 @@ class SAML2Backend(Saml2Backend):
                      create_unknown_user=True, assertion_info=None, **kwargs):
         self.idp_entityid = session_info.get('issuer', '')
 
-        if settings.DEBUG:
+        if settings.SAML_DEBUG:
             logger.debug('SAML2Backend.authenticate()')
-            logger.debug(str(session_info).encode('utf-8'))
+            logger.debug('session_info data')
+            logger.debug(byte_enc(session_info))
 
         if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
             if not settings.SAML_EDUGAINALLOWAAIEDUHR and is_authn_via_aaieduhr(session_info):
                 return None
 
+            if settings.SAML_DEBUG:
+                logger.debug('eduGAIN authn')
             attributes = session_info['ava']
             user_model = get_user_model()
             first_name = attributes.get('givenName', '')
@@ -56,10 +63,6 @@ class SAML2Backend(Saml2Backend):
             if isinstance(email, list):
                 person_email = email[0]
 
-            if settings.DEBUG:
-                logger.debug('SAML2Backend.authenticate()')
-                logger.debug(session_info)
-
             all_names = user_model.objects.all().values_list('first_name', 'last_name')
             all_names = set([
                 (unidecode(first_name.lower()), unidecode(last_name.lower()))
@@ -75,7 +78,7 @@ class SAML2Backend(Saml2Backend):
                     usermapped = set([username['from'] for username in settings.SAML_MAPEDUGAIN])
                     if username not in usermapped:
                         logger.error('SAML2Backend.authenticate() - Failed eduGAIN login - manual action needed: first_name and last_name already found but not with the same username')
-                        logger.error(attributes)
+                        logger.error(byte_enc(attributes))
                         request.saml2_backend_multiple = True
                         return None
                     else:
@@ -105,9 +108,15 @@ class SAML2Backend(Saml2Backend):
             return user_new
 
         else:
+            if settings.SAML_DEBUG:
+                logger.debug('AAIEduHR authn')
             return super().authenticate(request, session_info, attribute_mapping, create_unknown_user, assertion_info, **kwargs)
 
     def _update_user(self, user, attributes, attribute_mapping, force_save=False):
+        if settings.SAML_DEBUG:
+            logger.debug('SAML2Backend._update_user()')
+            logger.debug(user)
+            logger.debug(byte_enc(attributes))
         try:
             if not user.person_institution_manual_set:
                 hreduorgoib = attributes.get('hrEduOrgOIB', '')
@@ -139,9 +148,11 @@ class SAML2Backend(Saml2Backend):
         if not user.person_type_manual_set:
             if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
                 user.person_type = 'foreign'
+                logger.debug('Setting foreign person_type')
                 force_save = True
             else:
                 user.person_type = 'local'
+                logger.debug('Setting local person_type')
                 force_save = True
 
         return super()._update_user(user, attributes, attribute_mapping, force_save)

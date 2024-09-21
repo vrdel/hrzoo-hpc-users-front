@@ -461,7 +461,7 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
-        'hrzoosignup.saml2: {
+        'hrzoosignup.saml2': {
             'handlers': ['file_saml2'],
             'level': 'DEBUG',
             'propagate': True,
