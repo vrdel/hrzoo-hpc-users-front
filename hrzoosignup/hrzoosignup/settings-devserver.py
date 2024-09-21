@@ -77,6 +77,11 @@ try:
     CRORIS_PASSWORD = config.get('CRORIS', 'Password')
     GRACE_DAYS = config.getint('CRORIS', 'Grace_Days', fallback=0)
 
+    DASHBOARD_API_INSTITUTIONS = config.get("DASHBOARD", "API_Institutions")
+    DASHBOARD_API_INDICATORS = config.get("DASHBOARD", "API_Indicators")
+    DASHBOARD_USERNAME = config.get("DASHBOARD", "Username")
+    DASHBOARD_PASS = config.get("DASHBOARD", "Token")
+
     SUPERUSER_FIRSTNAME = config.get('SUPERUSER', 'FirstName')
     SUPERUSER_USERNAME = config.get('SUPERUSER', 'Username')
     SUPERUSER_LASTNAME = config.get('SUPERUSER', 'LastName')
