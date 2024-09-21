@@ -21,6 +21,7 @@ SecretKeyFile = %(VENV)s/etc/hrzoosignup/secretkey
 CaFile = /etc/pki/tls/certs/ca-bundle.crt
 
 [SAML2]
+Debug = True
 Metadata = %(VENV)s/etc/hrzoosignup/metadata.xml
 MetadataEduGain = %(VENV)s/etc/hrzoosignup/metadata_edugain.xml
 EduGainEnable = True

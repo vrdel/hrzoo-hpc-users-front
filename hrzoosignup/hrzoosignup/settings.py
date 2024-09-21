@@ -46,6 +46,7 @@ try:
     CAFILE = config.get('SECURITY', 'CaFile')
 
     SAML_METADATA = config.get('SAML2', 'Metadata')
+    SAML_DEBUG = bool(config.getboolean('SAML2', 'Debug'))
     SAML_METADATAEDUGAIN = config.get('SAML2', 'MetadataEduGain')
     SAML_EDUGAINALLOWAAIEDUHR = config.getboolean('SAML2', 'EduGainAllowAAIEduHR')
     SAML_EDUGAINENABLE = config.getboolean('SAML2', 'EduGainEnable')
@@ -434,6 +435,12 @@ LOGGING = {
             'filename': '{}var/log/tasks.log'.format(VENV),
             'formatter': 'verbose',
         },
+        'file_saml2': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}var/log/saml2.log'.format(VENV),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         # 'django': {
@@ -453,6 +460,11 @@ LOGGING = {
         },
         'hrzoosignup.tasks': {
             'handlers': ['file_tasks'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'hrzoosignup.saml2': {
+            'handlers': ['file_saml2'],
             'level': 'DEBUG',
             'propagate': True,
         },

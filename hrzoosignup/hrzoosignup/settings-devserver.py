@@ -46,6 +46,7 @@ try:
     CAFILE = config.get('SECURITY', 'CaFile')
 
     SAML_METADATA = config.get('SAML2', 'Metadata')
+    SAML_DEBUG = bool(config.getboolean('SAML2', 'Debug'))
     SAML_METADATAEDUGAIN = config.get('SAML2', 'MetadataEduGain')
     SAML_EDUGAINALLOWAAIEDUHR = config.getboolean('SAML2', 'EduGainAllowAAIEduHR')
     SAML_EDUGAINENABLE = config.getboolean('SAML2', 'EduGainEnable')
@@ -75,6 +76,11 @@ try:
     CRORIS_USER = config.get('CRORIS', 'Username')
     CRORIS_PASSWORD = config.get('CRORIS', 'Password')
     GRACE_DAYS = config.getint('CRORIS', 'Grace_Days', fallback=0)
+
+    DASHBOARD_API_INSTITUTIONS = config.get("DASHBOARD", "API_Institutions")
+    DASHBOARD_API_INDICATORS = config.get("DASHBOARD", "API_Indicators")
+    DASHBOARD_USERNAME = config.get("DASHBOARD", "Username")
+    DASHBOARD_PASS = config.get("DASHBOARD", "Token")
 
     SUPERUSER_FIRSTNAME = config.get('SUPERUSER', 'FirstName')
     SUPERUSER_USERNAME = config.get('SUPERUSER', 'Username')
@@ -432,6 +438,12 @@ LOGGING = {
             'filename': '{}var/log/tasks.log'.format(VENV),
             'formatter': 'verbose',
         },
+        'file_saml2': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}var/log/saml2.log'.format(VENV),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         # 'django': {
@@ -451,6 +463,11 @@ LOGGING = {
         },
         'hrzoosignup.tasks': {
             'handlers': ['file_tasks'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'hrzoosignup.saml2': {
+            'handlers': ['file_saml2'],
             'level': 'DEBUG',
             'propagate': True,
         },
