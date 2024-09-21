@@ -14,7 +14,7 @@ logger = logging.getLogger('hrzoosignup.saml2')
 
 
 def byte_enc(s):
-    return s.encode('utf-8')
+    return str(s).encode('utf-8')
 
 
 def is_authn_via_aaieduhr(session_info):
