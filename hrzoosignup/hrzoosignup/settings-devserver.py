@@ -46,6 +46,7 @@ try:
     CAFILE = config.get('SECURITY', 'CaFile')
 
     SAML_METADATA = config.get('SAML2', 'Metadata')
+    SAML_DEBUG = bool(config.getboolean('SAML2', 'Debug'))
     SAML_METADATAEDUGAIN = config.get('SAML2', 'MetadataEduGain')
     SAML_EDUGAINALLOWAAIEDUHR = config.getboolean('SAML2', 'EduGainAllowAAIEduHR')
     SAML_EDUGAINENABLE = config.getboolean('SAML2', 'EduGainEnable')
