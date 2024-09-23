@@ -24,7 +24,8 @@ class IsSessionActive(APIView):
                     "active": False,
                     "error": "Session not active",
                     'config': {
-                        'enable_edugain': settings.SAML_EDUGAINENABLE
+                        'enable_edugain': settings.SAML_EDUGAINENABLE,
+                        "enable_accounting": settings.SHOW_GRAPHS
                     }
                 },
                 status=status.HTTP_200_OK
@@ -42,7 +43,8 @@ class IsSessionActive(APIView):
                     'csrftoken': get_token(request),
                     'saml2_idp': saml2_idp,
                     'config': {
-                        'enable_edugain': settings.SAML_EDUGAINENABLE
+                        'enable_edugain': settings.SAML_EDUGAINENABLE,
+                        "enable_accounting": settings.SHOW_GRAPHS
                     }
                 },
                 status=status.HTTP_200_OK)
