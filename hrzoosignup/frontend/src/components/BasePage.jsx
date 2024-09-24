@@ -30,7 +30,8 @@ const BasePage = ({sessionData=undefined}) => {
   const {
     logout: doLogoutContext,
     isLoggedIn, setUserdetails,
-    setCsrfToken, loginType } = useContext(AuthContext)
+    setCsrfToken, loginType, 
+    setEnableAccounting } = useContext(AuthContext)
   const navigate = useNavigate()
   const { locale, setLocale } = useContext(IntlContext)
 
@@ -78,6 +79,7 @@ const BasePage = ({sessionData=undefined}) => {
     else {
       sessionData?.userdetails && setUserdetails(sessionData.userdetails)
       sessionData?.csrftoken && setCsrfToken(sessionData.csrftoken)
+      sessionData?.config?.enable_accounting && setEnableAccounting(sessionData.config.enable_accounting)
       const loginLocaleSet = localStorage.getItem('loginLocaleSet')
       if (loginLocaleSet && loginLocaleSet !== locale) {
         setLocale(loginLocaleSet)

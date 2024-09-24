@@ -15,6 +15,7 @@ export const AuthContextProvider = ( {children} ) => {
   const [userDetails, setUserdetails] = useState("")
   const [csrfToken, setCsrfToken] = useState("")
   const [loginType, setLoginType] = useState("")
+  const [enableAccounting, setEnableAccounting] = useState(false)
   const navigate = useNavigate()
   const queryClient = useQueryClient();
 
@@ -22,6 +23,7 @@ export const AuthContextProvider = ( {children} ) => {
     setIsLoggedIn(true)
     setUserdetails(session.userdetails)
     setCsrfToken(session.csrftoken)
+    setEnableAccounting(session.config.enable_accounting)
 
     const defaultRedirect = session.userdetails.is_staff
       || session.userdetails.is_superuser
@@ -48,13 +50,14 @@ export const AuthContextProvider = ( {children} ) => {
     setIsLoggedIn(false)
     setUserdetails("")
     setLoginType("")
+    setEnableAccounting(false)
     localStorage.removeItem('referrer')
     queryClient.invalidateQueries("sessionactive")
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
     setUserdetails, login, logout, csrfToken, setCsrfToken, loginType,
-    setLoginType }
+    setLoginType, enableAccounting, setEnableAccounting }
 
   return (
     <AuthContext.Provider value={authContextValue}>
