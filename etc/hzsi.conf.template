@@ -7,6 +7,7 @@ RelativePath =
 InstitutionMap = %(VENV)s/etc/hrzoosignup/institution_map.json
 IdentifierMap = %(VENV)s/etc/hrzoosignup/replacestring_map.json
 RealmMap = %(VENV)s/etc/hrzoosignup/realm_map.json
+ShowGraphs = True
 
 [CONNECTION]
 Timeout = 15

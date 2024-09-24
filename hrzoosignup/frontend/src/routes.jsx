@@ -194,7 +194,10 @@ const BaseRoutes = () => {
               <Route path="my-info" element={
                 <MyInfo /> }
               />
-              <Route path="accounting" element={ <MyAccounting /> } />
+              {
+                sessionData.config.enable_accounting &&
+                  <Route path="accounting" element={ <MyAccounting /> } />
+              }
             </Route>
             <Route path="*" element={<NotFound />}/>
           </Route>

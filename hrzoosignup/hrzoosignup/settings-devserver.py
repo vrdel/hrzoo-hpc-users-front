@@ -38,6 +38,7 @@ try:
     REALM_MAP = config.get('GENERAL', 'RealmMap')
     INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
     PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
+    SHOW_GRAPHS = config.getboolean("GENERAL", "ShowGraphs")
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
     HOST_CERT = config.get('SECURITY', 'HostCert')
