@@ -157,7 +157,7 @@ class ResourceUsageAPI(APIView):
 
         data = request.data["usage"]
 
-        error_response = dict()
+        error_message = ""
         status_code = status.HTTP_201_CREATED
 
         usage = Usage(data=data)
@@ -179,40 +179,46 @@ class ResourceUsageAPI(APIView):
         if len(usage.missing_projects) > 0:
             status_code = status.HTTP_404_NOT_FOUND
             if len(usage.missing_projects) > 1:
-                noun = "Projects"
+                noun = "projects"
 
             else:
-                noun = "Project"
+                noun = "project"
 
-            error_response = {
-                "status": {
-                    "code": status_code,
-                    "message":
-                        f"{noun} "
-                        f"{', '.join(sorted(list(usage.missing_projects)))} "
-                        f"not found"
-                }
-            }
+            if not error_message:
+                noun = noun.capitalize()
+
+            error_message = (
+                f"{error_message}; {noun} "
+                f"{', '.join(sorted(list(usage.missing_projects)))} not "
+                f"found".strip("; ")
+            )
 
         if len(usage.missing_users) > 0:
             status_code = status.HTTP_404_NOT_FOUND
             if len(usage.missing_users) > 1:
-                noun = "Users"
+                noun = "users"
             else:
-                noun = "User"
+                noun = "user"
 
-            error_response = {
-                "status": {
-                    "code": status_code,
-                    "message":
-                        f"{noun} "
-                        f"{', '.join(sorted(list(usage.missing_users)))} "
-                        f"not found"
-                }
-            }
+            if not error_message:
+                noun = noun.capitalize()
 
-        if error_response:
-            return Response(error_response, status=status_code)
+            error_message = (
+                f"{error_message}; {noun} "
+                f"{', '.join(sorted(list(usage.missing_users)))} not "
+                f"found".strip("; ")
+            )
+
+        if status_code != status.HTTP_201_CREATED:
+            return Response(
+                {
+                    "status": {
+                        "code": status_code,
+                        "message": error_message
+                    }
+                },
+                status=status_code
+            )
 
         else:
             return Response(status=status.HTTP_201_CREATED)
