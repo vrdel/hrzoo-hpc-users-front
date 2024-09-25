@@ -18,7 +18,8 @@ class ResourceUsageAPITests(TestCase):
         self.token = key
 
         self.project1 = models.Project.objects.get(identifier="project-1")
-        self.project2 = models.Project.objects.get(identifier="project-3")
+        self.project2 = models.Project.objects.get(identifier="project-2")
+        self.project3 = models.Project.objects.get(identifier="project-3")
         self.user1 = models.User.objects.get(person_username="adent")
         self.user2 = models.User.objects.get(person_username="tmcmilla")
 
@@ -309,7 +310,7 @@ class ResourceUsageAPITests(TestCase):
             "gpuh": 0
         })
         self.assertEqual(usage3.user, self.user2)
-        self.assertEqual(usage3.project, self.project2)
+        self.assertEqual(usage3.project, self.project3)
         self.assertEqual(
             usage3.end_time,
             timezone.make_aware(
@@ -434,7 +435,7 @@ class ResourceUsageAPITests(TestCase):
             "gpuh": 0
         })
         self.assertEqual(usage3.user, self.user2)
-        self.assertEqual(usage3.project, self.project2)
+        self.assertEqual(usage3.project, self.project3)
         self.assertEqual(
             usage3.end_time,
             timezone.make_aware(
@@ -974,6 +975,96 @@ class ResourceUsageAPITests(TestCase):
             "ngpus": "2",
             "cpuh": 4.3556,
             "gpuh": 2.1778
+        })
+
+    def test_post_data_without_project(self):
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=supek",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data={
+                "usage": [
+                    {
+                        "user": "adent",
+                        "jobid": "12345",
+                        "walltime": "3920",
+                        "ncpus": "4",
+                        "project": None,
+                        "start_time": "1717845508",
+                        "end_time": "1717849428",
+                        "queue": "gpu",
+                        "wait_time": "2",
+                        "qtime": "1717796832",
+                        "ngpus": "2"
+                    },
+                    {
+                        "user": "adent",
+                        "jobid": "12346",
+                        "walltime": "10",
+                        "ncpus": "18",
+                        "project": "project-1",
+                        "start_time": "1716001512",
+                        "end_time": "1716001522",
+                        "queue": "queue1",
+                        "wait_time": "2",
+                        "qtime": ""
+                    }
+                ]
+            },
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 10)
+        usage1 = models.ResourceUsage.objects.filter(
+            accounting_record__jobid="12345"
+        )[0]
+        usage2 = models.ResourceUsage.objects.filter(
+            accounting_record__jobid="12346"
+        )[0]
+        self.assertEqual(usage1.user, self.user1)
+        self.assertEqual(usage1.project, self.project2)
+        self.assertEqual(usage1.resource_name, "supek")
+        self.assertEqual(
+            usage1.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1717849428),
+                timezone=timezone.get_current_timezone()
+            )
+        )
+        self.assertEqual(usage1.accounting_record, {
+            "jobid": "12345",
+            "walltime": "3920",
+            "ncpus": "4",
+            "start_time": "1717845508",
+            "queue": "gpu",
+            "wait_time": "2",
+            "qtime": "1717796832",
+            "ngpus": "2",
+            "cpuh": 4.3556,
+            "gpuh": 2.1778
+        })
+        self.assertEqual(usage2.user, self.user1)
+        self.assertEqual(usage2.project, self.project1)
+        self.assertEqual(usage2.resource_name, "supek")
+        self.assertEqual(
+            usage2.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1716001522),
+                timezone=timezone.get_current_timezone()
+            )
+        )
+        self.assertEqual(usage2.accounting_record, {
+            "jobid": "12346",
+            "walltime": "10",
+            "ncpus": "18",
+            "ngpus": None,
+            "start_time": "1716001512",
+            "queue": "queue1",
+            "wait_time": "2",
+            "qtime": "",
+            "cpuh": 0.05,
+            "gpuh": 0.
         })
 
     def test_get_jobids(self):

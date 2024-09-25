@@ -178,12 +178,14 @@ def create_mock_db():
     models.UserProject.objects.create(
         user=user1,
         project=project1,
-        role=role1
+        role=role1,
+        date_joined=datetime.datetime(2023, 5, 3, 0, 0, 0, tzinfo=pytz.UTC)
     )
     models.UserProject.objects.create(
         user=user1,
         project=project2,
-        role=role2
+        role=role2,
+        date_joined=datetime.datetime(2024, 6, 10, 12, 0, 13, tzinfo=pytz.UTC)
     )
     models.UserProject.objects.create(
         user=user2,

@@ -94,9 +94,10 @@ class Usage:
         projects_dict = dict()
         for project in projects:
             try:
-                projects_dict.update({
-                    project: models.Project.objects.get(identifier=project)
-                })
+                if project:
+                    projects_dict.update({
+                        project: models.Project.objects.get(identifier=project)
+                    })
 
             except models.Project.DoesNotExist:
                 missing_projects.add(project)

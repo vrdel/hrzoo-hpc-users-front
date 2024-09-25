@@ -167,7 +167,10 @@ class ResourceUsageAPI(APIView):
         model_instances = [
             models.ResourceUsage(
                 user=usage.users[record["user"]],
-                project=usage.projects[record["project"]],
+                project=usage.projects[record["project"]] if record["project"]
+                else models.UserProject.objects.filter(
+                    user=usage.users[record["user"]],
+                ).order_by("-date_joined")[0].project,
                 end_time=record["end_time"],
                 resource_name=resource,
                 accounting_record=json.loads(record["job_data"])
