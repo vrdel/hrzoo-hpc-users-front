@@ -8,6 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_api_key.permissions import HasAPIKey
+from django.conf import settings
 
 
 class AccountingUserProjectAPI(APIView):
@@ -155,76 +156,89 @@ class ResourceUsageAPI(APIView):
     def post(self, request):
         resource = request.query_params.get("resource")
 
-        data = request.data["usage"]
-
-        error_message = ""
-        status_code = status.HTTP_201_CREATED
-
-        usage = Usage(data=data)
-
-        df = usage.create_dataframe()
-
-        model_instances = [
-            models.ResourceUsage(
-                user=usage.users[record["user"]],
-                project=usage.projects[record["project"]] if record["project"]
-                else models.UserProject.objects.filter(
-                    user=usage.users[record["user"]],
-                ).order_by("-date_joined")[0].project,
-                end_time=record["end_time"],
-                resource_name=resource,
-                accounting_record=json.loads(record["job_data"])
-            ) for record in df.to_dict("records")
-        ]
-
-        models.ResourceUsage.objects.bulk_create(model_instances)
-
-        if len(usage.missing_projects) > 0:
-            status_code = status.HTTP_404_NOT_FOUND
-            if len(usage.missing_projects) > 1:
-                noun = "projects"
-
-            else:
-                noun = "project"
-
-            if not error_message:
-                noun = noun.capitalize()
-
-            error_message = (
-                f"{error_message}; {noun} "
-                f"{', '.join(sorted(list(usage.missing_projects)))} not "
-                f"found".strip("; ")
-            )
-
-        if len(usage.missing_users) > 0:
-            status_code = status.HTTP_404_NOT_FOUND
-            if len(usage.missing_users) > 1:
-                noun = "users"
-            else:
-                noun = "user"
-
-            if not error_message:
-                noun = noun.capitalize()
-
-            error_message = (
-                f"{error_message}; {noun} "
-                f"{', '.join(sorted(list(usage.missing_users)))} not "
-                f"found".strip("; ")
-            )
-
-        if status_code != status.HTTP_201_CREATED:
+        if resource not in settings.ALLOWED_RESOURCES:
+            status_code = status.HTTP_400_BAD_REQUEST
             return Response(
                 {
                     "status": {
                         "code": status_code,
-                        "message": error_message
+                        "message": "Nonexisting resource"
                     }
                 },
                 status=status_code
             )
 
         else:
-            return Response(status=status.HTTP_201_CREATED)
+            data = request.data["usage"]
+
+            error_message = ""
+            status_code = status.HTTP_201_CREATED
+
+            usage = Usage(data=data)
+
+            df = usage.create_dataframe()
+
+            model_instances = [
+                models.ResourceUsage(
+                    user=usage.users[record["user"]],
+                    project=usage.projects[record["project"]] if
+                    record["project"] else models.UserProject.objects.filter(
+                        user=usage.users[record["user"]],
+                    ).order_by("-date_joined")[0].project,
+                    end_time=record["end_time"],
+                    resource_name=resource,
+                    accounting_record=json.loads(record["job_data"])
+                ) for record in df.to_dict("records")
+            ]
+
+            models.ResourceUsage.objects.bulk_create(model_instances)
+
+            if len(usage.missing_projects) > 0:
+                status_code = status.HTTP_404_NOT_FOUND
+                if len(usage.missing_projects) > 1:
+                    noun = "projects"
+
+                else:
+                    noun = "project"
+
+                if not error_message:
+                    noun = noun.capitalize()
+
+                error_message = (
+                    f"{error_message}; {noun} "
+                    f"{', '.join(sorted(list(usage.missing_projects)))} not "
+                    f"found".strip("; ")
+                )
+
+            if len(usage.missing_users) > 0:
+                status_code = status.HTTP_404_NOT_FOUND
+                if len(usage.missing_users) > 1:
+                    noun = "users"
+                else:
+                    noun = "user"
+
+                if not error_message:
+                    noun = noun.capitalize()
+
+                error_message = (
+                    f"{error_message}; {noun} "
+                    f"{', '.join(sorted(list(usage.missing_users)))} not "
+                    f"found".strip("; ")
+                )
+
+            if status_code != status.HTTP_201_CREATED:
+                return Response(
+                    {
+                        "status": {
+                            "code": status_code,
+                            "message": error_message
+                        }
+                    },
+                    status=status_code
+                )
+
+            else:
+                return Response(status=status.HTTP_201_CREATED)
 
     def get(self, request):
         resource = request.query_params.get("resource")
