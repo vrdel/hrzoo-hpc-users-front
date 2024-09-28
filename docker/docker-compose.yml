@@ -20,6 +20,7 @@ services:
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup
       - $HOME:/mnt
+      - $HOME/.docker_zsh_history:/home/user/.zsh_history
       - /dev/log:/dev/log
       - /etc/localtime:/etc/localtime:ro
       - ../:/home/user/hrzoosignup-source
