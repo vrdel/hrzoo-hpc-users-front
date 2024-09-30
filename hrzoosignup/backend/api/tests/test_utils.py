@@ -34,6 +34,12 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        resources_type=[
+            {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
+            {"label": "GPU", "value": "GPU"},
+            {"label": "CPU", "value": "CPU"},
+            {"label": "PADOBRAN", "value": "PADOBRAN"}
+        ],
         date_start=datetime.date(2023, 5, 1),
         date_end=datetime.date(2024, 7, 31),
         date_approved=datetime.datetime(2023, 5, 3, 0, 0, 0, tzinfo=pytz.UTC)
@@ -45,6 +51,10 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        resources_type=[
+            {"label": "CPU", "value": "CPU"},
+            {"label": "GPU", "value": "GPU"}
+        ],
         date_start=datetime.date(2024, 5, 7),
         date_end=datetime.date(2025, 12, 31),
         date_approved=datetime.datetime(2024, 6, 9, 12, 0, 13, tzinfo=pytz.UTC)
@@ -56,6 +66,13 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        resources_type=[
+            {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
+            {"label": "CLOUD-CPU", "value": "CLOUD-CPU"},
+            {"label": "GPU", "value": "GPU"},
+            {"label": "CPU", "value": "CPU"},
+            {"label": "PADOBRAN", "value": "PADOBRAN"}
+        ],
         date_start=datetime.date(2024, 3, 1),
         date_end=datetime.date(2025, 5, 1),
         date_approved=datetime.datetime(2024, 3, 7, 14, 58, 13, tzinfo=pytz.UTC)
@@ -67,9 +84,30 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state5,
+        resources_type=[
+            {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
+            {"label": "CLOUD-CPU", "value": "CLOUD-CPU"},
+            {"label": "GPU", "value": "GPU"},
+            {"label": "CPU", "value": "CPU"},
+            {"label": "PADOBRAN", "value": "PADOBRAN"}
+        ],
         date_start=datetime.date(2024, 1, 1),
         date_end=datetime.date(2024, 6, 30),
         date_approved=datetime.datetime(2024, 2, 2, 15, 8, 28, tzinfo=pytz.UTC)
+    )
+    project5 = models.Project.objects.create(
+        identifier="project-5",
+        name="Project name 5",
+        institute="Fakultet elektrotehnike i računarstva",
+        science_extrasoftware_help=False,
+        is_active=True,
+        state=state1,
+        resources_type=[
+            {"label": "PADOBRAN", "value": "PADOBRAN"}
+        ],
+        date_start=datetime.date(2024, 5, 1),
+        date_end=datetime.date(2025, 12, 31),
+        date_approved=datetime.datetime(2024, 5, 3, 12, 0, 13, tzinfo=pytz.UTC)
     )
     user1 = models.User.objects.create_user(
         username="user119@fer.hr",
@@ -178,12 +216,14 @@ def create_mock_db():
     models.UserProject.objects.create(
         user=user1,
         project=project1,
-        role=role1
+        role=role1,
+        date_joined=datetime.datetime(2023, 5, 3, 0, 0, 0, tzinfo=pytz.UTC)
     )
     models.UserProject.objects.create(
         user=user1,
         project=project2,
-        role=role2
+        role=role2,
+        date_joined=datetime.datetime(2024, 6, 10, 12, 0, 13, tzinfo=pytz.UTC)
     )
     models.UserProject.objects.create(
         user=user2,
@@ -228,6 +268,16 @@ def create_mock_db():
     models.UserProject.objects.create(
         user=user8,
         project=project4,
+        role=role2
+    )
+    models.UserProject.objects.create(
+        user=user2,
+        project=project5,
+        role=role1
+    )
+    models.UserProject.objects.create(
+        user=user1,
+        project=project5,
         role=role2
     )
     models.CrorisInstitutions.objects.create(

@@ -7,7 +7,6 @@ RelativePath =
 InstitutionMap = %(VENV)s/etc/hrzoosignup/institution_map.json
 IdentifierMap = %(VENV)s/etc/hrzoosignup/replacestring_map.json
 RealmMap = %(VENV)s/etc/hrzoosignup/realm_map.json
-ShowGraphs = True
 
 [CONNECTION]
 Timeout = 15
@@ -68,6 +67,10 @@ Password = postgres
 
 [PERMISSIONS]
 Staff = dvrcic@aai-test.hr
+
+[ACCOUNTING]
+ShowGraphs = True
+AllowedResources = supek, cloud, padobran, jupyter, galaxy
 
 [EMAIL]
 Send = True

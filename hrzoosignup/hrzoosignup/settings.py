@@ -38,7 +38,6 @@ try:
     REALM_MAP = config.get('GENERAL', 'RealmMap')
     INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
     PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
-    SHOW_GRAPHS = config.getboolean("GENERAL", "ShowGraphs")
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
     HOST_CERT = config.get('SECURITY', 'HostCert')
@@ -90,6 +89,13 @@ try:
     SUPERUSER_EMAIL = config.get('SUPERUSER', 'Email')
 
     PERMISSIONS_STAFF = config.get('PERMISSIONS', 'Staff')
+
+    SHOW_GRAPHS = config.getboolean("ACCOUNTING", "ShowGraphs")
+    ALLOWED_RESOURCES = [
+        item.strip() for item in config.get(
+            "ACCOUNTING", "AllowedResources"
+        ).split(",")
+    ]
 
     EMAIL_SEND = config.getboolean('EMAIL', 'Send')
     EMAILFROM = config.get('EMAIL', 'From')

@@ -32,7 +32,7 @@ class DashboardTests(TestCase):
             self.indicators.projects(
                 institution="Fakultet elektrotehnike i računarstva"
             ),
-            2
+            3
         )
 
     def test_users(self):
