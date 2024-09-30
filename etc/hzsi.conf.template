@@ -70,7 +70,7 @@ Staff = dvrcic@aai-test.hr
 
 [ACCOUNTING]
 ShowGraphs = True
-Resources = supek, cloud, padobran, jupyter, galaxy
+AllowedResources = supek, cloud, padobran, jupyter, galaxy
 
 [EMAIL]
 Send = True
