@@ -1,5 +1,3 @@
-import json
-
 from backend import models
 from backend.utils.usage_data_preparation import Usage
 from django.conf import settings
@@ -149,15 +147,6 @@ class AccountingUserProjectAPI(APIView):
             return Response(self._generate_response(projects), status=status.HTTP_200_OK)
 
 
-RESOURCES_TAGS_MAPPING = {
-    "supek": ["BIGMEM", "CPU", "GPU"],
-    "cloud": ["CLOUD", "CLOUD-BIGMEM", "CLOUD-GPU"],
-    "padobran": ["PADOBRAN"],
-    "jupyter": ["JUPYTER"],
-    "galaxy": ["PADOBRAN"]
-}
-
-
 class ResourceUsageAPI(APIView):
     permission_classes = (HasAPIKey,)
 
@@ -184,48 +173,7 @@ class ResourceUsageAPI(APIView):
 
             usage = Usage(data=data)
 
-            df = usage.create_dataframe()
-
-            model_instances = list()
-
-            for record in df.to_dict("records"):
-                project = None
-                if record["project"]:
-                    project = models.Project.objects.get(
-                        identifier=record["project"]
-                    )
-
-                else:
-                    user_projects = models.UserProject.objects.filter(
-                        user=usage.users[record["user"]]
-                    ).order_by("-date_joined")
-
-                    for user_project in user_projects:
-                        tags = [
-                            item["value"] for item in
-                            user_project.project.resources_type
-                        ]
-
-                        if len(
-                                set(tags).intersection(
-                                    set(RESOURCES_TAGS_MAPPING[resource])
-                                )
-                        ) > 0:
-                            project = user_project.project
-                            break
-
-                if project:
-                    model_instances.append(
-                        models.ResourceUsage(
-                            user=usage.users[record["user"]],
-                            project=project,
-                            end_time=record["end_time"],
-                            resource_name=resource,
-                            accounting_record=json.loads(record["job_data"])
-                        )
-                    )
-
-            models.ResourceUsage.objects.bulk_create(model_instances)
+            usage.save(resource=resource)
 
             if len(usage.missing_projects) > 0:
                 status_code = status.HTTP_404_NOT_FOUND
