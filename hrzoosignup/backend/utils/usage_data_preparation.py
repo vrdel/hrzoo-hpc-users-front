@@ -80,20 +80,21 @@ class Usage:
         missing_users = set()
         users_dict = dict()
         for user in users:
-            try:
-                users_dict.update({
-                    user: models.User.objects.get(person_username=user)
-                })
-
-            except models.User.DoesNotExist:
+            if user:
                 try:
                     users_dict.update({
-                        user: models.User.objects.get(person_uniqueid=user)
+                        user: models.User.objects.get(person_username=user)
                     })
 
                 except models.User.DoesNotExist:
-                    missing_users.add(user)
-                    continue
+                    try:
+                        users_dict.update({
+                            user: models.User.objects.get(person_uniqueid=user)
+                        })
+
+                    except models.User.DoesNotExist:
+                        missing_users.add(user)
+                        continue
 
         return users_dict, missing_users
 
@@ -148,7 +149,8 @@ class Usage:
             if project:
                 model_instances.append(
                     models.ResourceUsage(
-                        user=self.users[record["user"]],
+                        user=self.users[record["user"]] if record["user"]
+                        else None,
                         project=project,
                         end_time=record["end_time"],
                         resource_name=resource,
