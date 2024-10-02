@@ -543,7 +543,9 @@ class CrorisInstitutions(models.Model):
 
 
 class ResourceUsage(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, null=True, blank=True
+    )
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     resource_name = models.CharField(max_length=128, blank=True)
     end_time = models.DateTimeField(null=True, blank=True)
