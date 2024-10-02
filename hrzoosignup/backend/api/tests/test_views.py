@@ -1394,6 +1394,53 @@ class ResourceUsageAPITests(TestCase):
         )
         self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
 
+    def test_post_jupyter_data(self):
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=jupyter",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data={
+                "usage": [
+                    {
+                        "user": "user119@fer.hr",
+                        "jupyter_cpu_h": 17.17,
+                        "jupyter_gpu_h": 0
+                    },
+                    {
+                        "user": "user454@fer.hr",
+                        "jupyter_cpu_h": 0.73,
+                        "jupyter_gpu_h": 0.18
+                    }
+                ]
+            },
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 10)
+        jupyter_usage = models.ResourceUsage.objects.filter(
+            resource_name="jupyter"
+        )
+        self.assertEqual(len(jupyter_usage), 2)
+        usage1 = jupyter_usage[0]
+        usage2 = jupyter_usage[1]
+        self.assertEqual(usage1.user, self.user1)
+        self.assertEqual(usage1.project, self.project5)
+        self.assertEqual(usage1.resource_name, "jupyter")
+        self.assertEqual(usage1.end_time, None)
+        self.assertEqual(usage1.accounting_record, {
+            "jupyter_cpu_h": 17.17,
+            "jupyter_gpu_h": 0
+        })
+        self.assertEqual(usage2.user, self.user2)
+        self.assertEqual(usage2.project, self.project1)
+        self.assertEqual(usage2.resource_name, "jupyter")
+        self.assertEqual(usage2.end_time, None)
+        self.assertEqual(usage2.accounting_record, {
+            "jupyter_cpu_h": 0.73,
+            "jupyter_gpu_h": 0.18
+        })
+
     def test_get_jobids(self):
         request1 = self.client.get(
             "/api/v1/accounting/records?resource=supek",
