@@ -49,6 +49,9 @@ class Usage:
         if "project" not in self.df:
             self.df["project"] = self.df.apply(lambda row: None, axis=1)
 
+        if "user" not in self.df:
+            self.df["user"] = self.df.apply(lambda row: None, axis=1)
+
         self.users, self.missing_users = self._users(
             self.df["user"].unique()
         )
