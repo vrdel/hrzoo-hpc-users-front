@@ -23,9 +23,18 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         subparsers = parser.add_subparsers(help="Ineligible users and projects subcommands", dest="command")
+        parser.add_argument('--grace-period', dest='graceperiod', type=int, default=180, required=False)
+        parser.add_argument('--end-date', dest='enddate', type=str, default=datetime.date.today(), required=False)
         parser_users = subparsers.add_parser("users", help="Show users")
 
         parser_projects = subparsers.add_parser("projects", help="Show projects")
+
+    def _ineligble_users(self, options):
+        pass
+
+    def _ineligible_projects(self, options):
+        pass
+
 
     def handle(self, *args, **options):
         if options['command'] == 'users':
