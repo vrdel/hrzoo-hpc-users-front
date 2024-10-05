@@ -45,6 +45,8 @@ class Command(BaseCommand):
         for user in self.user_model.objects.all():
             user_projects_expired = set()
             user_projects = set(list(user.project_set.all().values_list('identifier', flat=True)))
+            if not user_projects:
+                continue
             for project in user.project_set.all():
                 if project.date_end + datetime.timedelta(days=options['graceperiod']) < self.end_date:
                     user_projects_expired.add(project.identifier)
@@ -64,6 +66,9 @@ class Command(BaseCommand):
 
         i = 1
         for user in self._ineligble_users:
+            projects = ', '.join(
+                ['[{}...{}]'.format(user_project[0:32], user_project[-32:]) for user_project in user.project_set.all().values_list('name', flat=True)]
+            )
             table.add_row("# = ", str(i))
             table.add_row("First = ", user.first_name)
             table.add_row("Last = ", user.last_name)
@@ -71,6 +76,7 @@ class Command(BaseCommand):
             table.add_row("Username = ", user.username)
             table.add_row("Active = ", str(user.is_active))
             table.add_row("Staff = ", str(user.is_staff))
+            table.add_row("Projects = ", projects)
             table.add_row(" ")
             i += 1
 
