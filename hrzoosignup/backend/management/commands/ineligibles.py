@@ -22,12 +22,11 @@ class Command(BaseCommand):
         parser.add_argument('--grace-period', dest='graceperiod', type=int, default=180, required=False)
         parser.add_argument('--end-date', dest='enddate', type=str, default=datetime.date.today(), required=False)
         parser_users = subparsers.add_parser("users", help="Show users")
-
         parser_projects = subparsers.add_parser("projects", help="Show projects")
 
     def _parse_enddate(self, dt):
         try:
-            return datetime.datetime.strptime(dt, '%Y-%m-%d')
+            return datetime.datetime.strptime(dt, '%Y-%m-%d').date()
         except ValueError as exc:
             self.stdout.write(self.style.ERROR('Format end-date not correct'))
             self.stdout.write(self.style.NOTICE(repr(exc)))
@@ -35,9 +34,17 @@ class Command(BaseCommand):
 
 
     def _ineligble_users(self, options):
+        self._ineligble_users = []
         self.end_date = self._parse_enddate(options.get('enddate'))
 
-        pass
+        for user in self.user_model.objects.all():
+            user_projects_expired = set()
+            user_projects = set(list(user.project_set.all().values_list('identifier', flat=True)))
+            for project in user.project_set.all():
+                if project.date_end + datetime.timedelta(days=options['graceperiod']) < self.end_date:
+                    user_projects_expired.add(project.identifier)
+            if not user_projects.difference(user_projects_expired):
+                self._ineligble_users.append(user)
 
     def _ineligible_projects(self, options):
         self.end_date = options.get('enddate')
