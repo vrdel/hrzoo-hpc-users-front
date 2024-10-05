@@ -1,14 +1,10 @@
 from django.contrib.auth import get_user_model
-from django.core.cache import cache
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from django.utils import timezone
-from django.utils.crypto import get_random_string
+from datetime import date
 
 from backend.models import Project, UserProject, Role
-from backend.serializers import SshKeysSerializer
-from backend.models import SSHPublicKey
-from backend.utils.gen_username import gen_username
 
 import argparse
 import datetime
@@ -29,10 +25,22 @@ class Command(BaseCommand):
 
         parser_projects = subparsers.add_parser("projects", help="Show projects")
 
+    def _parse_enddate(self, dt):
+        try:
+            return datetime.datetime.strptime(dt, '%Y-%m-%d')
+        except ValueError as exc:
+            self.stdout.write(self.style.ERROR('Format end-date not correct'))
+            self.stdout.write(self.style.NOTICE(repr(exc)))
+            raise SystemExit(1)
+
+
     def _ineligble_users(self, options):
+        self.end_date = self._parse_enddate(options.get('enddate'))
+
         pass
 
     def _ineligible_projects(self, options):
+        self.end_date = options.get('enddate')
         pass
 
 
