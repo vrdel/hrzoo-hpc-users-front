@@ -10,6 +10,7 @@ import argparse
 import datetime
 
 from rich import print
+from rich import box
 from rich.columns import Columns
 from rich.table import Table
 from rich.console import Console
@@ -44,6 +45,8 @@ class Command(BaseCommand):
 
         for user in self.user_model.objects.all():
             user_projects_expired = set()
+            if not user.status:
+                continue
             user_projects = set(list(user.project_set.all().values_list('identifier', flat=True)))
             if not user_projects:
                 continue
@@ -56,28 +59,25 @@ class Command(BaseCommand):
         table = Table(
             title="Ineligible users",
             title_justify="left",
-            box=None,
+            box=box.ASCII,
             show_lines=True,
-            title_style=""
         )
-        table.add_column(justify="right")
-        table.add_column()
-        table.add_column()
+        table.add_column("#")
+        table.add_column("First, last name")
+        table.add_column("Email")
+        table.add_column("Status")
+        table.add_column("Projects")
+        table.add_column("End")
 
         i = 1
         for user in self._ineligble_users:
-            projects = ', '.join(
-                ['[{}...{}]'.format(user_project[0:32], user_project[-32:]) for user_project in user.project_set.all().values_list('name', flat=True)]
+            projects = '\n\n'.join(
+                ['{}...{} ({})'.format(user_project[0][0:16], user_project[0][-16:], user_project[1])
+                 if len(user_project[0]) > 40 else '{} ({})'.format(user_project[0], user_project[1])
+                 for user_project in user.project_set.all().values_list('name', 'identifier')]
             )
-            table.add_row("# = ", str(i))
-            table.add_row("First = ", user.first_name)
-            table.add_row("Last = ", user.last_name)
-            table.add_row("Mail = ", user.person_mail)
-            table.add_row("Username = ", user.username)
-            table.add_row("Active = ", str(user.is_active))
-            table.add_row("Staff = ", str(user.is_staff))
-            table.add_row("Projects = ", projects)
-            table.add_row(" ")
+            projects_dates = '\n\n'.join(date_end.strftime('%Y-%m-%d') for date_end in user.project_set.all().values_list('date_end', flat=True))
+            table.add_row(str(i), f'{user.first_name} {user.last_name}\n{user.username}', f'{user.person_mail}', str(user.status), projects, projects_dates)
             i += 1
 
         if table.row_count:
