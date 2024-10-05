@@ -9,6 +9,12 @@ from backend.models import Project, UserProject, Role
 import argparse
 import datetime
 
+from rich import print
+from rich.columns import Columns
+from rich.table import Table
+from rich.console import Console
+from rich.pretty import pprint
+
 
 class Command(BaseCommand):
     help = "Ineligible projects and users"
@@ -32,7 +38,6 @@ class Command(BaseCommand):
             self.stdout.write(self.style.NOTICE(repr(exc)))
             raise SystemExit(1)
 
-
     def _ineligble_users(self, options):
         self._ineligble_users = []
         self.end_date = self._parse_enddate(options.get('enddate'))
@@ -45,6 +50,33 @@ class Command(BaseCommand):
                     user_projects_expired.add(project.identifier)
             if not user_projects.difference(user_projects_expired):
                 self._ineligble_users.append(user)
+
+        table = Table(
+            title="Ineligible users",
+            title_justify="left",
+            box=None,
+            show_lines=True,
+            title_style=""
+        )
+        table.add_column(justify="right")
+        table.add_column()
+        table.add_column()
+
+        i = 1
+        for user in self._ineligble_users:
+            table.add_row("# = ", str(i))
+            table.add_row("First = ", user.first_name)
+            table.add_row("Last = ", user.last_name)
+            table.add_row("Mail = ", user.person_mail)
+            table.add_row("Username = ", user.username)
+            table.add_row("Active = ", str(user.is_active))
+            table.add_row("Staff = ", str(user.is_staff))
+            table.add_row(" ")
+            i += 1
+
+        if table.row_count:
+            console = Console()
+            console.print(table)
 
     def _ineligible_projects(self, options):
         self.end_date = options.get('enddate')
