@@ -104,17 +104,19 @@ class Command(BaseCommand):
         table.add_column("Name")
         table.add_column("Identifier")
         table.add_column("End")
-        # table.add_column("Grace")
+        table.add_column("Overextend")
         table.add_column("Users")
 
         i = 1
         for project in self._ineligible_projects:
             if project.state.name in ['deny', 'submit', 'expire']:
                 continue
+
+            overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
             users = ', '.join(
                 [user.username for user in project.users.all()]
             )
-            table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.date_end}', f'{users}')
+            table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.date_end}', f'{overextend}', f'{users}')
             i += 1
 
         if table.row_count:
