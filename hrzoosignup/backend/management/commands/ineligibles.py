@@ -150,6 +150,32 @@ class Command(BaseCommand):
             console = Console()
             console.print(table)
 
+        if options['csvfile']:
+            try:
+                with open(options['csvfile'], 'w', newline='') as csvfile:
+                    fieldnames = ['#', 'name', 'identifier', 'end', 'overextend', 'users']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                    writer.writeheader()
+                    i = 1
+                    for project in self._projects:
+                        overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
+                        users = ', '.join(
+                            [user.username for user in project.users.all()]
+                        )
+                        writer.writerow({
+                            '#': str(i),
+                            'name': project.name,
+                            'identifier': project.identifier,
+                            'end': project.date_end,
+                            'overextend': overextend,
+                            'users': users
+                        })
+                        i += 1
+
+            except OSError as exc:
+                self.style.ERROR(f'Cannot open {csvfile} for writing - {repr(exc)}')
+                raise SystemExit(1)
+
     def handle(self, *args, **options):
         if options['command'] == 'users':
             self._ineligible_users(options)
