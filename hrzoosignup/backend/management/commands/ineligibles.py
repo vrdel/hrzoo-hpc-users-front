@@ -76,8 +76,8 @@ class Command(BaseCommand):
         i = 1
         for user in self._users:
             projects = '\n\n'.join(
-                ['{} ({})'.format(user_project[0], user_project[1])
-                 for user_project in user.project_set.all().values_list('name', 'identifier')]
+                ['{} ({} - {})'.format(user_project[0], user_project[1], user_project[2])
+                 for user_project in user.project_set.all().values_list('name', 'identifier', 'project_type__name')]
             )
             projects_dates = '\n\n'.join(date_end.strftime('%Y-%m-%d') for date_end in user.project_set.all().values_list('date_end', flat=True))
             table.add_row(str(i), f'{user.first_name} {user.last_name}\n{user.username}', f'{user.person_mail}', projects, projects_dates)
@@ -90,22 +90,22 @@ class Command(BaseCommand):
         if options['csvfile']:
             try:
                 with open(options['csvfile'], 'w', newline='') as csvfile:
-                    fieldnames = ['#', 'first last username', 'email', 'projects', 'end']
+                    fieldnames = ['#', 'First Last Username', 'Email', 'Projects', 'End']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     i = 1
                     for user in self._users:
                         projects = ', '.join(
-                            ['{} ({})'.format(user_project[0], user_project[1])
-                             for user_project in user.project_set.all().values_list('name', 'identifier')]
+                            ['{} ({} - {})'.format(user_project[0], user_project[1], user_project[2])
+                             for user_project in user.project_set.all().values_list('name', 'identifier', 'project_type__name')]
                         )
                         projects_dates = ', '.join(date_end.strftime('%Y-%m-%d') for date_end in user.project_set.all().values_list('date_end', flat=True))
                         writer.writerow({
                             '#': str(i),
-                            'first last username': f'{user.first_name} {user.last_name}, {user.username}',
-                            'email': user.person_mail,
-                            'projects': projects,
-                            'end': projects_dates
+                            'First Last Username': f'{user.first_name} {user.last_name}, {user.username}',
+                            'Email': user.person_mail,
+                            'Projects': projects,
+                            'End': projects_dates
                         })
                         i += 1
 
@@ -130,6 +130,7 @@ class Command(BaseCommand):
         table.add_column("#")
         table.add_column("Name")
         table.add_column("Identifier")
+        table.add_column("Type")
         table.add_column("End")
         table.add_column("Overextend")
         table.add_column("Users")
@@ -143,7 +144,7 @@ class Command(BaseCommand):
             users = ', '.join(
                 [user.username for user in project.users.all()]
             )
-            table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.date_end}', f'{overextend}', f'{users}')
+            table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.project_type.name}', f'{project.date_end}', f'{overextend}', f'{users}')
             i += 1
 
         if table.row_count:
@@ -153,7 +154,7 @@ class Command(BaseCommand):
         if options['csvfile']:
             try:
                 with open(options['csvfile'], 'w', newline='') as csvfile:
-                    fieldnames = ['#', 'name', 'identifier', 'end', 'overextend', 'users']
+                    fieldnames = ['#', 'Name', 'Identifier', 'Type', 'End', 'Overextend', 'Users']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     i = 1
@@ -164,11 +165,12 @@ class Command(BaseCommand):
                         )
                         writer.writerow({
                             '#': str(i),
-                            'name': project.name,
-                            'identifier': project.identifier,
-                            'end': project.date_end,
-                            'overextend': overextend,
-                            'users': users
+                            'Name': project.name,
+                            'Identifier': project.identifier,
+                            'Type': project.project_type.name,
+                            'End': project.date_end,
+                            'Overextend': overextend,
+                            'Users': users
                         })
                         i += 1
 
