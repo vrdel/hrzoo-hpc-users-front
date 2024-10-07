@@ -102,7 +102,7 @@ class Command(BaseCommand):
                         projects_dates = ', '.join(date_end.strftime('%Y-%m-%d') for date_end in user.project_set.all().values_list('date_end', flat=True))
                         writer.writerow({
                             '#': str(i),
-                            'first last username': f'{user.first_name} {user.last_name} {user.username}',
+                            'first last username': f'{user.first_name} {user.last_name}, {user.username}',
                             'email': user.person_mail,
                             'projects': projects,
                             'end': projects_dates
