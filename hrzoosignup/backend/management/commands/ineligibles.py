@@ -118,6 +118,8 @@ class Command(BaseCommand):
         self.end_date = self._parse_enddate(options.get('enddate'))
 
         for project in Project.objects.all():
+            if project.state.name in ['deny', 'submit', 'expire']:
+                continue
             if project.date_end + datetime.timedelta(days=options['graceperiod']) < self.end_date:
                 self._projects.append(project)
 
@@ -137,9 +139,6 @@ class Command(BaseCommand):
 
         i = 1
         for project in self._projects:
-            if project.state.name in ['deny', 'submit', 'expire']:
-                continue
-
             overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
             users = ', '.join(
                 [user.username for user in project.users.all()]
