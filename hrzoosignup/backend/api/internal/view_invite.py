@@ -151,19 +151,35 @@ class Invites(APIView):
                     get_invite.save()
                     return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
-                already_assigned = models.UserProject.objects.filter(
-                    user__person_oib=user.person_oib,
-                    project__id=proj.id
-                )
-                if len(already_assigned) > 0:
-                    msg = {
-                        'status': {
-                            'code': status.HTTP_400_BAD_REQUEST,
-                            'message': '{} - User {} already assigned to project'.format(request.user.username, user.username)
+                if inv_type == 'local' and user.person_oib:
+                    already_assigned = models.UserProject.objects.filter(
+                        user__person_oib=user.person_oib,
+                        project__id=proj.id
+                    )
+                    if len(already_assigned) > 0:
+                        msg = {
+                            'status': {
+                                'code': status.HTTP_400_BAD_REQUEST,
+                                'message': '{} - User {} already assigned to project'.format(request.user.username, user.username)
+                            }
                         }
-                    }
-                    logger.error(msg)
-                    return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+                        logger.error(msg)
+                        return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
+                elif inv_type == 'foreign' and user.person_mail:
+                    already_assigned = models.UserProject.objects.filter(
+                        user__person_mail=user.person_mail,
+                        project__id=proj.id
+                    )
+                    if len(already_assigned) > 0:
+                        msg = {
+                            'status': {
+                                'code': status.HTTP_400_BAD_REQUEST,
+                                'message': '{} - User {} already assigned to project'.format(request.user.username, user.username)
+                            }
+                        }
+                        logger.error(msg)
+                        return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
                 # (inv_type == 'foreign' and edugain_authn)):
                 if (proj_type.name == 'research-croris'):
