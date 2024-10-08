@@ -1406,12 +1406,14 @@ class ResourceUsageAPITests(TestCase):
                     {
                         "user": "user119@fer.hr",
                         "jupyter_cpu_h": 17.17,
-                        "jupyter_gpu_h": 0
+                        "jupyter_gpu_h": 0,
+                        "end_time": 1727906399
                     },
                     {
                         "user": "user454@fer.hr",
                         "jupyter_cpu_h": 0.73,
-                        "jupyter_gpu_h": 0.18
+                        "jupyter_gpu_h": 0.18,
+                        "end_time": 1727906399
                     }
                 ]
             },
@@ -1431,18 +1433,55 @@ class ResourceUsageAPITests(TestCase):
         ][0]
         self.assertEqual(usage1.project, self.project5)
         self.assertEqual(usage1.resource_name, "jupyter")
-        self.assertEqual(usage1.end_time, None)
+        self.assertEqual(
+            usage1.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage1.accounting_record, {
             "jupyter_cpu_h": 17.17,
             "jupyter_gpu_h": 0
         })
         self.assertEqual(usage2.project, self.project1)
         self.assertEqual(usage2.resource_name, "jupyter")
-        self.assertEqual(usage2.end_time, None)
+        self.assertEqual(
+            usage2.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone=timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage2.accounting_record, {
             "jupyter_cpu_h": 0.73,
             "jupyter_gpu_h": 0.18
         })
+
+    def test_post_jupyter_data_without_end_time_entry(self):
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=jupyter",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data={
+                "usage": [
+                    {
+                        "user": "user119@fer.hr",
+                        "jupyter_cpu_h": 17.17,
+                        "jupyter_gpu_h": 0,
+                    },
+                    {
+                        "user": "user454@fer.hr",
+                        "jupyter_cpu_h": 0.73,
+                        "jupyter_gpu_h": 0.18,
+                    }
+                ]
+            },
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            request.data["status"]["message"], "Missing 'end_time' field"
+        )
 
     def test_post_cloud_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
@@ -1455,15 +1494,18 @@ class ResourceUsageAPITests(TestCase):
                     {
                         "project": "project-3",
                         "cpuh": 2304,
-                        "gpuh": 24
+                        "gpuh": 24,
+                        "end_time": 1727906399
                     },
                     {
                         "project": "project-4",
-                        "cpuh": 3072
+                        "cpuh": 3072,
+                        "end_time": 1727906399
                     },
                     {
                         "project": "project-1",
-                        "gpuh": 72
+                        "gpuh": 72,
+                        "end_time": 1727906399
                     }
                 ]
             },
@@ -1486,21 +1528,36 @@ class ResourceUsageAPITests(TestCase):
         ][0]
         self.assertEqual(usage1.user, None)
         self.assertEqual(usage1.resource_name, "cloud")
-        self.assertEqual(usage1.end_time, None)
+        self.assertEqual(
+            usage1.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage1.accounting_record, {
             "cpuh": 2304,
             "gpuh": 24
         })
         self.assertEqual(usage2.user, None)
         self.assertEqual(usage2.resource_name, "cloud")
-        self.assertEqual(usage2.end_time, None)
+        self.assertEqual(
+            usage2.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage2.accounting_record, {
             "cpuh": 3072,
             "gpuh": None
         })
         self.assertEqual(usage3.user, None)
         self.assertEqual(usage3.resource_name, "cloud")
-        self.assertEqual(usage3.end_time, None)
+        self.assertEqual(
+            usage3.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone.get_current_timezone()
+            )
+        )
         self.assertEqual(usage3.accounting_record, {
             "gpuh": 72,
             "cpuh": None

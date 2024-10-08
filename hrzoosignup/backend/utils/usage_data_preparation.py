@@ -70,13 +70,12 @@ class Usage:
                 lambda row: _calculate_gpuh(row), axis=1
             )
 
-        if "end_time" in self.df:
-            self.df["end_time"] = self.df.apply(
-                lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
-                    int(row["end_time"])
-                ), timezone=timezone.get_current_timezone()),
-                axis=1
-            )
+        self.df["end_time"] = self.df.apply(
+            lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
+                int(row["end_time"])
+            ), timezone=timezone.get_current_timezone()),
+            axis=1
+        )
 
         self.df["job_data"] = self.df.apply(
             lambda row: _prepare_job_data(row), axis=1
@@ -166,8 +165,7 @@ class Usage:
                         user=self.users[record["user"]] if record["user"]
                         else None,
                         project=project,
-                        end_time=record["end_time"] if
-                        "end_time" in record else None,
+                        end_time=record["end_time"],
                         resource_name=resource,
                         accounting_record=json.loads(record["job_data"])
                     )
