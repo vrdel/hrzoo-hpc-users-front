@@ -111,7 +111,8 @@ class SAML2Backend(Saml2Backend):
                 person_type='foreign'
             )
             if settings.SAML_DEBUG:
-                logger.debug('Created DB entry for new user')
+                logger.debug('Created DB entry for new user and calling _update_user()')
+            self._update_user(user_new, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
             return user_new
 
         else:
