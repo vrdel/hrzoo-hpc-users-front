@@ -70,8 +70,12 @@ class SAML2Backend(Saml2Backend):
             ])
             if (unidecode(first_name.lower()), unidecode(last_name.lower())) in all_names:
                 try:
+                    if settings.SAML_DEBUG:
+                        logger.debug('User with the same first and last name already exists')
                     user_found = user_model.objects.get(username=username)
                     if self.user_can_authenticate(user_found):
+                        if settings.SAML_DEBUG:
+                            logger.debug('User with the same username found, authenticating it')
                         self._update_user(user_found, attributes, settings.EDUGAIN_SAML_ATTRIBUTE_MAPPING, force_save=True)
                         return user_found
                 except user_model.DoesNotExist:
@@ -103,8 +107,11 @@ class SAML2Backend(Saml2Backend):
                 mailinglist_subscribe=False,
                 person_mail=person_email,
                 person_institution=institute,
-                person_affiliation=affiliation
+                person_affiliation=affiliation,
+                person_type='foreign'
             )
+            if settings.SAML_DEBUG:
+                logger.debug('Created DB entry for new user')
             return user_new
 
         else:
