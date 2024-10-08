@@ -103,7 +103,8 @@ class SAML2Backend(Saml2Backend):
                 mailinglist_subscribe=False,
                 person_mail=person_email,
                 person_institution=institute,
-                person_affiliation=affiliation
+                person_affiliation=affiliation,
+                person_type='foreign'
             )
             return user_new
 
