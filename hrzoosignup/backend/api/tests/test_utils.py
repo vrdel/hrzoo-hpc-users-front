@@ -38,7 +38,8 @@ def create_mock_db():
             {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
             {"label": "GPU", "value": "GPU"},
             {"label": "CPU", "value": "CPU"},
-            {"label": "PADOBRAN", "value": "PADOBRAN"}
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
         ],
         date_start=datetime.date(2023, 5, 1),
         date_end=datetime.date(2024, 7, 31),
@@ -53,7 +54,8 @@ def create_mock_db():
         state=state1,
         resources_type=[
             {"label": "CPU", "value": "CPU"},
-            {"label": "GPU", "value": "GPU"}
+            {"label": "GPU", "value": "GPU"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
         ],
         date_start=datetime.date(2024, 5, 7),
         date_end=datetime.date(2025, 12, 31),
@@ -71,7 +73,8 @@ def create_mock_db():
             {"label": "CLOUD-CPU", "value": "CLOUD-CPU"},
             {"label": "GPU", "value": "GPU"},
             {"label": "CPU", "value": "CPU"},
-            {"label": "PADOBRAN", "value": "PADOBRAN"}
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
         ],
         date_start=datetime.date(2024, 3, 1),
         date_end=datetime.date(2025, 5, 1),
@@ -89,7 +92,8 @@ def create_mock_db():
             {"label": "CLOUD-CPU", "value": "CLOUD-CPU"},
             {"label": "GPU", "value": "GPU"},
             {"label": "CPU", "value": "CPU"},
-            {"label": "PADOBRAN", "value": "PADOBRAN"}
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
         ],
         date_start=datetime.date(2024, 1, 1),
         date_end=datetime.date(2024, 6, 30),
@@ -103,7 +107,8 @@ def create_mock_db():
         is_active=True,
         state=state1,
         resources_type=[
-            {"label": "PADOBRAN", "value": "PADOBRAN"}
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
         ],
         date_start=datetime.date(2024, 5, 1),
         date_end=datetime.date(2025, 12, 31),

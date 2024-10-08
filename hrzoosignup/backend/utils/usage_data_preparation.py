@@ -36,7 +36,9 @@ def _prepare_job_data(data):
 
     job_data.pop("project")
     job_data.pop("user")
-    job_data.pop("end_time")
+
+    if "end_time" in job_data:
+        job_data.pop("end_time")
 
     return job_data.to_json()
 
@@ -44,6 +46,12 @@ def _prepare_job_data(data):
 class Usage:
     def __init__(self, data):
         self.df = pd.DataFrame.from_records(data)
+        if "project" not in self.df:
+            self.df["project"] = self.df.apply(lambda row: None, axis=1)
+
+        if "user" not in self.df:
+            self.df["user"] = self.df.apply(lambda row: None, axis=1)
+
         self.users, self.missing_users = self._users(
             self.df["user"].unique()
         )
@@ -52,18 +60,24 @@ class Usage:
         )
 
     def create_dataframe(self):
-        self.df["cpuh"] = self.df.apply(
-            lambda row: _calculate_cpuh(row), axis=1
-        )
-        self.df["gpuh"] = self.df.apply(
-            lambda row: _calculate_gpuh(row), axis=1
-        )
-        self.df["end_time"] = self.df.apply(
-            lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
-                int(row["end_time"])
-            ), timezone=timezone.get_current_timezone()),
-            axis=1
-        )
+        if "ncpus" in self.df:
+            self.df["cpuh"] = self.df.apply(
+                lambda row: _calculate_cpuh(row), axis=1
+            )
+
+        if "ngpus" in self.df:
+            self.df["gpuh"] = self.df.apply(
+                lambda row: _calculate_gpuh(row), axis=1
+            )
+
+        if "end_time" in self.df:
+            self.df["end_time"] = self.df.apply(
+                lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
+                    int(row["end_time"])
+                ), timezone=timezone.get_current_timezone()),
+                axis=1
+            )
+
         self.df["job_data"] = self.df.apply(
             lambda row: _prepare_job_data(row), axis=1
         )
@@ -80,20 +94,21 @@ class Usage:
         missing_users = set()
         users_dict = dict()
         for user in users:
-            try:
-                users_dict.update({
-                    user: models.User.objects.get(person_username=user)
-                })
-
-            except models.User.DoesNotExist:
+            if user:
                 try:
                     users_dict.update({
-                        user: models.User.objects.get(person_uniqueid=user)
+                        user: models.User.objects.get(person_username=user)
                     })
 
                 except models.User.DoesNotExist:
-                    missing_users.add(user)
-                    continue
+                    try:
+                        users_dict.update({
+                            user: models.User.objects.get(person_uniqueid=user)
+                        })
+
+                    except models.User.DoesNotExist:
+                        missing_users.add(user)
+                        continue
 
         return users_dict, missing_users
 
@@ -148,9 +163,11 @@ class Usage:
             if project:
                 model_instances.append(
                     models.ResourceUsage(
-                        user=self.users[record["user"]],
+                        user=self.users[record["user"]] if record["user"]
+                        else None,
                         project=project,
-                        end_time=record["end_time"],
+                        end_time=record["end_time"] if
+                        "end_time" in record else None,
                         resource_name=resource,
                         accounting_record=json.loads(record["job_data"])
                     )
