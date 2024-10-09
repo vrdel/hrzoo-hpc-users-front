@@ -1,0 +1,1 @@
+0 2 1 * * root . /opt/hrzoo-signup/bin/activate; $VIRTUAL_ENV/bin/hzsi-manage dashboard --month `date -d "yesterday" '+%m'` --year `date -d "yesterday" '+%Y'`
