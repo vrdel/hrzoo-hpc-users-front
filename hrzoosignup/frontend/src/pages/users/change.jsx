@@ -270,7 +270,7 @@ const UserChange = () => {
         }
         <InstituteTableInfo myInfo={false} userDetails={userData} />
         {
-          statusCroRis === 'loading' ?
+          statusCroRis === 'loading' && targetOib ?
             <EmptyCroRis spinner={true} changeView={true} />
           :
             statusCroRis === 'success' && croRisData && croRisData.data
