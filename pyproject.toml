@@ -1,0 +1,86 @@
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.9"
+aiohttp = "*"
+Django = "4.*"
+dj-rest-auth= "5.*"
+django-webpack-loader = "*"
+Django = "4.*"
+djangorestframework = "*"
+djangorestframework-api-key = "*"
+djangosaml2 = "*"
+psycopg2-binary = "*"
+pymemcache = "*"
+safety = "*"
+Unidecode = "*"
+pandas = "2.2.2"
+
+[tool.poetry.group.devel]
+optional = true
+
+[tool.poetry.group.devel.dependencies]
+build = "*"
+mock = "*"
+ipdb = "*"
+coverage = "*"
+unittest-xml-reporting = "*"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hrzoosignup"
+dynamic = ["version"]
+readme = "README.md"
+authors = [
+	{ name = "Katarina Zailac", email = "kzailac@srce.hr" },
+	{ name = "Daniel Vrcic", email = "dvrcic@srce.hr" }
+]
+description = "HRZOO Signup - web application for registration of users on Computing service of SRCE."
+classifiers = [
+  "Programming Language :: Python :: 3.9",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: POSIX :: Linux",
+]
+
+[tool.setuptools]
+packages = [
+    'hrzoosignup',
+    'hrzoosignup.backend',
+    'hrzoosignup.backend.api',
+    'hrzoosignup.backend.api.internal',
+    'hrzoosignup.backend.auth',
+    'hrzoosignup.backend.auth.saml2',
+    'hrzoosignup.backend.croris',
+    'hrzoosignup.backend.dashboard',
+    'hrzoosignup.backend.email',
+    'hrzoosignup.backend.fixtures',
+    'hrzoosignup.backend.httpq',
+    'hrzoosignup.backend.management',
+    'hrzoosignup.backend.management.commands',
+    'hrzoosignup.backend.migrations',
+    'hrzoosignup.backend.tasks',
+    'hrzoosignup.backend.utils',
+    'hrzoosignup.frontend',
+    'hrzoosignup.hrzoosignup',
+]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+hrzoosignup = " hrzoosignup/"
+
+[tool.setuptools.data-files]
+"" = ["pyproject.toml", "poetry.lock"]
+"bin" = [
+  "bin/hzsi-db", "bin/hzsi-genseckey", "bin/hzsi-manage",
+  "bin/hzsi-projects", "bin/hzsi-users"
+]
+"var/log/" = ["helpers/empty"]
+"var/lib/" = ["helpers/empty"]
+"var/db_backups" = ["helpers/empty"]
+
+[tool.setuptools.dynamic]
+version = { attr = "version.vernum" }
