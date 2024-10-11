@@ -51,8 +51,8 @@ Grace_Days = 180
 [DASHBOARD]
 API_Institutions = https://webdev.dashboard.srce.hr/api/ustanove
 API_Indicators = https://webdev.dashboard.srce.hr/api/unesipokazatelj
-Username = 004-01-000
-Token = Dash_2024!
+Username = user
+Token = pass
 
 [MAILINGLIST]
 Name = computing-users@srce.hr
