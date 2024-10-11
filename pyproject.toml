@@ -7,7 +7,6 @@ aiohttp = "*"
 Django = "4.*"
 dj-rest-auth= "5.*"
 django-webpack-loader = "*"
-Django = "4.*"
 djangorestframework = "*"
 djangorestframework-api-key = "*"
 djangosaml2 = "*"
@@ -80,7 +79,6 @@ hrzoosignup = " hrzoosignup/"
 ]
 "var/log/" = ["helpers/empty"]
 "var/lib/" = ["helpers/empty"]
-"var/db_backups" = ["helpers/empty"]
 
 [tool.setuptools.dynamic]
 version = { attr = "version.vernum" }
