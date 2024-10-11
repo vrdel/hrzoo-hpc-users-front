@@ -69,7 +69,7 @@ packages = [
 include-package-data = true
 
 [tool.setuptools.package-dir]
-hrzoosignup = " hrzoosignup/"
+hrzoosignup = "hrzoosignup/"
 
 [tool.setuptools.data-files]
 "" = ["pyproject.toml", "poetry.lock"]
