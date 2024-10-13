@@ -48,6 +48,7 @@ classifiers = [
 [tool.setuptools]
 packages = [
     'hrzoosignup',
+    'hrzoosignup.static',
     'hrzoosignup.backend',
     'hrzoosignup.backend.api',
     'hrzoosignup.backend.api.internal',
@@ -84,7 +85,7 @@ hrzoosignup = "hrzoosignup/"
 ]
 "etc/httpd/conf.d" = [ "apache/vhost-hrzoosignup.conf" ]
 "etc/hrzoosignup" = [
-	"etc/deploy-config.sh",
+	"helpers/deploy-config.sh",
 	"etc/edugain_user_map.json.template",
 	"etc/email_invite_en_message.txt",
 	"etc/email_invite_en_subject.txt",
