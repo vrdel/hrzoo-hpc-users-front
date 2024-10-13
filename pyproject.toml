@@ -82,7 +82,7 @@ hrzoosignup = "hrzoosignup/"
 "etc/cron.d" = [
   "cron/hzsi-clearexpiredinvitations", "cron/hzsi-clearsessions",
 	"cron/hzsi-flaginactiveusers", "cron/hzsi-mailinglist-subscribe",
-	"cron/hzsi-resetprojectcounter"
+	"cron/hzsi-resetprojectcounter", "cron/hzsi-dashboard-send"
 ]
 "etc/httpd/conf.d" = [ "apache/vhost-hrzoosignup.conf" ]
 "etc/hrzoosignup" = [
