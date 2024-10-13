@@ -1,0 +1,116 @@
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.9"
+aiohttp = "*"
+Django = "4.*"
+dj-rest-auth= "5.*"
+django-webpack-loader = "*"
+djangorestframework = "*"
+djangorestframework-api-key = "*"
+djangosaml2 = "*"
+django-invitations = "*"
+psycopg2-binary = "*"
+pymemcache = "*"
+safety = "*"
+Unidecode = "*"
+pandas = "2.2.2"
+
+[tool.poetry.group.devel]
+optional = true
+
+[tool.poetry.group.devel.dependencies]
+build = "*"
+mock = "*"
+ipdb = "*"
+coverage = "*"
+unittest-xml-reporting = "*"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hrzoosignup"
+dynamic = ["version"]
+readme = "README.md"
+authors = [
+	{ name = "Katarina Zailac", email = "kzailac@srce.hr" },
+	{ name = "Daniel Vrcic", email = "dvrcic@srce.hr" }
+]
+description = "HRZOO Signup - web application for registration of users on Computing service of SRCE."
+classifiers = [
+  "Programming Language :: Python :: 3.9",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: POSIX :: Linux",
+]
+
+[tool.setuptools]
+packages = [
+    'hrzoosignup',
+    'hrzoosignup.backend',
+    'hrzoosignup.backend.api',
+    'hrzoosignup.backend.api.internal',
+    'hrzoosignup.backend.auth',
+    'hrzoosignup.backend.auth.saml2',
+    'hrzoosignup.backend.croris',
+    'hrzoosignup.backend.dashboard',
+    'hrzoosignup.backend.email',
+    'hrzoosignup.backend.fixtures',
+    'hrzoosignup.backend.httpq',
+    'hrzoosignup.backend.management',
+    'hrzoosignup.backend.management.commands',
+    'hrzoosignup.backend.migrations',
+    'hrzoosignup.backend.tasks',
+    'hrzoosignup.backend.utils',
+    'hrzoosignup.frontend',
+    'hrzoosignup.hrzoosignup',
+    'hrzoosignup.templates',
+]
+include-package-data = true
+
+[tool.setuptools.package-dir]
+hrzoosignup = "hrzoosignup/"
+
+[tool.setuptools.data-files]
+"" = ["pyproject.toml", "poetry.lock"]
+"bin" = [
+  "bin/hzsi-db", "bin/hzsi-genseckey", "bin/hzsi-manage",
+  "bin/hzsi-projects", "bin/hzsi-users"
+]
+"etc/cron.d" = [
+  "cron/hzsi-clearexpiredinvitations", "cron/hzsi-clearsessions",
+	"cron/hzsi-flaginactiveusers", "cron/hzsi-mailinglist-subscribe",
+	"cron/hzsi-resetprojectcounter"
+]
+"etc/httpd/conf.d" = [ "apache/vhost-hrzoosignup.conf" ]
+"etc/hrzoosignup" = [
+	"helpers/deploy-config.sh",
+	"etc/edugain_user_map.json.template",
+	"etc/email_invite_en_message.txt",
+	"etc/email_invite_en_subject.txt",
+	"etc/email_invite_message.txt",
+	"etc/email_invite_subject.txt",
+	"etc/hzsi.conf.template",
+	"etc/institution_map.json.template",
+	"etc/realm_map.json.template",
+	"etc/replacestring_map.json.template",
+	"etc/secretkey",
+	"etc/signature",
+	"etc/signature_en",
+]
+"share/static/" = ["hrzoosignup/static/hzsi-favicon.ico"]
+"share/static/reactbundle" = ["hrzoosignup/static/reactbundle/*"]
+"share/static/rest_framework/css" = ["hrzoosignup/static/rest_framework/css/*"]
+"share/static/rest_framework/fonts" = ["hrzoosignup/static/rest_framework/fonts/*"]
+"share/static/rest_framework/img" = ["hrzoosignup/static/rest_framework/img/*"]
+"share/static/rest_framework/js" = ["hrzoosignup/static/rest_framework/js/*"]
+"share/static/rest_framework/docs/css" = ["hrzoosignup/static/rest_framework/docs/css/*"]
+"share/static/rest_framework/docs/img" = ["hrzoosignup/static/rest_framework/docs/img/*"]
+"share/static/rest_framework/docs/js" = ["hrzoosignup/static/rest_framework/docs/js/*"]
+"var/log/" = ["helpers/empty"]
+"var/lib/" = ["helpers/empty"]
+
+[tool.setuptools.dynamic]
+version = { attr = "version.vernum" }

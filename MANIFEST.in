@@ -1,11 +1,9 @@
 include README.md
 include LICENSE
-include setup.py
-include requirements.txt
-include etc/email_*.txt
-include etc/signature
-include etc/hzsi.conf.template
-include etc/edugain_user_map.json.template
+include hrzoosignup/frontend/webpack-stats.json
+
+recursive-include hrzoosignup/templates *.html
+recursive-include hrzoosignup/backend/fixtures/ *.json
 
 exclude etc/was.*
 exclude etc/*.devel.*
@@ -15,3 +13,5 @@ exclude etc/secretkey
 exclude **/*.eslintrc.js
 
 recursive-exclude hrzoosignup/frontend/node_modules/* *
+recursive-exclude hrzoosignup/static/* *
+

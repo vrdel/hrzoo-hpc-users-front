@@ -46,12 +46,17 @@ RUN echo -e "user ALL=(ALL) NOPASSWD: ALL\nDefaults env_keep += \"HOME\"" >> /et
 COPY collectstatic.sh run-django-server.sh run-frontdev-server.sh syncsite.sh safety.sh /home/user
 USER user
 WORKDIR /home/user
+RUN sudo python3.9 -m venv /opt/poetry-tool/
+RUN sudo sh -c '\
+  . /opt/poetry-tool/bin/activate \
+  && pip install -U pip \
+  && pip install -U setuptools==69.2.0 \
+  && pip install -U poetry'
+RUN sudo ln -s /opt/poetry-tool/bin/poetry /usr/local/bin/
 RUN sudo python3.9 -m venv /opt/hrzoo-signup
 RUN sudo sh -c '\
   . /opt/hrzoo-signup/bin/activate \
-  && pip install -U pip \
-  && pip3 install -r https://raw.githubusercontent.com/vrdel/hrzoo-hpc-users-front/main/requirements.txt \
-  && pip install git+https://github.com/vrdel/hrzoo-hpc-users-front'
+  && pip install -U pip'
 RUN curl -sfL https://git.io/chezmoi | sh
 COPY chezmoi-config-apply.sh /home/user
 CMD ["sudo", "/usr/bin/supervisord", "-nc",  "/etc/supervisord.conf"]

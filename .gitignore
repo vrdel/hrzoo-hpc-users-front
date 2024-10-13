@@ -7,6 +7,9 @@ dist/
 # project config
 secretkey
 hzsi.conf
+etc/*.json
+etc/*.xml
+etc/*.pem
 
 # Logs
 logs
