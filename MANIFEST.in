@@ -1,10 +1,9 @@
 include README.md
 include LICENSE
-include setup.py
+include hrzoosignup/frontend/webpack-stats.json
 
 recursive-include hrzoosignup/templates *.html
 recursive-include hrzoosignup/backend/fixtures/ *.json
-recursive-include hrzoosignup/static/ *
 
 exclude etc/was.*
 exclude etc/*.devel.*
@@ -14,3 +13,5 @@ exclude etc/secretkey
 exclude **/*.eslintrc.js
 
 recursive-exclude hrzoosignup/frontend/node_modules/* *
+recursive-exclude hrzoosignup/static/* *
+

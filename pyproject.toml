@@ -48,7 +48,6 @@ classifiers = [
 [tool.setuptools]
 packages = [
     'hrzoosignup',
-    'hrzoosignup.static',
     'hrzoosignup.backend',
     'hrzoosignup.backend.api',
     'hrzoosignup.backend.api.internal',
@@ -66,6 +65,7 @@ packages = [
     'hrzoosignup.backend.utils',
     'hrzoosignup.frontend',
     'hrzoosignup.hrzoosignup',
+    'hrzoosignup.templates',
 ]
 include-package-data = true
 
