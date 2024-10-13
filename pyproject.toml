@@ -98,6 +98,15 @@ hrzoosignup = "hrzoosignup/"
 	"etc/signature",
 	"etc/signature_en",
 ]
+"share/static/" = ["hrzoosignup/static/hzsi-favicon.ico"]
+"share/static/reactbundle" = ["hrzoosignup/static/reactbundle/*"]
+"share/static/rest_framework/css" = ["hrzoosignup/static/rest_framework/css/*"]
+"share/static/rest_framework/fonts" = ["hrzoosignup/static/rest_framework/fonts/*"]
+"share/static/rest_framework/img" = ["hrzoosignup/static/rest_framework/img/*"]
+"share/static/rest_framework/js" = ["hrzoosignup/static/rest_framework/js/*"]
+"share/static/rest_framework/docs/css" = ["hrzoosignup/static/rest_framework/docs/css/*"]
+"share/static/rest_framework/docs/img" = ["hrzoosignup/static/rest_framework/docs/img/*"]
+"share/static/rest_framework/docs/js" = ["hrzoosignup/static/rest_framework/docs/js/*"]
 "var/log/" = ["helpers/empty"]
 "var/lib/" = ["helpers/empty"]
 
