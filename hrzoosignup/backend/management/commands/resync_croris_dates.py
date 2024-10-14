@@ -18,6 +18,7 @@ from backend.utils.various import contains_exception
 import logging
 import asyncio
 import json
+import datetime
 
 import random
 
@@ -70,17 +71,26 @@ class Command(BaseCommand):
                         'end': project.get('kraj')
                     }
 
-            import ipdb; ipdb.set_trace()
-
             return projects_dates
 
         finally:
             await self.session.close()
 
-    def _task_fix_project_dates(self, options):
+    def _task_fix_project_dates(self, projects_dates):
         any_changed = False
 
-        pass
+        projects_db = Project.objects.filter(project_type__name='research-croris')
+
+        for project in projects_db:
+            try:
+                croris_start = datetime.datetime.strptime(projects_dates[project.identifier]['start'], '%d.%m.%Y').date()
+                croris_end = datetime.datetime.strptime(projects_dates[project.identifier]['end'], '%d.%m.%Y').date()
+                if croris_start != project.date_start:
+                    self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date start from {project.date_start} to {croris_start}'))
+                if croris_end != project.date_end:
+                    self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date end from {project.date_end} to {croris_end}'))
+            except KeyError:
+                self.stdout.write(self.style.ERROR(f'No project {project.identifier} found in fetched CroRIS data'))
 
         return any_changed
 
@@ -88,12 +98,12 @@ class Command(BaseCommand):
         any_changed_project = False
 
         try:
-            any_changed_project = asyncio.run(self._task_resync_croris_dates())
+            projects_dates = asyncio.run(self._task_resync_croris_dates())
         except (HZSIHttpError, KeyboardInterrupt):
             pass
 
         if options.get('confirm_yes', None):
-            any_changed_project = self._task_fix_project_dates(options)
+            any_changed_project = self._task_fix_project_dates(projects_dates)
 
         if any_changed_project:
             cache.delete("usersinfoinactive-get")
