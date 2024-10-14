@@ -70,6 +70,7 @@ class Command(BaseCommand):
         table.add_column("#")
         table.add_column("First, last, username")
         table.add_column("Email")
+        table.add_column("Key")
         table.add_column("Projects")
         table.add_column("End")
 
@@ -80,7 +81,8 @@ class Command(BaseCommand):
                  for user_project in user.project_set.all().values_list('name', 'identifier', 'project_type__name')]
             )
             projects_dates = '\n\n'.join(date_end.strftime('%Y-%m-%d') for date_end in user.project_set.all().values_list('date_end', flat=True))
-            table.add_row(str(i), f'{user.first_name} {user.last_name}\n{user.username}', f'{user.person_mail}', projects, projects_dates)
+            key_added = len(user.sshpublickey_set.all()) > 0
+            table.add_row(str(i), f'{user.first_name} {user.last_name}\n{user.username}', f'{user.person_mail}', str(key_added), projects, projects_dates)
             i += 1
 
         if table.row_count:
@@ -90,20 +92,23 @@ class Command(BaseCommand):
         if options['csvfile']:
             try:
                 with open(options['csvfile'], 'w', newline='') as csvfile:
-                    fieldnames = ['#', 'First Last Username', 'Email', 'Projects', 'End']
+                    fieldnames = ['#', 'First Last Username', 'Email', 'Key', 'Projects', 'End']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     i = 1
                     for user in self._users:
+
                         projects = ', '.join(
                             ['{} ({} - {})'.format(user_project[0], user_project[1], user_project[2])
                              for user_project in user.project_set.all().values_list('name', 'identifier', 'project_type__name')]
                         )
                         projects_dates = ', '.join(date_end.strftime('%Y-%m-%d') for date_end in user.project_set.all().values_list('date_end', flat=True))
+                        key_added = len(user.sshpublickey_set.all()) > 0
                         writer.writerow({
                             '#': str(i),
                             'First Last Username': f'{user.first_name} {user.last_name}, {user.username}',
                             'Email': user.person_mail,
+                            'Key': str(key_added),
                             'Projects': projects,
                             'End': projects_dates
                         })
