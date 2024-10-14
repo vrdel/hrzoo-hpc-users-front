@@ -88,11 +88,17 @@ class Command(BaseCommand):
                 if croris_start != project.date_start:
                     self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date start from {project.date_start} to {croris_start}'))
                     if options.get('confirm_yes', None):
-                        pass
+                        project.date_start = croris_start
+                        project.croris_start = croris_start
+                        project.save()
+                        any_changed = True
                 if croris_end != project.date_end:
                     self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date end from {project.date_end} to {croris_end}'))
                     if options.get('confirm_yes', None):
-                        pass
+                        project.date_end = croris_end
+                        project.croris_end = croris_end
+                        project.save()
+                        any_changed = True
             except KeyError:
                 self.stdout.write(self.style.ERROR(f'No project {project.identifier} found in fetched CroRIS data'))
 
