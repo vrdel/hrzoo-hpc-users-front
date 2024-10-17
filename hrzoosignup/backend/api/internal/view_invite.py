@@ -218,7 +218,8 @@ class Invites(APIView):
                 elif (proj_type.name == 'research-institutional'):
                     user_crorisproject = models.UserProject.objects.filter(
                         user_id=request.user.id,
-                        project__project_type__name='research-croris'
+                        project__project_type__name='research-croris',
+                        project__state__name__in=['approve', 'extend']
                     )
                     if user_crorisproject.count() > 0:
                         err_status = status.HTTP_403_FORBIDDEN
@@ -232,7 +233,8 @@ class Invites(APIView):
 
                     user_instituteproject = models.UserProject.objects.filter(
                         user_id=request.user.id,
-                        project__project_type__name='research-institutional'
+                        project__project_type__name='research-institutional',
+                        project__state__name__in=['approve', 'extend']
                     )
                     if user_instituteproject.count() > 0:
                         err_status = status.HTTP_403_FORBIDDEN
