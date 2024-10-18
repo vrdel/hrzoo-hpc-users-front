@@ -74,11 +74,13 @@ class ProjectsGeneral(APIView):
         if type_obj.name == 'research-institutional':
             user_crorisproject = models.UserProject.objects.filter(
                 user_id=request.user.id,
-                project__project_type__name='research-croris'
+                project__project_type__name='research-croris',
+                project__state__name__in=['approve', 'extend']
             )
             user_instituteproject = models.UserProject.objects.filter(
                 user_id=request.user.id,
-                project__project_type__name='research-institutional'
+                project__project_type__name='research-institutional',
+                project__state__name__in=['approve', 'extend']
             )
             if user_instituteproject.count() > 0 or user_crorisproject.count() > 0:
                 err_status = status.HTTP_401_UNAUTHORIZED
