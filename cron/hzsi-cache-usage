@@ -1,0 +1,1 @@
+30 2 * * * root . /opt/hrzoo-signup/bin/activate; $VIRTUAL_ENV/bin/hzsi-manage cache_usage
