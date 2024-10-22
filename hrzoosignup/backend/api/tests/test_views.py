@@ -1579,3 +1579,360 @@ class ResourceUsageAPITests(TestCase):
             ["1", "2", "3", "4", "5", "6"]
         )
         self.assertEqual([r for r in request2.data], ["12843"])
+
+
+class AccountingUserProjectAPITests(TestCase):
+    def setUp(self):
+        create_mock_db()
+
+        self.map_realms = [
+            {
+                "from": "Fakultet elektrotehnike i računarstva",
+                "to": "fer.hr"
+            },
+            {
+                "from": "Prirodoslovno-matematički fakultet, Zagreb",
+                "to": "pmf.hr"
+            },
+            {
+                "from":
+                    "Fakultet elektrotehnike, strojarstva i brodogradnje u "
+                    "Splitu",
+                "to": "fesb.hr"
+            }
+        ]
+
+        name, key = APIKey.objects.create_key(name="test")
+        self.token = key
+
+        self.project1 = models.Project.objects.get(identifier="project-1")
+        self.project2 = models.Project.objects.get(identifier="project-2")
+        self.project3 = models.Project.objects.get(identifier="project-3")
+        self.project4 = models.Project.objects.get(identifier="project-4")
+        self.project5 = models.Project.objects.get(identifier="project-5")
+
+        self.user1 = models.User.objects.get(username="user119@fer.hr")
+        self.user2 = models.User.objects.get(username="user454@fer.hr")
+        self.user3 = models.User.objects.get(username="user45@fer.hr")
+        self.user4 = models.User.objects.get(username="user70@fer.hr")
+        self.user5 = models.User.objects.get(username="user42@fer.hr")
+        self.user6 = models.User.objects.get(username="user348@fer.hr")
+        self.user7 = models.User.objects.get(username="delboy@pmf.hr")
+        self.user8 = models.User.objects.get(username="dave@pmf.hr")
+        self.user9 = models.User.objects.get(username="uncle_albert@pmf.hr")
+        self.user10 = models.User.objects.get(
+            username="j.jameson@daily-bugle.com"
+        )
+
+    def test_get_user_project(self):
+        with self.settings(MAP_REALMS=self.map_realms):
+            request = self.client.get(
+                "/api/v1/accounting/projectsusers?tags=CPU,GPU,BIGMEM,PADOBRAN,"
+                "CLOUD,CLOUD-GPU,CLOUD-BIGMEM,JUPYTER",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            )
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            request.json(), [
+                {
+                    "id": self.project1.id,
+                    "sifra": "project-1",
+                    "date_from": "2023-05-01",
+                    "date_end": "2024-07-31",
+                    "date_approved": "2023-05-03",
+                    "type": "research-croris",
+                    "name": "Project name 1",
+                    "ustanova": {
+                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "oib": "01234567890",
+                        "mbu": "036"
+                    },
+                    "croris_url":
+                        "https://www.croris.hr/projekti/projekt/123456",
+                    "science_field": [
+                        {
+                            "name": "PRIRODNE ZNANOSTI",
+                            "percent": 100,
+                            "scientificfields": [
+                                {
+                                    "name": "Fizika",
+                                    "percent": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "realm": "fer.hr",
+                    "finance": [
+                        "Hrvatska zaklada za znanost"
+                    ],
+                    "approved_resources": [
+                        "CLOUD-GPU",
+                        "GPU",
+                        "CPU",
+                        "PADOBRAN",
+                        "JUPYTER"
+                    ],
+                    "users": [
+                        {
+                            "id": self.user1.id,
+                            "uid": "user119@fer.hr",
+                            "ime": "Arthur",
+                            "prezime": "Dent",
+                            "mail": "arthur.dent@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        },
+                        {
+                            "id": self.user2.id,
+                            "uid": "user454@fer.hr",
+                            "ime": "Tricia",
+                            "prezime": "McMillan",
+                            "mail": "trillian@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        },
+                        {
+                            "id": self.user9.id,
+                            "uid": "uncle_albert@pmf.hr",
+                            "ime": "Albert",
+                            "prezime": "Trotter",
+                            "mail": "uncle.albert@biol.pmf.hr",
+                            "ustanova":
+                                "Prirodoslovno-matematički fakultet, Zagreb"
+                        }
+                    ]
+                },
+                {
+                    "id": self.project2.id,
+                    "sifra": "project-2",
+                    "date_from": "2024-05-07",
+                    "date_end": "2025-12-31",
+                    "date_approved": "2024-06-09",
+                    "type": "research-institutional",
+                    "name": "Project name 2",
+                    "ustanova": {
+                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "oib": "01234567890",
+                        "mbu": "036"
+                    },
+                    "croris_url": "",
+                    "science_field": [
+                        {
+                            "name": "TEHNIČKE ZNANOSTI",
+                            "percent": 100,
+                            "scientificfields": [
+                                {
+                                    "name": "Računarstvo",
+                                    "percent": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "realm": "fer.hr",
+                    "finance": [
+                        "Fakultet elektrotehnike i računarstva"
+                    ],
+                    "approved_resources": [
+                        "CPU",
+                        "GPU",
+                        "JUPYTER"
+                    ],
+                    "users": [
+                        {
+                            "id": self.user1.id,
+                            "uid": "user119@fer.hr",
+                            "ime": "Arthur",
+                            "prezime": "Dent",
+                            "mail": "arthur.dent@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        },
+                        {
+                            "id": self.user3.id,
+                            "uid": "user45@fer.hr",
+                            "ime": "Ford",
+                            "prezime": "Prefect",
+                            "mail": "ford.prefect@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        },
+                        {
+                            "id": self.user4.id,
+                            "uid": "user70@fer.hr",
+                            "ime": "Zaphod",
+                            "prezime": "Beeblebrox",
+                            "mail": "zb@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        }
+                    ]
+                },
+                {
+                    "id": self.project3.id,
+                    "sifra": "project-3",
+                    "date_from": "2024-03-01",
+                    "date_end": "2025-05-01",
+                    "date_approved": "2024-03-07",
+                    "type": "thesis",
+                    "name": "Project name 3",
+                    "ustanova": {
+                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "oib": "01234567890",
+                        "mbu": "036"
+                    },
+                    "croris_url": "",
+                    "science_field": [
+                        {
+                            "name": "TEHNIČKE ZNANOSTI",
+                            "percent": 100,
+                            "scientificfields": [
+                                {
+                                    "name": "Računarstvo",
+                                    "percent": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "realm": "fer.hr",
+                    "finance": [
+                        "Fakultet elektrotehnike i računarstva"
+                    ],
+                    "approved_resources": [
+                        "GPU",
+                        "CPU",
+                        "JUPYTER"
+                    ],
+                    "users": [
+                        {
+                            "id": self.user5.id,
+                            "uid": "user42@fer.hr",
+                            "ime": "Marvin",
+                            "prezime": "The Paranoid Android",
+                            "mail": "marvin@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        },
+                        {
+                            "id": self.user6.id,
+                            "uid": "user348@fer.hr",
+                            "ime": "",
+                            "prezime": "",
+                            "mail": "",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        },
+                        {
+                            "id": self.user10.id,
+                            "uid": "j.jameson@daily-bugle.com",
+                            "ime": "",
+                            "prezime": "",
+                            "mail": "j.jameson@daily-bugle.com",
+                            "ustanova": "Daily Bugle"
+                        }
+                    ]
+                },
+                {
+                    "id": self.project4.id,
+                    "sifra": "project-4",
+                    "date_from": "2024-01-01",
+                    "date_end": "2024-06-30",
+                    "date_approved": "2024-02-02",
+                    "type": "research-croris",
+                    "name": "Project name 4",
+                    "ustanova": {
+                        "naziv": "Prirodoslovno-matematički fakultet, Zagreb",
+                        "oib": "12345678901",
+                        "mbu": "119"
+                    },
+                    "croris_url": "https://www.croris.hr/projekti/projekt/666",
+                    "science_field": [
+                        {
+                            "name": "PRIRODNE ZNANOSTI",
+                            "percent": 100,
+                            "scientificfields": [
+                                {
+                                    "name": "Biologija",
+                                    "percent": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "realm": "pmf.hr",
+                    "finance": [
+                        "Trotters Independent Traders"
+                    ],
+                    "approved_resources": [
+                        "CLOUD-GPU",
+                        "CLOUD-CPU",
+                        "PADOBRAN",
+                        "JUPYTER"
+                    ],
+                    "users": [
+                        {
+                            "id": self.user7.id,
+                            "uid": "delboy@pmf.hr",
+                            "ime": "Derek",
+                            "prezime": "Trotter",
+                            "mail": "delboy@biol.pmf.hr",
+                            "ustanova":
+                                "Prirodoslovno-matematički fakultet, Zagreb"
+                        },
+                        {
+                            "id": self.user8.id,
+                            "uid": "dave@pmf.hr",
+                            "ime": "Rodney",
+                            "prezime": "Trotter",
+                            "mail": "dave@biol.pmf.hr",
+                            "ustanova":
+                                "Prirodoslovno-matematički fakultet, Zagreb"
+                        }
+                    ]
+                },
+                {
+                    "id": self.project5.id,
+                    "sifra": "project-5",
+                    "date_from": "2024-05-01",
+                    "date_end": "2025-12-31",
+                    "date_approved": "2024-05-03",
+                    "type": "practical",
+                    "name": "Project name 5",
+                    "ustanova": {
+                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "oib": "01234567890",
+                        "mbu": "036"
+                    },
+                    "croris_url": "",
+                    "science_field": [
+                        {
+                            "name": "TEHNIČKE ZNANOSTI",
+                            "percent": 100,
+                            "scientificfields": [
+                                {
+                                    "name": "Računarstvo",
+                                    "percent": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "realm": "fer.hr",
+                    "finance": [
+                        "Fakultet elektrotehnike i računarstva"
+                    ],
+                    "approved_resources": [
+                        "PADOBRAN",
+                        "JUPYTER"
+                    ],
+                    "users": [
+                        {
+                            "id": self.user1.id,
+                            "uid": "user119@fer.hr",
+                            "ime": "Arthur",
+                            "prezime": "Dent",
+                            "mail": "arthur.dent@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        },
+                        {
+                            "id": self.user2.id,
+                            "uid": "user454@fer.hr",
+                            "ime": "Tricia",
+                            "prezime": "McMillan",
+                            "mail": "trillian@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        }
+                    ]
+                }
+            ]
+        )

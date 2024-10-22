@@ -6,6 +6,11 @@ from django.utils import timezone
 
 
 def create_mock_db():
+    type1 = models.ProjectType.objects.create(name="research-croris")
+    type2 = models.ProjectType.objects.create(name="thesis")
+    type3 = models.ProjectType.objects.create(name="practical")
+    type4 = models.ProjectType.objects.create(name="research-institutional")
+    type5 = models.ProjectType.objects.create(name="internal")
     state1 = models.State.objects.create(
         name="approve"
     )
@@ -34,6 +39,8 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        project_type=type1,
+        croris_id=123456,
         resources_type=[
             {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
             {"label": "GPU", "value": "GPU"},
@@ -41,6 +48,25 @@ def create_mock_db():
             {"label": "PADOBRAN", "value": "PADOBRAN"},
             {"label": "JUPYTER", "value": "JUPYTER"}
         ],
+        staff_resources_type=[
+            {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
+            {"label": "GPU", "value": "GPU"},
+            {"label": "CPU", "value": "CPU"},
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        science_field=[
+            {
+                'name': {
+                    'label': 'PRIRODNE ZNANOSTI', 'value': 'PRIRODNE ZNANOSTI'
+                },
+                'percent': 100,
+                'scientificfields': [{
+                    'name': {'label': 'Fizika', 'value': 'Fizika'},
+                    'percent': 100}]
+            }
+        ],
+        croris_finance=['Hrvatska zaklada za znanost'],
         date_start=datetime.date(2023, 5, 1),
         date_end=datetime.date(2024, 7, 31),
         date_approved=datetime.datetime(2023, 5, 3, 0, 0, 0, tzinfo=pytz.UTC)
@@ -52,7 +78,25 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        project_type=type4,
+        science_field=[
+            {
+                'name': {
+                    'label': 'TEHNIČKE ZNANOSTI', 'value': 'TEHNIČKE ZNANOSTI'
+                },
+                'percent': 100,
+                'scientificfields': [{
+                    'name': {'label': 'Računarstvo', 'value': 'Računarstvo'},
+                    'percent': 100
+                }]
+            }
+        ],
         resources_type=[
+            {"label": "CPU", "value": "CPU"},
+            {"label": "GPU", "value": "GPU"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        staff_resources_type=[
             {"label": "CPU", "value": "CPU"},
             {"label": "GPU", "value": "GPU"},
             {"label": "JUPYTER", "value": "JUPYTER"}
@@ -68,6 +112,7 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        project_type=type2,
         resources_type=[
             {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
             {"label": "CLOUD-CPU", "value": "CLOUD-CPU"},
@@ -75,6 +120,23 @@ def create_mock_db():
             {"label": "CPU", "value": "CPU"},
             {"label": "PADOBRAN", "value": "PADOBRAN"},
             {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        staff_resources_type=[
+            {"label": "GPU", "value": "GPU"},
+            {"label": "CPU", "value": "CPU"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        science_field=[
+            {
+                'name': {
+                    'label': 'TEHNIČKE ZNANOSTI', 'value': 'TEHNIČKE ZNANOSTI'
+                },
+                'percent': 100,
+                'scientificfields': [{
+                    'name': {'label': 'Računarstvo', 'value': 'Računarstvo'},
+                    'percent': 100
+                }]
+            }
         ],
         date_start=datetime.date(2024, 3, 1),
         date_end=datetime.date(2025, 5, 1),
@@ -85,7 +147,10 @@ def create_mock_db():
         name="Project name 4",
         institute="Prirodoslovno-matematički fakultet, Zagreb",
         science_extrasoftware_help=False,
+        project_type=type1,
         is_active=True,
+        croris_id=666,
+        croris_finance=['Trotters Independent Traders'],
         state=state5,
         resources_type=[
             {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
@@ -94,6 +159,23 @@ def create_mock_db():
             {"label": "CPU", "value": "CPU"},
             {"label": "PADOBRAN", "value": "PADOBRAN"},
             {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        staff_resources_type=[
+            {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
+            {"label": "CLOUD-CPU", "value": "CLOUD-CPU"},
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        science_field=[
+            {
+                'name': {
+                    'label': 'PRIRODNE ZNANOSTI', 'value': 'PRIRODNE ZNANOSTI'
+                },
+                'percent': 100,
+                'scientificfields': [{
+                    'name': {'label': 'Biologija', 'value': 'Biologija'},
+                    'percent': 100}]
+            }
         ],
         date_start=datetime.date(2024, 1, 1),
         date_end=datetime.date(2024, 6, 30),
@@ -106,9 +188,26 @@ def create_mock_db():
         science_extrasoftware_help=False,
         is_active=True,
         state=state1,
+        project_type=type3,
         resources_type=[
             {"label": "PADOBRAN", "value": "PADOBRAN"},
             {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        staff_resources_type=[
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        science_field=[
+            {
+                'name': {
+                    'label': 'TEHNIČKE ZNANOSTI', 'value': 'TEHNIČKE ZNANOSTI'
+                },
+                'percent': 100,
+                'scientificfields': [{
+                    'name': {'label': 'Računarstvo', 'value': 'Računarstvo'},
+                    'percent': 100
+                }]
+            }
         ],
         date_start=datetime.date(2024, 5, 1),
         date_end=datetime.date(2025, 12, 31),
@@ -119,6 +218,8 @@ def create_mock_db():
         person_uniqueid="user119@fer.hr",
         croris_first_name="Arthur",
         croris_last_name="Dent",
+        first_name="Arthur",
+        last_name="Dent",
         person_username="adent",
         person_mail="arthur.dent@fer.hr",
         person_institution="Fakultet elektrotehnike i računarstva",
@@ -130,6 +231,8 @@ def create_mock_db():
         person_uniqueid="user454@fer.hr",
         croris_first_name="Tricia",
         croris_last_name="McMillan",
+        first_name="Tricia",
+        last_name="McMillan",
         person_username="tmcmilla",
         person_mail="trillian@fer.hr",
         person_institution="Fakultet elektrotehnike i računarstva",
@@ -141,6 +244,8 @@ def create_mock_db():
         person_uniqueid="user45@fer.hr",
         croris_first_name="Ford",
         croris_last_name="Prefect",
+        first_name="Ford",
+        last_name="Prefect",
         person_username="fprefect",
         person_mail="ford.prefect@fer.hr",
         person_institution="Fakultet elektrotehnike i računarstva",
@@ -152,6 +257,8 @@ def create_mock_db():
         person_uniqueid="user70@fer.hr",
         croris_first_name="Zaphod",
         croris_last_name="Beeblebrox",
+        first_name="Zaphod",
+        last_name="Beeblebrox",
         person_username="zbeebleb",
         person_mail="zb@fer.hr",
         person_institution="Fakultet elektrotehnike i računarstva",
@@ -163,6 +270,8 @@ def create_mock_db():
         person_uniqueid="user42@fer.hr",
         croris_first_name="Marvin",
         croris_last_name="The Paranoid Android",
+        first_name="Marvin",
+        last_name="The Paranoid Android",
         person_username="marvin",
         person_mail="marvin@fer.hr",
         person_institution="Fakultet elektrotehnike i računarstva",
@@ -181,6 +290,8 @@ def create_mock_db():
         person_uniqueid="delboy@pmf.hr",
         croris_first_name="Derek",
         croris_last_name="Trotter",
+        first_name="Derek",
+        last_name="Trotter",
         person_username="dtrotter",
         person_mail="delboy@biol.pmf.hr",
         person_institution="Prirodoslovno-matematički fakultet, Zagreb",
@@ -192,6 +303,8 @@ def create_mock_db():
         person_uniqueid="dave@pmf.hr",
         croris_first_name="Rodney",
         croris_last_name="Trotter",
+        first_name="Rodney",
+        last_name="Trotter",
         person_username="rtrotter",
         person_mail="dave@biol.pmf.hr",
         person_institution="Prirodoslovno-matematički fakultet, Zagreb",
@@ -203,6 +316,8 @@ def create_mock_db():
         person_uniqueid="uncle_albert@pmf.hr",
         croris_first_name="Albert",
         croris_last_name="Trotter",
+        first_name="Albert",
+        last_name="Trotter",
         person_username="atrotter",
         person_mail="uncle.albert@biol.pmf.hr",
         person_institution="Prirodoslovno-matematički fakultet, Zagreb",
@@ -225,12 +340,6 @@ def create_mock_db():
         date_joined=datetime.datetime(2023, 5, 3, 0, 0, 0, tzinfo=pytz.UTC)
     )
     models.UserProject.objects.create(
-        user=user1,
-        project=project2,
-        role=role2,
-        date_joined=datetime.datetime(2024, 6, 10, 12, 0, 13, tzinfo=pytz.UTC)
-    )
-    models.UserProject.objects.create(
         user=user2,
         project=project1,
         role=role2
@@ -239,6 +348,13 @@ def create_mock_db():
         user=user9,
         project=project1,
         role=role2
+    )
+    project1.users.add(user1, user2, user9)
+    models.UserProject.objects.create(
+        user=user1,
+        project=project2,
+        role=role2,
+        date_joined=datetime.datetime(2024, 6, 10, 12, 0, 13, tzinfo=pytz.UTC)
     )
     models.UserProject.objects.create(
         user=user3,
@@ -250,6 +366,7 @@ def create_mock_db():
         project=project2,
         role=role1
     )
+    project2.users.add(user1, user3, user4)
     models.UserProject.objects.create(
         user=user10,
         project=project3,
@@ -265,6 +382,7 @@ def create_mock_db():
         project=project3,
         role=role2
     )
+    project3.users.add(user10, user5, user6)
     models.UserProject.objects.create(
         user=user7,
         project=project4,
@@ -275,6 +393,7 @@ def create_mock_db():
         project=project4,
         role=role2
     )
+    project4.users.add(user7, user8)
     models.UserProject.objects.create(
         user=user2,
         project=project5,
@@ -285,6 +404,7 @@ def create_mock_db():
         project=project5,
         role=role2
     )
+    project5.users.add(user2, user1)
     models.CrorisInstitutions.objects.create(
         active=True,
         name_short="Fakultet elektrotehnike i računarstva",
