@@ -118,6 +118,18 @@ class ResourceUsageAPITests(TestCase):
             "gpuh": 0.
         })
 
+    def test_post_empty_data(self):
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=supek",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data={"usage": []},
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+
     def test_post_data_user_uniqueid(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
         request = self.client.post(
