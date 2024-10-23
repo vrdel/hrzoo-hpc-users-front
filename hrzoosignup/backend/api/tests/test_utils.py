@@ -10,7 +10,7 @@ def create_mock_db():
     type2 = models.ProjectType.objects.create(name="thesis")
     type3 = models.ProjectType.objects.create(name="practical")
     type4 = models.ProjectType.objects.create(name="research-institutional")
-    type5 = models.ProjectType.objects.create(name="internal")
+    models.ProjectType.objects.create(name="internal")
     state1 = models.State.objects.create(
         name="approve"
     )
@@ -213,6 +213,38 @@ def create_mock_db():
         date_end=datetime.date(2025, 12, 31),
         date_approved=datetime.datetime(2024, 5, 3, 12, 0, 13, tzinfo=pytz.UTC)
     )
+    project6 = models.Project.objects.create(
+        identifier="Grant agreement ID: 123456",
+        name="Project name 6",
+        institute="Fakultet elektrotehnike i računarstva",
+        science_extrasoftware_help=False,
+        is_active=True,
+        state=state1,
+        project_type=type3,
+        resources_type=[
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        staff_resources_type=[
+            {"label": "PADOBRAN", "value": "PADOBRAN"},
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ],
+        science_field=[
+            {
+                'name': {
+                    'label': 'TEHNIČKE ZNANOSTI', 'value': 'TEHNIČKE ZNANOSTI'
+                },
+                'percent': 100,
+                'scientificfields': [{
+                    'name': {'label': 'Računarstvo', 'value': 'Računarstvo'},
+                    'percent': 100
+                }]
+            }
+        ],
+        date_start=datetime.date(2024, 5, 1),
+        date_end=datetime.date(2025, 12, 31),
+        date_approved=datetime.datetime(2024, 5, 4, 12, 0, 13, tzinfo=pytz.UTC)
+    )
     user1 = models.User.objects.create_user(
         username="user119@fer.hr",
         person_uniqueid="user119@fer.hr",
@@ -405,6 +437,12 @@ def create_mock_db():
         role=role2
     )
     project5.users.add(user2, user1)
+    models.UserProject.objects.create(
+        user=user1,
+        project=project6,
+        role=role1
+    )
+    project6.users.add(user1)
     models.CrorisInstitutions.objects.create(
         active=True,
         name_short="Fakultet elektrotehnike i računarstva",

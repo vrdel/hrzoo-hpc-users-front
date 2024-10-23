@@ -22,6 +22,7 @@ class ResourceUsageAPITests(TestCase):
         self.project3 = models.Project.objects.get(identifier="project-3")
         self.project4 = models.Project.objects.get(identifier="project-4")
         self.project5 = models.Project.objects.get(identifier="project-5")
+        self.project6 = models.Project.objects.get(name="Project name 6")
         self.user1 = models.User.objects.get(person_username="adent")
         self.user2 = models.User.objects.get(person_username="tmcmilla")
 
@@ -1563,6 +1564,60 @@ class ResourceUsageAPITests(TestCase):
             "cpuh": None
         })
 
+    def test_post_data_improper_project_id(self):
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=supek",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data={
+                "usage": [
+                    {
+                        "user": "adent",
+                        "jobid": "1234566",
+                        "walltime": "3920",
+                        "ncpus": "4",
+                        "project": "123456",
+                        "start_time": "1717845508",
+                        "end_time": "1717849428",
+                        "queue": "gpu",
+                        "wait_time": "2",
+                        "qtime": "1717796832",
+                        "ngpus": "2"
+                    }
+                ]
+            },
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 9)
+        usage = models.ResourceUsage.objects.get(
+            accounting_record__jobid="1234566"
+        )
+        self.assertEqual(usage.user, self.user1)
+        self.assertEqual(usage.project, self.project6)
+        self.assertEqual(usage.resource_name, "supek")
+        self.assertEqual(
+            usage.end_time,
+            timezone.make_aware(
+                datetime.datetime.fromtimestamp(1717849428),
+                timezone=timezone.get_current_timezone()
+            )
+        )
+        self.assertEqual(usage.accounting_record, {
+            "jobid": "1234566",
+            "walltime": "3920",
+            "ncpus": "4",
+            "start_time": "1717845508",
+            "queue": "gpu",
+            "wait_time": "2",
+            "qtime": "1717796832",
+            "ngpus": "2",
+            "cpuh": 4.3556,
+            "gpuh": 2.1778
+        })
+
+
     def test_get_jobids(self):
         request1 = self.client.get(
             "/api/v1/accounting/records?resource=supek",
@@ -1602,6 +1657,24 @@ class AccountingUserProjectAPITests(TestCase):
             }
         ]
 
+        self.project_identifiers = [
+            {
+                "field": "project.identifier",
+                "from": "Grant agreement ID: ",
+                "to": ""
+            },
+            {
+                "field": "project.identifier",
+                "from": "/",
+                "to": "-"
+            },
+            {
+                "field": "project.identifier",
+                "from": " ",
+                "to": "-"
+            }
+        ]
+
         name, key = APIKey.objects.create_key(name="test")
         self.token = key
 
@@ -1610,6 +1683,7 @@ class AccountingUserProjectAPITests(TestCase):
         self.project3 = models.Project.objects.get(identifier="project-3")
         self.project4 = models.Project.objects.get(identifier="project-4")
         self.project5 = models.Project.objects.get(identifier="project-5")
+        self.project6 = models.Project.objects.get(name="Project name 6")
 
         self.user1 = models.User.objects.get(username="user119@fer.hr")
         self.user2 = models.User.objects.get(username="user454@fer.hr")
@@ -1625,7 +1699,10 @@ class AccountingUserProjectAPITests(TestCase):
         )
 
     def test_get_user_project(self):
-        with self.settings(MAP_REALMS=self.map_realms):
+        with self.settings(
+                MAP_REALMS=self.map_realms,
+                PROJECT_IDENTIFIER_MAP=self.project_identifiers
+        ):
             request = self.client.get(
                 "/api/v1/accounting/projectsusers?tags=CPU,GPU,BIGMEM,PADOBRAN,"
                 "CLOUD,CLOUD-GPU,CLOUD-BIGMEM,JUPYTER",
@@ -1930,6 +2007,50 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Tricia",
                             "prezime": "McMillan",
                             "mail": "trillian@fer.hr",
+                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                        }
+                    ]
+                },                {
+                    "id": self.project6.id,
+                    "sifra": "123456",
+                    "date_from": "2024-05-01",
+                    "date_end": "2025-12-31",
+                    "date_approved": "2024-05-04",
+                    "type": "practical",
+                    "name": "Project name 6",
+                    "ustanova": {
+                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "oib": "01234567890",
+                        "mbu": "036"
+                    },
+                    "croris_url": "",
+                    "science_field": [
+                        {
+                            "name": "TEHNIČKE ZNANOSTI",
+                            "percent": 100,
+                            "scientificfields": [
+                                {
+                                    "name": "Računarstvo",
+                                    "percent": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "realm": "fer.hr",
+                    "finance": [
+                        "Fakultet elektrotehnike i računarstva"
+                    ],
+                    "approved_resources": [
+                        "PADOBRAN",
+                        "JUPYTER"
+                    ],
+                    "users": [
+                        {
+                            "id": self.user1.id,
+                            "uid": "user119@fer.hr",
+                            "ime": "Arthur",
+                            "prezime": "Dent",
+                            "mail": "arthur.dent@fer.hr",
                             "ustanova": "Fakultet elektrotehnike i računarstva"
                         }
                     ]
