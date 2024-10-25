@@ -32,6 +32,7 @@ class Command(BaseCommand):
         parser.add_argument('--export-csv', dest='csvfile', type=str, default=None, required=False)
         parser_users = subparsers.add_parser("users", help="Show users")
         parser_projects = subparsers.add_parser("projects", help="Show projects")
+        parser_projects.add_argument('--type', dest="project_type", dest=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)")
 
     def _parse_enddate(self, dt):
         try:
