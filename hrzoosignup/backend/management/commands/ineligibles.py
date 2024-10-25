@@ -32,7 +32,7 @@ class Command(BaseCommand):
         parser.add_argument('--export-csv', dest='csvfile', type=str, default=None, required=False)
         parser_users = subparsers.add_parser("users", help="Show users")
         parser_projects = subparsers.add_parser("projects", help="Show projects")
-        parser_projects.add_argument('--type', dest="project_type", dest=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)")
+        parser_projects.add_argument('--type', dest="project_type", type=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)")
 
     def _parse_enddate(self, dt):
         try:
@@ -124,6 +124,10 @@ class Command(BaseCommand):
         self.end_date = self._parse_enddate(options.get('enddate'))
 
         for project in Project.objects.all():
+
+            if (options.get('project_type') and
+                options.get('project_type') not in project.project_type.name):
+                continue
             if project.state.name in ['deny', 'submit', 'expire']:
                 continue
             if project.date_end + datetime.timedelta(days=options['graceperiod']) < self.end_date:
