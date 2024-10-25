@@ -4,6 +4,7 @@ import json
 
 import pandas as pd
 from backend import models
+from django.conf import settings
 from django.utils import timezone
 
 RESOURCES_TAGS_MAPPING = {
@@ -51,6 +52,20 @@ class Usage:
 
         if "user" not in self.df:
             self.df["user"] = self.df.apply(lambda row: None, axis=1)
+
+        self.projects_mapping = dict()
+        for proj in models.Project.objects.all():
+            for field in settings.PROJECT_IDENTIFIER_MAP:
+                if field["from"] in proj.identifier:
+                    self.projects_mapping.update({
+                        proj.identifier.replace(field["from"], field["to"]):
+                            proj.identifier
+                    })
+
+                else:
+                    self.projects_mapping.update({
+                        proj.identifier: proj.identifier
+                    })
 
         self.users, self.missing_users = self._users(
             self.df["user"].unique()
@@ -111,20 +126,22 @@ class Usage:
 
         return users_dict, missing_users
 
-    @staticmethod
-    def _projects(projects):
+    def _projects(self, projects):
         missing_projects = set()
         projects_dict = dict()
+
         for project in projects:
-            try:
-                if project:
+            if project:
+                if project in self.projects_mapping:
                     projects_dict.update({
-                        project: models.Project.objects.get(identifier=project)
+                        project: models.Project.objects.get(
+                            identifier=self.projects_mapping[project]
+                        )
                     })
 
-            except models.Project.DoesNotExist:
-                missing_projects.add(project)
-                continue
+                else:
+                    missing_projects.add(project)
+                    continue
 
         return projects_dict, missing_projects
 
@@ -137,7 +154,7 @@ class Usage:
             project = None
             if record["project"]:
                 project = models.Project.objects.get(
-                    identifier=record["project"]
+                    identifier=self.projects_mapping[record["project"]]
                 )
 
             else:
