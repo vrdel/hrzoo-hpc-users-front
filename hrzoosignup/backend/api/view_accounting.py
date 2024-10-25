@@ -171,70 +171,74 @@ class ResourceUsageAPI(APIView):
             error_message = ""
             status_code = status.HTTP_201_CREATED
 
-            usage = Usage(data=data)
+            if len(data) > 0:
+                usage = Usage(data=data)
 
-            try:
-                usage.save(resource=resource)
+                try:
+                    usage.save(resource=resource)
 
-            except KeyError as e:
-                status_code = status.HTTP_400_BAD_REQUEST
-                return Response(
-                    {
-                        "status": {
-                            "code": status_code,
-                            "message": f"Missing {str(e)} field"
-                        }
-                    },
-                    status=status_code
-                )
-
-            else:
-                if len(usage.missing_projects) > 0:
-                    status_code = status.HTTP_404_NOT_FOUND
-                    if len(usage.missing_projects) > 1:
-                        noun = "projects"
-
-                    else:
-                        noun = "project"
-
-                    if not error_message:
-                        noun = noun.capitalize()
-
-                    error_message = (
-                        f"{error_message}; {noun} "
-                        f"{', '.join(sorted(list(usage.missing_projects)))} "
-                        f"not found".strip("; ")
-                    )
-
-                if len(usage.missing_users) > 0:
-                    status_code = status.HTTP_404_NOT_FOUND
-                    if len(usage.missing_users) > 1:
-                        noun = "users"
-                    else:
-                        noun = "user"
-
-                    if not error_message:
-                        noun = noun.capitalize()
-
-                    error_message = (
-                        f"{error_message}; {noun} "
-                        f"{', '.join(sorted(list(usage.missing_users)))} not "
-                        f"found".strip("; ")
-                    )
-
-                if status_code != status.HTTP_201_CREATED:
+                except KeyError as e:
+                    status_code = status.HTTP_400_BAD_REQUEST
                     return Response(
                         {
                             "status": {
                                 "code": status_code,
-                                "message": error_message
+                                "message": f"Missing {str(e)} field"
                             }
                         },
                         status=status_code
                     )
 
                 else:
-                    return Response(status=status.HTTP_201_CREATED)
+                    if len(usage.missing_projects) > 0:
+                        status_code = status.HTTP_404_NOT_FOUND
+                        if len(usage.missing_projects) > 1:
+                            noun = "projects"
+
+                        else:
+                            noun = "project"
+
+                        if not error_message:
+                            noun = noun.capitalize()
+
+                        error_message = (
+                            f"{error_message}; {noun} "
+                            f"{', '.join(sorted(list(usage.missing_projects)))}"
+                            f" not found".strip("; ")
+                        )
+
+                    if len(usage.missing_users) > 0:
+                        status_code = status.HTTP_404_NOT_FOUND
+                        if len(usage.missing_users) > 1:
+                            noun = "users"
+                        else:
+                            noun = "user"
+
+                        if not error_message:
+                            noun = noun.capitalize()
+
+                        error_message = (
+                            f"{error_message}; {noun} "
+                            f"{', '.join(sorted(list(usage.missing_users)))} "
+                            f"not found".strip("; ")
+                        )
+
+                    if status_code != status.HTTP_201_CREATED:
+                        return Response(
+                            {
+                                "status": {
+                                    "code": status_code,
+                                    "message": error_message
+                                }
+                            },
+                            status=status_code
+                        )
+
+                    else:
+                        return Response(status=status.HTTP_201_CREATED)
+
+            else:
+                return Response(status=status.HTTP_200_OK)
 
     def get(self, request):
         resource = request.query_params.get("resource")
