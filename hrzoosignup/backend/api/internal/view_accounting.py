@@ -5,12 +5,12 @@ import math
 import pandas as pd
 from backend import models
 from dateutil.relativedelta import relativedelta
+from django.core.cache import cache
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.core.cache import cache
 
 
 def date_today():
@@ -110,8 +110,11 @@ def usage4user(username):
                         proj_cpuh = float(df_project["cpuh"].sum(axis=0))
                         proj_gpuh = float(df_project["gpuh"].sum(axis=0))
 
-                    cpu_dict.update({project: math.floor(proj_cpuh)})
-                    gpu_dict.update({project: math.floor(proj_gpuh)})
+                    if math.floor(proj_cpuh) > 0:
+                        cpu_dict.update({project: math.floor(proj_cpuh)})
+
+                    if math.floor(proj_gpuh) > 0:
+                        gpu_dict.update({project: math.floor(proj_gpuh)})
 
                 if cpu_dict:
                     cpuh.append(cpu_dict)

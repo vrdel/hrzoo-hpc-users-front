@@ -30,18 +30,15 @@ class ResourceUsageTests(TestCase):
                     "cpuh": [
                         {
                             "month": "02/2024",
-                            "project-1": 1,
-                            "project-4": 0
+                            "project-1": 1
                         },
                         {
                             "month": "03/2024",
-                            "project-1": 1,
-                            "project-4": 0
+                            "project-1": 1
                         },
                         {
                             "month": "04/2024",
-                            "project-1": 1,
-                            "project-4": 0
+                            "project-1": 1
                         },
                         {
                             "month": "05/2024",
@@ -67,40 +64,27 @@ class ResourceUsageTests(TestCase):
                     ],
                     "gpuh": [
                         {
-                            "month": "02/2024",
-                            "project-1": 0,
-                            "project-4": 0
+                            "month": "02/2024"
                         },
                         {
-                            "month": "03/2024",
-                            "project-1": 0,
-                            "project-4": 0
+                            "month": "03/2024"
                         },
                         {
-                            "month": "04/2024",
-                            "project-1": 0,
-                            "project-4": 0
+                            "month": "04/2024"
                         },
                         {
-                            "month": "05/2024",
-                            "project-1": 0,
-                            "project-2": 0,
-                            "project-4": 0
+                            "month": "05/2024"
                         },
                         {
                             "month": "06/2024",
-                            "project-1": 1,
-                            "project-2": 0,
-                            "project-4": 0
+                            "project-1": 1
                         },
                         {
                             "month": "07/2024",
-                            "project-1": 1,
-                            "project-2": 0
+                            "project-1": 1
                         },
                         {
-                            "month": "08/2024",
-                            "project-2": 0
+                            "month": "08/2024"
                         }
                     ]
                 }
@@ -141,20 +125,16 @@ class ResourceUsageTests(TestCase):
                             "month": "04/2024",
                         },
                         {
-                            "month": "05/2024",
-                            "project-5": 0
+                            "month": "05/2024"
                         },
                         {
-                            "month": "06/2024",
-                            "project-5": 0
+                            "month": "06/2024"
                         },
                         {
-                            "month": "07/2024",
-                            "project-5": 0
+                            "month": "07/2024"
                         },
                         {
-                            "month": "08/2024",
-                            "project-5": 0
+                            "month": "08/2024"
                         }
                     ]
                 },
@@ -170,12 +150,10 @@ class ResourceUsageTests(TestCase):
                             "month": "04/2024",
                         },
                         {
-                            "month": "05/2024",
-                            "project-5": 0
+                            "month": "05/2024"
                         },
                         {
-                            "month": "06/2024",
-                            "project-5": 0
+                            "month": "06/2024"
                         },
                         {
                             "month": "07/2024",
@@ -197,12 +175,10 @@ class ResourceUsageTests(TestCase):
                             "month": "04/2024",
                         },
                         {
-                            "month": "05/2024",
-                            "project-5": 0
+                            "month": "05/2024"
                         },
                         {
-                            "month": "06/2024",
-                            "project-5": 0
+                            "month": "06/2024"
                         },
                         {
                             "month": "07/2024",
