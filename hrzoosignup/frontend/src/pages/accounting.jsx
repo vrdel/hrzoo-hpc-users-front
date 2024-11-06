@@ -146,6 +146,270 @@ const MyAccounting = () => {
   }
 
   if (data) {
+    let n = (supekCPUProjects.length > 0) + (supekGPUProjects.length > 0) + (padobranProjects.length > 0) + (galaxyProjects.length > 0) + (jupyterCPUProjects.length > 0) + (jupyterGPUProjects.length > 0)
+    let col_md = 4
+    let graph_width = 450
+    let di = 3
+    let groups = []
+    if (n <= 4) {
+      col_md = 6
+      graph_width = 600
+      di = 2
+    }
+
+    if (supekCPUProjects.length > 0)
+      groups.push(
+        <Col md={col_md}>
+          <h4>Supek CPUH</h4>
+          {
+            supekCPUProjects.length > 0 &&
+              <Button
+                color="secondary"
+                size="sm"
+                onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
+              >
+                { useLogScaleSupekCPU ? linearScale : logScale }
+              </Button>
+          }
+          <BarChart
+            width={ graph_width }
+            height={ 300 }
+            data={ "supek" in data ? data["supek"]["cpuh"] : [] }
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            {
+              useLogScaleSupekCPU ?
+                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
+              :
+                <YAxis padding={{ top: 10 }} />
+            }
+            {
+              supekCPUProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
+            }
+          </BarChart>
+        </Col>
+      )
+
+    if (supekGPUProjects.length > 0)
+      groups.push(
+        <Col md={col_md}>
+          <h4>Supek GPUH</h4>
+          {
+            supekGPUProjects.length > 0 &&
+              <Button
+                color="secondary"
+                size="sm"
+                onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
+              >
+                { useLogScaleSupekGPU ? linearScale : logScale }
+              </Button>
+          }
+          <BarChart
+            width={ graph_width }
+            height={ 300 }
+            data={ "supek" in data ? data["supek"]["gpuh"] : [] }
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            {
+              useLogScaleSupekGPU ?
+                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
+              :
+                <YAxis padding={{ top: 10 }} />
+            }
+            {
+              supekGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
+            }
+          </BarChart>
+        </Col>
+      )
+
+    if (padobranProjects.length > 0) 
+      groups.push(
+        <Col md={col_md}>
+          <h4>Padobran CPUH</h4>
+          {
+            padobranProjects.length > 0 &&
+              <Button
+                color="secondary"
+                size="sm"
+                onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
+              >
+                { useLogScalePadobran ? linearScale : logScale }
+              </Button>
+          }
+          <BarChart
+            width={ graph_width }
+            height={ 300 }
+            data={ "padobran" in data ? data["padobran"]["cpuh"] : [] }
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            {
+              useLogScalePadobran ?
+                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
+              :
+                <YAxis padding={{ top: 10 }} />
+            }
+            {
+              padobranProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
+            }
+          </BarChart>
+        </Col>
+      )
+
+    if (galaxyProjects.length > 0)
+      groups.push(
+        <Col md={col_md}>
+          <h4>Galaxy CPUH</h4>
+          {
+            galaxyProjects.length > 0 &&
+              <Button
+                color="secondary"
+                size="sm"
+                onClick={ () => setUseLogScaleGalaxy(!useLogScaleGalaxy) }
+              >
+                { useLogScaleGalaxy ? linearScale : logScale }
+              </Button>
+          }
+          <BarChart
+            width={ graph_width }
+            height={ 300 }
+            data={ "galaxy" in data ? data["galaxy"]["cpuh"] : [] }
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            {
+              useLogScaleGalaxy ?
+                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
+              :
+                <YAxis padding={{ top: 10 }} />
+            }
+            {
+              galaxyProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
+            }
+          </BarChart>
+        </Col>
+      )
+
+    if (jupyterCPUProjects.length > 0)
+      groups.push(
+        <Col md={col_md}>
+          <h4>Jupyter CPUH</h4>
+          {
+            jupyterCPUProjects.length > 0 &&
+              <Button
+                color="secondary"
+                size="sm"
+                onClick={ () => setUseLogScaleJupyterCPU(!useLogScaleJupyterCPU) }
+              >
+                { useLogScaleJupyterCPU ? linearScale : logScale }
+              </Button>
+          }
+          <BarChart
+            width={ graph_width }
+            height={ 300 }
+            data={ "jupyter" in data ? data["jupyter"]["cpuh"] : [] }
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            {
+              useLogScaleJupyterCPU ?
+                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
+              :
+                <YAxis padding={{ top: 10 }} />
+            }
+            {
+              jupyterCPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
+            }
+          </BarChart>
+        </Col>
+      )
+
+    if (jupyterGPUProjects.length > 0)
+      groups.push(
+        <Col md={col_md}>
+          <h4>Jupyter GPUH</h4>
+          {
+            jupyterGPUProjects.length > 0 &&
+              <Button
+                color="secondary"
+                size="sm"
+                onClick={ () => setUseLogScaleJupyterGPU(!useLogScaleJupyterGPU) }
+              >
+                { useLogScaleJupyterGPU ? linearScale : logScale }
+              </Button>
+          }
+          <BarChart
+            width={ graph_width }
+            height={ 300 }
+            data={ "jupyter" in data ? data["jupyter"]["gpuh"] : [] }
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            {
+              useLogScaleJupyterGPU ?
+                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
+              :
+                <YAxis padding={{ top: 10 }} />
+            }
+            {
+              jupyterGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
+            }
+          </BarChart>
+        </Col>
+      )
+
+    const rows = []
+    for (let i = 0; i < groups.length; i = i + di) {
+      let chosen_group = groups.slice(i, di + 1)
+      if (i == 0)
+        rows.push(
+          <Row>
+            {
+              chosen_group.map(column => column)
+            }
+          </Row>
+        )
+    }
+
     if (supekCPUProjects.length == 0 && supekGPUProjects.length == 0 && padobranProjects.length == 0 && galaxyProjects.length == 0 && jupyterCPUProjects.length == 0 && jupyterGPUProjects.length == 0)
       return (
         <Row className="mt-3 mb-3">
@@ -188,224 +452,8 @@ const MyAccounting = () => {
             </PageTitle>
           </Row>
           <Row>
-            <Col md={4}>
-              <h4>Supek CPUH</h4>
-              {
-                supekCPUProjects.length > 0 &&
-                  <Button
-                    color="secondary"
-                    size="sm"
-                    onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
-                  >
-                    { useLogScaleSupekCPU ? linearScale : logScale }
-                  </Button>
-              }
-              <BarChart
-                width={ 450 }
-                height={ 300 }
-                data={ "supek" in data ? data["supek"]["cpuh"] : [] }
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                {
-                  useLogScaleSupekCPU ?
-                    <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-                  :
-                    <YAxis padding={{ top: 10 }} />
-                }
-                {
-                  supekCPUProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
-                }
-              </BarChart>
-            </Col>
-            <Col md={4}>
-              <h4>Supek GPUH</h4>
-              {
-                supekGPUProjects.length > 0 &&
-                  <Button
-                    color="secondary"
-                    size="sm"
-                    onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
-                  >
-                    { useLogScaleSupekGPU ? linearScale : logScale }
-                  </Button>
-              }
-              <BarChart
-                width={ 450 }
-                height={ 300 }
-                data={ "supek" in data ? data["supek"]["gpuh"] : [] }
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                {
-                  useLogScaleSupekGPU ?
-                    <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-                  :
-                    <YAxis padding={{ top: 10 }} />
-                }
-                {
-                  supekGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-                }
-              </BarChart>
-            </Col>
-            <Col md={4}>
-              <h4>Padobran CPUH</h4>
-              {
-                padobranProjects.length > 0 &&
-                  <Button
-                    color="secondary"
-                    size="sm"
-                    onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
-                  >
-                    { useLogScalePadobran ? linearScale : logScale }
-                  </Button>
-              }
-              <BarChart
-                width={ 450 }
-                height={ 300 }
-                data={ "padobran" in data ? data["padobran"]["cpuh"] : [] }
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                {
-                  useLogScalePadobran ?
-                    <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-                  :
-                    <YAxis padding={{ top: 10 }} />
-                }
-                {
-                  padobranProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-                }
-              </BarChart>
-            </Col>
           </Row>
           <Row className="mt-3">
-            <Col md={4}>
-              <h4>Galaxy CPUH</h4>
-              {
-                galaxyProjects.length > 0 &&
-                  <Button
-                    color="secondary"
-                    size="sm"
-                    onClick={ () => setUseLogScaleGalaxy(!useLogScaleGalaxy) }
-                  >
-                    { useLogScaleGalaxy ? linearScale : logScale }
-                  </Button>
-              }
-              <BarChart
-                width={ 450 }
-                height={ 300 }
-                data={ "galaxy" in data ? data["galaxy"]["cpuh"] : [] }
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                {
-                  useLogScaleGalaxy ?
-                    <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-                  :
-                    <YAxis padding={{ top: 10 }} />
-                }
-                {
-                  galaxyProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
-                }
-              </BarChart>
-            </Col>
-            <Col md={4}>
-              <h4>Jupyter CPUH</h4>
-              {
-                jupyterCPUProjects.length > 0 &&
-                  <Button
-                    color="secondary"
-                    size="sm"
-                    onClick={ () => setUseLogScaleJupyterCPU(!useLogScaleJupyterCPU) }
-                  >
-                    { useLogScaleJupyterCPU ? linearScale : logScale }
-                  </Button>
-              }
-              <BarChart
-                width={ 450 }
-                height={ 300 }
-                data={ "jupyter" in data ? data["jupyter"]["cpuh"] : [] }
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                {
-                  useLogScaleJupyterCPU ?
-                    <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-                  :
-                    <YAxis padding={{ top: 10 }} />
-                }
-                {
-                  jupyterCPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-                }
-              </BarChart>
-            </Col>
-            <Col md={4}>
-              <h4>Jupyter GPUH</h4>
-              {
-                jupyterGPUProjects.length > 0 &&
-                  <Button
-                    color="secondary"
-                    size="sm"
-                    onClick={ () => setUseLogScaleJupyterGPU(!useLogScaleJupyterGPU) }
-                  >
-                    { useLogScaleJupyterGPU ? linearScale : logScale }
-                  </Button>
-              }
-              <BarChart
-                width={ 450 }
-                height={ 300 }
-                data={ "jupyter" in data ? data["jupyter"]["gpuh"] : [] }
-                margin={{
-                  top: 5,
-                  right: 30,
-                  left: 20,
-                  bottom: 5
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                {
-                  useLogScaleJupyterGPU ?
-                    <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-                  :
-                    <YAxis padding={{ top: 10 }} />
-                }
-                {
-                  jupyterGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-                }
-              </BarChart>
-            </Col>
           </Row>
           <Row className="mt-3">
             <Col md={4}></Col>
@@ -422,6 +470,9 @@ const MyAccounting = () => {
               </div>
             </Col>
           </Row>
+          {
+            rows.map(row => row)
+          }
         </>
       )
   }
