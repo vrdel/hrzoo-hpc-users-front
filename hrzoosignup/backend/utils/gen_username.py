@@ -1,17 +1,11 @@
 from unidecode import unidecode
 from django.conf import settings
 from django.contrib.auth import get_user_model
+import re
 
 
 def only_alnum(s: str) -> str:
-    if '-' in s:
-        s = s.split('-')
-        s = ''.join(s)
-    if ' ' in s:
-        s = s.split(' ')
-        s = ''.join(s)
-
-    return s
+    return re.sub(r'\W', '', s)
 
 
 def gen_username(first, last):
