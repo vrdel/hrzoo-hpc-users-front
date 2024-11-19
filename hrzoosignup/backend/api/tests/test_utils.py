@@ -579,7 +579,7 @@ def create_mock_db():
     )
     models.ResourceUsage.objects.create(
         user=user2,
-        project=project3,
+        project=project5,
         resource_name="padobran",
         end_time=timezone.make_aware(
             datetime.datetime.fromtimestamp(1720520659),  # 9 Jul 2024
@@ -615,5 +615,44 @@ def create_mock_db():
             "qtime": "8",
             "cpuh": 0,
             "gpuh": 0.1367
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user2,
+        project=project5,
+        resource_name="jupyter",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1723976396),  # 18 Aug 2024
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jupyter_cpu_h": 0.73,
+            "jupyter_gpu_h": 0.18
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user2,
+        project=project5,
+        resource_name="jupyter",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1721557976),  # 21 Jul 2024
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jupyter_cpu_h": 2.34,
+            "jupyter_gpu_h": 0
+        }
+    )
+    models.ResourceUsage.objects.create(
+        user=user2,
+        project=project5,
+        resource_name="jupyter",
+        end_time=timezone.make_aware(
+            datetime.datetime.fromtimestamp(1721756893),  # 23 Jul 2024
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "jupyter_cpu_h": 2.83,
+            "jupyter_gpu_h": 3.43
         }
     )

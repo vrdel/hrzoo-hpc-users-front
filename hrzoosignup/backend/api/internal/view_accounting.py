@@ -5,12 +5,12 @@ import math
 import pandas as pd
 from backend import models
 from dateutil.relativedelta import relativedelta
+from django.core.cache import cache
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.core.cache import cache
 
 
 def date_today():
@@ -42,7 +42,9 @@ def usage4user(username):
                 "resource_name",
                 "end_time",
                 "accounting_record__cpuh",
-                "accounting_record__gpuh"
+                "accounting_record__gpuh",
+                "accounting_record__jupyter_cpu_h",
+                "accounting_record__jupyter_gpu_h"
             )
         )
 
@@ -52,7 +54,9 @@ def usage4user(username):
             "project__date_start": "project_start",
             "resource_name": "resource",
             "accounting_record__cpuh": "cpuh",
-            "accounting_record__gpuh": "gpuh"
+            "accounting_record__gpuh": "gpuh",
+            "accounting_record__jupyter_cpu_h": "jupyter_cpuh",
+            "accounting_record__jupyter_gpu_h": "jupyter_gpuh"
         })
 
         df = df.sort_values(by=["end_time"])
@@ -75,31 +79,41 @@ def usage4user(username):
                     (df_resource["end_time"].dt.date <= month_end) *
                     (df_resource["project_end"] >= month_start) *
                     (df_resource["project_start"] <= month_end)
-                    ]
+                ]
 
                 active_projects_in_month = df_resource[
                     (df_resource["project_end"] >= month_start) *
                     (df_resource["project_start"] <= month_end)
-                    ]
+                ]
 
                 projects = active_projects_in_month["project"].unique()
 
                 cpu_dict = dict()
                 gpu_dict = dict()
+                if "month" not in cpu_dict:
+                    cpu_dict.update({"month": f"{month:02d}/{year}"})
+
+                if "month" not in gpu_dict:
+                    gpu_dict.update({"month": f"{month:02d}/{year}"})
+
                 for project in projects:
                     df_project = df_month[df_month["project"] == project]
-                    proj_cpuh = float(df_project["cpuh"].sum(axis=0))
-                    proj_gpuh = float(df_project["gpuh"].sum(axis=0))
-                    if "month" not in cpu_dict:
-                        cpu_dict.update({"month": f"{month:02d}/{year}"})
+                    if resource == "jupyter":
+                        proj_cpuh = float(
+                            df_project["jupyter_cpuh"].sum(axis=0)
+                        )
+                        proj_gpuh = float(
+                            df_project["jupyter_gpuh"].sum(axis=0)
+                        )
 
-                    if proj_cpuh > 0:
+                    else:
+                        proj_cpuh = float(df_project["cpuh"].sum(axis=0))
+                        proj_gpuh = float(df_project["gpuh"].sum(axis=0))
+
+                    if math.floor(proj_cpuh) > 0:
                         cpu_dict.update({project: math.floor(proj_cpuh)})
 
-                    if "month" not in gpu_dict:
-                        gpu_dict.update({"month": f"{month:02d}/{year}"})
-
-                    if proj_gpuh:
+                    if math.floor(proj_gpuh) > 0:
                         gpu_dict.update({project: math.floor(proj_gpuh)})
 
                 if cpu_dict:
@@ -108,10 +122,16 @@ def usage4user(username):
                 if gpu_dict:
                     gpuh.append(gpu_dict)
 
-            output.update({resource: {
-                "cpuh": cpuh,
-                "gpuh": gpuh
-            }})
+            if resource == "padobran":
+                output.update({resource: {
+                    "cpuh": cpuh,
+                }})
+
+            else:
+                output.update({resource: {
+                    "cpuh": cpuh,
+                    "gpuh": gpuh
+                }})
 
     return output
 
