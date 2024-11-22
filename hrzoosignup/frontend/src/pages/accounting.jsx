@@ -410,12 +410,15 @@ const MyAccounting = () => {
           </Row>
           <Row className="mt-3">
           </Row>
+          {
+            rows.map(row => row)
+          }
           <Row className="mt-3">
             <Col md={4}></Col>
             <Col md={4} className="d-flex align-items-center justify-content-center">
               <div>
                 {
-                  listProjects.map((proj, index) => (
+                  subsetOfProjects.map((proj, index) => (
                     <p key={ proj }>
                       <FontAwesomeIcon icon={ faSquare } key={ proj } className="mt-1" color={ colors[index] } />
                       { " " }{ proj }
@@ -425,9 +428,6 @@ const MyAccounting = () => {
               </div>
             </Col>
           </Row>
-          {
-            rows.map(row => row)
-          }
         </>
       )
   }
