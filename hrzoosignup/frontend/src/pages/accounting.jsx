@@ -2,7 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { fetchAccountingData } from "Api/accounting";
-import { Button, Input, Col,Row, Label, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
+import { 
+  Button, 
+  ButtonGroup,
+  Input, 
+  Col,
+  Row, 
+  Label, 
+  Dropdown, 
+  DropdownMenu, 
+  DropdownItem, 
+  DropdownToggle 
+} from "reactstrap";
 import { PageTitle } from 'Components/PageTitle';
 import { XAxis, YAxis, CartesianGrid, Bar, BarChart } from 'recharts';
 import { toast } from 'react-toastify';
@@ -35,12 +46,7 @@ const MyAccounting = () => {
   const [galaxyProjects, setGalaxyProjects] = useState([])
   const [jupyterCPUProjects, setJupyterCPUProjects] = useState([])
   const [jupyterGPUProjects, setJupyterGPUProjects] = useState([])
-  const [useLogScaleSupekCPU, setUseLogScaleSupekCPU] = useState(false)
-  const [useLogScaleSupekGPU, setUseLogScaleSupekGPU] = useState(false)
-  const [useLogScalePadobran, setUseLogScalePadobran] = useState(false)
-  const [useLogScaleGalaxy, setUseLogScaleGalaxy] = useState(false)
-  const [useLogScaleJupyterCPU, setUseLogScaleJupyterCPU] = useState(false)
-  const [useLogScaleJupyterGPU, setUseLogScaleJupyterGPU] = useState(false)
+  const [useLogScale, setUseLogScale] = useState(false)
   const [listProjects, setListProjects] = useState([])
   const [subsetOfProjects, setSubsetOfProjects] = useState([])
   const [isOpen, setIsOpen] = useState(false)
@@ -161,16 +167,6 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Supek CPUH</h4>
-          {
-            supekCPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
-              >
-                { useLogScaleSupekCPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
@@ -185,7 +181,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleSupekCPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -201,16 +197,6 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Supek GPUH</h4>
-          {
-            supekGPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
-              >
-                { useLogScaleSupekGPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
@@ -225,7 +211,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleSupekGPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -241,16 +227,6 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Padobran CPUH</h4>
-          {
-            padobranProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
-              >
-                { useLogScalePadobran ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
@@ -265,7 +241,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScalePadobran ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -281,16 +257,6 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Galaxy CPUH</h4>
-          {
-            galaxyProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleGalaxy(!useLogScaleGalaxy) }
-              >
-                { useLogScaleGalaxy ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
@@ -305,7 +271,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleGalaxy ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -321,16 +287,6 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Jupyter CPUH</h4>
-          {
-            jupyterCPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleJupyterCPU(!useLogScaleJupyterCPU) }
-              >
-                { useLogScaleJupyterCPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
@@ -345,7 +301,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleJupyterCPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -361,16 +317,6 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Jupyter GPUH</h4>
-          {
-            jupyterGPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleJupyterGPU(!useLogScaleJupyterGPU) }
-              >
-                { useLogScaleJupyterGPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
@@ -385,7 +331,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleJupyterGPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -426,29 +372,38 @@ const MyAccounting = () => {
         <>
           <Row>
             <PageTitle pageTitle={ pageTitle }>
-              <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
-                <DropdownToggle caret>
-                  <FormattedMessage
-                    description="myaccounting-projects-button"
-                    defaultMessage="Projekti"
-                  />
-                </DropdownToggle>
-                <DropdownMenu>
-                  {
-                    listProjects.map((project) => 
-                      <DropdownItem key={ project } toggle={ false }>
-                        <Input 
-                          type="checkbox" 
-                          className="mr-1" 
-                          checked={ subsetOfProjects.indexOf(project) >= 0 } 
-                          onClick={ () => onProjectSelect(project) }
-                        />
-                        <Label check>{ project }</Label>
-                      </DropdownItem>
-                    )
-                  }
-                </DropdownMenu>
-              </Dropdown>
+              <ButtonGroup>
+                <Button
+                  color="secondary"
+                  size="sm"
+                  onClick={ () => setUseLogScale(!useLogScale) }
+                >
+                  { useLogScale ? linearScale : logScale }
+                </Button>
+                <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
+                  <DropdownToggle caret>
+                    <FormattedMessage
+                      description="myaccounting-projects-button"
+                      defaultMessage="Projekti"
+                    />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {
+                      listProjects.map((project) => 
+                        <DropdownItem key={ project } toggle={ false }>
+                          <Input 
+                            type="checkbox" 
+                            className="mr-1" 
+                            checked={ subsetOfProjects.indexOf(project) >= 0 } 
+                            onClick={ () => onProjectSelect(project) }
+                          />
+                          <Label check>{ project }</Label>
+                        </DropdownItem>
+                      )
+                    }
+                  </DropdownMenu>
+                </Dropdown>
+              </ButtonGroup>
             </PageTitle>
           </Row>
           <Row>
