@@ -21,7 +21,11 @@ import {
 import 'Styles/login.css';
 import { doUserPassLogin } from 'Api/auth';
 import { AuthContext } from 'Components/AuthContextProvider';
-import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
+import { 
+  defaultAuthnRedirect, 
+  defaultAuthnRedirectStaff,
+  defaultAuthnRedirectWithAccounting
+} from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { IntlContext } from 'Components/IntlContextProvider';
@@ -45,8 +49,12 @@ const LoginPrivate = ({sessionData=undefined}) => {
       if (sessionData.userdetails.is_staff
         || sessionData.userdetails.is_superuser)
         navigate(defaultAuthnRedirectStaff)
-      else
-        navigate(defaultAuthnRedirect)
+      else {
+        if (sessionData.config.enable_accounting)
+          navigate(defaultAuthnRedirectWithAccounting)
+        else
+          navigate(defaultAuthnRedirect)
+      }
   }, [sessionData])
 
   async function doLogin(username, password) {

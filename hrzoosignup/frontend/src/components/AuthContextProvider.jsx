@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { defaultUnAuthnRedirect,
   defaultAuthnRedirect,
-  defaultAuthnRedirectStaff
+  defaultAuthnRedirectStaff,
+  defaultAuthnRedirectWithAccounting
 } from 'Config/default-redirect';
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -28,7 +29,9 @@ export const AuthContextProvider = ( {children} ) => {
     const defaultRedirect = session.userdetails.is_staff
       || session.userdetails.is_superuser
       ? defaultAuthnRedirectStaff
-      : defaultAuthnRedirect
+        : enableAccounting 
+          ? defaultAuthnRedirectWithAccounting 
+            : defaultAuthnRedirect
 
     let wantVisit = JSON.parse(localStorage.getItem('referrer'))
     if (wantVisit && wantVisit.length > 0) {

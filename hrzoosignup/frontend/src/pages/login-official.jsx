@@ -12,7 +12,11 @@ import {
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
-import { defaultAuthnRedirect, defaultAuthnRedirectStaff } from 'Config/default-redirect';
+import { 
+  defaultAuthnRedirect, 
+  defaultAuthnRedirectStaff,
+  defaultAuthnRedirectWithAccounting
+} from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
@@ -29,8 +33,12 @@ const LoginOfficial = ({sessionData=undefined}) => {
       if (sessionData.userdetails.is_staff
         || sessionData.userdetails.is_superuser)
         navigate(defaultAuthnRedirectStaff)
-      else
-        navigate(defaultAuthnRedirect)
+      else {
+        if (sessionData.config.enable_accounting)
+          navigate(defaultAuthnRedirectWithAccounting)
+        else
+          navigate(defaultAuthnRedirect)
+      }
   }, [sessionData])
 
   return (
