@@ -171,63 +171,30 @@ def usage4user(username):
                     gpuh_monthly.append(gpu_monthly)
 
             if resource == "padobran":
-                if "cumulative" in output:
-                    output["cumulative"].update({
-                        resource: {
-                            "cpuh": cpuh_cummulative
-                        }
-                    })
-                    output["monthly"].update({
-                        resource: {
-                            "cpuh": cpuh_monthly
-                        }
-                    })
-
-                else:
-                    output.update({
+                output.update({
+                    resource: {
                         "cumulative": {
-                            resource: {
-                                "cpuh": cpuh_cummulative
-                            }
+                            "cpuh": cpuh_cummulative
                         },
                         "monthly": {
-                            resource: {
-                                "cpuh": cpuh_monthly
-                            }
+                            "cpuh": cpuh_monthly
                         }
-                    })
+                    }
+                })
 
             else:
-                if "cumulative" in output:
-                    output["cumulative"].update({
-                        resource: {
+                output.update({
+                    resource: {
+                        "cumulative": {
                             "cpuh": cpuh_cummulative,
                             "gpuh": gpuh_cummulative
-                        }
-                    })
-                    output["monthly"].update({
-                        resource: {
+                        },
+                        "monthly": {
                             "cpuh": cpuh_monthly,
                             "gpuh": gpuh_monthly
                         }
-                    })
-
-                else:
-                    output.update({
-                        "cumulative": {
-                            resource: {
-                                "cpuh": cpuh_cummulative,
-                                "gpuh": gpuh_cummulative
-
-                            }
-                        },
-                        "monthly": {
-                            resource: {
-                                "cpuh": cpuh_monthly,
-                                "gpuh": gpuh_monthly
-                            }
-                        }
-                    })
+                    }
+                })
 
     return output
 

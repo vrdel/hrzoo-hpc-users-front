@@ -26,8 +26,8 @@ class ResourceUsageTests(TestCase):
         response = self.view(request)
         self.assertEqual(
             response.data, {
-                "cumulative": {
-                    "supek": {
+                "supek": {
+                    "cumulative": {
                         "cpuh": [
                             {
                                 "month": "02/2024",
@@ -88,10 +88,8 @@ class ResourceUsageTests(TestCase):
                                 "month": "08/2024"
                             }
                         ]
-                    }
-                },
-                "monthly": {
-                    "supek": {
+                    },
+                    "monthly": {
                         "cpuh": [
                             {
                                 "month": "02/2024"
@@ -166,8 +164,8 @@ class ResourceUsageTests(TestCase):
         response = self.view(request)
         self.assertEqual(
             response.data, {
-                "cumulative": {
-                    "padobran": {
+                "padobran": {
+                    "cumulative": {
                         "cpuh": [
                             {
                                 "month": "02/2024",
@@ -192,7 +190,34 @@ class ResourceUsageTests(TestCase):
                             }
                         ]
                     },
-                    "jupyter": {
+                    "monthly": {
+                        "cpuh": [
+                            {
+                                "month": "02/2024",
+                            },
+                            {
+                                "month": "03/2024",
+                            },
+                            {
+                                "month": "04/2024",
+                            },
+                            {
+                                "month": "05/2024"
+                            },
+                            {
+                                "month": "06/2024"
+                            },
+                            {
+                                "month": "07/2024"
+                            },
+                            {
+                                "month": "08/2024"
+                            }
+                        ]
+                    }
+                },
+                "jupyter": {
+                    "cumulative": {
                         "cpuh": [
                             {
                                 "month": "02/2024",
@@ -243,35 +268,8 @@ class ResourceUsageTests(TestCase):
                                 "project-5": 3
                             }
                         ]
-                    }
-                },
-                "monthly": {
-                    "padobran": {
-                        "cpuh": [
-                            {
-                                "month": "02/2024",
-                            },
-                            {
-                                "month": "03/2024",
-                            },
-                            {
-                                "month": "04/2024",
-                            },
-                            {
-                                "month": "05/2024"
-                            },
-                            {
-                                "month": "06/2024"
-                            },
-                            {
-                                "month": "07/2024"
-                            },
-                            {
-                                "month": "08/2024"
-                            }
-                        ]
                     },
-                    "jupyter": {
+                    "monthly": {
                         "cpuh": [
                             {
                                 "month": "02/2024",
