@@ -1191,6 +1191,10 @@
     "defaultMessage": "Nema podataka za korisnika u sustavu CroRIS",
     "description": "userinfo-croris-nouserdata"
   },
+  "QQWE80": {
+    "defaultMessage": "Mjesečni prikaz",
+    "description": "myaccounting-monthly-button"
+  },
   "QTwRj9": {
     "defaultMessage": "Jedan institucijski projekt je već prijavljen",
     "description": "newrequest-reason-institutionalready"
@@ -1794,6 +1798,10 @@
   "iZzQAv": {
     "defaultMessage": "Radnje",
     "description": "publickeys-list-actions"
+  },
+  "ifjojK": {
+    "defaultMessage": "Kumulativni prikaz",
+    "description": "myaccounting-cumulative-button"
   },
   "izNmIO": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće dodati suradnike",

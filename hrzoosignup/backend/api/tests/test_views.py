@@ -119,7 +119,7 @@ class ResourceUsageAPITests(TestCase):
         })
 
     def test_post_empty_data(self):
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 11)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
@@ -128,7 +128,7 @@ class ResourceUsageAPITests(TestCase):
             format="json"
         )
         self.assertEqual(request.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 11)
 
     def test_post_data_user_uniqueid(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 11)
@@ -1578,7 +1578,7 @@ class ResourceUsageAPITests(TestCase):
         })
 
     def test_post_data_improper_project_id(self):
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 8)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 11)
         request = self.client.post(
             "/api/v1/accounting/records?resource=supek",
             **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
@@ -1603,7 +1603,7 @@ class ResourceUsageAPITests(TestCase):
             format="json"
         )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(len(models.ResourceUsage.objects.all()), 9)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 12)
         usage = models.ResourceUsage.objects.get(
             accounting_record__jobid="1234566"
         )

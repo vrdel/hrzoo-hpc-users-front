@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   defaultUnAuthnRedirect,
   defaultAuthnRedirect,
-  defaultAuthnRedirectStaff
+  defaultAuthnRedirectStaff,
+  defaultAuthnRedirectWithAccounting
 } from 'Config/default-redirect';
 import { url_ui_prefix } from 'Config/general';
 import { IntlContext } from 'Components/IntlContextProvider';
@@ -27,7 +28,9 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
       const defaultRedirect = sessionData.userdetails.is_staff
         || sessionData.userdetails.is_superuser
         ? defaultAuthnRedirectStaff
-        : defaultAuthnRedirect
+          : sessionData.config.enable_accounting 
+            ? defaultAuthnRedirectWithAccounting 
+              : defaultAuthnRedirect
       let wantVisit = JSON.parse(localStorage.getItem('referrer'))
       if (wantVisit && wantVisit.length > 0) {
         // before - defaultUnAuthnRedirect or path user initially requested

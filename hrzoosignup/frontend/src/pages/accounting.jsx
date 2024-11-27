@@ -2,7 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { fetchAccountingData } from "Api/accounting";
-import { Button, Input, Col,Row, Label, Dropdown, DropdownMenu, DropdownItem, DropdownToggle } from "reactstrap";
+import { 
+  Button, 
+  ButtonGroup,
+  Input, 
+  Col,
+  Row, 
+  Label, 
+  Dropdown, 
+  DropdownMenu, 
+  DropdownItem, 
+  DropdownToggle 
+} from "reactstrap";
 import { PageTitle } from 'Components/PageTitle';
 import { XAxis, YAxis, CartesianGrid, Bar, BarChart } from 'recharts';
 import { toast } from 'react-toastify';
@@ -26,6 +37,16 @@ const logScale = <FormattedMessage
   defaultMessage="Log skala"
 />
 
+const cumulativeDisplay = <FormattedMessage 
+  description="myaccounting-cumulative-button"
+  defaultMessage="Kumulativni prikaz"
+/>
+
+const monthlyDisplay = <FormattedMessage
+  description="myaccounting-monthly-button"
+  defaultMessage="Mjesečni prikaz"
+/>
+
 
 const MyAccounting = () => {
   const { userDetails } = useContext(AuthContext);
@@ -35,12 +56,8 @@ const MyAccounting = () => {
   const [galaxyProjects, setGalaxyProjects] = useState([])
   const [jupyterCPUProjects, setJupyterCPUProjects] = useState([])
   const [jupyterGPUProjects, setJupyterGPUProjects] = useState([])
-  const [useLogScaleSupekCPU, setUseLogScaleSupekCPU] = useState(false)
-  const [useLogScaleSupekGPU, setUseLogScaleSupekGPU] = useState(false)
-  const [useLogScalePadobran, setUseLogScalePadobran] = useState(false)
-  const [useLogScaleGalaxy, setUseLogScaleGalaxy] = useState(false)
-  const [useLogScaleJupyterCPU, setUseLogScaleJupyterCPU] = useState(false)
-  const [useLogScaleJupyterGPU, setUseLogScaleJupyterGPU] = useState(false)
+  const [useLogScale, setUseLogScale] = useState(false)
+  const [showCumulative, setShowCumulative] = useState(false)
   const [listProjects, setListProjects] = useState([])
   const [subsetOfProjects, setSubsetOfProjects] = useState([])
   const [isOpen, setIsOpen] = useState(false)
@@ -81,8 +98,8 @@ const MyAccounting = () => {
       let jupyter_cpu = new Set()
       let jupyter_gpu = new Set()
       if ("supek" in data) {
-        supek_cpu = new Set(data["supek"]["cpuh"].map(item => Object.keys(item)).flat())
-        supek_gpu = new Set(data["supek"]["gpuh"].map(item => Object.keys(item)).flat())
+        supek_cpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+        supek_gpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
         supek_cpu.delete("month")
         supek_gpu.delete("month")
         if (subsetOfProjects.length > 0) {
@@ -95,7 +112,7 @@ const MyAccounting = () => {
       }
 
       if ("padobran" in data) {
-        padobran = new Set(data["padobran"]["cpuh"].map(item => Object.keys(item)).flat())
+        padobran = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
         padobran.delete("month")
         if (subsetOfProjects.length > 0) {
           setPadobranProjects([...padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
@@ -105,7 +122,7 @@ const MyAccounting = () => {
       }
 
       if ("galaxy" in data) {
-        galaxy = new Set(data["galaxy"]["cpuh"].map(item => Object.keys(item)).flat())
+        galaxy = new Set(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
         galaxy.delete("month")
         if (subsetOfProjects.length > 0) {
           setGalaxyProjects([...galaxy].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
@@ -115,8 +132,8 @@ const MyAccounting = () => {
       }
 
       if ("jupyter" in data) {
-        jupyter_cpu = new Set(data["jupyter"]["cpuh"].map(item => Object.keys(item)).flat())
-        jupyter_gpu = new Set(data["jupyter"]["gpuh"].map(item => Object.keys(item)).flat())
+        jupyter_cpu = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+        jupyter_gpu = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
         jupyter_cpu.delete("month")
         jupyter_gpu.delete("month")
         if (subsetOfProjects.length > 0) {
@@ -127,10 +144,9 @@ const MyAccounting = () => {
           setJupyterGPUProjects(Array.from(jupyter_gpu).sort())
         }
       }
-
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran, ...galaxy, ...jupyter_cpu, ...jupyter_gpu])).sort())
     }
-  }, [status, data, subsetOfProjects])
+  }, [status, data, subsetOfProjects, showCumulative])
 
   if (error) {
     toast.error(
@@ -161,20 +177,10 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Supek CPUH</h4>
-          {
-            supekCPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleSupekCPU(!useLogScaleSupekCPU) }
-              >
-                { useLogScaleSupekCPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
-            data={ "supek" in data ? data["supek"]["cpuh"] : [] }
+            data={ "supek" in data ? data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
             margin={{
               top: 5,
               right: 30,
@@ -185,7 +191,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleSupekCPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -201,20 +207,10 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Supek GPUH</h4>
-          {
-            supekGPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleSupekGPU(!useLogScaleSupekGPU) }
-              >
-                { useLogScaleSupekGPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
-            data={ "supek" in data ? data["supek"]["gpuh"] : [] }
+            data={ "supek" in data ? data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] : [] }
             margin={{
               top: 5,
               right: 30,
@@ -225,7 +221,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleSupekGPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -241,20 +237,10 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Padobran CPUH</h4>
-          {
-            padobranProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScalePadobran(!useLogScalePadobran) }
-              >
-                { useLogScalePadobran ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
-            data={ "padobran" in data ? data["padobran"]["cpuh"] : [] }
+            data={ "padobran" in data ? data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
             margin={{
               top: 5,
               right: 30,
@@ -265,7 +251,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScalePadobran ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -281,20 +267,10 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Galaxy CPUH</h4>
-          {
-            galaxyProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleGalaxy(!useLogScaleGalaxy) }
-              >
-                { useLogScaleGalaxy ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
-            data={ "galaxy" in data ? data["galaxy"]["cpuh"] : [] }
+            data={ "galaxy" in data ? data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
             margin={{
               top: 5,
               right: 30,
@@ -305,7 +281,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleGalaxy ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -321,20 +297,10 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Jupyter CPUH</h4>
-          {
-            jupyterCPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleJupyterCPU(!useLogScaleJupyterCPU) }
-              >
-                { useLogScaleJupyterCPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
-            data={ "jupyter" in data ? data["jupyter"]["cpuh"] : [] }
+            data={ "jupyter" in data ? data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
             margin={{
               top: 5,
               right: 30,
@@ -345,7 +311,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleJupyterCPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -361,20 +327,10 @@ const MyAccounting = () => {
       groups.push(
         <Col md={col_md}>
           <h4>Jupyter GPUH</h4>
-          {
-            jupyterGPUProjects.length > 0 &&
-              <Button
-                color="secondary"
-                size="sm"
-                onClick={ () => setUseLogScaleJupyterGPU(!useLogScaleJupyterGPU) }
-              >
-                { useLogScaleJupyterGPU ? linearScale : logScale }
-              </Button>
-          }
           <BarChart
             width={ graph_width }
             height={ 300 }
-            data={ "jupyter" in data ? data["jupyter"]["gpuh"] : [] }
+            data={ "jupyter" in data ? data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] : [] }
             margin={{
               top: 5,
               right: 30,
@@ -385,7 +341,7 @@ const MyAccounting = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="month" />
             {
-              useLogScaleJupyterGPU ?
+              useLogScale ?
                 <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
               :
                 <YAxis padding={{ top: 10 }} />
@@ -426,53 +382,79 @@ const MyAccounting = () => {
         <>
           <Row>
             <PageTitle pageTitle={ pageTitle }>
-              <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
-                <DropdownToggle caret>
-                  <FormattedMessage
-                    description="myaccounting-projects-button"
-                    defaultMessage="Projekti"
-                  />
-                </DropdownToggle>
-                <DropdownMenu>
-                  {
-                    listProjects.map((project) => 
-                      <DropdownItem key={ project } toggle={ false }>
-                        <Input 
-                          type="checkbox" 
-                          className="mr-1" 
-                          checked={ subsetOfProjects.indexOf(project) >= 0 } 
-                          onClick={ () => onProjectSelect(project) }
-                        />
-                        <Label check>{ project }</Label>
-                      </DropdownItem>
-                    )
-                  }
-                </DropdownMenu>
-              </Dropdown>
+              <ButtonGroup
+                className="d-flex align-items-center justify-content-between"
+              >
+                <Button
+                  color="secondary"
+                  className="me-2 rounded"
+                  onClick={ () => setShowCumulative(!showCumulative) }
+                >
+                  { showCumulative ? monthlyDisplay : cumulativeDisplay }
+                </Button>
+                <Button
+                  color="secondary"
+                  className="me-2 rounded"
+                  onClick={ () => setUseLogScale(!useLogScale) }
+                >
+                  { useLogScale ? linearScale : logScale }
+                </Button>
+                <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
+                  <DropdownToggle caret>
+                    <FormattedMessage
+                      description="myaccounting-projects-button"
+                      defaultMessage="Projekti"
+                    />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {
+                      listProjects.map((project) => 
+                        <DropdownItem key={ project } toggle={ false }>
+                          <Input 
+                            type="checkbox" 
+                            className="mr-1" 
+                            checked={ subsetOfProjects.indexOf(project) >= 0 } 
+                            onClick={ () => onProjectSelect(project) }
+                          />
+                          <Label check>{ project }</Label>
+                        </DropdownItem>
+                      )
+                    }
+                  </DropdownMenu>
+                </Dropdown>
+              </ButtonGroup>
             </PageTitle>
           </Row>
           <Row>
           </Row>
           <Row className="mt-3">
           </Row>
+          {
+            rows.map(row => row)
+          }
           <Row className="mt-3">
             <Col md={4}></Col>
             <Col md={4} className="d-flex align-items-center justify-content-center">
               <div>
                 {
-                  listProjects.map((proj, index) => (
-                    <p key={ proj }>
-                      <FontAwesomeIcon icon={ faSquare } key={ proj } className="mt-1" color={ colors[index] } />
-                      { " " }{ proj }
-                    </p>
-                  ))
+                  subsetOfProjects.length > 0 ?
+                    subsetOfProjects.map((proj, index) => (
+                      <p key={ proj }>
+                        <FontAwesomeIcon icon={ faSquare } key={ proj } className="mt-1" color={ colors[index] } />
+                        { " " }{ proj }
+                      </p>
+                    ))
+                  :
+                    listProjects.map((proj, index) => (
+                      <p key={ proj }>
+                        <FontAwesomeIcon icon={ faSquare } key={ proj } className="mt-1" color={ colors[index] } />
+                        { " " }{ proj }
+                      </p>
+                    ))
                 }
               </div>
             </Col>
           </Row>
-          {
-            rows.map(row => row)
-          }
         </>
       )
   }

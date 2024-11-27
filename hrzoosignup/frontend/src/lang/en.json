@@ -1191,6 +1191,10 @@
     "defaultMessage": "There is no data for user in CroRIS system",
     "description": "userinfo-croris-nouserdata"
   },
+  "QQWE80": {
+    "defaultMessage": "Monthly display",
+    "description": "myaccounting-monthly-button"
+  },
   "QTwRj9": {
     "defaultMessage": "One institutional project has already been registered.",
     "description": "newrequest-reason-institutionalready"
@@ -1794,6 +1798,10 @@
   "iZzQAv": {
     "defaultMessage": "Actions",
     "description": "publickeys-list-actions"
+  },
+  "ifjojK": {
+    "defaultMessage": "Cumulative display",
+    "description": "myaccounting-cumulative-button"
   },
   "izNmIO": {
     "defaultMessage": "Project is not active, so it is not possible to add collaborators",
