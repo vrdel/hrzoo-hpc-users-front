@@ -64,12 +64,16 @@ class Command(BaseCommand):
                 raise exc
             else:
                 for project in response:
-                    project = json.loads(project)
+                    try:
+                        project = json.loads(project)
 
-                    projects_dates[project.get('id')] = {
-                        'start': project.get('pocetak'),
-                        'end': project.get('kraj')
-                    }
+                        projects_dates[project.get('id')] = {
+                            'start': project.get('pocetak'),
+                            'end': project.get('kraj')
+                        }
+                    except TypeError as exc:
+                        self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
+                        continue
 
             return projects_dates
 
