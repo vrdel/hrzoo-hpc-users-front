@@ -2,6 +2,7 @@ from django.core.management.commands.flush import Command as FlushCommand
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Permission
 
+
 class Command(FlushCommand):
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)
