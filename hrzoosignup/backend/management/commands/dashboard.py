@@ -58,39 +58,36 @@ class Command(BaseCommand):
             if ustanova_id:
                 day = calendar.monthrange(options["year"], options["month"])[1]
                 date = f"{options['year']}-{options['month']:02d}-{day}"
-                response1 = requests.post(
-                    settings.DASHBOARD_API_INDICATORS,
-                    json={
-                        "ustanovaId": ustanova_id,
-                        "pokazateljId": 7,
-                        "vrijednost": indicators.users(institution=institution),
-                        "datum": date
-                    },
-                    headers={"Authorization": f"Basic {token.decode('ascii')}"}
-                )
 
-                if not response1.ok:
-                    self.stderr.write(
-                        f"Error sending indicator 7: "
-                        f"{response1.status_code} {response1.reason}"
+                data2send = {
+                    "7": indicators.users(institution=institution),
+                    "8": indicators.projects(institution=institution),
+                    "36": indicators.supek_cpu(institution=institution),
+                    "37": indicators.vrancic_cpu(institution=institution),
+                    "83": indicators.padobran(institution=institution),
+                    "84": indicators.jupyter_cpu(institution=institution),
+                    "85": indicators.supek_gpu(institution=institution),
+                    "86": indicators.vrancic_gpu(institution=institution),
+                    "87": indicators.jupyter_gpu(institution=institution)
+                }
+
+                for indicator, value in data2send.items():
+                    response = requests.post(
+                        settings.DASHBOARD_API_INDICATORS,
+                        json={
+                            "ustanovaId": ustanova_id,
+                            "pokazateljId": int(indicator),
+                            "vrijednost": value,
+                            "datum": date
+                        },
+                        headers={
+                            "Authorization": f"Basic {token.decode('ascii')}"
+                        }
                     )
-                    continue
 
-                response2 = requests.post(
-                    settings.DASHBOARD_API_INDICATORS,
-                    json={
-                        "ustanovaId": ustanova_id,
-                        "pokazateljId": 8,
-                        "vrijednost": indicators.projects(
-                            institution=institution
-                        ),
-                        "datum": date
-                    },
-                    headers={"Authorization": f"Basic {token.decode('ascii')}"}
-                )
-
-                if not response2.ok:
-                    self.stderr.write(
-                        f"Error sending indicator 8: "
-                        f"{response2.status_code} {response2.reason}"
-                    )
+                    if not response.ok:
+                        self.stderr.write(
+                            f"Error sending indicator {indicator}: "
+                            f"{response.status_code} {response.reason}"
+                        )
+                        continue
