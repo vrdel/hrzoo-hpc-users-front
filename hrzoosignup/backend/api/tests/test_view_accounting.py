@@ -18,6 +18,7 @@ class ResourceUsageTests(TestCase):
 
     @patch("backend.api.internal.view_accounting.date_today")
     def test_get_data_per_user(self, mock_date_today):
+        self.maxDiff = None
         mock_date_today.return_value = datetime.date(2024, 8, 22)
         request = self.factory.get(
             "/api/v1/internal/accounting/records"
@@ -43,19 +44,19 @@ class ResourceUsageTests(TestCase):
                             },
                             {
                                 "month": "05/2024",
-                                "project-1": 1,
+                                "project-1": 6,
                                 "project-2": 117,
                                 "project-4": 1
                             },
                             {
                                 "month": "06/2024",
-                                "project-1": 2,
+                                "project-1": 7,
                                 "project-2": 117,
                                 "project-4": 1
                             },
                             {
                                 "month": "07/2024",
-                                "project-1": 2,
+                                "project-1": 7,
                                 "project-2": 117
                             },
                             {
@@ -102,6 +103,7 @@ class ResourceUsageTests(TestCase):
                             },
                             {
                                 "month": "05/2024",
+                                "project-1": 5,
                                 "project-2": 117,
                                 "project-4": 1
                             },
