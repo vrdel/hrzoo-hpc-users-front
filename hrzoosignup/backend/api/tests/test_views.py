@@ -1507,19 +1507,34 @@ class ResourceUsageAPITests(TestCase):
                 "usage": [
                     {
                         "project": "project-3",
-                        "cpuh": 2304,
-                        "gpuh": 24,
-                        "end_time": 1727906399
+                        "end_time": 1727906399,
+                        "start_time": 1727733601,
+                        "instance_id": "1212121212",
+                        "vcpus": 16,
+                        "started_at": 1725015063,
+                        "ended_at": None,
+                        "ngpus": 1,
+                        "flavor": "m1.gpu.1"
                     },
                     {
                         "project": "project-4",
-                        "cpuh": 3072,
-                        "end_time": 1727906399
+                        "end_time": 1727906399,
+                        "start_time": 1727733601,
+                        "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
+                        "vcpus": 4,
+                        "started_at": 1727782030,
+                        "ended_at": None,
+                        "flavor": "m1.half.windows"
                     },
                     {
                         "project": "project-1",
-                        "gpuh": 72,
-                        "end_time": 1727906399
+                        "end_time": 1727906399,
+                        "start_time": 1727733601,
+                        "instance_id": "13241243135132",
+                        "vcpus": 64,
+                        "started_at": 1719313795,
+                        "ended_at": 1727761972,
+                        "flavor": "m1.medium"
                     }
                 ]
             },
@@ -1549,8 +1564,15 @@ class ResourceUsageAPITests(TestCase):
             )
         )
         self.assertEqual(usage1.accounting_record, {
-            "cpuh": 2304,
-            "gpuh": 24
+            "start_time": 1727733601,
+            "instance_id": "1212121212",
+            "vcpus": 16,
+            "started_at": 1725015063,
+            "ended_at": None,
+            "ngpus": 1,
+            "flavor": "m1.gpu.1",
+            "cpuh": 767.9911,
+            "gpuh": 47.9994
         })
         self.assertEqual(usage2.user, None)
         self.assertEqual(usage2.resource_name, "cloud")
@@ -1561,8 +1583,15 @@ class ResourceUsageAPITests(TestCase):
             )
         )
         self.assertEqual(usage2.accounting_record, {
-            "cpuh": 3072,
-            "gpuh": None
+            "start_time": 1727733601,
+            "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
+            "vcpus": 4,
+            "ngpus": None,
+            "started_at": 1727782030,
+            "ended_at": None,
+            "flavor": "m1.half.windows",
+            "cpuh": 138.1878,
+            "gpuh": 0
         })
         self.assertEqual(usage3.user, None)
         self.assertEqual(usage3.resource_name, "cloud")
@@ -1573,8 +1602,15 @@ class ResourceUsageAPITests(TestCase):
             )
         )
         self.assertEqual(usage3.accounting_record, {
-            "gpuh": 72,
-            "cpuh": None
+            "start_time": 1727733601,
+            "instance_id": "13241243135132",
+            "vcpus": 64,
+            "ngpus": None,
+            "started_at": 1719313795,
+            "ended_at": 1727761972,
+            "flavor": "m1.medium",
+            "gpuh": 0,
+            "cpuh": 504.3733
         })
 
     def test_post_data_improper_project_id(self):

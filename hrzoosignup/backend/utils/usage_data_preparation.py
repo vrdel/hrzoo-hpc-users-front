@@ -1,6 +1,7 @@
 import copy
 import datetime
 import json
+import math
 
 import pandas as pd
 from backend import models
@@ -18,7 +19,27 @@ RESOURCES_TAGS_MAPPING = {
 
 def _calculate_processor_hour(data, key):
     try:
-        return round(int(data[key]) * int(data["walltime"]) / 3600., 4)
+        if "walltime" in data:
+            return round(int(data[key]) * int(data["walltime"]) / 3600., 4)
+
+        else:
+            if int(data["started_at"]) >= int(data["start_time"]):
+                start_time = int(data["started_at"])
+
+            else:
+                start_time = int(data["start_time"])
+
+            if not math.isnan(data["ended_at"]) and (
+                    int(data["ended_at"]) <= int(data["end_time"])
+            ):
+                end_time = int(data["ended_at"])
+
+            else:
+                end_time = int(data["end_time"])
+
+            walltime = end_time - start_time
+
+            return round(int(data[key]) * walltime / 3600., 4)
 
     except ValueError:
         return 0
@@ -30,6 +51,10 @@ def _calculate_gpuh(data):
 
 def _calculate_cpuh(data):
     return _calculate_processor_hour(data=data, key="ncpus")
+
+
+def _calculate_cloud_cpuh(data):
+    return _calculate_processor_hour(data=data, key="vcpus")
 
 
 def _prepare_job_data(data):
@@ -78,6 +103,11 @@ class Usage:
         if "ncpus" in self.df:
             self.df["cpuh"] = self.df.apply(
                 lambda row: _calculate_cpuh(row), axis=1
+            )
+
+        if "vcpus" in self.df:
+            self.df["cpuh"] = self.df.apply(
+                lambda row: _calculate_cloud_cpuh(row), axis=1
             )
 
         if "ngpus" in self.df:
