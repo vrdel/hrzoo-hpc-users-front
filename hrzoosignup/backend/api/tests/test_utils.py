@@ -533,7 +533,7 @@ def create_mock_db():
             "queue": "queue1",
             "wait_time": 2,
             "qtime": 0,
-            "cpuh": 0.05,
+            "cpuh": 5,
             "gpuh": 0
         }
     )
