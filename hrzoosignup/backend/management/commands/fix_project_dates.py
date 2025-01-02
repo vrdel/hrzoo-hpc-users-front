@@ -9,6 +9,7 @@ from django.utils import timezone
 
 import datetime
 
+
 class Command(BaseCommand):
     help = 'Fix project date_start and date_end with + 1 day'
     requires_migrations_checks = True

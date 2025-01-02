@@ -16,6 +16,7 @@ pymemcache = "*"
 safety = "*"
 Unidecode = "*"
 pandas = "2.2.2"
+ipdb = "*"
 
 [tool.poetry.group.devel]
 optional = true
@@ -23,7 +24,6 @@ optional = true
 [tool.poetry.group.devel.dependencies]
 build = "*"
 mock = "*"
-ipdb = "*"
 coverage = "*"
 unittest-xml-reporting = "*"
 
@@ -81,9 +81,9 @@ hrzoosignup = "hrzoosignup/"
 ]
 "etc/cron.d" = [
   "cron/hzsi-clearexpiredinvitations", "cron/hzsi-clearsessions",
-	"cron/hzsi-flaginactiveusers", "cron/hzsi-mailinglist-subscribe",
-	"cron/hzsi-resetprojectcounter", "cron/hzsi-dashboard-send",
-	"cron/hzsi-cache-usage"
+  "cron/hzsi-flaginactiveusers", "cron/hzsi-mailinglist-subscribe",
+  "cron/hzsi-resetprojectcounter", "cron/hzsi-dashboard-send",
+  "cron/hzsi-cache-usage", "cron/hzsi-bogusenddate"
 ]
 "etc/httpd/conf.d" = [ "apache/vhost-hrzoosignup.conf" ]
 "etc/hrzoosignup" = [
