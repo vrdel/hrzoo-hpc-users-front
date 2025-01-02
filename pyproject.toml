@@ -16,6 +16,7 @@ pymemcache = "*"
 safety = "*"
 Unidecode = "*"
 pandas = "2.2.2"
+ipdb = "*"
 
 [tool.poetry.group.devel]
 optional = true
@@ -23,7 +24,6 @@ optional = true
 [tool.poetry.group.devel.dependencies]
 build = "*"
 mock = "*"
-ipdb = "*"
 coverage = "*"
 unittest-xml-reporting = "*"
 
