@@ -23,12 +23,20 @@ class Command(BaseCommand):
             dest="confirm_yes",
             help="Make changes",
         )
+        parser.add_argument(
+            "--expired",
+            action="store_true",
+            dest="expired",
+            help="bogus_end set for expired projects",
+        )
 
     def handle(self, *args, **options):
         any_changed = False
         from backend import models
         outdated = 0
         refresh = 0
+        expired = 0
+        expired_bogus = 0
 
         for project in models.Project.objects.all():
             if project.state.name in ["expire", "submit", "deny"]:
@@ -51,3 +59,23 @@ class Command(BaseCommand):
         self.stdout.write(f'Found {outdated} outdated but still active projects')
         if refresh:
             self.stdout.write(f'Refreshed bogus_end field for {refresh} outdated but still active projects')
+
+        any_changed = False
+        if options.get('expired', None):
+            for project in models.Project.objects.all():
+                if project.state.name == "expire" and project.change_history:
+                    last_change = project.change_history[-1]
+                    if last_change['previous']['state'] != last_change['next']['state']:
+                        expired += 1
+                        if options.get('confirm_yes', None):
+                            date_changed = project.date_changed.date()
+                            if project.bogus_end != date_changed:
+                                project.bogus_end = date_changed
+                                any_changed += True
+                                self.stdout.write(self.style.NOTICE(f'Set bogus_end={project.bogus_end} to date of last change for expired project {project.identifier} and official date_end={project.date_end}'))
+                                project.save()
+                                expired_bogus += 1
+        if expired:
+            self.stdout.write(f'Found {expired} projects whose status is changed after official date_end')
+            if expired_bogus:
+                self.stdout.write(f'Set bogus_end for {expired_bogus} such projects')
