@@ -1,9 +1,9 @@
 import calendar
 import datetime
+import math
 
 import pytz
 from backend import models
-import math
 
 
 class DashboardIndicators:
@@ -18,12 +18,15 @@ class DashboardIndicators:
         )
 
     def _projects_in_period(self):
-        active_projects = models.Project.objects.filter(is_active=True)
+        active_projects = models.Project.objects.all()
 
         return [
             item for item in active_projects if
             item.date_approved <= self.end_date and
-            item.date_end >= self.start_date
+            (
+                item.date_end >= self.start_date or
+                item.bogus_end >= self.start_date
+            )
         ]
 
     def institutions(self):
