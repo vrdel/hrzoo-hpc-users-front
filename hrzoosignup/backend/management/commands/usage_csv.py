@@ -36,20 +36,33 @@ def job_tag(item):
         return None
 
 
+def _get_realm_from_mapping(institution):
+    mapping = [
+        item["to"] for item in settings.MAP_REALMS if
+        item["from"] == institution
+    ]
+    if len(mapping) > 0:
+        return mapping[0]
+
+    else:
+        return ""
+
+
 def get_realm(institutions, institution):
     try:
-        return institutions[institution]
+        realm = institutions[institution]
+
+        if not realm:
+            realm = _get_realm_from_mapping(institution)
 
     except KeyError:
-        mapping = [
-            item["to"] for item in settings.MAP_REALMS if
-            item["from"] == institution
-        ]
-        if len(mapping) > 0:
-            return mapping[0]
+        try:
+            realm = _get_realm_from_mapping(institution)
 
-        else:
+        except KeyError:
             return ""
+
+    return realm
 
 
 def get_finance(item):
@@ -95,6 +108,8 @@ class Command(BaseCommand):
             ~Q(resource_name="jupyter") & (
                 Q(project__date_end__gte=start_date) |
                 Q(project__bogus_end__gte=start_date)
+            ) & ~Q(
+                project__state__name__in=["submit", "deny"]
             )
         )
 
