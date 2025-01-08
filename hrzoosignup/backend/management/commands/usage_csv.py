@@ -1,8 +1,8 @@
 import datetime
-import time
 
 import pandas as pd
 from backend import models
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 from django.utils import timezone
@@ -41,7 +41,15 @@ def get_realm(institutions, institution):
         return institutions[institution]
 
     except KeyError:
-        return ""
+        mapping = [
+            item["to"] for item in settings.MAP_REALMS if
+            item["from"] == institution
+        ]
+        if len(mapping) > 0:
+            return mapping[0]
+
+        else:
+            return ""
 
 
 def get_finance(item):
@@ -74,7 +82,6 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        start_time = time.time()
         year = options["year"]
 
         start_datetime = timezone.make_aware(
@@ -134,5 +141,3 @@ class Command(BaseCommand):
         })
 
         data.to_csv(options["filename"], index=False, sep="*")
-
-        print(f"Time of execution: {time.time() - start_time} seconds")
