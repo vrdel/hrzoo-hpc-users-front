@@ -6,7 +6,6 @@ from backend import models
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 from django.utils import timezone
-from memory_profiler import profile
 
 
 def get_field(item, field):
@@ -74,7 +73,6 @@ class Command(BaseCommand):
             help="year for which you want information generated"
         )
 
-    @profile
     def handle(self, *args, **options):
         start_time = time.time()
         year = options["year"]
@@ -96,6 +94,8 @@ class Command(BaseCommand):
         institutions = dict()
         for item in models.CrorisInstitutions.objects.all():
             institutions.update({item.name_long: item.realm})
+            if item.name_short != item.name_long:
+                institutions.update({item.name_short: item.realm})
 
         data = pd.DataFrame.from_records(
             usage.values(
@@ -107,11 +107,6 @@ class Command(BaseCommand):
                 "accounting_record"
             )
         )
-
-        # data = data[
-        #     (data["project__date_end"] >= start_date) |
-        #     (data["project__bogus_end"] >= start_date)
-        # ]
 
         data["cpuh"] = data.apply(lambda row: get_field(row, "cpuh"), axis=1)
         data["gpuh"] = data.apply(lambda row: get_field(row, "gpuh"), axis=1)
