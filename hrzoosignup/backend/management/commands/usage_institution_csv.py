@@ -3,18 +3,8 @@ import datetime
 import pandas as pd
 from backend import models
 from django.core.management.base import BaseCommand
-from django.db.models import Q
 
-
-def get_field(item, field):
-    if item["resource_name"] == "jupyter" and field in ["cpuh", "gpuh"]:
-        field = f"jupyter_{field[0:3]}_h"
-
-    try:
-        return item["accounting_record"][field]
-
-    except KeyError:
-        return None
+from .usage_project_csv import get_active_projects
 
 
 class Command(BaseCommand):
@@ -32,10 +22,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         year = options["year"]
-        start_date = datetime.datetime(year, 1, 1, 0, 0, 0)
-        projects = models.Project.objects.filter(
-            Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)
-        )
+        projects = get_active_projects(datetime.datetime(year, 1, 1, 0, 0, 0))
+
         institutions = sorted([
             item.name_short for item in models.CrorisInstitutions.objects.all()
         ])

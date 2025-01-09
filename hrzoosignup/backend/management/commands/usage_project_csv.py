@@ -5,6 +5,8 @@ from backend import models
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
+from .usage_csv import institutions_realms_dict, get_realm
+
 
 def get_field(item, field):
     if item["resource_name"] == "jupyter" and field in ["cpuh", "gpuh"]:
@@ -15,6 +17,12 @@ def get_field(item, field):
 
     except KeyError:
         return None
+
+
+def get_active_projects(start_date):
+    return models.Project.objects.filter(
+        Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)
+    )
 
 
 class Command(BaseCommand):
@@ -32,13 +40,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         year = options["year"]
-        start_date = datetime.datetime(year, 1, 1, 0, 0, 0)
-        projects = models.Project.objects.filter(
-            Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)
-        )
-        institutions = dict()
-        for item in models.CrorisInstitutions.objects.all():
-            institutions.update({item.name_long: item.realm})
+
+        projects = get_active_projects(datetime.datetime(year, 1, 1, 0, 0, 0))
+
+        institutions = institutions_realms_dict()
 
         project_list = list()
         project_type_list = list()
@@ -65,7 +70,7 @@ class Command(BaseCommand):
                 croris_id.append("")
 
             try:
-                realm.append(institutions[project.institute])
+                realm.append(get_realm(institutions, project.institute))
 
             except KeyError:
                 realm.append("")
