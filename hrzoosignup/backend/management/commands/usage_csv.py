@@ -48,6 +48,16 @@ def _get_realm_from_mapping(institution):
         return ""
 
 
+def institutions_realms_dict():
+    institutions = dict()
+    for item in models.CrorisInstitutions.objects.all():
+        institutions.update({item.name_long: item.realm})
+        if item.name_short != item.name_long:
+            institutions.update({item.name_short: item.realm})
+
+    return institutions
+
+
 def get_realm(institutions, institution):
     try:
         realm = institutions[institution]
@@ -113,11 +123,7 @@ class Command(BaseCommand):
             )
         )
 
-        institutions = dict()
-        for item in models.CrorisInstitutions.objects.all():
-            institutions.update({item.name_long: item.realm})
-            if item.name_short != item.name_long:
-                institutions.update({item.name_short: item.realm})
+        institutions = institutions_realms_dict()
 
         data = pd.DataFrame.from_records(
             usage.values(
