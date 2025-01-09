@@ -21,7 +21,8 @@ def get_field(item, field):
 
 def get_active_projects(start_date):
     return models.Project.objects.filter(
-        Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)
+        (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) &
+        ~Q(state__name__in=["submit", "deny"])
     )
 
 
