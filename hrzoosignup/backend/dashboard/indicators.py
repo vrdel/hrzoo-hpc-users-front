@@ -4,6 +4,7 @@ import math
 
 import pytz
 from backend import models
+from django.db.models import Q
 
 
 class DashboardIndicators:
@@ -18,14 +19,16 @@ class DashboardIndicators:
         )
 
     def _projects_in_period(self):
-        active_projects = models.Project.objects.all()
+        active_projects = models.Project.objects.filter(
+            ~Q(state__name__in=["submit", "deny"])
+        )
 
         return [
             item for item in active_projects if
             item.date_approved <= self.end_date and
             (
                 item.date_end >= self.start_date or
-                item.bogus_end >= self.start_date
+                (item.bogus_end and item.bogus_end >= self.start_date)
             )
         ]
 
