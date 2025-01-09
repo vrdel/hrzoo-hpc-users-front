@@ -176,11 +176,28 @@ class DashboardTests(TestCase):
                 "jupyter_gpu_h": 8.23
             }
         )
-        self.indicators = DashboardIndicators(month=5, year=2024)
+        self.indicators5 = DashboardIndicators(month=5, year=2024)
+        self.indicators7 = DashboardIndicators(month=7, year=2024)
 
     def test_institutions(self):
         self.assertEqual(
-            self.indicators.institutions(), {
+            self.indicators5.institutions(), {
+                "Fakultet elektrotehnike i računarstva": {
+                    "oib": "01234567890",
+                    "mbu": "036"
+                },
+                "Prirodoslovno-matematički fakultet, Zagreb": {
+                    "oib": "12345678901",
+                    "mbu": "119"
+                },
+                "Daily Bugle": {
+                    "oib": "",
+                    "mbu": ""
+                }
+            }
+        )
+        self.assertEqual(
+            self.indicators7.institutions(), {
                 "Fakultet elektrotehnike i računarstva": {
                     "oib": "01234567890",
                     "mbu": "036"
@@ -198,21 +215,39 @@ class DashboardTests(TestCase):
 
     def test_projects(self):
         self.assertEqual(
-            self.indicators.projects(
+            self.indicators5.projects(
                 institution="Fakultet elektrotehnike i računarstva"
             ),
             4
+        )
+        self.assertEqual(
+            self.indicators5.projects(
+                institution="Prirodoslovno-matematički fakultet, Zagreb",
+            ),
+            1
+        )
+        self.assertEqual(
+            self.indicators7.projects(
+                institution="Prirodoslovno-matematički fakultet, Zagreb",
+            ),
+            1
         )
 
     def test_users(self):
         self.assertEqual(
-            self.indicators.users(
+            self.indicators5.users(
                 institution="Fakultet elektrotehnike i računarstva"
             ),
             4
         )
         self.assertEqual(
-            self.indicators.users(
+            self.indicators5.users(
+                institution="Prirodoslovno-matematički fakultet, Zagreb"
+            ),
+            3
+        )
+        self.assertEqual(
+            self.indicators7.users(
                 institution="Prirodoslovno-matematički fakultet, Zagreb"
             ),
             3
@@ -220,50 +255,49 @@ class DashboardTests(TestCase):
 
     def test_supek_cpuh(self):
         self.assertEqual(
-            self.indicators.supek_cpu(
+            self.indicators5.supek_cpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 5
         )
 
     def test_supek_gpu(self):
         self.assertEqual(
-            self.indicators.supek_gpu(
+            self.indicators5.supek_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 176
         )
 
     def test_padobran(self):
-        indicators = DashboardIndicators(month=7, year=2024)
         self.assertEqual(
-            indicators.padobran(
+            self.indicators7.padobran(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 74
         )
 
     def test_vrancic_cpu(self):
         self.assertEqual(
-            self.indicators.vrancic_cpu(
+            self.indicators5.vrancic_cpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 534
         )
 
     def test_vrancic_gpu(self):
         self.assertEqual(
-            self.indicators.vrancic_gpu(
+            self.indicators5.vrancic_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 44
         )
 
     def test_jupyter_cpu(self):
         self.assertEqual(
-            self.indicators.jupyter_cpu(
+            self.indicators5.jupyter_cpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 17
         )
 
     def test_jupyter_gpu(self):
         self.assertEqual(
-            self.indicators.jupyter_gpu(
+            self.indicators5.jupyter_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 7
         )

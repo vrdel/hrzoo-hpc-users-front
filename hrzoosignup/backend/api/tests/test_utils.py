@@ -179,6 +179,7 @@ def create_mock_db():
         ],
         date_start=datetime.date(2024, 1, 1),
         date_end=datetime.date(2024, 6, 30),
+        bogus_end=datetime.date(2024, 12, 31),
         date_approved=datetime.datetime(2024, 2, 2, 15, 8, 28, tzinfo=pytz.UTC)
     )
     project5 = models.Project.objects.create(
