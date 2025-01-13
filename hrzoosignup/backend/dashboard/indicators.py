@@ -2,20 +2,22 @@ import calendar
 import datetime
 import math
 
-import pytz
 from backend import models
 from django.db.models import Q
+from django.utils import timezone
 
 
 class DashboardIndicators:
     def __init__(self, month, year):
         self.start_date = datetime.date(year, month, 1)
-        self.start_datetime = datetime.datetime(
-            year, month, 1, 0, 0, 0, tzinfo=pytz.UTC
+        self.start_datetime = timezone.make_aware(
+            datetime.datetime(year, month, 1, 0, 0, 0),
+            timezone=timezone.get_current_timezone()
         )
-        self.end_date = datetime.datetime(
-            year, month, calendar.monthrange(year, month)[1], 23, 59, 59,
-            tzinfo=pytz.UTC
+        self.end_date = timezone.make_aware(
+            datetime.datetime(
+            year, month, calendar.monthrange(year, month)[1], 23, 59, 59),
+            timezone=timezone.get_current_timezone()
         )
 
     def _projects_in_period(self):

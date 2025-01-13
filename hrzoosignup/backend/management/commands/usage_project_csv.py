@@ -19,9 +19,10 @@ def get_field(item, field):
         return None
 
 
-def get_active_projects(start_date):
+def get_active_projects(start_date, end_date):
     return models.Project.objects.filter(
         (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) &
+        Q(date_start__lte=end_date) &
         ~Q(state__name__in=["submit", "deny"])
     )
 
@@ -42,7 +43,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         year = options["year"]
 
-        projects = get_active_projects(datetime.datetime(year, 1, 1, 0, 0, 0))
+        projects = get_active_projects(
+            start_date=datetime.datetime(year, 1, 1, 0, 0, 0),
+            end_date=datetime.datetime(year, 12, 31, 23, 59, 59)
+        )
 
         institutions = institutions_realms_dict()
 

@@ -112,9 +112,14 @@ class Command(BaseCommand):
             timezone=timezone.get_current_timezone()
         )
         start_date =  datetime.date(year, 1, 1)
+        end_date = timezone.make_aware(
+            datetime.datetime(year, 12, 31, 23, 59, 59),
+            timezone=timezone.get_current_timezone()
+        )
 
         usage = models.ResourceUsage.objects.filter(
             Q(end_time__gte=start_datetime) &
+            Q(end_time__lte=end_date) &
             ~Q(resource_name="jupyter") & (
                 Q(project__date_end__gte=start_date) |
                 Q(project__bogus_end__gte=start_date)
