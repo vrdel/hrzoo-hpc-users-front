@@ -22,7 +22,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         year = options["year"]
-        projects = get_active_projects(datetime.datetime(year, 1, 1, 0, 0, 0))
+        projects = get_active_projects(
+            start_date=datetime.datetime(year, 1, 1, 0, 0, 0),
+            end_date=datetime.datetime(year, 12, 31, 23, 59, 59)
+        )
 
         institutions = sorted([
             item.name_short for item in models.CrorisInstitutions.objects.all()
