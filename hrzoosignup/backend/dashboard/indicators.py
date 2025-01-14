@@ -146,7 +146,6 @@ class DashboardIndicators:
             self.start_datetime <= item.end_time <= self.end_date
         ))
 
-
     def padobran(self, institution):
         usage = models.ResourceUsage.objects.filter(
             project__in=self._projects(institution),
@@ -160,7 +159,7 @@ class DashboardIndicators:
 
     def _jupyter_usage(self, institution):
         return models.ResourceUsage.objects.filter(
-            user__username__in=self._users(institution),
+            project__in=self._projects(institution),
             resource_name="jupyter"
         )
 
