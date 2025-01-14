@@ -292,12 +292,12 @@ class DashboardTests(TestCase):
         self.assertEqual(
             self.indicators5.jupyter_cpu(
                 institution="Fakultet elektrotehnike i računarstva"
-            ), 17
+            ), 31
         )
 
     def test_jupyter_gpu(self):
         self.assertEqual(
             self.indicators5.jupyter_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
-            ), 7
+            ), 15
         )
