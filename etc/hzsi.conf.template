@@ -51,6 +51,8 @@ Grace_Days = 180
 [DASHBOARD]
 API_Institutions = https://webdev.dashboard.srce.hr/api/ustanove
 API_Indicators = https://webdev.dashboard.srce.hr/api/unesipokazatelj
+API_PermissionsList = https://webdev.dashboard.srce.hr/api/listadozvolausluge
+API_Permissions = https://webdev.dashboard.srce.hr/api/dozvolausluge
 Username = user
 Token = pass
 

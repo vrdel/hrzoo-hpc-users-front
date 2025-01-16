@@ -79,6 +79,8 @@ try:
 
     DASHBOARD_API_INSTITUTIONS = config.get("DASHBOARD", "API_Institutions")
     DASHBOARD_API_INDICATORS = config.get("DASHBOARD", "API_Indicators")
+    DASHBOARD_API_PERMISSIONS_LIST = config.get("DASHBOARD", "API_PermissionsList")
+    DASHBOARD_API_PERMISSIONS = config.get("DASHBOARD", "API_Permissions")
     DASHBOARD_USERNAME = config.get("DASHBOARD", "Username")
     DASHBOARD_PASS = config.get("DASHBOARD", "Token")
 
