@@ -271,33 +271,33 @@ class DashboardTests(TestCase):
         self.assertEqual(
             self.indicators7.padobran(
                 institution="Fakultet elektrotehnike i računarstva"
-            ), 74
+            ), 74.01
         )
 
     def test_vrancic_cpu(self):
         self.assertEqual(
             self.indicators5.vrancic_cpu(
                 institution="Fakultet elektrotehnike i računarstva"
-            ), 534
+            ), 534.02
         )
 
     def test_vrancic_gpu(self):
         self.assertEqual(
             self.indicators5.vrancic_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
-            ), 44
+            ), 44.47
         )
 
     def test_jupyter_cpu(self):
         self.assertEqual(
             self.indicators5.jupyter_cpu(
                 institution="Fakultet elektrotehnike i računarstva"
-            ), 31
+            ), 31.63
         )
 
     def test_jupyter_gpu(self):
         self.assertEqual(
             self.indicators5.jupyter_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
-            ), 15
+            ), 15.41
         )
