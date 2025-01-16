@@ -1,6 +1,5 @@
 import calendar
 import datetime
-import math
 
 from backend import models
 from django.db.models import Q
@@ -113,18 +112,18 @@ class DashboardIndicators:
         )
 
     def supek_cpu(self, institution):
-        return math.floor(sum(
+        return round(sum(
             float(item.accounting_record["cpuh"]) for item
             in self._supek_usage(institution) if
             self.start_datetime <= item.end_time <= self.end_date
-        ))
+        ), 2)
 
     def supek_gpu(self, institution):
-        return math.floor(sum(
+        return round(sum(
             float(item.accounting_record["gpuh"]) for item
             in self._supek_usage(institution) if
             self.start_datetime <= item.end_time <= self.end_date
-        ))
+        ), 2)
 
     def _vrancic_usage(self, institution):
         return models.ResourceUsage.objects.filter(
@@ -133,18 +132,18 @@ class DashboardIndicators:
         )
 
     def vrancic_cpu(self, institution):
-        return math.floor(sum(
+        return round(sum(
             float(item.accounting_record["cpuh"]) for item in
             self._vrancic_usage(institution) if
             self.start_datetime <= item.end_time <= self.end_date
-        ))
+        ), 2)
 
     def vrancic_gpu(self, institution):
-        return math.floor(sum(
+        return round(sum(
             float(item.accounting_record["gpuh"]) for item in
             self._vrancic_usage(institution) if
             self.start_datetime <= item.end_time <= self.end_date
-        ))
+        ), 2)
 
     def padobran(self, institution):
         usage = models.ResourceUsage.objects.filter(
@@ -152,10 +151,10 @@ class DashboardIndicators:
             resource_name="padobran"
         )
 
-        return math.floor(sum(
+        return round(sum(
             float(item.accounting_record["cpuh"]) for item in usage if
             self.start_datetime <= item.end_time <= self.end_date
-        ))
+        ), 2)
 
     def _jupyter_usage(self, institution):
         return models.ResourceUsage.objects.filter(
@@ -164,15 +163,15 @@ class DashboardIndicators:
         )
 
     def jupyter_cpu(self, institution):
-        return math.floor(sum(
+        return round(sum(
             float(item.accounting_record["jupyter_cpu_h"]) for item in
             self._jupyter_usage(institution) if
             self.start_datetime <= item.end_time <= self.end_date
-        ))
+        ), 2)
 
     def jupyter_gpu(self, institution):
-        return math.floor(sum(
+        return round(sum(
             float(item.accounting_record["jupyter_gpu_h"]) for item in
             self._jupyter_usage(institution) if
             self.start_datetime <= item.end_time <= self.end_date
-        ))
+        ), 2)
