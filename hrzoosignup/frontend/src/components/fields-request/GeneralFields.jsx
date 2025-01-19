@@ -598,12 +598,12 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
                 ?
                   crorisFinance.map((finance, i) =>
                     <Badge className="bg-warning-subtle fw-normal text-dark fs-6 me-2" key={`croris-finance-${i}`}>
-                      { finance }
+                      { finance.name }
                     </Badge>
                   )
                 :
                   <Badge className="bg-warning-subtle fw-normal text-dark fs-6">
-                    { crorisFinance[0] }
+                    { crorisFinance[0].name }
                   </Badge>
             }
           </span>
