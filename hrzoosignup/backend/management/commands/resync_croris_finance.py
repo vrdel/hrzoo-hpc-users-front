@@ -13,14 +13,13 @@ from backend.utils.various import contains_exception
 import logging
 import asyncio
 import json
-import datetime
 
 
 logger = logging.getLogger('hrzoosignup.tasks')
 
 
 class Command(BaseCommand):
-    help = "Fix user and project institutions by aligning them with the names from CroRIS"
+    help = "Refresh research project financiers with recent CroRIS project metadata"
 
     def __init__(self):
         super().__init__()
@@ -36,8 +35,8 @@ class Command(BaseCommand):
             help="Make changes",
         )
 
-    async def _task_resync_croris_dates(self):
-        projects_dates = dict()
+    async def _task_resync_croris_finance(self):
+        project_financiers = dict()
         try:
             projects_db = Project.objects.filter(project_type__name='research-croris')
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
@@ -59,42 +58,38 @@ class Command(BaseCommand):
                     try:
                         project = json.loads(project)
 
-                        projects_dates[project.get('id')] = {
-                            'start': project.get('pocetak'),
-                            'end': project.get('kraj')
-                        }
+                        finance = project.get('financijerResources')
+                        if finance and finance.get('_embedded', False):
+                            financiers = []
+                            for fin in finance['_embedded']['financijeri']:
+                                financiers.append({
+                                    'name': fin['entityNameHr'],
+                                    'amount': fin.get('amount', 0),
+                                    'currency': fin.get('currencyCode', '')
+                                })
+                        project_financiers[project.get('id')] = financiers
+
                     except TypeError as exc:
                         self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
                         continue
 
-            return projects_dates
+            return project_financiers
 
         finally:
             await self.session.close()
 
-    def _task_fix_project_dates(self, options, projects_dates):
+    def _task_fix_project_financiers(self, options, projects_financiers):
         any_changed = False
 
         projects_db = Project.objects.filter(project_type__name='research-croris')
 
         for project in projects_db:
             try:
-                croris_start = datetime.datetime.strptime(projects_dates[project.croris_id]['start'], '%d.%m.%Y').date()
-                croris_end = datetime.datetime.strptime(projects_dates[project.croris_id]['end'], '%d.%m.%Y').date()
-                if croris_start != project.date_start:
-                    self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date start from {project.date_start} to {croris_start}'))
-                    if options.get('confirm_yes', None):
-                        project.date_start = croris_start
-                        project.croris_start = croris_start
-                        project.save()
-                        any_changed = True
-                if croris_end != project.date_end:
-                    self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date end from {project.date_end} to {croris_end}'))
-                    if options.get('confirm_yes', None):
-                        project.date_end = croris_end
-                        project.croris_end = croris_end
-                        project.save()
-                        any_changed = True
+                self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} financiers {projects_financiers[project.croris_id]}'))
+                if options.get('confirm_yes', None):
+                    project.croris_finance = projects_financiers[project.croris_id]
+                    project.save()
+                    any_changed = True
             except KeyError:
                 self.stdout.write(self.style.ERROR(f'No project {project.identifier} found in fetched CroRIS data'))
 
@@ -104,12 +99,11 @@ class Command(BaseCommand):
         any_changed_project = False
 
         try:
-            projects_dates = asyncio.run(self._task_resync_croris_dates())
+            projects_financiers = asyncio.run(self._task_resync_croris_finance())
         except (HZSIHttpError, KeyboardInterrupt):
             pass
 
-        if options.get('confirm_yes', None):
-            any_changed_project = self._task_fix_project_dates(options, projects_dates)
+        any_changed_project = self._task_fix_project_financiers(options, projects_financiers)
 
         if any_changed_project:
             cache.delete("usersinfoinactive-get")

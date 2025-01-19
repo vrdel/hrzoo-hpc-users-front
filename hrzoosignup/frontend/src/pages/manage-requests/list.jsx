@@ -110,7 +110,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
 
     else if (searchType === 'research-eu-croris')
       fieldsView = fieldsView.filter(e => e.project_type.name === 'research-croris' &&
-        _.findIndex(e.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1)
+        _.findIndex(e.croris_finance, (fin) => fin.name?.toLowerCase().includes('euro')) > -1)
 
     else if (searchType.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))

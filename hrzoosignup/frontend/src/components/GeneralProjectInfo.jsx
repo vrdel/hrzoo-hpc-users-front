@@ -143,6 +143,7 @@ export const Persons = ({project, person_info, projectsLeadUsers}) => {
 
 
 export const Finance = ({project}) => {
+  console.log('VRDEL DEBUG', project.finance)
   return (
     <>
       <Col md={{size: 12}}>
@@ -243,7 +244,7 @@ export const ProjectTypeBadge = ({projectInfo}) => {
       <span className={`badge fw-normal position-relative ${TypeColor(projectInfo.project_type.name)}`} >
         { TypeString(projectInfo.project_type.name) }
         {
-          _.findIndex(projectInfo.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
+          _.findIndex(projectInfo.croris_finance, (fin) => fin.name.toLowerCase().includes('euro')) > -1 &&
           <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
             EU
             <span className="visually-hidden">EU</span>
