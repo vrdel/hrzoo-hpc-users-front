@@ -2,13 +2,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
-from django.db.models import Q
 
-from backend.utils.gen_username import gen_username
-from backend.models import User
 from backend.models import Project
-from backend.models import UserProject
-from backend.models import CrorisInstitutions
 from backend.utils.institution_map import InstitutionMap
 
 from backend.httpq.excep import HZSIHttpError
@@ -18,16 +13,13 @@ from backend.utils.various import contains_exception
 import logging
 import asyncio
 import json
-import datetime
-
-import random
 
 
 logger = logging.getLogger('hrzoosignup.tasks')
 
 
 class Command(BaseCommand):
-    help = "Fix user and project institutions by aligning them with the names from CroRIS"
+    help = "Refresh research project financiers with recent CroRIS project metadata"
 
     def __init__(self):
         super().__init__()
@@ -81,8 +73,6 @@ class Command(BaseCommand):
                         self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
                         continue
 
-            import ipdb; ipdb.set_trace()
-
             return project_financiers
 
         finally:
@@ -95,7 +85,11 @@ class Command(BaseCommand):
 
         for project in projects_db:
             try:
-                pass
+                self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} financiers {projects_financiers[project.croris_id]}'))
+                if options.get('confirm_yes', None):
+                    project.croris_finance = projects_financiers[project.croris_id]
+                    project.save()
+                    any_changed = True
             except KeyError:
                 self.stdout.write(self.style.ERROR(f'No project {project.identifier} found in fetched CroRIS data'))
 
@@ -109,8 +103,7 @@ class Command(BaseCommand):
         except (HZSIHttpError, KeyboardInterrupt):
             pass
 
-        if options.get('confirm_yes', None):
-            any_changed_project = self._task_fix_project_financiers(options, projects_financiers)
+        any_changed_project = self._task_fix_project_financiers(options, projects_financiers)
 
         if any_changed_project:
             cache.delete("usersinfoinactive-get")
