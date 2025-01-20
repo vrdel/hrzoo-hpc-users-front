@@ -118,7 +118,7 @@ class Command(BaseCommand):
         projects_other = Project.objects.exclude(project_type__name='research-croris')
 
         for project in projects_croris:
-            eu_finance = len([fin for fin in project.croris_finance if 'Europska komisija'.lower() in fin.lower()]) != 0
+            eu_finance = len([fin for fin in project.croris_finance if 'Europska unija'.lower() in fin.lower()]) != 0
             if eu_finance:
                 userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
                 userlead_institution = userproj[0].user.person_institution
