@@ -245,7 +245,7 @@ const MyRequestsList = () => {
                         <span className={`badge fw-normal position-relative ${TypeColor(project.project_type.name)}`} >
                           { TypeString(project.project_type.name) }
                           {
-                            _.findIndex(project.croris_finance, (fin) => fin.toLowerCase().includes('euro')) > -1 &&
+                            _.findIndex(project.croris_finance, (fin) => fin.name?.toLowerCase().includes('euro')) > -1 &&
                             <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
                               EU
                               <span className="visually-hidden">EU</span>
