@@ -135,7 +135,6 @@ class Command(BaseCommand):
                 "project__name",
                 "project__institute",
                 "project__project_type__name",
-                "project__croris_finance",
                 "resource_name",
                 "accounting_record"
             )
@@ -152,11 +151,9 @@ class Command(BaseCommand):
             axis=1
         )
         data["tag"] = data.apply(lambda row: job_tag(row), axis=1)
-        data["finance"] = data.apply(lambda row: get_finance(row), axis=1)
         data["VM"] = data.apply(lambda row: get_instance_id(row), axis=1)
 
         data.drop([
-            "project__croris_finance",
             "accounting_record"
         ], axis="columns", inplace=True)
 
