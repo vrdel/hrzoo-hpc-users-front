@@ -56,17 +56,11 @@ class Command(BaseCommand):
         croris_id = list()
         realm = list()
         users_list = list()
-        finance_list = list()
         for project in projects:
             project_list.append(project.name)
             project_type_list.append(project.project_type.name)
             project_institute.append(project.institute)
             users_list.append(len(project.users.all()))
-            try:
-                finance_list.append(project.croris_finance[0])
-
-            except TypeError:
-                finance_list.append("")
 
             try:
                 croris_id.append(project.croris_id)
@@ -85,7 +79,6 @@ class Command(BaseCommand):
             "project_type": project_type_list,
             "number_of_users": users_list,
             "project_institution": project_institute,
-            "finance": finance_list,
             "croris_id": croris_id,
             "realm": realm
         })
