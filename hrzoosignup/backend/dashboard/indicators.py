@@ -2,14 +2,13 @@ import calendar
 import datetime
 
 from backend import models
-from django.db.models import Q
+from backend.utils.accounting import get_active_projects, get_active_users
 from django.utils import timezone
 
 
 class DashboardIndicators:
     def __init__(self, month, year):
-        self.start_date = datetime.date(year, month, 1)
-        self.start_datetime = timezone.make_aware(
+        self.start_date = timezone.make_aware(
             datetime.datetime(year, month, 1, 0, 0, 0),
             timezone=timezone.get_current_timezone()
         )
@@ -20,18 +19,9 @@ class DashboardIndicators:
         )
 
     def _projects_in_period(self):
-        active_projects = models.Project.objects.filter(
-            ~Q(state__name__in=["submit", "deny"])
+        return get_active_projects(
+            start_date=self.start_date, end_date=self.end_date
         )
-
-        return [
-            item for item in active_projects if
-            item.date_approved <= self.end_date and
-            (
-                item.date_end >= self.start_date or
-                (item.bogus_end and item.bogus_end >= self.start_date)
-            )
-        ]
 
     def institutions(self):
         projects = self._projects_in_period()
@@ -44,8 +34,9 @@ class DashboardIndicators:
             ])
 
         institutions_users = set()
-        for active_user in active_users:
-            user = models.User.objects.get(username=active_user)
+        for user in get_active_users(
+                start_date=self.start_date, end_date=self.end_date
+        ):
             institutions_users.add(user.person_institution)
 
         institutions_projects = set([item.institute for item in projects])
@@ -115,14 +106,14 @@ class DashboardIndicators:
         return round(sum(
             float(item.accounting_record["cpuh"]) for item
             in self._supek_usage(institution) if
-            self.start_datetime <= item.end_time <= self.end_date
+            self.start_date <= item.end_time <= self.end_date
         ), 2)
 
     def supek_gpu(self, institution):
         return round(sum(
             float(item.accounting_record["gpuh"]) for item
             in self._supek_usage(institution) if
-            self.start_datetime <= item.end_time <= self.end_date
+            self.start_date <= item.end_time <= self.end_date
         ), 2)
 
     def _vrancic_usage(self, institution):
@@ -135,14 +126,14 @@ class DashboardIndicators:
         return round(sum(
             float(item.accounting_record["cpuh"]) for item in
             self._vrancic_usage(institution) if
-            self.start_datetime <= item.end_time <= self.end_date
+            self.start_date <= item.end_time <= self.end_date
         ), 2)
 
     def vrancic_gpu(self, institution):
         return round(sum(
             float(item.accounting_record["gpuh"]) for item in
             self._vrancic_usage(institution) if
-            self.start_datetime <= item.end_time <= self.end_date
+            self.start_date <= item.end_time <= self.end_date
         ), 2)
 
     def padobran(self, institution):
@@ -153,7 +144,7 @@ class DashboardIndicators:
 
         return round(sum(
             float(item.accounting_record["cpuh"]) for item in usage if
-            self.start_datetime <= item.end_time <= self.end_date
+            self.start_date <= item.end_time <= self.end_date
         ), 2)
 
     def _jupyter_usage(self, institution):
@@ -166,12 +157,12 @@ class DashboardIndicators:
         return round(sum(
             float(item.accounting_record["jupyter_cpu_h"]) for item in
             self._jupyter_usage(institution) if
-            self.start_datetime <= item.end_time <= self.end_date
+            self.start_date <= item.end_time <= self.end_date
         ), 2)
 
     def jupyter_gpu(self, institution):
         return round(sum(
             float(item.accounting_record["jupyter_gpu_h"]) for item in
             self._jupyter_usage(institution) if
-            self.start_datetime <= item.end_time <= self.end_date
+            self.start_date <= item.end_time <= self.end_date
         ), 2)
