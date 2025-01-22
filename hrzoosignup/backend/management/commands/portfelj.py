@@ -1,11 +1,9 @@
 import datetime
 
+from backend.utils.accounting import get_usage, get_active_projects
 from backend.utils.portfelj import Portfelj, PortfeljException
 from django.conf import settings
 from django.core.management.base import BaseCommand
-
-from .usage_csv import get_usage
-from .usage_project_csv import get_active_projects
 
 
 def get_field(item, field):
