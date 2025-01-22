@@ -84,6 +84,9 @@ try:
     DASHBOARD_USERNAME = config.get("DASHBOARD", "Username")
     DASHBOARD_PASS = config.get("DASHBOARD", "Token")
 
+    PORTFELJ_URL = config.get("PORTFELJ", "url")
+    PORTFELJ_TOKEN = config.get("PORTFELJ", "token")
+
     SUPERUSER_FIRSTNAME = config.get('SUPERUSER', 'FirstName')
     SUPERUSER_USERNAME = config.get('SUPERUSER', 'Username')
     SUPERUSER_LASTNAME = config.get('SUPERUSER', 'LastName')
