@@ -2,11 +2,25 @@ import datetime
 
 import pandas as pd
 from backend import models
+from django.conf import settings
 from backend.utils.accounting import get_field, institutions_realms_dict, \
     get_wait_time, get_realm, job_tag, get_instance_id
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 from django.utils import timezone
+
+
+def get_usage(start_date, end_date):
+    return models.ResourceUsage.objects.filter(
+        Q(end_time__gte=start_date) &
+        Q(end_time__lte=end_date) &
+        ~Q(resource_name="jupyter") & (
+                Q(project__date_end__gte=start_date.date()) |
+                Q(project__bogus_end__gte=start_date.date())
+        ) & ~Q(
+            project__state__name__in=["submit", "deny"]
+        ) & ~Q(user__person_institution__in=["", "Nepoznato"])
+    )
 
 
 class Command(BaseCommand):
@@ -25,26 +39,16 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         year = options["year"]
 
-        start_datetime = timezone.make_aware(
+        start_date= timezone.make_aware(
             datetime.datetime(year, 1, 1, 0, 0, 0),
             timezone=timezone.get_current_timezone()
         )
-        start_date =  datetime.date(year, 1, 1)
         end_date = timezone.make_aware(
             datetime.datetime(year, 12, 31, 23, 59, 59),
             timezone=timezone.get_current_timezone()
         )
 
-        usage = models.ResourceUsage.objects.filter(
-            Q(end_time__gte=start_datetime) &
-            Q(end_time__lte=end_date) &
-            ~Q(resource_name="jupyter") & (
-                Q(project__date_end__gte=start_date) |
-                Q(project__bogus_end__gte=start_date)
-            ) & ~Q(
-                project__state__name__in=["submit", "deny"]
-            ) & ~Q(user__person_institution__in=["", "Nepoznato"])
-        )
+        usage = get_usage(start_date=start_date, end_date=end_date)
 
         institutions = institutions_realms_dict()
 
