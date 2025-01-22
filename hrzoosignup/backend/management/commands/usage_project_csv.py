@@ -1,30 +1,9 @@
 import datetime
 
 import pandas as pd
-from backend import models
+from backend.utils.accounting import institutions_realms_dict, get_realm, \
+    get_active_projects, get_users_in_project
 from django.core.management.base import BaseCommand
-from django.db.models import Q
-
-from .usage_csv import institutions_realms_dict, get_realm
-
-
-def get_field(item, field):
-    if item["resource_name"] == "jupyter" and field in ["cpuh", "gpuh"]:
-        field = f"jupyter_{field[0:3]}_h"
-
-    try:
-        return item["accounting_record"][field]
-
-    except KeyError:
-        return None
-
-
-def get_active_projects(start_date, end_date):
-    return models.Project.objects.filter(
-        (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) &
-        Q(date_start__lte=end_date) &
-        ~Q(state__name__in=["submit", "deny"])
-    )
 
 
 class Command(BaseCommand):
@@ -60,10 +39,7 @@ class Command(BaseCommand):
             project_list.append(project.name)
             project_type_list.append(project.project_type.name)
             project_institute.append(project.institute)
-            users_list.append(len([
-                user for user in project.users.all() if
-                user.person_institution not in ["", "Nepoznato"]
-             ]))
+            users_list.append(len(get_users_in_project(project.identifier)))
 
             try:
                 croris_id.append(project.croris_id)

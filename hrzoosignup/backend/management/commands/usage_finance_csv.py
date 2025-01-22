@@ -1,9 +1,8 @@
 import datetime
 
 import pandas as pd
+from backend.utils.accounting import get_active_projects
 from django.core.management.base import BaseCommand
-
-from .usage_project_csv import get_active_projects
 
 
 class Command(BaseCommand):
@@ -35,19 +34,29 @@ class Command(BaseCommand):
         amounts = list()
         currencies = list()
         for project in croris_projects:
-            total_amount = sum(
-                [item["amount"] for item in project.croris_finance]
-            )
-            for finance in project.croris_finance:
-                sources.append(finance["name"])
-                if total_amount == 0:
-                    percentages.append(0)
-                else:
-                    percentages.append(finance["amount"] / total_amount * 100)
+            try:
+                total_amount = sum(
+                    [item["amount"] for item in project.croris_finance]
+                )
+            except TypeError:
+                self.stdout.write(
+                    f"Wrong finance entry for project {project.identifier}"
+                )
+                continue
 
-                amounts.append(finance["amount"])
-                currencies.append(finance["currency"])
-                projects.append(project.name)
+            else:
+                for finance in project.croris_finance:
+                    sources.append(finance["name"])
+                    if total_amount == 0:
+                        percentages.append(0)
+                    else:
+                        percentages.append(
+                            finance["amount"] / total_amount * 100
+                        )
+
+                    amounts.append(finance["amount"])
+                    currencies.append(finance["currency"])
+                    projects.append(project.name)
 
         data = pd.DataFrame({
             "source": sources,
