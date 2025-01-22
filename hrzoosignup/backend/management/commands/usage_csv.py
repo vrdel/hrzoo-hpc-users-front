@@ -125,7 +125,7 @@ class Command(BaseCommand):
                 Q(project__bogus_end__gte=start_date)
             ) & ~Q(
                 project__state__name__in=["submit", "deny"]
-            )
+            ) & ~Q(user__person_institution__in=["", "Nepoznato"])
         )
 
         institutions = institutions_realms_dict()

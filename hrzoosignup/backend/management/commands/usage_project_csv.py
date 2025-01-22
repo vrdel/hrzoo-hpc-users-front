@@ -60,7 +60,10 @@ class Command(BaseCommand):
             project_list.append(project.name)
             project_type_list.append(project.project_type.name)
             project_institute.append(project.institute)
-            users_list.append(len(project.users.all()))
+            users_list.append(len([
+                user for user in project.users.all() if
+                user.person_institution not in ["", "Nepoznato"]
+             ]))
 
             try:
                 croris_id.append(project.croris_id)

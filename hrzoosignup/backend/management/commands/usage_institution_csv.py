@@ -36,7 +36,10 @@ class Command(BaseCommand):
             active_users.extend([item for item in project.users.all()])
 
         institutions = set(institutions).union(set(
-            [item.person_institution for item in active_users]
+            [
+                item.person_institution for item in active_users
+                if item.person_institution not in ["", "Nepoznato"]
+            ]
         ))
 
         institutions = sorted(list(institutions))
