@@ -41,8 +41,8 @@ class Command(BaseCommand):
         for institution, conf in institutions.items():
             ustanova_id = None
             if not (conf["oib"] or conf["mbu"]):
-                self.stdout.write(
-                    f"Missing OIB or MBU for institution {institution}"
+                self.stderr.write(
+                    f"Missing OIB and MBU for institution {institution}"
                 )
                 continue
 
