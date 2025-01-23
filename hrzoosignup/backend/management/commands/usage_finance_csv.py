@@ -1,7 +1,8 @@
 import datetime
 
 import pandas as pd
-from backend.utils.accounting import get_active_projects
+from backend.utils.accounting import get_active_projects, \
+    institutions_realms_dict, get_realm
 from django.core.management.base import BaseCommand
 
 
@@ -28,18 +29,21 @@ class Command(BaseCommand):
             ) if project.project_type.name == "research-croris"
         ]
 
+        institutions = institutions_realms_dict()
+
         sources = list()
         projects = list()
         percentages = list()
         amounts = list()
         currencies = list()
+        realms = list()
         for project in croris_projects:
             try:
                 total_amount = sum(
                     [item["amount"] for item in project.croris_finance]
                 )
             except TypeError:
-                self.stdout.write(
+                self.stderr.write(
                     f"Wrong finance entry for project {project.identifier}"
                 )
                 continue
@@ -57,13 +61,15 @@ class Command(BaseCommand):
                     amounts.append(finance["amount"])
                     currencies.append(finance["currency"])
                     projects.append(project.name)
+                    realms.append(get_realm(institutions, project.institute))
 
         data = pd.DataFrame({
             "source": sources,
             "project": projects,
             "percentage": percentages,
             "amount": amounts,
-            "currency": currencies
+            "currency": currencies,
+            "realm": realms
         })
 
         data.to_csv(options["filename"], index=False, sep="*")
