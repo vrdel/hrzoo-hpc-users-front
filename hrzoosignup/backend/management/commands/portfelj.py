@@ -96,8 +96,8 @@ class Command(BaseCommand):
         ])
 
         portfelj = Portfelj(
-            url=settings.PORTFELJ_URL,
-            token=settings.PORTFELJ_TOKEN
+            url=settings.PORTFOLIO_API,
+            token=settings.PORTFOLIO_TOKEN
         )
 
         data2send = {
