@@ -78,5 +78,21 @@
     {
         "from": "Fakultet elektrotehnike, strojarstva i brodogradnje u Splitu",
         "to": "fesb.hr"
+    },
+    {
+        "from": "Filozofski fakultet u Rijeci",
+        "to": "uniri-ffi.hr"
+    },
+    {
+        "from": "Tehnički fakultet, Rijeka",
+        "to": "uniri-riteh.hr"
+    },
+    {
+        "from": "Pomorski fakultet u Rijeci",
+        "to": "uniri-pfri.hr"
+    },
+    {
+        "from": "Hrvatska akademska i istraživačka mreža - CARNet",
+        "to": "carnet.hr"
     }
 ]
