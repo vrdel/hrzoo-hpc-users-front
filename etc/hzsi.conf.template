@@ -57,7 +57,7 @@ Username = user
 Token = pass
 
 [PORTFOLIO]
-API = https://portfelj.srce.hr//api/v1/upisi-vrijednost-pokazatelja
+API = https://portfelj.srce.hr/api/v1/upisi-vrijednost-pokazatelja
 Token = token
 
 [MAILINGLIST]
