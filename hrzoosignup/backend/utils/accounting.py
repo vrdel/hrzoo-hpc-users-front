@@ -92,7 +92,7 @@ def get_instance_id(item):
 def get_active_projects(start_date, end_date):
     return models.Project.objects.filter(
         (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) &
-        Q(date_start__lte=end_date) &
+        Q(date_approved__lte=end_date) &
         ~Q(state__name__in=["submit", "deny"])
     )
 
