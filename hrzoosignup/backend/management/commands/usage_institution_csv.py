@@ -1,7 +1,6 @@
 import datetime
 
 import pandas as pd
-from backend import models
 from backend.utils.accounting import get_active_projects, get_active_users
 from django.core.management.base import BaseCommand
 from django.utils import timezone
@@ -37,10 +36,7 @@ class Command(BaseCommand):
             start_date=start_date, end_date=end_date
         )
 
-        institutions = sorted([
-            item.name_short for item in models.CrorisInstitutions.objects.all()
-        ])
-
+        institutions = [item.institute for item in projects]
         institutions = set(institutions).union(set([
             item.person_institution for item in active_users
         ]))
