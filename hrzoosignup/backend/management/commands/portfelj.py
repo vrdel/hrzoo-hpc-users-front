@@ -4,6 +4,7 @@ from backend.utils.accounting import get_usage, get_active_projects
 from backend.utils.portfelj import Portfelj, PortfeljException
 from django.conf import settings
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 
 def get_field(item, field):
@@ -18,15 +19,19 @@ class Command(BaseCommand):
     help = "Send data to Portfelj poslovnih aktivnosti"
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            "--year", type=int, dest="year", help="year"
-        )
+        parser.add_argument("--year", type=int, dest="year", help="year")
 
     def handle(self, *args, **options):
         year = options["year"]
 
-        start_date = datetime.datetime(year, 1, 1, 0, 0, 0)
-        end_date = datetime.datetime(year, 12, 31, 23, 59, 59)
+        start_date = timezone.make_aware(
+            datetime.datetime(year, 1, 1, 0, 0, 0),
+            timezone=timezone.get_current_timezone()
+        )
+        end_date = timezone.make_aware(
+            datetime.datetime(year, 12, 31, 23, 59, 59),
+            timezone=timezone.get_current_timezone()
+        )
 
         projects = get_active_projects(
             start_date=start_date,
