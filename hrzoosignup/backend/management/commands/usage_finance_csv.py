@@ -4,6 +4,7 @@ import pandas as pd
 from backend.utils.accounting import get_active_projects, \
     institutions_realms_dict, get_realm
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 
 class Command(BaseCommand):
@@ -24,8 +25,14 @@ class Command(BaseCommand):
 
         croris_projects = [
             project for project in get_active_projects(
-                start_date=datetime.datetime(year, 1, 1, 0, 0, 0),
-                end_date=datetime.datetime(year, 12, 31, 23, 59, 59)
+                start_date=timezone.make_aware(
+                    datetime.datetime(year, 1, 1, 0, 0, 0),
+                    timezone=timezone.get_current_timezone()
+                ),
+                end_date=timezone.make_aware(
+                    datetime.datetime(year, 12, 31, 23, 59, 59),
+                    timezone=timezone.get_current_timezone()
+                )
             ) if project.project_type.name == "research-croris"
         ]
 

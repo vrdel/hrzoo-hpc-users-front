@@ -56,6 +56,10 @@ API_Permissions = https://webdev.dashboard.srce.hr/api/dozvolausluge
 Username = user
 Token = pass
 
+[PORTFOLIO]
+API = https://portfelj.srce.hr/api/v1/upisi-vrijednost-pokazatelja
+Token = token
+
 [MAILINGLIST]
 Name = computing-users@srce.hr
 Server = http://list.srce.hr:8001/3.0

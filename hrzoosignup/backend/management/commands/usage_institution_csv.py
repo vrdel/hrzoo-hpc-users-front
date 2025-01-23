@@ -1,9 +1,9 @@
 import datetime
 
 import pandas as pd
-from backend import models
 from backend.utils.accounting import get_active_projects, get_active_users
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 
 
 class Command(BaseCommand):
@@ -22,18 +22,21 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         year = options["year"]
 
-        start_date = datetime.datetime(year, 1, 1, 0, 0, 0)
-        end_date = datetime.datetime(year, 12, 31, 23, 59, 59)
+        start_date = timezone.make_aware(
+            datetime.datetime(year, 1, 1, 0, 0, 0),
+            timezone=timezone.get_current_timezone()
+        )
+        end_date = timezone.make_aware(
+            datetime.datetime(year, 12, 31, 23, 59, 59),
+            timezone=timezone.get_current_timezone()
+        )
 
         projects = get_active_projects(start_date=start_date, end_date=end_date)
         active_users = get_active_users(
             start_date=start_date, end_date=end_date
         )
 
-        institutions = sorted([
-            item.name_short for item in models.CrorisInstitutions.objects.all()
-        ])
-
+        institutions = [item.institute for item in projects]
         institutions = set(institutions).union(set([
             item.person_institution for item in active_users
         ]))
