@@ -1,6 +1,7 @@
 import datetime
 
-from backend.utils.accounting import get_usage, get_active_projects
+from backend.utils.accounting import get_usage, get_active_projects, \
+    get_users_in_project
 from backend.utils.portfelj import Portfelj, PortfeljException
 from django.conf import settings
 from django.core.management.base import BaseCommand
@@ -40,7 +41,9 @@ class Command(BaseCommand):
 
         users = list()
         for project in projects:
-            users.extend(project.users.all())
+            users.extend(
+                get_users_in_project(project_identifier=project.identifier)
+            )
 
         users = set(users)
 
