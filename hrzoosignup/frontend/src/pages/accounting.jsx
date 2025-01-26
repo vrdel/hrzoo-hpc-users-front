@@ -162,20 +162,12 @@ const MyAccounting = () => {
   }
 
   if (data) {
-    let n = (supekCPUProjects.length > 0) + (supekGPUProjects.length > 0) + (padobranProjects.length > 0) + (galaxyProjects.length > 0) + (jupyterCPUProjects.length > 0) + (jupyterGPUProjects.length > 0)
-    let col_md = 4
-    let graph_width = 450
-    let di = 3
     let groups = []
-    if (n <= 4) {
-      col_md = 6
-      graph_width = 600
-      di = 2
-    }
+    let graph_width = 1650
 
     if (supekCPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Supek CPUH</h4>
           <BarChart
             width={ graph_width }
@@ -200,12 +192,12 @@ const MyAccounting = () => {
               supekCPUProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
             }
           </BarChart>
-        </Col>
+        </Row>
       )
 
     if (supekGPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Supek GPUH</h4>
           <BarChart
             width={ graph_width }
@@ -230,12 +222,12 @@ const MyAccounting = () => {
               supekGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
             }
           </BarChart>
-        </Col>
+        </Row>
       )
 
     if (padobranProjects.length > 0) 
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Padobran CPUH</h4>
           <BarChart
             width={ graph_width }
@@ -260,12 +252,12 @@ const MyAccounting = () => {
               padobranProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
             }
           </BarChart>
-        </Col>
+        </Row>
       )
 
     if (galaxyProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Galaxy CPUH</h4>
           <BarChart
             width={ graph_width }
@@ -290,12 +282,12 @@ const MyAccounting = () => {
               galaxyProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
             }
           </BarChart>
-        </Col>
+        </Row>
       )
 
     if (jupyterCPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Jupyter CPUH</h4>
           <BarChart
             width={ graph_width }
@@ -320,12 +312,12 @@ const MyAccounting = () => {
               jupyterCPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
             }
           </BarChart>
-        </Col>
+        </Row>
       )
 
     if (jupyterGPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Jupyter GPUH</h4>
           <BarChart
             width={ graph_width }
@@ -350,21 +342,8 @@ const MyAccounting = () => {
               jupyterGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
             }
           </BarChart>
-        </Col>
+        </Row>
       )
-
-    const rows = []
-    for (let i = 0; i < groups.length; i = i + di) {
-      let chosen_group = groups.slice(i, di + 1)
-      if (i == 0)
-        rows.push(
-          <Row>
-            {
-              chosen_group.map(column => column)
-            }
-          </Row>
-        )
-    }
 
     if (supekCPUProjects.length == 0 && supekGPUProjects.length == 0 && padobranProjects.length == 0 && galaxyProjects.length == 0 && jupyterCPUProjects.length == 0 && jupyterGPUProjects.length == 0)
       return (
@@ -430,7 +409,7 @@ const MyAccounting = () => {
           <Row className="mt-3">
           </Row>
           {
-            rows.map(row => row)
+            groups.map(row => row)
           }
           <Row className="mt-3">
             <Col md={4}></Col>
