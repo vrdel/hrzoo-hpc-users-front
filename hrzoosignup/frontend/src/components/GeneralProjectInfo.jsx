@@ -143,7 +143,6 @@ export const Persons = ({project, person_info, projectsLeadUsers}) => {
 
 
 export const Finance = ({project}) => {
-  console.log('VRDEL DEBUG', project.finance)
   return (
     <>
       <Col md={{size: 12}}>
@@ -165,14 +164,14 @@ export const Finance = ({project}) => {
                 project.finance.map((finance, i) =>
                   <span key={`croris-finance-${i}`} className="fst-italic">
                     <Badge className="bg-warning-subtle fw-normal text-dark fs-6 me-2" key="project-institute">
-                      { finance }
+                      { finance.name }
                     </Badge>
                   </span>
                 )
               :
                 <span className="fst-italic">
                   <Badge className="bg-warning-subtle fw-normal fs-6 text-dark">
-                    { project.finance[0] }
+                    { project.finance[0].name }
                   </Badge>
                 </span>
           }
