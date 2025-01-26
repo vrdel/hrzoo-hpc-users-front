@@ -501,6 +501,11 @@ class CrorisInstitutions(models.Model):
         max_length=512,
         blank=True,
     )
+    parent = models.CharField(
+        _("Long name of parent institution"),
+        max_length=512,
+        blank=True,
+    )
     name_short = models.CharField(
         _("Short name of institution"),
         max_length=256,
