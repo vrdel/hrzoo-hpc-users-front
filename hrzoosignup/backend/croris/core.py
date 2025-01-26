@@ -73,7 +73,11 @@ class CroRISCore(object):
         if finance and finance.get('_embedded', False):
             financiers = []
             for fin in finance['_embedded']['financijeri']:
-                financiers.append(fin['entityNameHr'])
+                financiers.append({
+                    'name': fin['entityNameHr'],
+                    'amount': fin.get('amount', 0),
+                    'currency': fin.get('currencyCode', '')
+                })
             metadata['finance'] = financiers
 
         return metadata
