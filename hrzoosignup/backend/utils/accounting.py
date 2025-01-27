@@ -129,3 +129,23 @@ def get_usage(start_date, end_date):
             project__state__name__in=["submit", "deny"]
         ) & ~Q(user__person_institution__in=["", "Nepoznato"])
     )
+
+
+def get_institute_long_name():
+    institutions = models.CrorisInstitutions.objects.all()
+
+    institute_dict = dict()
+    for institution in institutions:
+        institute_dict.update({
+            institution.name_short: institution.name_long
+        })
+
+    return institute_dict
+
+
+def short2long(institutions, institution):
+    try:
+        return institutions[institution]
+
+    except KeyError:
+        return institution

@@ -2,7 +2,8 @@ import datetime
 
 import pandas as pd
 from backend.utils.accounting import institutions_realms_dict, get_realm, \
-    get_active_projects, get_users_in_project
+    get_active_projects, get_users_in_project, get_institute_long_name, \
+    short2long
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -35,6 +36,7 @@ class Command(BaseCommand):
         )
 
         institutions = institutions_realms_dict()
+        long_names = get_institute_long_name()
 
         project_list = list()
         project_type_list = list()
@@ -45,7 +47,7 @@ class Command(BaseCommand):
         for project in projects:
             project_list.append(project.name)
             project_type_list.append(project.project_type.name)
-            project_institute.append(project.institute)
+            project_institute.append(short2long(long_names, project.institute))
             users_list.append(len(get_users_in_project(project.identifier)))
 
             try:

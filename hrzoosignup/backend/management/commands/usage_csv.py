@@ -2,7 +2,8 @@ import datetime
 
 import pandas as pd
 from backend.utils.accounting import get_field, institutions_realms_dict, \
-    get_wait_time, get_realm, job_tag, get_instance_id, get_usage
+    get_wait_time, get_realm, job_tag, get_instance_id, get_usage, \
+    get_institute_long_name, short2long
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -35,6 +36,7 @@ class Command(BaseCommand):
         usage = get_usage(start_date=start_date, end_date=end_date)
 
         institutions = institutions_realms_dict()
+        long_names = get_institute_long_name()
 
         data = pd.DataFrame.from_records(
             usage.values(
@@ -58,6 +60,9 @@ class Command(BaseCommand):
         )
         data["tag"] = data.apply(lambda row: job_tag(row), axis=1)
         data["VM"] = data.apply(lambda row: get_instance_id(row), axis=1)
+        data["project__institute"] = data.apply(
+            lambda row: short2long(long_names, row.project__institute), axis=1
+        )
 
         data.drop([
             "accounting_record"

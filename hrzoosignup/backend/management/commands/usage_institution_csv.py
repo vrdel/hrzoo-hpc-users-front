@@ -1,7 +1,8 @@
 import datetime
 
 import pandas as pd
-from backend.utils.accounting import get_active_projects, get_active_users
+from backend.utils.accounting import get_active_projects, get_active_users, \
+    get_institute_long_name, short2long
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -42,10 +43,13 @@ class Command(BaseCommand):
         ]))
 
         institutions = sorted(list(institutions))
+        long_names = get_institute_long_name()
 
         projects_list = list()
         users_list = list()
+        institutions_long_name = list()
         for institution in institutions:
+            institutions_long_name.append(short2long(long_names, institution))
             projects_list.append(len([
                 item for item in projects if item.institute == institution
             ]))
@@ -55,7 +59,7 @@ class Command(BaseCommand):
             ]))
 
         data = pd.DataFrame({
-            "institution": institutions,
+            "institution": institutions_long_name,
             "number_of_projects": projects_list,
             "number_of_users": users_list
         })
