@@ -1,4 +1,14 @@
 from django.conf import settings
+from backend.models import CrorisInstitutions
+
+
+async def long_name(short_name):
+    try:
+        inst_croris = await CrorisInstitutions.objects.aget(name_short=short_name)
+        return inst_croris.name_long
+    except CrorisInstitutions.DoesNotExist:
+        return short_name
+
 
 class InstitutionMap(object):
     def __init__(self):

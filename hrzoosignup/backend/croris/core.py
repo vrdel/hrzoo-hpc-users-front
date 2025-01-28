@@ -7,6 +7,7 @@ from django.conf import settings
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
+from backend.utils.institution import long_name
 from backend.utils.various import contains_exception
 
 from aiohttp import client_exceptions, http_exceptions
@@ -33,7 +34,7 @@ class CroRISCore(object):
         self.loop.run_until_complete(self._fetch_serie())
         self.loop.close()
 
-    def _extract_project_fields(self, apidata):
+    async def _extract_project_fields(self, apidata):
         metadata = {}
         metadata['end'] = apidata.get('kraj', None)
         # projects may be outdated
@@ -74,7 +75,9 @@ class CroRISCore(object):
             financiers = []
             for fin in finance['_embedded']['financijeri']:
                 financiers.append({
-                    'name': fin['entityNameHr'],
+                    'name': await long_name(fin['entityNameHr'])
+                    if settings.CRORIS_INSTITUTIONLONG
+                    else fin['entityNameHr'],
                     'amount': fin.get('amount', 0),
                     'currency': fin.get('currencyCode', '')
                 })
@@ -100,7 +103,7 @@ class CroRISCore(object):
         await self._filter_unverified()
         await self._extract_email_for_associate()
         await self._close_session()
-        self._lead_institute_on_project_associate()
+        await self._lead_institute_on_project_associate()
 
     async def _fetch_person_lead(self):
         fetch_data = await self._fetch_data(settings.API_PERSONLEAD.replace("{persOib}", self.target_oib))
@@ -152,7 +155,7 @@ class CroRISCore(object):
 
             for project in self.projects_lead_info:
                 project = json.loads(project)
-                pr_fields = self._extract_project_fields(project)
+                pr_fields = await self._extract_project_fields(project)
                 if pr_fields:
                     parsed_projects.append(pr_fields)
 
@@ -303,7 +306,7 @@ class CroRISCore(object):
                 )
             i += 1
 
-    def _lead_institute_on_project_associate(self):
+    async def _lead_institute_on_project_associate(self):
         project_associate_should_lead = list()
 
         if self.projects_associate_info:
@@ -327,7 +330,7 @@ class CroRISCore(object):
                                 if project['croris_id'] == prjs['id']:
                                     self.projects_associate_info.remove(project)
 
-                            pr_fields = self._extract_project_fields(prjs)
+                            pr_fields = await self._extract_project_fields(prjs)
                             self.projects_lead_info.append(pr_fields)
                             for person in prjs['osobeResources']['_embedded']['osobe']:
                                 if prjs['id'] not in self.projects_lead_users:
