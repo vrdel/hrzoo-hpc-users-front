@@ -34,6 +34,12 @@ class Command(BaseCommand):
             dest="confirm_yes",
             help="Make changes",
         )
+        parser.add_argument(
+            "--name-long",
+            action="store_true",
+            dest="name_long",
+            help="Use name_long for financiers",
+        )
 
     async def _task_resync_croris_finance(self):
         project_financiers = dict()
