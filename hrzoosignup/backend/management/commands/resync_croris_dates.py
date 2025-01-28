@@ -4,7 +4,7 @@ from django.core.cache import cache
 from django.core.management.base import BaseCommand
 
 from backend.models import Project
-from backend.utils.institution_map import InstitutionMap
+from backend.utils.institution import InstitutionMap
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry

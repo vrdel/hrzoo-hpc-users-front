@@ -9,7 +9,7 @@ from backend.models import User
 from backend.models import Project
 from backend.models import UserProject
 from backend.models import CrorisInstitutions
-from backend.utils.institution_map import InstitutionMap
+from backend.utils.institution import InstitutionMap
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
