@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
 
+from backend.models import CrorisInstitutions
+
 from backend.models import Project
 from backend.utils.institution_map import InstitutionMap
 
@@ -23,8 +25,6 @@ class Command(BaseCommand):
 
     def __init__(self):
         super().__init__()
-        self.inst_maps = InstitutionMap()
-        self.user_model = get_user_model()
 
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)
@@ -41,9 +41,17 @@ class Command(BaseCommand):
             help="Use name_long for financiers",
         )
 
-    async def _task_resync_croris_finance(self):
+    async def _long_name(self, short_name):
+        try:
+            inst_croris = await CrorisInstitutions.objects.aget(name_short=short_name)
+            return inst_croris.name_long
+        except CrorisInstitutions.DoesNotExist:
+            return short_name
+
+    async def _task_resync_croris_finance(self, options):
         project_financiers = dict()
         try:
+
             projects_db = Project.objects.filter(project_type__name='research-croris')
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
             self.session = SessionWithRetry(logger, auth=auth,
@@ -69,7 +77,9 @@ class Command(BaseCommand):
                             financiers = []
                             for fin in finance['_embedded']['financijeri']:
                                 financiers.append({
-                                    'name': fin['entityNameHr'],
+                                    'name': await self._long_name(fin['entityNameHr'])
+                                    if options.get('name_long', None)
+                                    else fin['entityNameHr'],
                                     'amount': fin.get('amount', 0),
                                     'currency': fin.get('currencyCode', '')
                                 })
@@ -105,7 +115,7 @@ class Command(BaseCommand):
         any_changed_project = False
 
         try:
-            projects_financiers = asyncio.run(self._task_resync_croris_finance())
+            projects_financiers = asyncio.run(self._task_resync_croris_finance(options))
         except (HZSIHttpError, KeyboardInterrupt):
             pass
 
