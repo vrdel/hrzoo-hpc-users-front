@@ -3,10 +3,9 @@ from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
 
-from backend.models import CrorisInstitutions
-
 from backend.models import Project
-from backend.utils.institution_map import InstitutionMap
+from backend.utils.institution import InstitutionMap
+from backend.utils.institution import long_name
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
@@ -41,13 +40,6 @@ class Command(BaseCommand):
             help="Use name_long for financiers",
         )
 
-    async def _long_name(self, short_name):
-        try:
-            inst_croris = await CrorisInstitutions.objects.aget(name_short=short_name)
-            return inst_croris.name_long
-        except CrorisInstitutions.DoesNotExist:
-            return short_name
-
     async def _task_resync_croris_finance(self, options):
         project_financiers = dict()
         try:
@@ -77,7 +69,7 @@ class Command(BaseCommand):
                             financiers = []
                             for fin in finance['_embedded']['financijeri']:
                                 financiers.append({
-                                    'name': await self._long_name(fin['entityNameHr'])
+                                    'name': await long_name(fin['entityNameHr'])
                                     if options.get('name_long', None)
                                     else fin['entityNameHr'],
                                     'amount': fin.get('amount', 0),
