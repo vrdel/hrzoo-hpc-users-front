@@ -47,6 +47,8 @@ API_InstitutionInactive = https://www.croris.hr/ustanove-api/upisnik-ustanova/us
 Username = user
 Password = pass
 Grace_Days = 180
+InstitutionLongName = True
+
 
 [DASHBOARD]
 API_Institutions = https://webdev.dashboard.srce.hr/api/ustanove

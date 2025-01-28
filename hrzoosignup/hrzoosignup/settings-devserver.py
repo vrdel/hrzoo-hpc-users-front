@@ -76,6 +76,7 @@ try:
     CRORIS_USER = config.get('CRORIS', 'Username')
     CRORIS_PASSWORD = config.get('CRORIS', 'Password')
     GRACE_DAYS = config.getint('CRORIS', 'Grace_Days', fallback=0)
+    CRORIS_INSTITUTIONLONG = config.getboolean('CRORIS', 'InstitutionLongName')
 
     DASHBOARD_API_INSTITUTIONS = config.get("DASHBOARD", "API_Institutions")
     DASHBOARD_API_INDICATORS = config.get("DASHBOARD", "API_Indicators")
