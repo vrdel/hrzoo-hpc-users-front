@@ -48,6 +48,35 @@ const monthlyDisplay = <FormattedMessage
 />
 
 
+const get_past_12_months = () => {
+  const today = new Date()
+
+  const year = today.getFullYear()
+  const month = today.getMonth()
+  console.log(month)
+
+  let dates = []
+
+  for (var i=month+2; i <= 12; i++) {
+    if (i.toString().length == 1)
+      dates.push(`0${i}/${year-1}`)
+
+    else
+      dates.push(`${i}/${year-1}`)
+  }
+
+  for (var j=1; j<= month + 1; j++) {
+    if (j.toString().length == 1)
+      dates.push(`0${j}/${year}`)
+
+    else
+      dates.push(`${j}/${year}`)
+  }
+
+  return dates
+}
+
+
 const MyAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const [padobranProjects, setPadobranProjects] = useState([])
@@ -65,6 +94,7 @@ const MyAccounting = () => {
 	const [pageTitle, setPageTitle] = useState(undefined)
   const [years, setYears] = useState([])
   const [selectedYear, setSelectedYear] = useState(undefined)
+  const [useDefaultTimeRange, setUseDefaultTimeRange] = useState(true)
   const [isOpenYear, setIsOpenYear] = useState(false)
 
   const intl = useIntl()
@@ -92,15 +122,19 @@ const MyAccounting = () => {
     setSubsetOfProjects([...subsetOfProjects])
   }
 
-  const filterByYear = (data) => {
+  const filterTime = (data) => {
     let result = data
     if (selectedYear) {
       result = data.filter((item) => {
         return item.month.endsWith(selectedYear)
       })
     }
-    console.log(selectedYear)
-    console.log(result)
+
+    if (useDefaultTimeRange) {
+      result = data.filter((item) => {
+        return get_past_12_months().includes(item.month)
+      })
+    }
     return result
   }
 
@@ -198,7 +232,7 @@ const MyAccounting = () => {
             height={ 300 }
             data={ 
               "supek" in data ? 
-                filterByYear(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
+                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
               :  
                 [] 
             }
@@ -233,7 +267,7 @@ const MyAccounting = () => {
             height={ 300 }
             data={ 
               "supek" in data ? 
-                filterByYear(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
+                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
               : 
                 [] 
             }
@@ -268,7 +302,7 @@ const MyAccounting = () => {
             height={ 300 }
             data={ 
               "padobran" in data ? 
-                filterByYear(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+                filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
               : 
                 [] 
             }
@@ -303,7 +337,7 @@ const MyAccounting = () => {
             height={ 300 }
             data={ 
               "galaxy" in data ? 
-                filterByYear(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+                filterTime(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
               : 
               [] 
             }
@@ -338,7 +372,7 @@ const MyAccounting = () => {
             height={ 300 }
             data={ 
               "jupyter" in data ? 
-                filterByYear(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
+                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
               : 
                 [] 
             }
@@ -373,7 +407,7 @@ const MyAccounting = () => {
             height={ 300 }
             data={ 
               "jupyter" in data ? 
-                filterByYear(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
+                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
               : 
                 [] 
             }
@@ -445,7 +479,10 @@ const MyAccounting = () => {
                       years.map((year) => 
                         <DropdownItem 
                           key={ year } 
-                          onClick={ () => setSelectedYear(year)}
+                          onClick={ () => {
+                            setSelectedYear(year)
+                            setUseDefaultTimeRange(false)
+                          }}
                         >
                           { year }
                         </DropdownItem>
@@ -453,7 +490,10 @@ const MyAccounting = () => {
                     }
                     <DropdownItem 
                       key="show-all"
-                      onClick={ () => setSelectedYear(undefined) }
+                      onClick={ () => {
+                        setSelectedYear(undefined) 
+                        setUseDefaultTimeRange(false)
+                      }}
                       toggle={false}
                     >
                       Prikaži sve
