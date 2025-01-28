@@ -472,7 +472,10 @@ const MyAccounting = () => {
                   toggle={ () => setIsOpenYear(!isOpenYear) }
                 >
                   <DropdownToggle caret>
-                    Godine
+                    <FormattedMessage
+                      description="myaccounting-year-dropdown"
+                      defaultMessage="Godine"
+                    />
                   </DropdownToggle>
                   <DropdownMenu>
                     {
@@ -489,6 +492,19 @@ const MyAccounting = () => {
                       )
                     }
                     <DropdownItem 
+                      key="default"
+                      onClick={ () => {
+                        setSelectedYear(undefined) 
+                        setUseDefaultTimeRange(true)
+                      }}
+                      toggle={false}
+                    >
+                      <FormattedMessage
+                        description="myaccounting-year-default"
+                        defaultMessage="Prikaži zadnjih 12 mjeseci"
+                      />
+                    </DropdownItem>
+                    <DropdownItem 
                       key="show-all"
                       onClick={ () => {
                         setSelectedYear(undefined) 
@@ -496,7 +512,10 @@ const MyAccounting = () => {
                       }}
                       toggle={false}
                     >
-                      Prikaži sve
+                      <FormattedMessage
+                        description="myaccounting-year-showall"
+                        defaultMessage="Prikaži sve"
+                      />
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>

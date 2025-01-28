@@ -51,6 +51,10 @@
     "defaultMessage": "Podnošenje novog korisničkog zahtjeva",
     "description": "newrequest-modaltitle"
   },
+  "/kj3e/": {
+    "defaultMessage": "Prikaži sve",
+    "description": "myaccounting-year-showall"
+  },
   "/uuN9L": {
     "defaultMessage": "Strani suradnik",
     "description": "users-table-general-collaborator-foreign"
@@ -70,6 +74,10 @@
   "0RKlYA": {
     "defaultMessage": "Sigurnosne i obrambene znanosti",
     "description": "science-field-49"
+  },
+  "0aOZT/": {
+    "defaultMessage": "Godine",
+    "description": "myaccounting-year-dropdown"
   },
   "0fF2qV": {
     "defaultMessage": "Novi zahtjev temeljem praktične nastave",
@@ -2054,6 +2062,10 @@
   "q2kpZ6": {
     "defaultMessage": "Obvezno",
     "description": "schema-mandatory"
+  },
+  "q6PmAm": {
+    "defaultMessage": "Prikaži zadnjih 12 mjeseci",
+    "description": "myaccounting-year-default"
   },
   "q711/n": {
     "defaultMessage": "Greška prilikom kopiranja emaila korisnika u međuspremnik",

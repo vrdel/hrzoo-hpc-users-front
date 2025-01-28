@@ -51,6 +51,10 @@
     "defaultMessage": "New request submit",
     "description": "newrequest-modaltitle"
   },
+  "/kj3e/": {
+    "defaultMessage": "Show all",
+    "description": "myaccounting-year-showall"
+  },
   "/uuN9L": {
     "defaultMessage": "Foreign Collaborator",
     "description": "users-table-general-collaborator-foreign"
@@ -70,6 +74,10 @@
   "0RKlYA": {
     "defaultMessage": "Security and Defense Sciences",
     "description": "science-field-49"
+  },
+  "0aOZT/": {
+    "defaultMessage": "Years",
+    "description": "myaccounting-year-dropdown"
   },
   "0fF2qV": {
     "defaultMessage": "New request on behalf of practical class",
@@ -2054,6 +2062,10 @@
   "q2kpZ6": {
     "defaultMessage": "Required",
     "description": "schema-mandatory"
+  },
+  "q6PmAm": {
+    "defaultMessage": "Show last 12 momths",
+    "description": "myaccounting-year-default"
   },
   "q711/n": {
     "defaultMessage": "Error while copying user's email to clipboard",
