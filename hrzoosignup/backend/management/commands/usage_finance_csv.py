@@ -2,7 +2,7 @@ import datetime
 
 import pandas as pd
 from backend.utils.accounting import get_active_projects, \
-    institutions_realms_dict, get_realm
+    institutions_realms_dict, get_realm, get_institute_long_name, short2long
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -37,6 +37,7 @@ class Command(BaseCommand):
         ]
 
         institutions = institutions_realms_dict()
+        long_names = get_institute_long_name()
 
         sources = list()
         projects = list()
@@ -57,9 +58,9 @@ class Command(BaseCommand):
 
             else:
                 for finance in project.croris_finance:
-                    sources.append(finance["name"])
+                    sources.append(short2long(long_names, finance["name"]))
                     if total_amount == 0:
-                        percentages.append(0)
+                        percentages.append(100)
                     else:
                         percentages.append(
                             finance["amount"] / total_amount * 100

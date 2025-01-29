@@ -1,15 +1,25 @@
 import datetime
 
 import pandas as pd
+from backend import models
 from backend.utils.accounting import institutions_realms_dict, get_realm, \
-    get_active_projects, get_users_in_project, get_institute_long_name, \
+    get_active_projects, get_institute_long_name, \
     short2long
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 
+def get_parent_institution(short_name):
+    try:
+        institute = models.CrorisInstitutions.objects.get(name_short=short_name)
+        return institute.parent
+
+    except models.CrorisInstitutions.DoesNotExist:
+        return ""
+
+
 class Command(BaseCommand):
-    help = "Export usage data of projects to .csv file"
+    help = "Export usage parent institutions of projects to .csv file"
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -38,37 +48,28 @@ class Command(BaseCommand):
         institutions = institutions_realms_dict()
         long_names = get_institute_long_name()
 
-        project_list = list()
-        project_type_list = list()
-        project_institute = list()
-        croris_id = list()
-        realm = list()
-        users_list = list()
+        parents = list()
+        project_names = list()
+        project_institutions = list()
+        realms = list()
         for project in projects:
-            project_list.append(project.name)
-            project_type_list.append(project.project_type.name)
-            project_institute.append(short2long(long_names, project.institute))
-            users_list.append(len(get_users_in_project(project.identifier)))
+            parents.append(get_parent_institution(project.institute))
+            project_names.append(project.name)
+            project_institutions.append(
+                short2long(long_names, project.institute)
+            )
 
             try:
-                croris_id.append(project.croris_id)
-
-            except TypeError:
-                croris_id.append("")
-
-            try:
-                realm.append(get_realm(institutions, project.institute))
+                realms.append(get_realm(institutions, project.institute))
 
             except KeyError:
-                realm.append("")
+                realms.append("")
 
         data = pd.DataFrame({
-            "project": project_list,
-            "project_type": project_type_list,
-            "number_of_users": users_list,
-            "project_institution": project_institute,
-            "croris_id": croris_id,
-            "realm": realm
+            "parent": parents,
+            "project": project_names,
+            "project_institution": project_institutions,
+            "realm": realms
         })
 
         data.to_csv(options["filename"], index=False, sep="*")
