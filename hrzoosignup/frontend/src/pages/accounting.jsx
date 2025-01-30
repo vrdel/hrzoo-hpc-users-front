@@ -168,18 +168,25 @@ const MyAccounting = () => {
             <YAxis padding={{ top: 10 }} />
         }
         {
-          projects.map((proj) => 
-            <Bar 
-              key={ proj } 
-              label={{ 
-                position: "top", 
-                fontSize: 10, 
-                fill: colors[listProjects.indexOf(proj)] 
-              }} 
-              dataKey={ proj } 
-              stackId={ stackId }
-              fill={ colors[listProjects.indexOf(proj)] } 
-            />
+          projects.map((proj, index) => 
+            (index === projects.length - 1) ?
+              <Bar 
+                key={ proj } 
+                label={{
+                  position: "top",
+                  fontSize: 10
+                }}
+                dataKey={ proj } 
+                stackId={ stackId }
+                fill={ colors[listProjects.indexOf(proj)] } 
+              />
+            :
+              <Bar 
+                key={ proj } 
+                dataKey={ proj } 
+                stackId={ stackId }
+                fill={ colors[listProjects.indexOf(proj)] } 
+              />
           )
         }
       </BarChart>
