@@ -4,6 +4,7 @@ from unittest.mock import patch
 from backend import models
 from backend.api.internal import views
 from django.test import TestCase
+from django.utils import timezone
 from rest_framework.test import APIRequestFactory, force_authenticate
 
 from .test_utils import create_mock_db
@@ -15,14 +16,15 @@ class ResourceUsageTests(TestCase):
         self.view = views.ResourceUsage.as_view()
         self.factory = APIRequestFactory()
         self.user = models.User.objects.get(person_username="adent")
+        self.today = timezone.make_aware(
+            datetime.datetime(2024, 8, 22, 0, 0, 0),
+            timezone=timezone.get_current_timezone()
+        )
 
     @patch("backend.api.internal.view_accounting.date_today")
     def test_get_data_per_user(self, mock_date_today):
-        self.maxDiff = None
-        mock_date_today.return_value = datetime.date(2024, 8, 22)
-        request = self.factory.get(
-            "/api/v1/internal/accounting/records"
-        )
+        mock_date_today.return_value = self.today
+        request = self.factory.get("/api/v1/internal/accounting/records")
         force_authenticate(request, user=self.user)
         response = self.view(request)
         self.assertEqual(
@@ -30,6 +32,10 @@ class ResourceUsageTests(TestCase):
                 "supek": {
                     "cumulative": {
                         "cpuh": [
+                            {
+                                "month": "01/2024",
+                                "project-1": 1
+                            },
                             {
                                 "month": "02/2024",
                                 "project-1": 1
@@ -66,6 +72,9 @@ class ResourceUsageTests(TestCase):
                         ],
                         "gpuh": [
                             {
+                                "month": "01/2024"
+                            },
+                            {
                                 "month": "02/2024"
                             },
                             {
@@ -93,6 +102,10 @@ class ResourceUsageTests(TestCase):
                     "monthly": {
                         "cpuh": [
                             {
+                                "month": "01/2024",
+                                "project-1": 1
+                            },
+                            {
                                 "month": "02/2024"
                             },
                             {
@@ -118,6 +131,9 @@ class ResourceUsageTests(TestCase):
                             }
                         ],
                         "gpuh": [
+                            {
+                                "month": "01/2024"
+                            },
                             {
                                 "month": "02/2024"
                             },
@@ -148,7 +164,7 @@ class ResourceUsageTests(TestCase):
 
     @patch("backend.api.internal.view_accounting.date_today")
     def test_get_data_for_user_without_usage_records(self, mock_date_today):
-        mock_date_today.return_value = datetime.date(2024, 8, 22)
+        mock_date_today.return_value = self.today
         user = models.User.objects.get(person_username="fprefect")
         request = self.factory.get(
             "/api/v1/internal/accounting/records"
@@ -159,7 +175,7 @@ class ResourceUsageTests(TestCase):
 
     @patch("backend.api.internal.view_accounting.date_today")
     def test_get_data_if_resource_jupyter(self, mock_date_today):
-        mock_date_today.return_value = datetime.date(2024, 8, 22)
+        mock_date_today.return_value = self.today
         user = models.User.objects.get(person_uniqueid="user454@fer.hr")
         request = self.factory.get("/api/v1/internal/accounting/records")
         force_authenticate(request, user=user)
@@ -170,21 +186,6 @@ class ResourceUsageTests(TestCase):
                     "cumulative": {
                         "cpuh": [
                             {
-                                "month": "02/2024",
-                            },
-                            {
-                                "month": "03/2024",
-                            },
-                            {
-                                "month": "04/2024",
-                            },
-                            {
-                                "month": "05/2024"
-                            },
-                            {
-                                "month": "06/2024"
-                            },
-                            {
                                 "month": "07/2024"
                             },
                             {
@@ -194,21 +195,6 @@ class ResourceUsageTests(TestCase):
                     },
                     "monthly": {
                         "cpuh": [
-                            {
-                                "month": "02/2024",
-                            },
-                            {
-                                "month": "03/2024",
-                            },
-                            {
-                                "month": "04/2024",
-                            },
-                            {
-                                "month": "05/2024"
-                            },
-                            {
-                                "month": "06/2024"
-                            },
                             {
                                 "month": "07/2024"
                             },
@@ -222,21 +208,6 @@ class ResourceUsageTests(TestCase):
                     "cumulative": {
                         "cpuh": [
                             {
-                                "month": "02/2024",
-                            },
-                            {
-                                "month": "03/2024",
-                            },
-                            {
-                                "month": "04/2024",
-                            },
-                            {
-                                "month": "05/2024"
-                            },
-                            {
-                                "month": "06/2024"
-                            },
-                            {
                                 "month": "07/2024",
                                 "project-5": 5
                             },
@@ -246,21 +217,6 @@ class ResourceUsageTests(TestCase):
                             }
                         ],
                         "gpuh": [
-                            {
-                                "month": "02/2024",
-                            },
-                            {
-                                "month": "03/2024",
-                            },
-                            {
-                                "month": "04/2024",
-                            },
-                            {
-                                "month": "05/2024"
-                            },
-                            {
-                                "month": "06/2024"
-                            },
                             {
                                 "month": "07/2024",
                                 "project-5": 3
@@ -274,21 +230,6 @@ class ResourceUsageTests(TestCase):
                     "monthly": {
                         "cpuh": [
                             {
-                                "month": "02/2024",
-                            },
-                            {
-                                "month": "03/2024",
-                            },
-                            {
-                                "month": "04/2024",
-                            },
-                            {
-                                "month": "05/2024"
-                            },
-                            {
-                                "month": "06/2024"
-                            },
-                            {
                                 "month": "07/2024",
                                 "project-5": 5
                             },
@@ -297,21 +238,6 @@ class ResourceUsageTests(TestCase):
                             }
                         ],
                         "gpuh": [
-                            {
-                                "month": "02/2024",
-                            },
-                            {
-                                "month": "03/2024",
-                            },
-                            {
-                                "month": "04/2024",
-                            },
-                            {
-                                "month": "05/2024"
-                            },
-                            {
-                                "month": "06/2024"
-                            },
                             {
                                 "month": "07/2024",
                                 "project-5": 3

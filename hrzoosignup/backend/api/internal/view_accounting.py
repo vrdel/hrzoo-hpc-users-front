@@ -6,6 +6,7 @@ import pandas as pd
 from backend import models
 from dateutil.relativedelta import relativedelta
 from django.core.cache import cache
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
@@ -14,18 +15,33 @@ from rest_framework.views import APIView
 
 
 def date_today():
-    return datetime.date.today()
+    return timezone.make_aware(
+        datetime.datetime.combine(
+            datetime.date.today(),
+            datetime.datetime.min.time()
+        ),
+        timezone=timezone.get_current_timezone()
+    )
+
+
+def diff_months(date1, date2):
+    if date2.year == date1.year:
+        return abs(date1.month - date2.month) + 1
+
+    else:
+        if date2.year > date1.year:
+            month1 = date1.month
+            month2 = date2.month
+
+        else:
+            month1 = date2.month
+            month2 = date1.month
+
+        return (abs(date1.year - date2.year) - 1) * 12 + 13 - month1 + month2
 
 
 def usage4user(username):
     todays_date = date_today()
-    current_month_start = datetime.date(
-        todays_date.year, todays_date.month, 1
-    )
-    six_months_ago = current_month_start - relativedelta(months=6)
-    dates = [
-        six_months_ago + relativedelta(months=i) for i in range(7)
-    ]
 
     records = models.ResourceUsage.objects.filter(
         user=models.User.objects.get(person_username=username)
@@ -59,7 +75,15 @@ def usage4user(username):
             "accounting_record__jupyter_gpu_h": "jupyter_gpuh"
         })
 
-        df = df.sort_values(by=["end_time"])
+        beginning_of_times = min(df["end_time"]).to_pydatetime().date()
+
+        dates = [
+            datetime.date(
+                beginning_of_times.year, beginning_of_times.month, 1
+            ) + relativedelta(months=i) for i in range(
+                diff_months(beginning_of_times, todays_date)
+            )
+        ]
 
         resources = df["resource"].unique()
 

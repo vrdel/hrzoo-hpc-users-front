@@ -15,7 +15,7 @@ import {
   DropdownToggle 
 } from "reactstrap";
 import { PageTitle } from 'Components/PageTitle';
-import { XAxis, YAxis, CartesianGrid, Bar, BarChart } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Tooltip } from 'recharts';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
@@ -25,17 +25,7 @@ import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { useNavigate } from "react-router-dom";
 
 
-const colors = ['#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b', '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b','#fcaf26', '#b4bbc0', '#929597', '#606365']
-
-const linearScale = <FormattedMessage 
-  description="myaccounting-linearscale-button"
-  defaultMessage="Linearna skala"
-/>
-
-const logScale = <FormattedMessage
-  description="myaccounting-logscale-button"
-  defaultMessage="Log skala"
-/>
+const colors = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"]
 
 const cumulativeDisplay = <FormattedMessage 
   description="myaccounting-cumulative-button"
@@ -48,6 +38,34 @@ const monthlyDisplay = <FormattedMessage
 />
 
 
+const get_past_12_months = () => {
+  const today = new Date()
+
+  const year = today.getFullYear()
+  const month = today.getMonth()
+
+  let dates = []
+
+  for (var i=month+2; i <= 12; i++) {
+    if (i.toString().length == 1)
+      dates.push(`0${i}/${year-1}`)
+
+    else
+      dates.push(`${i}/${year-1}`)
+  }
+
+  for (var j=1; j<= month + 1; j++) {
+    if (j.toString().length == 1)
+      dates.push(`0${j}/${year}`)
+
+    else
+      dates.push(`${j}/${year}`)
+  }
+
+  return dates
+}
+
+
 const MyAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const [padobranProjects, setPadobranProjects] = useState([])
@@ -56,13 +74,16 @@ const MyAccounting = () => {
   const [galaxyProjects, setGalaxyProjects] = useState([])
   const [jupyterCPUProjects, setJupyterCPUProjects] = useState([])
   const [jupyterGPUProjects, setJupyterGPUProjects] = useState([])
-  const [useLogScale, setUseLogScale] = useState(false)
   const [showCumulative, setShowCumulative] = useState(false)
   const [listProjects, setListProjects] = useState([])
   const [subsetOfProjects, setSubsetOfProjects] = useState([])
   const [isOpen, setIsOpen] = useState(false)
   const { LinkTitles } = useContext(SharedData)
 	const [pageTitle, setPageTitle] = useState(undefined)
+  const [years, setYears] = useState([])
+  const [selectedYear, setSelectedYear] = useState(undefined)
+  const [useDefaultTimeRange, setUseDefaultTimeRange] = useState(true)
+  const [isOpenYear, setIsOpenYear] = useState(false)
 
   const intl = useIntl()
   let navigate = useNavigate()
@@ -89,19 +110,86 @@ const MyAccounting = () => {
     setSubsetOfProjects([...subsetOfProjects])
   }
 
+  const filterTime = (data) => {
+    let result = data
+    if (selectedYear) {
+      result = data.filter((item) => {
+        return item.month.endsWith(selectedYear)
+      })
+    }
+
+    if (useDefaultTimeRange) {
+      result = data.filter((item) => {
+        return get_past_12_months().includes(item.month)
+      })
+    }
+    return result
+  }
+
+
+  const UsageBarChart = ({ data, projects, stackId }) => {
+    const graph_width = 1650
+
+    return (
+      <BarChart
+        width={ graph_width }
+        height={ 300 }
+        data={ data }
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip />
+        <XAxis dataKey="month" />
+        <YAxis padding={{ top: 10 }} />
+        {
+          projects.map((proj, index) => 
+            (index === projects.length - 1) ?
+              <Bar 
+                key={ proj } 
+                label={{
+                  position: "top",
+                  fontSize: 10
+                }}
+                dataKey={ proj } 
+                stackId={ stackId }
+                fill={ colors[listProjects.indexOf(proj)] } 
+              />
+            :
+              <Bar 
+                key={ proj } 
+                dataKey={ proj } 
+                stackId={ stackId }
+                fill={ colors[listProjects.indexOf(proj)] } 
+              />
+          )
+        }
+      </BarChart>
+    )
+  } 
+
   useEffect(() => {
     if (status == "success" && data) {
       let supek_cpu = new Set()
       let supek_gpu = new Set()
+      let supek_years = new Set()
       let padobran = new Set()
+      let padobran_years = new Set()
       let galaxy = new Set()
+      let galaxy_years = new Set()
       let jupyter_cpu = new Set()
       let jupyter_gpu = new Set()
+      let jupyter_years = new Set()
       if ("supek" in data) {
         supek_cpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
         supek_gpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
         supek_cpu.delete("month")
         supek_gpu.delete("month")
+        supek_years = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
         if (subsetOfProjects.length > 0) {
           setSupekCPUProjects([...supek_cpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
           setSupekGPUProjects([...supek_gpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
@@ -114,6 +202,7 @@ const MyAccounting = () => {
       if ("padobran" in data) {
         padobran = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
         padobran.delete("month")
+        padobran_years = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
         if (subsetOfProjects.length > 0) {
           setPadobranProjects([...padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
         } else {
@@ -124,6 +213,7 @@ const MyAccounting = () => {
       if ("galaxy" in data) {
         galaxy = new Set(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
         galaxy.delete("month")
+        galaxy_years = new Set(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
         if (subsetOfProjects.length > 0) {
           setGalaxyProjects([...galaxy].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
         } else {
@@ -136,6 +226,7 @@ const MyAccounting = () => {
         jupyter_gpu = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
         jupyter_cpu.delete("month")
         jupyter_gpu.delete("month")
+        galaxy_years = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
         if (subsetOfProjects.length > 0) {
           setJupyterCPUProjects([...jupyter_cpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
           setJupyterGPUProjects([...jupyter_gpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
@@ -145,6 +236,7 @@ const MyAccounting = () => {
         }
       }
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran, ...galaxy, ...jupyter_cpu, ...jupyter_gpu])).sort())
+      setYears(Array.from(new Set([...supek_years, ...padobran_years, ...galaxy_years, ...jupyter_years])).sort())
     }
   }, [status, data, subsetOfProjects, showCumulative])
 
@@ -162,209 +254,109 @@ const MyAccounting = () => {
   }
 
   if (data) {
-    let n = (supekCPUProjects.length > 0) + (supekGPUProjects.length > 0) + (padobranProjects.length > 0) + (galaxyProjects.length > 0) + (jupyterCPUProjects.length > 0) + (jupyterGPUProjects.length > 0)
-    let col_md = 4
-    let graph_width = 450
-    let di = 3
     let groups = []
-    if (n <= 4) {
-      col_md = 6
-      graph_width = 600
-      di = 2
-    }
 
     if (supekCPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Supek CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
-            data={ "supek" in data ? data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
+          <UsageBarChart
+            data={
+              "supek" in data ? 
+                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+              : 
+                [] 
             }
-            {
-              supekCPUProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
-        </Col>
+            projects={ supekCPUProjects }
+            stackId="supek-cpuh"
+          />
+        </Row>
       )
 
     if (supekGPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Supek GPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
-            data={ "supek" in data ? data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] : [] }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
+          <UsageBarChart
+            data={ 
+              "supek" in data ? 
+                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
+              : 
+                [] 
             }
-            {
-              supekGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
-        </Col>
+            projects={ supekGPUProjects }
+            stackId="supek-gpuh"
+          />
+        </Row>
       )
 
     if (padobranProjects.length > 0) 
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Padobran CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
-            data={ "padobran" in data ? data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
+          <UsageBarChart
+            data={ 
+              "padobran" in data ? 
+                filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+              : 
+                [] 
             }
-            {
-              padobranProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
-        </Col>
+            projects={ padobranProjects }
+            stackId="padobran"
+          />
+        </Row>
       )
 
     if (galaxyProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Galaxy CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
-            data={ "galaxy" in data ? data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
+          <UsageBarChart
+            data={ 
+              "galaxy" in data ? 
+                filterTime(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+              : 
+              [] 
             }
-            {
-              galaxyProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
-        </Col>
+            projects={ galaxyProjects }
+            stackId="galaxy"
+          />
+        </Row>
       )
 
     if (jupyterCPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Jupyter CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
-            data={ "jupyter" in data ? data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] : [] }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
+          <UsageBarChart
+            data={ 
+              "jupyter" in data ? 
+                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
+              : 
+                [] 
             }
-            {
-              jupyterCPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
-        </Col>
+            projects={ jupyterCPUProjects }
+            stackId="jupyter-cpuh"
+          />
+        </Row>
       )
 
     if (jupyterGPUProjects.length > 0)
       groups.push(
-        <Col md={col_md}>
+        <Row>
           <h4>Jupyter GPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
-            data={ "jupyter" in data ? data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] : [] }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
+          <UsageBarChart
+            data={ 
+              "jupyter" in data ? 
+                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
+              : 
+                [] 
             }
-            {
-              jupyterGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
-        </Col>
+            projects={ jupyterGPUProjects }
+            stackId="jupyter-gpuh"
+          />
+        </Row>
       )
-
-    const rows = []
-    for (let i = 0; i < groups.length; i = i + di) {
-      let chosen_group = groups.slice(i, di + 1)
-      if (i == 0)
-        rows.push(
-          <Row>
-            {
-              chosen_group.map(column => column)
-            }
-          </Row>
-        )
-    }
 
     if (supekCPUProjects.length == 0 && supekGPUProjects.length == 0 && padobranProjects.length == 0 && galaxyProjects.length == 0 && jupyterCPUProjects.length == 0 && jupyterGPUProjects.length == 0)
       return (
@@ -392,13 +384,62 @@ const MyAccounting = () => {
                 >
                   { showCumulative ? monthlyDisplay : cumulativeDisplay }
                 </Button>
-                <Button
-                  color="secondary"
-                  className="me-2 rounded"
-                  onClick={ () => setUseLogScale(!useLogScale) }
+                <Dropdown 
+                  isOpen={ isOpenYear } 
+                  className="me-2"
+                  toggle={ () => setIsOpenYear(!isOpenYear) }
                 >
-                  { useLogScale ? linearScale : logScale }
-                </Button>
+                  <DropdownToggle caret>
+                    <FormattedMessage
+                      description="myaccounting-year-dropdown"
+                      defaultMessage="Godine"
+                    />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {
+                      years.map((year) => 
+                        <DropdownItem 
+                          key={ year } 
+                          onClick={ () => {
+                            setSelectedYear(year)
+                            setUseDefaultTimeRange(false)
+                            setIsOpenYear(!isOpenYear)
+                          }}
+                        >
+                          { year }
+                        </DropdownItem>
+                      )
+                    }
+                    <DropdownItem 
+                      key="default"
+                      onClick={ () => {
+                        setSelectedYear(undefined) 
+                        setUseDefaultTimeRange(true)
+                        setIsOpenYear(!isOpenYear)
+                      }}
+                      toggle={false}
+                    >
+                      <FormattedMessage
+                        description="myaccounting-year-default"
+                        defaultMessage="Prikaži zadnjih 12 mjeseci"
+                      />
+                    </DropdownItem>
+                    <DropdownItem 
+                      key="show-all"
+                      onClick={ () => {
+                        setSelectedYear(undefined) 
+                        setUseDefaultTimeRange(false)
+                        setIsOpenYear(!isOpenYear)
+                      }}
+                      toggle={false}
+                    >
+                      <FormattedMessage
+                        description="myaccounting-year-showall"
+                        defaultMessage="Prikaži sve"
+                      />
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
                 <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
                   <DropdownToggle caret>
                     <FormattedMessage
@@ -430,7 +471,7 @@ const MyAccounting = () => {
           <Row className="mt-3">
           </Row>
           {
-            rows.map(row => row)
+            groups.map(row => row)
           }
           <Row className="mt-3">
             <Col md={4}></Col>
