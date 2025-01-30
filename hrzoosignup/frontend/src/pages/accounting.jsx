@@ -27,16 +27,6 @@ import { useNavigate } from "react-router-dom";
 
 const colors = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"]
 
-const linearScale = <FormattedMessage 
-  description="myaccounting-linearscale-button"
-  defaultMessage="Linearna skala"
-/>
-
-const logScale = <FormattedMessage
-  description="myaccounting-logscale-button"
-  defaultMessage="Log skala"
-/>
-
 const cumulativeDisplay = <FormattedMessage 
   description="myaccounting-cumulative-button"
   defaultMessage="Kumulativni prikaz"
@@ -53,7 +43,6 @@ const get_past_12_months = () => {
 
   const year = today.getFullYear()
   const month = today.getMonth()
-  console.log(month)
 
   let dates = []
 
@@ -85,7 +74,6 @@ const MyAccounting = () => {
   const [galaxyProjects, setGalaxyProjects] = useState([])
   const [jupyterCPUProjects, setJupyterCPUProjects] = useState([])
   const [jupyterGPUProjects, setJupyterGPUProjects] = useState([])
-  const [useLogScale, setUseLogScale] = useState(false)
   const [showCumulative, setShowCumulative] = useState(false)
   const [listProjects, setListProjects] = useState([])
   const [subsetOfProjects, setSubsetOfProjects] = useState([])
@@ -157,16 +145,7 @@ const MyAccounting = () => {
         <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
         <XAxis dataKey="month" />
-        {
-          useLogScale ?
-            <YAxis 
-              scale="log" 
-              domain={[1, "dataMax"]} 
-              padding={{ top: 10 }} 
-            />
-          :
-            <YAxis padding={{ top: 10 }} />
-        }
+        <YAxis padding={{ top: 10 }} />
         {
           projects.map((proj, index) => 
             (index === projects.length - 1) ?
@@ -404,13 +383,6 @@ const MyAccounting = () => {
                   onClick={ () => setShowCumulative(!showCumulative) }
                 >
                   { showCumulative ? monthlyDisplay : cumulativeDisplay }
-                </Button>
-                <Button
-                  color="secondary"
-                  className="me-2 rounded"
-                  onClick={ () => setUseLogScale(!useLogScale) }
-                >
-                  { useLogScale ? linearScale : logScale }
                 </Button>
                 <Dropdown 
                   isOpen={ isOpenYear } 
