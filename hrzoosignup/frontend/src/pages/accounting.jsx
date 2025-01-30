@@ -25,7 +25,7 @@ import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { useNavigate } from "react-router-dom";
 
 
-const colors = ['#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b', '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b','#fcaf26', '#b4bbc0', '#929597', '#606365']
+const colors = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"]
 
 const linearScale = <FormattedMessage 
   description="myaccounting-linearscale-button"
