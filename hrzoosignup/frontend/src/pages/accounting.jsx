@@ -403,6 +403,7 @@ const MyAccounting = () => {
                           onClick={ () => {
                             setSelectedYear(year)
                             setUseDefaultTimeRange(false)
+                            setIsOpenYear(!isOpenYear)
                           }}
                         >
                           { year }
@@ -414,6 +415,7 @@ const MyAccounting = () => {
                       onClick={ () => {
                         setSelectedYear(undefined) 
                         setUseDefaultTimeRange(true)
+                        setIsOpenYear(!isOpenYear)
                       }}
                       toggle={false}
                     >
@@ -427,6 +429,7 @@ const MyAccounting = () => {
                       onClick={ () => {
                         setSelectedYear(undefined) 
                         setUseDefaultTimeRange(false)
+                        setIsOpenYear(!isOpenYear)
                       }}
                       toggle={false}
                     >
