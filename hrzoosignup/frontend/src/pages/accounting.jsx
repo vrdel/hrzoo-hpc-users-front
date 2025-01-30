@@ -15,7 +15,7 @@ import {
   DropdownToggle 
 } from "reactstrap";
 import { PageTitle } from 'Components/PageTitle';
-import { XAxis, YAxis, CartesianGrid, Bar, BarChart } from 'recharts';
+import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Tooltip } from 'recharts';
 import { toast } from 'react-toastify';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquare } from "@fortawesome/free-solid-svg-icons";
@@ -138,6 +138,54 @@ const MyAccounting = () => {
     return result
   }
 
+
+  const UsageBarChart = ({ data, projects, stackId }) => {
+    const graph_width = 1650
+
+    return (
+      <BarChart
+        width={ graph_width }
+        height={ 300 }
+        data={ data }
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip />
+        <XAxis dataKey="month" />
+        {
+          useLogScale ?
+            <YAxis 
+              scale="log" 
+              domain={[1, "dataMax"]} 
+              padding={{ top: 10 }} 
+            />
+          :
+            <YAxis padding={{ top: 10 }} />
+        }
+        {
+          projects.map((proj) => 
+            <Bar 
+              key={ proj } 
+              label={{ 
+                position: "top", 
+                fontSize: 10, 
+                fill: colors[listProjects.indexOf(proj)] 
+              }} 
+              dataKey={ proj } 
+              stackId={ stackId }
+              fill={ colors[listProjects.indexOf(proj)] } 
+            />
+          )
+        }
+      </BarChart>
+    )
+  } 
+
   useEffect(() => {
     if (status == "success" && data) {
       let supek_cpu = new Set()
@@ -221,40 +269,21 @@ const MyAccounting = () => {
 
   if (data) {
     let groups = []
-    let graph_width = 1650
 
     if (supekCPUProjects.length > 0)
       groups.push(
         <Row>
           <h4>Supek CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
-            data={ 
+          <UsageBarChart
+            data={
               "supek" in data ? 
-                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
-              :  
+                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+              : 
                 [] 
             }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
-            }
-            {
-              supekCPUProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
+            projects={ supekCPUProjects }
+            stackId="supek-cpuh"
+          />
         </Row>
       )
 
@@ -262,34 +291,16 @@ const MyAccounting = () => {
       groups.push(
         <Row>
           <h4>Supek GPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
+          <UsageBarChart
             data={ 
               "supek" in data ? 
                 filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
               : 
                 [] 
             }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
-            }
-            {
-              supekGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
+            projects={ supekGPUProjects }
+            stackId="supek-gpuh"
+          />
         </Row>
       )
 
@@ -297,34 +308,16 @@ const MyAccounting = () => {
       groups.push(
         <Row>
           <h4>Padobran CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
+          <UsageBarChart
             data={ 
               "padobran" in data ? 
                 filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
               : 
                 [] 
             }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
-            }
-            {
-              padobranProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
+            projects={ padobranProjects }
+            stackId="padobran"
+          />
         </Row>
       )
 
@@ -332,34 +325,16 @@ const MyAccounting = () => {
       groups.push(
         <Row>
           <h4>Galaxy CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
+          <UsageBarChart
             data={ 
               "galaxy" in data ? 
                 filterTime(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
               : 
               [] 
             }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
-            }
-            {
-              galaxyProjects.map((proj) => <Bar key={ proj } label={{ position: "top", fontSize: 10, fill: colors[listProjects.indexOf(proj)] }} dataKey={ proj } fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
+            projects={ galaxyProjects }
+            stackId="galaxy"
+          />
         </Row>
       )
 
@@ -367,34 +342,16 @@ const MyAccounting = () => {
       groups.push(
         <Row>
           <h4>Jupyter CPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
+          <UsageBarChart
             data={ 
               "jupyter" in data ? 
                 filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
               : 
                 [] 
             }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
-            }
-            {
-              jupyterCPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
+            projects={ jupyterCPUProjects }
+            stackId="jupyter-cpuh"
+          />
         </Row>
       )
 
@@ -402,34 +359,16 @@ const MyAccounting = () => {
       groups.push(
         <Row>
           <h4>Jupyter GPUH</h4>
-          <BarChart
-            width={ graph_width }
-            height={ 300 }
+          <UsageBarChart
             data={ 
               "jupyter" in data ? 
                 filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
               : 
                 [] 
             }
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="month" />
-            {
-              useLogScale ?
-                <YAxis scale="log" domain={[1, "dataMax"]} padding={{ top: 10 }} />
-              :
-                <YAxis padding={{ top: 10 }} />
-            }
-            {
-              jupyterGPUProjects.map((proj) => <Bar key={ proj } dataKey={ proj } label={{ position: "top", fill: colors[listProjects.indexOf(proj)], fontSize: 10 }} fill={ colors[listProjects.indexOf(proj)] } />)
-            }
-          </BarChart>
+            projects={ jupyterGPUProjects }
+            stackId="jupyter-gpuh"
+          />
         </Row>
       )
 
