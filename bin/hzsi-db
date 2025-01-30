@@ -13,6 +13,7 @@ usage()
 	printf "       [-u]                                  - create superuser\n" >&2
 	printf "       [-m]                                  - create new migrations\n" >&2
 	printf "       [-d]                                  - load data from file\n" >&2
+	printf "       [-p] [-e] -f <filename>               - dump data to a file\n" >&2
 	exit 2
 }
 
@@ -21,7 +22,7 @@ then
     usage
 fi
 
-while getopts 'clhumd:' OPTION
+while getopts 'clhumpd:' OPTION
 do
     case $OPTION in
         c)
@@ -44,6 +45,24 @@ do
             $DJANGO_SETTINGS && \
             $PYTHON $MANAGEPY loaddata $OPTARG
              ;;
+
+        p)
+            while getopts 'f:e' OPTION2
+            do
+              case $OPTION2 in
+               f) filename=$OPTARG ;;
+               e) exclude=1 ;;
+              esac
+            done
+           if [[ $exclude == 1 ]]
+           then
+             $DJANGO_SETTINGS && \
+             $PYTHON $MANAGEPY dumpdata --indent 4 --exclude backend.resourceusage > $filename
+           else
+             $DJANGO_SETTINGS && \
+             $PYTHON $MANAGEPY dumpdata --indent 4 > $filename
+           fi
+           ;;
 
         h)
             usage
