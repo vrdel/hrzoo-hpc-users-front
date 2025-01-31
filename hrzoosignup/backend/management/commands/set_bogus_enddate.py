@@ -1,11 +1,11 @@
+import datetime
+import logging
+
 from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
-from django.db import DEFAULT_DB_ALIAS
-from django.db.utils import IntegrityError
+from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-import datetime
+logger = logging.getLogger("hrzoosignup.crons")
 
 
 class Command(BaseCommand):
@@ -31,6 +31,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        logger.info("Setting bogus_end date...")
         any_changed = False
         from backend import models
         outdated = 0
@@ -45,9 +46,9 @@ class Command(BaseCommand):
             if project.date_end < date_now:
                 outdated += 1
                 if not project.bogus_end:
-                    self.stdout.write(self.style.WARNING('Outdated active project {} with date_end {} without bogus_end set'.format(project.identifier, project.date_end)))
+                    logger.warning('Outdated active project {} with date_end {} without bogus_end set'.format(project.identifier, project.date_end))
                 if options.get('confirm_yes', None) and not project.bogus_end:
-                    self.stdout.write(self.style.NOTICE(f'Set bogus_enddate={date_now} for project {project.identifier}'))
+                    logger.info(f'Set bogus_enddate={date_now} for project {project.identifier}')
                     any_changed = True
                     project.bogus_end = date_now
                 if options.get('confirm_yes', None) and project.bogus_end and project.bogus_end != date_now:
@@ -56,9 +57,9 @@ class Command(BaseCommand):
                     refresh += 1
                 if any_changed:
                     project.save()
-        self.stdout.write(f'Found {outdated} outdated but still active projects')
+        logger.info(f'Found {outdated} outdated but still active projects')
         if refresh:
-            self.stdout.write(f'Refreshed bogus_end field for {refresh} outdated but still active projects')
+            logger.info(f'Refreshed bogus_end field for {refresh} outdated but still active projects')
 
         any_changed = False
         if options.get('expired', None):
@@ -72,10 +73,12 @@ class Command(BaseCommand):
                             if project.bogus_end != date_changed:
                                 project.bogus_end = date_changed
                                 any_changed += True
-                                self.stdout.write(self.style.NOTICE(f'Set bogus_end={project.bogus_end} to date of last change for expired project {project.identifier} and official date_end={project.date_end}'))
+                                logger.info(f'Set bogus_end={project.bogus_end} to date of last change for expired project {project.identifier} and official date_end={project.date_end}')
                                 project.save()
                                 expired_bogus += 1
         if expired:
-            self.stdout.write(f'Found {expired} projects whose status is changed after official date_end')
+            logger.info(f'Found {expired} projects whose status is changed after official date_end')
             if expired_bogus:
-                self.stdout.write(f'Set bogus_end for {expired_bogus} such projects')
+                logger.info(f'Set bogus_end for {expired_bogus} such projects')
+
+        logger.info("Setting bogus_end date... DONE")

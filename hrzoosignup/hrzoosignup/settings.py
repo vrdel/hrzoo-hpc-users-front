@@ -454,6 +454,12 @@ LOGGING = {
             'filename': '{}var/log/saml2.log'.format(VENV),
             'formatter': 'verbose',
         },
+        'file_crons': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}var/log/crons.log'.format(VENV),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         # 'django': {
@@ -478,6 +484,11 @@ LOGGING = {
         },
         'hrzoosignup.saml2': {
             'handlers': ['file_saml2'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'hrzoosignup.crons': {
+            'handlers': ['file_crons'],
             'level': 'DEBUG',
             'propagate': True,
         },
