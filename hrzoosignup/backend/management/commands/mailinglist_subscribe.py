@@ -1,14 +1,13 @@
-from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import Permission
-from django.core.cache import cache
-
 import asyncio
+import logging
 import os
 
-from backend.httpq.httpconn import SessionWithRetry
 from backend.httpq.excep import HZSIHttpError
 from backend.tasks.mailinglist_subscribe import ListSubscribe
+from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand
+
+logger = logging.getLogger("hrzoosignup.crons")
 
 
 class Command(BaseCommand):
@@ -19,6 +18,8 @@ class Command(BaseCommand):
         self.user_model = get_user_model()
 
     def handle(self, *args, **options):
+        logger.info("Subscribing eligible users to mailing list...")
+
         all_users = self.user_model.objects.all()
 
         users_to_subscribe = list()
@@ -34,11 +35,13 @@ class Command(BaseCommand):
             list_subscribe = ListSubscribe(users_to_subscribe)
             loop.run_until_complete(list_subscribe.run())
             if users_to_subscribe:
-                self.stdout.write(self.style.SUCCESS(f'User to subscribe: {repr([user.username for user in users_to_subscribe])}'))
-                self.stdout.write(f'Details in {os.environ["VIRTUAL_ENV"]}/var/log/tasks.log ')
+                logger.info(f'User to subscribe: {repr([user.username for user in users_to_subscribe])}')
+                logger.info(f'Details in {os.environ["VIRTUAL_ENV"]}/var/log/tasks.log ')
             else:
-                self.stdout.write('No users to subscribe')
+                logger.info('No users to subscribe')
             loop.close()
 
         except (HZSIHttpError, KeyboardInterrupt):
             pass
+
+        logger.info("Subscribing eligible users to mailing list... DONE")
