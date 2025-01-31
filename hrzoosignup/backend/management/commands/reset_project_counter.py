@@ -1,11 +1,9 @@
-import datetime
+import logging
 
 from backend import models
+from django.core.management.base import BaseCommand
 
-from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
-from django.utils import timezone
+logger = logging.getLogger("hrzoosignup.crons")
 
 
 class Command(BaseCommand):
@@ -16,6 +14,8 @@ class Command(BaseCommand):
         super().__init__(*args, **kwargs)
 
     def handle(self, *args, **kwargs):
+        logger.info("Resetting request count...")
         pc = models.ProjectCount.objects.get(pk=1)
         pc.counter = 1
         pc.save()
+        logger.info("Resetting request count... DONE")
