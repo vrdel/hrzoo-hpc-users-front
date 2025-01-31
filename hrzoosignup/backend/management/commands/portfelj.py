@@ -6,6 +6,10 @@ from backend.utils.portfelj import Portfelj, PortfeljException
 from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+import logging
+
+
+logger = logging.getLogger("hrzoosignup.crons")
 
 
 def get_field(item, field):
@@ -23,6 +27,10 @@ class Command(BaseCommand):
         parser.add_argument("--year", type=int, dest="year", help="year")
 
     def handle(self, *args, **options):
+        logger.info(
+            f"Sending data to Portfelj for year {options['year']}..."
+        )
+
         year = options["year"]
 
         start_date = timezone.make_aware(
@@ -121,7 +129,11 @@ class Command(BaseCommand):
                 )
 
             except PortfeljException as e:
-                self.stdout.write(
+                logger.error(
                     f"Error sending indicator {indicator}: {str(e)}"
                 )
                 continue
+
+        logger.info(
+            f"Sending data to Portfelj for year {options['year']}... DONE"
+        )
