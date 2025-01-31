@@ -1,10 +1,10 @@
-from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import Permission
-from django.conf import settings
-from django.core.cache import cache
+import logging
 
-import random
+from django.contrib.auth import get_user_model
+from django.core.cache import cache
+from django.core.management.base import BaseCommand
+
+logger = logging.getLogger("hrzoosignup.crons")
 
 ALPHACHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 
@@ -26,6 +26,8 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        logger.info("Flagging users as inactive...")
+
         all_users = self.user_model.objects.all()
 
         any_changed = False
@@ -42,12 +44,14 @@ class Command(BaseCommand):
             ])
             if all_inactive and user.status != False:
                 if options.get('confirmed_yes', None):
-                    self.stdout.write(self.style.NOTICE(f'Marking user {user.username} inactive'))
+                    logger.info(f'Marking user {user.username} inactive')
                     user.status = False
                     any_changed = True
                     user.save()
                 else:
-                    self.stdout.write(f'User {user.username} would be marked as inactive')
+                    logger.info(
+                        f'User {user.username} would be marked as inactive'
+                    )
 
         if any_changed:
             cache.delete("usersinfoinactive-get")
@@ -55,5 +59,6 @@ class Command(BaseCommand):
             cache.delete("ext-users-projects")
             cache.delete('projects-get-all')
         else:
-            self.stdout.write('No changes')
+            logger.info('No changes')
 
+        logger.info("Flagging users as inactive...")
