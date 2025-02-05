@@ -448,13 +448,15 @@ def create_mock_db():
         active=True,
         name_short="Fakultet elektrotehnike i računarstva",
         oib="01234567890",
-        mbu="036"
+        mbu="036",
+        parent="Sveučilište u Zagrebu"
     )
     models.CrorisInstitutions.objects.create(
         active=True,
         name_short="Prirodoslovno-matematički fakultet, Zagreb",
         oib="12345678901",
-        mbu="119"
+        mbu="119",
+        parent="Sveučilište u Zagrebu"
     )
     models.ResourceUsage.objects.create(
         user=user1,

@@ -233,6 +233,18 @@ class DashboardTests(TestCase):
             1
         )
 
+    def test_aggregated_projects(self):
+        self.assertEqual(
+            self.indicators5.aggregated_projects(
+                university="Sveučilište u Zagrebu"
+            ), 5
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_projects(
+                university="Sveučilište u Zagrebu"
+            ), 6
+        )
+
     def test_users(self):
         self.assertEqual(
             self.indicators5.users(
@@ -253,11 +265,35 @@ class DashboardTests(TestCase):
             3
         )
 
+    def test_aggregated_users(self):
+        self.assertEqual(
+            self.indicators5.aggregated_users(
+                university="Sveučilište u Zagrebu"
+            ), 7
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_users(
+                university="Sveučilište u Zagrebu"
+            ), 9
+        )
+
     def test_supek_cpuh(self):
         self.assertEqual(
             self.indicators5.supek_cpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 5
+        )
+
+    def test_aggregated_supek_cpu(self):
+        self.assertEqual(
+            self.indicators5.aggregated_supek_cpu(
+                university="Sveučilište u Zagrebu"
+            ), 6.52
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_supek_cpu(
+                university="Sveučilište u Zagrebu"
+            ), 0
         )
 
     def test_supek_gpu(self):
@@ -267,10 +303,34 @@ class DashboardTests(TestCase):
             ), 176
         )
 
+    def test_aggregated_supek_gpu(self):
+        self.assertEqual(
+            self.indicators5.aggregated_supek_gpu(
+                university="Sveučilište u Zagrebu"
+            ), 176
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_supek_gpu(
+                university="Sveučilište u Zagrebu"
+            ), 0.14
+        )
+
     def test_padobran(self):
         self.assertEqual(
             self.indicators7.padobran(
                 institution="Fakultet elektrotehnike i računarstva"
+            ), 74.01
+        )
+
+    def test_aggregated_padobran(self):
+        self.assertEqual(
+            self.indicators5.aggregated_padobran(
+                university="Sveučilište u Zagrebu"
+            ), 0
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_padobran(
+                university="Sveučilište u Zagrebu"
             ), 74.01
         )
 
@@ -281,11 +341,35 @@ class DashboardTests(TestCase):
             ), 534.02
         )
 
+    def test_aggregated_vrancic_cpu(self):
+        self.assertEqual(
+            self.indicators5.aggregated_vrancic_cpu(
+                university="Sveučilište u Zagrebu"
+            ), 745.22
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_vrancic_cpu(
+                university="Sveučilište u Zagrebu"
+            ), 0
+        )
+
     def test_vrancic_gpu(self):
         self.assertEqual(
             self.indicators5.vrancic_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 44.47
+        )
+
+    def test_aggregated_vrancic_gpu(self):
+        self.assertEqual(
+            self.indicators5.aggregated_vrancic_gpu(
+                university="Sveučilište u Zagrebu"
+            ), 70.87
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_vrancic_gpu(
+                university="Sveučilište u Zagrebu"
+            ), 0
         )
 
     def test_jupyter_cpu(self):
@@ -295,9 +379,33 @@ class DashboardTests(TestCase):
             ), 31.63
         )
 
+    def test_aggregated_jupyter_cpu(self):
+        self.assertEqual(
+            self.indicators5.aggregated_jupyter_cpu(
+                university="Sveučilište u Zagrebu"
+            ), 31.63
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_jupyter_cpu(
+                university="Sveučilište u Zagrebu"
+            ), 5.17
+        )
+
     def test_jupyter_gpu(self):
         self.assertEqual(
             self.indicators5.jupyter_gpu(
                 institution="Fakultet elektrotehnike i računarstva"
             ), 15.41
+        )
+
+    def test_aggregated_jupyter_gpu(self):
+        self.assertEqual(
+            self.indicators5.aggregated_jupyter_gpu(
+                university="Sveučilište u Zagrebu"
+            ), 15.41
+        )
+        self.assertEqual(
+            self.indicators7.aggregated_jupyter_gpu(
+                university="Sveučilište u Zagrebu"
+            ), 3.43
         )
