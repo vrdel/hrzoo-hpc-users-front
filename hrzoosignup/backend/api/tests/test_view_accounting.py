@@ -6,6 +6,7 @@ from backend.api.internal import views
 from django.test import TestCase
 from django.utils import timezone
 from rest_framework.test import APIRequestFactory, force_authenticate
+from rest_framework import status
 
 from .test_utils import create_mock_db
 
@@ -247,6 +248,35 @@ class ResourceUsageTests(TestCase):
                             }
                         ]
                     }
+                }
+            }
+        )
+
+
+class ProjectUsageTests(TestCase):
+    def setUp(self):
+        create_mock_db()
+        self.view = views.ProjectUsage.as_view()
+        self.factory = APIRequestFactory()
+        self.user = models.User.objects.get(person_username="adent")
+        self.today = timezone.make_aware(
+            datetime.datetime(2024, 8, 22, 0, 0, 0),
+            timezone=timezone.get_current_timezone()
+        )
+
+    def test_get_data_if_user_not_lead(self):
+        user = models.User.objects.get(person_username="fprefect")
+        request = self.factory.get(
+            "/api/v1/internal/accounting/project-records"
+        )
+        force_authenticate(request, user=user)
+        response = self.view(request)
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": status.HTTP_401_UNAUTHORIZED,
+                    "message": "Only project leaders are allowed this view"
                 }
             }
         )

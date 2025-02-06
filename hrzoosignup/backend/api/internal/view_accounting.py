@@ -40,6 +40,13 @@ def diff_months(date1, date2):
         return (abs(date1.year - date2.year) - 1) * 12 + 13 - month1 + month2
 
 
+def _is_user_lead(user):
+    return len(models.UserProject.objects.filter(
+        user=user,
+        role=models.Role.objects.get(name="lead")
+    )) > 0
+
+
 def usage4user(username):
     todays_date = date_today()
 
@@ -239,3 +246,22 @@ class ResourceUsage(APIView):
             output = usage4user(user.person_username)
 
             return Response(data=output, status=status.HTTP_200_OK)
+
+
+class ProjectUsage(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+
+        if not _is_user_lead(user):
+            err_status = status.HTTP_401_UNAUTHORIZED
+            err_response = {
+                "status": {
+                    "code": err_status,
+                    "message": "Only project leaders are allowed this view"
+                }
+            }
+
+            return Response(err_response, status=err_status)
