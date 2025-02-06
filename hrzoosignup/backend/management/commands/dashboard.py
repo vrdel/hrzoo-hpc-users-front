@@ -239,10 +239,10 @@ class Command(BaseCommand):
                         "104": indicators.aggregated_supek_gpu(
                             university=university
                         ),
-                        "105": indicators.aggregated_vrancic_gpu(
+                        "106": indicators.aggregated_vrancic_gpu(
                             university=university
                         ),
-                        "106": indicators.aggregated_jupyter_gpu(
+                        "107": indicators.aggregated_jupyter_gpu(
                             university=university
                         )
                     }
