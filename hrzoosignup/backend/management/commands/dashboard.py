@@ -8,7 +8,14 @@ from backend.dashboard.indicators import DashboardIndicators
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-logger = logging.getLogger("hrzoosignup.crons")
+LOGGER = logging.getLogger("hrzoosignup.crons")
+
+UNIVERSITIES = {
+    "263": "Sveučilište u Zagrebu",
+    "264": "Sveučilište u Splitu",
+    "265": "Sveučilište u Rijeci",
+    "266": "Sveučilište Josipa Jurja Strossmayera u Osijeku"
+}
 
 
 class Command(BaseCommand):
@@ -23,9 +30,11 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        logger.info(
-            f"Sending data to Dasboard for {options['month']}/{options['year']}"
-        )
+        month = options["month"]
+        year = options["year"]
+
+        LOGGER.info(f"Sending data to Dashboard for {month}/{year}")
+
         indicators = DashboardIndicators(
             month=options["month"], year=options["year"]
         )
@@ -37,18 +46,26 @@ class Command(BaseCommand):
         )
         headers = {"Authorization": f"Basic {token.decode('ascii')}"}
 
+        day = calendar.monthrange(
+            options["year"], options["month"]
+        )[1]
+        date = (
+            f"{options['year']}-{options['month']:02d}-"
+            f"{day}"
+        )
+
         try:
             response = requests.get(
                 settings.DASHBOARD_API_INSTITUTIONS, headers=headers
             )
 
         except requests.exceptions.RequestException as e:
-            logger.error(f"Error fetching  institutions: {str(e)}")
+            LOGGER.error(f"Error fetching  institutions: {str(e)}")
             sys.exit(2)
 
         else:
             if not response.ok:
-                logger.error(
+                LOGGER.error(
                     f"Error fetching institutions: "
                     f"{response.status_code} {response.reason}"
                 )
@@ -62,7 +79,7 @@ class Command(BaseCommand):
                 for institution, conf in institutions.items():
                     ustanova_id = None
                     if not (conf["oib"] or conf["mbu"]):
-                        logger.warning(
+                        LOGGER.warning(
                             f"Missing OIB and MBU for institution {institution}"
                         )
                         continue
@@ -82,20 +99,12 @@ class Command(BaseCommand):
                                 ][0]["ustanovaId"]
 
                             except IndexError:
-                                logger.warning(
+                                LOGGER.warning(
                                     f"Missing institution: {institution}"
                                 )
 
                         if ustanova_id:
                             really_using.append(ustanova_id)
-
-                            day = calendar.monthrange(
-                                options["year"], options["month"]
-                            )[1]
-                            date = (
-                                f"{options['year']}-{options['month']:02d}-"
-                                f"{day}"
-                            )
 
                             data2send = {
                                 "7": indicators.users(institution=institution),
@@ -138,7 +147,7 @@ class Command(BaseCommand):
                                 )
 
                                 if not response.ok:
-                                    logger.error(
+                                    LOGGER.error(
                                         f"Error sending indicator {indicator} "
                                         f"for institution {institution}: "
                                         f"{response.status_code} "
@@ -153,7 +162,7 @@ class Command(BaseCommand):
                     response.raise_for_status()
 
                 except requests.exceptions.RequestException as e:
-                    logger.error(
+                    LOGGER.error(
                         f"Error fetching Dashboard permissions list: {str(e)}"
                     )
                     sys.exit(2)
@@ -179,7 +188,7 @@ class Command(BaseCommand):
                             )
 
                             if not response.ok:
-                                logger.error(
+                                LOGGER.error(
                                     f"Error updating permissions for "
                                     f"institution {item}: "
                                     f"{response.status_code} {response.reason}"
@@ -198,11 +207,71 @@ class Command(BaseCommand):
                             )
 
                             if not response.ok:
-                                logger.error(
+                                LOGGER.error(
                                     f"Error updating permissions for "
                                     f"institution {item}: "
                                     f"{response.status_code} {response.reason}"
                                 )
                                 sys.exit(2)
 
-        logger.info("Data sent to dashboard successfully")
+                LOGGER.info("Sending aggregated data to four Universities...")
+
+                for uniid, university in UNIVERSITIES.items():
+                    aggr_data2send = {
+                        "98": indicators.aggregated_users(
+                            university=university
+                        ),
+                        "99": indicators.aggregated_projects(
+                            university=university
+                        ),
+                        "100": indicators.aggregated_supek_cpu(
+                            university=university
+                        ),
+                        "101": indicators.aggregated_vrancic_cpu(
+                            university=university
+                        ),
+                        "102": indicators.aggregated_padobran(
+                            university=university
+                        ),
+                        "103": indicators.aggregated_jupyter_cpu(
+                            university=university
+                        ),
+                        "104": indicators.aggregated_supek_gpu(
+                            university=university
+                        ),
+                        "106": indicators.aggregated_vrancic_gpu(
+                            university=university
+                        ),
+                        "107": indicators.aggregated_jupyter_gpu(
+                            university=university
+                        )
+                    }
+
+                    for indicator_id, value in aggr_data2send.items():
+                        response = requests.post(
+                            settings.DASHBOARD_API_INDICATORS,
+                            json={
+                                "ustanovaId": int(uniid),
+                                "pokazateljId": int(indicator_id),
+                                "vrijednost": value,
+                                "datum": date
+                            },
+                            headers=headers
+                        )
+
+                        if not response.ok:
+                            LOGGER.error(
+                                f"Error sending indicator {indicator_id} "
+                                f"for University {university}: "
+                                f"{response.status_code} "
+                                f"{response.reason}"
+                            )
+                            continue
+
+                        else:
+                            LOGGER.info(
+                                f"Indicators for University {university} sent "
+                                f"successfully"
+                            )
+
+        LOGGER.info("All data sent to dashboard successfully")

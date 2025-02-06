@@ -62,6 +62,13 @@ class DashboardIndicators:
 
         return institutions
 
+    @staticmethod
+    def _get_university_components(university):
+        return [
+            institution.name_short for institution in
+            models.CrorisInstitutions.objects.filter(parent=university)
+        ]
+
     def _projects(self, institution):
         return [
             item for item in self._projects_in_period() if
@@ -70,6 +77,12 @@ class DashboardIndicators:
 
     def projects(self, institution):
         return len(self._projects(institution=institution))
+
+    def aggregated_projects(self, university):
+        return sum([
+            self.projects(institution) for institution in
+            self._get_university_components(university)
+        ])
 
     def _users(self, institution):
         institution_users = [
@@ -96,6 +109,12 @@ class DashboardIndicators:
     def users(self, institution):
         return len(self._users(institution))
 
+    def aggregated_users(self, university):
+        return sum([
+            self.users(institution) for institution in
+            self._get_university_components(university)
+        ])
+
     def _supek_usage(self, institution):
         return models.ResourceUsage.objects.filter(
             project__in=self._projects(institution),
@@ -109,12 +128,24 @@ class DashboardIndicators:
             self.start_date <= item.end_time <= self.end_date
         ), 2)
 
+    def aggregated_supek_cpu(self, university):
+        return sum(
+            self.supek_cpu(institution) for institution in
+            self._get_university_components(university)
+        )
+
     def supek_gpu(self, institution):
         return round(sum(
             float(item.accounting_record["gpuh"]) for item
             in self._supek_usage(institution) if
             self.start_date <= item.end_time <= self.end_date
         ), 2)
+
+    def aggregated_supek_gpu(self, university):
+        return sum([
+            self.supek_gpu(institution) for institution in
+            self._get_university_components(university)
+        ])
 
     def _vrancic_usage(self, institution):
         return models.ResourceUsage.objects.filter(
@@ -129,12 +160,24 @@ class DashboardIndicators:
             self.start_date <= item.end_time <= self.end_date
         ), 2)
 
+    def aggregated_vrancic_cpu(self, university):
+        return sum([
+            self.vrancic_cpu(institution) for institution in
+            self._get_university_components(university)
+        ])
+
     def vrancic_gpu(self, institution):
         return round(sum(
             float(item.accounting_record["gpuh"]) for item in
             self._vrancic_usage(institution) if
             self.start_date <= item.end_time <= self.end_date
         ), 2)
+
+    def aggregated_vrancic_gpu(self, university):
+        return sum([
+            self.vrancic_gpu(institution) for institution in
+            self._get_university_components(university)
+        ])
 
     def padobran(self, institution):
         usage = models.ResourceUsage.objects.filter(
@@ -146,6 +189,12 @@ class DashboardIndicators:
             float(item.accounting_record["cpuh"]) for item in usage if
             self.start_date <= item.end_time <= self.end_date
         ), 2)
+
+    def aggregated_padobran(self, university):
+        return sum([
+            self.padobran(institution) for institution in
+            self._get_university_components(university)
+        ])
 
     def _jupyter_usage(self, institution):
         return models.ResourceUsage.objects.filter(
@@ -160,9 +209,21 @@ class DashboardIndicators:
             self.start_date <= item.end_time <= self.end_date
         ), 2)
 
+    def aggregated_jupyter_cpu(self, university):
+        return sum([
+            self.jupyter_cpu(institution) for institution in
+            self._get_university_components(university)
+        ])
+
     def jupyter_gpu(self, institution):
         return round(sum(
             float(item.accounting_record["jupyter_gpu_h"]) for item in
             self._jupyter_usage(institution) if
             self.start_date <= item.end_time <= self.end_date
         ), 2)
+
+    def aggregated_jupyter_gpu(self, university):
+        return sum([
+            self.jupyter_gpu(institution) for institution in
+            self._get_university_components(university)
+        ])
