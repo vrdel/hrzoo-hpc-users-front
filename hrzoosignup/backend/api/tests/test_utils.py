@@ -43,6 +43,7 @@ def create_mock_db():
         croris_id=123456,
         resources_type=[
             {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
+            {"label": "CLOUD", "value": "CLOUD"},
             {"label": "GPU", "value": "GPU"},
             {"label": "CPU", "value": "CPU"},
             {"label": "PADOBRAN", "value": "PADOBRAN"},
@@ -50,6 +51,7 @@ def create_mock_db():
         ],
         staff_resources_type=[
             {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
+            {"label": "CLOUD", "value": "CLOUD"},
             {"label": "GPU", "value": "GPU"},
             {"label": "CPU", "value": "CPU"},
             {"label": "PADOBRAN", "value": "PADOBRAN"},
@@ -657,5 +659,43 @@ def create_mock_db():
         accounting_record={
             "jupyter_cpu_h": 2.83,
             "jupyter_gpu_h": 3.43
+        }
+    )
+    models.ResourceUsage.objects.create(
+        project=project1,
+        resource_name="cloud",
+        end_time=timezone.make_aware(
+            datetime.datetime(2024, 6, 18, 23, 59, 59),
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "cpuh": 575.9867,
+            "gpuh": 0.0,
+            "ngpus": None,
+            "vcpus": 24,
+            "flavor": "m1.xlarge.windows",
+            "ended_at": None,
+            "start_time": 1718661600.0,
+            "started_at": 1718533146.0,
+            "instance_id": "123432451-14322143-13412"
+        }
+    )
+    models.ResourceUsage.objects.create(
+        project=project1,
+        resource_name="cloud",
+        end_time=timezone.make_aware(
+            datetime.datetime(2024, 6, 19, 18, 43, 17),
+            timezone=timezone.get_current_timezone()
+        ),
+        accounting_record={
+            "cpuh": 449.3133,
+            "gpuh": 0.0,
+            "ngpus": None,
+            "vcpus": 24,
+            "flavor": "m1.xlarge.windows",
+            "ended_at": 1718815397.0,
+            "start_time": 1718748000.0,
+            "started_at": 1718533146.0,
+            "instance_id": "123432451-14322143-13412"
         }
     )
