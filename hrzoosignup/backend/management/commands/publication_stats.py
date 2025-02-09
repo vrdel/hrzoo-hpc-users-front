@@ -31,7 +31,7 @@ class Command(BaseCommand):
         super(Command, self).add_arguments(parser)
 
     async def _fetch_publications(self):
-        projects_publications = dict()
+        projects_publications = list()
         try:
 
             projects_db = Project.objects.filter(project_type__name='research-croris')
@@ -65,7 +65,20 @@ class Command(BaseCommand):
                                     'doi': pub.get('doi', ''),
                                     'eissn': pub.get('eissn', ''),
                                 })
-                        projects_publications[project.get('id')] = publications
+                        project_metadata = dict()
+                        titles = project['title']
+                        for title in titles:
+                            if title['cfLangCode'] == 'hr':
+                                project_metadata['title'] = title['naziv']
+                                break
+                        project_db_metadata = await projects_db.aget(croris_id=project.get('id'))
+                        project_metadata.update({
+                            'identifier': project.get('hrSifraProjekta', ''),
+                            'date_end': project.get('kraj'),
+                            'bogus_end': project_db_metadata.bogus_end,
+                            'publications': publications,
+                        })
+                        projects_publications.append(project_metadata)
 
                     except TypeError as exc:
                         self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
@@ -82,4 +95,4 @@ class Command(BaseCommand):
         except (HZSIHttpError, KeyboardInterrupt):
             pass
 
-        pprint(projects_publications)
+        pprint(projects_publications, indent_guides=False)
