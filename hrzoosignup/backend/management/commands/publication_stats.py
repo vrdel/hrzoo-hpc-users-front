@@ -4,7 +4,7 @@ from django.core.cache import cache
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
-from backend.models import Project
+from backend.models import Project, ResourceUsage
 from backend.utils.institution import InstitutionMap
 from backend.utils.institution import long_name
 
@@ -32,10 +32,10 @@ class Command(BaseCommand):
 
     def _parse_enddate(self, dt):
         try:
-            if type(dt) is str:
-                return datetime.datetime.strptime(dt, '%Y-%m-%d').date()
-            else:
+            if not dt:
                 return dt
+            elif type(dt) is str:
+                return datetime.datetime.strptime(dt, '%Y-%m-%d').date()
         except ValueError as exc:
             self.stdout.write(self.style.ERROR('Format end-date not correct'))
             self.stdout.write(self.style.NOTICE(repr(exc)))
@@ -43,7 +43,8 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)
-        parser.add_argument('--filter-end-date', dest='enddate', type=str, default=date.today(), required=False)
+        parser.add_argument('--filter-end-date', dest='enddate', type=str, default=None, required=False)
+        parser.add_argument('--only-with-usage', action='store_true', dest='onlyusage', help='Only projects with usage records')
 
     async def _fetch_publications(self, options):
         projects_publications = list()
@@ -57,10 +58,23 @@ class Command(BaseCommand):
                                             handle_session_close=True)
             coros = []
             async for project in projects_db:
-                date_1 = project.date_end if project.date_end else datetime.date(1970, 1, 1)
-                date_2 = project.bogus_end if project.bogus_end else datetime.date(1970, 1, 1)
-                target_date = max(date_1, date_2)
-                if target_date >= self.end_date:
+                if options.get('onlyusage', False):
+                    try:
+                        await ResourceUsage.objects.aget(project_id=project.id)
+                    except ResourceUsage.MultipleObjectsReturned:
+                        pass
+                    except ResourceUsage.DoesNotExist:
+                        self.stdout.write(self.style.WARNING(f'Skip project {project.identifier} as no resource usage found'))
+                        continue
+                if self.end_date:
+                    date_1 = project.date_end if project.date_end else datetime.date(1970, 1, 1)
+                    date_2 = project.bogus_end if project.bogus_end else datetime.date(1970, 1, 1)
+                    target_date = max(date_1, date_2)
+                    if target_date >= self.end_date:
+                        coros.append(
+                            self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
+                        )
+                else:
                     coros.append(
                         self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
                     )
