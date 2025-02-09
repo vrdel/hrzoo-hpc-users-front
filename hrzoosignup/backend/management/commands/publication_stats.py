@@ -14,6 +14,7 @@ from backend.utils.various import contains_exception
 import logging
 import asyncio
 import json
+import datetime
 
 from rich.pretty import pprint
 
@@ -72,9 +73,10 @@ class Command(BaseCommand):
                                 project_metadata['title'] = title['naziv']
                                 break
                         project_db_metadata = await projects_db.aget(croris_id=project.get('id'))
+
                         project_metadata.update({
                             'identifier': project.get('hrSifraProjekta', ''),
-                            'date_end': project.get('kraj'),
+                            'date_end': datetime.date.strptime(project.get('kraj'), '%d.%m.%Y').replace(hour=23, minute=59),
                             'bogus_end': project_db_metadata.bogus_end,
                             'publications': publications,
                         })
