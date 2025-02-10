@@ -90,6 +90,8 @@ class Command(BaseCommand):
                                     'name': pub.get('naslov', ''),
                                     'authors': pub.get('autori', ''),
                                     'cfResPublId': pub.get('cfResPublId', ''),
+                                    'type': pub.get('tipPublikacije', ''),
+                                    'category': pub.get('vrstaPublikacije', ''),
                                     'doi': pub.get('doi', ''),
                                     'eissn': pub.get('eissn', ''),
                                 })
