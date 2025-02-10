@@ -11,6 +11,7 @@ import asyncio
 import datetime
 import json
 import logging
+import csv
 
 from rich.pretty import pprint
 
@@ -40,6 +41,7 @@ class Command(BaseCommand):
         parser.add_argument('--end-date', dest='enddate', type=str, default=None, required=False)
         parser.add_argument('--start-date', dest='startdate', type=str, default=None, required=False)
         parser.add_argument('--only-with-usage', action='store_true', dest='onlyusage', help='Only projects with usage records')
+        parser.add_argument('--export-csv', dest='csvfile', type=str, default=None, required=False)
 
     async def _fetch_publications(self, options):
         projects_publications = list()
@@ -136,3 +138,26 @@ class Command(BaseCommand):
                 publications_set.add(pub['cfResPublId'])
                 publications.append(pub['cfResPublId'])
         pprint(f"Projects = {len(projects_publications)}, Publications = {len(publications)}, Unique publications = {len(publications_set)}")
+
+        if options['csvfile']:
+            try:
+                with open(options['csvfile'], 'w', newline='') as csvfile:
+                    fieldnames = ['#', 'identifier', 'publication', 'category', 'type']
+                    writer = csv.DictWriter(csvfile, fieldnames=fieldnames, delimiter='|')
+                    writer.writeheader()
+                    i = 1
+                    for pr_pub in projects_publications:
+                        for pub in pr_pub['publications']:
+                            writer.writerow({
+                                '#': str(i),
+                                'identifier': f"{pr_pub['identifier']}",
+                                'publication': f"{pub['name']}",
+                                'category': f"{pub['category']}",
+                                'type': f"{pub['type']}"
+                            })
+                            i += 1
+
+            except OSError as exc:
+                self.style.ERROR(f'Cannot open {csvfile} for writing - {repr(exc)}')
+                raise SystemExit(1)
+
