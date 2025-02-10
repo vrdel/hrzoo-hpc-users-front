@@ -1,18 +1,12 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.core.cache import cache
 from django.core.management.base import BaseCommand
-from django.db.models import Q
 
 from backend.models import Project, ResourceUsage
-from backend.utils.institution import InstitutionMap
-from backend.utils.institution import long_name
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
 from backend.utils.various import contains_exception
 
-from datetime import date
 import asyncio
 import datetime
 import json
@@ -30,28 +24,30 @@ class Command(BaseCommand):
     def __init__(self):
         super().__init__()
 
-    def _parse_enddate(self, dt):
+    def _parse_date(self, dt):
         try:
             if not dt:
                 return dt
             elif type(dt) is str:
                 return datetime.datetime.strptime(dt, '%Y-%m-%d').date()
         except ValueError as exc:
-            self.stdout.write(self.style.ERROR('Format end-date not correct'))
+            self.stdout.write(self.style.ERROR('Format date not correct'))
             self.stdout.write(self.style.NOTICE(repr(exc)))
             raise SystemExit(1)
 
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)
-        parser.add_argument('--filter-end-date', dest='enddate', type=str, default=None, required=False)
+        parser.add_argument('--end-date', dest='enddate', type=str, default=None, required=False)
+        parser.add_argument('--start-date', dest='startdate', type=str, default=None, required=False)
         parser.add_argument('--only-with-usage', action='store_true', dest='onlyusage', help='Only projects with usage records')
 
     async def _fetch_publications(self, options):
         projects_publications = list()
-        self.end_date = self._parse_enddate(options.get('enddate'))
+        self.end_date = self._parse_date(options.get('enddate'))
+        self.start_date = self._parse_date(options.get('startdate'))
 
         try:
-            projects_db = Project.objects.filter(project_type__name='research-croris')
+            projects_db = Project.objects.filter(project_type__name='research-croris', state__name__in=['approve', 'extend', 'expire'])
 
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
             self.session = SessionWithRetry(logger, auth=auth,
@@ -66,11 +62,8 @@ class Command(BaseCommand):
                     except ResourceUsage.DoesNotExist:
                         self.stdout.write(self.style.WARNING(f'Skip project {project.identifier} as no resource usage found'))
                         continue
-                if self.end_date:
-                    date_1 = project.date_end if project.date_end else datetime.date(1970, 1, 1)
-                    date_2 = project.bogus_end if project.bogus_end else datetime.date(1970, 1, 1)
-                    target_date = max(date_1, date_2)
-                    if target_date >= self.end_date:
+                if self.end_date or self.start_date:
+                    if ((project.date_approved.date() >= self.start_date and project.date_approved.date() <= self.end_date)):
                         coros.append(
                             self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
                         )
@@ -113,6 +106,7 @@ class Command(BaseCommand):
                             'croris_id': project.get('id'),
                             'date_end': datetime.datetime.strptime(project.get('kraj'), '%d.%m.%Y').replace(hour=23, minute=59),
                             'bogus_end': project_db_metadata.bogus_end,
+                            'date_approved': project_db_metadata.date_approved,
                             'publications': publications,
                         })
                         projects_publications.append(project_metadata)
