@@ -425,14 +425,12 @@ class ProjectUsageTests(TestCase):
 
     @patch("backend.api.internal.view_accounting.date_today")
     def test_get_data(self, mock_date_today):
-        self.maxDiff = None
         mock_date_today.return_value = self.today
         request = self.factory.get(
             "/api/v1/internal/accounting/project-records"
         )
         force_authenticate(request, user=self.user1)
         response = self.view(request)
-        # print(response.data["project-1"]["padobran"])
         self.assertEqual(
             response.data, {
                 "project-1": {
@@ -441,43 +439,43 @@ class ProjectUsageTests(TestCase):
                             "cpuh": [
                                 {
                                     "month": "01/2024",
-                                    "adent": 1
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "02/2024",
-                                    "adent": 1
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "03/2024",
-                                    "adent": 1
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "04/2024",
-                                    "adent": 1
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "05/2024",
-                                    "adent": 6,
-                                    "tmcmilla": 1,
-                                    "atrotter": 117
+                                    "Arthur Dent": 6,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 },
                                 {
                                     "month": "06/2024",
-                                    "adent": 7,
-                                    "tmcmilla": 1,
-                                    "atrotter": 117
+                                    "Arthur Dent": 7,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 },
                                 {
                                     "month": "07/2024",
-                                    "adent": 7,
-                                    "tmcmilla": 1,
-                                    "atrotter": 117
+                                    "Arthur Dent": 7,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 },
                                 {
                                     "month": "08/2024",
-                                    "adent": 7,
-                                    "tmcmilla": 1,
-                                    "atrotter": 117
+                                    "Arthur Dent": 7,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 }
                             ],
                             "gpuh": [
@@ -495,22 +493,22 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "tmcmilla": 128
+                                    "Tricia McMillan": 128
                                 },
                                 {
                                     "month": "06/2024",
-                                    "adent": 1,
-                                    "tmcmilla": 128
+                                    "Arthur Dent": 1,
+                                    "Tricia McMillan": 128
                                 },
                                 {
                                     "month": "07/2024",
-                                    "adent": 1,
-                                    "tmcmilla": 128
+                                    "Arthur Dent": 1,
+                                    "Tricia McMillan": 128
                                 },
                                 {
                                     "month": "08/2024",
-                                    "adent": 1,
-                                    "tmcmilla": 128
+                                    "Arthur Dent": 1,
+                                    "Tricia McMillan": 128
                                 }
                             ]
                         },
@@ -518,7 +516,7 @@ class ProjectUsageTests(TestCase):
                             "cpuh": [
                                 {
                                     "month": "01/2024",
-                                    "adent": 1
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "02/2024"
@@ -531,9 +529,9 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "adent": 5,
-                                    "tmcmilla": 1,
-                                    "atrotter": 117
+                                    "Arthur Dent": 5,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 },
                                 {
                                     "month": "06/2024"
@@ -560,11 +558,11 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "tmcmilla": 128
+                                    "Tricia McMillan": 128
                                 },
                                 {
                                     "month": "06/2024",
-                                    "adent": 1
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "07/2024"
@@ -598,11 +596,11 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "07/2024",
-                                    "atrotter": 74
+                                    "Albert Trotter": 74
                                 },
                                 {
                                     "month": "08/2024",
-                                    "atrotter": 74
+                                    "Albert Trotter": 74
                                 }
                             ]
                         },
@@ -628,7 +626,7 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "07/2024",
-                                    "atrotter": 74
+                                    "Albert Trotter": 74
                                 },
                                 {
                                     "month": "08/2024"
@@ -769,19 +767,19 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "adent": 6
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "06/2024",
-                                    "adent": 6
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "07/2024",
-                                    "adent": 6
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "08/2024",
-                                    "adent": 6
+                                    "Arthur Dent": 6
                                 }
                             ]
                         },
@@ -801,7 +799,7 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "adent": 6
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "06/2024"

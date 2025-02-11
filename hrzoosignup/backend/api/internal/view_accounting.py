@@ -375,6 +375,7 @@ def usage4project(lead_username):
 
                     else:
                         for user in users:
+                            user_key = f"{user.first_name} {user.last_name}"
                             df_user = df_cumulative_month[
                                 df_cumulative_month["user"] ==
                                 user.person_username
@@ -394,26 +395,22 @@ def usage4project(lead_username):
 
                             if math.floor(user_cpuh) > 0:
                                 cpu_cumulative.update({
-                                    user.person_username: math.floor(user_cpuh)
+                                    user_key: math.floor(user_cpuh)
                                 })
 
                             if math.floor(user_gpuh) > 0:
                                 gpu_cumulative.update({
-                                    user.person_username: math.floor(user_gpuh)
+                                    user_key: math.floor(user_gpuh)
                                 })
 
                             if math.floor(monthly_cpuh) > 0:
                                 cpu_monthly.update({
-                                    user.person_username: math.floor(
-                                        monthly_cpuh
-                                    )
+                                    user_key: math.floor(monthly_cpuh)
                                 })
 
                             if math.floor(monthly_gpuh) > 0:
                                 gpu_monthly.update({
-                                    user.person_username: math.floor(
-                                        monthly_gpuh
-                                    )
+                                    user_key: math.floor(monthly_gpuh)
                                 })
 
                     if cpu_cumulative:
