@@ -593,7 +593,6 @@ export const ProjectAccounting = () => {
   }, [location.pathname, intl, status, selectedProject])
 
   const onUserSelect = (selected) => {
-    console.log(selected)
     let index = subsetUsers.indexOf(selected)
 
     if (index < 0) {
@@ -609,7 +608,6 @@ export const ProjectAccounting = () => {
     if (status == "success" && data) {
       let _listProjects = Object.keys(data)
       setSelectedProject(_listProjects[0])
-      console.log(subsetUsers)
 
       for (let index = 0; index <= _listProjects.length; index++) {
         let project = _listProjects[index]
@@ -663,12 +661,23 @@ export const ProjectAccounting = () => {
           setVrancicCPU(_vrancicCPU)
           setVrancicGPU(_vrancicGPU)
         }
-        _listUsers[project] = Array.from(new Set([ ..._supekCPUsers, ..._supekGPUsers, ..._padobranUsers, ..._vrancicCPUsers, ..._vrancicGPUsers ])).sort()
+        let _allUsers = Array.from(new Set([ ..._supekCPUsers, ..._supekGPUsers, ..._padobranUsers, ..._vrancicCPUsers, ..._vrancicGPUsers ])).sort()
+        _allUsers.splice(_allUsers.indexOf("total_project_usage"), 1)
+        _listUsers[project] = _allUsers
+
         setListUsers(_listUsers)
       }
       setListProjects(_listProjects)
     }
   }, [status, data, showCumulative, subsetUsers])
+
+  const getColor = (user) => {
+    if (user == "total_project_usage")
+      return colors[listUsers[selectedProject].length]
+
+    else
+      return colors[listUsers[selectedProject].indexOf(user)] 
+  }
 
   const UsageBarChart = ({ data, users, stackId }) => {
     const graph_width = 1650
@@ -700,14 +709,14 @@ export const ProjectAccounting = () => {
                 }}
                 dataKey={ user } 
                 stackId={ stackId }
-                fill={ colors[listUsers[selectedProject].indexOf(user)] } 
+                fill={ getColor(user) }
               />
             :
               <Bar 
                 key={ user } 
                 dataKey={ user } 
                 stackId={ stackId }
-                fill={ colors[listUsers[selectedProject].indexOf(user)] } 
+                fill={ getColor(user) }
               />
           )
         }
