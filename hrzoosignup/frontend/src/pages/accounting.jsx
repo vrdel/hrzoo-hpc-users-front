@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
-import { fetchAccountingData } from "Api/accounting";
+import { 
+  fetchAccountingData, 
+  fetchProjectAccountingData 
+} from "Api/accounting";
 import { 
   Button, 
   ButtonGroup,
@@ -66,7 +69,18 @@ const get_past_12_months = () => {
 }
 
 
-const MyAccounting = () => {
+export const MyAccounting = () => {
+  const { userDetails } = useContext(AuthContext);
+
+  if (userDetails && "userproject_set" in userDetails && userDetails.userproject_set.map(item => item.role.name).includes("lead"))
+    return <ProjectAccounting />
+
+  else
+    return <PersonalAccounting />
+}
+
+
+const PersonalAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const [padobranProjects, setPadobranProjects] = useState([])
   const [supekCPUProjects, setSupekCPUProjects] = useState([])
@@ -501,4 +515,260 @@ const MyAccounting = () => {
   }
 }
 
-export default MyAccounting
+const ProjectAccounting = () => {
+  const { userDetails } = useContext(AuthContext);
+  const { LinkTitles } = useContext(SharedData)
+	const [ pageTitle, setPageTitle ] = useState(undefined)
+  const [ showCumulative, setShowCumulative ] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [ listProjects, setListProjects ] = useState([])
+  const [ selectedProject, setSelectedProject ] = useState("NR-2023-09-009")
+  const [ listUsers, setListUsers ] = useState(new Object())
+  const [ padobran, setPadobran ] = useState(new Object())
+  const [ supekCPU, setSupekCPU ] = useState(new Object())
+  const [ supekGPU, setSupekGPU ] = useState(new Object())
+  const [ vrancicCPU, setVrancicCPU ] = useState(new Object())
+  const [ vrancicGPU, setVrancicGPU ] = useState(new Object())
+
+  const intl = useIntl()
+  let navigate = useNavigate()
+
+  const { status, data, error } = useQuery({
+    queryKey: ["lead-graph-data", userDetails.username],
+    queryFn: () => fetchProjectAccountingData()
+  })
+
+  useEffect(() => {
+    setPageTitle(LinkTitles(location.pathname, intl))
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [location.pathname, intl, status])
+
+  useEffect(() => {
+    if (status == "success" && data) {
+      let _listProjects = Object.keys(data)
+
+      for (let index = 0; index <= _listProjects.length; index++) {
+        let project = _listProjects[index]
+        let _supekCPUsers = new Set()
+        let _supekGPUsers = new Set()
+        let _padobranUsers = new Set()
+        let _vrancicCPUsers = new Set()
+        let _vrancicGPUsers = new Set()
+        let _supekCPU = supekCPU
+        let _supekGPU = supekGPU
+        let _padobran = padobran
+        let _vrancicCPU = vrancicCPU
+        let _vrancicGPU = vrancicGPU
+        let _listUsers = listUsers
+        if (project in data && "supek" in data[project]) {
+          _supekCPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          _supekGPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+          _supekCPUsers.delete("month")
+          _supekGPUsers.delete("month")
+          _supekCPU[project] = Array.from(_supekCPUsers).sort()
+          _supekGPU[project] = Array.from(_supekGPUsers).sort()
+          setSupekCPU(_supekCPU)
+          setSupekGPU(_supekGPU)
+        }
+        if (project in data && "padobran" in data[project]) {
+          _padobranUsers = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          _padobranUsers.delete("month")
+          _padobran[project] = Array.from(_padobranUsers).sort()
+          setPadobran(_padobran)
+        }
+        if (project in data && "cloud" in data[project]) { 
+          _vrancicCPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          _vrancicGPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+          _vrancicCPUsers.delete("month")
+          _vrancicGPUsers.delete("month")
+          _vrancicCPU[project] = Array.from(_vrancicCPUsers).sort()
+          _vrancicGPU[project] = Array.from(_vrancicGPUsers).sort()
+          setVrancicCPU(_vrancicCPU)
+          setVrancicGPU(_vrancicGPU)
+        }
+        _listUsers[project] = Array.from(new Set([ ..._supekCPUsers, ..._supekGPUsers, ..._padobranUsers, ..._vrancicCPUsers, ..._vrancicGPUsers ])).sort()
+        setListUsers(_listUsers)
+      }
+      setListProjects(_listProjects)
+    }
+  }, [status, data, showCumulative])
+
+  const UsageBarChart = ({ data, users, stackId }) => {
+    const graph_width = 1650
+
+    return (
+      <BarChart
+        width={ graph_width }
+        height={ 300 }
+        data={ data }
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <Tooltip />
+        <XAxis dataKey="month" />
+        <YAxis padding={{ top: 10 }} />
+        {
+          users.map((user, index) => 
+            (index === users.length - 1) ?
+              <Bar 
+                key={ user } 
+                label={{
+                  position: "top",
+                  fontSize: 10
+                }}
+                dataKey={ user } 
+                stackId={ stackId }
+                fill={ colors[listUsers[selectedProject].indexOf(user)] } 
+              />
+            :
+              <Bar 
+                key={ user } 
+                dataKey={ user } 
+                stackId={ stackId }
+                fill={ colors[listUsers[selectedProject].indexOf(user)] } 
+              />
+          )
+        }
+      </BarChart>
+    )
+  } 
+
+  if (error) {
+    toast.error(
+      <span className="font-monospace">
+        { error.message }
+      </span>, {
+        theme: "colored",
+        toastId: "accounting-record-error",
+        autoClose: 2500,
+        delay: 1000
+      }
+    )
+  }
+
+  if (data) {
+    let groups = []
+
+    if (selectedProject in supekCPU && supekCPU[selectedProject].length > 0)
+      groups.push(
+        <Row>
+          <h4>Supek CPUH</h4>
+          <UsageBarChart
+            data={ data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
+            users={ supekCPU[selectedProject] }
+            stackId="supek-cpuh"
+          />
+        </Row>
+      )
+
+    if (selectedProject in supekGPU && supekGPU[selectedProject].length > 0)
+      groups.push(
+        <Row>
+          <h4>Supek GPUH</h4>
+          <UsageBarChart
+            data={ data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] }
+            users={ supekGPU[selectedProject] }
+            stackId="supek-gpuh"
+          />
+        </Row>
+      )
+
+    if (selectedProject in padobran && padobran[selectedProject].length > 0)
+      groups.push(
+        <Row>
+          <h4>Padobran</h4>
+          <UsageBarChart
+            data={ data[selectedProject]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
+            users={ padobran[selectedProject] }
+            stackId="padobran"
+          />
+        </Row>
+      )
+
+    if (selectedProject in vrancicCPU && vrancicCPU[selectedProject].length > 0)
+      groups.push(
+        <Row>
+          <h4>Vrancic CPUH</h4>
+          <UsageBarChart
+            data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
+            users={ vrancicCPU[selectedProject] }
+            stackId="vrancic-cpuh"
+          />
+        </Row>
+      )
+
+    if (selectedProject in vrancicGPU && vrancicGPU[selectedProject].length > 0)
+      groups.push(
+        <Row>
+          <h4>Vrancic GPUH</h4>
+          <UsageBarChart
+            data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] }
+            users={ vrancicGPU[selectedProject] }
+            stackId="vrancic-gpuh"
+          />
+        </Row>
+      )
+
+    if ( Object.keys(supekCPU).length == 0 && Object.keys(supekGPU).length == 0 && Object.keys(padobran).length == 0 && Object.keys(vrancicCPU).length == 0 && Object.keys(vrancicGPU).length == 0)
+      return (
+        <Row className="mt-3 mb-3">
+          <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+            <FormattedMessage
+              description="myaccounting-emptygraphs"
+              defaultMessage="Nema zabilježenog iskorištenja resursa"
+            />
+          </Col>
+        </Row>
+      )
+    else
+      return (
+        <>
+          <Row>
+            <PageTitle pageTitle={ pageTitle }>
+              <ButtonGroup
+                className="d-flex align-items-center justify-content-between"
+              >
+                <Button
+                  color="secondary"
+                  className="me-2 rounded"
+                  onClick={ () => setShowCumulative(!showCumulative) }
+                >
+                  { showCumulative ? monthlyDisplay : cumulativeDisplay }
+                </Button>
+                <Dropdown
+                  isOpen={ isOpen }
+                  className="me-2"
+                  toggle={ () => setIsOpen(!isOpen) }
+                >
+                  <DropdownToggle caret>
+                    Projekti
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {
+                      listProjects.map(proj => 
+                        <DropdownItem
+                          key={ proj }
+                          onClick={ () => setSelectedProject(proj) }
+                        >
+                          { proj }
+                        </DropdownItem>
+                      )
+                    }
+                  </DropdownMenu>
+                </Dropdown>
+              </ButtonGroup>
+            </PageTitle>
+          </Row>
+          {
+            groups.map(row => row)
+          }
+        </>
+      )
+  }
+}

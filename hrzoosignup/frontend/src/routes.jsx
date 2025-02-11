@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import {
   Routes, Route, BrowserRouter
 } from 'react-router-dom';
@@ -28,7 +28,7 @@ import Memberships from 'Pages/memberships';
 import MyInfo from 'Pages/my-info';
 import NotFound from 'Pages/notfound';
 import Root from 'Pages/root';
-import MyAccounting from "Pages/accounting";
+import { MyAccounting } from "Pages/accounting";
 import { isActiveSession } from 'Api/auth';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
