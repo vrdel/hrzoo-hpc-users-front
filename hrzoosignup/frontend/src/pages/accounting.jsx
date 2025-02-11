@@ -130,6 +130,45 @@ const getColor = (entity, listEntities) => {
 }
 
 
+const Legend = ({ entities, subset }) => {
+  return (
+    <Row className="mt-3">
+      <Col md={4}></Col>
+      <Col md={4} className="d-flex align-items-center justify-content-center">
+        <div>
+          {
+            subset.length > 0 ?
+              subset.map((item, index) => (
+                <p key={ item }>
+                  <FontAwesomeIcon 
+                    icon={ faSquare } 
+                    key={ item } 
+                    className="mt-1" 
+                    color={ colors[index] } 
+                  />
+                  { " " }{ item }
+                </p>
+              ))
+            :
+              entities.map((item, index) => (
+                <p key={ item }>
+                  <FontAwesomeIcon 
+                    icon={ faSquare } 
+                    key={ item } 
+                    className="mt-1" 
+                    color={ colors[index] } 
+                  />
+                  { " " }{ item }
+                </p>
+              ))
+          }
+        </div>
+      </Col>
+    </Row>
+  )
+}
+
+
 const UsageBarChart = ({ data, entities, listEntities, stackId }) => {
   const graph_width = 1650
 
@@ -548,29 +587,10 @@ export const MyAccounting = () => {
           {
             groups.map(row => row)
           }
-          <Row className="mt-3">
-            <Col md={4}></Col>
-            <Col md={4} className="d-flex align-items-center justify-content-center">
-              <div>
-                {
-                  subsetOfProjects.length > 0 ?
-                    subsetOfProjects.map((proj, index) => (
-                      <p key={ proj }>
-                        <FontAwesomeIcon icon={ faSquare } key={ proj } className="mt-1" color={ colors[index] } />
-                        { " " }{ proj }
-                      </p>
-                    ))
-                  :
-                    listProjects.map((proj, index) => (
-                      <p key={ proj }>
-                        <FontAwesomeIcon icon={ faSquare } key={ proj } className="mt-1" color={ colors[index] } />
-                        { " " }{ proj }
-                      </p>
-                    ))
-                }
-              </div>
-            </Col>
-          </Row>
+          <Legend 
+            entities={ listProjects }
+            subset={ subsetOfProjects }
+          />
         </>
       )
   }
@@ -744,7 +764,7 @@ export const ProjectAccounting = () => {
     if (selectedProject in vrancicCPU && vrancicCPU[selectedProject].length > 0)
       groups.push(
         <Row>
-          <h4>Vrancic CPUH</h4>
+          <h4>Vrančić CPUH</h4>
           <UsageBarChart
             data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
             entities={ vrancicCPU[selectedProject] }
@@ -757,7 +777,7 @@ export const ProjectAccounting = () => {
     if (selectedProject in vrancicGPU && vrancicGPU[selectedProject].length > 0)
       groups.push(
         <Row>
-          <h4>Vrancic GPUH</h4>
+          <h4>Vrančić GPUH</h4>
           <UsageBarChart
             data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] }
             entities={ vrancicGPU[selectedProject] }
@@ -857,29 +877,10 @@ export const ProjectAccounting = () => {
           {
             groups.map(row => row)
           }
-          <Row className="mt-3">
-            <Col md={4}></Col>
-            <Col md={4} className="d-flex align-items-center justify-content-center">
-              <div>
-                {
-                  subsetUsers.length > 0 ?
-                    subsetUsers.map((user, index) => (
-                      <p key={ user }>
-                        <FontAwesomeIcon icon={ faSquare } key={ user } className="mt-1" color={ colors[index] } />
-                        { " " }{ user }
-                      </p>
-                    ))
-                  :
-                    listUsers[selectedProject].map((user, index) => (
-                      <p key={ user }>
-                        <FontAwesomeIcon icon={ faSquare } key={ user } className="mt-1" color={ colors[index] } />
-                        { " " }{ user }
-                      </p>
-                    ))
-                }
-              </div>
-            </Col>
-          </Row>
+          <Legend
+            entities={ listUsers[selectedProject] }
+            subset={ subsetUsers }
+          />
         </>
       )
   }
