@@ -121,6 +121,60 @@ const Navigation = () => {
 }
 
 
+const getColor = (entity, listEntities) => {
+  if (entity == "total_project_usage")
+    return colors[listEntities.length]
+
+  else
+    return colors[listEntities.indexOf(entity)] 
+}
+
+
+const UsageBarChart = ({ data, entities, listEntities, stackId }) => {
+  const graph_width = 1650
+
+  return (
+    <BarChart
+      width={ graph_width }
+      height={ 300 }
+      data={ data }
+      margin={{
+        top: 5,
+        right: 30,
+        left: 20,
+        bottom: 5
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <Tooltip />
+      <XAxis dataKey="month" />
+      <YAxis padding={{ top: 10 }} />
+      {
+        entities.map((item, index) => 
+          (index === item.length - 1) ?
+            <Bar 
+              key={ item } 
+              label={{
+                position: "top",
+                fontSize: 10
+              }}
+              dataKey={ item } 
+              stackId={ stackId }
+              fill={ getColor(item, listEntities) }
+            />
+          :
+            <Bar 
+              key={ item } 
+              dataKey={ item } 
+              stackId={ stackId }
+              fill={ getColor(item, listEntities) }
+            />
+        )
+      }
+    </BarChart>
+  )
+} 
+
 export const MyAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const [padobranProjects, setPadobranProjects] = useState([])
@@ -181,51 +235,6 @@ export const MyAccounting = () => {
     return result
   }
 
-
-  const UsageBarChart = ({ data, projects, stackId }) => {
-    const graph_width = 1650
-
-    return (
-      <BarChart
-        width={ graph_width }
-        height={ 300 }
-        data={ data }
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <XAxis dataKey="month" />
-        <YAxis padding={{ top: 10 }} />
-        {
-          projects.map((proj, index) => 
-            (index === projects.length - 1) ?
-              <Bar 
-                key={ proj } 
-                label={{
-                  position: "top",
-                  fontSize: 10
-                }}
-                dataKey={ proj } 
-                stackId={ stackId }
-                fill={ colors[listProjects.indexOf(proj)] } 
-              />
-            :
-              <Bar 
-                key={ proj } 
-                dataKey={ proj } 
-                stackId={ stackId }
-                fill={ colors[listProjects.indexOf(proj)] } 
-              />
-          )
-        }
-      </BarChart>
-    )
-  } 
 
   useEffect(() => {
     if (status == "success" && data) {
@@ -322,7 +331,8 @@ export const MyAccounting = () => {
               : 
                 [] 
             }
-            projects={ supekCPUProjects }
+            entities={ supekCPUProjects }
+            listEntities={ listProjects }
             stackId="supek-cpuh"
           />
         </Row>
@@ -339,7 +349,8 @@ export const MyAccounting = () => {
               : 
                 [] 
             }
-            projects={ supekGPUProjects }
+            entities={ supekGPUProjects }
+            listEntities={ listProjects }
             stackId="supek-gpuh"
           />
         </Row>
@@ -356,7 +367,8 @@ export const MyAccounting = () => {
               : 
                 [] 
             }
-            projects={ padobranProjects }
+            entities={ padobranProjects }
+            listEntities={ listProjects }
             stackId="padobran"
           />
         </Row>
@@ -373,7 +385,8 @@ export const MyAccounting = () => {
               : 
               [] 
             }
-            projects={ galaxyProjects }
+            entities={ galaxyProjects }
+            listEntities={ listProjects }
             stackId="galaxy"
           />
         </Row>
@@ -390,7 +403,8 @@ export const MyAccounting = () => {
               : 
                 [] 
             }
-            projects={ jupyterCPUProjects }
+            entities={ jupyterCPUProjects }
+            listEntities={ listProjects }
             stackId="jupyter-cpuh"
           />
         </Row>
@@ -407,7 +421,8 @@ export const MyAccounting = () => {
               : 
                 [] 
             }
-            projects={ jupyterGPUProjects }
+            entities={ jupyterGPUProjects }
+            listEntities={ listProjects }
             stackId="jupyter-gpuh"
           />
         </Row>
@@ -671,59 +686,6 @@ export const ProjectAccounting = () => {
     }
   }, [status, data, showCumulative, subsetUsers])
 
-  const getColor = (user) => {
-    if (user == "total_project_usage")
-      return colors[listUsers[selectedProject].length]
-
-    else
-      return colors[listUsers[selectedProject].indexOf(user)] 
-  }
-
-  const UsageBarChart = ({ data, users, stackId }) => {
-    const graph_width = 1650
-
-    return (
-      <BarChart
-        width={ graph_width }
-        height={ 300 }
-        data={ data }
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <Tooltip />
-        <XAxis dataKey="month" />
-        <YAxis padding={{ top: 10 }} />
-        {
-          users.map((user, index) => 
-            (index === users.length - 1) ?
-              <Bar 
-                key={ user } 
-                label={{
-                  position: "top",
-                  fontSize: 10
-                }}
-                dataKey={ user } 
-                stackId={ stackId }
-                fill={ getColor(user) }
-              />
-            :
-              <Bar 
-                key={ user } 
-                dataKey={ user } 
-                stackId={ stackId }
-                fill={ getColor(user) }
-              />
-          )
-        }
-      </BarChart>
-    )
-  } 
-
   if (error) {
     toast.error(
       <span className="font-monospace">
@@ -746,7 +708,8 @@ export const ProjectAccounting = () => {
           <h4>Supek CPUH</h4>
           <UsageBarChart
             data={ data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
-            users={ supekCPU[selectedProject] }
+            entities={ supekCPU[selectedProject] }
+            listEntities={ listUsers[selectedProject] }
             stackId="supek-cpuh"
           />
         </Row>
@@ -758,7 +721,8 @@ export const ProjectAccounting = () => {
           <h4>Supek GPUH</h4>
           <UsageBarChart
             data={ data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] }
-            users={ supekGPU[selectedProject] }
+            entities={ supekGPU[selectedProject] }
+            listEntities={ listUsers[selectedProject] }
             stackId="supek-gpuh"
           />
         </Row>
@@ -770,7 +734,8 @@ export const ProjectAccounting = () => {
           <h4>Padobran</h4>
           <UsageBarChart
             data={ data[selectedProject]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
-            users={ padobran[selectedProject] }
+            entities={ padobran[selectedProject] }
+            listEntities={ listUsers[selectedProject] }
             stackId="padobran"
           />
         </Row>
@@ -782,7 +747,8 @@ export const ProjectAccounting = () => {
           <h4>Vrancic CPUH</h4>
           <UsageBarChart
             data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
-            users={ vrancicCPU[selectedProject] }
+            entities={ vrancicCPU[selectedProject] }
+            listEntities={ listUsers[selectedProject] }
             stackId="vrancic-cpuh"
           />
         </Row>
@@ -794,7 +760,8 @@ export const ProjectAccounting = () => {
           <h4>Vrancic GPUH</h4>
           <UsageBarChart
             data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] }
-            users={ vrancicGPU[selectedProject] }
+            entities={ vrancicGPU[selectedProject] }
+            listEntities={ listUsers[selectedProject] }
             stackId="vrancic-gpuh"
           />
         </Row>
