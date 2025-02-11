@@ -881,6 +881,29 @@ export const ProjectAccounting = () => {
           {
             groups.map(row => row)
           }
+          <Row className="mt-3">
+            <Col md={4}></Col>
+            <Col md={4} className="d-flex align-items-center justify-content-center">
+              <div>
+                {
+                  subsetUsers.length > 0 ?
+                    subsetUsers.map((user, index) => (
+                      <p key={ user }>
+                        <FontAwesomeIcon icon={ faSquare } key={ user } className="mt-1" color={ colors[index] } />
+                        { " " }{ user }
+                      </p>
+                    ))
+                  :
+                    listUsers[selectedProject].map((user, index) => (
+                      <p key={ user }>
+                        <FontAwesomeIcon icon={ faSquare } key={ user } className="mt-1" color={ colors[index] } />
+                        { " " }{ user }
+                      </p>
+                    ))
+                }
+              </div>
+            </Col>
+          </Row>
         </>
       )
   }
