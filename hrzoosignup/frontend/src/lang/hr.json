@@ -783,6 +783,10 @@
     "defaultMessage": "Period korištenja:",
     "description": "researchselected-usageperiod"
   },
+  "FViZGg": {
+    "defaultMessage": "Korisnici",
+    "description": "myaccounting-users-button"
+  },
   "FWFb50": {
     "defaultMessage": "Korisničko ime",
     "description": "popover-username"

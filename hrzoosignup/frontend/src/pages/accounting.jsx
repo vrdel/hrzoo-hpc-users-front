@@ -42,6 +42,11 @@ const monthlyDisplay = <FormattedMessage
   defaultMessage="Mjesečni prikaz"
 />
 
+const projectsButton = <FormattedMessage
+  description="myaccounting-projects-button"
+  defaultMessage="Projekti"
+/>
+
 
 const get_past_12_months = () => {
   const today = new Date()
@@ -500,10 +505,7 @@ export const MyAccounting = () => {
                 </Dropdown>
                 <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
                   <DropdownToggle caret>
-                    <FormattedMessage
-                      description="myaccounting-projects-button"
-                      defaultMessage="Projekti"
-                    />
+                    { projectsButton }
                   </DropdownToggle>
                   <DropdownMenu>
                     {
@@ -564,9 +566,11 @@ export const ProjectAccounting = () => {
   const { LinkTitles } = useContext(SharedData)
 	const [ pageTitle, setPageTitle ] = useState(undefined)
   const [ showCumulative, setShowCumulative ] = useState(false)
-  const [isOpen, setIsOpen] = useState(false)
+  const [ isOpen, setIsOpen ] = useState(false)
+  const [ isOpenUsers, setIsOpenUsers ] = useState(false)
   const [ listProjects, setListProjects ] = useState([])
   const [ selectedProject, setSelectedProject ] = useState(undefined)
+  const [ subsetUsers, setSubsetUsers ] = useState([])
   const [ listUsers, setListUsers ] = useState(new Object())
   const [ padobran, setPadobran ] = useState(new Object())
   const [ supekCPU, setSupekCPU ] = useState(new Object())
@@ -588,10 +592,24 @@ export const ProjectAccounting = () => {
       navigate(defaultUnAuthnRedirect)
   }, [location.pathname, intl, status, selectedProject])
 
+  const onUserSelect = (selected) => {
+    console.log(selected)
+    let index = subsetUsers.indexOf(selected)
+
+    if (index < 0) {
+      subsetUsers.push(selected)
+    } else {
+      subsetUsers.splice(index, 1)
+    }
+
+    setSubsetUsers([...subsetUsers])
+  }
+
   useEffect(() => {
     if (status == "success" && data) {
       let _listProjects = Object.keys(data)
       setSelectedProject(_listProjects[0])
+      console.log(subsetUsers)
 
       for (let index = 0; index <= _listProjects.length; index++) {
         let project = _listProjects[index]
@@ -611,15 +629,23 @@ export const ProjectAccounting = () => {
           _supekGPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
           _supekCPUsers.delete("month")
           _supekGPUsers.delete("month")
-          _supekCPU[project] = Array.from(_supekCPUsers).sort()
-          _supekGPU[project] = Array.from(_supekGPUsers).sort()
+          if (subsetUsers.length > 0) {
+            _supekCPU[project] = [..._supekCPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+            _supekGPU[project] = [..._supekGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+          } else {
+            _supekCPU[project] = Array.from(_supekCPUsers).sort()
+            _supekGPU[project] = Array.from(_supekGPUsers).sort()
+          }
           setSupekCPU(_supekCPU)
           setSupekGPU(_supekGPU)
         }
         if (project in data && "padobran" in data[project]) {
           _padobranUsers = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
           _padobranUsers.delete("month")
-          _padobran[project] = Array.from(_padobranUsers).sort()
+          if (subsetUsers.length > 0)
+            _padobran[project] = [..._padobranUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+          else
+            _padobran[project] = Array.from(_padobranUsers).sort()
           setPadobran(_padobran)
         }
         if (project in data && "cloud" in data[project]) { 
@@ -627,8 +653,13 @@ export const ProjectAccounting = () => {
           _vrancicGPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
           _vrancicCPUsers.delete("month")
           _vrancicGPUsers.delete("month")
-          _vrancicCPU[project] = Array.from(_vrancicCPUsers).sort()
-          _vrancicGPU[project] = Array.from(_vrancicGPUsers).sort()
+          if (subsetUsers.length > 0) {
+            _vrancicCPU[project] = [..._vrancicCPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+            _vrancicGPU[project] = [..._vrancicGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+          } else {
+            _vrancicCPU[project] = Array.from(_vrancicCPUsers).sort()
+            _vrancicGPU[project] = Array.from(_vrancicGPUsers).sort()
+          }
           setVrancicCPU(_vrancicCPU)
           setVrancicGPU(_vrancicGPU)
         }
@@ -637,7 +668,7 @@ export const ProjectAccounting = () => {
       }
       setListProjects(_listProjects)
     }
-  }, [status, data, showCumulative])
+  }, [status, data, showCumulative, subsetUsers])
 
   const UsageBarChart = ({ data, users, stackId }) => {
     const graph_width = 1650
@@ -796,13 +827,40 @@ export const ProjectAccounting = () => {
                 >
                   { showCumulative ? monthlyDisplay : cumulativeDisplay }
                 </Button>
+                <Dropdown 
+                  isOpen={ isOpenUsers } 
+                  className="me-2 rounded"
+                  toggle={ () => setIsOpenUsers(!isOpenUsers) }
+                >
+                  <DropdownToggle caret>
+                    <FormattedMessage
+                      description="myaccounting-users-button"
+                      defaultMessage="Korisnici"
+                    />
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    {
+                      listUsers[selectedProject].map((user) => 
+                        <DropdownItem key={ user } toggle={ false }>
+                          <Input
+                            type="checkbox"
+                            className="mr-2"
+                            checked={ subsetUsers.indexOf(user) >= 0 }
+                            onClick={ () => onUserSelect(user) }
+                          />
+                          <Label check>{ user }</Label>
+                        </DropdownItem>
+                      )
+                    }
+                  </DropdownMenu>
+                </Dropdown>
                 <Dropdown
                   isOpen={ isOpen }
-                  className="me-2"
+                  className="ml-2"
                   toggle={ () => setIsOpen(!isOpen) }
                 >
                   <DropdownToggle caret>
-                    Projekti
+                    { projectsButton }
                   </DropdownToggle>
                   <DropdownMenu>
                     {

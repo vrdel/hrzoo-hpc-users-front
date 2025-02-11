@@ -783,6 +783,10 @@
     "defaultMessage": "Usage period:",
     "description": "researchselected-usageperiod"
   },
+  "FViZGg": {
+    "defaultMessage": "Users",
+    "description": "myaccounting-users-button"
+  },
   "FWFb50": {
     "defaultMessage": "Username",
     "description": "popover-username"
