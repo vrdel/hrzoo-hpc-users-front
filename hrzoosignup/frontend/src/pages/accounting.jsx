@@ -93,7 +93,10 @@ const Navigation = () => {
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/project-accounting'
         >
-          Pogled za voditelja
+          <FormattedMessage
+            description="project-lead-accounting"
+            defaultMessage="Pogled za voditelja"
+          />
         </NavLink>
       </NavItem>
       <NavItem key="personal-accounting" className="mt-1">
@@ -102,7 +105,10 @@ const Navigation = () => {
           className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
           to='/ui/my-accounting'
         >
-          Osobna potrosnja
+          <FormattedMessage
+            description="project-my-accounting"
+            defaultMessage="Osobna potrošnja"
+          />
         </NavLink>
       </NavItem>
     </Nav>
@@ -560,7 +566,7 @@ export const ProjectAccounting = () => {
   const [ showCumulative, setShowCumulative ] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [ listProjects, setListProjects ] = useState([])
-  const [ selectedProject, setSelectedProject ] = useState("NR-2023-09-009")
+  const [ selectedProject, setSelectedProject ] = useState(undefined)
   const [ listUsers, setListUsers ] = useState(new Object())
   const [ padobran, setPadobran ] = useState(new Object())
   const [ supekCPU, setSupekCPU ] = useState(new Object())
@@ -577,14 +583,15 @@ export const ProjectAccounting = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
+    setPageTitle(LinkTitles(`${location.pathname}/${selectedProject}`, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, intl, status])
+  }, [location.pathname, intl, status, selectedProject])
 
   useEffect(() => {
     if (status == "success" && data) {
       let _listProjects = Object.keys(data)
+      setSelectedProject(_listProjects[0])
 
       for (let index = 0; index <= _listProjects.length; index++) {
         let project = _listProjects[index]
