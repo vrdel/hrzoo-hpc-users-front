@@ -274,7 +274,6 @@ export const MyAccounting = () => {
     return result
   }
 
-
   useEffect(() => {
     if (status == "success" && data) {
       let supek_cpu = new Set()
@@ -471,7 +470,8 @@ export const MyAccounting = () => {
       return (
         <>
           {
-            IsLead() && <Navigation />
+            IsLead() && 
+              <Navigation />
           }
           <Row className="mt-3 mb-3">
             <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
@@ -787,13 +787,37 @@ export const ProjectAccounting = () => {
         </Row>
       )
 
-    if ( Object.keys(supekCPU).length == 0 && Object.keys(supekGPU).length == 0 && Object.keys(padobran).length == 0 && Object.keys(vrancicCPU).length == 0 && Object.keys(vrancicGPU).length == 0)
+    if ( groups.length == 0 )
       return (
         <>
           {
-            IsLead() && 
-              <Navigation />
+            IsLead() && <Navigation />
           }
+          <Row>
+            <PageTitle pageTitle={ pageTitle }>
+              <Dropdown
+                isOpen={ isOpen }
+                className="ml-2"
+                toggle={ () => setIsOpen(!isOpen) }
+              >
+                <DropdownToggle caret>
+                  { projectsButton }
+                </DropdownToggle>
+                <DropdownMenu>
+                  {
+                    listProjects.map(proj => 
+                      <DropdownItem
+                        key={ proj }
+                        onClick={ () => setSelectedProject(proj) }
+                      >
+                        { proj }
+                      </DropdownItem>
+                    )
+                  }
+                </DropdownMenu>
+              </Dropdown>
+            </PageTitle>
+          </Row>
           <Row className="mt-3 mb-3">
             <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
               <FormattedMessage
@@ -804,6 +828,7 @@ export const ProjectAccounting = () => {
           </Row>
         </>
       )
+
     else
       return (
         <>
