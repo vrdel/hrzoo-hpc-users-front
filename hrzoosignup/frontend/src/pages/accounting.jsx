@@ -143,25 +143,25 @@ const Legend = ({ entities, subset }) => {
         <div>
           {
             subset.length > 0 ?
-              subset.map((item, index) => (
+              subset.map((item) => (
                 <p key={ item }>
                   <FontAwesomeIcon 
                     icon={ faSquare } 
                     key={ item } 
                     className="mt-1" 
-                    color={ colors[index] } 
+                    color={ getColor(item, entities) }
                   />
                   { " " }{ item }
                 </p>
               ))
             :
-              entities.map((item, index) => (
+              entities.map((item) => (
                 <p key={ item }>
                   <FontAwesomeIcon 
                     icon={ faSquare } 
                     key={ item } 
                     className="mt-1" 
-                    color={ colors[index] } 
+                    color={ getColor(item, entities) }
                   />
                   { " " }{ item }
                 </p>
