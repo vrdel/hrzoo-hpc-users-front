@@ -42,9 +42,14 @@ const monthlyDisplay = <FormattedMessage
   defaultMessage="Mjesečni prikaz"
 />
 
-const projectsButton = <FormattedMessage
+const projectsButtonText = <FormattedMessage
   description="myaccounting-projects-button"
   defaultMessage="Projekti"
+/>
+
+const usersButtonText = <FormattedMessage
+  description="myaccounting-users-button"
+  defaultMessage="Korisnici"
 />
 
 
@@ -559,7 +564,7 @@ export const MyAccounting = () => {
                 </Dropdown>
                 <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
                   <DropdownToggle caret>
-                    { projectsButton }
+                    { projectsButtonText }
                   </DropdownToggle>
                   <DropdownMenu>
                     {
@@ -642,7 +647,8 @@ export const ProjectAccounting = () => {
   useEffect(() => {
     if (status == "success" && data) {
       let _listProjects = Object.keys(data)
-      setSelectedProject(_listProjects[0])
+      if (!selectedProject)
+        setSelectedProject(_listProjects[0])
 
       for (let index = 0; index <= _listProjects.length; index++) {
         let project = _listProjects[index]
@@ -704,7 +710,7 @@ export const ProjectAccounting = () => {
       }
       setListProjects(_listProjects)
     }
-  }, [status, data, showCumulative, subsetUsers])
+  }, [status, data, showCumulative, subsetUsers, selectedProject])
 
   if (error) {
     toast.error(
@@ -718,6 +724,31 @@ export const ProjectAccounting = () => {
       }
     )
   }
+
+  const projectButton = <Dropdown
+    isOpen={ isOpen }
+    className="ml-2"
+    toggle={ () => setIsOpen(!isOpen) }
+  >
+    <DropdownToggle caret>
+      { projectsButtonText }
+    </DropdownToggle>
+    <DropdownMenu>
+      {
+        listProjects.map(proj => 
+          <DropdownItem
+            key={ proj }
+            onClick={ () => {
+              setSelectedProject(proj) 
+              setSubsetUsers([])
+            }}
+          >
+            { proj }
+          </DropdownItem>
+        )
+      }
+    </DropdownMenu>
+  </Dropdown>
 
   if (data) {
     let groups = []
@@ -795,27 +826,38 @@ export const ProjectAccounting = () => {
           }
           <Row>
             <PageTitle pageTitle={ pageTitle }>
-              <Dropdown
-                isOpen={ isOpen }
-                className="ml-2"
-                toggle={ () => setIsOpen(!isOpen) }
+              <ButtonGroup
+                className="d-flex align-items-center justify-content-between"
               >
-                <DropdownToggle caret>
-                  { projectsButton }
-                </DropdownToggle>
-                <DropdownMenu>
-                  {
-                    listProjects.map(proj => 
-                      <DropdownItem
-                        key={ proj }
-                        onClick={ () => setSelectedProject(proj) }
-                      >
-                        { proj }
-                      </DropdownItem>
-                    )
-                  }
-                </DropdownMenu>
-              </Dropdown>
+                {
+                  selectedProject in listUsers && listUsers[selectedProject].length > 0 &&
+                    <Dropdown 
+                      isOpen={ isOpenUsers } 
+                      className="me-2 rounded"
+                      toggle={ () => setIsOpenUsers(!isOpenUsers) }
+                    >
+                      <DropdownToggle caret>
+                        { usersButtonText }
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        {
+                          listUsers[selectedProject].map((user) => 
+                            <DropdownItem key={ user } toggle={ false }>
+                              <Input
+                                type="checkbox"
+                                className="mr-2"
+                                checked={ subsetUsers.indexOf(user) >= 0 }
+                                onClick={ () => onUserSelect(user) }
+                              />
+                              <Label check>{ user }</Label>
+                            </DropdownItem>
+                          )
+                        }
+                      </DropdownMenu>
+                    </Dropdown>
+                }
+                { projectButton }
+              </ButtonGroup>
             </PageTitle>
           </Row>
           <Row className="mt-3 mb-3">
@@ -854,10 +896,7 @@ export const ProjectAccounting = () => {
                   toggle={ () => setIsOpenUsers(!isOpenUsers) }
                 >
                   <DropdownToggle caret>
-                    <FormattedMessage
-                      description="myaccounting-users-button"
-                      defaultMessage="Korisnici"
-                    />
+                    { usersButtonText }
                   </DropdownToggle>
                   <DropdownMenu>
                     {
@@ -875,27 +914,7 @@ export const ProjectAccounting = () => {
                     }
                   </DropdownMenu>
                 </Dropdown>
-                <Dropdown
-                  isOpen={ isOpen }
-                  className="ml-2"
-                  toggle={ () => setIsOpen(!isOpen) }
-                >
-                  <DropdownToggle caret>
-                    { projectsButton }
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {
-                      listProjects.map(proj => 
-                        <DropdownItem
-                          key={ proj }
-                          onClick={ () => setSelectedProject(proj) }
-                        >
-                          { proj }
-                        </DropdownItem>
-                      )
-                    }
-                  </DropdownMenu>
-                </Dropdown>
+                { projectButton }
               </ButtonGroup>
             </PageTitle>
           </Row>
