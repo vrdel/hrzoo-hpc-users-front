@@ -194,26 +194,6 @@ class Command(BaseCommand):
                                     f"{response.status_code} {response.reason}"
                                 )
 
-                    for item in dashboard_really_using:
-                        if item not in really_using:
-                            response = requests.post(
-                                settings.DASHBOARD_API_PERMISSIONS,
-                                json={
-                                    "uslugaId": 1,
-                                    "ustanovaId": item,
-                                    "stvarnoKoristi": "NE"
-                                },
-                                headers=headers
-                            )
-
-                            if not response.ok:
-                                LOGGER.error(
-                                    f"Error updating permissions for "
-                                    f"institution {item}: "
-                                    f"{response.status_code} {response.reason}"
-                                )
-                                sys.exit(2)
-
                 LOGGER.info("Sending aggregated data to four Universities...")
 
                 for uniid, university in UNIVERSITIES.items():
