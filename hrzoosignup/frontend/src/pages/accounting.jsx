@@ -15,8 +15,11 @@ import {
   Dropdown, 
   DropdownMenu, 
   DropdownItem, 
-  DropdownToggle 
+  DropdownToggle, 
+  Nav,
+  NavItem
 } from "reactstrap";
+import { useNavigate, NavLink } from 'react-router-dom';
 import { PageTitle } from 'Components/PageTitle';
 import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Tooltip } from 'recharts';
 import { toast } from 'react-toastify';
@@ -25,7 +28,6 @@ import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { SharedData } from "Pages/root";
 import { useIntl, FormattedMessage } from 'react-intl'
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
-import { useNavigate } from "react-router-dom";
 
 
 const colors = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"]
@@ -69,18 +71,46 @@ const get_past_12_months = () => {
 }
 
 
-export const MyAccounting = () => {
+const IsLead = () => {
   const { userDetails } = useContext(AuthContext);
 
-  if (userDetails && "userproject_set" in userDetails && userDetails.userproject_set.map(item => item.role.name).includes("lead"))
-    return <ProjectAccounting />
+  if (userDetails && "userproject_set" in userDetails)
+    return userDetails.userproject_set.map(item => item.role.name).includes("lead")
 
   else
-    return <PersonalAccounting />
+    return false
 }
 
 
-const PersonalAccounting = () => {
+const Navigation = () => {
+  const activeBgColor = '#b04c46';
+
+  return (
+    <Nav tabs id="hzsi-navlinks" className="rounded d-flex sticky-top">
+      <NavItem key='project-accounting' className='ms-3 mt-1'>
+        <NavLink
+          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          to='/ui/project-accounting'
+        >
+          Pogled za voditelja
+        </NavLink>
+      </NavItem>
+      <NavItem key="personal-accounting" className="mt-1">
+        <NavLink
+          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          to='/ui/my-accounting'
+        >
+          Osobna potrosnja
+        </NavLink>
+      </NavItem>
+    </Nav>
+  )
+}
+
+
+export const MyAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const [padobranProjects, setPadobranProjects] = useState([])
   const [supekCPUProjects, setSupekCPUProjects] = useState([])
@@ -374,18 +404,26 @@ const PersonalAccounting = () => {
 
     if (supekCPUProjects.length == 0 && supekGPUProjects.length == 0 && padobranProjects.length == 0 && galaxyProjects.length == 0 && jupyterCPUProjects.length == 0 && jupyterGPUProjects.length == 0)
       return (
-        <Row className="mt-3 mb-3">
-          <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-            <FormattedMessage
-              description="myaccounting-emptygraphs"
-              defaultMessage="Nema zabilježenog iskorištenja resursa"
-            />
-          </Col>
-        </Row>
+        <>
+          {
+            IsLead() && <Navigation />
+          }
+          <Row className="mt-3 mb-3">
+            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+              <FormattedMessage
+                description="myaccounting-emptygraphs"
+                defaultMessage="Nema zabilježenog iskorištenja resursa"
+              />
+            </Col>
+          </Row>
+        </>
       )
     else
       return (
         <>
+          {
+            IsLead() && <Navigation />
+          }
           <Row>
             <PageTitle pageTitle={ pageTitle }>
               <ButtonGroup
@@ -515,7 +553,7 @@ const PersonalAccounting = () => {
   }
 }
 
-const ProjectAccounting = () => {
+export const ProjectAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const { LinkTitles } = useContext(SharedData)
 	const [ pageTitle, setPageTitle ] = useState(undefined)
@@ -717,18 +755,28 @@ const ProjectAccounting = () => {
 
     if ( Object.keys(supekCPU).length == 0 && Object.keys(supekGPU).length == 0 && Object.keys(padobran).length == 0 && Object.keys(vrancicCPU).length == 0 && Object.keys(vrancicGPU).length == 0)
       return (
-        <Row className="mt-3 mb-3">
-          <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-            <FormattedMessage
-              description="myaccounting-emptygraphs"
-              defaultMessage="Nema zabilježenog iskorištenja resursa"
-            />
-          </Col>
-        </Row>
+        <>
+          {
+            IsLead() && 
+              <Navigation />
+          }
+          <Row className="mt-3 mb-3">
+            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+              <FormattedMessage
+                description="myaccounting-emptygraphs"
+                defaultMessage="Nema zabilježenog iskorištenja resursa"
+              />
+            </Col>
+          </Row>
+        </>
       )
     else
       return (
         <>
+          {
+            IsLead() && 
+              <Navigation />
+          }
           <Row>
             <PageTitle pageTitle={ pageTitle }>
               <ButtonGroup
