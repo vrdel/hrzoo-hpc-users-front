@@ -348,24 +348,24 @@ def usage4project(lead_username):
                             df_monthly["gpuh"].sum(axis=0)
                         )
 
-                        if cloud_cpuh > 0:
+                        if cloud_cpuh > 0.005:
                             cpu_cumulative.update({
                                 "total_project_usage": round(cloud_cpuh, 2)
                             })
 
-                        if cloud_gpuh > 0:
+                        if cloud_gpuh > 0.005:
                             gpu_cumulative.update({
                                 "total_project_usage": round(cloud_gpuh, 2)
                             })
 
-                        if cloud_monthly_cpuh > 0:
+                        if cloud_monthly_cpuh > 0.005:
                             cpu_monthly.update({
                                 "total_project_usage": round(
                                     cloud_monthly_cpuh, 2
                                 )
                             })
 
-                        if cloud_monthly_gpuh > 0:
+                        if cloud_monthly_gpuh > 0.005:
                             gpu_monthly.update({
                                 "total_project_usage": round(
                                     cloud_monthly_gpuh, 2
@@ -392,22 +392,22 @@ def usage4project(lead_username):
                                 df_user_monthly["gpuh"].sum(axis=0)
                             )
 
-                            if user_cpuh > 0:
+                            if user_cpuh > 0.005:
                                 cpu_cumulative.update({
                                     user_key: round(user_cpuh, 2)
                                 })
 
-                            if user_gpuh > 0:
+                            if user_gpuh > 0.005:
                                 gpu_cumulative.update({
                                     user_key: round(user_gpuh, 2)
                                 })
 
-                            if monthly_cpuh > 0:
+                            if monthly_cpuh > 0.005:
                                 cpu_monthly.update({
                                     user_key: round(monthly_cpuh, 2)
                                 })
 
-                            if monthly_gpuh > 0:
+                            if monthly_gpuh > 0.005:
                                 gpu_monthly.update({
                                     user_key: round(monthly_gpuh, 2)
                                 })
