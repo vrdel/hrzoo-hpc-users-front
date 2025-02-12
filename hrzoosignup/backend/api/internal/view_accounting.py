@@ -550,6 +550,13 @@ class ProjectUsage(APIView):
             return Response(err_response, status=err_status)
 
         else:
-            return Response(
-                usage4project(user.person_username), status=status.HTTP_200_OK
-            )
+            cached_data = cache.get(f"project_usage_{user.person_username}")
+
+            if cached_data:
+                return Response(data=cached_data, status=status.HTTP_200_OK)
+
+            else:
+                return Response(
+                    usage4project(user.person_username),
+                    status=status.HTTP_200_OK
+                )
