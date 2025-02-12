@@ -750,6 +750,35 @@ export const ProjectAccounting = () => {
     </DropdownMenu>
   </Dropdown>
 
+  const UsersButton = () => (
+    <Dropdown 
+      isOpen={ isOpenUsers } 
+      className="me-2 rounded"
+      toggle={ () => setIsOpenUsers(!isOpenUsers) }
+      hidden={ listUsers[selectedProject].length == 0 }
+    >
+      <DropdownToggle caret>
+        { usersButtonText }
+      </DropdownToggle>
+      <DropdownMenu>
+        {
+          listUsers[selectedProject].map((user) => 
+            <DropdownItem key={ user } toggle={ false }>
+              <Input
+                type="checkbox"
+                className="mr-2"
+                checked={ subsetUsers.indexOf(user) >= 0 }
+                onClick={ () => onUserSelect(user) }
+              />
+              <Label check>{ user }</Label>
+            </DropdownItem>
+          )
+        }
+      </DropdownMenu>
+    </Dropdown>
+
+  )
+
   if (data) {
     let groups = []
 
@@ -831,30 +860,7 @@ export const ProjectAccounting = () => {
               >
                 {
                   selectedProject in listUsers && listUsers[selectedProject].length > 0 &&
-                    <Dropdown 
-                      isOpen={ isOpenUsers } 
-                      className="me-2 rounded"
-                      toggle={ () => setIsOpenUsers(!isOpenUsers) }
-                    >
-                      <DropdownToggle caret>
-                        { usersButtonText }
-                      </DropdownToggle>
-                      <DropdownMenu>
-                        {
-                          listUsers[selectedProject].map((user) => 
-                            <DropdownItem key={ user } toggle={ false }>
-                              <Input
-                                type="checkbox"
-                                className="mr-2"
-                                checked={ subsetUsers.indexOf(user) >= 0 }
-                                onClick={ () => onUserSelect(user) }
-                              />
-                              <Label check>{ user }</Label>
-                            </DropdownItem>
-                          )
-                        }
-                      </DropdownMenu>
-                    </Dropdown>
+                    <UsersButton />
                 }
                 { projectButton }
               </ButtonGroup>
@@ -890,30 +896,7 @@ export const ProjectAccounting = () => {
                 >
                   { showCumulative ? monthlyDisplay : cumulativeDisplay }
                 </Button>
-                <Dropdown 
-                  isOpen={ isOpenUsers } 
-                  className="me-2 rounded"
-                  toggle={ () => setIsOpenUsers(!isOpenUsers) }
-                >
-                  <DropdownToggle caret>
-                    { usersButtonText }
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {
-                      listUsers[selectedProject].map((user) => 
-                        <DropdownItem key={ user } toggle={ false }>
-                          <Input
-                            type="checkbox"
-                            className="mr-2"
-                            checked={ subsetUsers.indexOf(user) >= 0 }
-                            onClick={ () => onUserSelect(user) }
-                          />
-                          <Label check>{ user }</Label>
-                        </DropdownItem>
-                      )
-                    }
-                  </DropdownMenu>
-                </Dropdown>
+                <UsersButton />
                 { projectButton }
               </ButtonGroup>
             </PageTitle>
