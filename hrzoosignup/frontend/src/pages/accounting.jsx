@@ -347,67 +347,82 @@ export const MyAccounting = () => {
     if (status == "success" && data) {
       let supek_cpu = new Set()
       let supek_gpu = new Set()
-      let supek_years = new Set()
+      let _years = new Set()
       let padobran = new Set()
-      let padobran_years = new Set()
       let galaxy = new Set()
-      let galaxy_years = new Set()
       let jupyter_cpu = new Set()
       let jupyter_gpu = new Set()
-      let jupyter_years = new Set()
       if ("supek" in data) {
-        supek_cpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
-        supek_gpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
-        supek_cpu.delete("month")
-        supek_gpu.delete("month")
-        supek_years = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
-        if (subsetOfProjects.length > 0) {
-          setSupekCPUProjects([...supek_cpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
-          setSupekGPUProjects([...supek_gpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
-        } else {
-          setSupekCPUProjects(Array.from(supek_cpu).sort())
-          setSupekGPUProjects(Array.from(supek_gpu).sort())
+        if ("cpuh" in data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          supek_cpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          supek_cpu.delete("month")
+          _years = new Set([ ..._years, ...data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetOfProjects.length > 0) 
+            setSupekCPUProjects([...supek_cpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+
+          else
+            setSupekCPUProjects(Array.from(supek_cpu).sort())
+        }
+
+        if ("gpuh" in data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          supek_gpu = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+          supek_gpu.delete("month")
+          _years = new Set([ ..._years, ...data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetOfProjects.length > 0) 
+            setSupekGPUProjects([...supek_gpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+
+          else
+            setSupekGPUProjects(Array.from(supek_gpu).sort())
         }
       }
 
       if ("padobran" in data) {
         padobran = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
         padobran.delete("month")
-        padobran_years = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
-        if (subsetOfProjects.length > 0) {
+        _years = new Set([ ..._years, ...data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)) ])
+        if (subsetOfProjects.length > 0) 
           setPadobranProjects([...padobran].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
-        } else {
+
+        else
           setPadobranProjects(Array.from(padobran).sort())
-        }
       }
 
       if ("galaxy" in data) {
         galaxy = new Set(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
         galaxy.delete("month")
-        galaxy_years = new Set(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
-        if (subsetOfProjects.length > 0) {
+        _years = new Set([ ..._years, ...data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)) ])
+        if (subsetOfProjects.length > 0) 
           setGalaxyProjects([...galaxy].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
-        } else {
+
+        else
           setGalaxyProjects(Array.from(galaxy).sort())
-        }
       }
 
       if ("jupyter" in data) {
-        jupyter_cpu = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
-        jupyter_gpu = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
-        jupyter_cpu.delete("month")
-        jupyter_gpu.delete("month")
-        galaxy_years = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)))
-        if (subsetOfProjects.length > 0) {
-          setJupyterCPUProjects([...jupyter_cpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
-          setJupyterGPUProjects([...jupyter_gpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
-        } else {
-          setJupyterCPUProjects(Array.from(jupyter_cpu).sort())
-          setJupyterGPUProjects(Array.from(jupyter_gpu).sort())
+        if ("cpuh" in data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          jupyter_cpu = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          jupyter_cpu.delete("month")
+          _years = new Set([ ..._years, ...data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetOfProjects.length > 0)
+            setJupyterCPUProjects([...jupyter_cpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+
+          else
+            setJupyterCPUProjects(Array.from(jupyter_cpu).sort())
+        }
+
+        if ("gpuh" in data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          jupyter_gpu = new Set(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+          jupyter_gpu.delete("month")
+          _years = new Set([ ..._years, ...data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetOfProjects.length > 0) 
+            setJupyterGPUProjects([...jupyter_gpu].filter(proj => subsetOfProjects.indexOf(proj) >= 0))
+
+          else
+            setJupyterGPUProjects(Array.from(jupyter_gpu).sort())
         }
       }
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran, ...galaxy, ...jupyter_cpu, ...jupyter_gpu])).sort())
-      setYears(Array.from(new Set([...supek_years, ...padobran_years, ...galaxy_years, ...jupyter_years])).sort())
+      setYears(Array.from(_years))
     }
   }, [status, data, subsetOfProjects, showCumulative])
 
