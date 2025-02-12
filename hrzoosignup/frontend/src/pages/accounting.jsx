@@ -17,7 +17,9 @@ import {
   DropdownItem, 
   DropdownToggle, 
   Nav,
-  NavItem
+  NavItem,
+  CardBody,
+  Spinner
 } from "reactstrap";
 import { useNavigate, NavLink } from 'react-router-dom';
 import { PageTitle } from 'Components/PageTitle';
@@ -96,7 +98,7 @@ const Navigation = () => {
   const activeBgColor = '#6C757D';
 
   return (
-    <Nav tabs id="hzsi-navlinks" className="rounded d-flex sticky-top">
+    <Nav tabs id="hzsi-navlinks" className="d-flex sticky-top">
       <NavItem key='project-accounting' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
@@ -202,7 +204,8 @@ const UsageBarChart = ({ data, entities, listEntities, stackId }) => {
               stackId={ stackId }
               label={{
                 position: "top",
-                fontSize: 10
+                fontSize: 14,
+                fill: "#666"
               }}
               fill={ getColor(item, listEntities) }
             />
@@ -297,6 +300,35 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, s
     </Dropdown>
   )
 }
+
+
+const AccountingSpinner = ({ pageTitle }) => (
+  <>
+    <PageTitle pageTitle={ pageTitle } />
+    {
+      IsLead() && 
+        <Row className="mb-3">
+          <Col md={ 4 }>
+            <Navigation />
+          </Col>
+        </Row>
+    }
+    <CardBody className="mb-1 bg-white">
+      <Row>
+        <Col className="d-flex justify-content-center align-items-center p-5">
+          <Spinner
+            style={{
+              height: '25rem',
+              width: '25rem',
+              borderColor: '#b04c46',
+              borderRightColor: 'transparent'
+            }}
+          />
+        </Col>
+      </Row>
+    </CardBody>
+  </>
+)
 
 
 export const MyAccounting = () => {
@@ -439,203 +471,209 @@ export const MyAccounting = () => {
     )
   }
 
-  if (data) {
-    let groups = []
+  if (status === "success") {
+    if (data) {
+      let groups = []
 
-    if (supekCPUProjects.length > 0)
-      groups.push(
-        <Row>
-          <h4>Supek CPUH</h4>
-          <UsageBarChart
-            data={
-              "supek" in data ? 
-                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
-              : 
-                [] 
-            }
-            entities={ supekCPUProjects }
-            listEntities={ listProjects }
-            stackId="supek-cpuh"
-          />
-        </Row>
-      )
-
-    if (supekGPUProjects.length > 0)
-      groups.push(
-        <Row>
-          <h4>Supek GPUH</h4>
-          <UsageBarChart
-            data={ 
-              "supek" in data ? 
-                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
-              : 
-                [] 
-            }
-            entities={ supekGPUProjects }
-            listEntities={ listProjects }
-            stackId="supek-gpuh"
-          />
-        </Row>
-      )
-
-    if (padobranProjects.length > 0) 
-      groups.push(
-        <Row>
-          <h4>Padobran CPUH</h4>
-          <UsageBarChart
-            data={ 
-              "padobran" in data ? 
-                filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
-              : 
-                [] 
-            }
-            entities={ padobranProjects }
-            listEntities={ listProjects }
-            stackId="padobran"
-          />
-        </Row>
-      )
-
-    if (galaxyProjects.length > 0)
-      groups.push(
-        <Row>
-          <h4>Galaxy CPUH</h4>
-          <UsageBarChart
-            data={ 
-              "galaxy" in data ? 
-                filterTime(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
-              : 
-              [] 
-            }
-            entities={ galaxyProjects }
-            listEntities={ listProjects }
-            stackId="galaxy"
-          />
-        </Row>
-      )
-
-    if (jupyterCPUProjects.length > 0)
-      groups.push(
-        <Row>
-          <h4>Jupyter CPUH</h4>
-          <UsageBarChart
-            data={ 
-              "jupyter" in data ? 
-                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange)
-              : 
-                [] 
-            }
-            entities={ jupyterCPUProjects }
-            listEntities={ listProjects }
-            stackId="jupyter-cpuh"
-          />
-        </Row>
-      )
-
-    if (jupyterGPUProjects.length > 0)
-      groups.push(
-        <Row>
-          <h4>Jupyter GPUH</h4>
-          <UsageBarChart
-            data={ 
-              "jupyter" in data ? 
-                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
-              : 
-                [] 
-            }
-            entities={ jupyterGPUProjects }
-            listEntities={ listProjects }
-            stackId="jupyter-gpuh"
-          />
-        </Row>
-      )
-
-    if (supekCPUProjects.length == 0 && supekGPUProjects.length == 0 && padobranProjects.length == 0 && galaxyProjects.length == 0 && jupyterCPUProjects.length == 0 && jupyterGPUProjects.length == 0)
-      return (
-        <>
+      if (supekCPUProjects.length > 0)
+        groups.push(
           <Row>
-            <PageTitle pageTitle={ pageTitle } />
+            <h4>Supek CPUH</h4>
+            <UsageBarChart
+              data={
+                "supek" in data ? 
+                  filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
+                : 
+                  [] 
+              }
+              entities={ supekCPUProjects }
+              listEntities={ listProjects }
+              stackId="supek-cpuh"
+            />
           </Row>
-          {
-            IsLead() && 
+        )
+
+      if (supekGPUProjects.length > 0)
+        groups.push(
+          <Row>
+            <h4>Supek GPUH</h4>
+            <UsageBarChart
+              data={ 
+                "supek" in data ? 
+                  filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
+                : 
+                  [] 
+              }
+              entities={ supekGPUProjects }
+              listEntities={ listProjects }
+              stackId="supek-gpuh"
+            />
+          </Row>
+        )
+
+      if (padobranProjects.length > 0) 
+        groups.push(
+          <Row>
+            <h4>Padobran CPUH</h4>
+            <UsageBarChart
+              data={ 
+                "padobran" in data ? 
+                  filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
+                : 
+                  [] 
+              }
+              entities={ padobranProjects }
+              listEntities={ listProjects }
+              stackId="padobran"
+            />
+          </Row>
+        )
+
+      if (galaxyProjects.length > 0)
+        groups.push(
+          <Row>
+            <h4>Galaxy CPUH</h4>
+            <UsageBarChart
+              data={ 
+                "galaxy" in data ? 
+                  filterTime(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
+                : 
+                [] 
+              }
+              entities={ galaxyProjects }
+              listEntities={ listProjects }
+              stackId="galaxy"
+            />
+          </Row>
+        )
+
+      if (jupyterCPUProjects.length > 0)
+        groups.push(
+          <Row>
+            <h4>Jupyter CPUH</h4>
+            <UsageBarChart
+              data={ 
+                "jupyter" in data ? 
+                  filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange)
+                : 
+                  [] 
+              }
+              entities={ jupyterCPUProjects }
+              listEntities={ listProjects }
+              stackId="jupyter-cpuh"
+            />
+          </Row>
+        )
+
+      if (jupyterGPUProjects.length > 0)
+        groups.push(
+          <Row>
+            <h4>Jupyter GPUH</h4>
+            <UsageBarChart
+              data={ 
+                "jupyter" in data ? 
+                  filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
+                : 
+                  [] 
+              }
+              entities={ jupyterGPUProjects }
+              listEntities={ listProjects }
+              stackId="jupyter-gpuh"
+            />
+          </Row>
+        )
+
+      if (supekCPUProjects.length == 0 && supekGPUProjects.length == 0 && padobranProjects.length == 0 && galaxyProjects.length == 0 && jupyterCPUProjects.length == 0 && jupyterGPUProjects.length == 0)
+        return (
+          <>
+            <Row>
+              <PageTitle pageTitle={ pageTitle } />
+            </Row>
+            {
+              IsLead() && 
+                <Row className="mb-3">
+                  <Col md={ 4 }>
+                    <Navigation />
+                  </Col>
+                </Row>
+            }
+            <Row className="mt-3 mb-3">
+              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+                <FormattedMessage
+                  description="myaccounting-emptygraphs"
+                  defaultMessage="Nema zabilježenog iskorištenja resursa"
+                />
+              </Col>
+            </Row>
+          </>
+        )
+      else
+        return (
+          <>
+            <Row>
+              <PageTitle pageTitle={ pageTitle }>
+                <ButtonGroup
+                  className="d-flex align-items-center justify-content-between"
+                >
+                  <Button
+                    color="secondary"
+                    className="me-2 rounded"
+                    onClick={ () => setShowCumulative(!showCumulative) }
+                  >
+                    { showCumulative ? monthlyDisplay : cumulativeDisplay }
+                  </Button>
+                  <SelectYearButton
+                    years={ years }
+                    isOpenYear={ isOpenYear }
+                    setIsOpenYear={ setIsOpenYear }
+                    setSelectedYear={ setSelectedYear }
+                    setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                  />
+                  <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
+                    <DropdownToggle caret>
+                      { projectsButtonText }
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      {
+                        listProjects.map((project) => 
+                          <DropdownItem key={ project } toggle={ false }>
+                            <Input 
+                              type="checkbox" 
+                              className="mr-1" 
+                              checked={ subsetOfProjects.indexOf(project) >= 0 } 
+                              onClick={ () => onProjectSelect(project) }
+                            />
+                            <Label check>{ project }</Label>
+                          </DropdownItem>
+                        )
+                      }
+                    </DropdownMenu>
+                  </Dropdown>
+                </ButtonGroup>
+              </PageTitle>
+            </Row>
+            {
+              IsLead() && 
               <Row className="mb-3">
-                <Col md={ 3 }>
+                <Col md={ 4 }>
                   <Navigation />
                 </Col>
               </Row>
-          }
-          <Row className="mt-3 mb-3">
-            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-              <FormattedMessage
-                description="myaccounting-emptygraphs"
-                defaultMessage="Nema zabilježenog iskorištenja resursa"
-              />
-            </Col>
-          </Row>
-        </>
-      )
-    else
-      return (
-        <>
-          <Row>
-            <PageTitle pageTitle={ pageTitle }>
-              <ButtonGroup
-                className="d-flex align-items-center justify-content-between"
-              >
-                <Button
-                  color="secondary"
-                  className="me-2 rounded"
-                  onClick={ () => setShowCumulative(!showCumulative) }
-                >
-                  { showCumulative ? monthlyDisplay : cumulativeDisplay }
-                </Button>
-                <SelectYearButton
-                  years={ years }
-                  isOpenYear={ isOpenYear }
-                  setIsOpenYear={ setIsOpenYear }
-                  setSelectedYear={ setSelectedYear }
-                  setUseDefaultTimeRange={ setUseDefaultTimeRange }
-                />
-                <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
-                  <DropdownToggle caret>
-                    { projectsButtonText }
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {
-                      listProjects.map((project) => 
-                        <DropdownItem key={ project } toggle={ false }>
-                          <Input 
-                            type="checkbox" 
-                            className="mr-1" 
-                            checked={ subsetOfProjects.indexOf(project) >= 0 } 
-                            onClick={ () => onProjectSelect(project) }
-                          />
-                          <Label check>{ project }</Label>
-                        </DropdownItem>
-                      )
-                    }
-                  </DropdownMenu>
-                </Dropdown>
-              </ButtonGroup>
-            </PageTitle>
-          </Row>
-          {
-            IsLead() && 
-            <Row className="mb-3">
-              <Col md={ 3 }>
-                <Navigation />
-              </Col>
-            </Row>
-          }
-          {
-            groups.map(row => row)
-          }
-          <Legend 
-            entities={ listProjects }
-            subset={ subsetOfProjects }
-          />
-        </>
-      )
+            }
+            {
+              groups.map(row => row)
+            }
+            <Legend 
+              entities={ listProjects }
+              subset={ subsetOfProjects }
+            />
+          </>
+        )
+    }
+  } else {
+    return (
+      <AccountingSpinner pageTitle={ pageTitle } />
+    )
   }
 }
 
@@ -850,161 +888,166 @@ export const ProjectAccounting = () => {
 
   )
 
-  if (data) {
-    let groups = []
+  if (status === "success") {
+    if (data) {
+      let groups = []
 
-    if (selectedProject in supekCPU && supekCPU[selectedProject].length > 0)
-      groups.push(
-        <Row>
-          <h4>Supek CPUH</h4>
-          <UsageBarChart
-            data={ 
-              filterTime(data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange)
-            }
-            entities={ supekCPU[selectedProject] }
-            listEntities={ listUsers[selectedProject] }
-            stackId="supek-cpuh"
-          />
-        </Row>
-      )
-
-    if (selectedProject in supekGPU && supekGPU[selectedProject].length > 0)
-      groups.push(
-        <Row>
-          <h4>Supek GPUH</h4>
-          <UsageBarChart
-            data={ filterTime(data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) }
-            entities={ supekGPU[selectedProject] }
-            listEntities={ listUsers[selectedProject] }
-            stackId="supek-gpuh"
-          />
-        </Row>
-      )
-
-    if (selectedProject in padobran && padobran[selectedProject].length > 0)
-      groups.push(
-        <Row>
-          <h4>Padobran</h4>
-          <UsageBarChart
-            data={ filterTime(data[selectedProject]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) }
-            entities={ padobran[selectedProject] }
-            listEntities={ listUsers[selectedProject] }
-            stackId="padobran"
-          />
-        </Row>
-      )
-
-    if (selectedProject in vrancicCPU && vrancicCPU[selectedProject].length > 0)
-      groups.push(
-        <Row>
-          <h4>Vrančić CPUH</h4>
-          <UsageBarChart
-            data={ filterTime(data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) }
-            entities={ vrancicCPU[selectedProject] }
-            listEntities={ listUsers[selectedProject] }
-            stackId="vrancic-cpuh"
-          />
-        </Row>
-      )
-
-    if (selectedProject in vrancicGPU && vrancicGPU[selectedProject].length > 0)
-      groups.push(
-        <Row>
-          <h4>Vrančić GPUH</h4>
-          <UsageBarChart
-            data={ filterTime(data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) }
-            entities={ vrancicGPU[selectedProject] }
-            listEntities={ listUsers[selectedProject] }
-            stackId="vrancic-gpuh"
-          />
-        </Row>
-      )
-
-    if ( groups.length == 0 )
-      return (
-        <>
+      if (selectedProject in supekCPU && supekCPU[selectedProject].length > 0)
+        groups.push(
           <Row>
-            <PageTitle pageTitle={ pageTitle }>
-              <ButtonGroup
-                className="d-flex align-items-center justify-content-between"
-              >
-                {
-                  selectedProject in listUsers && listUsers[selectedProject].length > 0 &&
-                    <UsersButton />
-                }
-                <SelectYearButton
-                  years={ years }
-                  isOpenYear={ isOpenYear }
-                  setIsOpenYear={ setIsOpenYear }
-                  setSelectedYear={ setSelectedYear }
-                  setUseDefaultTimeRange={ setUseDefaultTimeRange }
-                />
-                <ProjectButton />
-              </ButtonGroup>
-            </PageTitle>
+            <h4>Supek CPUH</h4>
+            <UsageBarChart
+              data={ 
+                filterTime(data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange)
+              }
+              entities={ supekCPU[selectedProject] }
+              listEntities={ listUsers[selectedProject] }
+              stackId="supek-cpuh"
+            />
           </Row>
-          {
-            IsLead() && 
-              <Row className="mb-3">
-                <Col md={ 3 }>
-                  <Navigation />
-                </Col>
-              </Row>
-          }
-          <Row className="mt-3 mb-3">
-            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-              <FormattedMessage
-                description="myaccounting-emptygraphs"
-                defaultMessage="Nema zabilježenog iskorištenja resursa"
-              />
-            </Col>
-          </Row>
-        </>
-      )
+        )
 
-    else
-      return (
-        <>
+      if (selectedProject in supekGPU && supekGPU[selectedProject].length > 0)
+        groups.push(
           <Row>
-            <PageTitle pageTitle={ pageTitle }>
-              <ButtonGroup
-                className="d-flex align-items-center justify-content-between"
-              >
-                <Button
-                  color="secondary"
-                  className="me-2 rounded"
-                  onClick={ () => setShowCumulative(!showCumulative) }
+            <h4>Supek GPUH</h4>
+            <UsageBarChart
+              data={ filterTime(data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) }
+              entities={ supekGPU[selectedProject] }
+              listEntities={ listUsers[selectedProject] }
+              stackId="supek-gpuh"
+            />
+          </Row>
+        )
+
+      if (selectedProject in padobran && padobran[selectedProject].length > 0)
+        groups.push(
+          <Row>
+            <h4>Padobran</h4>
+            <UsageBarChart
+              data={ filterTime(data[selectedProject]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) }
+              entities={ padobran[selectedProject] }
+              listEntities={ listUsers[selectedProject] }
+              stackId="padobran"
+            />
+          </Row>
+        )
+
+      if (selectedProject in vrancicCPU && vrancicCPU[selectedProject].length > 0)
+        groups.push(
+          <Row>
+            <h4>Vrančić CPUH</h4>
+            <UsageBarChart
+              data={ filterTime(data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) }
+              entities={ vrancicCPU[selectedProject] }
+              listEntities={ listUsers[selectedProject] }
+              stackId="vrancic-cpuh"
+            />
+          </Row>
+        )
+
+      if (selectedProject in vrancicGPU && vrancicGPU[selectedProject].length > 0)
+        groups.push(
+          <Row>
+            <h4>Vrančić GPUH</h4>
+            <UsageBarChart
+              data={ filterTime(data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) }
+              entities={ vrancicGPU[selectedProject] }
+              listEntities={ listUsers[selectedProject] }
+              stackId="vrancic-gpuh"
+            />
+          </Row>
+        )
+
+      if ( groups.length == 0 )
+        return (
+          <>
+            <Row>
+              <PageTitle pageTitle={ pageTitle }>
+                <ButtonGroup
+                  className="d-flex align-items-center justify-content-between"
                 >
-                  { showCumulative ? monthlyDisplay : cumulativeDisplay }
-                </Button>
-                <UsersButton />
-                <SelectYearButton
-                  years={ years }
-                  isOpenYear={ isOpenYear }
-                  setIsOpenYear={ setIsOpenYear }
-                  setSelectedYear={ setSelectedYear }
-                  setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                  {
+                    selectedProject in listUsers && listUsers[selectedProject].length > 0 &&
+                      <UsersButton />
+                  }
+                  <SelectYearButton
+                    years={ years }
+                    isOpenYear={ isOpenYear }
+                    setIsOpenYear={ setIsOpenYear }
+                    setSelectedYear={ setSelectedYear }
+                    setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                  />
+                  <ProjectButton />
+                </ButtonGroup>
+              </PageTitle>
+            </Row>
+            {
+              IsLead() && 
+                <Row className="mb-3">
+                  <Col md={ 4 }>
+                    <Navigation />
+                  </Col>
+                </Row>
+            }
+            <Row className="mt-3 mb-3">
+              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+                <FormattedMessage
+                  description="myaccounting-emptygraphs"
+                  defaultMessage="Nema zabilježenog iskorištenja resursa"
                 />
-                <ProjectButton />
-              </ButtonGroup>
-            </PageTitle>
-          </Row>
-          {
-            IsLead() && 
-              <Row className="mb-3">
-                <Col md={ 3 }>
-                  <Navigation />
-                </Col>
-              </Row>
-          }
-          {
-            groups.map(row => row)
-          }
-          <Legend
-            entities={ listUsers[selectedProject] }
-            subset={ subsetUsers }
-          />
-        </>
-      )
-  }
+              </Col>
+            </Row>
+          </>
+        )
+
+      else
+        return (
+          <>
+            <Row>
+              <PageTitle pageTitle={ pageTitle }>
+                <ButtonGroup
+                  className="d-flex align-items-center justify-content-between"
+                >
+                  <Button
+                    color="secondary"
+                    className="me-2 rounded"
+                    onClick={ () => setShowCumulative(!showCumulative) }
+                  >
+                    { showCumulative ? monthlyDisplay : cumulativeDisplay }
+                  </Button>
+                  <UsersButton />
+                  <SelectYearButton
+                    years={ years }
+                    isOpenYear={ isOpenYear }
+                    setIsOpenYear={ setIsOpenYear }
+                    setSelectedYear={ setSelectedYear }
+                    setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                  />
+                  <ProjectButton />
+                </ButtonGroup>
+              </PageTitle>
+            </Row>
+            {
+              IsLead() && 
+                <Row className="mb-3">
+                  <Col md={ 4 }>
+                    <Navigation />
+                  </Col>
+                </Row>
+            }
+            {
+              groups.map(row => row)
+            }
+            <Legend
+              entities={ listUsers[selectedProject] }
+              subset={ subsetUsers }
+            />
+          </>
+        )
+    }
+  } else
+    return (
+      <AccountingSpinner pageTitle={ pageTitle } />
+    )
 }
