@@ -195,15 +195,15 @@ const UsageBarChart = ({ data, entities, listEntities, stackId }) => {
       <YAxis padding={{ top: 10 }} />
       {
         entities.map((item, index) => 
-          (index === item.length - 1) ?
+          (index === entities.length - 1) ?
             <Bar 
               key={ item } 
+              dataKey={ item } 
+              stackId={ stackId }
               label={{
                 position: "top",
                 fontSize: 10
               }}
-              dataKey={ item } 
-              stackId={ stackId }
               fill={ getColor(item, listEntities) }
             />
           :
