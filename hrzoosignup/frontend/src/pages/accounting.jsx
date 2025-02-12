@@ -96,7 +96,7 @@ const Navigation = () => {
   const activeBgColor = '#6C757D';
 
   return (
-    <Nav tabs id="hzsi-navlinks" className="rounded d-flex sticky-top">
+    <Nav tabs id="hzsi-navlinks" className="d-flex sticky-top">
       <NavItem key='project-accounting' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
@@ -559,7 +559,7 @@ export const MyAccounting = () => {
           {
             IsLead() && 
               <Row className="mb-3">
-                <Col md={ 3 }>
+                <Col md={ 4 }>
                   <Navigation />
                 </Col>
               </Row>
@@ -622,7 +622,7 @@ export const MyAccounting = () => {
           {
             IsLead() && 
             <Row className="mb-3">
-              <Col md={ 3 }>
+              <Col md={ 4 }>
                 <Navigation />
               </Col>
             </Row>
@@ -946,7 +946,7 @@ export const ProjectAccounting = () => {
           {
             IsLead() && 
               <Row className="mb-3">
-                <Col md={ 3 }>
+                <Col md={ 4 }>
                   <Navigation />
                 </Col>
               </Row>
@@ -992,7 +992,7 @@ export const ProjectAccounting = () => {
           {
             IsLead() && 
               <Row className="mb-3">
-                <Col md={ 3 }>
+                <Col md={ 4 }>
                   <Navigation />
                 </Col>
               </Row>
