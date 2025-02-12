@@ -93,7 +93,7 @@ const IsLead = () => {
 
 
 const Navigation = () => {
-  const activeBgColor = '#b04c46';
+  const activeBgColor = '#6C757D';
 
   return (
     <Nav tabs id="hzsi-navlinks" className="rounded d-flex sticky-top">
@@ -553,9 +553,16 @@ export const MyAccounting = () => {
     if (supekCPUProjects.length == 0 && supekGPUProjects.length == 0 && padobranProjects.length == 0 && galaxyProjects.length == 0 && jupyterCPUProjects.length == 0 && jupyterGPUProjects.length == 0)
       return (
         <>
+          <Row>
+            <PageTitle pageTitle={ pageTitle } />
+          </Row>
           {
             IsLead() && 
-              <Navigation />
+              <Row className="mb-3">
+                <Col md={ 3 }>
+                  <Navigation />
+                </Col>
+              </Row>
           }
           <Row className="mt-3 mb-3">
             <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
@@ -570,9 +577,6 @@ export const MyAccounting = () => {
     else
       return (
         <>
-          {
-            IsLead() && <Navigation />
-          }
           <Row>
             <PageTitle pageTitle={ pageTitle }>
               <ButtonGroup
@@ -615,10 +619,14 @@ export const MyAccounting = () => {
               </ButtonGroup>
             </PageTitle>
           </Row>
-          <Row>
-          </Row>
-          <Row className="mt-3">
-          </Row>
+          {
+            IsLead() && 
+            <Row className="mb-3">
+              <Col md={ 3 }>
+                <Navigation />
+              </Col>
+            </Row>
+          }
           {
             groups.map(row => row)
           }
@@ -725,7 +733,7 @@ export const ProjectAccounting = () => {
           }
         }
         if (project in data && "padobran" in data[project]) {
-          _padobranUsers = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          _padobranUsers = new Set(data[project]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
           _years = new Set([..._years, ...data[project]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3))])
           _padobranUsers.delete("month")
           if (subsetUsers.length > 0)
@@ -915,9 +923,6 @@ export const ProjectAccounting = () => {
     if ( groups.length == 0 )
       return (
         <>
-          {
-            IsLead() && <Navigation />
-          }
           <Row>
             <PageTitle pageTitle={ pageTitle }>
               <ButtonGroup
@@ -938,6 +943,14 @@ export const ProjectAccounting = () => {
               </ButtonGroup>
             </PageTitle>
           </Row>
+          {
+            IsLead() && 
+              <Row className="mb-3">
+                <Col md={ 3 }>
+                  <Navigation />
+                </Col>
+              </Row>
+          }
           <Row className="mt-3 mb-3">
             <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
               <FormattedMessage
@@ -952,10 +965,6 @@ export const ProjectAccounting = () => {
     else
       return (
         <>
-          {
-            IsLead() && 
-              <Navigation />
-          }
           <Row>
             <PageTitle pageTitle={ pageTitle }>
               <ButtonGroup
@@ -980,6 +989,14 @@ export const ProjectAccounting = () => {
               </ButtonGroup>
             </PageTitle>
           </Row>
+          {
+            IsLead() && 
+              <Row className="mb-3">
+                <Col md={ 3 }>
+                  <Navigation />
+                </Col>
+              </Row>
+          }
           {
             groups.map(row => row)
           }
