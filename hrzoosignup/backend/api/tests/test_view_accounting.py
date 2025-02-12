@@ -183,28 +183,6 @@ class ResourceUsageTests(TestCase):
         response = self.view(request)
         self.assertEqual(
             response.data, {
-                "padobran": {
-                    "cumulative": {
-                        "cpuh": [
-                            {
-                                "month": "07/2024"
-                            },
-                            {
-                                "month": "08/2024"
-                            }
-                        ]
-                    },
-                    "monthly": {
-                        "cpuh": [
-                            {
-                                "month": "07/2024"
-                            },
-                            {
-                                "month": "08/2024"
-                            }
-                        ]
-                    }
-                },
                 "jupyter": {
                     "cumulative": {
                         "cpuh": [
@@ -664,32 +642,6 @@ class ProjectUsageTests(TestCase):
                                     "month": "08/2024",
                                     "total_project_usage": 1025
                                 }
-                            ],
-                            "gpuh": [
-                                {
-                                    "month": "01/2024"
-                                },
-                                {
-                                    "month": "02/2024"
-                                },
-                                {
-                                    "month": "03/2024"
-                                },
-                                {
-                                    "month": "04/2024"
-                                },
-                                {
-                                    "month": "05/2024"
-                                },
-                                {
-                                    "month": "06/2024"
-                                },
-                                {
-                                    "month": "07/2024"
-                                },
-                                {
-                                    "month": "08/2024"
-                                }
                             ]
                         },
                         "monthly": {
@@ -712,32 +664,6 @@ class ProjectUsageTests(TestCase):
                                 {
                                     "month": "06/2024",
                                     "total_project_usage": 1025
-                                },
-                                {
-                                    "month": "07/2024"
-                                },
-                                {
-                                    "month": "08/2024"
-                                }
-                            ],
-                            "gpuh": [
-                                {
-                                    "month": "01/2024"
-                                },
-                                {
-                                    "month": "02/2024"
-                                },
-                                {
-                                    "month": "03/2024"
-                                },
-                                {
-                                    "month": "04/2024"
-                                },
-                                {
-                                    "month": "05/2024"
-                                },
-                                {
-                                    "month": "06/2024"
                                 },
                                 {
                                     "month": "07/2024"

@@ -49,6 +49,18 @@ def _is_user_lead(user):
     )) > 0
 
 
+def _is_usage_empty(usage):
+    usage_keys = set()
+    for item in usage:
+        usage_keys.update(list(item.keys()))
+
+    if len(usage_keys) == 1 and usage_keys == {"month"}:
+        return True
+
+    else:
+        return False
+
+
 def usage4user(username):
     todays_date = date_today()
 
@@ -204,30 +216,53 @@ def usage4user(username):
                     gpuh_monthly.append(gpu_monthly)
 
             if resource == "padobran":
-                output.update({
-                    resource: {
-                        "cumulative": {
-                            "cpuh": cpuh_cumulative
-                        },
-                        "monthly": {
-                            "cpuh": cpuh_monthly
+                if not _is_usage_empty(cpuh_monthly):
+                    output.update({
+                        resource: {
+                            "cumulative": {
+                                "cpuh": cpuh_cumulative
+                            },
+                            "monthly": {
+                                "cpuh": cpuh_monthly
+                            }
                         }
-                    }
-                })
+                    })
 
             else:
-                output.update({
-                    resource: {
-                        "cumulative": {
-                            "cpuh": cpuh_cumulative,
-                            "gpuh": gpuh_cumulative
-                        },
-                        "monthly": {
-                            "cpuh": cpuh_monthly,
-                            "gpuh": gpuh_monthly
+                if not _is_usage_empty(cpuh_monthly):
+                    output.update({
+                        resource: {
+                            "cumulative": {
+                                "cpuh": cpuh_cumulative,
+                                "gpuh": gpuh_cumulative
+                            },
+                            "monthly": {
+                                "cpuh": cpuh_monthly,
+                                "gpuh": gpuh_monthly
+                            }
                         }
-                    }
-                })
+                    })
+
+                if not _is_usage_empty(gpuh_monthly):
+                    if resource in output:
+                        output[resource]["cumulative"].update({
+                            "gpuh": gpuh_cumulative
+                        })
+                        output[resource]["monthly"].update({
+                            "gpuh": gpuh_monthly
+                        })
+
+                    else:
+                        output.update({
+                            resource: {
+                                "cumulative": {
+                                    "gpuh": gpuh_cumulative
+                                },
+                                "monthly": {
+                                    "gpuh": gpuh_monthly
+                                }
+                            }
+                        })
 
     return output
 
@@ -426,30 +461,51 @@ def usage4project(lead_username):
                         gpuh_monthly.append(gpu_monthly)
 
                     if resource == "padobran":
-                        project_usage.update({
-                            resource: {
-                                "cumulative": {
-                                    "cpuh": cpuh_cumulative
-                                },
-                                "monthly": {
-                                    "cpuh": cpuh_monthly
+                        if not _is_usage_empty(cpuh_monthly):
+                            project_usage.update({
+                                resource: {
+                                    "cumulative": {
+                                        "cpuh": cpuh_cumulative
+                                    },
+                                    "monthly": {
+                                        "cpuh": cpuh_monthly
+                                    }
                                 }
-                            }
-                        })
+                            })
 
                     else:
-                        project_usage.update({
-                            resource: {
-                                "cumulative": {
-                                    "cpuh": cpuh_cumulative,
-                                    "gpuh": gpuh_cumulative
-                                },
-                                "monthly": {
-                                    "cpuh": cpuh_monthly,
-                                    "gpuh": gpuh_monthly
+                        if not _is_usage_empty(cpuh_monthly):
+                            project_usage.update({
+                                resource: {
+                                    "cumulative": {
+                                        "cpuh": cpuh_cumulative
+                                    },
+                                    "monthly": {
+                                        "cpuh": cpuh_monthly
+                                    }
                                 }
-                            }
-                        })
+                            })
+
+                        if not _is_usage_empty(gpuh_monthly):
+                            if resource in project_usage:
+                                project_usage[resource]["cumulative"].update({
+                                    "gpuh": gpuh_cumulative
+                                })
+                                project_usage[resource]["monthly"].update({
+                                    "gpuh": gpuh_monthly
+                                })
+
+                            else:
+                                project_usage.update({
+                                    resource: {
+                                        "cumulative": {
+                                            "gpuh": gpuh_cumulative
+                                        },
+                                        "monthly": {
+                                            "gpuh": gpuh_monthly
+                                        }
+                                    }
+                                })
 
             if project_usage:
                 output.update({project.identifier: project_usage})
