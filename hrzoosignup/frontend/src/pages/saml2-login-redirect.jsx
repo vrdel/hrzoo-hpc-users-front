@@ -5,7 +5,8 @@ import {
   defaultUnAuthnRedirect,
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff,
-  defaultAuthnRedirectWithAccounting
+  defaultAuthnRedirectWithAccounting,
+  defaultAuthnRedirectWithAccountingLead
 } from 'Config/default-redirect';
 import { url_ui_prefix } from 'Config/general';
 import { IntlContext } from 'Components/IntlContextProvider';
@@ -29,7 +30,10 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
         || sessionData.userdetails.is_superuser
         ? defaultAuthnRedirectStaff
           : sessionData.config.enable_accounting 
-            ? defaultAuthnRedirectWithAccounting 
+          ? sessionData.userdetails.userproject_set.map(item => item.role.name).includes("lead") ?
+            defaultAuthnRedirectWithAccountingLead
+            :
+             defaultAuthnRedirectWithAccounting 
               : defaultAuthnRedirect
       let wantVisit = JSON.parse(localStorage.getItem('referrer'))
       if (wantVisit && wantVisit.length > 0) {

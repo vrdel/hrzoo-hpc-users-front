@@ -699,6 +699,10 @@
     "defaultMessage": "Person:",
     "description": "software-cardbody-person"
   },
+  "Dk3rrP": {
+    "defaultMessage": "Project leader view",
+    "description": "project-lead-accounting"
+  },
   "DqpQay": {
     "defaultMessage": "Type",
     "description": "myreq-list-type"
@@ -778,6 +782,10 @@
   "FVhGIC": {
     "defaultMessage": "Usage period:",
     "description": "researchselected-usageperiod"
+  },
+  "FViZGg": {
+    "defaultMessage": "Users",
+    "description": "myaccounting-users-button"
   },
   "FWFb50": {
     "defaultMessage": "Username",
@@ -1278,6 +1286,10 @@
   "STHLdY": {
     "defaultMessage": "Checkout",
     "description": "users-table-general-signoff"
+  },
+  "SjQeQO": {
+    "defaultMessage": "Project usage - {identifier}",
+    "description": "linktitle-manageprojects-change"
   },
   "T73nyd": {
     "defaultMessage": "Public key",
@@ -2286,6 +2298,10 @@
   "y+MIYq": {
     "defaultMessage": "Manager institution:",
     "description": "generalfields-leadinstitution"
+  },
+  "y2NmXZ": {
+    "defaultMessage": "Personal usage",
+    "description": "project-my-accounting"
   },
   "y4Tv/g": {
     "defaultMessage": "Change",

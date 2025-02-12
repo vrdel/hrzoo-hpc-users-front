@@ -24,7 +24,8 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { 
   defaultAuthnRedirect, 
   defaultAuthnRedirectStaff,
-  defaultAuthnRedirectWithAccounting
+  defaultAuthnRedirectWithAccounting,
+  defaultAuthnRedirectWithAccountingLead
 } from 'Config/default-redirect';
 import { useNavigate } from 'react-router-dom';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
@@ -51,7 +52,10 @@ const LoginPrivate = ({sessionData=undefined}) => {
         navigate(defaultAuthnRedirectStaff)
       else {
         if (sessionData.config.enable_accounting)
-          navigate(defaultAuthnRedirectWithAccounting)
+          if (sessionData.userdetails.userproject_set.map(item => item.role.name).includes("lead"))
+            navigate(defaultAuthnRedirectWithAccountingLead)
+          else
+            navigate(defaultAuthnRedirectWithAccounting)
         else
           navigate(defaultAuthnRedirect)
       }

@@ -86,7 +86,7 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Popis aplikacija dostupnih na klasteru',
         description: 'linktitle-software'
       }),
-    [url_ui_prefix + '/accounting']: intl.formatMessage({
+    [url_ui_prefix + '/my-accounting']: intl.formatMessage({
       defaultMessage: 'Iskorištenje resursa',
       description: "linktitle-accounting"
     }),
@@ -122,6 +122,18 @@ export function LinkTitles(loc, intl) {
       identifier = Array(decodeURIComponent(identifier[0]))
     return intl.formatMessage({
         defaultMessage: 'Pregledavanje projekta {identifier}',
+        description: 'linktitle-manageprojects-change'
+      },
+      {identifier}
+    ).join(' ')
+  }
+
+  if (loc.includes('/project-accounting/') && loc.match(/[%\w.\d-_]+$/)) {
+    let identifier = loc.match(/[%\w.\d-_]+$/)
+    if (identifier[0].includes('%'))
+      identifier = Array(decodeURIComponent(identifier[0]))
+    return intl.formatMessage({
+        defaultMessage: 'Iskorištenje resursa za projekt - {identifier}',
         description: 'linktitle-manageprojects-change'
       },
       {identifier}

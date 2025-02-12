@@ -699,6 +699,10 @@
     "defaultMessage": "Osoba:",
     "description": "software-cardbody-person"
   },
+  "Dk3rrP": {
+    "defaultMessage": "Pogled za voditelja",
+    "description": "project-lead-accounting"
+  },
   "DqpQay": {
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
@@ -778,6 +782,10 @@
   "FVhGIC": {
     "defaultMessage": "Period korištenja:",
     "description": "researchselected-usageperiod"
+  },
+  "FViZGg": {
+    "defaultMessage": "Korisnici",
+    "description": "myaccounting-users-button"
   },
   "FWFb50": {
     "defaultMessage": "Korisničko ime",
@@ -1278,6 +1286,10 @@
   "STHLdY": {
     "defaultMessage": "Odjava",
     "description": "users-table-general-signoff"
+  },
+  "SjQeQO": {
+    "defaultMessage": "Iskorištenje resursa za projekt - {identifier}",
+    "description": "linktitle-manageprojects-change"
   },
   "T73nyd": {
     "defaultMessage": "Javni ključ",
@@ -2286,6 +2298,10 @@
   "y+MIYq": {
     "defaultMessage": "Institucija nositelj:",
     "description": "generalfields-leadinstitution"
+  },
+  "y2NmXZ": {
+    "defaultMessage": "Osobna potrošnja",
+    "description": "project-my-accounting"
   },
   "y4Tv/g": {
     "defaultMessage": "Promjena",

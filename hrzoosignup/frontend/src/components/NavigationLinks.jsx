@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Nav,
   NavItem,
@@ -28,7 +28,7 @@ import { FormattedMessage } from 'react-intl';
 
 
 
-const NavigationLinksUser = ({isAdmin, enableAccounting, activeBgColor}) => {
+const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor}) => {
   return (
     <>
       <NavItem key='my-requests' className='ms-3 mt-1'>
@@ -85,7 +85,8 @@ const NavigationLinksUser = ({isAdmin, enableAccounting, activeBgColor}) => {
             <NavLink
               style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
               className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-              to='/ui/accounting'>
+              to={`/ui/${isLead ? "project" : "my"}-accounting`}
+            >
               <FontAwesomeIcon icon={ faChartBar } />{' '}
               <FormattedMessage
                 description="navlinks-accounting"
@@ -174,6 +175,7 @@ const NavigationLinks = ({userMode, setUserMode}) => {
   const activeBgColor = '#b04c46';
   const { userDetails, enableAccounting } = useContext(AuthContext);
   const navigate = useNavigate()
+  const isLead = userDetails && "userproject_set" in userDetails && userDetails.userproject_set.map(item => item.role.name).includes("lead")
 
   return (
     <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex sticky-top">
@@ -203,6 +205,7 @@ const NavigationLinks = ({userMode, setUserMode}) => {
           <>
             <NavigationLinksUser
               isAdmin={userDetails.is_staff || userDetails.is_superuser}
+              isLead={ isLead }
               enableAccounting={ enableAccounting }
               activeBgColor={activeBgColor}
             />
