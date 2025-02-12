@@ -35,114 +35,45 @@ class ResourceUsageTests(TestCase):
                         "cpuh": [
                             {
                                 "month": "01/2024",
-                                "project-1": 1.89
+                                "project-1": 1
                             },
                             {
                                 "month": "02/2024",
-                                "project-1": 1.89
+                                "project-1": 1
                             },
                             {
                                 "month": "03/2024",
-                                "project-1": 1.89
+                                "project-1": 1
                             },
                             {
                                 "month": "04/2024",
-                                "project-1": 1.89
+                                "project-1": 1
                             },
                             {
                                 "month": "05/2024",
-                                "project-1": 6.89,
-                                "project-2": 117.11,
-                                "project-4": 1.52
+                                "project-1": 6,
+                                "project-2": 117,
+                                "project-4": 1
                             },
                             {
                                 "month": "06/2024",
-                                "project-1": 7.32,
-                                "project-2": 117.11,
-                                "project-4": 1.52
+                                "project-1": 7,
+                                "project-2": 117,
+                                "project-4": 1
                             },
                             {
                                 "month": "07/2024",
-                                "project-1": 7.32,
-                                "project-2": 117.11
+                                "project-1": 7,
+                                "project-2": 117
                             },
                             {
                                 "month": "08/2024",
-                                "project-2": 117.11
+                                "project-2": 117
                             }
                         ],
                         "gpuh": [
                             {
-                                "month": "01/2024",
-                                "project-1": 0.12
-                            },
-                            {
-                                "month": "02/2024",
-                                "project-1": 0.12
-                            },
-                            {
-                                "month": "03/2024",
-                                "project-1": 0.12
-                            },
-                            {
-                                "month": "04/2024",
-                                "project-1": 0.12
-                            },
-                            {
-                                "month": "05/2024",
-                                "project-1": 0.12
-                            },
-                            {
-                                "month": "06/2024",
-                                "project-1": 1.71
-                            },
-                            {
-                                "month": "07/2024",
-                                "project-1": 1.71,
-                                "project-2": 0.14
-                            },
-                            {
-                                "month": "08/2024",
-                                "project-2": 0.14
-                            }
-                        ]
-                    },
-                    "monthly": {
-                        "cpuh": [
-                            {
-                                "month": "01/2024",
-                                "project-1": 1.89
-                            },
-                            {
-                                "month": "02/2024"
-                            },
-                            {
-                                "month": "03/2024"
-                            },
-                            {
-                                "month": "04/2024"
-                            },
-                            {
-                                "month": "05/2024",
-                                "project-1": 5,
-                                "project-2": 117.11,
-                                "project-4": 1.52
-                            },
-                            {
-                                "month": "06/2024",
-                                "project-1": 0.44
-                            },
-                            {
-                                "month": "07/2024"
-                            },
-                            {
-                                "month": "08/2024"
-                            }
-                        ],
-                        "gpuh": [
-                            {
-                                "month": "01/2024",
-                                "project-1": 0.12
+                                "month": "01/2024"
                             },
                             {
                                 "month": "02/2024"
@@ -158,11 +89,70 @@ class ResourceUsageTests(TestCase):
                             },
                             {
                                 "month": "06/2024",
-                                "project-1": 1.59
+                                "project-1": 1
                             },
                             {
                                 "month": "07/2024",
-                                "project-2": 0.14
+                                "project-1": 1
+                            },
+                            {
+                                "month": "08/2024"
+                            }
+                        ]
+                    },
+                    "monthly": {
+                        "cpuh": [
+                            {
+                                "month": "01/2024",
+                                "project-1": 1
+                            },
+                            {
+                                "month": "02/2024"
+                            },
+                            {
+                                "month": "03/2024"
+                            },
+                            {
+                                "month": "04/2024"
+                            },
+                            {
+                                "month": "05/2024",
+                                "project-1": 5,
+                                "project-2": 117,
+                                "project-4": 1
+                            },
+                            {
+                                "month": "06/2024"
+                            },
+                            {
+                                "month": "07/2024"
+                            },
+                            {
+                                "month": "08/2024"
+                            }
+                        ],
+                        "gpuh": [
+                            {
+                                "month": "01/2024"
+                            },
+                            {
+                                "month": "02/2024"
+                            },
+                            {
+                                "month": "03/2024"
+                            },
+                            {
+                                "month": "04/2024"
+                            },
+                            {
+                                "month": "05/2024"
+                            },
+                            {
+                                "month": "06/2024",
+                                "project-1": 1
+                            },
+                            {
+                                "month": "07/2024"
                             },
                             {
                                 "month": "08/2024"
@@ -197,20 +187,17 @@ class ResourceUsageTests(TestCase):
                     "cumulative": {
                         "cpuh": [
                             {
-                                "month": "07/2024",
-                                "project-5": 0.01
+                                "month": "07/2024"
                             },
                             {
-                                "month": "08/2024",
-                                "project-5": 0.01
+                                "month": "08/2024"
                             }
                         ]
                     },
                     "monthly": {
                         "cpuh": [
                             {
-                                "month": "07/2024",
-                                "project-5": 0.01
+                                "month": "07/2024"
                             },
                             {
                                 "month": "08/2024"
@@ -223,21 +210,21 @@ class ResourceUsageTests(TestCase):
                         "cpuh": [
                             {
                                 "month": "07/2024",
-                                "project-5": 5.17
+                                "project-5": 5
                             },
                             {
                                 "month": "08/2024",
-                                "project-5": 5.9
+                                "project-5": 5
                             }
                         ],
                         "gpuh": [
                             {
                                 "month": "07/2024",
-                                "project-5": 3.43
+                                "project-5": 3
                             },
                             {
                                 "month": "08/2024",
-                                "project-5": 3.61
+                                "project-5": 3
                             }
                         ]
                     },
@@ -245,21 +232,19 @@ class ResourceUsageTests(TestCase):
                         "cpuh": [
                             {
                                 "month": "07/2024",
-                                "project-5": 5.17
+                                "project-5": 5
                             },
                             {
-                                "month": "08/2024",
-                                "project-5": 0.73
+                                "month": "08/2024"
                             }
                         ],
                         "gpuh": [
                             {
                                 "month": "07/2024",
-                                "project-5": 3.43
+                                "project-5": 3
                             },
                             {
-                                "month": "08/2024",
-                                "project-5": 0.18
+                                "month": "08/2024"
                             }
                         ]
                     }
@@ -454,89 +439,48 @@ class ProjectUsageTests(TestCase):
                             "cpuh": [
                                 {
                                     "month": "01/2024",
-                                    "Arthur Dent": 1.89
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "02/2024",
-                                    "Arthur Dent": 1.89
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "03/2024",
-                                    "Arthur Dent": 1.89
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "04/2024",
-                                    "Arthur Dent": 1.89
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "05/2024",
-                                    "Arthur Dent": 6.89,
-                                    "Tricia McMillan": 1.52,
-                                    "Albert Trotter": 117.11
+                                    "Arthur Dent": 6,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 },
                                 {
                                     "month": "06/2024",
-                                    "Arthur Dent": 7.32,
-                                    "Tricia McMillan": 1.52,
-                                    "Albert Trotter": 117.11
+                                    "Arthur Dent": 7,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 },
                                 {
                                     "month": "07/2024",
-                                    "Arthur Dent": 7.32,
-                                    "Tricia McMillan": 1.52,
-                                    "Albert Trotter": 117.11
+                                    "Arthur Dent": 7,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 },
                                 {
                                     "month": "08/2024",
-                                    "Arthur Dent": 7.32,
-                                    "Tricia McMillan": 1.52,
-                                    "Albert Trotter": 117.11
+                                    "Arthur Dent": 7,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
                                 }
                             ],
                             "gpuh": [
                                 {
-                                    "month": "01/2024",
-                                    "Arthur Dent": 0.12
-                                },
-                                {
-                                    "month": "02/2024",
-                                    "Arthur Dent": 0.12
-                                },
-                                {
-                                    "month": "03/2024",
-                                    "Arthur Dent": 0.12
-                                },
-                                {
-                                    "month": "04/2024",
-                                    "Arthur Dent": 0.12
-                                },
-                                {
-                                    "month": "05/2024",
-                                    "Arthur Dent": 0.12,
-                                    "Tricia McMillan": 128.
-                                },
-                                {
-                                    "month": "06/2024",
-                                    "Arthur Dent": 1.71,
-                                    "Tricia McMillan": 128.
-                                },
-                                {
-                                    "month": "07/2024",
-                                    "Arthur Dent": 1.71,
-                                    "Tricia McMillan": 128.
-                                },
-                                {
-                                    "month": "08/2024",
-                                    "Arthur Dent": 1.71,
-                                    "Tricia McMillan": 128.
-                                }
-                            ]
-                        },
-                        "monthly": {
-                            "cpuh": [
-                                {
-                                    "month": "01/2024",
-                                    "Arthur Dent": 1.89
+                                    "month": "01/2024"
                                 },
                                 {
                                     "month": "02/2024"
@@ -549,13 +493,48 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "Arthur Dent": 5.,
-                                    "Tricia McMillan": 1.52,
-                                    "Albert Trotter": 117.11
+                                    "Tricia McMillan": 128
                                 },
                                 {
                                     "month": "06/2024",
-                                    "Arthur Dent": 0.44
+                                    "Arthur Dent": 1,
+                                    "Tricia McMillan": 128
+                                },
+                                {
+                                    "month": "07/2024",
+                                    "Arthur Dent": 1,
+                                    "Tricia McMillan": 128
+                                },
+                                {
+                                    "month": "08/2024",
+                                    "Arthur Dent": 1,
+                                    "Tricia McMillan": 128
+                                }
+                            ]
+                        },
+                        "monthly": {
+                            "cpuh": [
+                                {
+                                    "month": "01/2024",
+                                    "Arthur Dent": 1
+                                },
+                                {
+                                    "month": "02/2024"
+                                },
+                                {
+                                    "month": "03/2024"
+                                },
+                                {
+                                    "month": "04/2024"
+                                },
+                                {
+                                    "month": "05/2024",
+                                    "Arthur Dent": 5,
+                                    "Tricia McMillan": 1,
+                                    "Albert Trotter": 117
+                                },
+                                {
+                                    "month": "06/2024"
                                 },
                                 {
                                     "month": "07/2024"
@@ -566,25 +545,24 @@ class ProjectUsageTests(TestCase):
                             ],
                             "gpuh": [
                                 {
-                                    "month": "01/2024",
-                                    "Arthur Dent": 0.12
+                                    "month": "01/2024"
                                 },
                                 {
-                                    "month": "02/2024",
+                                    "month": "02/2024"
                                 },
                                 {
-                                    "month": "03/2024",
+                                    "month": "03/2024"
                                 },
                                 {
-                                    "month": "04/2024",
+                                    "month": "04/2024"
                                 },
                                 {
                                     "month": "05/2024",
-                                    "Tricia McMillan": 128.
+                                    "Tricia McMillan": 128
                                 },
                                 {
                                     "month": "06/2024",
-                                    "Arthur Dent": 1.59
+                                    "Arthur Dent": 1
                                 },
                                 {
                                     "month": "07/2024"
@@ -618,11 +596,11 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "07/2024",
-                                    "Albert Trotter": 74.
+                                    "Albert Trotter": 74
                                 },
                                 {
                                     "month": "08/2024",
-                                    "Albert Trotter": 74.
+                                    "Albert Trotter": 74
                                 }
                             ]
                         },
@@ -648,7 +626,7 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "07/2024",
-                                    "Albert Trotter": 74.
+                                    "Albert Trotter": 74
                                 },
                                 {
                                     "month": "08/2024"
@@ -676,15 +654,15 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "06/2024",
-                                    "total_project_usage": 1025.3
+                                    "total_project_usage": 1025
                                 },
                                 {
                                     "month": "07/2024",
-                                    "total_project_usage": 1025.3
+                                    "total_project_usage": 1025
                                 },
                                 {
                                     "month": "08/2024",
-                                    "total_project_usage": 1025.3
+                                    "total_project_usage": 1025
                                 }
                             ],
                             "gpuh": [
@@ -733,7 +711,7 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "06/2024",
-                                    "total_project_usage": 1025.3
+                                    "total_project_usage": 1025
                                 },
                                 {
                                     "month": "07/2024"
@@ -789,19 +767,19 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "Arthur Dent": 6.67
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "06/2024",
-                                    "Arthur Dent": 6.67
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "07/2024",
-                                    "Arthur Dent": 6.67
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "08/2024",
-                                    "Arthur Dent": 6.67
+                                    "Arthur Dent": 6
                                 }
                             ]
                         },
@@ -821,7 +799,7 @@ class ProjectUsageTests(TestCase):
                                 },
                                 {
                                     "month": "05/2024",
-                                    "Arthur Dent": 6.67
+                                    "Arthur Dent": 6
                                 },
                                 {
                                     "month": "06/2024"
