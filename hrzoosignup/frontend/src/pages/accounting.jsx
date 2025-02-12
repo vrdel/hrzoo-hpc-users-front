@@ -30,7 +30,7 @@ import { useIntl, FormattedMessage } from 'react-intl'
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 
 
-const colors = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1"]
+const colors = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1", '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b', '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b','#fcaf26', '#b4bbc0', '#929597', '#606365']
 
 const cumulativeDisplay = <FormattedMessage 
   description="myaccounting-cumulative-button"
@@ -664,19 +664,28 @@ export const ProjectAccounting = () => {
         let _vrancicGPU = vrancicGPU
         let _listUsers = listUsers
         if (project in data && "supek" in data[project]) {
-          _supekCPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
-          _supekGPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
-          _supekCPUsers.delete("month")
-          _supekGPUsers.delete("month")
-          if (subsetUsers.length > 0) {
-            _supekCPU[project] = [..._supekCPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
-            _supekGPU[project] = [..._supekGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
-          } else {
-            _supekCPU[project] = Array.from(_supekCPUsers).sort()
-            _supekGPU[project] = Array.from(_supekGPUsers).sort()
+          if ("cpuh" in data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+            _supekCPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+            _supekCPUsers.delete("month")
+            if (subsetUsers.length > 0) 
+              _supekCPU[project] = [..._supekCPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+
+            else
+              _supekCPU[project] = Array.from(_supekCPUsers).sort()
+
+            setSupekCPU(_supekCPU)
           }
-          setSupekCPU(_supekCPU)
-          setSupekGPU(_supekGPU)
+          if ("gpuh" in data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+            _supekGPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+            _supekGPUsers.delete("month")
+            if (subsetUsers.length > 0) 
+              _supekGPU[project] = [..._supekGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+
+            else
+              _supekGPU[project] = Array.from(_supekGPUsers).sort()
+
+            setSupekGPU(_supekGPU)
+          }
         }
         if (project in data && "padobran" in data[project]) {
           _padobranUsers = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
@@ -688,22 +697,33 @@ export const ProjectAccounting = () => {
           setPadobran(_padobran)
         }
         if (project in data && "cloud" in data[project]) { 
-          _vrancicCPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
-          _vrancicGPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
-          _vrancicCPUsers.delete("month")
-          _vrancicGPUsers.delete("month")
-          if (subsetUsers.length > 0) {
-            _vrancicCPU[project] = [..._vrancicCPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
-            _vrancicGPU[project] = [..._vrancicGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
-          } else {
-            _vrancicCPU[project] = Array.from(_vrancicCPUsers).sort()
-            _vrancicGPU[project] = Array.from(_vrancicGPUsers).sort()
+          if ("cpuh" in data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+            _vrancicCPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+            _vrancicCPUsers.delete("month")
+
+            if (subsetUsers.length > 0)
+              _vrancicCPU[project] = [..._vrancicCPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+            
+            else
+              _vrancicCPU[project] = Array.from(_vrancicCPUsers).sort()
+
+            setVrancicCPU(_vrancicCPU)
           }
-          setVrancicCPU(_vrancicCPU)
-          setVrancicGPU(_vrancicGPU)
-        }
+          if ("gpuh" in data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+            _vrancicGPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+            _vrancicGPUsers.delete("month")
+            if (subsetUsers.length > 0) 
+              _vrancicGPU[project] = [..._vrancicGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
+
+            else
+              _vrancicGPU[project] = Array.from(_vrancicGPUsers).sort()
+            }
+            setVrancicGPU(_vrancicGPU)
+          }
         let _allUsers = Array.from(new Set([ ..._supekCPUsers, ..._supekGPUsers, ..._padobranUsers, ..._vrancicCPUsers, ..._vrancicGPUsers ])).sort()
-        _allUsers.splice(_allUsers.indexOf("total_project_usage"), 1)
+        if (_allUsers.includes("total_project_usage"))
+          _allUsers.splice(_allUsers.indexOf("total_project_usage"), 1)
+
         _listUsers[project] = _allUsers
 
         setListUsers(_listUsers)
