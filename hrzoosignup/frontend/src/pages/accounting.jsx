@@ -219,6 +219,86 @@ const UsageBarChart = ({ data, entities, listEntities, stackId }) => {
   )
 } 
 
+
+const filterTime = ( data, selectedYear, useDefaultTimeRange ) => {
+  let result = data
+  if (selectedYear) {
+    result = data.filter((item) => {
+      return item.month.endsWith(selectedYear)
+    })
+  }
+
+  if (useDefaultTimeRange) {
+    result = data.filter((item) => {
+      return get_past_12_months().includes(item.month)
+    })
+  }
+  return result
+}
+
+
+const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, setUseDefaultTimeRange }) => {
+  return (
+    <Dropdown 
+      isOpen={ isOpenYear } 
+      className="me-2"
+      toggle={ () => setIsOpenYear(!isOpenYear) }
+    >
+      <DropdownToggle caret>
+        <FormattedMessage
+          description="myaccounting-year-dropdown"
+          defaultMessage="Godine"
+        />
+      </DropdownToggle>
+      <DropdownMenu>
+        {
+          years.map((year) => 
+            <DropdownItem 
+              key={ year } 
+              onClick={ () => {
+                setSelectedYear(year)
+                setUseDefaultTimeRange(false)
+                setIsOpenYear(!isOpenYear)
+              }}
+            >
+              { year }
+            </DropdownItem>
+          )
+        }
+        <DropdownItem 
+          key="default"
+          onClick={ () => {
+            setSelectedYear(undefined) 
+            setUseDefaultTimeRange(true)
+            setIsOpenYear(!isOpenYear)
+          }}
+          toggle={false}
+        >
+          <FormattedMessage
+            description="myaccounting-year-default"
+            defaultMessage="Prikaži zadnjih 12 mjeseci"
+          />
+        </DropdownItem>
+        <DropdownItem 
+          key="show-all"
+          onClick={ () => {
+            setSelectedYear(undefined) 
+            setUseDefaultTimeRange(false)
+            setIsOpenYear(!isOpenYear)
+          }}
+          toggle={false}
+        >
+          <FormattedMessage
+            description="myaccounting-year-showall"
+            defaultMessage="Prikaži sve"
+          />
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  )
+}
+
+
 export const MyAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const [padobranProjects, setPadobranProjects] = useState([])
@@ -261,22 +341,6 @@ export const MyAccounting = () => {
     }
 
     setSubsetOfProjects([...subsetOfProjects])
-  }
-
-  const filterTime = (data) => {
-    let result = data
-    if (selectedYear) {
-      result = data.filter((item) => {
-        return item.month.endsWith(selectedYear)
-      })
-    }
-
-    if (useDefaultTimeRange) {
-      result = data.filter((item) => {
-        return get_past_12_months().includes(item.month)
-      })
-    }
-    return result
   }
 
   useEffect(() => {
@@ -370,7 +434,7 @@ export const MyAccounting = () => {
           <UsageBarChart
             data={
               "supek" in data ? 
-                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
               : 
                 [] 
             }
@@ -388,7 +452,7 @@ export const MyAccounting = () => {
           <UsageBarChart
             data={ 
               "supek" in data ? 
-                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
+                filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
               : 
                 [] 
             }
@@ -406,7 +470,7 @@ export const MyAccounting = () => {
           <UsageBarChart
             data={ 
               "padobran" in data ? 
-                filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+                filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
               : 
                 [] 
             }
@@ -424,7 +488,7 @@ export const MyAccounting = () => {
           <UsageBarChart
             data={ 
               "galaxy" in data ? 
-                filterTime(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"]) 
+                filterTime(data["galaxy"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
               : 
               [] 
             }
@@ -442,7 +506,7 @@ export const MyAccounting = () => {
           <UsageBarChart
             data={ 
               "jupyter" in data ? 
-                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"])
+                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange)
               : 
                 [] 
             }
@@ -460,7 +524,7 @@ export const MyAccounting = () => {
           <UsageBarChart
             data={ 
               "jupyter" in data ? 
-                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"]) 
+                filterTime(data["jupyter"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
               : 
                 [] 
             }
@@ -506,62 +570,13 @@ export const MyAccounting = () => {
                 >
                   { showCumulative ? monthlyDisplay : cumulativeDisplay }
                 </Button>
-                <Dropdown 
-                  isOpen={ isOpenYear } 
-                  className="me-2"
-                  toggle={ () => setIsOpenYear(!isOpenYear) }
-                >
-                  <DropdownToggle caret>
-                    <FormattedMessage
-                      description="myaccounting-year-dropdown"
-                      defaultMessage="Godine"
-                    />
-                  </DropdownToggle>
-                  <DropdownMenu>
-                    {
-                      years.map((year) => 
-                        <DropdownItem 
-                          key={ year } 
-                          onClick={ () => {
-                            setSelectedYear(year)
-                            setUseDefaultTimeRange(false)
-                            setIsOpenYear(!isOpenYear)
-                          }}
-                        >
-                          { year }
-                        </DropdownItem>
-                      )
-                    }
-                    <DropdownItem 
-                      key="default"
-                      onClick={ () => {
-                        setSelectedYear(undefined) 
-                        setUseDefaultTimeRange(true)
-                        setIsOpenYear(!isOpenYear)
-                      }}
-                      toggle={false}
-                    >
-                      <FormattedMessage
-                        description="myaccounting-year-default"
-                        defaultMessage="Prikaži zadnjih 12 mjeseci"
-                      />
-                    </DropdownItem>
-                    <DropdownItem 
-                      key="show-all"
-                      onClick={ () => {
-                        setSelectedYear(undefined) 
-                        setUseDefaultTimeRange(false)
-                        setIsOpenYear(!isOpenYear)
-                      }}
-                      toggle={false}
-                    >
-                      <FormattedMessage
-                        description="myaccounting-year-showall"
-                        defaultMessage="Prikaži sve"
-                      />
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                <SelectYearButton
+                  years={ years }
+                  isOpenYear={ isOpenYear }
+                  setIsOpenYear={ setIsOpenYear }
+                  setSelectedYear={ setSelectedYear }
+                  setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                />
                 <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
                   <DropdownToggle caret>
                     { projectsButtonText }
@@ -605,6 +620,10 @@ export const ProjectAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const { LinkTitles } = useContext(SharedData)
 	const [ pageTitle, setPageTitle ] = useState(undefined)
+  const [ years, setYears ] = useState([])
+  const [ selectedYear, setSelectedYear ] = useState(undefined)
+  const [ isOpenYear, setIsOpenYear ] = useState(false)
+  const [ useDefaultTimeRange, setUseDefaultTimeRange ] = useState(true)
   const [ showCumulative, setShowCumulative ] = useState(false)
   const [ isOpen, setIsOpen ] = useState(false)
   const [ isOpenUsers, setIsOpenUsers ] = useState(false)
@@ -650,6 +669,7 @@ export const ProjectAccounting = () => {
       if (!selectedProject)
         setSelectedProject(_listProjects[0])
 
+      let _years = new Set()
       for (let index = 0; index <= _listProjects.length; index++) {
         let project = _listProjects[index]
         let _supekCPUsers = new Set()
@@ -667,6 +687,7 @@ export const ProjectAccounting = () => {
           if ("cpuh" in data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
             _supekCPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
             _supekCPUsers.delete("month")
+            _years = new Set([..._years, ...data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3))])
             if (subsetUsers.length > 0) 
               _supekCPU[project] = [..._supekCPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
 
@@ -678,6 +699,7 @@ export const ProjectAccounting = () => {
           if ("gpuh" in data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
             _supekGPUsers = new Set(data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
             _supekGPUsers.delete("month")
+            _years = new Set([..._years, ...data[project]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => item["month"].substring(3))])
             if (subsetUsers.length > 0) 
               _supekGPU[project] = [..._supekGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
 
@@ -689,6 +711,7 @@ export const ProjectAccounting = () => {
         }
         if (project in data && "padobran" in data[project]) {
           _padobranUsers = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          _years = new Set([..._years, ...data[project]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3))])
           _padobranUsers.delete("month")
           if (subsetUsers.length > 0)
             _padobran[project] = [..._padobranUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
@@ -699,6 +722,7 @@ export const ProjectAccounting = () => {
         if (project in data && "cloud" in data[project]) { 
           if ("cpuh" in data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]) {
             _vrancicCPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+            _years = new Set([..._years, ...data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3))])
             _vrancicCPUsers.delete("month")
 
             if (subsetUsers.length > 0)
@@ -711,6 +735,7 @@ export const ProjectAccounting = () => {
           }
           if ("gpuh" in data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]) {
             _vrancicGPUsers = new Set(data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+            _years = new Set([..._years, ...data[project]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => item["month"].substring(3))])
             _vrancicGPUsers.delete("month")
             if (subsetUsers.length > 0) 
               _vrancicGPU[project] = [..._vrancicGPUsers].filter(user => subsetUsers.indexOf(user) >= 0).sort()
@@ -728,6 +753,7 @@ export const ProjectAccounting = () => {
 
         setListUsers(_listUsers)
       }
+      setYears(Array.from(_years))
       setListProjects(_listProjects)
     }
   }, [status, data, showCumulative, subsetUsers, selectedProject])
@@ -745,30 +771,32 @@ export const ProjectAccounting = () => {
     )
   }
 
-  const projectButton = <Dropdown
-    isOpen={ isOpen }
-    className="ml-2"
-    toggle={ () => setIsOpen(!isOpen) }
-  >
-    <DropdownToggle caret>
-      { projectsButtonText }
-    </DropdownToggle>
-    <DropdownMenu>
-      {
-        listProjects.map(proj => 
-          <DropdownItem
-            key={ proj }
-            onClick={ () => {
-              setSelectedProject(proj) 
-              setSubsetUsers([])
-            }}
-          >
-            { proj }
-          </DropdownItem>
-        )
-      }
-    </DropdownMenu>
-  </Dropdown>
+  const ProjectButton = () => (
+    <Dropdown
+      isOpen={ isOpen }
+      className="ml-2"
+      toggle={ () => setIsOpen(!isOpen) }
+    >
+      <DropdownToggle caret>
+        { projectsButtonText }
+      </DropdownToggle>
+      <DropdownMenu>
+        {
+          listProjects.map(proj => 
+            <DropdownItem
+              key={ proj }
+              onClick={ () => {
+                setSelectedProject(proj) 
+                setSubsetUsers([])
+              }}
+            >
+              { proj }
+            </DropdownItem>
+          )
+        }
+      </DropdownMenu>
+    </Dropdown>
+  )
 
   const UsersButton = () => (
     <Dropdown 
@@ -807,7 +835,9 @@ export const ProjectAccounting = () => {
         <Row>
           <h4>Supek CPUH</h4>
           <UsageBarChart
-            data={ data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
+            data={ 
+              filterTime(data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange)
+            }
             entities={ supekCPU[selectedProject] }
             listEntities={ listUsers[selectedProject] }
             stackId="supek-cpuh"
@@ -820,7 +850,7 @@ export const ProjectAccounting = () => {
         <Row>
           <h4>Supek GPUH</h4>
           <UsageBarChart
-            data={ data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] }
+            data={ filterTime(data[selectedProject]["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) }
             entities={ supekGPU[selectedProject] }
             listEntities={ listUsers[selectedProject] }
             stackId="supek-gpuh"
@@ -833,7 +863,7 @@ export const ProjectAccounting = () => {
         <Row>
           <h4>Padobran</h4>
           <UsageBarChart
-            data={ data[selectedProject]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
+            data={ filterTime(data[selectedProject]["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) }
             entities={ padobran[selectedProject] }
             listEntities={ listUsers[selectedProject] }
             stackId="padobran"
@@ -846,7 +876,7 @@ export const ProjectAccounting = () => {
         <Row>
           <h4>Vrančić CPUH</h4>
           <UsageBarChart
-            data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"] }
+            data={ filterTime(data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) }
             entities={ vrancicCPU[selectedProject] }
             listEntities={ listUsers[selectedProject] }
             stackId="vrancic-cpuh"
@@ -859,7 +889,7 @@ export const ProjectAccounting = () => {
         <Row>
           <h4>Vrančić GPUH</h4>
           <UsageBarChart
-            data={ data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"] }
+            data={ filterTime(data[selectedProject]["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) }
             entities={ vrancicGPU[selectedProject] }
             listEntities={ listUsers[selectedProject] }
             stackId="vrancic-gpuh"
@@ -882,7 +912,14 @@ export const ProjectAccounting = () => {
                   selectedProject in listUsers && listUsers[selectedProject].length > 0 &&
                     <UsersButton />
                 }
-                { projectButton }
+                <SelectYearButton
+                  years={ years }
+                  isOpenYear={ isOpenYear }
+                  setIsOpenYear={ setIsOpenYear }
+                  setSelectedYear={ setSelectedYear }
+                  setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                />
+                <ProjectButton />
               </ButtonGroup>
             </PageTitle>
           </Row>
@@ -917,7 +954,14 @@ export const ProjectAccounting = () => {
                   { showCumulative ? monthlyDisplay : cumulativeDisplay }
                 </Button>
                 <UsersButton />
-                { projectButton }
+                <SelectYearButton
+                  years={ years }
+                  isOpenYear={ isOpenYear }
+                  setIsOpenYear={ setIsOpenYear }
+                  setSelectedYear={ setSelectedYear }
+                  setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                />
+                <ProjectButton />
               </ButtonGroup>
             </PageTitle>
           </Row>
