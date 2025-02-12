@@ -134,6 +134,11 @@ class Command(BaseCommand):
                                 )
                             }
 
+                            if str(ustanova_id) == "142":
+                                data2send.update({
+                                    "144": len(institutions)
+                                })
+
                             for indicator, value in data2send.items():
                                 response = requests.post(
                                     settings.DASHBOARD_API_INDICATORS,
