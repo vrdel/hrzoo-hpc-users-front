@@ -344,12 +344,16 @@ def usage4project(lead_username):
                     )
 
                     df_cumulative_month = df_resource[
-                        df_resource["end_time"].dt.date <= month_end
+                        (df_resource["end_time"].dt.date <= month_end) *
+                        (df_resource["project_end"] >= month_start) *
+                        (df_resource["project_start"] <= month_end)
                     ]
 
                     df_monthly = df_resource[
                         (df_resource["end_time"].dt.date <= month_end) *
-                        (df_resource["end_time"].dt.date >= month_start)
+                        (df_resource["end_time"].dt.date >= month_start) *
+                        (df_resource["project_end"] >= month_start) *
+                        (df_resource["project_start"] <= month_end)
                     ]
 
                     cpu_cumulative = dict()

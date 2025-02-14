@@ -450,10 +450,7 @@ class ProjectUsageTests(TestCase):
                                     "Albert Trotter": 117
                                 },
                                 {
-                                    "month": "08/2024",
-                                    "Arthur Dent": 7,
-                                    "Tricia McMillan": 1,
-                                    "Albert Trotter": 117
+                                    "month": "08/2024"
                                 }
                             ],
                             "gpuh": [
@@ -484,9 +481,7 @@ class ProjectUsageTests(TestCase):
                                     "Tricia McMillan": 128
                                 },
                                 {
-                                    "month": "08/2024",
-                                    "Arthur Dent": 1,
-                                    "Tricia McMillan": 128
+                                    "month": "08/2024"
                                 }
                             ]
                         },
@@ -577,8 +572,7 @@ class ProjectUsageTests(TestCase):
                                     "Albert Trotter": 74
                                 },
                                 {
-                                    "month": "08/2024",
-                                    "Albert Trotter": 74
+                                    "month": "08/2024"
                                 }
                             ]
                         },
@@ -639,8 +633,7 @@ class ProjectUsageTests(TestCase):
                                     "total_project_usage": 1025
                                 },
                                 {
-                                    "month": "08/2024",
-                                    "total_project_usage": 1025
+                                    "month": "08/2024"
                                 }
                             ]
                         },
