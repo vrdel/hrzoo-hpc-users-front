@@ -30,7 +30,7 @@ import NotFound from 'Pages/notfound';
 import Root from 'Pages/root';
 import { 
   MyAccounting,
-  ProjectAccounting
+  ProjectUsersAccounting
 } from "Pages/accounting";
 import { isActiveSession } from 'Api/auth';
 import { useQuery } from '@tanstack/react-query';
@@ -200,7 +200,7 @@ const BaseRoutes = () => {
               {
                 sessionData.config.enable_accounting &&
                   <>
-                    <Route path="project-accounting" element={ <ProjectAccounting /> } />
+                    <Route path="project-accounting" element={ <ProjectUsersAccounting /> } />
                     <Route path="my-accounting" element={ <MyAccounting /> } />
                   </>
               }

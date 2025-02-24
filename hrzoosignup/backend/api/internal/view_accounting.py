@@ -390,7 +390,7 @@ class ResourceUsage(APIView):
             return Response(data=output, status=status.HTTP_200_OK)
 
 
-class ProjectUsage(APIView):
+class ProjectUsagePerUser(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
 

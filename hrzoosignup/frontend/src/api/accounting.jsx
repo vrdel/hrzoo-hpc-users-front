@@ -32,12 +32,12 @@ export async function fetchAccountingData()
 
 
 
-export async function fetchProjectAccountingData()
+export async function fetchProjectUserAccountingData()
 {
   let error_msg = ''
 
   try {
-    let response = await fetch(`${url_api_prefix}/api/v1/internal/accounting/project-records`)
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/accounting/project-user-records`)
 
     if (response.ok)
       return await response.json()

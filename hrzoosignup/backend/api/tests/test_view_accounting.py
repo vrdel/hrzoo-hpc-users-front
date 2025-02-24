@@ -231,10 +231,10 @@ class ResourceUsageTests(TestCase):
         )
 
 
-class ProjectUsageTests(TestCase):
+class ProjectUsagePerUserTests(TestCase):
     def setUp(self):
         create_mock_db()
-        self.view = views.ProjectUsage.as_view()
+        self.view = views.ProjectUsagePerUser.as_view()
         self.factory = APIRequestFactory()
         project1 = models.Project.objects.get(identifier="project-1")
         project6 = models.Project.objects.get(name="Project name 6")
@@ -387,7 +387,7 @@ class ProjectUsageTests(TestCase):
     def test_get_data_if_user_not_lead(self):
         user = models.User.objects.get(person_username="fprefect")
         request = self.factory.get(
-            "/api/v1/internal/accounting/project-records"
+            "/api/v1/internal/accounting/project-user-records"
         )
         force_authenticate(request, user=user)
         response = self.view(request)
@@ -405,7 +405,7 @@ class ProjectUsageTests(TestCase):
     def test_get_data(self, mock_date_today):
         mock_date_today.return_value = self.today
         request = self.factory.get(
-            "/api/v1/internal/accounting/project-records"
+            "/api/v1/internal/accounting/project-user-records"
         )
         force_authenticate(request, user=self.user1)
         response = self.view(request)

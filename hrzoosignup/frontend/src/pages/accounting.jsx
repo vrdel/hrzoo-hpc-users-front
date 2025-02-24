@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { 
   fetchAccountingData, 
-  fetchProjectAccountingData 
+  fetchProjectUserAccountingData 
 } from "Api/accounting";
 import { 
   Button, 
@@ -677,7 +677,7 @@ export const MyAccounting = () => {
   }
 }
 
-export const ProjectAccounting = () => {
+export const ProjectUsersAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const { LinkTitles } = useContext(SharedData)
 	const [ pageTitle, setPageTitle ] = useState(undefined)
@@ -703,7 +703,7 @@ export const ProjectAccounting = () => {
 
   const { status, data, error } = useQuery({
     queryKey: ["lead-graph-data", userDetails.username],
-    queryFn: () => fetchProjectAccountingData()
+    queryFn: () => fetchProjectUserAccountingData()
   })
 
   useEffect(() => {
