@@ -217,7 +217,7 @@ const UsageBarChart = ({ data, entities, listEntities, stackId }) => {
               stackId={ stackId }
               label={{
                 position: "top",
-                fontSize: 14,
+                fontSize: 16,
                 fill: "#666"
               }}
               fill={ getColor(item, listEntities) }
