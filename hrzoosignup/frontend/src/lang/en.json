@@ -399,7 +399,7 @@
     "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userlist-minibutton-msg-3"
   },
-   "8AVSwM": {
+  "8AVSwM": {
     "defaultMessage": "Usage",
     "description": "linktitle-accounting"
   },
@@ -698,10 +698,6 @@
   "Djq0Io": {
     "defaultMessage": "Person:",
     "description": "software-cardbody-person"
-  },
-  "Dk3rrP": {
-    "defaultMessage": "Project leader view",
-    "description": "project-lead-accounting"
   },
   "DqpQay": {
     "defaultMessage": "Type",
@@ -1167,6 +1163,10 @@
     "defaultMessage": "Search",
     "description": "project-list-find"
   },
+  "PT5+t1": {
+    "defaultMessage": "Leader view - projects",
+    "description": "project-lead-accounting"
+  },
   "Pj1p8q": {
     "defaultMessage": "Resources",
     "description": "userschange-project-resources"
@@ -1286,10 +1286,6 @@
   "STHLdY": {
     "defaultMessage": "Checkout",
     "description": "users-table-general-signoff"
-  },
-  "SjQeQO": {
-    "defaultMessage": "Project usage - {identifier}",
-    "description": "linktitle-manageprojects-change"
   },
   "T73nyd": {
     "defaultMessage": "Public key",
@@ -1538,6 +1534,10 @@
   "bAhHuU": {
     "defaultMessage": "Request \"Thesis project\" pertains to production of bachelor's, master's, and doctoral theses and is submitted by mentor. Upon approval of the request, the mentor invites student or doctoral candidate to project.",
     "description": "newrequest-thesis-explanation"
+  },
+  "bC9GB0": {
+    "defaultMessage": "Leader view - users",
+    "description": "project-lead-accounting"
   },
   "bDGuzC": {
     "defaultMessage": "No active projects",

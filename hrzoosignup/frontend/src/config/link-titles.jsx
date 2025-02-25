@@ -90,6 +90,14 @@ export function LinkTitles(loc, intl) {
       defaultMessage: 'Iskorištenje resursa',
       description: "linktitle-accounting"
     }),
+    [url_ui_prefix + '/project-accounting']: intl.formatMessage({
+      defaultMessage: 'Iskorištenje resursa',
+      description: "linktitle-accounting"
+    }),
+    [url_ui_prefix + '/project-users-accounting']: intl.formatMessage({
+      defaultMessage: 'Iskorištenje resursa',
+      description: "linktitle-accounting"
+    }),
   }
 
   if (loc.includes('/my-requests/') && loc.match(/[%\w.\d-_]+$/)) {
@@ -122,18 +130,6 @@ export function LinkTitles(loc, intl) {
       identifier = Array(decodeURIComponent(identifier[0]))
     return intl.formatMessage({
         defaultMessage: 'Pregledavanje projekta {identifier}',
-        description: 'linktitle-manageprojects-change'
-      },
-      {identifier}
-    ).join(' ')
-  }
-
-  if (loc.includes('/project-accounting/') && loc.match(/[%\w.\d-_]+$/)) {
-    let identifier = loc.match(/[%\w.\d-_]+$/)
-    if (identifier[0].includes('%'))
-      identifier = Array(decodeURIComponent(identifier[0]))
-    return intl.formatMessage({
-        defaultMessage: 'Iskorištenje resursa za projekt - {identifier}',
         description: 'linktitle-manageprojects-change'
       },
       {identifier}
