@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { 
   fetchAccountingData, 
-  fetchProjectUserAccountingData 
+  fetchProjectUserAccountingData,
+  fetchProjectAccountingData 
 } from "Api/accounting";
 import { 
   Button, 
@@ -296,6 +297,39 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, s
             defaultMessage="Prikaži sve"
           />
         </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  )
+}
+
+
+const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSelect }) => {
+  return (
+    <Dropdown 
+      isOpen={ isOpen } 
+      className="me-2"
+      toggle={ () => setIsOpen(!isOpen) }
+    >
+      <DropdownToggle caret>
+        { projectsButtonText }
+      </DropdownToggle>
+      <DropdownMenu>
+        {
+          projects.map((project) => 
+            <DropdownItem 
+              key={ project } 
+              toggle={ false }
+            >
+              <Input 
+                type="checkbox"
+                className="mr-1"
+                checked={ subsetProjects.indexOf(project) >= 0 }
+                onClick={ () => onSelect(project) }
+              />
+              <Label check>{ project }</Label>
+            </DropdownItem>
+          )
+        }
       </DropdownMenu>
     </Dropdown>
   )
@@ -629,26 +663,13 @@ export const MyAccounting = () => {
                     setSelectedYear={ setSelectedYear }
                     setUseDefaultTimeRange={ setUseDefaultTimeRange }
                   />
-                  <Dropdown isOpen={ isOpen } toggle={ () => setIsOpen(!isOpen) }>
-                    <DropdownToggle caret>
-                      { projectsButtonText }
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      {
-                        listProjects.map((project) => 
-                          <DropdownItem key={ project } toggle={ false }>
-                            <Input 
-                              type="checkbox" 
-                              className="mr-1" 
-                              checked={ subsetOfProjects.indexOf(project) >= 0 } 
-                              onClick={ () => onProjectSelect(project) }
-                            />
-                            <Label check>{ project }</Label>
-                          </DropdownItem>
-                        )
-                      }
-                    </DropdownMenu>
-                  </Dropdown>
+                  <SelectProjectButton 
+                    projects={ listProjects }
+                    subsetProjects={ subsetOfProjects }
+                    isOpen={ isOpen }
+                    setIsOpen={ setIsOpen }
+                    onSelect={ onProjectSelect }
+                  />
                 </ButtonGroup>
               </PageTitle>
             </Row>
@@ -677,6 +698,7 @@ export const MyAccounting = () => {
   }
 }
 
+
 export const ProjectUsersAccounting = () => {
   const { userDetails } = useContext(AuthContext);
   const { LinkTitles } = useContext(SharedData)
@@ -702,7 +724,7 @@ export const ProjectUsersAccounting = () => {
   let navigate = useNavigate()
 
   const { status, data, error } = useQuery({
-    queryKey: ["lead-graph-data", userDetails.username],
+    queryKey: ["lead-project-users-data", userDetails.username],
     queryFn: () => fetchProjectUserAccountingData()
   })
 
@@ -1042,6 +1064,336 @@ export const ProjectUsersAccounting = () => {
             <Legend
               entities={ listUsers[selectedProject] }
               subset={ subsetUsers }
+            />
+          </>
+        )
+    }
+  } else
+    return (
+      <AccountingSpinner pageTitle={ pageTitle } />
+    )
+}
+
+
+export const ProjectAccounting = () => {
+  const { userDetails } = useContext(AuthContext);
+  const { LinkTitles } = useContext(SharedData)
+	const [ pageTitle, setPageTitle ] = useState(undefined)
+  const [ years, setYears ] = useState([])
+  const [ selectedYear, setSelectedYear ] = useState(undefined)
+  const [ isOpenYear, setIsOpenYear ] = useState(false)
+  const [ useDefaultTimeRange, setUseDefaultTimeRange ] = useState(true)
+  const [ showCumulative, setShowCumulative ] = useState(false)
+  const [ isOpen, setIsOpen ] = useState(false)
+  const [ listProjects, setListProjects ] = useState([])
+  const [ subsetProjects, setSubsetProjects ] = useState([])
+  const [ padobran, setPadobran ] = useState(new Object())
+  const [ supekCPU, setSupekCPU ] = useState(new Object())
+  const [ supekGPU, setSupekGPU ] = useState(new Object())
+  const [ vrancicCPU, setVrancicCPU ] = useState(new Object())
+  const [ vrancicGPU, setVrancicGPU ] = useState(new Object())
+
+  const intl = useIntl()
+  let navigate = useNavigate()
+
+  const { status, data, error } = useQuery({
+    queryKey: ["lead-project-data", userDetails.username],
+    queryFn: () => fetchProjectAccountingData()
+  })
+
+  useEffect(() => {
+    setPageTitle(LinkTitles(location.pathname, intl))
+    if (status === 'error' && error.message.includes('403'))
+      navigate(defaultUnAuthnRedirect)
+  }, [location.pathname, intl, status])
+
+  const onProjectSelect = (selected) => {
+    let index = subsetProjects.indexOf(selected)
+
+    if (index < 0) {
+      subsetProjects.push(selected)
+    } else {
+      subsetProjects.splice(index, 1)
+    }
+
+    setSubsetProjects([...subsetProjects])
+  }
+
+  useEffect(() => {
+    if (status == "success" && data) {
+      let _supekCPU = new Set()
+      let _supekGPU = new Set()
+      let _years = new Set()
+      let _padobran = new Set()
+      let _cloudCPU = new Set()
+      let _cloudGPU = new Set()
+      if ("supek" in data) {
+        if ("cpuh" in data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          _supekCPU = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          _supekCPU.delete("month")
+          _years = new Set([ ..._years, ...data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetProjects.length > 0) 
+            setSupekCPU([..._supekCPU].filter(proj => subsetProjects.indexOf(proj) >= 0).sort())
+
+          else
+            setSupekCPU(Array.from(_supekCPU).sort())
+        }
+
+        if ("gpuh" in data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          _supekGPU = new Set(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+          _supekGPU.delete("month")
+          _years = new Set([ ..._years, ...data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetProjects.length > 0) 
+            setSupekGPU([..._supekGPU].filter(proj => subsetProjects.indexOf(proj) >= 0).sort())
+
+          else
+            setSupekGPU(Array.from(_supekGPU).sort())
+        }
+      }
+
+      if ("padobran" in data) {
+        _padobran = new Set(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+        _padobran.delete("month")
+        _years = new Set([ ..._years, ...data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)) ])
+        if (subsetProjects.length > 0) 
+          setPadobran([..._padobran].filter(proj => subsetProjects.indexOf(proj) >= 0).sort())
+
+        else
+          setPadobran(Array.from(_padobran).sort())
+      }
+
+      if ("cloud" in data) {
+        if ("cpuh" in data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          _cloudCPU = new Set(data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => Object.keys(item)).flat())
+          _cloudCPU.delete("month")
+          _years = new Set([ ..._years, ...data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetProjects.length > 0)
+            setVrancicCPU([..._cloudCPU].filter(proj => subsetProjects.indexOf(proj) >= 0).sort())
+
+          else
+            setVrancicCPU(Array.from(_cloudCPU).sort())
+        }
+
+        if ("gpuh" in data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]) {
+          _cloudGPU = new Set(data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => Object.keys(item)).flat())
+          _cloudGPU.delete("month")
+          _years = new Set([ ..._years, ...data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"].map(item => item["month"].substring(3)) ])
+          if (subsetProjects.length > 0)
+            setVrancicGPU([..._cloudGPU].filter(proj => subsetProjects.indexOf(proj) >= 0).sort())
+
+          else
+            setVrancicGPU(Array.from(_cloudGPU).sort())
+        }
+      }
+      setListProjects(Array.from(new Set([..._supekCPU, ..._supekGPU, ..._padobran, ..._cloudCPU, ..._cloudGPU])).sort())
+      setYears(Array.from(_years))
+    }
+  }, [status, data, subsetProjects, showCumulative])
+
+  if (error) {
+    toast.error(
+      <span className="font-monospace">
+        { error.message }
+      </span>, {
+        theme: "colored",
+        toastId: "accounting-record-error",
+        autoClose: 2500,
+        delay: 1000
+      }
+    )
+  }
+
+  if (status === "success") {
+    if (data) {
+      let groups = []
+
+      if (supekCPU.length > 0)
+        groups.push(
+          <Row>
+            <h4>Supek CPUH</h4>
+            <UsageBarChart
+              data={ 
+                "supek" in data ?
+                  filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
+                :
+                  []
+              }
+              entities={ supekCPU }
+              listEntities={ listProjects }
+              stackId="supek-cpuh"
+            />
+          </Row>
+        )
+
+      if (supekGPU.length > 0)
+        groups.push(
+          <Row>
+            <h4>Supek GPUH</h4>
+            <UsageBarChart
+              data={ 
+                "supek" in data ?
+                  filterTime(data["supek"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
+                :
+                 []
+              }
+              entities={ supekGPU }
+              listEntities={ listProjects }
+              stackId="supek-gpuh"
+            />
+          </Row>
+        )
+
+      if (padobran.length > 0)
+        groups.push(
+          <Row>
+            <h4>Padobran</h4>
+            <UsageBarChart
+              data={ 
+                "padobran" in data ?
+                  filterTime(data["padobran"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
+                :
+                  []
+              }
+              entities={ padobran }
+              listEntities={ listProjects }
+              stackId="padobran"
+            />
+          </Row>
+        )
+
+      if (vrancicCPU.length > 0)
+        groups.push(
+          <Row>
+            <h4>Vrančić CPUH</h4>
+            <UsageBarChart
+              data={ 
+                "cloud" in data ?
+                  filterTime(data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["cpuh"], selectedYear, useDefaultTimeRange) 
+                :
+                  []
+              }
+              entities={ vrancicCPU }
+              listEntities={ listProjects }
+              stackId="vrancic-cpuh"
+            />
+          </Row>
+        )
+
+      if (vrancicGPU.length > 0)
+        groups.push(
+          <Row>
+            <h4>Vrančić GPUH</h4>
+            <UsageBarChart
+              data={ 
+                "cloud" in data ?
+                  filterTime(data["cloud"][`${showCumulative ? "cumulative" : "monthly"}`]["gpuh"], selectedYear, useDefaultTimeRange) 
+                :
+                  []
+              }
+              entities={ vrancicGPU }
+              listEntities={ listProjects }
+              stackId="vrancic-gpuh"
+            />
+          </Row>
+        )
+
+      if ( groups.length == 0 )
+        return (
+          <>
+            <Row>
+              <PageTitle pageTitle={ pageTitle }>
+                <ButtonGroup
+                  className="d-flex align-items-center justify-content-between"
+                >
+                  <Button
+                    color="secondary"
+                    className="me-2 rounded"
+                    onClick={ () => setShowCumulative(!showCumulative) }
+                  >
+                    { showCumulative ? monthlyDisplay : cumulativeDisplay }
+                  </Button>
+                  <SelectYearButton
+                    years={ years }
+                    isOpenYear={ isOpenYear }
+                    setIsOpenYear={ setIsOpenYear }
+                    setSelectedYear={ setSelectedYear }
+                    setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                  />
+                  <SelectProjectButton 
+                    projects={ listProjects }
+                    subsetProjects={ subsetProjects }
+                    isOpen={ isOpen }
+                    setIsOpen={ setIsOpen }
+                    onSelect={ onProjectSelect }
+                  />
+                </ButtonGroup>
+              </PageTitle>
+            </Row>
+            {
+              IsLead() && 
+                <Row className="mb-3">
+                  <Col md={ 4 }>
+                    <Navigation />
+                  </Col>
+                </Row>
+            }
+            <Row className="mt-3 mb-3">
+              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+                <FormattedMessage
+                  description="myaccounting-emptygraphs"
+                  defaultMessage="Nema zabilježenog iskorištenja resursa"
+                />
+              </Col>
+            </Row>
+          </>
+        )
+
+      else
+        return (
+          <>
+            <Row>
+              <PageTitle pageTitle={ pageTitle }>
+                <ButtonGroup
+                  className="d-flex align-items-center justify-content-between"
+                >
+                  <Button
+                    color="secondary"
+                    className="me-2 rounded"
+                    onClick={ () => setShowCumulative(!showCumulative) }
+                  >
+                    { showCumulative ? monthlyDisplay : cumulativeDisplay }
+                  </Button>
+                  <SelectYearButton
+                    years={ years }
+                    isOpenYear={ isOpenYear }
+                    setIsOpenYear={ setIsOpenYear }
+                    setSelectedYear={ setSelectedYear }
+                    setUseDefaultTimeRange={ setUseDefaultTimeRange }
+                  />
+                  <SelectProjectButton 
+                    projects={ listProjects }
+                    subsetProjects={ subsetProjects }
+                    isOpen={ isOpen }
+                    setIsOpen={ setIsOpen }
+                    onSelect={ onProjectSelect }
+                  />
+                </ButtonGroup>
+              </PageTitle>
+            </Row>
+            {
+              IsLead() && 
+                <Row className="mb-3">
+                  <Col md={ 4 }>
+                    <Navigation />
+                  </Col>
+                </Row>
+            }
+            {
+              groups.map(row => row)
+            }
+            <Legend
+              entities={ listProjects }
+              subset={ subsetProjects }
             />
           </>
         )
