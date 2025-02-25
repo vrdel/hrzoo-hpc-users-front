@@ -306,6 +306,12 @@ class ResourceUsageTests(TestCase):
                             }
                         ]
                     }
+                },
+                "projects_mapping": {
+                    "project-1": "Project name 1",
+                    "project-2": "Project name 2",
+                    "project-5": "Project name 5",
+                    "Grant agreement ID: 123456": "Project name 6"
                 }
             }
         )
@@ -373,6 +379,10 @@ class ResourceUsageTests(TestCase):
                             }
                         ]
                     }
+                },
+                "projects_mapping": {
+                    "project-1": "Project name 1",
+                    "project-5": "Project name 5"
                 }
             }
         )
@@ -677,6 +687,10 @@ class ProjectUsagePerUserTests(TestCase):
                             ]
                         }
                     }
+                },
+                "projects_mapping": {
+                    "project-1": "Project name 1",
+                    "Grant agreement ID: 123456": "Project name 6"
                 }
             }
         )
@@ -970,6 +984,10 @@ class ProjectUsageTests(TestCase):
                             }
                         ]
                     }
+                },
+                "projects_mapping": {
+                    "project-1": "Project name 1",
+                    "Grant agreement ID: 123456": "Project name 6"
                 }
             }
         )

@@ -283,11 +283,25 @@ def _project_info(records):
 
 
 def usage4user(username):
+    projects = [
+        item.project for item in models.UserProject.objects.filter(
+            user=models.User.objects.get(person_username=username)
+        )
+    ]
+
     records = models.ResourceUsage.objects.filter(
         user=models.User.objects.get(person_username=username)
     )
+    output = _project_info(records)
 
-    return _project_info(records)
+    projects_mapping = dict()
+    for project in projects:
+        projects_mapping.update({project.identifier: project.name})
+
+    if projects_mapping and output:
+        output.update({"projects_mapping": projects_mapping})
+
+    return output
 
 
 def _leader_records(lead_username):
@@ -338,8 +352,9 @@ def usage4project_per_user(lead_username):
         })
 
         dates = _get_dates(df)
-
+        projects_mapping = dict()
         for project in projects:
+            projects_mapping.update({project.identifier: project.name})
             users = get_users_in_project(project_identifier=project.identifier)
 
             df_project = df[df["project"] == project.identifier]
@@ -354,13 +369,25 @@ def usage4project_per_user(lead_username):
             if project_usage:
                 output.update({project.identifier: project_usage})
 
+        if projects_mapping and output:
+            output.update({"projects_mapping": projects_mapping})
+
     return output
 
 
 def usage4project(lead_username):
-    records = _leader_records(lead_username)[1]
+    projects, records = _leader_records(lead_username)
 
-    return _project_info(records)
+    output = _project_info(records)
+
+    projects_mapping = dict()
+    for project in projects:
+        projects_mapping.update({project.identifier: project.name})
+
+    if projects_mapping and output:
+        output.update({"projects_mapping": projects_mapping})
+
+    return output
 
 
 class ResourceUsage(APIView):
