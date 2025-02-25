@@ -108,7 +108,19 @@ const Navigation = () => {
         >
           <FormattedMessage
             description="project-lead-accounting"
-            defaultMessage="Pogled za voditelja"
+            defaultMessage="Voditelj - projekti"
+          />
+        </NavLink>
+      </NavItem>
+      <NavItem key='project-users-accounting' className='ms-3 mt-1'>
+        <NavLink
+          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
+          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          to='/ui/project-users-accounting'
+        >
+          <FormattedMessage
+            description="project-lead-accounting"
+            defaultMessage="Voditelj - korisnici"
           />
         </NavLink>
       </NavItem>
@@ -342,7 +354,7 @@ const AccountingSpinner = ({ pageTitle }) => (
     {
       IsLead() && 
         <Row className="mb-3">
-          <Col md={ 4 }>
+          <Col md={ 6 }>
             <Navigation />
           </Col>
         </Row>
@@ -626,7 +638,7 @@ export const MyAccounting = () => {
             {
               IsLead() && 
                 <Row className="mb-3">
-                  <Col md={ 4 }>
+                  <Col md={ 6 }>
                     <Navigation />
                   </Col>
                 </Row>
@@ -676,7 +688,7 @@ export const MyAccounting = () => {
             {
               IsLead() && 
               <Row className="mb-3">
-                <Col md={ 4 }>
+                <Col md={ 6 }>
                   <Navigation />
                 </Col>
               </Row>
@@ -729,7 +741,7 @@ export const ProjectUsersAccounting = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(`${location.pathname}/${selectedProject}`, intl))
+    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
   }, [location.pathname, intl, status, selectedProject])
@@ -1007,7 +1019,7 @@ export const ProjectUsersAccounting = () => {
             {
               IsLead() && 
                 <Row className="mb-3">
-                  <Col md={ 4 }>
+                  <Col md={ 6 }>
                     <Navigation />
                   </Col>
                 </Row>
@@ -1053,7 +1065,7 @@ export const ProjectUsersAccounting = () => {
             {
               IsLead() && 
                 <Row className="mb-3">
-                  <Col md={ 4 }>
+                  <Col md={ 6 }>
                     <Navigation />
                   </Col>
                 </Row>
@@ -1332,7 +1344,7 @@ export const ProjectAccounting = () => {
             {
               IsLead() && 
                 <Row className="mb-3">
-                  <Col md={ 4 }>
+                  <Col md={ 6 }>
                     <Navigation />
                   </Col>
                 </Row>
@@ -1383,7 +1395,7 @@ export const ProjectAccounting = () => {
             {
               IsLead() && 
                 <Row className="mb-3">
-                  <Col md={ 4 }>
+                  <Col md={ 6 }>
                     <Navigation />
                   </Col>
                 </Row>
