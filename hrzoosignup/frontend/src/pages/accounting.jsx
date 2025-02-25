@@ -150,11 +150,11 @@ const getColor = (entity, listEntities) => {
 }
 
 
-const Legend = ({ entities, subset }) => {
+const Legend = ({ entities, subset, mapping}) => {
   return (
     <Row className="mt-3">
-      <Col md={4}></Col>
-      <Col md={4} className="d-flex align-items-center justify-content-center">
+      <Col md={3}></Col>
+      <Col md={6} className="d-flex align-items-center justify-content-center">
         <div>
           {
             subset.length > 0 ?
@@ -166,7 +166,7 @@ const Legend = ({ entities, subset }) => {
                     className="mt-1" 
                     color={ getColor(item, entities) }
                   />
-                  { " " }{ item }
+                  { " " }{ mapping && item in mapping ? `${mapping[item]} (${item})` : item }
                 </p>
               ))
             :
@@ -178,7 +178,7 @@ const Legend = ({ entities, subset }) => {
                     className="mt-1" 
                     color={ getColor(item, entities) }
                   />
-                  { " " }{ item }
+                  { " " }{ mapping && item in mapping ? `${mapping[item]} (${item})` : item }
                 </p>
               ))
           }
@@ -395,6 +395,8 @@ export const MyAccounting = () => {
   const [selectedYear, setSelectedYear] = useState(undefined)
   const [useDefaultTimeRange, setUseDefaultTimeRange] = useState(true)
   const [isOpenYear, setIsOpenYear] = useState(false)
+  const [ projectsMapping, setProjectsMapping ] = useState(new Object())
+  const [ popoverOpen, setPopoverOpen ] = useState(false)
 
   const intl = useIntl()
   let navigate = useNavigate()
@@ -501,6 +503,7 @@ export const MyAccounting = () => {
       }
       setListProjects(Array.from(new Set([...supek_cpu, ...supek_gpu, ...padobran, ...galaxy, ...jupyter_cpu, ...jupyter_gpu])).sort())
       setYears(Array.from(_years))
+      setProjectsMapping(data["projects_mapping"])
     }
   }, [status, data, subsetOfProjects, showCumulative])
 
@@ -681,6 +684,9 @@ export const MyAccounting = () => {
                     isOpen={ isOpen }
                     setIsOpen={ setIsOpen }
                     onSelect={ onProjectSelect }
+                    popoverOpen={ popoverOpen }
+                    setPopoverOpen={ setPopoverOpen }
+                    mapping={ projectsMapping }
                   />
                 </ButtonGroup>
               </PageTitle>
@@ -699,6 +705,7 @@ export const MyAccounting = () => {
             <Legend 
               entities={ listProjects }
               subset={ subsetOfProjects }
+              mapping={ projectsMapping }
             />
           </>
         )
@@ -731,6 +738,7 @@ export const ProjectUsersAccounting = () => {
   const [ supekGPU, setSupekGPU ] = useState(new Object())
   const [ vrancicCPU, setVrancicCPU ] = useState(new Object())
   const [ vrancicGPU, setVrancicGPU ] = useState(new Object())
+  const [ projectsMapping, setProjectsMapping ] = useState(new Object())
 
   const intl = useIntl()
   let navigate = useNavigate()
@@ -847,6 +855,7 @@ export const ProjectUsersAccounting = () => {
         _listUsers[project] = _allUsers
 
         setListUsers(_listUsers)
+        setProjectsMapping(data["projects_mapping"])
       }
       setYears(Array.from(_years))
       setListProjects(_listProjects)
@@ -1076,6 +1085,7 @@ export const ProjectUsersAccounting = () => {
             <Legend
               entities={ listUsers[selectedProject] }
               subset={ subsetUsers }
+              mapping={ projectsMapping }
             />
           </>
         )
@@ -1104,6 +1114,8 @@ export const ProjectAccounting = () => {
   const [ supekGPU, setSupekGPU ] = useState(new Object())
   const [ vrancicCPU, setVrancicCPU ] = useState(new Object())
   const [ vrancicGPU, setVrancicGPU ] = useState(new Object())
+  const [ projectsMapping, setProjectsMapping ] = useState(new Object())
+  const [ popoverOpen, setPopoverOpen ] = useState(false)
 
   const intl = useIntl()
   let navigate = useNavigate()
@@ -1199,6 +1211,7 @@ export const ProjectAccounting = () => {
       }
       setListProjects(Array.from(new Set([..._supekCPU, ..._supekGPU, ..._padobran, ..._cloudCPU, ..._cloudGPU])).sort())
       setYears(Array.from(_years))
+      setProjectsMapping(data["projects_mapping"])
     }
   }, [status, data, subsetProjects, showCumulative])
 
@@ -1337,6 +1350,9 @@ export const ProjectAccounting = () => {
                     isOpen={ isOpen }
                     setIsOpen={ setIsOpen }
                     onSelect={ onProjectSelect }
+                    popoverOpen={ popoverOpen }
+                    setPopoverOpen={ setPopoverOpen }
+                    mapping={ projectsMapping }
                   />
                 </ButtonGroup>
               </PageTitle>
@@ -1388,6 +1404,9 @@ export const ProjectAccounting = () => {
                     isOpen={ isOpen }
                     setIsOpen={ setIsOpen }
                     onSelect={ onProjectSelect }
+                    popoverOpen={ popoverOpen }
+                    setPopoverOpen={ setPopoverOpen }
+                    mapping={ projectsMapping }
                   />
                 </ButtonGroup>
               </PageTitle>
@@ -1406,6 +1425,7 @@ export const ProjectAccounting = () => {
             <Legend
               entities={ listProjects }
               subset={ subsetProjects }
+              mapping={ projectsMapping }
             />
           </>
         )
