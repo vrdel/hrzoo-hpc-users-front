@@ -8,7 +8,7 @@ from backend.dashboard.indicators import DashboardIndicators
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-LOGGER = logging.getLogger("hrzoosignup.crons")
+LOGGER = logging.getLogger("hrzoosignup.dashboard")
 
 UNIVERSITIES = {
     "263": "Sveučilište u Zagrebu",
@@ -33,7 +33,7 @@ class Command(BaseCommand):
         month = options["month"]
         year = options["year"]
 
-        LOGGER.info(f"Sending data to Dashboard for {month}/{year}")
+        LOGGER.info(f"Sending data to Dashboard for {month:02d}/{year}")
 
         indicators = DashboardIndicators(
             month=options["month"], year=options["year"]
@@ -46,13 +46,9 @@ class Command(BaseCommand):
         )
         headers = {"Authorization": f"Basic {token.decode('ascii')}"}
 
-        day = calendar.monthrange(
-            options["year"], options["month"]
-        )[1]
-        date = (
-            f"{options['year']}-{options['month']:02d}-"
-            f"{day}"
-        )
+        day = calendar.monthrange(options["year"], options["month"])[1]
+
+        date = f"{options['year']}-{options['month']:02d}-{day}"
 
         try:
             response = requests.get(
@@ -139,6 +135,7 @@ class Command(BaseCommand):
                                     "144": len(institutions)
                                 })
 
+                            indicator_error_count = 0
                             for indicator, value in data2send.items():
                                 response = requests.post(
                                     settings.DASHBOARD_API_INDICATORS,
@@ -152,6 +149,7 @@ class Command(BaseCommand):
                                 )
 
                                 if not response.ok:
+                                    indicator_error_count += 1
                                     LOGGER.error(
                                         f"Error sending indicator {indicator} "
                                         f"for institution {institution}: "
@@ -159,6 +157,12 @@ class Command(BaseCommand):
                                         f"{response.reason}"
                                     )
                                     continue
+
+                            if indicator_error_count == 0:
+                                LOGGER.info(
+                                    f"All indicators for institution "
+                                    f"{institution} sent successfully"
+                                )
 
                 try:
                     response = requests.get(
@@ -232,6 +236,7 @@ class Command(BaseCommand):
                         )
                     }
 
+                    indicator_error_count = 0
                     for indicator_id, value in aggr_data2send.items():
                         response = requests.post(
                             settings.DASHBOARD_API_INDICATORS,
@@ -245,6 +250,7 @@ class Command(BaseCommand):
                         )
 
                         if not response.ok:
+                            indicator_error_count += 1
                             LOGGER.error(
                                 f"Error sending indicator {indicator_id} "
                                 f"for University {university}: "
@@ -253,10 +259,10 @@ class Command(BaseCommand):
                             )
                             continue
 
-                        else:
-                            LOGGER.info(
-                                f"Indicators for University {university} sent "
-                                f"successfully"
-                            )
+                    if indicator_error_count == 0:
+                        LOGGER.info(
+                            f"Indicators for University {university} sent "
+                            f"successfully"
+                        )
 
-        LOGGER.info("All data sent to dashboard successfully")
+        LOGGER.info("Sending data to dashboard finished")
