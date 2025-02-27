@@ -31,6 +31,9 @@ import { faSquare } from "@fortawesome/free-solid-svg-icons";
 import { SharedData } from "Pages/root";
 import { useIntl, FormattedMessage } from 'react-intl'
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
+import { MiniButton } from 'Components/MiniButton';
+import { copyToClipboard } from 'Utils/copy-clipboard';
+import { faCopy} from "@fortawesome/free-solid-svg-icons";
 
 
 const colors = ["#12436D", "#28A197", "#801650", "#F46A25", "#3D3D3D", "#A285D1", '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b', '#e8827a', '#b04c46','#d71635', '#510707', '#7e191e',  '#df7f1b','#fcaf26', '#b4bbc0', '#929597', '#606365']
@@ -315,7 +318,7 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, s
 }
 
 
-const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSelect }) => {
+const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSelect, intl }) => {
   return (
     <Dropdown 
       isOpen={ isOpen } 
@@ -332,13 +335,32 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
               key={ project } 
               toggle={ false }
             >
-              <Input 
-                type="checkbox"
-                className="mr-1"
-                checked={ subsetProjects.indexOf(project) >= 0 }
-                onClick={ () => onSelect(project) }
-              />
-              <Label check>{ project }</Label>
+              <span className="d-flex justify-content-left flex-row">
+                <Input 
+                  type="checkbox"
+                  className="mr-1"
+                  checked={ subsetProjects.indexOf(project) >= 0 }
+                  onClick={ () => onSelect(project) }
+                />
+                <Label className="ml-1" check>{ project }</Label>
+                <MiniButton
+                  color="light"
+                  onClick={(e) => copyToClipboard(
+                    e, project.identifier,
+                    intl.formatMessage({
+                      defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                      description: "memberships-clipboard-ok"
+                    }),
+                    intl.formatMessage({
+                      defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                      description: "memberships-clipboard-fail"
+                    }),
+                    "id-request"
+                  )}
+                >
+                  <FontAwesomeIcon size="xs" icon={faCopy} />
+                </MiniButton>
+              </span>
             </DropdownItem>
           )
         }
@@ -686,7 +708,7 @@ export const MyAccounting = () => {
                     onSelect={ onProjectSelect }
                     popoverOpen={ popoverOpen }
                     setPopoverOpen={ setPopoverOpen }
-                    mapping={ projectsMapping }
+                    intl={ intl }
                   />
                 </ButtonGroup>
               </PageTitle>
@@ -895,7 +917,26 @@ export const ProjectUsersAccounting = () => {
                 setSubsetUsers([])
               }}
             >
-              { proj }
+              <span className="d-flex justify-content-left align-items-middle">
+                { proj }
+                <MiniButton
+                  color="light"
+                  onClick={(e) => copyToClipboard(
+                    e, proj,
+                    intl.formatMessage({
+                      defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                      description: "memberships-clipboard-ok"
+                    }),
+                    intl.formatMessage({
+                      defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                      description: "memberships-clipboard-fail"
+                    }),
+                    "id-request"
+                  )}
+                >
+                  <FontAwesomeIcon size="xs" icon={faCopy} />
+                </MiniButton>
+              </span>
             </DropdownItem>
           )
         }
@@ -1368,7 +1409,7 @@ export const ProjectAccounting = () => {
                     onSelect={ onProjectSelect }
                     popoverOpen={ popoverOpen }
                     setPopoverOpen={ setPopoverOpen }
-                    mapping={ projectsMapping }
+                    intl={ intl }
                   />
                 </ButtonGroup>
               </PageTitle>
@@ -1422,7 +1463,7 @@ export const ProjectAccounting = () => {
                     onSelect={ onProjectSelect }
                     popoverOpen={ popoverOpen }
                     setPopoverOpen={ setPopoverOpen }
-                    mapping={ projectsMapping }
+                    intl={ intl }
                   />
                 </ButtonGroup>
               </PageTitle>
