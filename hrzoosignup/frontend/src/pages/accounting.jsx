@@ -769,6 +769,7 @@ export const ProjectUsersAccounting = () => {
   useEffect(() => {
     if (status == "success" && data) {
       let _listProjects = Object.keys(data)
+      _listProjects.splice(_listProjects.indexOf("projects_mapping"), 1)
       if (!selectedProject)
         setSelectedProject(_listProjects[0])
 
@@ -1031,6 +1032,12 @@ export const ProjectUsersAccounting = () => {
                   <Col md={ 6 }>
                     <Navigation />
                   </Col>
+                  {
+                    selectedProject &&
+                      <Col md={ 6 }>
+                        { projectsMapping[selectedProject] }
+                      </Col>
+                  }
                 </Row>
             }
             <Row className="mt-3 mb-3">
@@ -1077,6 +1084,15 @@ export const ProjectUsersAccounting = () => {
                   <Col md={ 6 }>
                     <Navigation />
                   </Col>
+                  <Col md={ 2 }></Col>
+                  {
+                    selectedProject &&
+                      <Col md={ 4 }>
+                        <p className="text-sm-end text-muted">
+                          { projectsMapping[selectedProject] }
+                        </p>
+                      </Col>
+                  }
                 </Row>
             }
             {
