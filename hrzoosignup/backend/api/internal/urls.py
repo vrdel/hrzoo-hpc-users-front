@@ -9,6 +9,7 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path("accounting/records", views.ResourceUsage.as_view(), name="resourceusage"),
+    path("accounting/project-user-records", views.ProjectUsagePerUser.as_view(), name="projectusageperuser"),
     path("accounting/project-records", views.ProjectUsage.as_view(), name="projectusage"),
     path("active-users/", views.UsersInfo.as_view(), name="users"),
     path("inactive-users/", views.UsersInfoInactive.as_view(), name="inactiveusers"),

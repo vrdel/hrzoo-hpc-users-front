@@ -1,8 +1,8 @@
 import logging
 
 from backend import models
-from backend.api.internal.view_accounting import usage4user, usage4project, \
-    _is_user_lead
+from backend.api.internal.view_accounting import usage4user, \
+    usage4project_per_user, _is_user_lead, usage4project
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
 
@@ -34,7 +34,15 @@ class Command(BaseCommand):
 
             cache.set_many({
                 f"project_usage_{user}": usage4project(user) for user in users
-                if (_is_user_lead(user) and usage4project(user))
+                if (_is_user_lead(models.User.objects.get(person_username=user))
+                    and usage4project(user))
+            })
+
+            cache.set_many({
+                f"project_user_usage_{user}": usage4project_per_user(user)
+                for user in users
+                if (_is_user_lead(models.User.objects.get(person_username=user))
+                    and usage4project_per_user(user))
             })
 
         except Exception as e:

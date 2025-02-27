@@ -699,10 +699,6 @@
     "defaultMessage": "Osoba:",
     "description": "software-cardbody-person"
   },
-  "Dk3rrP": {
-    "defaultMessage": "Pogled za voditelja",
-    "description": "project-lead-accounting"
-  },
   "DqpQay": {
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
@@ -1167,6 +1163,10 @@
     "defaultMessage": "Traži",
     "description": "project-list-find"
   },
+  "PT5+t1": {
+    "defaultMessage": "Voditelj - projekti",
+    "description": "project-lead-accounting"
+  },
   "Pj1p8q": {
     "defaultMessage": "Resursi",
     "description": "userschange-project-resources"
@@ -1286,10 +1286,6 @@
   "STHLdY": {
     "defaultMessage": "Odjava",
     "description": "users-table-general-signoff"
-  },
-  "SjQeQO": {
-    "defaultMessage": "Iskorištenje resursa za projekt - {identifier}",
-    "description": "linktitle-manageprojects-change"
   },
   "T73nyd": {
     "defaultMessage": "Javni ključ",
@@ -1538,6 +1534,10 @@
   "bAhHuU": {
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
     "description": "newrequest-thesis-explanation"
+  },
+  "bC9GB0": {
+    "defaultMessage": "Voditelj - korisnici",
+    "description": "project-lead-accounting"
   },
   "bDGuzC": {
     "defaultMessage": "Nema aktivnih projekata",

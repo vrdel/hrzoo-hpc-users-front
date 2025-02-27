@@ -136,32 +136,6 @@ def _generate_usage(df, dates, iterable=None, per_user=False):
             if "month" not in gpu_monthly:
                 gpu_monthly.update({"month": f"{month:02d}/{year}"})
 
-            if resource == "cloud":
-                _update_dict(
-                    resource_dict=cpu_cumulative,
-                    df_in=df_cumulative,
-                    value="cpuh",
-                    key="total_project_usage"
-                )
-                _update_dict(
-                    resource_dict=gpu_cumulative,
-                    df_in=df_cumulative,
-                    value="gpuh",
-                    key="total_project_usage"
-                )
-                _update_dict(
-                    resource_dict=cpu_monthly,
-                    df_in=df_monthly,
-                    value="cpuh",
-                    key="total_project_usage"
-                )
-                _update_dict(
-                    resource_dict=gpu_monthly,
-                    df_in=df_monthly,
-                    value="gpuh",
-                    key="total_project_usage"
-                )
-
             for item in iterable:
                 cpuh_key = "cpuh"
                 gpuh_key = "gpuh"
@@ -187,30 +161,31 @@ def _generate_usage(df, dates, iterable=None, per_user=False):
                         cpuh_key = "jupyter_cpuh"
                         gpuh_key = "jupyter_gpuh"
 
-                _update_dict(
-                    resource_dict=cpu_cumulative,
-                    df_in=df_cumulative_per_item,
-                    value=cpuh_key,
-                    key=item_key
-                )
-                _update_dict(
-                    resource_dict=gpu_cumulative,
-                    df_in=df_cumulative_per_item,
-                    value=gpuh_key,
-                    key=item_key
-                )
-                _update_dict(
-                    resource_dict=cpu_monthly,
-                    df_in=df_monthly_per_item,
-                    value=cpuh_key,
-                    key=item_key
-                )
-                _update_dict(
-                    resource_dict=gpu_monthly,
-                    df_in=df_monthly_per_item,
-                    value=gpuh_key,
-                    key=item_key
-                )
+                if not (resource == "cloud" and per_user):
+                    _update_dict(
+                        resource_dict=cpu_cumulative,
+                        df_in=df_cumulative_per_item,
+                        value=cpuh_key,
+                        key=item_key
+                    )
+                    _update_dict(
+                        resource_dict=gpu_cumulative,
+                        df_in=df_cumulative_per_item,
+                        value=gpuh_key,
+                        key=item_key
+                    )
+                    _update_dict(
+                        resource_dict=cpu_monthly,
+                        df_in=df_monthly_per_item,
+                        value=cpuh_key,
+                        key=item_key
+                    )
+                    _update_dict(
+                        resource_dict=gpu_monthly,
+                        df_in=df_monthly_per_item,
+                        value=gpuh_key,
+                        key=item_key
+                    )
 
             if cpu_cumulative:
                 cpuh_cumulative.append(cpu_cumulative)
@@ -274,11 +249,7 @@ def _generate_usage(df, dates, iterable=None, per_user=False):
     return output
 
 
-def usage4user(username):
-    records = models.ResourceUsage.objects.filter(
-        user=models.User.objects.get(person_username=username)
-    )
-
+def _project_info(records):
     output = dict()
     if len(records) > 0:
         df = pd.DataFrame.from_records(
@@ -311,7 +282,29 @@ def usage4user(username):
     return output
 
 
-def usage4project(lead_username):
+def usage4user(username):
+    projects = [
+        item.project for item in models.UserProject.objects.filter(
+            user=models.User.objects.get(person_username=username)
+        )
+    ]
+
+    records = models.ResourceUsage.objects.filter(
+        user=models.User.objects.get(person_username=username)
+    )
+    output = _project_info(records)
+
+    projects_mapping = dict()
+    for project in projects:
+        projects_mapping.update({project.identifier: project.name})
+
+    if projects_mapping and output:
+        output.update({"projects_mapping": projects_mapping})
+
+    return output
+
+
+def _leader_records(lead_username):
     projects = [
         item.project for item in models.UserProject.objects.filter(
             user=models.User.objects.get(person_username=lead_username),
@@ -322,6 +315,12 @@ def usage4project(lead_username):
     records = models.ResourceUsage.objects.filter(
         Q(project__in=projects) & ~Q(resource_name="jupyter")
     )
+
+    return projects, records
+
+
+def usage4project_per_user(lead_username):
+    projects, records = _leader_records(lead_username)
 
     output = dict()
     if len(records) > 0:
@@ -353,8 +352,9 @@ def usage4project(lead_username):
         })
 
         dates = _get_dates(df)
-
+        projects_mapping = dict()
         for project in projects:
+            projects_mapping.update({project.identifier: project.name})
             users = get_users_in_project(project_identifier=project.identifier)
 
             df_project = df[df["project"] == project.identifier]
@@ -368,6 +368,24 @@ def usage4project(lead_username):
 
             if project_usage:
                 output.update({project.identifier: project_usage})
+
+        if projects_mapping and output:
+            output.update({"projects_mapping": projects_mapping})
+
+    return output
+
+
+def usage4project(lead_username):
+    projects, records = _leader_records(lead_username)
+
+    output = _project_info(records)
+
+    projects_mapping = dict()
+    for project in projects:
+        projects_mapping.update({project.identifier: project.name})
+
+    if projects_mapping and output:
+        output.update({"projects_mapping": projects_mapping})
 
     return output
 
@@ -409,13 +427,40 @@ class ProjectUsage(APIView):
             return Response(err_response, status=err_status)
 
         else:
-            cached_data = cache.get(f"project_usage_{user.person_username}")
+            return Response(
+                data=usage4project(user.person_username),
+                status=status.HTTP_200_OK
+            )
+
+
+class ProjectUsagePerUser(APIView):
+    authentication_classes = (SessionAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        user = request.user
+
+        if not _is_user_lead(user):
+            err_status = status.HTTP_401_UNAUTHORIZED
+            err_response = {
+                "status": {
+                    "code": err_status,
+                    "message": "Only project leaders are allowed this view"
+                }
+            }
+
+            return Response(err_response, status=err_status)
+
+        else:
+            cached_data = cache.get(
+                f"project_user_usage_{user.person_username}"
+            )
 
             if cached_data:
                 return Response(data=cached_data, status=status.HTTP_200_OK)
 
             else:
                 return Response(
-                    usage4project(user.person_username),
+                    usage4project_per_user(user.person_username),
                     status=status.HTTP_200_OK
                 )
