@@ -463,6 +463,12 @@ LOGGING = {
             'filename': '{}var/log/crons.log'.format(VENV),
             'formatter': 'verbose',
         },
+        'file_dashboard': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': '{}var/log/dashboard.log'.format(VENV),
+            'formatter': 'verbose',
+        },
     },
     'loggers': {
         # 'django': {
@@ -492,6 +498,11 @@ LOGGING = {
         },
         'hrzoosignup.crons': {
             'handlers': ['file_crons'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'hrzoosignup.dashboard': {
+            'handlers': ['file_dashboard'],
             'level': 'DEBUG',
             'propagate': True,
         },

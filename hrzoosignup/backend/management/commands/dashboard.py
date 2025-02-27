@@ -8,7 +8,7 @@ from backend.dashboard.indicators import DashboardIndicators
 from django.conf import settings
 from django.core.management.base import BaseCommand
 
-LOGGER = logging.getLogger("hrzoosignup.crons")
+LOGGER = logging.getLogger("hrzoosignup.dashboard")
 
 UNIVERSITIES = {
     "263": "Sveučilište u Zagrebu",
@@ -33,7 +33,7 @@ class Command(BaseCommand):
         month = options["month"]
         year = options["year"]
 
-        LOGGER.info(f"Sending data to Dashboard for {month}/{year}")
+        LOGGER.info(f"Sending data to Dashboard for {month:02d}/{year}")
 
         indicators = DashboardIndicators(
             month=options["month"], year=options["year"]
