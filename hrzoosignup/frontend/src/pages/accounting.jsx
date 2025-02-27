@@ -20,7 +20,8 @@ import {
   Nav,
   NavItem,
   CardBody,
-  Spinner
+  Spinner,
+  UncontrolledTooltip
 } from "reactstrap";
 import { useNavigate, NavLink } from 'react-router-dom';
 import { PageTitle } from 'Components/PageTitle';
@@ -318,7 +319,7 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, s
 }
 
 
-const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSelect, intl }) => {
+const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSelect, intl, projectsMapping }) => {
   return (
     <Dropdown 
       isOpen={ isOpen } 
@@ -330,12 +331,12 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
       </DropdownToggle>
       <DropdownMenu>
         {
-          projects.map((project) => 
+          projects.map((project, index) => 
             <DropdownItem 
               key={ project } 
               toggle={ false }
             >
-              <span className="d-flex justify-content-left flex-row">
+              <span id={ `tooltip-${index}` } className="d-flex justify-content-left flex-row">
                 <Input 
                   type="checkbox"
                   className="mr-1"
@@ -361,6 +362,12 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
                   <FontAwesomeIcon size="xs" icon={faCopy} />
                 </MiniButton>
               </span>
+              <UncontrolledTooltip
+                placement="left"
+                target={ `tooltip-${index}` }
+              >
+                { projectsMapping[project] }
+              </UncontrolledTooltip>
             </DropdownItem>
           )
         }
@@ -709,6 +716,7 @@ export const MyAccounting = () => {
                     popoverOpen={ popoverOpen }
                     setPopoverOpen={ setPopoverOpen }
                     intl={ intl }
+                    projectsMapping={ projectsMapping }
                   />
                 </ButtonGroup>
               </PageTitle>
@@ -909,35 +917,43 @@ export const ProjectUsersAccounting = () => {
       </DropdownToggle>
       <DropdownMenu>
         {
-          listProjects.map(proj => 
-            <DropdownItem
-              key={ proj }
-              onClick={ () => {
-                setSelectedProject(proj) 
-                setSubsetUsers([])
-              }}
-            >
-              <span className="d-flex justify-content-left align-items-middle">
-                { proj }
-                <MiniButton
-                  color="light"
-                  onClick={(e) => copyToClipboard(
-                    e, proj,
-                    intl.formatMessage({
-                      defaultMessage: "Šifra projekta kopirana u međuspremnik",
-                      description: "memberships-clipboard-ok"
-                    }),
-                    intl.formatMessage({
-                      defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
-                      description: "memberships-clipboard-fail"
-                    }),
-                    "id-request"
-                  )}
+          listProjects.map((proj, index) => 
+            <>
+              <DropdownItem
+                key={ proj }
+                onClick={ () => {
+                  setSelectedProject(proj) 
+                  setSubsetUsers([])
+                }}
+              >
+                <span id={`tooltip-${index}`} className="d-flex justify-content-left align-items-middle">
+                  { proj }
+                  <MiniButton
+                    color="light"
+                    onClick={(e) => copyToClipboard(
+                      e, proj,
+                      intl.formatMessage({
+                        defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                        description: "memberships-clipboard-ok"
+                      }),
+                      intl.formatMessage({
+                        defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                        description: "memberships-clipboard-fail"
+                      }),
+                      "id-request"
+                    )}
+                  >
+                    <FontAwesomeIcon size="xs" icon={faCopy} />
+                  </MiniButton>
+                </span>
+                <UncontrolledTooltip
+                  placement="left"
+                  target={ `tooltip-${index}` }
                 >
-                  <FontAwesomeIcon size="xs" icon={faCopy} />
-                </MiniButton>
-              </span>
-            </DropdownItem>
+                  { projectsMapping[proj] }
+                </UncontrolledTooltip>
+              </DropdownItem>
+            </>
           )
         }
       </DropdownMenu>
@@ -1410,6 +1426,7 @@ export const ProjectAccounting = () => {
                     popoverOpen={ popoverOpen }
                     setPopoverOpen={ setPopoverOpen }
                     intl={ intl }
+                    projectsMapping={ projectsMapping }
                   />
                 </ButtonGroup>
               </PageTitle>
@@ -1464,6 +1481,7 @@ export const ProjectAccounting = () => {
                     popoverOpen={ popoverOpen }
                     setPopoverOpen={ setPopoverOpen }
                     intl={ intl }
+                    projectsMapping={ projectsMapping }
                   />
                 </ButtonGroup>
               </PageTitle>
