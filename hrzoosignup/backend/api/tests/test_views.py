@@ -1769,7 +1769,8 @@ class AccountingUserProjectAPITests(TestCase):
                     "type": "research-croris",
                     "name": "Project name 1",
                     "ustanova": {
-                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "naziv": "Sveučilište u Zagrebu, Fakultet "
+                                 "elektrotehnike i računarstva",
                         "oib": "01234567890",
                         "mbu": "036"
                     },
@@ -1789,7 +1790,11 @@ class AccountingUserProjectAPITests(TestCase):
                     ],
                     "realm": "fer.hr",
                     "finance": [
-                        "Hrvatska zaklada za znanost"
+                        {
+                            "name": 'Hrvatska zaklada za znanost',
+                            "amount": "100",
+                            "currency": "EUR"
+                        }
                     ],
                     "approved_resources": [
                         "CLOUD-GPU",
@@ -1806,7 +1811,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Arthur",
                             "prezime": "Dent",
                             "mail": "arthur.dent@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         },
                         {
                             "id": self.user2.id,
@@ -1814,7 +1820,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Tricia",
                             "prezime": "McMillan",
                             "mail": "trillian@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, "
+                                        "Fakultet elektrotehnike i računarstva"
                         },
                         {
                             "id": self.user9.id,
@@ -1836,7 +1843,8 @@ class AccountingUserProjectAPITests(TestCase):
                     "type": "research-institutional",
                     "name": "Project name 2",
                     "ustanova": {
-                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "naziv": "Sveučilište u Zagrebu, Fakultet "
+                                 "elektrotehnike i računarstva",
                         "oib": "01234567890",
                         "mbu": "036"
                     },
@@ -1855,7 +1863,8 @@ class AccountingUserProjectAPITests(TestCase):
                     ],
                     "realm": "fer.hr",
                     "finance": [
-                        "Fakultet elektrotehnike i računarstva"
+                        "Sveučilište u Zagrebu, Fakultet elektrotehnike i "
+                        "računarstva"
                     ],
                     "approved_resources": [
                         "CPU",
@@ -1869,7 +1878,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Arthur",
                             "prezime": "Dent",
                             "mail": "arthur.dent@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         },
                         {
                             "id": self.user3.id,
@@ -1877,7 +1887,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Ford",
                             "prezime": "Prefect",
                             "mail": "ford.prefect@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         },
                         {
                             "id": self.user4.id,
@@ -1885,7 +1896,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Zaphod",
                             "prezime": "Beeblebrox",
                             "mail": "zb@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         }
                     ]
                 },
@@ -1898,7 +1910,8 @@ class AccountingUserProjectAPITests(TestCase):
                     "type": "thesis",
                     "name": "Project name 3",
                     "ustanova": {
-                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "naziv": "Sveučilište u Zagrebu, Fakultet "
+                                 "elektrotehnike i računarstva",
                         "oib": "01234567890",
                         "mbu": "036"
                     },
@@ -1917,7 +1930,8 @@ class AccountingUserProjectAPITests(TestCase):
                     ],
                     "realm": "fer.hr",
                     "finance": [
-                        "Fakultet elektrotehnike i računarstva"
+                        "Sveučilište u Zagrebu, Fakultet elektrotehnike i "
+                        "računarstva"
                     ],
                     "approved_resources": [
                         "GPU",
@@ -1931,7 +1945,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Marvin",
                             "prezime": "The Paranoid Android",
                             "mail": "marvin@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         },
                         {
                             "id": self.user6.id,
@@ -1939,7 +1954,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "",
                             "prezime": "",
                             "mail": "",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         },
                         {
                             "id": self.user10.id,
@@ -1979,7 +1995,11 @@ class AccountingUserProjectAPITests(TestCase):
                     ],
                     "realm": "pmf.hr",
                     "finance": [
-                        "Trotters Independent Traders"
+                        {
+                            "name": 'Trotters Independent Traders',
+                            "amount": "10",
+                            "currency": "GBP"
+                        }
                     ],
                     "approved_resources": [
                         "CLOUD-GPU",
@@ -2017,7 +2037,8 @@ class AccountingUserProjectAPITests(TestCase):
                     "type": "practical",
                     "name": "Project name 5",
                     "ustanova": {
-                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "naziv": "Sveučilište u Zagrebu, Fakultet "
+                                 "elektrotehnike i računarstva",
                         "oib": "01234567890",
                         "mbu": "036"
                     },
@@ -2036,7 +2057,8 @@ class AccountingUserProjectAPITests(TestCase):
                     ],
                     "realm": "fer.hr",
                     "finance": [
-                        "Fakultet elektrotehnike i računarstva"
+                        "Sveučilište u Zagrebu, Fakultet elektrotehnike i "
+                        "računarstva"
                     ],
                     "approved_resources": [
                         "PADOBRAN",
@@ -2049,7 +2071,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Arthur",
                             "prezime": "Dent",
                             "mail": "arthur.dent@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         },
                         {
                             "id": self.user2.id,
@@ -2057,7 +2080,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Tricia",
                             "prezime": "McMillan",
                             "mail": "trillian@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         }
                     ]
                 },                {
@@ -2069,7 +2093,8 @@ class AccountingUserProjectAPITests(TestCase):
                     "type": "practical",
                     "name": "Project name 6",
                     "ustanova": {
-                        "naziv": "Fakultet elektrotehnike i računarstva",
+                        "naziv": "Sveučilište u Zagrebu, Fakultet "
+                                 "elektrotehnike i računarstva",
                         "oib": "01234567890",
                         "mbu": "036"
                     },
@@ -2088,7 +2113,8 @@ class AccountingUserProjectAPITests(TestCase):
                     ],
                     "realm": "fer.hr",
                     "finance": [
-                        "Fakultet elektrotehnike i računarstva"
+                        "Sveučilište u Zagrebu, Fakultet elektrotehnike i "
+                        "računarstva"
                     ],
                     "approved_resources": [
                         "PADOBRAN",
@@ -2101,7 +2127,8 @@ class AccountingUserProjectAPITests(TestCase):
                             "ime": "Arthur",
                             "prezime": "Dent",
                             "mail": "arthur.dent@fer.hr",
-                            "ustanova": "Fakultet elektrotehnike i računarstva"
+                            "ustanova": "Sveučilište u Zagrebu, Fakultet "
+                                        "elektrotehnike i računarstva"
                         }
                     ]
                 }
