@@ -343,7 +343,7 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
                   checked={ subsetProjects.indexOf(project) >= 0 }
                   onClick={ () => onSelect(project) }
                 />
-                <Label className="ml-1" check>{ project }</Label>
+                <Label className="ml-1" check>&nbsp; { project }</Label>
                 <MiniButton
                   color="light"
                   onClick={(e) => copyToClipboard(
@@ -980,7 +980,7 @@ export const ProjectUsersAccounting = () => {
                 checked={ subsetUsers.indexOf(user) >= 0 }
                 onClick={ () => onUserSelect(user) }
               />
-              <Label check>{ user }</Label>
+              <Label check>&nbsp; { user }</Label>
             </DropdownItem>
           )
         }
