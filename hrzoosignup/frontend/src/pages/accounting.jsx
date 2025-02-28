@@ -347,7 +347,7 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
                 <MiniButton
                   color="light"
                   onClick={(e) => copyToClipboard(
-                    e, project.identifier,
+                    e, project,
                     intl.formatMessage({
                       defaultMessage: "Šifra projekta kopirana u međuspremnik",
                       description: "memberships-clipboard-ok"
