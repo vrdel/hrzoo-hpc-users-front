@@ -257,7 +257,7 @@ const filterTime = ( data, selectedYear, useDefaultTimeRange ) => {
 }
 
 
-const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, setUseDefaultTimeRange }) => {
+const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setSelectedYear, useDefaultTimeRange, setUseDefaultTimeRange }) => {
   return (
     <Dropdown 
       isOpen={ isOpenYear } 
@@ -280,6 +280,7 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, s
                 setUseDefaultTimeRange(false)
                 setIsOpenYear(!isOpenYear)
               }}
+              active={ year == selectedYear }
             >
               { year }
             </DropdownItem>
@@ -292,7 +293,8 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, s
             setUseDefaultTimeRange(true)
             setIsOpenYear(!isOpenYear)
           }}
-          toggle={false}
+          toggle={ false }
+          active={ useDefaultTimeRange }
         >
           <FormattedMessage
             description="myaccounting-year-default"
@@ -306,7 +308,8 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, setSelectedYear, s
             setUseDefaultTimeRange(false)
             setIsOpenYear(!isOpenYear)
           }}
-          toggle={false}
+          toggle={ false }
+          active={ !selectedYear && !useDefaultTimeRange }
         >
           <FormattedMessage
             description="myaccounting-year-showall"
@@ -343,11 +346,11 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
                   checked={ subsetProjects.indexOf(project) >= 0 }
                   onClick={ () => onSelect(project) }
                 />
-                <Label className="ml-1" check>{ project }</Label>
+                <Label className="ml-1" check>&nbsp; { project }</Label>
                 <MiniButton
                   color="light"
                   onClick={(e) => copyToClipboard(
-                    e, project.identifier,
+                    e, project,
                     intl.formatMessage({
                       defaultMessage: "Šifra projekta kopirana u međuspremnik",
                       description: "memberships-clipboard-ok"
@@ -704,7 +707,9 @@ export const MyAccounting = () => {
                     years={ years }
                     isOpenYear={ isOpenYear }
                     setIsOpenYear={ setIsOpenYear }
+                    selectedYear={ selectedYear }
                     setSelectedYear={ setSelectedYear }
+                    useDefaultTimeRange={ useDefaultTimeRange }
                     setUseDefaultTimeRange={ setUseDefaultTimeRange }
                   />
                   <SelectProjectButton 
@@ -925,6 +930,7 @@ export const ProjectUsersAccounting = () => {
                   setSelectedProject(proj) 
                   setSubsetUsers([])
                 }}
+                active={ proj == selectedProject }
               >
                 <span id={`tooltip-${index}`} className="d-flex justify-content-left align-items-middle">
                   { proj }
@@ -980,7 +986,7 @@ export const ProjectUsersAccounting = () => {
                 checked={ subsetUsers.indexOf(user) >= 0 }
                 onClick={ () => onUserSelect(user) }
               />
-              <Label check>{ user }</Label>
+              <Label check>&nbsp; { user }</Label>
             </DropdownItem>
           )
         }
@@ -1076,7 +1082,9 @@ export const ProjectUsersAccounting = () => {
                     years={ years }
                     isOpenYear={ isOpenYear }
                     setIsOpenYear={ setIsOpenYear }
+                    selectedYear={ selectedYear }
                     setSelectedYear={ setSelectedYear }
+                    useDefaultTimeRange={ useDefaultTimeRange }
                     setUseDefaultTimeRange={ setUseDefaultTimeRange }
                   />
                   <ProjectButton />
@@ -1128,7 +1136,9 @@ export const ProjectUsersAccounting = () => {
                     years={ years }
                     isOpenYear={ isOpenYear }
                     setIsOpenYear={ setIsOpenYear }
+                    selectedYear={ selectedYear }
                     setSelectedYear={ setSelectedYear }
+                    useDefaultTimeRange={ useDefaultTimeRange }
                     setUseDefaultTimeRange={ setUseDefaultTimeRange }
                   />
                   <ProjectButton />
@@ -1414,7 +1424,9 @@ export const ProjectAccounting = () => {
                     years={ years }
                     isOpenYear={ isOpenYear }
                     setIsOpenYear={ setIsOpenYear }
+                    selectedYear={ selectedYear }
                     setSelectedYear={ setSelectedYear }
+                    useDefaultTimeRange={ useDefaultTimeRange }
                     setUseDefaultTimeRange={ setUseDefaultTimeRange }
                   />
                   <SelectProjectButton 
@@ -1469,7 +1481,9 @@ export const ProjectAccounting = () => {
                     years={ years }
                     isOpenYear={ isOpenYear }
                     setIsOpenYear={ setIsOpenYear }
+                    selectedYear={ selectedYear }
                     setSelectedYear={ setSelectedYear }
+                    useDefaultTimeRange={ useDefaultTimeRange }
                     setUseDefaultTimeRange={ setUseDefaultTimeRange }
                   />
                   <SelectProjectButton 
