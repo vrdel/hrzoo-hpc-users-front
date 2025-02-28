@@ -68,7 +68,11 @@ def create_mock_db():
                     'percent': 100}]
             }
         ],
-        croris_finance=['Hrvatska zaklada za znanost'],
+        croris_finance=[{
+            "name": 'Hrvatska zaklada za znanost',
+            "amount": "100",
+            "currency": "EUR"
+        }],
         date_start=datetime.date(2023, 5, 1),
         date_end=datetime.date(2024, 7, 31),
         date_approved=datetime.datetime(2023, 5, 3, 0, 0, 0, tzinfo=pytz.UTC)
@@ -152,7 +156,11 @@ def create_mock_db():
         project_type=type1,
         is_active=True,
         croris_id=666,
-        croris_finance=['Trotters Independent Traders'],
+        croris_finance=[{
+            "name": 'Trotters Independent Traders',
+            "amount": "10",
+            "currency": "GBP"
+        }],
         state=state5,
         resources_type=[
             {"label": "CLOUD-GPU", "value": "CLOUD-GPU"},
@@ -449,6 +457,8 @@ def create_mock_db():
     models.CrorisInstitutions.objects.create(
         active=True,
         name_short="Fakultet elektrotehnike i računarstva",
+        name_long="Sveučilište u Zagrebu, Fakultet elektrotehnike i "
+                  "računarstva",
         oib="01234567890",
         mbu="036",
         parent="Sveučilište u Zagrebu"

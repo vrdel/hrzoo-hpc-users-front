@@ -27,7 +27,15 @@ class AccountingUserProjectAPI(APIView):
         if project.croris_finance:
             return project.croris_finance
         else:
-            return [project.institute]
+            try:
+                return [
+                    models.CrorisInstitutions.objects.get(
+                        name_short=project.institute
+                    ).name_long
+                ]
+
+            except models.CrorisInstitutions.DoesNotExist:
+                return [project.institute]
 
     def _flatten_field(self, field):
         reformat_sfs = list()
@@ -74,8 +82,13 @@ class AccountingUserProjectAPI(APIView):
                 ustanova = models.CrorisInstitutions.objects.get(
                     name_short=project.institute
                 )
+                if not ustanova.name_long:
+                    name_long = project.institute
+                else:
+                    name_long = ustanova.name_long
+
                 fields_project['ustanova'] = {
-                    "naziv": ustanova.name_short,
+                    "naziv": name_long,
                     "oib": ustanova.oib,
                     "mbu": ustanova.mbu
                 }
@@ -95,13 +108,26 @@ class AccountingUserProjectAPI(APIView):
             fields_project['users'] = list()
 
             for user in project.users.all():
+                try:
+                    person_institution = models.CrorisInstitutions.objects.get(
+                        name_short=user.person_institution
+                    )
+                    if person_institution.name_long:
+                        person_institution = person_institution.name_long
+
+                    else:
+                        person_institution = user.person_institution
+
+                except models.CrorisInstitutions.DoesNotExist:
+                    person_institution = user.person_institution
+
                 project_user = dict()
                 project_user['id'] = user.id
                 project_user['uid'] = user.person_uniqueid
                 project_user['ime'] = user.first_name
                 project_user['prezime'] = user.last_name
                 project_user['mail'] = user.person_mail
-                project_user['ustanova'] = user.person_institution
+                project_user['ustanova'] = person_institution
                 fields_project['users'].append(project_user)
 
             ret_data.append(fields_project)
