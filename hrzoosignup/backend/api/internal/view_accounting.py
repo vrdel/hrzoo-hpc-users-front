@@ -285,12 +285,12 @@ def _project_info(records):
 def usage4user(username):
     projects = [
         item.project for item in models.UserProject.objects.filter(
-            user=models.User.objects.get(person_username=username)
+            user=models.User.objects.get(username=username)
         )
     ]
 
     records = models.ResourceUsage.objects.filter(
-        user=models.User.objects.get(person_username=username)
+        user=models.User.objects.get(username=username)
     )
     output = _project_info(records)
 
@@ -307,7 +307,7 @@ def usage4user(username):
 def _leader_records(lead_username):
     projects = [
         item.project for item in models.UserProject.objects.filter(
-            user=models.User.objects.get(person_username=lead_username),
+            user=models.User.objects.get(username=lead_username),
             role=models.Role.objects.get(name="lead")
         )
     ]
@@ -397,13 +397,13 @@ class ResourceUsage(APIView):
     def get(self, request):
         user = request.user
 
-        cached_data = cache.get(f"usage_{user.person_username}")
+        cached_data = cache.get(f"usage_{user.username}")
 
         if cached_data:
             return Response(data=cached_data, status=status.HTTP_200_OK)
 
         else:
-            output = usage4user(user.person_username)
+            output = usage4user(user.username)
 
             return Response(data=output, status=status.HTTP_200_OK)
 
@@ -428,7 +428,7 @@ class ProjectUsage(APIView):
 
         else:
             return Response(
-                data=usage4project(user.person_username),
+                data=usage4project(user.username),
                 status=status.HTTP_200_OK
             )
 
@@ -453,7 +453,7 @@ class ProjectUsagePerUser(APIView):
 
         else:
             cached_data = cache.get(
-                f"project_user_usage_{user.person_username}"
+                f"project_user_usage_{user.username}"
             )
 
             if cached_data:
@@ -461,6 +461,6 @@ class ProjectUsagePerUser(APIView):
 
             else:
                 return Response(
-                    usage4project_per_user(user.person_username),
+                    usage4project_per_user(user.username),
                     status=status.HTTP_200_OK
                 )
