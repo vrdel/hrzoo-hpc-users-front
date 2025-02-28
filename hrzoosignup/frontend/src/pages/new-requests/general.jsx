@@ -360,7 +360,8 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     if (onYesCall == 'doaddreq') {
       const resDates = validateRequestDates(onYesCallArg['date_start'],
         onYesCallArg['date_end'])
-      const resDomains = validateDomainAndFields(onYesCallArg)
+      const resDomains = validateDomainAndFields(onYesCallArg, intl)
+
       if (resDomains && resDates)
         doAdd(onYesCallArg)
     }
