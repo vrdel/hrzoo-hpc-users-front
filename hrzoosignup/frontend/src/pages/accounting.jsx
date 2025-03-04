@@ -280,7 +280,9 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
                 setUseDefaultTimeRange(false)
                 setIsOpenYear(!isOpenYear)
               }}
-              active={ year == selectedYear }
+              style={{
+                backgroundColor: year == selectedYear ? "#e8e9ea" : "white"
+              }}
             >
               { year }
             </DropdownItem>
@@ -294,7 +296,9 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
             setIsOpenYear(!isOpenYear)
           }}
           toggle={ false }
-          active={ useDefaultTimeRange }
+          style={{
+            backgroundColor: useDefaultTimeRange ? "#e8e9ea" : "white"
+          }}
         >
           <FormattedMessage
             description="myaccounting-year-default"
@@ -309,7 +313,9 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
             setIsOpenYear(!isOpenYear)
           }}
           toggle={ false }
-          active={ !selectedYear && !useDefaultTimeRange }
+          style={{
+            backgroundColor: !selectedYear && !useDefaultTimeRange ? "#e8e9ea" : "white"
+          }}
         >
           <FormattedMessage
             description="myaccounting-year-showall"
@@ -930,7 +936,9 @@ export const ProjectUsersAccounting = () => {
                   setSelectedProject(proj) 
                   setSubsetUsers([])
                 }}
-                active={ proj == selectedProject }
+                style={{
+                  backgroundColor: proj == selectedProject ? "#e8e9ea" : "white"
+                }}
               >
                 <span id={`tooltip-${index}`} className="d-flex justify-content-left align-items-middle">
                   { proj }
