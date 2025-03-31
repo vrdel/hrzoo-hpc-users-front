@@ -81,14 +81,26 @@ def _generate_usage(df, dates, iterable=None, per_user=False):
         if puh > 1:
             return resource_dict.update({key: math.floor(puh)})
 
+    def _choose_end_date(rsrc):
+        if "bogus_end" in rsrc and rsrc["bogus_end"]:
+            return rsrc["bogus_end"]
+
+        else:
+            return rsrc["project_end"]
+
     output = dict()
-    resources = df["resource"].unique()
+    df_copy = df.copy()
+    del df
+    df_copy["project_end"] = df_copy.apply(
+        lambda row: _choose_end_date(row), axis=1
+    )
+    resources = df_copy["resource"].unique()
     for resource in resources:
         cpuh_cumulative = list()
         gpuh_cumulative = list()
         cpuh_monthly = list()
         gpuh_monthly = list()
-        df_resource = df[df["resource"] == resource]
+        df_resource = df_copy[df_copy["resource"] == resource]
 
         for date in dates:
             month_start = date
@@ -256,6 +268,7 @@ def _project_info(records):
             records.values(
                 "project__identifier",
                 "project__date_end",
+                "project__bogus_end",
                 "project__date_start",
                 "resource_name",
                 "end_time",
@@ -269,6 +282,7 @@ def _project_info(records):
         df = df.rename(columns={
             "project__identifier": "project",
             "project__date_end": "project_end",
+            "project__bogus_end": "bogus_end",
             "project__date_start": "project_start",
             "resource_name": "resource",
             "accounting_record__cpuh": "cpuh",
@@ -328,6 +342,7 @@ def usage4project_per_user(lead_username):
             records.values(
                 "project__identifier",
                 "project__date_end",
+                "project__bogus_end",
                 "project__date_start",
                 "user__person_username",
                 "resource_name",
@@ -342,6 +357,7 @@ def usage4project_per_user(lead_username):
         df = df.rename(columns={
             "project__identifier": "project",
             "project__date_end": "project_end",
+            "project__bogus_end": "bogus_end",
             "project__date_start": "project_start",
             "user__person_username": "user",
             "resource_name": "resource",
