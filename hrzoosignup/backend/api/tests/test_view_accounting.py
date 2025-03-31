@@ -211,11 +211,13 @@ class ResourceUsageTests(TestCase):
                             {
                                 "month": "07/2024",
                                 "project-1": 7,
-                                "project-2": 117
+                                "project-2": 117,
+                                "project-4": 1
                             },
                             {
                                 "month": "08/2024",
-                                "project-2": 117
+                                "project-2": 117,
+                                "project-4": 1
                             }
                         ],
                         "gpuh": [
