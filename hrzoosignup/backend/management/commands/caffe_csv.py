@@ -44,7 +44,11 @@ class Command(BaseCommand):
         )
 
         projects = get_active_projects(start_date=start_date, end_date=end_date)
-        usage = get_usage(start_date=start_date, end_date=end_date)
+        usage = get_usage(
+            start_date=start_date,
+            end_date=end_date,
+            resources=["supek", "padobran"]
+        )
         institution_long_names = get_institute_long_name()
 
         data = pd.DataFrame({
