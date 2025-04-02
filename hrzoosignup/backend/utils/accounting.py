@@ -125,7 +125,7 @@ def get_usage(start_date, end_date, resources=None):
     return models.ResourceUsage.objects.filter(
         Q(end_time__gte=start_date) &
         Q(end_time__lte=end_date) &
-        ~Q(resource_name__in=resources) & (
+        Q(resource_name__in=resources) & (
                 Q(project__date_end__gte=start_date.date()) |
                 Q(project__bogus_end__gte=start_date.date())
         ) & ~Q(
