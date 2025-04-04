@@ -6,7 +6,7 @@ from backend.utils.accounting import get_active_projects, get_active_users
 from django.utils import timezone
 
 
-class DashboardIndicators:
+class Indicators:
     def __init__(self, month, year):
         self.start_date = timezone.make_aware(
             datetime.datetime(year, month, 1, 0, 0, 0),
@@ -23,6 +23,38 @@ class DashboardIndicators:
             start_date=self.start_date, end_date=self.end_date
         )
 
+    def _projects(self, institution):
+        return [
+            item for item in self._projects_in_period() if
+            item.institute == institution
+        ]
+
+    def _supek_usage(self, institution):
+        return models.ResourceUsage.objects.filter(
+            project__in=self._projects(institution),
+            resource_name="supek"
+        )
+
+    def _vrancic_usage(self, institution):
+        return models.ResourceUsage.objects.filter(
+            project__in=self._projects(institution),
+            resource_name="cloud"
+        )
+
+    def _jupyter_usage(self, institution):
+        return models.ResourceUsage.objects.filter(
+            project__in=self._projects(institution),
+            resource_name="jupyter"
+        )
+
+    def _padobran_usage(self, institution):
+        return models.ResourceUsage.objects.filter(
+            project__in=self._projects(institution),
+            resource_name="padobran"
+        )
+
+
+class DashboardIndicators(Indicators):
     def institutions(self):
         projects = self._projects_in_period()
 
@@ -69,12 +101,6 @@ class DashboardIndicators:
             models.CrorisInstitutions.objects.filter(parent=university)
         ]
 
-    def _projects(self, institution):
-        return [
-            item for item in self._projects_in_period() if
-            item.institute == institution
-        ]
-
     def projects(self, institution):
         return len(self._projects(institution=institution))
 
@@ -115,12 +141,6 @@ class DashboardIndicators:
             self._get_university_components(university)
         ])
 
-    def _supek_usage(self, institution):
-        return models.ResourceUsage.objects.filter(
-            project__in=self._projects(institution),
-            resource_name="supek"
-        )
-
     def supek_cpu(self, institution):
         return round(sum(
             float(item.accounting_record["cpuh"]) for item
@@ -146,12 +166,6 @@ class DashboardIndicators:
             self.supek_gpu(institution) for institution in
             self._get_university_components(university)
         ])
-
-    def _vrancic_usage(self, institution):
-        return models.ResourceUsage.objects.filter(
-            project__in=self._projects(institution),
-            resource_name="cloud"
-        )
 
     def vrancic_cpu(self, institution):
         return round(sum(
@@ -180,13 +194,9 @@ class DashboardIndicators:
         ])
 
     def padobran(self, institution):
-        usage = models.ResourceUsage.objects.filter(
-            project__in=self._projects(institution),
-            resource_name="padobran"
-        )
-
         return round(sum(
-            float(item.accounting_record["cpuh"]) for item in usage if
+            float(item.accounting_record["cpuh"]) for item in
+            self._padobran_usage(institution) if
             self.start_date <= item.end_time <= self.end_date
         ), 2)
 
@@ -195,12 +205,6 @@ class DashboardIndicators:
             self.padobran(institution) for institution in
             self._get_university_components(university)
         ])
-
-    def _jupyter_usage(self, institution):
-        return models.ResourceUsage.objects.filter(
-            project__in=self._projects(institution),
-            resource_name="jupyter"
-        )
 
     def jupyter_cpu(self, institution):
         return round(sum(

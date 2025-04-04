@@ -6,6 +6,7 @@ from backend.utils.accounting import get_active_projects, \
     get_institute_long_name, short2long, get_usage
 from django.core.management.base import BaseCommand
 from django.utils import timezone
+from memory_profiler import profile
 
 
 def get_field(item, field):
@@ -30,10 +31,11 @@ class Command(BaseCommand):
             "-f", "--filename", type=str, dest="filename", help="file name"
         )
 
+    @profile
     def handle(self, *args, **options):
         month = options["month"]
         year = options["year"]
-        last_day = calendar.monthrange(year, month)[1]
+        last_day = 5
         start_date = timezone.make_aware(
             datetime.datetime(year, month, 1, 0, 0, 0),
             timezone=timezone.get_current_timezone()
