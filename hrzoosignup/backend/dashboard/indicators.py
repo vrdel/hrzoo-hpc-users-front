@@ -231,3 +231,46 @@ class DashboardIndicators(Indicators):
             self.jupyter_gpu(institution) for institution in
             self._get_university_components(university)
         ])
+
+
+class CaffeIndicators(Indicators):
+    def institutions(self):
+        return list(set(item.institute for item in self._projects_in_period()))
+
+    def _supek_cpuh(self, institution):
+        return [
+            float(item.accounting_record["cpuh"]) for item
+            in self._supek_usage(institution) if
+            self.start_date <= item.end_time <= self.end_date
+        ]
+
+    def supek_cpuh(self, institution):
+        supek_usage = self._supek_cpuh(institution)
+        return round(sum(supek_usage), 2)
+
+    def _supek_gpuh(self, institution):
+        return [
+            float(item.accounting_record["gpuh"]) for item
+            in self._supek_usage(institution) if
+            self.start_date <= item.end_time <= self.end_date
+        ]
+
+    def supek_gpuh(self, institution):
+        supek_usage = self._supek_gpuh(institution)
+        gpu_jobs = [item for item in supek_usage if item != 0]
+        return (
+            round(sum(supek_usage), 2),
+            len(gpu_jobs),
+            len(supek_usage) - len(gpu_jobs)
+        )
+
+    def _padobran_cpuh(self, institution):
+        return [
+            float(item.accounting_record["cpuh"]) for item in
+            self._padobran_usage(institution) if
+            self.start_date <= item.end_time <= self.end_date
+        ]
+
+    def padobran(self, institution):
+        usage = self._padobran_cpuh(institution)
+        return round(sum(usage), 2), len(usage)

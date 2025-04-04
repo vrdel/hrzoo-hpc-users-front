@@ -1,7 +1,7 @@
 import datetime
 
 from backend import models
-from backend.dashboard.indicators import DashboardIndicators
+from backend.dashboard.indicators import DashboardIndicators, CaffeIndicators
 from django.test import TestCase
 from django.utils import timezone
 from django.utils.timezone import get_current_timezone
@@ -408,4 +408,119 @@ class DashboardTests(TestCase):
             self.indicators7.aggregated_jupyter_gpu(
                 university="Sveučilište u Zagrebu"
             ), 3.43
+        )
+
+class CaffeIndicatorsTests(TestCase):
+    def setUp(self):
+        create_mock_db()
+        user1 = models.User.objects.get(username="user119@fer.hr")
+        user5 = models.User.objects.get(username="user42@fer.hr")
+        user7 = models.User.objects.get(username="delboy@pmf.hr")
+
+        project1 = models.Project.objects.get(identifier="project-1")
+        project3 = models.Project.objects.get(identifier="project-3")
+        project4 = models.Project.objects.get(identifier="project-4")
+
+        models.ResourceUsage.objects.create(
+            user=user1,
+            project=project1,
+            resource_name="supek",
+            end_time=timezone.make_aware(
+                datetime.datetime.fromtimestamp(1716376320),  # 22 May 2024
+                timezone=timezone.get_current_timezone()
+            ),
+            accounting_record={
+                "jobid": "7",
+                "walltime": 232141,
+                "start_time": 1716144179,
+                "queue": "queue1",
+                "wait_time": 2,
+                "qtime": 5,
+                "ngpu": 4,
+                "cpuh": 0,
+                "gpuh": 48
+            }
+        )
+        models.ResourceUsage.objects.create(
+            user=user5,
+            project=project3,
+            resource_name="supek",
+            end_time=timezone.make_aware(
+                datetime.datetime.fromtimestamp(1715685120),  # 14 May 2024
+                timezone=timezone.get_current_timezone()
+            ),
+            accounting_record={
+                "jobid": "7",
+                "walltime": 214135,
+                "start_time": 1715470985,
+                "queue": "queue1",
+                "wait_time": 17,
+                "qtime": 4321,
+                "ngpu": 4,
+                "cpuh": 0,
+                "gpuh": 128
+            }
+        )
+        models.ResourceUsage.objects.create(
+            user=user7,
+            project=project1,
+            resource_name="padobran",
+            end_time=timezone.make_aware(
+                datetime.datetime.fromtimestamp(1720520659),  # 9 Jul 2024
+                timezone=timezone.get_current_timezone()
+            ),
+            accounting_record={
+                "jobid": "12844",
+                "walltime": "23",
+                "ncpus": "2",
+                "start_time": "1720520646",
+                "queue": "queue2",
+                "wait_time": "4",
+                "qtime": "8",
+                "cpuh": 74,
+                "gpuh": 0
+            }
+        )
+
+        self.indicators5 = CaffeIndicators(month=5, year=2024)
+        self.indicators7 = CaffeIndicators(month=7, year=2024)
+
+    def test_institutions(self):
+        self.assertEqual(
+            sorted(self.indicators5.institutions()), [
+                "Fakultet elektrotehnike i računarstva",
+                "Prirodoslovno-matematički fakultet, Zagreb"
+            ]
+        )
+        self.assertEqual(
+            sorted(self.indicators7.institutions()), [
+                "Fakultet elektrotehnike i računarstva",
+                "Prirodoslovno-matematički fakultet, Zagreb"
+            ]
+        )
+
+    def test_supek_cpuh(self):
+        self.assertEqual(
+            self.indicators5.supek_cpuh(
+                institution="Fakultet elektrotehnike i računarstva"
+            ), 5.
+        )
+
+    def test_supek_gpuh(self):
+        self.assertEqual(
+            self.indicators5.supek_gpuh(
+                institution="Fakultet elektrotehnike i računarstva"
+            ), (176.0, 2, 1)
+        )
+
+    def test_padobran(self):
+        self.assertEqual(
+            self.indicators5.padobran(
+                institution="Fakultet elektrotehnike i računarstva"
+            ), (0, 0)
+        )
+        self.assertEqual(
+            self.indicators7.padobran(
+                institution="Fakultet elektrotehnike i računarstva"
+            ), (74.01, 2)
         )
