@@ -16,9 +16,7 @@ class ListSubscribe(object):
     def __init__(self, users):
         self.headers = dict()
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
-        auth = settings.MAILINGLIST_CREDENTIALS.split(':')
         self.users = users
-        self.session = SessionWithRetry(logger, auth=auth, handle_session_close=True)
 
     async def maillist_id(self, headers):
         headers = dict()
@@ -59,6 +57,9 @@ class ListSubscribe(object):
             return (False, exc)
 
     async def run(self):
+        auth = settings.MAILINGLIST_CREDENTIALS.split(':')
+        self.session = SessionWithRetry(logger, auth=auth, handle_session_close=True)
+
         try:
             list_id = await self.maillist_id(self.headers)
         except HZSIHttpError as exc:
