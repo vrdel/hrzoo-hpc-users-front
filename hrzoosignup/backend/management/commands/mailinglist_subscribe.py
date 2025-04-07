@@ -42,17 +42,13 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.WARNING(f'{user.username}'))
         else:
             try:
-                loop = asyncio.new_event_loop()
-                asyncio.set_event_loop(loop)
-
                 list_subscribe = ListSubscribe(users_to_subscribe)
-                loop.run_until_complete(list_subscribe.run())
+                asyncio.run(list_subscribe.run())
                 if users_to_subscribe:
                     logger.info(f'User to subscribe: {repr([user.username for user in users_to_subscribe])}')
                     logger.info(f'Details in {os.environ["VIRTUAL_ENV"]}/var/log/tasks.log ')
                 else:
                     logger.info('No users to subscribe')
-                loop.close()
 
             except (HZSIHttpError, KeyboardInterrupt):
                 pass
