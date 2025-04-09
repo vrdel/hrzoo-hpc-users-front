@@ -213,6 +213,10 @@ class Command(BaseCommand):
             user.person_type_manual_set = new
             self.stdout.write('Set person_type_manual_set for user {} to {}'.format(user.username, new))
 
+        if options['institution']:
+            user.person_institution = ' '.join(options['institution'])
+            self.stdout.write('Set institution for user {} to {}'.format(user.username, user.person_institution))
+
         user.save()
 
     def _user_delete(self, options):
@@ -334,6 +338,8 @@ class Command(BaseCommand):
                                    required=False, help="User is local or foreign")
         parser_update.add_argument('--person-type-manual-set', dest='person_type_manual_set', type=int, default=None,
                                    required=False, help="Set person_type_manual_set field")
+        parser_update.add_argument('--institution', dest='institution', nargs='+',
+                                   required=False, help='Institution of the user')
 
 
     def handle(self, *args, **options):
