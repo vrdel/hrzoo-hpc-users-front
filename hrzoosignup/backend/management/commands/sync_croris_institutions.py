@@ -24,7 +24,16 @@ class Command(BaseCommand):
     def __init__(self):
         super().__init__()
 
-    def _extract_instits_fields(self, institutions, active):
+    def add_arguments(self, parser):
+        super(Command, self).add_arguments(parser)
+        parser.add_argument(
+            "--cron",
+            action="store_true",
+            dest="cron",
+            help="Flag indicating call from cron",
+        )
+
+    def _extract_instits_fields(self, institutions, active, options):
         tmp = []
         for inst in institutions:
             try:
@@ -46,7 +55,8 @@ class Command(BaseCommand):
                 )
             except KeyError:
                 self.stdout.write(self.style.ERROR(f'Problem extracting keys for entry: {inst}'))
-                logger.error(f'Problem extracting keys for entry: {inst}')
+                if options.get('cron', None):
+                    logger.error(f'Problem extracting keys for entry: {inst}')
 
         return tmp
 
@@ -76,13 +86,15 @@ class Command(BaseCommand):
 
             self.reset_serial_sequence()
 
-            bulk_inactive = self._extract_instits_fields(self.inactive_instits, False)
-            bulk_active = self._extract_instits_fields(self.active_instits, True)
+            bulk_inactive = self._extract_instits_fields(self.inactive_instits, False, options)
+            bulk_active = self._extract_instits_fields(self.active_instits, True, options)
 
             self.stdout.write(self.style.NOTICE(f'Synced {len(bulk_inactive)} inactive institutions'))
-            logger.info(f'Synced {len(bulk_inactive)} inactive institutions')
+            if options.get('cron', None):
+                logger.info(f'Synced {len(bulk_inactive)} inactive institutions')
             self.stdout.write(self.style.NOTICE(f'Synced {len(bulk_active)} active institutions'))
-            logger.info(f'Synced {len(bulk_active)} active institutions')
+            if options.get('cron', None):
+                logger.info(f'Synced {len(bulk_active)} active institutions')
 
             CrorisInstitutions.objects.bulk_create(bulk_active)
             CrorisInstitutions.objects.bulk_create(bulk_inactive)
