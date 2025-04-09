@@ -1,0 +1,1 @@
+15 0 * * * apache . /opt/hrzoo-signup/bin/activate; $VIRTUAL_ENV/bin/hzsi-manage sync_croris_institutions
