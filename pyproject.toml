@@ -83,7 +83,8 @@ hrzoosignup = "hrzoosignup/"
   "cron/hzsi-clearexpiredinvitations", "cron/hzsi-clearsessions",
   "cron/hzsi-flaginactiveusers", "cron/hzsi-mailinglist-subscribe",
   "cron/hzsi-resetprojectcounter", "cron/hzsi-dashboard-send",
-  "cron/hzsi-cache-usage", "cron/hzsi-bogusenddate", "cron/hzsi-portfelj-send"
+  "cron/hzsi-cache-usage", "cron/hzsi-bogusenddate", "cron/hzsi-portfelj-send",
+  "cron/hzsi-croris-institutions-sync"
 ]
 "etc/httpd/conf.d" = [ "apache/vhost-hrzoosignup.conf" ]
 "etc/hrzoosignup" = [
