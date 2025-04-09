@@ -23,7 +23,7 @@ import random
 
 ALPHACHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 
-logger = logging.getLogger('hrzoosignup.tasks')
+logger = logging.getLogger('hrzoosignup.crons')
 
 
 class Command(BaseCommand):
@@ -66,6 +66,12 @@ class Command(BaseCommand):
             dest="confirm_yes",
             help="Make changes",
         )
+        parser.add_argument(
+            "--cron",
+            action="store_true",
+            dest="cron",
+            help="Flag indicating call from cron",
+        )
 
     async def _task_resync_croris_institutions(self, options, projects):
         any_changed = False
@@ -105,6 +111,8 @@ class Command(BaseCommand):
                                 any_changed = True
                                 target.croris_institute = metadata_institutes
                                 self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
+                                if options.get('cron', None):
+                                    logger.info(f'Changing croris_institute for {target.croris_identifier}')
                                 await target.asave()
 
             return any_changed
@@ -124,6 +132,8 @@ class Command(BaseCommand):
                 userlead_institution = userproj[0].user.person_institution
                 if project.institute != userlead_institution:
                     self.stdout.write(self.style.NOTICE(f'Changing EU research project {project.identifier} institute of lead institute: {userlead_institution}'))
+                    if options.get('cron', None):
+                        logger.info(f'Changing EU research project {project.identifier} institute of lead institute: {userlead_institution}')
                     if options.get('confirm_yes', None):
                         project.institute = userlead_institution
                         any_changed = True
@@ -132,6 +142,8 @@ class Command(BaseCommand):
                 holder = [hold for hold in project.croris_institute if hold['class'].lower() == 'nositelj'.lower()]
                 if len(holder) == 1 and project.institute != holder[0]['name']:
                     self.stdout.write(self.style.NOTICE(f"Changing research project {project.identifier} institute of holder: {holder[0]['name']}"))
+                    if options.get('cron', None):
+                        logger.info(f"Changing research project {project.identifier} institute of holder: {holder[0]['name']}")
                     if options.get('confirm_yes', None):
                         project.institute = holder[0]['name']
                         any_changed = True
@@ -141,6 +153,8 @@ class Command(BaseCommand):
                     userlead_institution = userproj[0].user.person_institution
                     if project.institute != userlead_institution:
                         self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} institute with multiple holders to that of lead institute: {project.institute}'))
+                        if options.get('cron', None):
+                            logger.info(f'Changing research project {project.identifier} institute with multiple holders to that of lead institute: {project.institute}')
                         if options.get('confirm_yes', None):
                             project.institute = userlead_institution
                             any_changed = True
@@ -150,6 +164,8 @@ class Command(BaseCommand):
             userlead_institution = userproj[0].user.person_institution
             if project.institute != userlead_institution:
                 self.stdout.write(self.style.NOTICE(f'Changing project {project.identifier} institute of lead institute: {project.institute}'))
+                if options.get('cron', None):
+                    logger.info(f'Changing project {project.identifier} institute of lead institute: {project.institute}')
                 if options.get('confirm_yes', None):
                     project.institute = userlead_institution
                     any_changed = True
@@ -174,6 +190,8 @@ class Command(BaseCommand):
                     foren_st = CrorisInstitutions.objects.get(contact_email='forenzika@unist.hr')
                     if user.person_institution != foren_st.name_short:
                         self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {foren_st.name_short}'))
+                        if options.get('cron', None):
+                            logger.info(f'Setting active institution for {user.username} to {foren_st.name_short}')
                     any_changed = True
                     if options.get('confirm_yes', None):
                         if user.person_institution != foren_st.name_short:
@@ -190,6 +208,8 @@ class Command(BaseCommand):
                 if user.person_institution != found.name_short:
                     user.person_institution = found.name_short
                     self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {found.name_short}'))
+                    if options.get('cron', None):
+                        logger.info(f'Setting active institution for {user.username} to {found.name_short}')
                     any_changed = True
                     if options.get('confirm_yes', None):
                         user.person_institution_manual_set = True
@@ -207,6 +227,8 @@ class Command(BaseCommand):
                         if user.person_institution != found.name_short:
                             user.person_institution = found.name_short
                             self.stdout.write(self.style.NOTICE(f'Resolving active institution for {user.username} to {found.name_short}'))
+                            if options.get('cron', None):
+                                logger.info(f'Resolving active institution for {user.username} to {found.name_short}')
                             if options.get('confirm_yes', None):
                                 user.person_institution_manual_set = True
                                 user.save()
@@ -219,6 +241,8 @@ class Command(BaseCommand):
                     if user.person_institution != found.name_short:
                         user.person_institution = found.name_short
                         self.stdout.write(self.style.NOTICE(f'Setting inactive institution for {user.username} to {found.name_short}'))
+                        if options.get('cron', None):
+                            logger.info(f'Setting inactive institution for {user.username} to {found.name_short}')
                         if options.get('confirm_yes', None):
                             user.person_institution_manual_set = True
                             user.save()
@@ -233,6 +257,8 @@ class Command(BaseCommand):
                             if user.person_institution != found.name_short:
                                 user.person_institution = found.name_short
                                 self.stdout.write(self.style.NOTICE(f'Resolving inactive institution for {user.username} to {found.name_short}'))
+                                if options.get('cron', None):
+                                    logger.info(f'Resolving inactive institution for {user.username} to {found.name_short}')
                                 if options.get('confirm_yes', None):
                                     any_changed = True
                                     user.person_institution_manual_set = True
@@ -243,6 +269,8 @@ class Command(BaseCommand):
             if user.person_institution in self.inst_maps.all_from():
                 user.person_institution = self.inst_maps.get(user.person_institution)
                 self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
+                if options.get('cron', None):
+                    logger.info(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}')
                 if options.get('confirm_yes', None):
                     user.person_institution_manual_set = True
                     any_changed = True
@@ -253,12 +281,16 @@ class Command(BaseCommand):
                 if user.person_institution in self.inst_maps.all_from():
                     user.person_institution = self.inst_maps.get(user.person_institution)
                     self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
+                    if options.get('cron', None):
+                        logger.info(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}')
                     if options.get('confirm_yes', None):
                         any_changed = True
                         user.save()
                 if user.person_institution == 'Sveučilište Josipa Jurja Strossmayera u Osijeku' and user.person_organisation:
                     user.person_institution = f'{user.person_institution}, {user.person_organisation}'
                     self.stdout.write(self.style.NOTICE(f'Joining institution and organisation for {user.username} to {user.person_institution}'))
+                    if options.get('cron', None):
+                        logger.info(f'Joining institution and organisation for {user.username} to {user.person_institution}')
                     if options.get('confirm_yes', None):
                         any_changed = True
                         user.person_institution_manual_set = True
@@ -278,6 +310,8 @@ class Command(BaseCommand):
                     if user.person_institution_realm and not inst_croris.realm:
                         inst_croris.realm = user.person_institution_realm
                         self.stdout.write(self.style.NOTICE(f'Setting realm for {inst_croris.name_short} to {inst_croris.realm}'))
+                        if options.get('cron', None):
+                            logger.info(f'Setting realm for {inst_croris.name_short} to {inst_croris.realm}')
                         if options.get('confirm_yes', None):
                             any_changed = True
                             inst_croris.save()
