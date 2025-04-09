@@ -24,22 +24,26 @@ class Command(BaseCommand):
     def _extract_instits_fields(self, institutions, active):
         tmp = []
         for inst in institutions:
-            contact = inst.get('kontakt', None)
-            parent = inst.get('nadUstanova', None)
-            tmp.append(
-                CrorisInstitutions(
-                    active=active,
-                    name_long=inst['puniNaziv'],
-                    parent=parent['naziv'] if parent else '',
-                    name_short=inst['kratkiNaziv'],
-                    name_acronym=inst.get('kratica', ''),
-                    oib=inst.get('oib', '0'),
-                    mbs=inst.get('mbs', '0'),
-                    mbu=inst.get('mbu', '0'),
-                    contact_web=contact.get('web', '') if contact else '',
-                    contact_email=contact.get('email', '') if contact else '',
+            try:
+                contact = inst.get('kontakt', None)
+                parent = inst.get('nadUstanova', None)
+                tmp.append(
+                    CrorisInstitutions(
+                        active=active,
+                        name_long=inst['puniNaziv'],
+                        parent=parent['naziv'] if parent else '',
+                        name_short=inst['kratkiNaziv'],
+                        name_acronym=inst.get('kratica', ''),
+                        oib=inst.get('oib', '0'),
+                        mbs=inst.get('mbs', '0'),
+                        mbu=inst.get('mbu', '0'),
+                        contact_web=contact.get('web', '') if contact else '',
+                        contact_email=contact.get('email', '') if contact else '',
+                    )
                 )
-            )
+            except KeyError:
+                self.stdout.write(self.style.ERROR(f'Problem extracting keys for entry: {inst}'))
+
         return tmp
 
     def reset_serial_sequence(self):
