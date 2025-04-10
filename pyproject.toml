@@ -102,6 +102,11 @@ hrzoosignup = "hrzoosignup/"
 	"etc/signature",
 	"etc/signature_en",
 ]
+"etc/logrotate.d/" = [
+	"logrotate/logcrons", "logrotate/logdashboard",
+	"logrotate/logsaml2", "logrotate/logtasks",
+	"logrotate/logviews"
+]
 "share/static/" = ["hrzoosignup/static/hzsi-favicon.ico"]
 "share/static/reactbundle" = ["hrzoosignup/static/reactbundle/*"]
 "share/static/rest_framework/css" = ["hrzoosignup/static/rest_framework/css/*"]
