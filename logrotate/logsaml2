@@ -1,0 +1,7 @@
+/opt/hrzoo-signup/var/log/saml2.log {
+    size 500k
+    rotate 365
+    compress
+    missingok
+    notifempty
+}
