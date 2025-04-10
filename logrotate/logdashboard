@@ -1,0 +1,7 @@
+/opt/hrzoo-signup/var/log/dashboard.log {
+    size 50k
+    rotate 365
+    compress
+    missingok
+    notifempty
+}

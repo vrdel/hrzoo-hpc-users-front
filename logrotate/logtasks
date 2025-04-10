@@ -1,0 +1,7 @@
+/opt/hrzoo-signup/var/log/tasks.log {
+    size 100k
+    rotate 365
+    compress
+    missingok
+    notifempty
+}
