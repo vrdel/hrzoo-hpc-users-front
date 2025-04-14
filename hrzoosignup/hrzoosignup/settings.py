@@ -213,6 +213,7 @@ INSTALLED_APPS = [
     'webpack_loader',
     'frontend',
     'backend',
+    'drf_spectacular',
 ]
 
 SITE_ID = 1
@@ -389,6 +390,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
@@ -504,4 +506,12 @@ LOGGING = {
             'propagate': True,
         },
     },
+}
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "hrzoo-hpc-users-front",
+    "VERSION": "0.1.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "PREPROCESSING_HOOKS": ["hrzoosignup.excluded_path.custom_preprocessing_hook"]
 }
