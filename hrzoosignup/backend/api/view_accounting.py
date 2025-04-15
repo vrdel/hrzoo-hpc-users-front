@@ -1,7 +1,11 @@
 from backend import models
-from backend.utils.usage_data_preparation import Usage
+from backend.serializers import ResourceUsageListSerializer, \
+    ResourceUsageSerializer
 from django.conf import settings
 from django.db.models import Q
+from drf_spectacular.utils import extend_schema, OpenApiExample, \
+    OpenApiParameter
+from rest_framework import serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -176,6 +180,117 @@ class AccountingUserProjectAPI(APIView):
 class ResourceUsageAPI(APIView):
     permission_classes = (HasAPIKey,)
 
+    @extend_schema(
+        description="POST information on data usage",
+        parameters=[
+            OpenApiParameter(
+                name="resource",
+                description="Resource name",
+                required=True,
+                type=str,
+                location=OpenApiParameter.QUERY
+            ),
+            OpenApiParameter(
+                name="token",
+                description="Authorization token",
+                required=True,
+                type=str,
+                location=OpenApiParameter.HEADER
+            )
+        ],
+        responses=ResourceUsageSerializer,
+        examples=[
+            OpenApiExample(
+                "Sending data from Supek/Padobran",
+                value={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                }
+            ),
+            OpenApiExample(
+                "Sending data from Vrancic",
+                value={
+                    "usage": [
+                        {
+                            "project": "project-3",
+                            "end_time": "1727906399",
+                            "start_time": "1727733601",
+                            "instance_id": "1212121212",
+                            "vcpus": "16",
+                            "started_at": "1725015063",
+                            "ended_at": None,
+                            "ngpus": "1",
+                            "flavor": "m1.gpu.1"
+                        },
+                        {
+                            "project": "project-4",
+                            "end_time": "1727906399",
+                            "start_time": "1727733601",
+                            "instance_id": "d591480f",
+                            "vcpus": "4",
+                            "started_at": "1727782030",
+                            "ended_at": None,
+                            "flavor": "m1.half.windows"
+                        },
+                        {
+                            "project": "project-5",
+                            "end_time": "1727906399",
+                            "start_time": "1727733601",
+                            "instance_id": "13241243135132",
+                            "vcpus": "64",
+                            "started_at": "1719313795",
+                            "ended_at": "1727761972",
+                            "flavor": "m1.medium"
+                        }
+                    ]
+                }
+            ),
+            OpenApiExample(
+                "Sending data from Jupyter",
+                value={
+                    "usage": [
+                        {
+                            "user": "user119@fer.hr",
+                            "jupyter_cpu_h": 17.17,
+                            "jupyter_gpu_h": 0,
+                            "end_time": "1727906399"
+                        },
+                        {
+                            "user": "user454@fer.hr",
+                            "jupyter_cpu_h": 0.73,
+                            "jupyter_gpu_h": 0.18,
+                            "end_time": "1727906399"
+                        }
+                    ]
+                }
+            )
+        ]
+    )
     def post(self, request):
         resource = request.query_params.get("resource")
 
@@ -192,30 +307,33 @@ class ResourceUsageAPI(APIView):
             )
 
         else:
-            data = request.data["usage"]
-
             error_message = ""
             status_code = status.HTTP_201_CREATED
 
-            if len(data) > 0:
-                usage = Usage(data=data)
+            serializer = ResourceUsageSerializer(data=request.data)
 
-                try:
-                    usage.save(resource=resource)
+            try:
+                serializer.is_valid(raise_exception=True)
+                usage = serializer.save(resource=resource)
 
-                except KeyError as e:
-                    status_code = status.HTTP_400_BAD_REQUEST
-                    return Response(
-                        {
-                            "status": {
-                                "code": status_code,
-                                "message": f"Missing {str(e)} field"
-                            }
-                        },
-                        status=status_code
-                    )
+            except serializers.ValidationError:
+                status_code = status.HTTP_400_BAD_REQUEST
+                error_set = set()
+                for item in serializer.errors["usage"]:
+                    for key, value in item.items():
+                        error_set.add(f"{key}: {str(value[0])}")
+                return Response(
+                    {
+                        "status": {
+                            "code": status_code,
+                            "message": " ".join(error_set)
+                        }
+                    },
+                    status=status_code
+                )
 
-                else:
+            else:
+                if usage:
                     if len(usage.missing_projects) > 0:
                         status_code = status.HTTP_404_NOT_FOUND
                         if len(usage.missing_projects) > 1:
@@ -263,15 +381,37 @@ class ResourceUsageAPI(APIView):
                     else:
                         return Response(status=status.HTTP_201_CREATED)
 
-            else:
-                return Response(status=status.HTTP_200_OK)
+                else:
+                    return Response(status=status.HTTP_200_OK)
 
+    @extend_schema(
+        description="List job IDs for given resource",
+        parameters=[
+            OpenApiParameter(
+                name="resource",
+                description="Resource name",
+                required=True,
+                type=str,
+                location=OpenApiParameter.QUERY
+            ),
+            OpenApiParameter(
+                name="token",
+                description="Authorization token",
+                required=True,
+                type=str,
+                location=OpenApiParameter.HEADER
+            )
+        ],
+        responses=ResourceUsageListSerializer,
+        examples=[
+            OpenApiExample(
+                "List of job IDs",
+                value=["1234", "5678", "9102"]
+            )
+        ]
+    )
     def get(self, request):
         resource = request.query_params.get("resource")
+        serializer = ResourceUsageListSerializer
 
-        data = models.ResourceUsage.objects.filter(resource_name=resource)
-        jobids = sorted(
-            list(set(data.values_list("accounting_record__jobid", flat=True)))
-        )
-
-        return Response(jobids)
+        return Response(serializer.list_jobids(resource=resource))

@@ -1420,13 +1420,13 @@ class ResourceUsageAPITests(TestCase):
                         "user": "user119@fer.hr",
                         "jupyter_cpu_h": 17.17,
                         "jupyter_gpu_h": 0,
-                        "end_time": 1727906399
+                        "end_time": "1727906399"
                     },
                     {
                         "user": "user454@fer.hr",
                         "jupyter_cpu_h": 0.73,
                         "jupyter_gpu_h": 0.18,
-                        "end_time": 1727906399
+                        "end_time": "1727906399"
                     }
                 ]
             },
@@ -1494,7 +1494,8 @@ class ResourceUsageAPITests(TestCase):
         )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
-            request.data["status"]["message"], "Missing 'end_time' field"
+            request.data["status"]["message"],
+            "end_time: This field is required."
         )
 
     def test_post_cloud_data(self):
@@ -1507,33 +1508,33 @@ class ResourceUsageAPITests(TestCase):
                 "usage": [
                     {
                         "project": "project-3",
-                        "end_time": 1727906399,
-                        "start_time": 1727733601,
+                        "end_time": "1727906399",
+                        "start_time": "1727733601",
                         "instance_id": "1212121212",
-                        "vcpus": 16,
-                        "started_at": 1725015063,
+                        "vcpus": "16",
+                        "started_at": "1725015063",
                         "ended_at": None,
-                        "ngpus": 1,
+                        "ngpus": "1",
                         "flavor": "m1.gpu.1"
                     },
                     {
                         "project": "project-4",
-                        "end_time": 1727906399,
-                        "start_time": 1727733601,
+                        "end_time": "1727906399",
+                        "start_time": "1727733601",
                         "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
-                        "vcpus": 4,
-                        "started_at": 1727782030,
+                        "vcpus": "4",
+                        "started_at": "1727782030",
                         "ended_at": None,
                         "flavor": "m1.half.windows"
                     },
                     {
                         "project": "project-5",
-                        "end_time": 1727906399,
-                        "start_time": 1727733601,
+                        "end_time": "1727906399",
+                        "start_time": "1727733601",
                         "instance_id": "13241243135132",
-                        "vcpus": 64,
-                        "started_at": 1719313795,
-                        "ended_at": 1727761972,
+                        "vcpus": "64",
+                        "started_at": "1719313795",
+                        "ended_at": "1727761972",
                         "flavor": "m1.medium"
                     }
                 ]
@@ -1564,12 +1565,12 @@ class ResourceUsageAPITests(TestCase):
             )
         )
         self.assertEqual(usage1.accounting_record, {
-            "start_time": 1727733601,
+            "start_time": "1727733601",
             "instance_id": "1212121212",
-            "vcpus": 16,
-            "started_at": 1725015063,
+            "vcpus": "16",
+            "started_at": "1725015063",
             "ended_at": None,
-            "ngpus": 1,
+            "ngpus": "1",
             "flavor": "m1.gpu.1",
             "cpuh": 767.9911,
             "gpuh": 47.9994
@@ -1583,11 +1584,11 @@ class ResourceUsageAPITests(TestCase):
             )
         )
         self.assertEqual(usage2.accounting_record, {
-            "start_time": 1727733601,
+            "start_time": "1727733601",
             "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
-            "vcpus": 4,
+            "vcpus": "4",
             "ngpus": None,
-            "started_at": 1727782030,
+            "started_at": "1727782030",
             "ended_at": None,
             "flavor": "m1.half.windows",
             "cpuh": 138.1878,
@@ -1602,12 +1603,12 @@ class ResourceUsageAPITests(TestCase):
             )
         )
         self.assertEqual(usage3.accounting_record, {
-            "start_time": 1727733601,
+            "start_time": "1727733601",
             "instance_id": "13241243135132",
-            "vcpus": 64,
+            "vcpus": "64",
             "ngpus": None,
-            "started_at": 1719313795,
-            "ended_at": 1727761972,
+            "started_at": "1719313795",
+            "ended_at": "1727761972",
             "flavor": "m1.medium",
             "gpuh": 0,
             "cpuh": 504.3733
@@ -1665,7 +1666,6 @@ class ResourceUsageAPITests(TestCase):
             "cpuh": 4.3556,
             "gpuh": 2.1778
         })
-
 
     def test_get_jobids(self):
         request1 = self.client.get(

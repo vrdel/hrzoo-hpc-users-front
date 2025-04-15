@@ -1,10 +1,10 @@
-from rest_framework import serializers
-from django.contrib.auth import get_user_model
-from django.utils import timezone
-
 import datetime
 
 from backend import models
+from backend.utils.usage_data_preparation import Usage
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+from rest_framework import serializers
 
 
 def get_ssh_key_fingerprint(ssh_key):
@@ -398,3 +398,63 @@ class ScienceSoftwareSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('pk', 'name', 'created', 'added_by')
         model = models.ScienceSoftware
+
+
+class ResourceUsageListSerializer(serializers.Serializer):
+    jobid = serializers.CharField()
+
+    @staticmethod
+    def list_jobids(resource):
+        data = models.ResourceUsage.objects.filter(resource_name=resource)
+        jobids = sorted(
+            list(set(data.values_list("accounting_record__jobid", flat=True)))
+        )
+        return jobids
+
+
+class UsageSerializer(serializers.Serializer):
+    user = serializers.CharField(
+        required=False, allow_blank=True, allow_null=True
+    )
+    jobid = serializers.CharField(required=False, allow_blank=True)
+    walltime = serializers.CharField(required=False, allow_blank=True)
+    project = serializers.CharField(
+        required=False, allow_blank=True, allow_null=True
+    )
+    start_time = serializers.CharField(required=False, allow_blank=True)
+    end_time = serializers.CharField(required=True)
+    queue = serializers.CharField(required=False, allow_blank=True)
+    wait_time = serializers.CharField(required=False, allow_blank=True)
+    qtime = serializers.CharField(required=False, allow_blank=True)
+    ncpus = serializers.CharField(required=False, allow_blank=True)
+    ngpus = serializers.CharField(required=False, allow_blank=True)
+    jupyter_cpu_h = serializers.FloatField(required=False)
+    jupyter_gpu_h = serializers.FloatField(required=False)
+    instance_id = serializers.CharField(required=False, allow_blank=True)
+    flavor = serializers.CharField(required=False, allow_blank=True)
+    vcpus = serializers.CharField(required=False, allow_blank=True)
+    ngpus = serializers.CharField(required=False, allow_blank=True)
+    started_at = serializers.CharField(required=False, allow_blank=True)
+    ended_at = serializers.CharField(
+        required=False, allow_blank=True, allow_null=True
+    )
+
+
+class ResourceUsageSerializer(serializers.Serializer):
+    usage = UsageSerializer(many=True)
+
+    def save(self, **kwargs):
+        if len(self.validated_data["usage"]) > 0:
+            usage = Usage(data=self.validated_data["usage"])
+
+            try:
+                usage.save(resource=kwargs["resource"])
+
+            except KeyError as e:
+                serializers.ValidationError(f"Missing {str(e)} field")
+
+            else:
+                return usage
+
+        else:
+            return None
