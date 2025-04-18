@@ -2,6 +2,7 @@ import datetime
 
 from backend import models
 from backend.utils.usage_data_preparation import Usage
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework import serializers
@@ -458,3 +459,162 @@ class ResourceUsageSerializer(serializers.Serializer):
 
         else:
             return None
+
+
+class AccountingUsersSerializer(serializers.ModelSerializer):
+    uid = serializers.CharField(source="person_uniqueid")
+    ime = serializers.CharField(source="first_name")
+    prezime = serializers.CharField(source="last_name")
+    mail = serializers.EmailField(source="person_mail")
+    ustanova = serializers.SerializerMethodField()
+
+    def get_ustanova(self, obj):
+        try:
+            person_institution = models.CrorisInstitutions.objects.get(
+                name_short=obj.person_institution
+            )
+
+            if person_institution.name_long:
+                person_institution = person_institution.name_long
+
+            else:
+                person_institution = obj.person_institution
+
+        except models.CrorisInstitutions.DoesNotExist:
+            person_institution = obj.person_institution
+
+        return person_institution
+
+    class Meta:
+        fields = ["id", "uid", "ime", "prezime", "mail", "ustanova"]
+        model = models.User
+
+
+class AccountingUserProjectSerializer(serializers.ModelSerializer):
+    sifra = serializers.SerializerMethodField()
+    date_from = serializers.DateField(source="date_start")
+    ustanova = serializers.SerializerMethodField()
+    croris_url = serializers.SerializerMethodField()
+    realm = serializers.SerializerMethodField()
+    finance = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
+    approved_resources = serializers.SerializerMethodField()
+    users = AccountingUsersSerializer(many=True)
+
+    def get_sifra(self, obj):
+        sifra = obj.identifier
+        for field in settings.PROJECT_IDENTIFIER_MAP:
+            if field['from'] in sifra:
+                return sifra.replace(field['from'], field['to'])
+
+        return sifra
+
+    def get_type(self, obj):
+        return obj.project_type.name
+
+    def get_finance(self, obj):
+        if obj.croris_finance:
+            return obj.croris_finance
+        else:
+            try:
+                return [
+                    models.CrorisInstitutions.objects.get(
+                        name_short=obj.institute
+                    ).name_long
+                ]
+
+            except models.CrorisInstitutions.DoesNotExist:
+                return [obj.institute]
+
+    def get_ustanova(self, obj):
+        try:
+            ustanova = models.CrorisInstitutions.objects.get(
+                name_short=obj.institute
+            )
+
+            if not ustanova.name_long:
+                name_long = obj.institute
+
+            else:
+                name_long = ustanova.name_long
+
+            return {
+                "naziv": name_long,
+                "oib": ustanova.oib,
+                "mbu": ustanova.mbu
+            }
+
+        except models.CrorisInstitutions.DoesNotExist:
+            return {
+                "naziv": obj.institute,
+                "oib": "",
+                "mbu": ""
+            }
+
+    def get_croris_url(self, obj):
+        if obj.croris_id:
+            return f'https://www.croris.hr/projekti/projekt/{obj.croris_id}'
+        else:
+            return ''
+
+    @staticmethod
+    def _flatten_field(field):
+        reformat_sfs = list()
+
+        for sf in field:
+            rsf = dict()
+            rsf['name'] = sf['name']['value']
+            rsf['percent'] = sf['percent']
+            rsf['scientificfields'] = list()
+            for fl in sf['scientificfields']:
+                rsf_s = dict()
+                rsf_s['name'] = fl['name']['value']
+                rsf_s['percent'] = fl['percent']
+                rsf['scientificfields'].append(rsf_s)
+
+            reformat_sfs.append(rsf)
+
+        return reformat_sfs
+
+    @staticmethod
+    def _set_realm_from_map(inst_name):
+        for field in settings.MAP_REALMS:
+            if field['from'] in inst_name:
+                return inst_name.replace(field['from'], field['to'])
+        return ''
+
+    def get_realm(self, obj):
+        try:
+            realm_inst = models.CrorisInstitutions.objects.get(
+                name_short=obj.institute
+            ).realm
+
+        except models.CrorisInstitutions.DoesNotExist:
+            realm_inst = ''
+
+        if not realm_inst:
+            realm_inst = self._set_realm_from_map(obj.institute)
+
+        return realm_inst
+
+    def get_approved_resources(self, obj):
+        res_types = obj.staff_resources_type
+        if res_types:
+            return [t['value'] for t in res_types]
+        else:
+            return []
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["date_approved"] = ret["date_approved"][0:10]
+        ret["science_field"] = self._flatten_field(ret["science_field"])
+
+        return ret
+
+    class Meta:
+        fields = [
+            "id", "sifra", "date_from", "date_end", "date_approved", "type",
+            "name", "ustanova", "croris_url", "science_field", "realm",
+            "finance", "approved_resources", "users"
+        ]
+        model = models.Project

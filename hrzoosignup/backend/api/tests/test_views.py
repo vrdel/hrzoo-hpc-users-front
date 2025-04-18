@@ -1748,6 +1748,7 @@ class AccountingUserProjectAPITests(TestCase):
         )
 
     def test_get_user_project(self):
+        self.maxDiff = None
         with self.settings(
                 MAP_REALMS=self.map_realms,
                 PROJECT_IDENTIFIER_MAP=self.project_identifiers
