@@ -11,13 +11,16 @@ from rest_framework_api_key.permissions import HasAPIKey
 
 class SshKeysAPI(APIView):
     permission_classes = (HasAPIKey,)
+    serializer_class = serializers.SshKeysSerializer2
 
     def get(self, request):
         ret_data = cache.get('ext-sshkeys')
         if ret_data:
             return Response(ret_data, status=status.HTTP_200_OK)
 
-        serializer = serializers.SshKeysSerializer2(SSHPublicKey.objects.all(), many=True)
+        serializer = serializers.SshKeysSerializer2(
+            SSHPublicKey.objects.all(), many=True
+        )
         cache.set('ext-sshkeys', serializer.data, None)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
