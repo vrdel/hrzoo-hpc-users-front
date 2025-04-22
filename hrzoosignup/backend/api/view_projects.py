@@ -9,6 +9,7 @@ from rest_framework.response import Response
 
 class ProjectsAPI(APIView):
     permission_classes = (HasAPIKey,)
+    serializer_class = serializers.ProjectSerializerFiltered
 
     def get(self, request):
         projects = models.Project.objects.all()

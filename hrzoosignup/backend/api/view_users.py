@@ -13,6 +13,7 @@ from rest_framework_api_key.permissions import HasAPIKey
 
 class UsersAPI(APIView):
     permission_classes = (HasAPIKey,)
+    serializer_class = serializers.UsersSerializerFiltered3
 
     def get(self, request):
         users = models.User.objects.all()

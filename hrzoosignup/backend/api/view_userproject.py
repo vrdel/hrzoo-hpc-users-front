@@ -12,6 +12,7 @@ from rest_framework_api_key.permissions import HasAPIKey
 
 class UserProjectAPI(APIView):
     permission_classes = (HasAPIKey,)
+    serializer_class = serializers.UserProjectSerializer2
 
     def get(self, request):
         tags = self.request.query_params.get('tags')
