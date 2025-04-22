@@ -13,13 +13,13 @@ class ResourceUsageAPITests(TestCase):
     def setUp(self):
         create_mock_db()
 
-        snr = models.Organization4APIKey.objects.get(name="SNR")
-        sopto = models.Organization4APIKey.objects.get(name="SOPTO")
+        hrzoo = models.Organization4APIKey.objects.get(name="HRZOO")
+        merlin = models.Organization4APIKey.objects.get(name="Merlin")
         name, key = models.MyAPIKey.objects.create_key(
-            name="test", organization=snr
+            name="test", organization=hrzoo
         )
         name2, key2 = models.MyAPIKey.objects.create_key(
-            name="test2", organization=sopto
+            name="test2", organization=merlin
         )
         self.token = key
         self.token2 = key2
@@ -1794,9 +1794,9 @@ class AccountingUserProjectAPITests(TestCase):
             }
         ]
 
-        snr = models.Organization4APIKey.objects.get(name="SNR")
+        hrzoo = models.Organization4APIKey.objects.get(name="HRZOO")
         name, key = models.MyAPIKey.objects.create_key(
-            name="test", organization=snr
+            name="test", organization=hrzoo
         )
         self.token = key
 

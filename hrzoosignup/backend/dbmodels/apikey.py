@@ -41,15 +41,15 @@ class MyHasAPIKey(BaseHasAPIKey):
                     return False
 
 
-class SNRHasAPIKey(MyHasAPIKey):
+class HRZOOHasAPIKey(MyHasAPIKey):
     def has_permission(self, request, view):
         return self.has_organization_permission(
-            request=request, organization_name="SNR"
+            request=request, organization_name="HRZOO"
         )
 
 
-class SOPTOHasAPIKey(MyHasAPIKey):
+class MerlinHasAPIKey(MyHasAPIKey):
     def has_permission(self, request, view):
         return self.has_organization_permission(
-            request=request, organization_name="SOPTO"
+            request=request, organization_name="Merlin"
         )
