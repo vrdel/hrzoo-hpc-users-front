@@ -1,7 +1,4 @@
-import typing
-
 from django.db import models
-from django.http import HttpRequest
 from rest_framework_api_key.models import AbstractAPIKey
 from rest_framework_api_key.permissions import BaseHasAPIKey
 
@@ -45,14 +42,14 @@ class MyHasAPIKey(BaseHasAPIKey):
 
 
 class SNRHasAPIKey(MyHasAPIKey):
-    def has_permission(self, request: HttpRequest, view: typing.Any) -> bool:
+    def has_permission(self, request, view):
         return self.has_organization_permission(
             request=request, organization_name="SNR"
         )
 
 
 class SOPTOHasAPIKey(MyHasAPIKey):
-    def has_permission(self, request: HttpRequest, view: typing.Any) -> bool:
+    def has_permission(self, request, view):
         return self.has_organization_permission(
             request=request, organization_name="SOPTO"
         )
