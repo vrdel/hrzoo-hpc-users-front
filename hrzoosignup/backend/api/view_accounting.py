@@ -2,6 +2,7 @@ from backend import models
 from backend.serializers import ResourceUsageListSerializer, \
     ResourceUsageSerializer, AccountingUserProjectSerializer
 from django.conf import settings
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema, OpenApiExample, \
     OpenApiParameter
 from rest_framework import serializers
@@ -15,10 +16,77 @@ class AccountingUserProjectAPI(APIView):
     permission_classes = (HasAPIKey,)
     serializer_class = AccountingUserProjectSerializer(many=True)
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="tags",
+                description="Tags",
+                type=str,
+                location=OpenApiParameter.QUERY
+            ),
+            OpenApiParameter(
+                name="token",
+                description="Authorization token",
+                required=True,
+                type=str,
+                location=OpenApiParameter.HEADER
+            )
+        ]
+    )
     def get(self, request):
-        serializer = AccountingUserProjectSerializer(
-            models.Project.objects.all(), many=True
+        tags = self.request.query_params.get('tags')
+        tag = self.request.query_params.get('tag')
+        op = self.request.query_params.get('op')
+        query = Q()
+
+        if tags:
+            tags = tags.split(',')
+            target_resources = list()
+            for tag in tags:
+                if op:
+                    if op == 'OR':
+                        query |= Q(
+                            staff_resources_type__contains=[{
+                                "label": tag, "value": tag
+                            }]
+                        )
+                    elif op == 'AND':
+                        target_resources.append({
+                            "label": tag,
+                            "value": tag
+                        })
+
+                else:
+                    query |= Q(
+                        staff_resources_type__contains=[{
+                            "label": tag, "value": tag
+                        }]
+                    )
+
+            if target_resources:
+                db_interested = models.Project.objects.filter(
+                    staff_resources_type__exact=target_resources
+                ).distinct()
+            else:
+                db_interested = models.Project.objects.filter(query).distinct()
+                db_interested = db_interested.filter(
+                    state__name__in=['approve', 'expire', 'extend']
+                )
+
+        elif tag:
+            db_interested = models.Project.objects.filter(
+                staff_resources_type__exact=[{"label": tag, "value": tag}]
+            )
+            db_interested = db_interested.filter(
+                state__name__in=['approve', 'expire', 'extend']
+            )
+
+        else:
+            db_interested = models.Project.objects.all().filter(
+            state__name__in=['approve', 'expire', 'extend']
         )
+
+        serializer = AccountingUserProjectSerializer(db_interested, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
 
 
