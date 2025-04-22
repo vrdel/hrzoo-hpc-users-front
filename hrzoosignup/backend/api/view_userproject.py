@@ -1,17 +1,15 @@
-from backend import serializers
 from backend import models
-
+from backend import serializers
+from backend.dbmodels.apikey import SNRHasAPIKey
 from django.core.cache import cache
 from django.db.models import Q
-
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_api_key.permissions import HasAPIKey
 
 
 class UserProjectAPI(APIView):
-    permission_classes = (HasAPIKey,)
+    permission_classes = (SNRHasAPIKey,)
     serializer_class = serializers.UserProjectSerializer2
 
     def get(self, request):

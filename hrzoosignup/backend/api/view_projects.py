@@ -1,14 +1,13 @@
 from backend import models
 from backend import serializers
-
-from rest_framework.views import APIView
+from backend.dbmodels.apikey import SNRHasAPIKey
 from rest_framework import status
-from rest_framework_api_key.permissions import HasAPIKey
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
 class ProjectsAPI(APIView):
-    permission_classes = (HasAPIKey,)
+    permission_classes = (SNRHasAPIKey,)
     serializer_class = serializers.ProjectSerializerFiltered
 
     def get(self, request):
