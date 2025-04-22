@@ -5,7 +5,6 @@ from django.test import TestCase
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIRequestFactory
-from rest_framework_api_key.models import APIKey
 
 from .test_utils import create_mock_db
 
@@ -14,8 +13,16 @@ class ResourceUsageAPITests(TestCase):
     def setUp(self):
         create_mock_db()
 
-        name, key = APIKey.objects.create_key(name="test")
+        snr = models.Organization4APIKey.objects.get(name="SNR")
+        sopto = models.Organization4APIKey.objects.get(name="SOPTO")
+        name, key = models.MyAPIKey.objects.create_key(
+            name="test", organization=snr
+        )
+        name2, key2 = models.MyAPIKey.objects.create_key(
+            name="test2", organization=sopto
+        )
         self.token = key
+        self.token2 = key2
 
         self.project1 = models.Project.objects.get(identifier="project-1")
         self.project2 = models.Project.objects.get(identifier="project-2")
@@ -117,6 +124,50 @@ class ResourceUsageAPITests(TestCase):
             "cpuh": 0.05,
             "gpuh": 0.
         })
+
+    def test_post_data_different_organization_token(self):
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=supek",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+            content_type="application/json",
+            data={
+                "usage": [
+                    {
+                        "user": "adent",
+                        "jobid": "12345",
+                        "walltime": "3920",
+                        "ncpus": "4",
+                        "project": "project-1",
+                        "start_time": "1717845508",
+                        "end_time": "1717849428",
+                        "queue": "gpu",
+                        "wait_time": "2",
+                        "qtime": "1717796832",
+                        "ngpus": "2"
+                    },
+                    {
+                        "user": "adent",
+                        "jobid": "12346",
+                        "walltime": "10",
+                        "ncpus": "18",
+                        "project": "project-1",
+                        "start_time": "1716001512",
+                        "end_time": "1716001522",
+                        "queue": "queue1",
+                        "wait_time": "2",
+                        "qtime": ""
+                    }
+                ]
+            },
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
 
     def test_post_empty_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
@@ -1684,6 +1735,25 @@ class ResourceUsageAPITests(TestCase):
         )
         self.assertEqual([r for r in request2.data], ["12843"])
 
+    def test_get_jobids_different_organization_token(self):
+        request1 = self.client.get(
+            "/api/v1/accounting/records?resource=supek",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"}
+        )
+        request2 = self.client.get(
+            "/api/v1/accounting/records?resource=padobran",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"}
+        )
+        self.assertEqual(request1.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(request2.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request1.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+        self.assertEqual(
+            request2.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
 
 class AccountingUserProjectAPITests(TestCase):
     def setUp(self):
@@ -1724,7 +1794,10 @@ class AccountingUserProjectAPITests(TestCase):
             }
         ]
 
-        name, key = APIKey.objects.create_key(name="test")
+        snr = models.Organization4APIKey.objects.get(name="SNR")
+        name, key = models.MyAPIKey.objects.create_key(
+            name="test", organization=snr
+        )
         self.token = key
 
         self.project1 = models.Project.objects.get(identifier="project-1")

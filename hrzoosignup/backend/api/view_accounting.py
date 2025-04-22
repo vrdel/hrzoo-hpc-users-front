@@ -1,6 +1,8 @@
 from backend import models
 from backend.serializers import ResourceUsageListSerializer, \
     ResourceUsageSerializer, AccountingUserProjectSerializer
+from backend.dbmodels.apikey import SNRHasAPIKey
+from backend.utils.usage_data_preparation import Usage
 from django.conf import settings
 from django.db.models import Q
 from drf_spectacular.utils import extend_schema, OpenApiExample, \
@@ -38,6 +40,7 @@ class AccountingUserProjectAPI(APIView):
         tag = self.request.query_params.get('tag')
         op = self.request.query_params.get('op')
         query = Q()
+        db_interested = list()
 
         if tags:
             tags = tags.split(',')
@@ -91,7 +94,7 @@ class AccountingUserProjectAPI(APIView):
 
 
 class ResourceUsageAPI(APIView):
-    permission_classes = (HasAPIKey,)
+    permission_classes = (SNRHasAPIKey,)
 
     @extend_schema(
         description="POST information on data usage",
