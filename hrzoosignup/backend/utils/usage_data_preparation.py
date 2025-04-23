@@ -29,7 +29,7 @@ def _calculate_processor_hour(data, key):
             else:
                 start_time = int(data["start_time"])
 
-            if data["ended_at"] and not math.isnan(data["ended_at"]) and (
+            if data["ended_at"] and not math.isnan(int(data["ended_at"])) and (
                     int(data["ended_at"]) <= int(data["end_time"])
             ):
                 end_time = int(data["ended_at"])

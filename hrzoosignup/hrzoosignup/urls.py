@@ -19,6 +19,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import HttpResponseRedirect
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 from backend.views_saml2acs import CustomSaml2Acs
 
@@ -34,4 +35,6 @@ urlpatterns = [
     re_path(r'^api/v1/internal/', include('backend.api.internal.urls', namespace='internalapi')),
     path("invitations/", include('invitations.urls', namespace='invitations')),
     re_path(r'^api/v1/', include('backend.api.urls', namespace='api')),
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
