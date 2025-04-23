@@ -1755,6 +1755,7 @@ class ResourceUsageAPITests(TestCase):
             {"detail": "Authentication credentials were not provided."}
         )
 
+
 class AccountingUserProjectAPITests(TestCase):
     def setUp(self):
         create_mock_db()
@@ -2205,6 +2206,505 @@ class AccountingUserProjectAPITests(TestCase):
                                         "elektrotehnike i računarstva"
                         }
                     ]
+                }
+            ]
+        )
+
+
+class UserProjectAPITests(TestCase):
+    def setUp(self):
+        create_mock_db()
+        hrzoo = models.Organization4APIKey.objects.get(name="HRZOO")
+        name, key = models.MyAPIKey.objects.create_key(
+            name="test", organization=hrzoo
+        )
+        self.token = key
+
+        self.project1 = models.Project.objects.get(identifier="project-1")
+        self.project2 = models.Project.objects.get(identifier="project-2")
+        self.project3 = models.Project.objects.get(identifier="project-3")
+        self.project4 = models.Project.objects.get(identifier="project-4")
+        self.project5 = models.Project.objects.get(identifier="project-5")
+        self.project6 = models.Project.objects.get(name="Project name 6")
+
+        self.user1 = models.User.objects.get(username="user119@fer.hr")
+        self.user2 = models.User.objects.get(username="user454@fer.hr")
+        self.user3 = models.User.objects.get(username="user45@fer.hr")
+        self.user4 = models.User.objects.get(username="user70@fer.hr")
+        self.user5 = models.User.objects.get(username="user42@fer.hr")
+        self.user6 = models.User.objects.get(username="user348@fer.hr")
+        self.user7 = models.User.objects.get(username="delboy@pmf.hr")
+        self.user8 = models.User.objects.get(username="dave@pmf.hr")
+        self.user9 = models.User.objects.get(username="uncle_albert@pmf.hr")
+        self.user10 = models.User.objects.get(
+            username="j.jameson@daily-bugle.com"
+        )
+
+    def test_get_usersprojects(self):
+        request = self.client.get(
+            "/api/v1/usersprojects",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+        )
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            request.json(), [
+                {
+                    "user": {
+                        "id": self.user1.id,
+                        "person_oib": "",
+                        "first_name": "Arthur",
+                        "last_name": "Dent",
+                        "person_mail": "arthur.dent@fer.hr",
+                        "person_username": "adent",
+                        "person_type": "",
+                        "username": "user119@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project1.id,
+                        "identifier": "project-1",
+                        "is_active": True,
+                        "name": "Project name 1",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "research-croris",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CLOUD-GPU",
+                            "CLOUD",
+                            "GPU",
+                            "CPU",
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": "2023-05-03T02:00:00+02:00"
+                },
+                {
+                    "user": {
+                        "id": self.user2.id,
+                        "person_oib": "",
+                        "first_name": "Tricia",
+                        "last_name": "McMillan",
+                        "person_mail": "trillian@fer.hr",
+                        "person_username": "tmcmilla",
+                        "person_type": "",
+                        "username": "user454@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project1.id,
+                        "identifier": "project-1",
+                        "is_active": True,
+                        "name": "Project name 1",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "research-croris",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CLOUD-GPU",
+                            "CLOUD",
+                            "GPU",
+                            "CPU",
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user9.id,
+                        "person_oib": "",
+                        "first_name": "Albert",
+                        "last_name": "Trotter",
+                        "person_mail": "uncle.albert@biol.pmf.hr",
+                        "person_username": "atrotter",
+                        "person_type": "",
+                        "username": "uncle_albert@pmf.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project1.id,
+                        "identifier": "project-1",
+                        "is_active": True,
+                        "name": "Project name 1",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "research-croris",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CLOUD-GPU",
+                            "CLOUD",
+                            "GPU",
+                            "CPU",
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user1.id,
+                        "person_oib": "",
+                        "first_name": "Arthur",
+                        "last_name": "Dent",
+                        "person_mail": "arthur.dent@fer.hr",
+                        "person_username": "adent",
+                        "person_type": "",
+                        "username": "user119@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project2.id,
+                        "identifier": "project-2",
+                        "is_active": True,
+                        "name": "Project name 2",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "research-institutional",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CPU",
+                            "GPU",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": "2024-06-10T14:00:13+02:00"
+                },
+                {
+                    "user": {
+                        "id": self.user3.id,
+                        "person_oib": "",
+                        "first_name": "Ford",
+                        "last_name": "Prefect",
+                        "person_mail": "ford.prefect@fer.hr",
+                        "person_username": "fprefect",
+                        "person_type": "",
+                        "username": "user45@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project2.id,
+                        "identifier": "project-2",
+                        "is_active": True,
+                        "name": "Project name 2",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "research-institutional",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CPU",
+                            "GPU",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user4.id,
+                        "person_oib": "",
+                        "first_name": "Zaphod",
+                        "last_name": "Beeblebrox",
+                        "person_mail": "zb@fer.hr",
+                        "person_username": "zbeebleb",
+                        "person_type": "",
+                        "username": "user70@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project2.id,
+                        "identifier": "project-2",
+                        "is_active": True,
+                        "name": "Project name 2",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "research-institutional",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CPU",
+                            "GPU",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user10.id,
+                        "person_oib": "",
+                        "first_name": "",
+                        "last_name": "",
+                        "person_mail": "j.jameson@daily-bugle.com",
+                        "person_username": "jjjameso",
+                        "person_type": "",
+                        "username": "j.jameson@daily-bugle.com",
+                        "status": False,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project3.id,
+                        "identifier": "project-3",
+                        "is_active": True,
+                        "name": "Project name 3",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "thesis",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "GPU",
+                            "CPU",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user5.id,
+                        "person_oib": "",
+                        "first_name": "Marvin",
+                        "last_name": "The Paranoid Android",
+                        "person_mail": "marvin@fer.hr",
+                        "person_username": "marvin",
+                        "person_type": "",
+                        "username": "user42@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project3.id,
+                        "identifier": "project-3",
+                        "is_active": True,
+                        "name": "Project name 3",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "thesis",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "GPU",
+                            "CPU",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user6.id,
+                        "person_oib": "",
+                        "first_name": "",
+                        "last_name": "",
+                        "person_mail": "",
+                        "person_username": "",
+                        "person_type": "",
+                        "username": "user348@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project3.id,
+                        "identifier": "project-3",
+                        "is_active": True,
+                        "name": "Project name 3",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "thesis",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "GPU",
+                            "CPU",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user7.id,
+                        "person_oib": "",
+                        "first_name": "Derek",
+                        "last_name": "Trotter",
+                        "person_mail": "delboy@biol.pmf.hr",
+                        "person_username": "dtrotter",
+                        "person_type": "",
+                        "username": "delboy@pmf.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project4.id,
+                        "identifier": "project-4",
+                        "is_active": True,
+                        "name": "Project name 4",
+                        "institute":
+                            "Prirodoslovno-matematički fakultet, Zagreb",
+                        "project_type": "research-croris",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CLOUD-GPU",
+                            "CLOUD-CPU",
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "expire"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user8.id,
+                        "person_oib": "",
+                        "first_name": "Rodney",
+                        "last_name": "Trotter",
+                        "person_mail": "dave@biol.pmf.hr",
+                        "person_username": "rtrotter",
+                        "person_type": "",
+                        "username": "dave@pmf.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project4.id,
+                        "identifier": "project-4",
+                        "is_active": True,
+                        "name": "Project name 4",
+                        "institute":
+                            "Prirodoslovno-matematički fakultet, Zagreb",
+                        "project_type": "research-croris",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "CLOUD-GPU",
+                            "CLOUD-CPU",
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "expire"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user2.id,
+                        "person_oib": "",
+                        "first_name": "Tricia",
+                        "last_name": "McMillan",
+                        "person_mail": "trillian@fer.hr",
+                        "person_username": "tmcmilla",
+                        "person_type": "",
+                        "username": "user454@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project5.id,
+                        "identifier": "project-5",
+                        "is_active": True,
+                        "name": "Project name 5",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "practical",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user1.id,
+                        "person_oib": "",
+                        "first_name": "Arthur",
+                        "last_name": "Dent",
+                        "person_mail": "arthur.dent@fer.hr",
+                        "person_username": "adent",
+                        "person_type": "",
+                        "username": "user119@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project5.id,
+                        "identifier": "project-5",
+                        "is_active": True,
+                        "name": "Project name 5",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "practical",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
+                },
+                {
+                    "user": {
+                        "id": self.user1.id,
+                        "person_oib": "",
+                        "first_name": "Arthur",
+                        "last_name": "Dent",
+                        "person_mail": "arthur.dent@fer.hr",
+                        "person_username": "adent",
+                        "person_type": "",
+                        "username": "user119@fer.hr",
+                        "status": True,
+                        "is_active": True,
+                        "is_staff": False,
+                        "is_superuser": False
+                    },
+                    "project": {
+                        "id": self.project6.id,
+                        "identifier": "Grant agreement ID: 123456",
+                        "is_active": True,
+                        "name": "Project name 6",
+                        "institute": "Fakultet elektrotehnike i računarstva",
+                        "project_type": "practical",
+                        "resources_numbers": None,
+                        "staff_resources_type": [
+                            "PADOBRAN",
+                            "JUPYTER"
+                        ],
+                        "state": "approve"
+                    },
+                    "date_joined": None
                 }
             ]
         )
