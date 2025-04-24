@@ -1797,10 +1797,15 @@ class AccountingUserProjectAPITests(TestCase):
         ]
 
         hrzoo = models.Organization4APIKey.objects.get(name="HRZOO")
+        merlin = models.Organization4APIKey.objects.get(name="Merlin")
         name, key = models.MyAPIKey.objects.create_key(
             name="test", organization=hrzoo
         )
+        name2, key2 = models.MyAPIKey.objects.create_key(
+            name="test2", organization=merlin
+        )
         self.token = key
+        self.token2 = key2
 
         self.project1 = models.Project.objects.get(identifier="project-1")
         self.project2 = models.Project.objects.get(identifier="project-2")
@@ -1823,7 +1828,6 @@ class AccountingUserProjectAPITests(TestCase):
         )
 
     def test_get_user_project(self):
-        self.maxDiff = None
         with self.settings(
                 MAP_REALMS=self.map_realms,
                 PROJECT_IDENTIFIER_MAP=self.project_identifiers
@@ -2211,15 +2215,36 @@ class AccountingUserProjectAPITests(TestCase):
             ]
         )
 
+    def test_get_user_project_with_different_organization_token(self):
+        with self.settings(
+                MAP_REALMS=self.map_realms,
+                PROJECT_IDENTIFIER_MAP=self.project_identifiers
+        ):
+            request = self.client.get(
+                "/api/v1/accounting/projectsusers?tags=CPU,GPU,BIGMEM,PADOBRAN,"
+                "CLOUD,CLOUD-GPU,CLOUD-BIGMEM,JUPYTER",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+            )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+
 
 class UserProjectAPITests(TestCase):
     def setUp(self):
         create_mock_db()
         hrzoo = models.Organization4APIKey.objects.get(name="HRZOO")
+        merlin = models.Organization4APIKey.objects.get(name="Merlin")
         name, key = models.MyAPIKey.objects.create_key(
             name="test", organization=hrzoo
         )
+        name2, key2 = models.MyAPIKey.objects.create_key(
+            name="test2", organization=merlin
+        )
         self.token = key
+        self.token2 = key2
 
         self.project1 = models.Project.objects.get(identifier="project-1")
         self.project2 = models.Project.objects.get(identifier="project-2")
@@ -2711,6 +2736,17 @@ class UserProjectAPITests(TestCase):
                     "date_joined": None
                 }
             ]
+        )
+
+    def test_get_usersprojects_wrong_token(self):
+        request = self.client.get(
+            "/api/v1/usersprojects",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
         )
 
     def test_get_usersprojects_filter_tags(self):
