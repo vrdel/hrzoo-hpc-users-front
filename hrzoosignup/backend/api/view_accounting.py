@@ -2,8 +2,6 @@ from backend import models
 from backend.dbmodels.apikey import HRZOOHasAPIKey
 from backend.serializers import ResourceUsageListSerializer, \
     ResourceUsageSerializer, AccountingUserProjectSerializer
-from backend.dbmodels.apikey import SNRHasAPIKey
-from backend.utils.usage_data_preparation import Usage
 from django.conf import settings
 from django.db.models import Q
 from drf_spectacular.utils import extend_schema, OpenApiExample, \
