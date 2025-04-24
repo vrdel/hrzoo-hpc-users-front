@@ -43,14 +43,14 @@ devel-webpack-server-hmr:
 	docker exec -u user -t $(container_name) bash -c '/home/user/run-frontdev-server.sh --hot'
 
 npm:
-	docker exec -t $(container_name) bash -c 'cd /home/user/frontend && npm $(ARGS)'
+	docker exec -u user -t $(container_name) bash -c 'cd /home/user/frontend && npm $(ARGS)'
 
 formatjs-extract:
-	docker exec -t $(container_name) bash -c "cd /home/user/frontend/ && npm run extract -- 'src/**/*.jsx' --out-file src/lang/hr.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
+	docker exec -u user -t $(container_name) bash -c "cd /home/user/frontend/ && npm run extract -- 'src/**/*.jsx' --out-file src/lang/hr.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'"
 
 formatjs-compile:
-	docker exec -t $(container_name) bash -c "cd /home/user/frontend/ && npm run compile -- src/lang/hr.json --out-file src/compiled-lang/hr.json"
+	docker exec -u user -t $(container_name) bash -c "cd /home/user/frontend/ && npm run compile -- src/lang/hr.json --out-file src/compiled-lang/hr.json"
 
 formatjs-compile-en:
-	docker exec -t $(container_name) bash -c "cd /home/user/frontend/ && npm run compile -- src/lang/en.json --out-file src/compiled-lang/en.json"
+	docker exec -u user -t $(container_name) bash -c "cd /home/user/frontend/ && npm run compile -- src/lang/en.json --out-file src/compiled-lang/en.json"
 
