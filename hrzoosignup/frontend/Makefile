@@ -2,7 +2,7 @@ container_name = hzsi-web
 
 place-new-bundle:
 	./keep-latest-bundle.sh
-	docker exec -u user -t $(container_name) /home/user/collectstatic.sh
+	docker exec -u root -t $(container_name) /home/user/collectstatic.sh
 
 devel-django-server:
 	docker exec -u user -ti $(container_name) /home/user/run-django-server.sh
