@@ -32,13 +32,18 @@ sudo mkdir -p /opt/hrzoo-signup/var/log
 ``
 So commands are run in the context of container. `Makefile` targets will be introduced shortly after to simplify this step.
 
+Save the changes of virtualn enviroment in container:
+```
+docker commit hzsi-web <registry>/hrzoo-web
+```
+
 Dependencies of frontend ReactJS code are as well and they can be installed from host source tree:
 
 ```
 cd hrzoo-hpc-front/hrzoosignup/frontend
 make npm ARGS="install"
 ```
-Here `npm install` is called in the `web-hzsi` container context using Node.js installation there.
+`npm install` is called in the `web-hzsi` container context using Node.js installation there. Generated `node_modules/` is stored and mapped from host so `docker commit` is not needed here.
 
 ### Django development server and webpack-dev-server
 
