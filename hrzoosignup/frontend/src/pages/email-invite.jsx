@@ -10,16 +10,10 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import NotFound from 'Pages/notfound';
 import { fetchInvite } from 'Api/invite';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faLaptopCode,
-} from '@fortawesome/free-solid-svg-icons';
 import { url_ui_prefix } from 'Config/general';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { FormattedMessage, useIntl } from 'react-intl'
 import { LanguageButtonLogin } from 'Components/LocaleButton';
-import SrceLogoHead from 'Assets/srce-logo-head.png';
-import SrceLogoHeadEn from 'Assets/srce-logo-head-en.png';
 import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';
 import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
 import Cookies from 'js-cookie';
