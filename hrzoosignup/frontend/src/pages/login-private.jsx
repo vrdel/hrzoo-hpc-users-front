@@ -21,8 +21,8 @@ import {
 import 'Styles/login.css';
 import { doUserPassLogin } from 'Api/auth';
 import { AuthContext } from 'Components/AuthContextProvider';
-import { 
-  defaultAuthnRedirect, 
+import {
+  defaultAuthnRedirect,
   defaultAuthnRedirectStaff,
   defaultAuthnRedirectWithAccounting,
   defaultAuthnRedirectWithAccountingLead
@@ -30,6 +30,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { IntlContext } from 'Components/IntlContextProvider';
+import SrceLogoHead from 'Assets/srce-logo-head-mid.png';
+import SrceLogoHeadEn from 'Assets/srce-logo-head-mid-en.png';
+import { useIntl } from 'react-intl'
 import { FormattedMessage } from 'react-intl';
 
 
@@ -44,6 +47,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
   const { login: doLoginContext, setLoginType } = useContext(AuthContext);
   const { locale, setLocale } = useContext(IntlContext)
   const navigate = useNavigate();
+  const intl = useIntl()
 
   useEffect(() => {
     if (sessionData?.active && sessionData?.userdetails)
@@ -86,12 +90,18 @@ const LoginPrivate = ({sessionData=undefined}) => {
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-              <h4 className="text-dark"><strong>
-                <FormattedMessage
-                  defaultMessage="Napredno računanje"
-                  description="loginpriv-servicename" />
-              </strong></h4>
+              {
+                locale === 'hr' ?
+                  <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                    target="_blank" rel="noopener noreferrer">
+                    <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR"/>
+                  </a>
+                :
+                  <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                    target="_blank" rel="noopener noreferrer">
+                    <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN"/>
+                  </a>
+              }
             </CardHeader>
             <CardBody className="pt-5">
               <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
