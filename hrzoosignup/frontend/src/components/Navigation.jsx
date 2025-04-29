@@ -40,11 +40,11 @@ const Navigation = () => {
           {
             locale === 'hr' ?
               <a href="https://www.srce.unizg.hr/" target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHead} id="srcelogo" alt="SRCE Logo"/>
+                <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR"/>
               </a>
             :
-              <a href="https://www.srce.unizg.hr/" target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHeadEn} id="srcelogo" alt="SRCE Logo"/>
+              <a href="https://www.srce.unizg.hr/en" target="_blank" rel="noopener noreferrer">
+                <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN"/>
               </a>
           }
         </span>

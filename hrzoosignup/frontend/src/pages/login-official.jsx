@@ -12,8 +12,8 @@ import {
 import {
   faLaptopCode,
 } from '@fortawesome/free-solid-svg-icons';
-import { 
-  defaultAuthnRedirect, 
+import {
+  defaultAuthnRedirect,
   defaultAuthnRedirectStaff,
   defaultAuthnRedirectWithAccounting,
   defaultAuthnRedirectWithAccountingLead
@@ -22,6 +22,8 @@ import { useNavigate } from 'react-router-dom';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
+import SrceLogoHead from 'Assets/srce-logo-head.png';
+import SrceLogoHeadEn from 'Assets/srce-logo-head-en.png';
 import 'Styles/login-official.css';
 
 
@@ -57,15 +59,16 @@ const LoginOfficial = ({sessionData=undefined}) => {
               id='hzsi-loginheader'
               className="p-3 d-flex flex-row align-items-center justify-content-center"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
-              <h2 className="ms-5 text-dark">
-                <strong>
-                  <FormattedMessage
-                    description="loginofficial-servicename"
-                    defaultMessage="Napredno računanje"
-                  />
-                </strong>
-              </h2>
+              {
+                locale === 'hr' ?
+                  <a href="https://www.srce.unizg.hr/" target="_blank" rel="noopener noreferrer">
+                    <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR"/>
+                  </a>
+                :
+                  <a href="https://www.srce.unizg.hr/en" target="_blank" rel="noopener noreferrer">
+                    <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN"/>
+                  </a>
+              }
             </CardHeader>
             <CardBody className="pt-5 pb-2 mb-4">
               <p className="fs-4 mb-4 text-center">
