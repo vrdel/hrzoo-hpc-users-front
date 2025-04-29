@@ -23,6 +23,8 @@ import { LanguageButtonNav } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
 import SrceLogoHead from 'Assets/srce-logo-head.png';
 import SrceLogoHeadEn from 'Assets/srce-logo-head-en.png';
+import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';
+import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
 import { useIntl } from 'react-intl'
 
 
@@ -36,7 +38,7 @@ const Navigation = () => {
   return (
     <Navbar expand="md" id="hzsi-nav" className="shadow-sm border rounded d-flex justify-content-between mt-2 mb-2 pt-3 pb-3">
       <Nav navbar className="m-1 ms-3">
-        <span className="pl-3 font-weight-bold text-center">
+        <span className="pl-3 font-weight-bold text-center d-none d-md-inline">
           {
             locale === 'hr' ?
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
@@ -47,6 +49,20 @@ const Navigation = () => {
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                 target="_blank" rel="noopener noreferrer">
                 <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN"/>
+              </a>
+          }
+        </span>
+        <span className="pl-3 font-weight-bold text-center d-inline d-md-none me-3">
+          {
+            locale === 'hr' ?
+              <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                target="_blank" rel="noopener noreferrer">
+                <img src={SrceLogoHeadMid} id="srcelogohr" alt="SRCE Logo HR"/>
+              </a>
+            :
+              <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                target="_blank" rel="noopener noreferrer">
+                <img src={SrceLogoHeadMidEn} id="srcelogoen" alt="SRCE Logo EN"/>
               </a>
           }
         </span>
