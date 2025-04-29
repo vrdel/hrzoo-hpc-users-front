@@ -27,8 +27,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { IntlContext } from 'Components/IntlContextProvider';
-import SrceLogoHead from 'Assets/srce-logo-head-mid.png';
-import SrceLogoHeadEn from 'Assets/srce-logo-head-mid-en.png';
+import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';
+import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from 'react-intl';
 
@@ -91,12 +91,12 @@ const LoginPrivate = ({sessionData=undefined}) => {
                 locale === 'hr' ?
                   <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                     target="_blank" rel="noopener noreferrer">
-                    <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR"/>
+                    <img src={SrceLogoHeadMid} id="srcelogohr" alt="SRCE Logo HR"/>
                   </a>
                 :
                   <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                     target="_blank" rel="noopener noreferrer">
-                    <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN"/>
+                    <img src={SrceLogoHeadMidEn} id="srcelogoen" alt="SRCE Logo EN"/>
                   </a>
               }
             </CardHeader>
