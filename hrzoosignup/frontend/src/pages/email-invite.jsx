@@ -165,7 +165,15 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
                   </span>
                 </CardHeader>
                 <CardBody className="pt-5">
-                  <p className="fs-5 mb-4 text-center">
+                  <h4>
+                    <span className="fst-italic fw-bold">
+                      <FormattedMessage
+                        defaultMessage="Pozivnica:"
+                        description="email-invite-cardtitle-2"
+                      />
+                    </span>
+                  </h4>
+                  <p className="fs-5 mt-3 mb-4 text-center">
                     <FormattedMessage
                       defaultMessage="Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom
                                       ujedno potvrđujete da prihvaćate"
