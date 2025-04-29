@@ -431,10 +431,6 @@
     "defaultMessage": "Obrada projekta",
     "description": "managereq-change-modal-title-1"
   },
-  "8wR78t": {
-    "defaultMessage": "Pozivnica",
-    "description": "email-invite-cardtitle-2"
-  },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
@@ -1111,10 +1107,6 @@
     "defaultMessage": "Institucijski projekt",
     "description": "requesttype-label-institutional"
   },
-  "NsHq0r": {
-    "defaultMessage": "Napredno računanje",
-    "description": "saml2-not-allowed-cardtitle"
-  },
   "OA86Kt": {
     "defaultMessage": "Ime i prezime",
     "description": "popover-firstlast-name"
@@ -1142,10 +1134,6 @@
   "OtDaFD": {
     "defaultMessage": "Ime ključa",
     "description": "publickeys-list-keyname"
-  },
-  "OxYLwa": {
-    "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
-    "description": "navigation-title"
   },
   "P+pTgU": {
     "defaultMessage": "Email kopiran u međuspremnik",
@@ -1182,10 +1170,6 @@
   "Q1Qu3u": {
     "defaultMessage": "Tip",
     "description": "userschange-project-type"
-  },
-  "Q1aE8s": {
-    "defaultMessage": "Napredno računanje",
-    "description": "loginofficial-servicename"
   },
   "Q21jEN": {
     "defaultMessage": "Podnesi zahtjev",
@@ -1995,10 +1979,6 @@
     "defaultMessage": "Zahtjev nije bilo moguće podnijeti - validacija znanstvenih područja i polja neuspješna",
     "description": "domain-fields-both-fail"
   },
-  "oRqoRe": {
-    "defaultMessage": "Napredno računanje",
-    "description": "loginpriv-servicename"
-  },
   "oX7IAF": {
     "defaultMessage": "Prijavljen",
     "description": "users-table-croris-registered"
@@ -2203,6 +2183,10 @@
     "defaultMessage": "Prehrambena tehnologija",
     "description": "science-field-34"
   },
+  "ubx0Nb": {
+    "defaultMessage": "Pozivnica:",
+    "description": "email-invite-cardtitle-2"
+  },
   "udq7zq": {
     "defaultMessage": "Trajanje",
     "description": "userinfo-croris-duration"
@@ -2338,10 +2322,6 @@
   "ysQjtn": {
     "defaultMessage": "CroRIS registracija",
     "description": "memberships-user-crorisreg"
-  },
-  "yxubiU": {
-    "defaultMessage": "Napredno računanje",
-    "description": "email-invite-cardtitle-1"
   },
   "z/MmC8": {
     "defaultMessage": "Moji podaci",

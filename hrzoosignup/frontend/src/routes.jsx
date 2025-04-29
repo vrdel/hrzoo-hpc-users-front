@@ -28,7 +28,7 @@ import Memberships from 'Pages/memberships';
 import MyInfo from 'Pages/my-info';
 import NotFound from 'Pages/notfound';
 import Root from 'Pages/root';
-import { 
+import {
   MyAccounting,
   ProjectAccounting,
   ProjectUsersAccounting

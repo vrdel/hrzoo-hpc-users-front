@@ -10,14 +10,12 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import NotFound from 'Pages/notfound';
 import { fetchInvite } from 'Api/invite';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faLaptopCode,
-} from '@fortawesome/free-solid-svg-icons';
 import { url_ui_prefix } from 'Config/general';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { FormattedMessage, useIntl } from 'react-intl'
 import { LanguageButtonLogin } from 'Components/LocaleButton';
+import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';
+import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
 import Cookies from 'js-cookie';
 
 
@@ -151,24 +149,31 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
                   id='hzsi-loginheader'
                   className="p-3 d-flex flex-row align-items-center justify-content-center"
                 >
-                  <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="3x" />
-                  <h4 className="ms-4 text-dark">
-                    <strong>
+                  <span className="pl-3 font-weight-bold text-center">
+                    {
+                      locale === 'hr' ?
+                        <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                          target="_blank" rel="noopener noreferrer">
+                          <img src={SrceLogoHeadMid} id="srcelogohr" alt="SRCE Logo HR"/>
+                        </a>
+                      :
+                        <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                          target="_blank" rel="noopener noreferrer">
+                          <img src={SrceLogoHeadMidEn} id="srcelogoen" alt="SRCE Logo EN"/>
+                        </a>
+                    }
+                  </span>
+                </CardHeader>
+                <CardBody className="pt-5">
+                  <h4>
+                    <span className="fst-italic fw-bold">
                       <FormattedMessage
-                        defaultMessage="Napredno računanje"
-                        description="email-invite-cardtitle-1"
-                      />
-                    </strong> - {' '}
-                    <span className="fst-italic">
-                      <FormattedMessage
-                        defaultMessage="Pozivnica"
+                        defaultMessage="Pozivnica:"
                         description="email-invite-cardtitle-2"
                       />
                     </span>
                   </h4>
-                </CardHeader>
-                <CardBody className="pt-5">
-                  <p className="fs-5 mb-4 text-center">
+                  <p className="fs-5 mt-3 mb-4 text-center">
                     <FormattedMessage
                       defaultMessage="Pozvani ste na projekt pri usluzi Napredno računanje, potvrdom
                                       ujedno potvrđujete da prihvaćate"

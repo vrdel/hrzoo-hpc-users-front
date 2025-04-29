@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Alert,
   Container,
@@ -10,14 +9,14 @@ import {
   CardBody,
   CardFooter
 } from 'reactstrap';
-import {
-  faLaptopCode,
-} from '@fortawesome/free-solid-svg-icons';
 import 'Styles/login-official.css';
 import { useParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
+import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';
+import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
 import { IntlContext } from 'Components/IntlContextProvider';
+import { useIntl } from 'react-intl'
 
 const AlertRegular= () =>
   <>
@@ -62,6 +61,7 @@ const Saml2NotAllowed = () => {
   const { errorType } = useParams()
   const multipleUsersError = errorType === 'multiple'
   const { locale, setLocale } = useContext(IntlContext)
+  const intl = useIntl()
 
   return (
     <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
@@ -75,15 +75,20 @@ const Saml2NotAllowed = () => {
               id='hzsi-loginheader'
               className="p-3 d-flex flex-row align-items-center justify-content-center"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
-              <h2 className="ps-5 ms-5 text-dark">
-                <strong>
-                  <FormattedMessage
-                    defaultMessage="Napredno računanje"
-                    description="saml2-not-allowed-cardtitle"
-                  />
-                </strong>
-              </h2>
+              <span className="pl-3 font-weight-bold text-center">
+                {
+                  locale === 'hr' ?
+                    <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                      target="_blank" rel="noopener noreferrer">
+                      <img src={SrceLogoHeadMid} id="srcelogohr" alt="SRCE Logo HR"/>
+                    </a>
+                  :
+                    <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                      target="_blank" rel="noopener noreferrer">
+                      <img src={SrceLogoHeadMidEn} id="srcelogoen" alt="SRCE Logo EN"/>
+                    </a>
+                }
+              </span>
             </CardHeader>
             <CardBody className="pt-5 pb-5">
               {

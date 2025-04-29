@@ -10,10 +10,7 @@ import {
   CardBody,
 } from 'reactstrap';
 import {
-  faLaptopCode,
-} from '@fortawesome/free-solid-svg-icons';
-import { 
-  defaultAuthnRedirect, 
+  defaultAuthnRedirect,
   defaultAuthnRedirectStaff,
   defaultAuthnRedirectWithAccounting,
   defaultAuthnRedirectWithAccountingLead
@@ -22,12 +19,16 @@ import { useNavigate } from 'react-router-dom';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
+import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';
+import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
+import { useIntl } from 'react-intl'
 import 'Styles/login-official.css';
 
 
 const LoginOfficial = ({sessionData=undefined}) => {
   const navigate = useNavigate();
   const { locale, setLocale } = useContext(IntlContext)
+  const intl = useIntl()
 
   useEffect(() => {
     if (sessionData?.active && sessionData?.userdetails)
@@ -57,15 +58,18 @@ const LoginOfficial = ({sessionData=undefined}) => {
               id='hzsi-loginheader'
               className="p-3 d-flex flex-row align-items-center justify-content-center"
             >
-              <FontAwesomeIcon icon={faLaptopCode} style={{color: "#c00000"}} size="4x" />
-              <h2 className="ms-5 text-dark">
-                <strong>
-                  <FormattedMessage
-                    description="loginofficial-servicename"
-                    defaultMessage="Napredno računanje"
-                  />
-                </strong>
-              </h2>
+              {
+                locale === 'hr' ?
+                  <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                    target="_blank" rel="noopener noreferrer">
+                    <img src={SrceLogoHeadMid} id="srcelogohr" alt="SRCE Logo HR"/>
+                  </a>
+                :
+                  <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                    target="_blank" rel="noopener noreferrer">
+                    <img src={SrceLogoHeadMidEn} id="srcelogoen" alt="SRCE Logo EN"/>
+                  </a>
+              }
             </CardHeader>
             <CardBody className="pt-5 pb-2 mb-4">
               <p className="fs-4 mb-4 text-center">
