@@ -22,7 +22,7 @@ import { IntlContext } from 'Components/IntlContextProvider';
 import { LanguageButtonNav } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
 import SrceLogoHead from 'Assets/srce-logo-head.png';
-import SrceLogoHeadEn from 'Assets/srce-logo-head.png';
+import SrceLogoHeadEn from 'Assets/srce-logo-head-en.png';
 import { useIntl } from 'react-intl'
 
 
@@ -32,8 +32,6 @@ const Navigation = () => {
   const { userDetails } = useContext(AuthContext)
   const { locale, setLocale } = useContext(IntlContext)
   const intl = useIntl()
-
-  console.log('VRDEL DEBUG', locale)
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="shadow-sm border rounded d-flex justify-content-between mt-2 mb-2 pt-3 pb-3">
