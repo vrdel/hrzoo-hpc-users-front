@@ -24,7 +24,7 @@ const Footer = () => {
       </div>
       <div className="text-center pt-1 pb-2">
         <p>
-          <small>Copyright © 2024{' '}
+          <small>Copyright © 2025{' '}
             <a href={intl.formatMessage({
                 defaultMessage: "https://www.srce.unizg.hr/",
                 description: 'footer-link'
