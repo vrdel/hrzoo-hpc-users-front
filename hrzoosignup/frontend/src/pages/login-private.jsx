@@ -15,9 +15,6 @@ import {
   Label,
   Form,
   FormGroup } from 'reactstrap';
-import {
-  faLaptopCode,
-} from '@fortawesome/free-solid-svg-icons';
 import 'Styles/login.css';
 import { doUserPassLogin } from 'Api/auth';
 import { AuthContext } from 'Components/AuthContextProvider';

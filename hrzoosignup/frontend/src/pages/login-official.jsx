@@ -10,9 +10,6 @@ import {
   CardBody,
 } from 'reactstrap';
 import {
-  faLaptopCode,
-} from '@fortawesome/free-solid-svg-icons';
-import {
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff,
   defaultAuthnRedirectWithAccounting,
