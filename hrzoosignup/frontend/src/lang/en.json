@@ -1080,7 +1080,7 @@
     "description": "manreq-change-modalmsg"
   },
   "N7CK9d": {
-    "defaultMessage": "You are invited to project within the Advanced Computing service and by confirming, you also agree to the",
+    "defaultMessage": "You are invited to project within the Advanced computing service and by confirming, you also agree to the",
     "description": "email-invite-cardbody"
   },
   "NF44j4": {
@@ -2336,7 +2336,7 @@
     "description": "memberships-user-crorisreg"
   },
   "yxubiU": {
-    "defaultMessage": "Advanced Computing",
+    "defaultMessage": "Advanced computing",
     "description": "email-invite-cardtitle-1"
   },
   "z/MmC8": {

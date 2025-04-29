@@ -1987,10 +1987,6 @@
     "defaultMessage": "Zahtjev nije bilo moguće podnijeti - validacija znanstvenih područja i polja neuspješna",
     "description": "domain-fields-both-fail"
   },
-  "oRqoRe": {
-    "defaultMessage": "Napredno računanje",
-    "description": "loginpriv-servicename"
-  },
   "oX7IAF": {
     "defaultMessage": "Prijavljen",
     "description": "users-table-croris-registered"
