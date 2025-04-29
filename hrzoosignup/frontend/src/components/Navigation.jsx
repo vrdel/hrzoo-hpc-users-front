@@ -39,11 +39,13 @@ const Navigation = () => {
         <span className="pl-3 font-weight-bold text-center">
           {
             locale === 'hr' ?
-              <a href="https://www.srce.unizg.hr/" target="_blank" rel="noopener noreferrer">
+              <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                target="_blank" rel="noopener noreferrer">
                 <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR"/>
               </a>
             :
-              <a href="https://www.srce.unizg.hr/en" target="_blank" rel="noopener noreferrer">
+              <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
+                target="_blank" rel="noopener noreferrer">
                 <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN"/>
               </a>
           }

@@ -1143,10 +1143,6 @@
     "defaultMessage": "Ime ključa",
     "description": "publickeys-list-keyname"
   },
-  "OxYLwa": {
-    "defaultMessage": "Zahtjev za korištenje usluge Napredno računanje",
-    "description": "navigation-title"
-  },
   "P+pTgU": {
     "defaultMessage": "Email kopiran u međuspremnik",
     "description": "userlist-minibutton-title-1"
@@ -1182,10 +1178,6 @@
   "Q1Qu3u": {
     "defaultMessage": "Tip",
     "description": "userschange-project-type"
-  },
-  "Q1aE8s": {
-    "defaultMessage": "Napredno računanje",
-    "description": "loginofficial-servicename"
   },
   "Q21jEN": {
     "defaultMessage": "Podnesi zahtjev",
