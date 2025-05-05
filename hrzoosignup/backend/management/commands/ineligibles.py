@@ -6,6 +6,7 @@ from django.utils import timezone
 from datetime import date
 
 from backend.models import Project, UserProject, Role
+from backend.utils.ineligibles import ineligible_users
 
 import argparse
 import datetime
@@ -35,33 +36,9 @@ class Command(BaseCommand):
         parser_projects = subparsers.add_parser("projects", help="Show projects")
         parser_projects.add_argument('--type', dest="project_type", type=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)", nargs="+")
 
-    def _parse_enddate(self, dt):
-        try:
-            if type(dt) is str:
-                return datetime.datetime.strptime(dt, '%Y-%m-%d').date()
-            else:
-                return dt
-        except ValueError as exc:
-            self.stdout.write(self.style.ERROR('Format end-date not correct'))
-            self.stdout.write(self.style.NOTICE(repr(exc)))
-            raise SystemExit(1)
-
     def _ineligible_users(self, options):
-        self._users = []
-        self.end_date = self._parse_enddate(options.get('enddate'))
-
-        for user in self.user_model.objects.all():
-            user_projects_expired = set()
-            if not user.status:
-                continue
-            user_projects = set(list(user.project_set.all().values_list('identifier', flat=True)))
-            if not user_projects:
-                continue
-            for project in user.project_set.all():
-                if project.date_end + datetime.timedelta(days=options['graceperiod']) < self.end_date:
-                    user_projects_expired.add(project.identifier)
-            if not user_projects.difference(user_projects_expired):
-                self._users.append(user)
+        users = ineligible_users(options.get('enddate'),
+                                 options.get('graceperiod'))
 
         table = Table(
             title="Ineligible users",
@@ -77,7 +54,7 @@ class Command(BaseCommand):
         table.add_column("End")
 
         i = 1
-        for user in self._users:
+        for user in users:
             projects = '\n\n'.join(
                 ['{} ({} - {})'.format(user_project[0], user_project[1], user_project[2])
                  for user_project in user.project_set.all().values_list('name', 'identifier', 'project_type__name')]
@@ -98,7 +75,7 @@ class Command(BaseCommand):
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     i = 1
-                    for user in self._users:
+                    for user in users:
 
                         projects = ', '.join(
                             ['{} ({} - {})'.format(user_project[0], user_project[1], user_project[2])
