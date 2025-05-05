@@ -1,5 +1,9 @@
-import datetime
 from django.contrib.auth import get_user_model
+from django.db.models import Q
+
+import datetime
+
+from backend.models import Project, UserProject, Role
 
 
 def parse_enddate(dt):
@@ -35,3 +39,24 @@ def ineligible_users(enddate, graceperiod):
     return users
 
 
+def ineligible_projects(enddate, graceperiod, project_type):
+    projects_result = []
+    end_date = parse_enddate(enddate)
+
+    projects = []
+    target_project_types = project_type
+    if target_project_types:
+        query = Q()
+        for pt in target_project_types:
+            query |= Q(project_type__name__contains=pt)
+        projects = Project.objects.filter(query).distinct()
+    else:
+        projects = Project.objects.all()
+
+    for project in projects:
+        if project.state.name in ['deny', 'submit', 'expire']:
+            continue
+        if project.date_end + datetime.timedelta(days=graceperiod) < end_date:
+            projects_result.append(project)
+
+    return projects_result

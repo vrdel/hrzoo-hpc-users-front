@@ -1,12 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
-from django.db.models import Q
 from django.utils import timezone
 from datetime import date
 
 from backend.models import Project, UserProject, Role
-from backend.utils.ineligibles import ineligible_users
+from backend.utils.ineligibles import ineligible_users, ineligible_projects, parse_enddate
 
 import argparse
 import datetime
@@ -98,24 +97,10 @@ class Command(BaseCommand):
                 raise SystemExit(1)
 
     def _ineligible_projects(self, options):
-        self._projects = []
-        self.end_date = self._parse_enddate(options.get('enddate'))
-
-        projects = []
-        target_project_types = options.get('project_type', None)
-        if target_project_types:
-            query = Q()
-            for pt in target_project_types:
-                query |= Q(project_type__name__contains=pt)
-            projects = Project.objects.filter(query).distinct()
-        else:
-            projects = Project.objects.all()
-
-        for project in projects:
-            if project.state.name in ['deny', 'submit', 'expire']:
-                continue
-            if project.date_end + datetime.timedelta(days=options['graceperiod']) < self.end_date:
-                self._projects.append(project)
+        projects = ineligible_projects(options.get('enddate'),
+                                       options.get('graceperiod'),
+                                       options.get('project_type', None))
+        self.end_date = parse_enddate(options.get('enddate'))
 
         table = Table(
             title="Ineligible projects",
@@ -132,7 +117,7 @@ class Command(BaseCommand):
         table.add_column("Users")
 
         i = 1
-        for project in self._projects:
+        for project in projects:
             overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
             users = ', '.join(
                 [user.username for user in project.users.all()]
@@ -151,7 +136,7 @@ class Command(BaseCommand):
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     i = 1
-                    for project in self._projects:
+                    for project in projects:
                         overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
                         users = ', '.join(
                             [user.username for user in project.users.all()]
