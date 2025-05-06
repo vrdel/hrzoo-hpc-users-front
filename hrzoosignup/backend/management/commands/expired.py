@@ -5,7 +5,7 @@ from django.utils import timezone
 from datetime import date
 
 from backend.models import Project, UserProject, Role
-from backend.utils.ineligibles import ineligible_users, ineligible_projects, parse_enddate
+from backend.utils.expired import expired_projects, expired_users, parse_enddate
 
 import argparse
 import datetime
@@ -20,27 +20,27 @@ from rich.pretty import pprint
 
 
 class Command(BaseCommand):
-    help = "Ineligible projects and users"
+    help = "Expired projects and users"
 
     def __init__(self):
         super().__init__()
         self.user_model = get_user_model()
 
     def add_arguments(self, parser):
-        subparsers = parser.add_subparsers(help="Ineligible users and projects subcommands", dest="command")
+        subparsers = parser.add_subparsers(help="Expired projects subcommands", dest="command")
         parser.add_argument('--grace-period', dest='graceperiod', type=int, default=180, required=False)
         parser.add_argument('--end-date', dest='enddate', type=str, default=date.today(), required=False)
         parser.add_argument('--export-csv', dest='csvfile', type=str, default=None, required=False)
-        parser_users = subparsers.add_parser("users", help="Show users")
         parser_projects = subparsers.add_parser("projects", help="Show projects")
+        parser_users = subparsers.add_parser("users", help="Show users")
         parser_projects.add_argument('--type', dest="project_type", type=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)", nargs="+")
 
-    def _ineligible_users(self, options):
-        users = ineligible_users(options.get('enddate'),
-                                 options.get('graceperiod'))
+    def _expired_users(self, options):
+        users = expired_users(options.get('enddate'),
+                              options.get('graceperiod'))
 
         table = Table(
-            title="Ineligible users",
+            title="Expired users",
             title_justify="left",
             box=box.ASCII,
             show_lines=True,
@@ -96,14 +96,14 @@ class Command(BaseCommand):
                 self.style.ERROR(f'Cannot open {csvfile} for writing - {repr(exc)}')
                 raise SystemExit(1)
 
-    def _ineligible_projects(self, options):
-        projects = ineligible_projects(options.get('enddate'),
-                                       options.get('graceperiod'),
-                                       options.get('project_type', None))
+    def _expired_projects(self, options):
+        projects = expired_projects(options.get('enddate'),
+                                    options.get('graceperiod'),
+                                    options.get('project_type', None))
         self.end_date = parse_enddate(options.get('enddate'))
 
         table = Table(
-            title="Ineligible projects",
+            title="Expired projects",
             title_justify="left",
             box=box.ASCII,
             show_lines=True,
@@ -113,17 +113,18 @@ class Command(BaseCommand):
         table.add_column("Identifier")
         table.add_column("Type")
         table.add_column("End")
-        table.add_column("Overextend")
+        table.add_column("Gracedays")
         table.add_column("Users")
 
         i = 1
         for project in projects:
-            overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
-            users = ', '.join(
-                [user.username for user in project.users.all()]
-            )
-            table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.project_type.name}', f'{project.date_end}', f'{overextend}', f'{users}')
-            i += 1
+            since_expire = self.end_date - project.date_end
+            if since_expire < datetime.timedelta(days=options['graceperiod']):
+                users = ', '.join(
+                    [user.username for user in project.users.all()]
+                )
+                table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.project_type.name}', f'{project.date_end}', f'{since_expire.days}', f'{users}')
+                i += 1
 
         if table.row_count:
             console = Console()
@@ -132,12 +133,11 @@ class Command(BaseCommand):
         if options['csvfile']:
             try:
                 with open(options['csvfile'], 'w', newline='') as csvfile:
-                    fieldnames = ['#', 'Name', 'Identifier', 'Type', 'End', 'Overextend', 'Users']
+                    fieldnames = ['#', 'Name', 'Identifier', 'Type', 'End', 'Gracedays', 'Users']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     i = 1
                     for project in projects:
-                        overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
                         users = ', '.join(
                             [user.username for user in project.users.all()]
                         )
@@ -147,7 +147,7 @@ class Command(BaseCommand):
                             'Identifier': project.identifier,
                             'Type': project.project_type.name,
                             'End': project.date_end,
-                            'Overextend': overextend,
+                            'Gracedays': since_expire.days,
                             'Users': users
                         })
                         i += 1
@@ -157,8 +157,8 @@ class Command(BaseCommand):
                 raise SystemExit(1)
 
     def handle(self, *args, **options):
-        if options['command'] == 'users':
-            self._ineligible_users(options)
-
         if options['command'] == 'projects':
-            self._ineligible_projects(options)
+            self._expired_projects(options)
+
+        if options['command'] == 'users':
+            self._expired_users(options)
