@@ -10,6 +10,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('sessionactive/', views.IsSessionActive.as_view(), name='sessionactive'),
     path("usersprojects", views.UserProjectAPI.as_view(), name="usersprojects"),
+    path("projects", views.NewProjectsAPI.as_view(), name="newprojects"),
     path("sshkeys", views.SshKeysAPI.as_view(), name="sshkeys"),
     path("accounting/projectsusers", views.AccountingUserProjectAPI.as_view(), name="accountingprojectsusers"),
     path("accounting/records", views.ResourceUsageAPI.as_view(), name="accountingrecords")

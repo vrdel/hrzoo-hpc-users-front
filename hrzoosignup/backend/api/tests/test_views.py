@@ -3144,3 +3144,89 @@ class UserProjectAPITests(TestCase):
                 }
             ]
         )
+
+
+class NewProjectsAPITests(TestCase):
+    def setUp(self):
+        create_mock_db()
+
+        hrzoo = models.Organization4APIKey.objects.get(name="HRZOO")
+        merlin = models.Organization4APIKey.objects.get(name="Merlin")
+        name, key = models.MyAPIKey.objects.create_key(
+            name="test", organization=merlin
+        )
+        name2, key2 = models.MyAPIKey.objects.create_key(
+            name="test2", organization=hrzoo
+        )
+        self.token = key
+        self.token2 = key2
+
+        self.factory = APIRequestFactory()
+
+        self.data = {
+            "project_type": "practical",
+            "date_end": "2025-12-31",
+            "date_start": "2025-01-01",
+            "name": "New project 7",
+            "reason":
+                "Duis aute irure dolor in reprehenderit in voluptate velit "
+                "esse cillum dolore eu fugiat nulla pariatur.",
+            "institute": "Institut Ruđer Bošković",
+            "science_field": [
+                {
+                    "name": {
+                        'label': 'PRIRODNE ZNANOSTI',
+                        'value': 'PRIRODNE ZNANOSTI'
+                    },
+                    "percent": 100,
+                    "scientificfields": [
+                        {
+                            'name': {
+                                'label': 'Biologija',
+                                'value': 'Biologija'
+                            },
+                            "percent": 50
+                        },
+                        {
+                            'name': {
+                                'label': 'Fizika',
+                                'value': 'Fizika'
+                            },
+                            "percent": 50
+                        }
+                    ]
+                }
+            ],
+            "resources_type": ["JUPYTER"]
+        }
+
+    def test_post_unauthorized(self):
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        request = self.client.post(
+            "/api/v1/projects",
+            content_type="application/json",
+            data=self.data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+
+    def test_post_wrong_organization(self):
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        request = self.client.post(
+            "/api/v1/projects",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+            content_type="application/json",
+            data=self.data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
