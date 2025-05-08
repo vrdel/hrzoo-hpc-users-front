@@ -57,6 +57,7 @@ packages = [
     'hrzoosignup.backend.auth.saml2',
     'hrzoosignup.backend.croris',
     'hrzoosignup.backend.dashboard',
+    'hrzoosignup.backend.dbmodels',
     'hrzoosignup.backend.email',
     'hrzoosignup.backend.fixtures',
     'hrzoosignup.backend.httpq',
