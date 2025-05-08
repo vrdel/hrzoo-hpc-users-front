@@ -1,12 +1,7 @@
-from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.conf import settings
-from django.db import DEFAULT_DB_ALIAS
-from django.db.utils import IntegrityError
+import sys
 
-# based on django/contrib/auth/management/commands/createsuperuser.py
-
-from rest_framework_api_key.models import APIKey
+from backend import models
+from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
@@ -24,6 +19,13 @@ class Command(BaseCommand):
             help='Create a new API Key with <name>'
         )
         parser.add_argument(
+            "--organization",
+            metavar="<organization>",
+            type=str,
+            help="Assign the token to organization <organization>",
+            required="--create" in sys.argv
+        )
+        parser.add_argument(
             '--list',
             action='store_true',
             help='List all created API keys'
@@ -37,24 +39,59 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['create']:
-            name, key = APIKey.objects.create_key(name=options['create'])
-            self.stdout.write(self.style.SUCCESS(f"API Key created"))
-            self.stdout.write('Name of the key: ' + self.style.WARNING(f'{name}'))
-            self.stdout.write('Value of key: ' + self.style.WARNING(f'{key}') + ' (visible only on creation time)')
+            try:
+                organization = models.Organization4APIKey.objects.get(
+                    name=options["organization"]
+                )
+
+            except models.Organization4APIKey.DoesNotExist:
+                self.stderr.write(
+                    f"Organization {options['organization']} not found"
+                )
+
+            else:
+                name, key = models.MyAPIKey.objects.create_key(
+                    name=options['create'], organization=organization
+                )
+                self.stdout.write(self.style.SUCCESS(f"API Key created"))
+                self.stdout.write(
+                    f"Organization {self.style.WARNING(organization)}"
+                )
+                self.stdout.write(
+                    'Name of the key: ' + self.style.WARNING(f'{name}')
+                )
+                self.stdout.write(
+                    'Value of key: ' + self.style.WARNING(f'{key}') +
+                    ' (visible only on creation time)'
+                )
 
         if options['list']:
-            api_keys = APIKey.objects.get_usable_keys()
+            api_keys = models.MyAPIKey.objects.get_usable_keys()
             for key in api_keys:
-                self.stdout.write('Name: ' + self.style.WARNING(f'{key.name}'))
-                self.stdout.write('Prefix: ' + self.style.WARNING(f'{key.prefix}'))
-                self.stdout.write('Created: ' + self.style.WARNING(f"{key.created.strftime('%H:%M:%Sh %d.%m.%Y')}"))
+                self.stdout.write(
+                    'Name: ' + self.style.WARNING(f'{key.name}')
+                )
+                self.stdout.write(
+                    'Prefix: ' + self.style.WARNING(f'{key.prefix}')
+                )
+                self.stdout.write(
+                    'Created: ' + self.style.WARNING(
+                        f"{key.created.strftime('%H:%M:%Sh %d.%m.%Y')}"
+                    )
+                )
                 self.stdout.write('\n')
 
         if options['delete']:
             try:
-                api_key = APIKey.objects.get(prefix=options['delete'])
+                api_key = models.MyAPIKey.objects.get(
+                    prefix=options['delete']
+                )
                 api_key.delete()
-                self.stdout.write(self.style.SUCCESS(f'Key {api_key} successfully deleted'))
-            except APIKey.DoesNotExist as exc:
-                self.stderr.write(f"Problem deleting key {options['delete']}: {repr(exc)}")
+                self.stdout.write(
+                    self.style.SUCCESS(f'Key {api_key} successfully deleted')
+                )
+            except models.MyAPIKey.DoesNotExist as exc:
+                self.stderr.write(
+                    f"Problem deleting key {options['delete']}: {repr(exc)}"
+                )
                 raise SystemExit(1)
