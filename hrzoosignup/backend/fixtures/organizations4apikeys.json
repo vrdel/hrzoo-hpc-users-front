@@ -3,14 +3,14 @@
     "model": "backend.Organization4APIKey",
     "pk": 1,
     "fields": {
-      "name": "HRZOO"
+      "name": "hrzoo"
      }
   },
   {
     "model": "backend.Organization4APIKey",
     "pk": 2,
     "fields": {
-      "name": "Merlin"
+      "name": "merlin"
      }
   }
 ]
