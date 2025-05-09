@@ -1,4 +1,5 @@
 from backend import models
+from backend.dbmodels.apikey import HRZOOHasAPIKey
 from backend.serializers import ResourceUsageListSerializer, \
     ResourceUsageSerializer, AccountingUserProjectSerializer
 from django.conf import settings
@@ -9,12 +10,17 @@ from rest_framework import serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_api_key.permissions import HasAPIKey
 
 
 class AccountingUserProjectAPI(APIView):
-    permission_classes = (HasAPIKey,)
+    permission_classes = (HRZOOHasAPIKey,)
     serializer_class = AccountingUserProjectSerializer(many=True)
+
+    def _replace_projectsapi_fields(self, projid):
+        for field in settings.PROJECT_IDENTIFIER_MAP:
+            if field['from'] in projid:
+                return projid.replace(field['from'], field['to'])
+        return projid
 
     @extend_schema(
         parameters=[
@@ -38,6 +44,7 @@ class AccountingUserProjectAPI(APIView):
         tag = self.request.query_params.get('tag')
         op = self.request.query_params.get('op')
         query = Q()
+        db_interested = list()
 
         if tags:
             tags = tags.split(',')
@@ -91,7 +98,7 @@ class AccountingUserProjectAPI(APIView):
 
 
 class ResourceUsageAPI(APIView):
-    permission_classes = (HasAPIKey,)
+    permission_classes = (HRZOOHasAPIKey,)
 
     @extend_schema(
         description="POST information on data usage",

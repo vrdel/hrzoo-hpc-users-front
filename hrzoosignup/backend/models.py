@@ -26,6 +26,8 @@ from invitations import signals
 
 import datetime
 
+from backend.dbmodels.apikey import *
+
 
 def validate_ssh_public_key(ssh_key):
     if isinstance(ssh_key, str):

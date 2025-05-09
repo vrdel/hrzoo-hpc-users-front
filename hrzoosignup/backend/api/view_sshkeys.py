@@ -6,11 +6,11 @@ from django.core.cache import cache
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_api_key.permissions import HasAPIKey
+from backend.dbmodels.apikey import HRZOOHasAPIKey
 
 
 class SshKeysAPI(APIView):
-    permission_classes = (HasAPIKey,)
+    permission_classes = (HRZOOHasAPIKey,)
     serializer_class = serializers.SshKeysSerializer2
 
     def get(self, request):
