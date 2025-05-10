@@ -53,9 +53,9 @@ class Command(BaseCommand):
                 name, key = models.MyAPIKey.objects.create_key(
                     name=options['create'], organization=organization
                 )
-                self.stdout.write(self.style.SUCCESS(f"API Key created"))
+                self.stdout.write(self.style.SUCCESS("API Key created"))
                 self.stdout.write(
-                    f"Organization {self.style.WARNING(organization)}"
+                    f"Organization {self.style.WARNING(organization.name)}"
                 )
                 self.stdout.write(
                     'Name of the key: ' + self.style.WARNING(f'{name}')
