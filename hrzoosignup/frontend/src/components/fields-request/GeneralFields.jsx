@@ -580,7 +580,7 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
       </Row>
       <Row>
         <Col md={{size: 10, offset: 1}}>
-          <a href={`https://www.croris.hr/projekti/projekt/${crorisId}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+          <a href={`https://www.croris.hr/projekti/projekt/${crorisId}`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
             https://www.croris.hr/projekti/projekt/{crorisId}
           </a>
         </Col>
