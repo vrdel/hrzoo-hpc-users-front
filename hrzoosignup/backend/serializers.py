@@ -696,8 +696,8 @@ class NewProjectsSerializer(serializers.Serializer):
     @staticmethod
     def validate_resources_type(value):
         for val in value:
-            if val not in settings.ALLOWED_RESOURCES:
-                serializers.ValidationError(
+            if val.lower() not in settings.ALLOWED_RESOURCES:
+                raise serializers.ValidationError(
                     f"{val} is not among allowed resources"
                 )
 

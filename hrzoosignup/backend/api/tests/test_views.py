@@ -3466,3 +3466,41 @@ class NewProjectsAPITests(TestCase):
                 2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
             )
         )
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_wrong_resource(self, mock_now):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        data = copy.deepcopy(self.data)
+        data["resources_type"] = ["MEH"]
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        request = self.client.post(
+            "/api/v1/projects",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data=data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message":
+                        "resources_type: MEH is not among allowed resources"
+                }
+            }
+        )
