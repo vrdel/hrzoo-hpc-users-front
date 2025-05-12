@@ -722,6 +722,7 @@ class NewProjectsSerializer(serializers.Serializer):
         return value
 
     def save(self, **kwargs):
+        merlin_user = models.User.objects.get(username="merlin@srce.hr")
         data = copy.deepcopy(self.validated_data)
         user = copy.deepcopy(self.validated_data["user"])
         del data["user"]
@@ -733,6 +734,12 @@ class NewProjectsSerializer(serializers.Serializer):
         )
         data["science_extrasoftware_help"] = False
         data["is_active"] = True
+        data["approved_by"] = {
+            "first_name": merlin_user.first_name,
+            "last_name": merlin_user.last_name,
+            "person_uniqueid": merlin_user.person_uniqueid,
+            "username": merlin_user.username
+        }
         data["date_approved"] = timezone.now()
         data["staff_resources_type"] = data["resources_type"]
         data["state"] = models.State.objects.get(name="approve")

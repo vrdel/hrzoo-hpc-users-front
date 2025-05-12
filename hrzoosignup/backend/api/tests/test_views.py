@@ -3279,7 +3279,14 @@ class NewProjectsAPITests(TestCase):
             )
         )
         self.assertEqual(project.date_changed, None)
-        self.assertEqual(project.approved_by, None)
+        self.assertEqual(
+            project.approved_by, {
+                "first_name": "Merlin",
+                "last_name": "Moodle",
+                "person_uniqueid": "merlin@srce.hr",
+                "username": "merlin@srce.hr",
+            }
+        )
         self.assertEqual(project.denied_by, None)
         self.assertEqual(project.changed_by, None)
         self.assertEqual(project.change_history, None)
@@ -3404,7 +3411,14 @@ class NewProjectsAPITests(TestCase):
             )
         )
         self.assertEqual(project.date_changed, None)
-        self.assertEqual(project.approved_by, None)
+        self.assertEqual(
+            project.approved_by, {
+                "first_name": "Merlin",
+                "last_name": "Moodle",
+                "person_uniqueid": "merlin@srce.hr",
+                "username": "merlin@srce.hr",
+            }
+        )
         self.assertEqual(project.denied_by, None)
         self.assertEqual(project.changed_by, None)
         self.assertEqual(project.change_history, None)

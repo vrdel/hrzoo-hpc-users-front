@@ -259,6 +259,16 @@ def create_mock_db():
         date_end=datetime.date(2025, 12, 31),
         date_approved=datetime.datetime(2024, 5, 4, 12, 0, 13, tzinfo=pytz.UTC)
     )
+    models.User.objects.create_user(
+        username="merlin@srce.hr",
+        first_name="Merlin",
+        last_name="Moodle",
+        person_mail="merlin@srce.hr",
+        person_uniqueid="merlin@srce.hr",
+        person_institution="Sveučilišni računski centar - Srce",
+        status=True,
+        mailinglist_subscribe=True
+    )
     user1 = models.User.objects.create_user(
         username="user119@fer.hr",
         person_uniqueid="user119@fer.hr",
