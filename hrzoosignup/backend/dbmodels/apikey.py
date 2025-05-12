@@ -44,12 +44,12 @@ class MyHasAPIKey(BaseHasAPIKey):
 class HRZOOHasAPIKey(MyHasAPIKey):
     def has_permission(self, request, view):
         return self.has_organization_permission(
-            request=request, organization_name="HRZOO"
+            request=request, organization_name="hrzoo"
         )
 
 
 class MerlinHasAPIKey(MyHasAPIKey):
     def has_permission(self, request, view):
         return self.has_organization_permission(
-            request=request, organization_name="Merlin"
+            request=request, organization_name="merlin"
         )
