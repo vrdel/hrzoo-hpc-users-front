@@ -8,6 +8,7 @@ from django.utils import timezone
 def create_mock_db():
     models.Organization4APIKey.objects.create(name="hrzoo")
     models.Organization4APIKey.objects.create(name="merlin")
+    models.ProjectCount.objects.create(counter=1)
     type1 = models.ProjectType.objects.create(name="research-croris")
     type2 = models.ProjectType.objects.create(name="thesis")
     type3 = models.ProjectType.objects.create(name="practical")

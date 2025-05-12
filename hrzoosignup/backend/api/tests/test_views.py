@@ -2281,7 +2281,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2316,7 +2316,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -2351,7 +2351,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user9.id,
-                        "person_oib": "",
+                        "person_oib": "99999999999",
                         "first_name": "Albert",
                         "last_name": "Trotter",
                         "person_mail": "uncle.albert@biol.pmf.hr",
@@ -2386,7 +2386,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2418,7 +2418,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user3.id,
-                        "person_oib": "",
+                        "person_oib": "33333333333",
                         "first_name": "Ford",
                         "last_name": "Prefect",
                         "person_mail": "ford.prefect@fer.hr",
@@ -2450,7 +2450,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user4.id,
-                        "person_oib": "",
+                        "person_oib": "44444444444",
                         "first_name": "Zaphod",
                         "last_name": "Beeblebrox",
                         "person_mail": "zb@fer.hr",
@@ -2578,7 +2578,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user7.id,
-                        "person_oib": "",
+                        "person_oib": "77777777777",
                         "first_name": "Derek",
                         "last_name": "Trotter",
                         "person_mail": "delboy@biol.pmf.hr",
@@ -2612,7 +2612,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user8.id,
-                        "person_oib": "",
+                        "person_oib": "88888888888",
                         "first_name": "Rodney",
                         "last_name": "Trotter",
                         "person_mail": "dave@biol.pmf.hr",
@@ -2646,7 +2646,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -2677,7 +2677,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2708,7 +2708,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2761,7 +2761,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2796,7 +2796,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -2831,7 +2831,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user7.id,
-                        "person_oib": "",
+                        "person_oib": "77777777777",
                         "first_name": "Derek",
                         "last_name": "Trotter",
                         "person_mail": "delboy@biol.pmf.hr",
@@ -2865,7 +2865,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user8.id,
-                        "person_oib": "",
+                        "person_oib": "88888888888",
                         "first_name": "Rodney",
                         "last_name": "Trotter",
                         "person_mail": "dave@biol.pmf.hr",
@@ -2899,7 +2899,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user9.id,
-                        "person_oib": "",
+                        "person_oib": "99999999999",
                         "first_name": "Albert",
                         "last_name": "Trotter",
                         "person_mail": "uncle.albert@biol.pmf.hr",
@@ -2945,7 +2945,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2980,7 +2980,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -3012,7 +3012,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -3047,7 +3047,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user3.id,
-                        "person_oib": "",
+                        "person_oib": "33333333333",
                         "first_name": "Ford",
                         "last_name": "Prefect",
                         "person_mail": "ford.prefect@fer.hr",
@@ -3079,7 +3079,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user4.id,
-                        "person_oib": "",
+                        "person_oib": "44444444444",
                         "first_name": "Zaphod",
                         "last_name": "Beeblebrox",
                         "person_mail": "zb@fer.hr",
@@ -3111,7 +3111,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user9.id,
-                        "person_oib": "",
+                        "person_oib": "99999999999",
                         "first_name": "Albert",
                         "last_name": "Trotter",
                         "person_mail": "uncle.albert@biol.pmf.hr",
@@ -3151,8 +3151,8 @@ class NewProjectsAPITests(TestCase):
     def setUp(self):
         create_mock_db()
 
-        hrzoo = models.Organization4APIKey.objects.get(name="HRZOO")
-        merlin = models.Organization4APIKey.objects.get(name="Merlin")
+        hrzoo = models.Organization4APIKey.objects.get(name="hrzoo")
+        merlin = models.Organization4APIKey.objects.get(name="merlin")
         name, key = models.MyAPIKey.objects.create_key(
             name="test", organization=merlin
         )
