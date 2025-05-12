@@ -671,7 +671,9 @@ class NewProjectsSerializer(serializers.Serializer):
             return value
 
         except models.ProjectType.DoesNotExist:
-            serializers.ValidationError(f"{value} is not valid project type")
+            raise serializers.ValidationError(
+                f"{value} is not valid project type"
+            )
 
 
     @staticmethod
