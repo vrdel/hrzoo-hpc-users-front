@@ -3165,6 +3165,13 @@ class NewProjectsAPITests(TestCase):
         self.factory = APIRequestFactory()
 
         self.data = {
+            "user": {
+                "first_name": "Arthur",
+                "last_name": "Dent",
+                "person_oib": "11111111111",
+                "person_mail": "arthur.dent@fer.hr",
+                "person_uniqueid": "user119@fer.hr"
+            },
             "project_type": "practical",
             "date_end": "2025-12-31",
             "date_start": "2025-01-01",
@@ -3306,5 +3313,23 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(project.croris_type, "")
         self.assertEqual(project.staff_resources_type, ["JUPYTER"])
         self.assertEqual(project.state.name, "approve")
-        self.assertEqual(len(project.users.all()), 0)
+        self.assertEqual(len(project.users.all()), 1)
+        self.assertEqual(
+            [user.username for user in project.users.all()], ["user119@fer.hr"]
+        )
         self.assertEqual(project.project_type.name, "practical")
+        self.assertEqual(
+            len(models.UserProject.objects.filter(
+                user=models.User.objects.get(person_username="adent"))
+            ), 5
+        )
+        userproject = models.UserProject.objects.get(
+            user=models.User.objects.get(person_username="adent"),
+            project=project
+        )
+        self.assertEqual(userproject.role.name, "lead")
+        self.assertEqual(
+            userproject.date_joined, datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            )
+        )

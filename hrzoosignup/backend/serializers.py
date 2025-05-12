@@ -643,21 +643,28 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
         model = models.Project
 
 
-class NewProjectsSerializer(serializers.ModelSerializer):
-    project_type = serializers.CharField(required=True)
-
+class NewProjectLeadUserSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
-            "project_type",
-            "date_end",
-            "date_start",
-            "name",
-            "reason",
-            "institute",
-            "science_field",
-            "resources_type"
+            "first_name",
+            "last_name",
+            "person_oib",
+            "person_mail",
+            "person_uniqueid"
         )
-        model = models.Project
+        model = models.User
+
+
+class NewProjectsSerializer(serializers.Serializer):
+    user = NewProjectLeadUserSerializer()
+    project_type = serializers.CharField(required=True)
+    date_end = serializers.DateField(format="%Y-%m-%d")
+    date_start = serializers.DateField(format="%Y-%m-%d")
+    name = serializers.CharField(max_length=256)
+    reason = serializers.CharField(max_length=4096)
+    institute = serializers.CharField(max_length=128)
+    science_field = serializers.JSONField()
+    resources_type = serializers.JSONField()
 
     @staticmethod
     def validate_project_type(value):
@@ -699,8 +706,23 @@ class NewProjectsSerializer(serializers.ModelSerializer):
 
         return value
 
+    @staticmethod
+    def validate_user(value):
+        try:
+            models.User.objects.get(person_oib=value["person_oib"])
+
+        except models.User.DoesNotExist:
+            serializers.ValidationError(
+                f"User {value['first_name']} {value['last_name']} does not "
+                f"exist"
+            )
+
+        return value
+
     def save(self, **kwargs):
         data = copy.deepcopy(self.validated_data)
+        user = copy.deepcopy(self.validated_data["user"])
+        del data["user"]
         data["date_submitted"] = timezone.now()
         data["identifier"] = get_project_identifier(data["project_type"])
         data["project_type"] = models.ProjectType.objects.get(
@@ -713,3 +735,12 @@ class NewProjectsSerializer(serializers.ModelSerializer):
         data["state"] = models.State.objects.get(name="approve")
         project = models.Project(**data)
         project.save()
+
+        userproject_obj = models.UserProject(
+            user=models.User.objects.get(person_oib=user["person_oib"]),
+            project=project,
+            role=models.Role.objects.get(name="lead"),
+            date_joined=timezone.now()
+        )
+        userproject_obj.save()
+
