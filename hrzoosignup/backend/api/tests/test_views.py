@@ -1,3 +1,4 @@
+import copy
 import datetime
 from unittest import mock
 
@@ -3170,7 +3171,7 @@ class NewProjectsAPITests(TestCase):
                 "last_name": "Dent",
                 "person_oib": "11111111111",
                 "person_mail": "arthur.dent@fer.hr",
-                "person_uniqueid": "user119@fer.hr"
+                "username": "user119@fer.hr"
             },
             "project_type": "practical",
             "date_end": "2025-12-31",
@@ -3231,8 +3232,21 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(len(models.Project.objects.all()), 6)
 
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project(self, mock_now):
-        mock_now.return_value = datetime.datetime(2025, 5, 7, 13, 53, 20)
+    def test_post_project_existing_user(self, mock_now):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
         self.assertEqual(len(models.Project.objects.all()), 6)
         request = self.client.post(
             "/api/v1/projects",
@@ -3253,7 +3267,7 @@ class NewProjectsAPITests(TestCase):
         )
         self.assertEqual(
             project.date_approved, datetime.datetime(
-                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
             )
         )
         self.assertEqual(project.date_start, datetime.date(2025, 1, 1))
@@ -3330,6 +3344,125 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(userproject.role.name, "lead")
         self.assertEqual(
             userproject.date_joined, datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        )
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_new_user(self, mock_now):
+        mock_now.side_effect = [
+            datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        data = copy.deepcopy(self.data)
+        data["user"] = {
+            "first_name": "John J.",
+            "last_name": "Rambo",
+            "person_oib": "00000000000",
+            "person_mail": "jj.rambo@kif.hr",
+            "username": "jjrambo@kif.hr"
+        }
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        request = self.client.post(
+            "/api/v1/projects",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data=data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.Project.objects.all()), 7)
+        project = models.Project.objects.get(name="New project 7")
+        self.assertEqual(project.identifier, "NR-2025-05-001")
+        self.assertEqual(project.institute, "Institut Ruđer Bošković")
+        self.assertEqual(
+            project.reason,
+            "Duis aute irure dolor in reprehenderit in voluptate velit "
+            "esse cillum dolore eu fugiat nulla pariatur.",
+        )
+        self.assertEqual(
+            project.date_approved, datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_start, datetime.date(2025, 1, 1))
+        self.assertEqual(project.date_end, datetime.date(2025, 12, 31))
+        self.assertEqual(project.bogus_end, None)
+        self.assertEqual(
+            project.date_submitted, datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.approved_by, None)
+        self.assertEqual(project.denied_by, None)
+        self.assertEqual(project.changed_by, None)
+        self.assertEqual(project.change_history, None)
+        self.assertEqual(
+            project.science_field, [
+                {
+                    "name": {
+                        "value": "PRIRODNE ZNANOSTI",
+                        "label": "PRIRODNE ZNANOSTI"
+                    },
+                    "percent": 100,
+                    "scientificfields": [
+                        {
+                            'name': {
+                                'label': 'Biologija',
+                                'value': 'Biologija'
+                            },
+                            "percent": 50
+                        },
+                        {
+                            'name': {
+                                'label': 'Fizika',
+                                'value': 'Fizika'
+                            },
+                            "percent": 50
+                        }
+                    ]
+                }
+            ]
+        )
+        self.assertEqual(project.science_extrasoftware, "")
+        self.assertFalse(project.science_extrasoftware_help)
+        self.assertEqual(project.resources_numbers, None)
+        self.assertTrue(project.is_active)
+        self.assertEqual(project.croris_title, "")
+        self.assertEqual(project.croris_start, None)
+        self.assertEqual(project.croris_end, None)
+        self.assertEqual(project.croris_identifier, "")
+        self.assertEqual(project.croris_id, None)
+        self.assertEqual(project.croris_summary, "")
+        self.assertEqual(project.croris_collaborators, None)
+        self.assertEqual(project.croris_lead, None)
+        self.assertEqual(project.croris_finance, None)
+        self.assertEqual(project.croris_institute, None)
+        self.assertEqual(project.croris_type, "")
+        self.assertEqual(project.staff_resources_type, ["JUPYTER"])
+        self.assertEqual(project.state.name, "approve")
+        self.assertEqual(len(project.users.all()), 1)
+        user = models.User.objects.get(person_oib="00000000000")
+        self.assertEqual(
+            [user.username for user in project.users.all()], ["jjrambo@kif.hr"]
+        )
+        self.assertEqual(project.project_type.name, "practical")
+        self.assertEqual(len(models.UserProject.objects.filter(user=user)), 1)
+        userproject = models.UserProject.objects.get(user=user, project=project)
+        self.assertEqual(userproject.role.name, "lead")
+        self.assertEqual(
+            userproject.date_joined, datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
             )
         )

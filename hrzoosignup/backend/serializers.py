@@ -2,6 +2,7 @@ import copy
 import datetime
 
 from backend import models
+from backend.utils.gen_username import gen_username
 from backend.utils.usage_data_preparation import Usage
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -643,16 +644,12 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
         model = models.Project
 
 
-class NewProjectLeadUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            "first_name",
-            "last_name",
-            "person_oib",
-            "person_mail",
-            "person_uniqueid"
-        )
-        model = models.User
+class NewProjectLeadUserSerializer(serializers.Serializer):
+    first_name = serializers.CharField(max_length=128)
+    last_name = serializers.CharField(max_length=128)
+    person_oib = serializers.CharField(max_length=11, allow_blank=True)
+    person_mail = serializers.EmailField(max_length=64)
+    username = serializers.CharField(max_length=128)
 
 
 class NewProjectsSerializer(serializers.Serializer):
@@ -712,10 +709,13 @@ class NewProjectsSerializer(serializers.Serializer):
             models.User.objects.get(person_oib=value["person_oib"])
 
         except models.User.DoesNotExist:
-            serializers.ValidationError(
-                f"User {value['first_name']} {value['last_name']} does not "
-                f"exist"
+            value["person_username"] = gen_username(
+                value["first_name"], value["last_name"]
             )
+            value["person_uniqueid"] = value["username"]
+            value["status"] = True
+            value["mailinglist_subscribe"] = True
+            models.User.objects.create_user(**value)
 
         return value
 
@@ -723,6 +723,7 @@ class NewProjectsSerializer(serializers.Serializer):
         data = copy.deepcopy(self.validated_data)
         user = copy.deepcopy(self.validated_data["user"])
         del data["user"]
+
         data["date_submitted"] = timezone.now()
         data["identifier"] = get_project_identifier(data["project_type"])
         data["project_type"] = models.ProjectType.objects.get(
