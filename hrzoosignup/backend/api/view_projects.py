@@ -19,6 +19,16 @@ class ProjectsAPI(APIView):
 
 class NewProjectsAPI(APIView):
     permission_classes = (MerlinHasAPIKey,)
+    serializer_class = serializers.NewProjectsSerializer
 
-    def post(self):
-        pass
+    def post(self, request):
+        serializer = serializers.NewProjectsSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+
+        else:
+            return Response(
+                data=serializer.errors, status=status.HTTP_400_BAD_REQUEST
+            )

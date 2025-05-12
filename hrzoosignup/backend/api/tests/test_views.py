@@ -1,11 +1,12 @@
 import datetime
+from unittest import mock
 
 from backend import models
+from django.core.cache import cache
 from django.test import TestCase
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIRequestFactory
-from django.core.cache import cache
 
 from .test_utils import create_mock_db
 
@@ -3174,24 +3175,15 @@ class NewProjectsAPITests(TestCase):
             "institute": "Institut Ruđer Bošković",
             "science_field": [
                 {
-                    "name": {
-                        'label': 'PRIRODNE ZNANOSTI',
-                        'value': 'PRIRODNE ZNANOSTI'
-                    },
+                    "name": "PRIRODNE ZNANOSTI",
                     "percent": 100,
                     "scientificfields": [
                         {
-                            'name': {
-                                'label': 'Biologija',
-                                'value': 'Biologija'
-                            },
+                            'name': 'Biologija',
                             "percent": 50
                         },
                         {
-                            'name': {
-                                'label': 'Fizika',
-                                'value': 'Fizika'
-                            },
+                            'name': 'Fizika',
                             "percent": 50
                         }
                     ]
@@ -3230,3 +3222,89 @@ class NewProjectsAPITests(TestCase):
             {"detail": "Authentication credentials were not provided."}
         )
         self.assertEqual(len(models.Project.objects.all()), 6)
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project(self, mock_now):
+        mock_now.return_value = datetime.datetime(2025, 5, 7, 13, 53, 20)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        request = self.client.post(
+            "/api/v1/projects",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data=self.data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.Project.objects.all()), 7)
+        project = models.Project.objects.get(name="New project 7")
+        self.assertEqual(project.identifier, "NR-2025-05-001")
+        self.assertEqual(project.institute, "Institut Ruđer Bošković")
+        self.assertEqual(
+            project.reason,
+            "Duis aute irure dolor in reprehenderit in voluptate velit "
+            "esse cillum dolore eu fugiat nulla pariatur.",
+        )
+        self.assertEqual(
+            project.date_approved, datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_start, datetime.date(2025, 1, 1))
+        self.assertEqual(project.date_end, datetime.date(2025, 12, 31))
+        self.assertEqual(project.bogus_end, None)
+        self.assertEqual(
+            project.date_submitted, datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.approved_by, None)
+        self.assertEqual(project.denied_by, None)
+        self.assertEqual(project.changed_by, None)
+        self.assertEqual(project.change_history, None)
+        self.assertEqual(
+            project.science_field, [
+                {
+                    "name": {
+                        "value": "PRIRODNE ZNANOSTI",
+                        "label": "PRIRODNE ZNANOSTI"
+                    },
+                    "percent": 100,
+                    "scientificfields": [
+                        {
+                            'name': {
+                                'label': 'Biologija',
+                                'value': 'Biologija'
+                            },
+                            "percent": 50
+                        },
+                        {
+                            'name': {
+                                'label': 'Fizika',
+                                'value': 'Fizika'
+                            },
+                            "percent": 50
+                        }
+                    ]
+                }
+            ]
+        )
+        self.assertEqual(project.science_extrasoftware, "")
+        self.assertFalse(project.science_extrasoftware_help)
+        self.assertEqual(project.resources_numbers, None)
+        self.assertTrue(project.is_active)
+        self.assertEqual(project.croris_title, "")
+        self.assertEqual(project.croris_start, None)
+        self.assertEqual(project.croris_end, None)
+        self.assertEqual(project.croris_identifier, "")
+        self.assertEqual(project.croris_id, None)
+        self.assertEqual(project.croris_summary, "")
+        self.assertEqual(project.croris_collaborators, None)
+        self.assertEqual(project.croris_lead, None)
+        self.assertEqual(project.croris_finance, None)
+        self.assertEqual(project.croris_institute, None)
+        self.assertEqual(project.croris_type, "")
+        self.assertEqual(project.staff_resources_type, ["JUPYTER"])
+        self.assertEqual(project.state.name, "approve")
+        self.assertEqual(len(project.users.all()), 0)
+        self.assertEqual(project.project_type.name, "practical")

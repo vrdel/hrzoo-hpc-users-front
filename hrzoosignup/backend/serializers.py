@@ -1,3 +1,4 @@
+import copy
 import datetime
 
 from backend import models
@@ -18,6 +19,28 @@ def get_ssh_key_fingerprint(ssh_key):
     key_body = base64.b64decode(ssh_key.strip().split()[1].encode('ascii'))
     fp_plain = hashlib.md5(key_body).hexdigest()  # noqa: S303
     return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
+
+
+def get_project_identifier(project_type):
+    cobj = models.ProjectCount.objects.get()
+    if project_type == "research-institutional":
+        identifier = "NRI-{}-{:03}".format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+    elif project_type == "internal":
+        identifier = "NRM-{}-{:03}".format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+    elif project_type == "srce-workshop":
+        identifier = 'NRR-{}-{:03}'.format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+    else:
+        identifier = 'NR-{}-{:03}'.format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+
+    return identifier
 
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -618,3 +641,75 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
             "finance", "approved_resources", "users"
         ]
         model = models.Project
+
+
+class NewProjectsSerializer(serializers.ModelSerializer):
+    project_type = serializers.CharField(required=True)
+
+    class Meta:
+        fields = (
+            "project_type",
+            "date_end",
+            "date_start",
+            "name",
+            "reason",
+            "institute",
+            "science_field",
+            "resources_type"
+        )
+        model = models.Project
+
+    @staticmethod
+    def validate_project_type(value):
+        try:
+            models.ProjectType.objects.get(name=value)
+
+            return value
+
+        except models.ProjectType.DoesNotExist:
+            serializers.ValidationError(f"{value} is not valid project type")
+
+
+    @staticmethod
+    def validate_science_field(field_value):
+        for item in field_value:
+            for key, value in item.items():
+                if key == "name":
+                    item["name"] = {
+                        "label": value,
+                        "value": value
+                    }
+
+                elif key == "scientificfields":
+                    for item2 in item[key]:
+                        item2["name"] = {
+                            "label": item2["name"],
+                            "value": item2["name"]
+                        }
+
+        return field_value
+
+    @staticmethod
+    def validate_resources_type(value):
+        for val in value:
+            if val not in settings.ALLOWED_RESOURCES:
+                serializers.ValidationError(
+                    f"{val} is not among allowed resources"
+                )
+
+        return value
+
+    def save(self, **kwargs):
+        data = copy.deepcopy(self.validated_data)
+        data["date_submitted"] = timezone.now()
+        data["identifier"] = get_project_identifier(data["project_type"])
+        data["project_type"] = models.ProjectType.objects.get(
+            name=data["project_type"]
+        )
+        data["science_extrasoftware_help"] = False
+        data["is_active"] = True
+        data["date_approved"] = timezone.now()
+        data["staff_resources_type"] = data["resources_type"]
+        data["state"] = models.State.objects.get(name="approve")
+        project = models.Project(**data)
+        project.save()
