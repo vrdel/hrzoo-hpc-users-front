@@ -123,18 +123,36 @@ class NewProjectsAPI(APIView):
 
                 institutions = response.json()
 
-                project = serializer.save(dashboard_institutions=institutions)
+                try:
+                    project = serializer.save(
+                        dashboard_institutions=institutions
+                    )
 
-                return Response(
-                    data={
-                        "status": {
-                            "code": status.HTTP_201_CREATED,
-                            "project_id": project.id,
-                            "message": "Project successfully created"
+                except IndexError:
+                    status_code = status.HTTP_404_NOT_FOUND
+                    return Response(
+                        status=status_code,
+                        data={
+                            "status": {
+                                "code": status_code,
+                                "message":
+                                    f"Institution with "
+                                    f"id={request.data['institute']} not found"
+                            }
                         }
-                    },
-                    status=status.HTTP_201_CREATED
-                )
+                    )
+
+                else:
+                    return Response(
+                        data={
+                            "status": {
+                                "code": status.HTTP_201_CREATED,
+                                "project_id": project.id,
+                                "message": "Project successfully created"
+                            }
+                        },
+                        status=status.HTTP_201_CREATED
+                    )
 
             else:
                 return Response(

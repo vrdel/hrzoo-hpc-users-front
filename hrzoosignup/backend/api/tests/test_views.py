@@ -3,6 +3,7 @@ import copy
 import datetime
 from unittest import mock
 
+import requests
 from backend import models
 from django.core.cache import cache
 from django.test import TestCase
@@ -53,9 +54,28 @@ mock_dashboard_institutions = [
 
 
 class MockResponse:
-    def __init__(self, data=None, status_code=200):
+    def __init__(self, data=None, status_code=201):
         self.data = data
         self.status_code = status_code
+
+        if self.status_code == 201:
+            self.reason = "CREATED"
+
+        elif self.status_code == 400:
+            self.reason = "BAD REQUEST"
+
+        elif self.status_code == 403:
+            self.reason = "FORBIDDEN"
+
+        elif self.status_code == 500:
+            self.reason = "SERVER ERROR"
+
+        else:
+            self.reason = None
+
+    def raise_for_exception(self):
+        if self.status_code >= 300:
+            raise requests.exceptions.RequestException("Some request exception")
 
     def json(self):
         return self.data
@@ -3680,6 +3700,59 @@ class NewProjectsAPITests(TestCase):
                 "status": {
                     "code": status.HTTP_400_BAD_REQUEST,
                     "message": "project_type: meh is not valid project type"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_nonexisting_institute_id(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        data = copy.deepcopy(self.data)
+        data["institute"] = 14
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_404_NOT_FOUND,
+                    "message": "Institution with id=14 not found"
                 }
             }
         )
