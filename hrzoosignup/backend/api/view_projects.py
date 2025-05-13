@@ -34,8 +34,26 @@ class NewProjectsAPI(APIView):
     @extend_schema(
         responses={
             201: OpenApiResponse(
-                response=None,
-                description="Created"
+                response={
+                    "status": {
+                        "code": 201,
+                        "project_id": 1,
+                        "message": "Project successfully created"
+                    }
+                },
+                description="Created",
+                examples=[
+                    OpenApiExample(
+                        "Created",
+                        value={
+                            "status": {
+                                "code": 201,
+                                "project_id": 1,
+                                "message": "Project successfully created"
+                            }
+                        }
+                    )
+                ]
             ),
             400: OpenApiResponse(
                 response={
@@ -105,8 +123,18 @@ class NewProjectsAPI(APIView):
 
                 institutions = response.json()
 
-                serializer.save(dashboard_institutions=institutions)
-                return Response(status=status.HTTP_201_CREATED)
+                project = serializer.save(dashboard_institutions=institutions)
+
+                return Response(
+                    data={
+                        "status": {
+                            "code": status.HTTP_201_CREATED,
+                            "project_id": project.id,
+                            "message": "Project successfully created"
+                        }
+                    },
+                    status=status.HTTP_201_CREATED
+                )
 
             else:
                 return Response(

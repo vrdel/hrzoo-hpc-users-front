@@ -3328,6 +3328,15 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.Project.objects.all()), 7)
         project = models.Project.objects.get(name="New project 7")
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_201_CREATED,
+                    "project_id": project.id,
+                    "message": "Project successfully created"
+                }
+            }
+        )
         self.assertEqual(project.identifier, "NR-2025-05-001")
         self.assertEqual(project.institute, "Institut Ruđer Bošković")
         self.assertEqual(
@@ -3469,11 +3478,20 @@ class NewProjectsAPITests(TestCase):
             )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.Project.objects.all()), 7)
+        project = models.Project.objects.get(name="New project 7")
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_201_CREATED,
+                    "project_id": project.id,
+                    "message": "Project successfully created"
+                }
+            }
+        )
         mock_requests_get.assert_called_once_with(
             "https://webdev.dashboard.srce.hr/api/ustanove",
             headers=self.dashboard_headers
         )
-        project = models.Project.objects.get(name="New project 7")
         self.assertEqual(project.identifier, "NR-2025-05-001")
         self.assertEqual(project.institute, "Institut Ruđer Bošković")
         self.assertEqual(

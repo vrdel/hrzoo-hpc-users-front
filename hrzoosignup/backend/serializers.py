@@ -800,3 +800,4 @@ class NewProjectsSerializer(serializers.Serializer):
         )
         userproject_obj.save()
 
+        return project
