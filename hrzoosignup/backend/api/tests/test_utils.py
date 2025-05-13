@@ -479,14 +479,22 @@ def create_mock_db():
         name_short="Fakultet elektrotehnike i računarstva",
         name_long="Sveučilište u Zagrebu, Fakultet elektrotehnike i "
                   "računarstva",
-        oib="01234567890",
+        oib="57029260362",
         mbu="036",
         parent="Sveučilište u Zagrebu"
     )
     models.CrorisInstitutions.objects.create(
         active=True,
+        name_short="Institut Ruđer Bošković",
+        name_long="Institut Ruđer Bošković",
+        oib="69715301002",
+        mbu="098",
+        parent=""
+    )
+    models.CrorisInstitutions.objects.create(
+        active=True,
         name_short="Prirodoslovno-matematički fakultet, Zagreb",
-        oib="12345678901",
+        oib="28163265527",
         mbu="119",
         parent="Sveučilište u Zagrebu"
     )

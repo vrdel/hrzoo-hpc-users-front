@@ -1,7 +1,11 @@
+import base64
+
+import requests
 import rest_framework.authentication
 from backend import models
 from backend import serializers as backend_serializers
 from backend.dbmodels.apikey import HRZOOHasAPIKey, MerlinHasAPIKey
+from django.conf import settings
 from drf_spectacular.utils import extend_schema, OpenApiExample, OpenApiResponse
 from rest_framework import serializers
 from rest_framework import status
@@ -89,7 +93,19 @@ class NewProjectsAPI(APIView):
 
         try:
             if serializer.is_valid(raise_exception=True):
-                serializer.save()
+                token = base64.b64encode(
+                    f"{settings.DASHBOARD_USERNAME}:"
+                    f"{settings.DASHBOARD_PASS}".encode("ascii")
+                )
+
+                response = requests.get(
+                    settings.DASHBOARD_API_INSTITUTIONS,
+                    headers={"Authorization": f"Basic {token.decode('ascii')}"}
+                )
+
+                institutions = response.json()
+
+                serializer.save(dashboard_institutions=institutions)
                 return Response(status=status.HTTP_201_CREATED)
 
             else:

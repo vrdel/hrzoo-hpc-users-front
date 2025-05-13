@@ -1,3 +1,4 @@
+import base64
 import copy
 import datetime
 from unittest import mock
@@ -10,6 +11,54 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory
 
 from .test_utils import create_mock_db
+
+mock_dashboard_institutions = [
+    {
+        'ustanovaId': 133,
+        'vrstaUstanove': 'institut',
+        'naziv': 'Institut Ruđer Bošković',
+        'velicina': None,
+        'oib': '69715301002',
+        'realm': 'irb.hr',
+        'mbu': '098'
+    },
+    {
+        'ustanovaId': 27,
+        'vrstaUstanove': 'fakultet',
+        'naziv': 'Sveučilište u Zagrebu, Fakultet elektrotehnike i računarstva',
+        'velicina': None,
+        'oib': '57029260362',
+        'realm': 'fer.hr',
+        'mbu': '036'
+    },
+    {
+        'ustanovaId': 50,
+        'vrstaUstanove': 'fakultet',
+        'naziv': 'Sveučilište u Zagrebu, Prirodoslovno-matematički fakultet',
+        'velicina': None,
+        'oib': '28163265527',
+        'realm': 'pmf.hr',
+        'mbu': '119'
+    },
+    {
+        'ustanovaId': 61,
+        'vrstaUstanove': 'fakultet',
+        'naziv': 'Sveučilište u Splitu, Prirodoslovno-matematički fakultet',
+        'velicina': None,
+        'oib': '20858497843',
+        'realm': 'pmfst.hr',
+        'mbu': '177'
+    }
+]
+
+
+class MockResponse:
+    def __init__(self, data=None, status_code=200):
+        self.data = data
+        self.status_code = status_code
+
+    def json(self):
+        return self.data
 
 
 class ResourceUsageAPITests(TestCase):
@@ -1853,7 +1902,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url":
@@ -1927,7 +1976,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -1994,7 +2043,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -2059,7 +2108,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "name": "Project name 4",
                     "ustanova": {
                         "naziv": "Prirodoslovno-matematički fakultet, Zagreb",
-                        "oib": "12345678901",
+                        "oib": "28163265527",
                         "mbu": "119"
                     },
                     "croris_url": "https://www.croris.hr/projekti/projekt/666",
@@ -2121,7 +2170,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -2177,7 +2226,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -3165,6 +3214,13 @@ class NewProjectsAPITests(TestCase):
 
         self.factory = APIRequestFactory()
 
+        dashboard_token = base64.b64encode(
+            f"dashboard_username:dashboard_pass".encode("ascii")
+        )
+        self.dashboard_headers = {
+            "Authorization": f"Basic {dashboard_token.decode('ascii')}"
+        }
+
         self.data = {
             "user": {
                 "first_name": "Arthur",
@@ -3180,7 +3236,7 @@ class NewProjectsAPITests(TestCase):
             "reason":
                 "Duis aute irure dolor in reprehenderit in voluptate velit "
                 "esse cillum dolore eu fugiat nulla pariatur.",
-            "institute": "Institut Ruđer Bošković",
+            "institute": 133,
             "science_field": [
                 {
                     "name": "PRIRODNE ZNANOSTI",
@@ -3231,8 +3287,9 @@ class NewProjectsAPITests(TestCase):
         )
         self.assertEqual(len(models.Project.objects.all()), 6)
 
+    @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_existing_user(self, mock_now):
+    def test_post_project_existing_user(self, mock_now, mock_requests_get):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3247,13 +3304,26 @@ class NewProjectsAPITests(TestCase):
                 2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
             )
         ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
         self.assertEqual(len(models.Project.objects.all()), 6)
-        request = self.client.post(
-            "/api/v1/projects",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data=self.data,
-            format="json"
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=self.data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
         )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.Project.objects.all()), 7)
@@ -3355,8 +3425,9 @@ class NewProjectsAPITests(TestCase):
             )
         )
 
+    @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_new_user(self, mock_now):
+    def test_post_project_new_user(self, mock_now, mock_requests_get):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3371,6 +3442,9 @@ class NewProjectsAPITests(TestCase):
                 2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
             )
         ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
         data = copy.deepcopy(self.data)
         data["user"] = {
             "first_name": "John J.",
@@ -3380,15 +3454,25 @@ class NewProjectsAPITests(TestCase):
             "username": "jjrambo@kif.hr"
         }
         self.assertEqual(len(models.Project.objects.all()), 6)
-        request = self.client.post(
-            "/api/v1/projects",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data=data,
-            format="json"
-        )
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.Project.objects.all()), 7)
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
         project = models.Project.objects.get(name="New project 7")
         self.assertEqual(project.identifier, "NR-2025-05-001")
         self.assertEqual(project.institute, "Institut Ruđer Bošković")
@@ -3481,8 +3565,11 @@ class NewProjectsAPITests(TestCase):
             )
         )
 
+    @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_existing_user_wrong_resource(self, mock_now):
+    def test_post_project_existing_user_wrong_resource(
+            self, mock_now, mock_requests_get
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3497,16 +3584,26 @@ class NewProjectsAPITests(TestCase):
                 2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
             )
         ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
         data = copy.deepcopy(self.data)
         data["resources_type"] = ["MEH"]
         self.assertEqual(len(models.Project.objects.all()), 6)
-        request = self.client.post(
-            "/api/v1/projects",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data=data,
-            format="json"
-        )
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertFalse(mock_requests_get.called)
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(len(models.Project.objects.all()), 6)
         self.assertEqual(
@@ -3519,8 +3616,11 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_existing_user_wrong_project_type(self, mock_now):
+    def test_post_project_existing_user_wrong_project_type(
+            self, mock_now, mock_requests_get
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3535,17 +3635,27 @@ class NewProjectsAPITests(TestCase):
                 2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
             )
         ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
         data = copy.deepcopy(self.data)
         data["project_type"] = "meh"
         self.assertEqual(len(models.Project.objects.all()), 6)
-        request = self.client.post(
-            "/api/v1/projects",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data=data,
-            format="json"
-        )
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(mock_requests_get.called)
         self.assertEqual(len(models.Project.objects.all()), 6)
         self.assertEqual(
             request.data, {

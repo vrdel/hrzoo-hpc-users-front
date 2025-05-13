@@ -664,7 +664,7 @@ class ResourcesTypeSerializer(serializers.ListSerializer):
 class NewProjectScienceFieldSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=128)
     percent = serializers.IntegerField()
-    scientificfield = ScientificFieldSerializer(many=True)
+    scientificfields = ScientificFieldSerializer(many=True)
 
 
 class NewProjectsSerializer(serializers.Serializer):
@@ -674,7 +674,7 @@ class NewProjectsSerializer(serializers.Serializer):
     date_start = serializers.DateField(format="%Y-%m-%d")
     name = serializers.CharField(max_length=256)
     reason = serializers.CharField(max_length=4096)
-    institute = serializers.CharField(max_length=128)
+    institute = serializers.IntegerField()
     science_field = NewProjectScienceFieldSerializer(many=True)
     resources_type = ResourcesTypeSerializer()
 
@@ -736,6 +736,34 @@ class NewProjectsSerializer(serializers.Serializer):
 
         return value
 
+    @staticmethod
+    def _get_institution_name(dashboard_institutions, inst_id):
+        ustanova = [
+            ustanova for ustanova in dashboard_institutions if
+            ustanova["ustanovaId"] == inst_id
+        ][0]
+        institution = ustanova["naziv"]
+
+        if ustanova["oib"]:
+            try:
+                institution = models.CrorisInstitutions.objects.get(
+                    oib=ustanova["oib"]
+                ).name_short
+
+            except models.CrorisInstitutions.DoesNotExist:
+                pass
+
+        elif ustanova["mbu"]:
+            try:
+                institution = models.CrorisInstitutions.objects.get(
+                    mbu=ustanova["mbu"]
+                ).name_short
+
+            except models.CrorisInstitutions.DoesNotExist:
+                pass
+
+        return institution
+
     def save(self, **kwargs):
         merlin_user = models.User.objects.get(username="merlin@srce.hr")
         data = copy.deepcopy(self.validated_data)
@@ -758,6 +786,9 @@ class NewProjectsSerializer(serializers.Serializer):
         data["date_approved"] = timezone.now()
         data["staff_resources_type"] = data["resources_type"]
         data["state"] = models.State.objects.get(name="approve")
+        data["institute"] = self._get_institution_name(
+            kwargs["dashboard_institutions"], data["institute"]
+        )
         project = models.Project(**data)
         project.save()
 
