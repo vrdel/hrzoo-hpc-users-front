@@ -183,11 +183,11 @@ class DashboardTests(TestCase):
         self.assertEqual(
             self.indicators5.institutions(), {
                 "Fakultet elektrotehnike i računarstva": {
-                    "oib": "01234567890",
+                    "oib": "57029260362",
                     "mbu": "036"
                 },
                 "Prirodoslovno-matematički fakultet, Zagreb": {
-                    "oib": "12345678901",
+                    "oib": "28163265527",
                     "mbu": "119"
                 },
                 "Daily Bugle": {
@@ -199,11 +199,11 @@ class DashboardTests(TestCase):
         self.assertEqual(
             self.indicators7.institutions(), {
                 "Fakultet elektrotehnike i računarstva": {
-                    "oib": "01234567890",
+                    "oib": "57029260362",
                     "mbu": "036"
                 },
                 "Prirodoslovno-matematički fakultet, Zagreb": {
-                    "oib": "12345678901",
+                    "oib": "28163265527",
                     "mbu": "119"
                 },
                 "Daily Bugle": {
