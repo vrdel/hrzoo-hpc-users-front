@@ -1,6 +1,8 @@
+import rest_framework.authentication
 from backend import models
 from backend import serializers as backend_serializers
 from backend.dbmodels.apikey import HRZOOHasAPIKey, MerlinHasAPIKey
+from drf_spectacular.utils import extend_schema, OpenApiExample, OpenApiResponse
 from rest_framework import serializers
 from rest_framework import status
 from rest_framework.response import Response
@@ -9,6 +11,7 @@ from rest_framework.views import APIView
 
 class ProjectsAPI(APIView):
     permission_classes = (HRZOOHasAPIKey,)
+    authentication_classes = [rest_framework.authentication.TokenAuthentication]
     serializer_class = backend_serializers.ProjectSerializerFiltered
 
     def get(self, request):
@@ -24,6 +27,61 @@ class NewProjectsAPI(APIView):
     permission_classes = (MerlinHasAPIKey,)
     serializer_class = backend_serializers.NewProjectsSerializer
 
+    @extend_schema(
+        responses={
+            201: OpenApiResponse(
+                response=None,
+                description="Created"
+            ),
+            400: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": 400,
+                        "message":
+                            "project_type: TEST is not valid project type"
+                    }
+                },
+                description="Bad request",
+                examples=[
+                    OpenApiExample(
+                        "Bad request",
+                        value={
+                            "status": {
+                                "code": 400,
+                                "message": "project_type: TEST is not valid "
+                                           "project type"
+                            }
+                        }
+                    ),
+                    OpenApiExample(
+                        "Bad request",
+                        value={
+                            "status": {
+                                "code": 400,
+                                "message": "resources_type: TEST is not among "
+                                           "allowed resources"
+                            }
+                        }
+                    )
+                ]
+            ),
+            403: OpenApiResponse(
+                response={
+                    "detail": "Authentication credentials were not provided."
+                },
+                description="Forbidden",
+                examples=[
+                    OpenApiExample(
+                        "Forbidden",
+                        value={
+                            "detail":
+                                "Authentication credentials were not provided."
+                        }
+                    )
+                ]
+            )
+        }
+    )
     def post(self, request):
         serializer = backend_serializers.NewProjectsSerializer(
             data=request.data

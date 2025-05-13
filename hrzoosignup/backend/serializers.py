@@ -652,6 +652,21 @@ class NewProjectLeadUserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=128)
 
 
+class ScientificFieldSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=128)
+    percent = serializers.IntegerField()
+
+
+class ResourcesTypeSerializer(serializers.ListSerializer):
+    child = serializers.CharField(max_length=128)
+
+
+class NewProjectScienceFieldSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=128)
+    percent = serializers.IntegerField()
+    scientificfield = ScientificFieldSerializer(many=True)
+
+
 class NewProjectsSerializer(serializers.Serializer):
     user = NewProjectLeadUserSerializer()
     project_type = serializers.CharField(required=True)
@@ -660,8 +675,8 @@ class NewProjectsSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=256)
     reason = serializers.CharField(max_length=4096)
     institute = serializers.CharField(max_length=128)
-    science_field = serializers.JSONField()
-    resources_type = serializers.JSONField()
+    science_field = NewProjectScienceFieldSerializer(many=True)
+    resources_type = ResourcesTypeSerializer()
 
     @staticmethod
     def validate_project_type(value):
