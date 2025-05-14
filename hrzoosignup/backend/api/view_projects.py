@@ -357,3 +357,10 @@ class MerlinProjectsAPI(APIView):
             )
 
         return Response(data=data, status=status_code)
+
+
+class ProjectsUsersAPI(APIView):
+    permission_classes = (MerlinHasAPIKey,)
+
+    def post(self):
+        pass

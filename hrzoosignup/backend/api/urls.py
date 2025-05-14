@@ -12,6 +12,7 @@ urlpatterns = [
     path("usersprojects", views.UserProjectAPI.as_view(), name="usersprojects"),
     path("projects/<int:proj_id>", views.MerlinProjectsAPI.as_view(), name="merlinprojects"),
     path("projects", views.NewProjectsAPI.as_view(), name="newprojects"),
+    path("projectsusers", views.ProjectsUsersAPI.as_view(), name="projectsusers"),
     path("sshkeys", views.SshKeysAPI.as_view(), name="sshkeys"),
     path("accounting/projectsusers", views.AccountingUserProjectAPI.as_view(), name="accountingprojectsusers"),
     path("accounting/records", views.ResourceUsageAPI.as_view(), name="accountingrecords")
