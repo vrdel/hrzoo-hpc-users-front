@@ -911,10 +911,6 @@
     "defaultMessage": "Istekao",
     "description": "stateshort-expire"
   },
-  "Im/hLO": {
-    "defaultMessage": "Istekao",
-    "description": "managereq-change-expire"
-  },
   "IqwjN5": {
     "defaultMessage": "Prezime",
     "description": "managereq-change-lastname"
@@ -1106,6 +1102,10 @@
   "No5Y5w": {
     "defaultMessage": "Institucijski projekt",
     "description": "requesttype-label-institutional"
+  },
+  "O9mQYO": {
+    "defaultMessage": "Završen",
+    "description": "managereq-change-expire"
   },
   "OA86Kt": {
     "defaultMessage": "Ime i prezime",

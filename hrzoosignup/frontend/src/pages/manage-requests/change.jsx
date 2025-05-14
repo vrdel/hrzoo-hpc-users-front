@@ -678,7 +678,7 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
         <br/>
         <p className="fs-5">
           <FormattedMessage
-            defaultMessage="Istekao"
+            defaultMessage="Završen"
             description="managereq-change-expire"
           />
         </p>
@@ -697,6 +697,7 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
 
 
 const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
+  console.log('VRDEL DEBUG', requestState)
   return (
     <>
       <Col md={{size: 2}}>
@@ -786,7 +787,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
         <br/>
         <p className="fs-5">
           <FormattedMessage
-            defaultMessage="Istekao"
+            defaultMessage="Završen"
             description="managereq-change-expire"
           />
         </p>
