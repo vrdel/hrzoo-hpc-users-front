@@ -3425,6 +3425,7 @@ class NewProjectsAPITests(TestCase):
                 }
             ]
         )
+        self.assertEqual(project.science_software, [])
         self.assertEqual(project.science_extrasoftware, "")
         self.assertFalse(project.science_extrasoftware_help)
         self.assertEqual(project.resources_numbers, None)
@@ -3580,6 +3581,7 @@ class NewProjectsAPITests(TestCase):
                 }
             ]
         )
+        self.assertEqual(project.science_software, [])
         self.assertEqual(project.science_extrasoftware, "")
         self.assertFalse(project.science_extrasoftware_help)
         self.assertEqual(project.resources_numbers, None)

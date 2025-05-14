@@ -775,6 +775,7 @@ class NewProjectsSerializer(serializers.Serializer):
         data["project_type"] = models.ProjectType.objects.get(
             name=data["project_type"]
         )
+        data["science_software"] = []
         data["science_extrasoftware_help"] = False
         data["is_active"] = True
         data["approved_by"] = {
