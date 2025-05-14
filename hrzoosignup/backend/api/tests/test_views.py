@@ -3428,7 +3428,7 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(project.science_software, [])
         self.assertEqual(project.science_extrasoftware, "")
         self.assertFalse(project.science_extrasoftware_help)
-        self.assertEqual(project.resources_numbers, None)
+        self.assertEqual(project.resources_numbers, {})
         self.assertTrue(project.is_active)
         self.assertEqual(project.croris_title, "")
         self.assertEqual(project.croris_start, None)
@@ -3441,7 +3441,11 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(project.croris_finance, None)
         self.assertEqual(project.croris_institute, None)
         self.assertEqual(project.croris_type, "")
-        self.assertEqual(project.staff_resources_type, ["JUPYTER"])
+        self.assertEqual(
+            project.staff_resources_type, [
+                {"label": "JUPYTER", "value": "JUPYTER"}
+            ]
+        )
         self.assertEqual(project.state.name, "approve")
         self.assertEqual(len(project.users.all()), 1)
         self.assertEqual(
@@ -3584,7 +3588,7 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(project.science_software, [])
         self.assertEqual(project.science_extrasoftware, "")
         self.assertFalse(project.science_extrasoftware_help)
-        self.assertEqual(project.resources_numbers, None)
+        self.assertEqual(project.resources_numbers, {})
         self.assertTrue(project.is_active)
         self.assertEqual(project.croris_title, "")
         self.assertEqual(project.croris_start, None)
@@ -3597,7 +3601,9 @@ class NewProjectsAPITests(TestCase):
         self.assertEqual(project.croris_finance, None)
         self.assertEqual(project.croris_institute, None)
         self.assertEqual(project.croris_type, "")
-        self.assertEqual(project.staff_resources_type, ["JUPYTER"])
+        self.assertEqual(project.staff_resources_type, [
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ])
         self.assertEqual(project.state.name, "approve")
         self.assertEqual(len(project.users.all()), 1)
         user = models.User.objects.get(person_oib="00000000000")

@@ -718,7 +718,12 @@ class NewProjectsSerializer(serializers.Serializer):
                     f"{val} is not among allowed resources"
                 )
 
-        return value
+            else:
+                new_value = []
+                for item in value:
+                    new_value.append({"label": item, "value": item})
+
+        return new_value
 
     @staticmethod
     def validate_user(value):
@@ -777,6 +782,7 @@ class NewProjectsSerializer(serializers.Serializer):
         )
         data["science_software"] = []
         data["science_extrasoftware_help"] = False
+        data["resources_numbers"] = {}
         data["is_active"] = True
         data["approved_by"] = {
             "first_name": merlin_user.first_name,
