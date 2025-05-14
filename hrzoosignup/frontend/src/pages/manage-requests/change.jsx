@@ -47,7 +47,9 @@ function setInitialState() {
       'approve': false,
       'deny': false,
       'extend': false,
-      'expire': false
+      'expire': false,
+      'approve-expire': false,
+      'submit-extend': false
     }
   )
   return newState
@@ -697,28 +699,55 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
 
 
 const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
-  console.log('VRDEL DEBUG', requestState)
+  let currentState = findTrueState(requestState)
+
   return (
     <>
-      <Col md={{size: 2}}>
-        <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Odobren"
-            description="managereq-change-approve"
-          />
-        </p>
-        <Button
-          style={{height: '30px', width: '30px'}}
-          outline={!requestState['approve']}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'approve'))
-          }}
-          color="success"
-        />
-      </Col>
+      {
+        (currentState == 'submit-extend' || currentState == 'extend') ?
+          <Col md={{size: 2}}>
+            <span className="fa-layers fa-3x fa-fw">
+              <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-8 left-8 down-3" />
+              <FontAwesomeIcon icon={faTimeline} className="text-success" transform="shrink-2 up-2"/>
+            </span>
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Produljen"
+                description="managereq-change-extend"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['extend']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'extend'))
+              }}
+              color="success"
+            />
+          </Col>
+        :
+          <Col md={{size: 2}}>
+            <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Odobren"
+                description="managereq-change-approve"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['approve']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'approve'))
+              }}
+              color="success"
+            />
+          </Col>
+      }
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <FontAwesomeIcon
           className="fa-3x text-warning"
@@ -739,26 +768,6 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           }}
           color="success"
         />
-      </Col>
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-warning"
-          icon={faTimeline}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Produljenje"
-            description="managereq-change-extend"
-          />
-        </p>
-        <Button
-          outline={!requestState['extend']}
-          style={{height: '30px', width: '30px'}}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'extend'))
-          }}
-          color="success"/>
       </Col>
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <FontAwesomeIcon
