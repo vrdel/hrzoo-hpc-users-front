@@ -5,6 +5,7 @@ from backend import models
 from backend import serializers as backend_serializers
 from backend.dbmodels.apikey import HRZOOHasAPIKey, MerlinHasAPIKey
 from django.conf import settings
+from django.core.cache import cache
 from drf_spectacular.utils import extend_schema, OpenApiExample, OpenApiResponse
 from rest_framework import serializers
 from rest_framework import status
@@ -147,6 +148,8 @@ class NewProjectsAPI(APIView):
                     project = serializer.save(
                         dashboard_institutions=institutions
                     )
+                    cache.delete('projects-get-all')
+                    cache.delete("ext-users-projects")
 
                 except IndexError:
                     status_code = status.HTTP_404_NOT_FOUND
