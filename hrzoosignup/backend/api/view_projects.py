@@ -1,7 +1,6 @@
 import base64
 
 import requests
-import rest_framework.authentication
 from backend import models
 from backend import serializers as backend_serializers
 from backend.dbmodels.apikey import HRZOOHasAPIKey, MerlinHasAPIKey
@@ -15,7 +14,6 @@ from rest_framework.views import APIView
 
 class ProjectsAPI(APIView):
     permission_classes = (HRZOOHasAPIKey,)
-    authentication_classes = [rest_framework.authentication.TokenAuthentication]
     serializer_class = backend_serializers.ProjectSerializerFiltered
 
     def get(self, request):
@@ -116,12 +114,34 @@ class NewProjectsAPI(APIView):
                     f"{settings.DASHBOARD_PASS}".encode("ascii")
                 )
 
-                response = requests.get(
-                    settings.DASHBOARD_API_INSTITUTIONS,
-                    headers={"Authorization": f"Basic {token.decode('ascii')}"}
-                )
+                try:
+                    response = requests.get(
+                        settings.DASHBOARD_API_INSTITUTIONS,
+                        headers={
+                            "Authorization": f"Basic {token.decode('ascii')}"
+                        }
+                    )
 
-                institutions = response.json()
+                    response.raise_for_status()
+
+                    institutions = response.json()
+
+                except requests.exceptions.RequestException as e:
+                    status_code = response.status_code
+                    error_msg = f"Error fetching institutions"
+
+                    if str(e):
+                        error_msg = f"{error_msg}: {str(e)}"
+
+                    return Response(
+                        status=status_code,
+                        data={
+                            "status": {
+                                "code": status_code,
+                                "message": error_msg
+                            }
+                        }
+                    )
 
                 try:
                     project = serializer.save(

@@ -73,9 +73,18 @@ class MockResponse:
         else:
             self.reason = None
 
-    def raise_for_exception(self):
         if self.status_code >= 300:
+            self.ok = False
+
+        else:
+            self.ok = True
+
+    def raise_for_status(self):
+        if 500 > self.status_code >= 300:
             raise requests.exceptions.RequestException("Some request exception")
+
+        elif self.status_code >= 500:
+            raise requests.exceptions.RequestException()
 
     def json(self):
         return self.data
@@ -3753,6 +3762,115 @@ class NewProjectsAPITests(TestCase):
                 "status": {
                     "code": status.HTTP_404_NOT_FOUND,
                     "message": "Institution with id=14 not found"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_error_fetching_institutes_with_msg(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=None, status_code=400
+        )
+        data = copy.deepcopy(self.data)
+        data["institute"] = 14
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message": "Error fetching institutions: "
+                               "Some request exception"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_error_fetching_institutes_without_msg(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=None, status_code=500
+        )
+        data = copy.deepcopy(self.data)
+        data["institute"] = 14
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+                DASHBOARD_USERNAME="dashboard_username",
+                DASHBOARD_PASS="dashboard_pass",
+                DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                           "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(
+            request.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    "message": "Error fetching institutions"
                 }
             }
         )
