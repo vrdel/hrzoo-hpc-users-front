@@ -1395,6 +1395,10 @@
     "defaultMessage": "Actions",
     "description": "software-table-actions"
   },
+  "WIkWY9": {
+    "defaultMessage": "Prolonged",
+    "description": "managereq-change-extend"
+  },
   "WL3CC8": {
     "defaultMessage": "Terms of Use of Advanced Computing service",
     "description": "loginoffical-terms"
@@ -1987,10 +1991,6 @@
     "defaultMessage": "Request could not be submitted - validation of scientific domains and fields unsuccessful",
     "description": "domain-fields-both-fail"
   },
-  "oRqoRe": {
-    "defaultMessage": "Advanced Computing",
-    "description": "loginpriv-servicename"
-  },
   "oX7IAF": {
     "defaultMessage": "Registered",
     "description": "users-table-croris-registered"
@@ -2334,10 +2334,6 @@
   "ysQjtn": {
     "defaultMessage": "CroRIS registration",
     "description": "memberships-user-crorisreg"
-  },
-  "yxubiU": {
-    "defaultMessage": "Advanced computing",
-    "description": "email-invite-cardtitle-1"
   },
   "z/MmC8": {
     "defaultMessage": "My info",

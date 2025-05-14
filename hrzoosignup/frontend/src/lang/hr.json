@@ -1387,6 +1387,10 @@
     "defaultMessage": "Radnje",
     "description": "software-table-actions"
   },
+  "WIkWY9": {
+    "defaultMessage": "Produljen",
+    "description": "managereq-change-extend"
+  },
   "WL3CC8": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginoffical-terms"
