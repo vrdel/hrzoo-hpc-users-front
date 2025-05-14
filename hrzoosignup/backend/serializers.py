@@ -41,7 +41,7 @@ def get_project_identifier(project_type):
             timezone.now().strftime('%Y-%m'), cobj.counter
         )
 
-    return identifier
+    return identifier, cobj
 
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -776,7 +776,8 @@ class NewProjectsSerializer(serializers.Serializer):
         del data["user"]
 
         data["date_submitted"] = timezone.now()
-        data["identifier"] = get_project_identifier(data["project_type"])
+        identifier, cobj = get_project_identifier(data["project_type"])
+        data["identifier"] = identifier
         data["project_type"] = models.ProjectType.objects.get(
             name=data["project_type"]
         )
@@ -798,6 +799,9 @@ class NewProjectsSerializer(serializers.Serializer):
         )
         project = models.Project(**data)
         project.save()
+
+        cobj.counter += 1
+        cobj.save()
 
         userproject_obj = models.UserProject(
             user=models.User.objects.get(person_oib=user["person_oib"]),
