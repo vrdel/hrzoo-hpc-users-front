@@ -70,12 +70,20 @@ export function StateString(state_name) {
       description="statestring-deny"
     />,
     'expire': <FormattedMessage
-      defaultMessage="Zahtjev je istekao"
+      defaultMessage="Zahtjev je završen"
       description="statestring-expire"
     />,
     'extend': <FormattedMessage
-      defaultMessage="Zahtjev čeka na produljenje"
+      defaultMessage="Zahtjev je produljen"
       description="statestring-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Podnesen zahtjev za produljenjem"
+      description="statestring-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Zahtjev je pred istekom"
+      description="statestring-submitextend"
     />
   }
 
@@ -93,12 +101,20 @@ export function StateStringUser(state_name) {
       description="statestringuser-approve"
     />,
     'expire': <FormattedMessage
-      defaultMessage="Istekao"
+      defaultMessage="Završen"
       description="statestringuser-expire"
     />,
     'extend': <FormattedMessage
       defaultMessage="Produljen"
       description="statestringuser-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Zahtjev za produljenjem podnesen i čeka na obradu"
+      description="statestringuser-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Projekt je pred istekom"
+      description="statestringuser-approveexpire"
     />
   }
 
@@ -120,12 +136,20 @@ export function StateShortString(state_name) {
       description="stateshort-deny"
     />,
     'expire': <FormattedMessage
-      defaultMessage="Istekao"
+      defaultMessage="Završen"
       description="stateshort-expire"
     />,
     'extend': <FormattedMessage
-      defaultMessage="Produljenje"
+      defaultMessage="Produljen"
       description="stateshort-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Produljenje"
+      description="stateshort-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Pred istekom"
+      description="stateshort-approveexpire"
     />,
   }
 

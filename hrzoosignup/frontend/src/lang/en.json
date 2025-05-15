@@ -251,10 +251,6 @@
     "defaultMessage": "Add public key",
     "description": "publickeys-list-nokeys"
   },
-  "4jkyMa": {
-    "defaultMessage": "Request expired",
-    "description": "statestring-expire"
-  },
   "4sQ+vh": {
     "defaultMessage": "No project meet the search criteria",
     "description": "project-list-emptytable-noresults"
@@ -347,6 +343,10 @@
     "defaultMessage": "User",
     "description": "userdetails-popover-user"
   },
+  "6q9RYD": {
+    "defaultMessage": "Request is about to expire",
+    "description": "statestring-submitextend"
+  },
   "6yeF5o": {
     "defaultMessage": "Request has been successfully changed",
     "description": "managereq-change-changed-2"
@@ -410,6 +410,10 @@
   "8dPx+P": {
     "defaultMessage": "List of scientific software available on HPC clusters",
     "description": "linktitle-software"
+  },
+  "8daRp3": {
+    "defaultMessage": "Ended",
+    "description": "stateshort-expire"
   },
   "8g6QYF": {
     "defaultMessage": "Naval Architecture",
@@ -695,6 +699,10 @@
     "defaultMessage": "Person:",
     "description": "software-cardbody-person"
   },
+  "DmC3b6": {
+    "defaultMessage": "Extended",
+    "description": "stateshort-extend"
+  },
   "DqpQay": {
     "defaultMessage": "Type",
     "description": "myreq-list-type"
@@ -883,6 +891,10 @@
     "defaultMessage": "First name",
     "description": "users-table-croris-firstname"
   },
+  "Hx/jaO": {
+    "defaultMessage": "Request has been extended",
+    "description": "statestring-extend"
+  },
   "I/dgYm": {
     "defaultMessage": "Duration:",
     "description": "generalproject-duration"
@@ -906,10 +918,6 @@
   "IX8Pax": {
     "defaultMessage": "Project identifier:",
     "description": "researchselected-projectid"
-  },
-  "Ikm5Es": {
-    "defaultMessage": "Expired",
-    "description": "stateshort-expire"
   },
   "IqwjN5": {
     "defaultMessage": "Last name",
@@ -990,10 +998,6 @@
   "L2Z7Eh": {
     "defaultMessage": "Deletion of the application's Modulefile",
     "description": "software-modaltitle"
-  },
-  "LBM528": {
-    "defaultMessage": "Expired",
-    "description": "statestringuser-expire"
   },
   "LK4ilW": {
     "defaultMessage": "Interdisciplinary Humanities",
@@ -1107,9 +1111,9 @@
     "defaultMessage": "Institutional project",
     "description": "requesttype-label-institutional"
   },
-  "NsHq0r": {
-    "defaultMessage": "Advanced Computing",
-    "description": "saml2-not-allowed-cardtitle"
+  "O9mQYO": {
+    "defaultMessage": "Ended",
+    "description": "managereq-change-expire"
   },
   "OA86Kt": {
     "defaultMessage": "First and last name",
@@ -1202,6 +1206,10 @@
   "QU9bH3": {
     "defaultMessage": "Metallurgy",
     "description": "science-field-15"
+  },
+  "Qhl17+": {
+    "defaultMessage": "Pending expiration",
+    "description": "stateshort-approveexpire"
   },
   "QoBBEg": {
     "defaultMessage": "Error while copying public key to clipboard",
@@ -1330,6 +1338,10 @@
   "Twq096": {
     "defaultMessage": "Identifier:",
     "description": "generalproject-identifier"
+  },
+  "UJGt4g": {
+    "defaultMessage": "Extension",
+    "description": "stateshort-submitextend"
   },
   "UKD/0e": {
     "defaultMessage": "Username and AAI identifier",
@@ -1475,6 +1487,10 @@
     "defaultMessage": "Name",
     "description": "popover-projectinfo-name"
   },
+  "YlKibC": {
+    "defaultMessage": "Project is about to expire",
+    "description": "statestringuser-approveexpire"
+  },
   "Yn5LNX": {
     "defaultMessage": "Details",
     "description": "popover-user-details"
@@ -1490,6 +1506,10 @@
   "ZG4yGb": {
     "defaultMessage": "Approved",
     "description": "managereq-change-approve"
+  },
+  "ZNEQJU": {
+    "defaultMessage": "Extension request has been submitted and is pending processing",
+    "description": "statestringuser-submitextend"
   },
   "ZRMcsw": {
     "defaultMessage": "Project is not active, therefore it is not possible to unregister collaborators",
@@ -1735,6 +1755,10 @@
     "defaultMessage": "List of users not active on any project",
     "description": "linktitle-usersinactive"
   },
+  "gsxCJu": {
+    "defaultMessage": "Request ended",
+    "description": "statestring-expire"
+  },
   "gx5Ush": {
     "defaultMessage": "Logout",
     "description": "navigation-modaltitle"
@@ -1814,10 +1838,6 @@
   "izNmIO": {
     "defaultMessage": "Project is not active, so it is not possible to add collaborators",
     "description": "userstable-general-toast-invite-fail-2"
-  },
-  "j/8HUp": {
-    "defaultMessage": "Request is pending extension",
-    "description": "statestring-extend"
   },
   "j6QjlA": {
     "defaultMessage": "State:",
@@ -1930,10 +1950,6 @@
   "mHHLJK": {
     "defaultMessage": "Total amount of RAM (GB):",
     "description": "cloudfields-nram"
-  },
-  "mIOI8m": {
-    "defaultMessage": "Extension",
-    "description": "stateshort-extend"
   },
   "mNOzeP": {
     "defaultMessage": "Public key could not be deleted: { error}",
@@ -2135,6 +2151,10 @@
     "defaultMessage": "Request has been submitted and is awaiting processing",
     "description": "statestringuser-submit"
   },
+  "stFV7b": {
+    "defaultMessage": "Ended",
+    "description": "statestringuser-expire"
+  },
   "sy0MO9": {
     "defaultMessage": "Public key added",
     "description": "users-table-croris-keyadd"
@@ -2314,6 +2334,10 @@
   "yDf4qQ": {
     "defaultMessage": "Electrical Engineering",
     "description": "science-field-10"
+  },
+  "yLPaCC": {
+    "defaultMessage": "Extension request has been submitted",
+    "description": "statestring-submitextend"
   },
   "yQX1Hw": {
     "defaultMessage": "users",
