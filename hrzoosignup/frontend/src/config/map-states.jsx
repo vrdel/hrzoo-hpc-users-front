@@ -7,13 +7,14 @@ import {
   faTimeline,
   faCalendarXmark,
   faQuestion,
+  faHourglassStart,
 } from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl'
 
 
 const ExtendIcon = ({size}) => (
   <span className={`fa-layers ${size} fa-fw`}>
-    <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-8 left-8 down-3" />
+    <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-8 right-8 down-3" />
     <FontAwesomeIcon icon={faTimeline} className="text-success" transform="shrink-2 up-2"/>
   </span>
 )
@@ -21,8 +22,16 @@ const ExtendIcon = ({size}) => (
 
 const SubmitExtendIcon = ({size}) => (
   <span className={`fa-layers ${size} fa-fw`}>
-    <FontAwesomeIcon icon={faQuestion} className="text-danger" transform="shrink-8 left-8 down-3" />
+    <FontAwesomeIcon icon={faQuestion} className="text-danger" transform="shrink-8 right-8 down-3" />
     <FontAwesomeIcon icon={faTimeline} className="text-warning" transform="shrink-2 up-2"/>
+  </span>
+)
+
+
+const ApproveExpire = ({size}) => (
+  <span className={`fa-layers ${size} fa-fw`}>
+    <FontAwesomeIcon icon={faHourglassStart} className="text-warning" transform="shrink-9 right-8 down-3" />
+    <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-1 up-2"/>
   </span>
 )
 
@@ -39,7 +48,7 @@ export function StateIcons(state_name, small=false) {
     'deny': <FontAwesomeIcon className={`text-danger ${size}`} icon={faTimes}/>,
     'expire': <FontAwesomeIcon className={`text-danger ${size}`} icon={faCalendarXmark}/>,
     'extend': <ExtendIcon size={size}/>,
-    'approve-expire': <FontAwesomeIcon className={`text-warning ${size}`} icon={faTimeline}/>,
+    'approve-expire': <ApproveExpire size={size}/>,
     'submit-extend': <SubmitExtendIcon size={size}/>
   }
 
