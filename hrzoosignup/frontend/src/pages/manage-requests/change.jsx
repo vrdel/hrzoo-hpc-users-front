@@ -757,27 +757,52 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             />
           </Col>
       }
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-warning"
-          icon={faCog}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Obrada"
-            description="managereq-change-process"
-          />
-        </p>
-        <Button
-          style={{height: '30px', width: '30px'}}
-          outline={!requestState['submit']}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'submit'))
-          }}
-          color="success"
-        />
-      </Col>
+      {
+        (currentState == 'submit-extend' || currentState == 'extend') ?
+          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+            <FontAwesomeIcon
+              className="fa-3x text-warning"
+              icon={faCog}/>{' '}
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Obrada"
+                description="managereq-change-process"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['submit-extend']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'submit-extend'))
+              }}
+              color="success"
+            />
+          </Col>
+        :
+          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+            <FontAwesomeIcon
+              className="fa-3x text-warning"
+              icon={faCog}/>{' '}
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Obrada"
+                description="managereq-change-process"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['submit']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'submit'))
+              }}
+              color="success"
+            />
+          </Col>
+      }
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <FontAwesomeIcon
           className="fa-3x text-danger"
