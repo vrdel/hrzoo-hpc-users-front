@@ -1035,6 +1035,10 @@
     "defaultMessage": "Process",
     "description": "managereq-change-process-title-2"
   },
+  "MRnF0C": {
+    "defaultMessage": "Extension",
+    "description": "tablehelpers-optionstates-7"
+  },
   "MTd8cf": {
     "defaultMessage": "Login eduGAIN",
     "description": "loginpriv-labeledugain"
@@ -1114,6 +1118,10 @@
   "OEudsO": {
     "defaultMessage": "Research EU",
     "description": "tablehelpers-optiontypes-3"
+  },
+  "OMMiRX": {
+    "defaultMessage": "Expired",
+    "description": "tablehelpers-optionstates-8"
   },
   "OMuyxE": {
     "defaultMessage": "You are registered as collaborator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
@@ -1994,6 +2002,10 @@
   "odvkpW": {
     "defaultMessage": "NATURAL SCIENCES",
     "description": "science-domain-map-1"
+  },
+  "okS+Tq": {
+    "defaultMessage": "Ended",
+    "description": "tablehelpers-optionstates-5"
   },
   "ouf6xV": {
     "defaultMessage": "You must select one type of request to continue",

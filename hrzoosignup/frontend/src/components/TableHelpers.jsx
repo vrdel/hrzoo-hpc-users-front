@@ -45,13 +45,21 @@ export function buildOptionsStates(intl) {
     defaultMessage: "Odbijen",
     description: "tablehelpers-optionstates-4"
   })
-  let istekao = intl.formatMessage({
-    defaultMessage: "Istekao",
+  let zavrsen = intl.formatMessage({
+    defaultMessage: "Završen",
     description: "tablehelpers-optionstates-5"
   })
   let produljen = intl.formatMessage({
     defaultMessage: "Produljen",
     description: "tablehelpers-optionstates-6"
+  })
+  let produljenje = intl.formatMessage({
+    defaultMessage: "Produljenje",
+    description: "tablehelpers-optionstates-7"
+  })
+  let istekao = intl.formatMessage({
+    defaultMessage: "Istekao",
+    description: "tablehelpers-optionstates-8"
   })
 
   const optionsStates = [
@@ -59,8 +67,10 @@ export function buildOptionsStates(intl) {
     { label: podnesen, value: "submit" },
     { label: odobren, value: "approve" },
     { label: odbijen, value: "deny" },
-    { label: istekao, value: "expire" },
+    { label: zavrsen, value: "expire" },
     { label: produljen, value: "extend" },
+    { label: produljenje, value: "submit-extend" },
+    { label: istekao, value: "approve-expire" },
   ]
 
   return optionsStates
