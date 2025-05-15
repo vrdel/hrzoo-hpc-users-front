@@ -49,8 +49,8 @@ export function buildOptionsStates(intl) {
     defaultMessage: "Istekao",
     description: "tablehelpers-optionstates-5"
   })
-  let produzen = intl.formatMessage({
-    defaultMessage: "Produžen",
+  let produljen = intl.formatMessage({
+    defaultMessage: "Produljen",
     description: "tablehelpers-optionstates-6"
   })
 
@@ -60,7 +60,7 @@ export function buildOptionsStates(intl) {
     { label: odobren, value: "approve" },
     { label: odbijen, value: "deny" },
     { label: istekao, value: "expire" },
-    { label: produzen, value: "extend" },
+    { label: produljen, value: "extend" },
   ]
 
   return optionsStates
@@ -145,7 +145,7 @@ export function buildOptionsStatesProjects(intl) {
 }
 
 
-export const allStates = ["submit", "approve", "deny", "expire", "extend"]
+export const allStates = ["submit", "approve", "deny", "expire", "extend", "submit-extend", "approve-expire"]
 export const allProjectTypes = ["research-croris", "thesis", "practical", "research-institutional", "internal", "srce-workshop"]
 
 export class TablePaginationHelper {

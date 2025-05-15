@@ -911,10 +911,6 @@
     "defaultMessage": "Expired",
     "description": "stateshort-expire"
   },
-  "Im/hLO": {
-    "defaultMessage": "Expired",
-    "description": "managereq-change-expire"
-  },
   "IqwjN5": {
     "defaultMessage": "Last name",
     "description": "managereq-change-lastname"
@@ -1138,10 +1134,6 @@
   "OtDaFD": {
     "defaultMessage": "Key name",
     "description": "publickeys-list-keyname"
-  },
-  "OxYLwa": {
-    "defaultMessage": "Request for Advanced Computing service usage",
-    "description": "navigation-title"
   },
   "P+pTgU": {
     "defaultMessage": "Email copied to clipboard",
@@ -1631,6 +1623,10 @@
     "defaultMessage": "Number cannot be greater than {number}",
     "description": "schema-great-n"
   },
+  "dYAzc6": {
+    "defaultMessage": "Prolonged",
+    "description": "tablehelpers-optionstates-6"
+  },
   "dn45ZP": {
     "defaultMessage": "Duration",
     "description": "myreq-list-duration"
@@ -1742,10 +1738,6 @@
   "h41Ik7": {
     "defaultMessage": "Software",
     "description": "navlinks-software"
-  },
-  "h5uXWs": {
-    "defaultMessage": "Extension",
-    "description": "managereq-change-extend"
   },
   "h78Eiu": {
     "defaultMessage": "You are registered as principal investigator on research projects in CroRIS system. Please visit \"My info\" page for more details.",

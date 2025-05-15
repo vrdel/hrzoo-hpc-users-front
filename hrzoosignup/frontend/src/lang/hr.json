@@ -1623,6 +1623,10 @@
     "defaultMessage": "Broj ne može biti veći od {number}",
     "description": "schema-great-n"
   },
+  "dYAzc6": {
+    "defaultMessage": "Produljen",
+    "description": "tablehelpers-optionstates-6"
+  },
   "dn45ZP": {
     "defaultMessage": "Trajanje",
     "description": "myreq-list-duration"
@@ -1734,10 +1738,6 @@
   "h41Ik7": {
     "defaultMessage": "Softver",
     "description": "navlinks-software"
-  },
-  "h5uXWs": {
-    "defaultMessage": "Produljenje",
-    "description": "managereq-change-extend"
   },
   "h78Eiu": {
     "defaultMessage": "Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
