@@ -1,15 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from backend.dbmodels.apikey import *
-from backend.dbmodels.institution import *
-from backend.dbmodels.invite import *
-from backend.dbmodels.project import *
-from backend.dbmodels.project_extend import *
-from backend.dbmodels.resource_usage import *
-from backend.dbmodels.sshkey import *
-from backend.dbmodels.user import *
-from backend.dbmodels.userproject import *
+from backend.dbmodels.apikey import Organization4APIKey
+from backend.dbmodels.institution import CrorisInstitutions
+from backend.dbmodels.invite import CustomInvitation
+from backend.dbmodels.project import ProjectCount, State, ProjectType, Project, StaffComment
+from backend.dbmodels.project_extend import DateExtend
+from backend.dbmodels.resource_usage import ResourceUsage
+from backend.dbmodels.sshkey import SSHPublicKey, validate_ssh_public_key
+from backend.dbmodels.user import User, Role
+from backend.dbmodels.userproject import UserProject
 
 
 # TODO: remove
