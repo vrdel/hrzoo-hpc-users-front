@@ -5,7 +5,7 @@ from backend.dbmodels.apikey import Organization4APIKey
 from backend.dbmodels.institution import CrorisInstitutions
 from backend.dbmodels.invite import CustomInvitation
 from backend.dbmodels.project import ProjectCount, State, ProjectType, Project, StaffComment
-from backend.dbmodels.project_extend import DateExtend
+from backend.dbmodels.project_extend import ProjectExtend
 from backend.dbmodels.resource_usage import ResourceUsage
 from backend.dbmodels.sshkey import SSHPublicKey, validate_ssh_public_key
 from backend.dbmodels.user import User, Role
