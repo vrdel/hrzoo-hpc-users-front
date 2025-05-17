@@ -65,6 +65,34 @@ export function StateString(state_name) {
   return state2string[state_name]
 }
 
+
+export function StateProjectString(state_name) {
+  let state2string = {
+    'approve': <FormattedMessage
+      defaultMessage="Projekt je odobren"
+      description="stateprojectstring-approve"
+    />,
+    'expire': <FormattedMessage
+      defaultMessage="Projekt je završen"
+      description="stateprojectstring-expire"
+    />,
+    'extend': <FormattedMessage
+      defaultMessage="Projekt je produljen"
+      description="stateprojectstring-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Projekt se produljuje"
+      description="stateprojectstring-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Projekt je pred istekom"
+      description="stateprojectstring-submitextend"
+    />
+  }
+
+  return state2string[state_name]
+}
+
 export function StateStringUser(state_name) {
   let state2string = {
     'submit': <FormattedMessage
