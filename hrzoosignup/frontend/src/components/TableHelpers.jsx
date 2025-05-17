@@ -127,6 +127,7 @@ export function buildOptionsTypes(intl) {
 
 
 export function buildOptionsStatesProjects(intl) {
+
   let svi = intl.formatMessage({
     defaultMessage: "Svi",
     description: "tablehelpers-optionstates-1"
@@ -135,20 +136,30 @@ export function buildOptionsStatesProjects(intl) {
     defaultMessage: "Odobren",
     description: "tablehelpers-optionstates-3"
   })
-  let istekao = intl.formatMessage({
-    defaultMessage: "Istekao",
+  let zavrsen = intl.formatMessage({
+    defaultMessage: "Završen",
     description: "tablehelpers-optionstates-5"
   })
-  let produzen = intl.formatMessage({
-    defaultMessage: "Produžen",
+  let produljen = intl.formatMessage({
+    defaultMessage: "Produljen",
     description: "tablehelpers-optionstates-6"
+  })
+  let produljenje = intl.formatMessage({
+    defaultMessage: "Produljenje",
+    description: "tablehelpers-optionstates-7"
+  })
+  let istice = intl.formatMessage({
+    defaultMessage: "Ističe",
+    description: "tablehelpers-optionstates-8"
   })
 
   const optionsStatesProjects = [
     { label: svi, value: "all" },
     { label: odobren, value: "approve" },
-    { label: istekao, value: "expire" },
-    { label: produzen, value: "extend" },
+    { label: zavrsen, value: "expire" },
+    { label: produljen, value: "extend" },
+    { label: produljenje, value: "submit-extend" },
+    { label: istice, value: "approve-expire" },
   ]
 
   return optionsStatesProjects

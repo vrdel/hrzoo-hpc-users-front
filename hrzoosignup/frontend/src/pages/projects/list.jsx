@@ -514,7 +514,7 @@ export const ProjectsList = () => {
   if (status === 'success' && data && pageTitle)
     return (
       <ProjectsListForm
-        data={ data.filter(e => ["approve", "extend", "expire"].includes(e.state.name.toLowerCase())) }
+        data={ data.filter(e => ["approve", "extend", "expire", "submit-extend", "approve-expire"].includes(e.state.name.toLowerCase())) }
         pageTitle={ pageTitle }
       />
     )
