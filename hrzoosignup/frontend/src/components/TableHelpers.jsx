@@ -57,8 +57,8 @@ export function buildOptionsStates(intl) {
     defaultMessage: "Produljenje",
     description: "tablehelpers-optionstates-7"
   })
-  let istekao = intl.formatMessage({
-    defaultMessage: "Istekao",
+  let istice = intl.formatMessage({
+    defaultMessage: "Ističe",
     description: "tablehelpers-optionstates-8"
   })
 
@@ -70,7 +70,7 @@ export function buildOptionsStates(intl) {
     { label: zavrsen, value: "expire" },
     { label: produljen, value: "extend" },
     { label: produljenje, value: "submit-extend" },
-    { label: istekao, value: "approve-expire" },
+    { label: istice, value: "approve-expire" },
   ]
 
   return optionsStates

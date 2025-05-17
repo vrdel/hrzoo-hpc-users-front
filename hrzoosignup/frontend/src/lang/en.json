@@ -1127,10 +1127,6 @@
     "defaultMessage": "Research EU",
     "description": "tablehelpers-optiontypes-3"
   },
-  "OMMiRX": {
-    "defaultMessage": "Expired",
-    "description": "tablehelpers-optionstates-8"
-  },
   "OMuyxE": {
     "defaultMessage": "You are registered as collaborator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadyassociate"
@@ -2218,6 +2214,10 @@
   "u6Rz3Z": {
     "defaultMessage": "History",
     "description": "science-field-54"
+  },
+  "uTpwjq": {
+    "defaultMessage": "Expiration",
+    "description": "tablehelpers-optionstates-8"
   },
   "uW3ZtA": {
     "defaultMessage": "SOCIAL SCIENCES",

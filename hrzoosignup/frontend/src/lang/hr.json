@@ -1127,10 +1127,6 @@
     "defaultMessage": "Istraživački EU",
     "description": "tablehelpers-optiontypes-3"
   },
-  "OMMiRX": {
-    "defaultMessage": "Istekao",
-    "description": "tablehelpers-optionstates-8"
-  },
   "OMuyxE": {
     "defaultMessage": "Registrirani ste kao suradnik na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
     "description": "newrequest-reason-alreadyassociate"
@@ -2218,6 +2214,10 @@
   "u6Rz3Z": {
     "defaultMessage": "Povijest",
     "description": "science-field-54"
+  },
+  "uTpwjq": {
+    "defaultMessage": "Ističe",
+    "description": "tablehelpers-optionstates-8"
   },
   "uW3ZtA": {
     "defaultMessage": "DRUŠTVENE ZNANOSTI",
