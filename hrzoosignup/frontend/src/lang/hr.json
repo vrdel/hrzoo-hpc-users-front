@@ -1323,6 +1323,10 @@
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TOuMA+": {
+    "defaultMessage": "Voditelj će biti obaviješten emailom o promjeni stanja u \"Produljen\" ili \"Odbijen\".",
+    "description": "managereq-change-remark-msg-2"
+  },
   "TVRDUD": {
     "defaultMessage": "Udio",
     "description": "newreqind-scientific-ratio"
@@ -1350,10 +1354,6 @@
   "Twq096": {
     "defaultMessage": "Šifra:",
     "description": "generalproject-identifier"
-  },
-  "UJGt4g": {
-    "defaultMessage": "Produljenje",
-    "description": "stateshort-submitextend"
   },
   "UKD/0e": {
     "defaultMessage": "Korisničko ime i AAI oznaka",
@@ -1474,6 +1474,10 @@
   "XeJRUi": {
     "defaultMessage": "Logopedija",
     "description": "science-field-45"
+  },
+  "XmzTXL": {
+    "defaultMessage": "Zatraženo produljenje",
+    "description": "stateshort-submitextend"
   },
   "Y+WVo0": {
     "defaultMessage": "Područje",
@@ -1814,6 +1818,10 @@
   "hj4YOP": {
     "defaultMessage": "Novi zahtjev",
     "description": "linktitle-newrequest"
+  },
+  "hn0Nwx": {
+    "defaultMessage": "Voditelj je dužan podnijeti zahtjev za produljenjem",
+    "description": "managereq-change-remark-msg-1"
   },
   "hrHnbY": {
     "defaultMessage": "Interdisciplinarne biotehničke znanosti",

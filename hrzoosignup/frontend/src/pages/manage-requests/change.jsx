@@ -1032,10 +1032,24 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                 { StateShortString(initialProjectState) }
               </span>
               <br/>
-              <FormattedMessage
-                defaultMessage='Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".'
-                description="managereq-change-remark-msg"
-              />
+              {
+                initialProjectState === 'approve-expire' ?
+                  <FormattedMessage
+                    defaultMessage='Voditelj je dužan podnijeti zahtjev za produljenjem'
+                    description="managereq-change-remark-msg-1"
+                  />
+                :
+                  initialProjectState === 'submit-extend' ?
+                    <FormattedMessage
+                      defaultMessage='Voditelj će biti obaviješten emailom o promjeni stanja u "Produljen" ili "Odbijen".'
+                      description="managereq-change-remark-msg-2"
+                    />
+                  :
+                    <FormattedMessage
+                      defaultMessage='Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".'
+                      description="managereq-change-remark-msg"
+                    />
+              }
             </p>
           </Col>
         </Row>

@@ -147,7 +147,7 @@ export function StateShortString(state_name) {
       description="stateshort-extend"
     />,
     'submit-extend': <FormattedMessage
-      defaultMessage="Produljenje"
+      defaultMessage="Zatraženo produljenje"
       description="stateshort-submitextend"
     />,
     'approve-expire': <FormattedMessage
