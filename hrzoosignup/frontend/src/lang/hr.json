@@ -35,6 +35,10 @@
     "defaultMessage": "Spremi promjene",
     "description": "managereq-change-button-save"
   },
+  "/EQUFG": {
+    "defaultMessage": "Produljenjen",
+    "description": "renderstate-extend"
+  },
   "/N26lV": {
     "defaultMessage": "Prijava neuspješna: Pozivni kod je istekao",
     "description": "email-invite-code-expired"
@@ -399,6 +403,10 @@
     "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
     "description": "userlist-minibutton-msg-3"
   },
+  "81QlzP": {
+    "defaultMessage": "Pred istekom",
+    "description": "renderstate-approveexpire"
+  },
   "8AVSwM": {
     "defaultMessage": "Iskorištenje resursa",
     "description": "linktitle-accounting"
@@ -726,10 +734,6 @@
   "EHi/e9": {
     "defaultMessage": "Farmacija",
     "description": "science-field-29"
-  },
-  "EN67wt": {
-    "defaultMessage": "Produljenje",
-    "description": "renderstate-extend"
   },
   "ENvJpe": {
     "defaultMessage": "Ime",
@@ -1511,7 +1515,7 @@
     "defaultMessage": "Zahtjev za produljenjem podnesen i čeka na obradu",
     "description": "statestringuser-submitextend"
   },
-  "ZRMcsw":
+  "ZRMcsw": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće odjavljivati suradnike",
     "description": "userstable-croris-toast-invite-fail-2"
   },
@@ -2094,6 +2098,10 @@
   "qT1C5v": {
     "defaultMessage": "Računarstvo",
     "description": "science-field-16"
+  },
+  "qVBSOd": {
+    "defaultMessage": "Produljenje",
+    "description": "renderstate-submitextend"
   },
   "qWvZqN": {
     "defaultMessage": "Poljoprivreda (agronomija)",

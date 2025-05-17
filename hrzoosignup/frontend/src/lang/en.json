@@ -35,6 +35,10 @@
     "defaultMessage": "Save changes",
     "description": "managereq-change-button-save"
   },
+  "/EQUFG": {
+    "defaultMessage": "Extended",
+    "description": "renderstate-extend"
+  },
   "/N26lV": {
     "defaultMessage": "Registration unsucessful: Invitation code expired",
     "description": "email-invite-code-expired"
@@ -399,6 +403,10 @@
     "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userlist-minibutton-msg-3"
   },
+  "81QlzP": {
+    "defaultMessage": "Pending expiration",
+    "description": "renderstate-approveexpire"
+  },
   "8AVSwM": {
     "defaultMessage": "Usage",
     "description": "linktitle-accounting"
@@ -726,10 +734,6 @@
   "EHi/e9": {
     "defaultMessage": "Pharmacy",
     "description": "science-field-29"
-  },
-  "EN67wt": {
-    "defaultMessage": "Extended",
-    "description": "renderstate-extend"
   },
   "ENvJpe": {
     "defaultMessage": "First name",
@@ -2094,6 +2098,10 @@
   "qT1C5v": {
     "defaultMessage": "Computing",
     "description": "science-field-16"
+  },
+  "qVBSOd": {
+    "defaultMessage": "Extension",
+    "description": "renderstate-submitextend"
   },
   "qWvZqN": {
     "defaultMessage": "Agriculture (Agronomy)",
