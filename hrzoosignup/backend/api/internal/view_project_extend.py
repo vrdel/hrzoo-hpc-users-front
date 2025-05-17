@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.utils import timezone
+
 from backend import models
 from backend.serializers_internal import ProjectExtendSerializer
 
@@ -33,13 +35,15 @@ class ProjectExtend(APIView):
                 return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
             request.data['project'] = p_obj.project.pk
+            request.data['date'] = timezone.now()
+            request.data['approved'] = False
             serializer = ProjectExtendSerializer(data=request.data)
 
             if serializer.is_valid():
-                pass
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
         except models.UserProject.DoesNotExist:
             err_response = {
