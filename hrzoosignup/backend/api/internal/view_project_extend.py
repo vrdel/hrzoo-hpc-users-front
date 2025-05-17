@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.core.cache import cache
 from django.utils import timezone
 
 from backend import models
@@ -22,9 +23,9 @@ class ProjectExtend(APIView):
         projid = kwargs.get('projid')
 
         try:
-            p_obj = models.UserProject.objects.get(project__identifier=projid, user=request.user, role__name='lead')
+            up_obj = models.UserProject.objects.get(project__identifier=projid, user=request.user, role__name='lead')
 
-            if p_obj.project.state.name != 'approve-expire':
+            if up_obj.project.state.name != 'approve-expire':
                 msg = {
                     'status': {
                         'code': status.HTTP_400_BAD_REQUEST,
@@ -34,14 +35,23 @@ class ProjectExtend(APIView):
                 logger.error(msg)
                 return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
-            request.data['project'] = p_obj.project.pk
+            request.data['project'] = up_obj.project.pk
             request.data['date'] = timezone.now()
             request.data['approved'] = False
             serializer = ProjectExtendSerializer(data=request.data)
 
             if serializer.is_valid():
                 serializer.save()
+
+                state_extend = models.State.objects.get(name='submit-extend')
+                p_obj = up_obj.project
+                p_obj.state = state_extend
+                p_obj.save()
+                cache.delete("ext-users-projects")
+                cache.delete('projects-get-all')
+
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
