@@ -328,6 +328,17 @@ class Projects(APIView):
             if state.name == 'expire' or state.name == 'submit':
                 p_obj.is_active = False
             elif state.name == 'extend':
+                pe_obj = models.ProjectExtend.objects.all().order_by('date')
+                pe_obj = pe_obj.last()
+                pe_obj.date_approved = timezone.now()
+                pe_obj.approved_by = {
+                    'first_name': self.request.user.first_name,
+                    'last_name': self.request.user.last_name,
+                    'person_uniqueid': self.request.user.person_uniqueid,
+                    'username': self.request.user.username
+                }
+                pe_obj.approved = True
+                pe_obj.save()
                 p_obj.is_active = True
 
             serializer = ProjectSerializer(p_obj, data=request.data)
