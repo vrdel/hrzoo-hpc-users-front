@@ -39,9 +39,6 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
         model = get_user_model()
 
 
-
-
-
 class SshKeysSerializer(serializers.ModelSerializer):
     user = UsersSerializerFiltered(read_only=True)
 
@@ -170,6 +167,7 @@ class ProjectTypeSerializer(serializers.ModelSerializer):
         model = models.ProjectType
 
 
+
 class ProjectSerializerGet(serializers.ModelSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
     state = StateSerializer()
@@ -218,6 +216,18 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'users',
         )
         model = models.Project
+
+
+class ProjectExtendSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'project',
+            'date',
+            'date_end',
+            'approved',
+            'reason'
+        )
+        model = models.ProjectExtend
 
 
 class ProjectSerializerFiltered(serializers.ModelSerializer):

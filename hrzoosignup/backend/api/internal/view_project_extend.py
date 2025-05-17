@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from backend import models
+from backend.serializers_internal import ProjectExtendSerializer
 
 import logging
 
@@ -30,6 +31,15 @@ class ProjectExtend(APIView):
                 }
                 logger.error(msg)
                 return Response(msg, status=status.HTTP_400_BAD_REQUEST)
+
+            request.data['project'] = p_obj.project.pk
+            serializer = ProjectExtendSerializer(data=request.data)
+
+            if serializer.is_valid():
+                pass
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
         except models.UserProject.DoesNotExist:
             err_response = {
