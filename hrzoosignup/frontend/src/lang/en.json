@@ -231,6 +231,10 @@
     "defaultMessage": "Are you sure you want to add listed collaborators to project?",
     "description": "memberships-modalmsg-internal"
   },
+  "412tPX": {
+    "defaultMessage": "Project ended",
+    "description": "stateprojectstring-expire"
+  },
   "43Vm52": {
     "defaultMessage": "AAI identifier copied to clipboard",
     "description": "popover-username-copy-ok"
@@ -443,6 +447,10 @@
     "defaultMessage": "Processing of project",
     "description": "managereq-change-modal-title-1"
   },
+  "8wALOB": {
+    "defaultMessage": "Projekt approved",
+    "description": "stateprojectstring-approve"
+  },
   "9D1eT/": {
     "defaultMessage": "Login error, wrong username and password",
     "description": "loginpriv-error"
@@ -470,10 +478,6 @@
   "9vAKOS": {
     "defaultMessage": "Public key:",
     "description": "publickeys-list-keycontent"
-  },
-  "9vyKuM": {
-    "defaultMessage": "Extended",
-    "description": "tablehelpers-optionstates-6"
   },
   "9xTRRJ": {
     "defaultMessage": "Scientist's personal identification number (MBZ) is unknown.",
@@ -987,6 +991,10 @@
     "defaultMessage": "Role",
     "description": "userinfo-croris-role"
   },
+  "KlDt4S": {
+    "defaultMessage": "Project extended",
+    "description": "stateprojectstring-extend"
+  },
   "KnyhrF": {
     "defaultMessage": "Active",
     "description": "userlist-button-active"
@@ -1110,6 +1118,10 @@
   "NUvyep": {
     "defaultMessage": "Denied",
     "description": "renderstate-denied"
+  },
+  "NmU8j0": {
+    "defaultMessage": "Project is pending expiration",
+    "description": "stateprojectstring-submitextend"
   },
   "No5Y5w": {
     "defaultMessage": "Institutional project",
@@ -1527,10 +1539,6 @@
     "defaultMessage": "Login with regular AAI@EduHR account",
     "description": "saml2-not-allowed-button-label-regular"
   },
-  "aEN6CZ": {
-    "defaultMessage": "Expired",
-    "description": "tablehelpers-optionstates-5"
-  },
   "aPSUqH": {
     "defaultMessage": "Remark:",
     "description": "managereq-change-remark"
@@ -1590,6 +1598,10 @@
   "cIUsvW": {
     "defaultMessage": "Interdisciplinary Natural Sciences",
     "description": "science-field-7"
+  },
+  "cJh2AY": {
+    "defaultMessage": "Project request for extension",
+    "description": "stateprojectstring-submitextend"
   },
   "cNIEbm": {
     "defaultMessage": "Select",
@@ -1654,6 +1666,10 @@
   "dYAzc6": {
     "defaultMessage": "Prolonged",
     "description": "tablehelpers-optionstates-6"
+  },
+  "de7Kyx": {
+    "defaultMessage": "Pending expiration",
+    "description": "managereq-change-approveexpire"
   },
   "dn45ZP": {
     "defaultMessage": "Duration",

@@ -231,6 +231,10 @@
     "defaultMessage": "Da li ste sigurni da želite dodati navedene suradnike na projekt?",
     "description": "memberships-modalmsg-internal"
   },
+  "412tPX": {
+    "defaultMessage": "Projekt je završen",
+    "description": "stateprojectstring-expire"
+  },
   "43Vm52": {
     "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
     "description": "popover-username-copy-ok"
@@ -443,6 +447,10 @@
     "defaultMessage": "Obrada projekta",
     "description": "managereq-change-modal-title-1"
   },
+  "8wALOB": {
+    "defaultMessage": "Projekt je odobren",
+    "description": "stateprojectstring-approve"
+  },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
     "description": "loginpriv-error"
@@ -470,10 +478,6 @@
   "9vAKOS": {
     "defaultMessage": "Javni ključ:",
     "description": "publickeys-list-keycontent"
-  },
-  "9vyKuM": {
-    "defaultMessage": "Produžen",
-    "description": "tablehelpers-optionstates-6"
   },
   "9xTRRJ": {
     "defaultMessage": "Matični broj znanstvenika (MBZ) nije poznat",
@@ -987,6 +991,10 @@
     "defaultMessage": "Uloga",
     "description": "userinfo-croris-role"
   },
+  "KlDt4S": {
+    "defaultMessage": "Projekt je produljen",
+    "description": "stateprojectstring-extend"
+  },
   "KnyhrF": {
     "defaultMessage": "Aktivni",
     "description": "userlist-button-active"
@@ -1110,6 +1118,10 @@
   "NUvyep": {
     "defaultMessage": "Odbijen",
     "description": "renderstate-denied"
+  },
+  "NmU8j0": {
+    "defaultMessage": "Projekt je pred istekom",
+    "description": "stateprojectstring-submitextend"
   },
   "No5Y5w": {
     "defaultMessage": "Institucijski projekt",
@@ -1527,10 +1539,6 @@
     "defaultMessage": "Prijava s regularnim AAI@EduHR",
     "description": "saml2-not-allowed-button-label-regular"
   },
-  "aEN6CZ": {
-    "defaultMessage": "Istekao",
-    "description": "tablehelpers-optionstates-5"
-  },
   "aPSUqH": {
     "defaultMessage": "Napomena:",
     "description": "managereq-change-remark"
@@ -1590,6 +1598,10 @@
   "cIUsvW": {
     "defaultMessage": "Interdisciplinarne prirodne znanosti",
     "description": "science-field-7"
+  },
+  "cJh2AY": {
+    "defaultMessage": "Projekt se produljuje",
+    "description": "stateprojectstring-submitextend"
   },
   "cNIEbm": {
     "defaultMessage": "Odaberi",
@@ -1654,6 +1666,10 @@
   "dYAzc6": {
     "defaultMessage": "Produljen",
     "description": "tablehelpers-optionstates-6"
+  },
+  "de7Kyx": {
+    "defaultMessage": "Pred istekom",
+    "description": "managereq-change-approveexpire"
   },
   "dn45ZP": {
     "defaultMessage": "Trajanje",
