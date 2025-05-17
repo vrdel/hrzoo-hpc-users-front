@@ -16,6 +16,7 @@ import {
   faTimeline,
   faCalendarXmark,
   faCheckDouble,
+  faHourglassStart,
 } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -737,25 +738,49 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             />
           </Col>
         :
-          <Col md={{size: 2}}>
-            <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
-            <br/>
-            <p className="fs-5">
-              <FormattedMessage
-                defaultMessage="Odobren"
-                description="managereq-change-approve"
+          currentState == 'approve-expire' ?
+            <Col md={{size: 2}}>
+              <span className="fa-layers fa-3x fa-fw">
+                <FontAwesomeIcon icon={faHourglassStart} className="text-warning" transform="shrink-9 right-8 down-3" />
+                <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-1 up-2"/>
+              </span>
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Pred istekom"
+                  description="managereq-change-approveexpire"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve-expire']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve-expire'))
+                }}
+                color="success"
               />
-            </p>
-            <Button
-              style={{height: '30px', width: '30px'}}
-              outline={!requestState['approve']}
-              onClick={() => {
-                setCommentDisabled(true)
-                setRequestState(ToggleState(requestState, 'approve'))
-              }}
-              color="success"
-            />
-          </Col>
+            </Col>
+          :
+            <Col md={{size: 2}}>
+              <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Odobren"
+                  description="managereq-change-approve"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve'))
+                }}
+                color="success"
+              />
+            </Col>
       }
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
