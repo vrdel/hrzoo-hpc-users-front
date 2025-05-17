@@ -39,6 +39,15 @@ import { convertToAmerican } from "Utils/dates";
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import { useIntl, FormattedMessage } from 'react-intl'
+import {
+  Approve,
+  ApproveExpire,
+  Deny,
+  Expire,
+  Extend,
+  Submit,
+  SubmitExtend,
+} from "Components/StateIcons"
 
 
 function setInitialState() {
@@ -716,10 +725,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
           <Col md={{size: 2}}>
-            <span className="fa-layers fa-3x fa-fw">
-              <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-8 left-8 down-3" />
-              <FontAwesomeIcon icon={faTimeline} className="text-success" transform="shrink-2 up-2"/>
-            </span>
+            <Extend/>
             <br/>
             <p className="fs-5">
               <FormattedMessage
@@ -740,10 +746,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
         :
           currentState == 'approve-expire' ?
             <Col md={{size: 2}}>
-              <span className="fa-layers fa-3x fa-fw">
-                <FontAwesomeIcon icon={faHourglassStart} className="text-warning" transform="shrink-9 right-8 down-3" />
-                <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-1 up-2"/>
-              </span>
+              <ApproveExpire/>
               <br/>
               <p className="fs-5">
                 <FormattedMessage
@@ -763,7 +766,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             </Col>
           :
             <Col md={{size: 2}}>
-              <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
+              <Approve/>{' '}
               <br/>
               <p className="fs-5">
                 <FormattedMessage
@@ -785,9 +788,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
           <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-            <FontAwesomeIcon
-              className="fa-3x text-warning"
-              icon={faCog}/>{' '}
+            <Submit/>{' '}
             <br/>
             <p className="fs-5">
               <FormattedMessage
@@ -807,9 +808,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           </Col>
         :
           <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-            <FontAwesomeIcon
-              className="fa-3x text-warning"
-              icon={faCog}/>{' '}
+            <Submit/>{' '}
             <br/>
             <p className="fs-5">
               <FormattedMessage
@@ -829,9 +828,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           </Col>
       }
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-danger"
-          icon={faTimes}/>{' '}
+        <Deny/>{' '}
         <br/>
         <p className="fs-5">
           <FormattedMessage
@@ -849,9 +846,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           color="success"/>
       </Col>
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-danger"
-          icon={faCalendarXmark}/>{' '}
+        <Expire/>{' '}
         <br/>
         <p className="fs-5">
           <FormattedMessage
