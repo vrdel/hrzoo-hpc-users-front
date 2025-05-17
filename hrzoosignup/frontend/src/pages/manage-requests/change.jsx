@@ -633,12 +633,17 @@ export const ManageRequestsChange = ({manageProject=false}) => {
 };
 
 
-const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
+const ProjectState = ({requestState, setCommentDisabled, setRequestState, initialProjectState}) => {
   let currentState = findTrueState(requestState)
 
   return (
     <>
-      <Col md={{size: 3}}/>
+      {
+        (currentState === 'submit-extend' || initialProjectState === 'submit-extend') ?
+          <Col md={{size: 2}}/>
+        :
+          <Col md={{size: 3}}/>
+      }
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
           <Col md={{size: 2}}>
@@ -661,21 +666,64 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
             />
           </Col>
         :
-          <Col md={{size: 2}}>
-            <Approve/>{' '}
+          currentState == 'approve-expire' ?
+            <Col md={{size: 2}}>
+              <ApproveExpire/>
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Pred istekom"
+                  description="managereq-change-approveexpire"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve-expire']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve-expire'))
+                }}
+                color="success"
+              />
+            </Col>
+          :
+            <Col md={{size: 2}}>
+              <Approve/>{' '}
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Odobren"
+                  description="managereq-change-approve"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve'))
+                }}
+                color="success"
+              />
+            </Col>
+      }
+      {
+        (currentState === 'submit-extend' || initialProjectState === 'submit-extend') &&
+          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+            <Submit/>{' '}
             <br/>
             <p className="fs-5">
               <FormattedMessage
-                defaultMessage="Odobren"
-                description="managereq-change-approve"
+                defaultMessage="Obrada"
+                description="managereq-change-process"
               />
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['approve']}
+              outline={!requestState['submit-extend']}
               onClick={() => {
                 setCommentDisabled(true)
-                setRequestState(ToggleState(requestState, 'approve'))
+                setRequestState(ToggleState(requestState, 'submit-extend'))
               }}
               color="success"
             />
@@ -1003,6 +1051,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               requestState={requestState}
               setCommentDisabled={setCommentDisabled}
               setRequestState={setRequestState}
+              initialProjectState={initialProjectState}
             />
           :
             <RequestState
