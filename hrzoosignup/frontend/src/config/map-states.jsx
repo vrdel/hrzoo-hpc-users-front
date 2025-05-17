@@ -1,39 +1,14 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCheckDouble,
-  faCog,
-  faTimes,
-  faTimeline,
-  faCalendarXmark,
-  faQuestion,
-  faHourglassStart,
-} from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl'
-
-
-const ExtendIcon = ({size}) => (
-  <span className={`fa-layers ${size} fa-fw`}>
-    <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-8 right-8 down-3" />
-    <FontAwesomeIcon icon={faTimeline} className="text-success" transform="shrink-2 up-2"/>
-  </span>
-)
-
-
-const SubmitExtendIcon = ({size}) => (
-  <span className={`fa-layers ${size} fa-fw`}>
-    <FontAwesomeIcon icon={faQuestion} className="text-danger" transform="shrink-8 right-8 down-3" />
-    <FontAwesomeIcon icon={faTimeline} className="text-warning" transform="shrink-2 up-2"/>
-  </span>
-)
-
-
-const ApproveExpire = ({size}) => (
-  <span className={`fa-layers ${size} fa-fw`}>
-    <FontAwesomeIcon icon={faHourglassStart} className="text-warning" transform="shrink-9 right-8 down-3" />
-    <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-1 up-2"/>
-  </span>
-)
+import {
+  Approve,
+  ApproveExpire,
+  Deny,
+  Expire,
+  Extend,
+  Submit,
+  SubmitExtend,
+} from "Components/StateIcons"
 
 
 export function StateIcons(state_name, small=false) {
@@ -43,13 +18,13 @@ export function StateIcons(state_name, small=false) {
     size = "fa-2x"
 
   let state2icon = {
-    'submit': <FontAwesomeIcon className={`text-warning ${size}`} icon={faCog}/>,
-    'approve': <FontAwesomeIcon className={`text-success ${size}`} icon={faCheckDouble}/>,
-    'deny': <FontAwesomeIcon className={`text-danger ${size}`} icon={faTimes}/>,
-    'expire': <FontAwesomeIcon className={`text-danger ${size}`} icon={faCalendarXmark}/>,
-    'extend': <ExtendIcon size={size}/>,
+    'submit': <Submit size={size} />,
+    'approve': <Approve size={size} />,
+    'deny': <Deny size={size} />,
+    'expire': <Expire size={size} />,
+    'extend': <Extend size={size}/>,
     'approve-expire': <ApproveExpire size={size}/>,
-    'submit-extend': <SubmitExtendIcon size={size}/>
+    'submit-extend': <SubmitExtend size={size}/>
   }
 
   return state2icon[state_name]
