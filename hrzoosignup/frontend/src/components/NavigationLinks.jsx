@@ -3,7 +3,7 @@ import {
   Nav,
   NavItem,
 } from 'reactstrap';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate, NavLink, useMatch } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFileSignature,
@@ -29,6 +29,10 @@ import { FormattedMessage } from 'react-intl';
 
 
 const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor}) => {
+  const accountingProjectMatch = useMatch("/ui/project-accounting")
+  const accountingUsersMatch = useMatch("/ui/project-users-accounting")
+  const accountingMyMatch = useMatch("/ui/my-accounting")
+
   return (
     <>
       <NavItem key='my-requests' className='ms-3 mt-1'>
@@ -83,8 +87,12 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
         enableAccounting &&
           <NavItem key='accounting' className='mt-1'>
             <NavLink
-              style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-              className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+              style={accountingProjectMatch ||
+                accountingUsersMatch ||
+                accountingMyMatch ? {'backgroundColor': activeBgColor} : {}}
+              className={accountingProjectMatch ||
+                accountingUsersMatch ||
+                accountingMyMatch ? "nav-link active text-white" : "nav-link text-dark"}
               to={`/ui/${isLead ? "project" : "my"}-accounting`}
             >
               <FontAwesomeIcon icon={ faChartBar } />{' '}
