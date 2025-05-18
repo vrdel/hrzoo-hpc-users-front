@@ -30,7 +30,7 @@ export const Approve = ({size="fa-3x"}) =>
 export const SubmitExtend = ({size="fa-3x"}) =>
   <span className={`fa-layers ${size} fa-fw`}>
     <FontAwesomeIcon icon={faQuestion} className="text-danger" transform="shrink-8 right-8 down-3" />
-    <FontAwesomeIcon icon={faTimeline} className="text-warning" transform="shrink-2 up-2"/>
+    <FontAwesomeIcon icon={faTimeline} className="text-success" transform="shrink-2 up-2"/>
   </span>
 
 
