@@ -10,12 +10,7 @@ import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSave,
-  faCog,
   faCopy,
-  faTimes,
-  faTimeline,
-  faCalendarXmark,
-  faCheckDouble,
 } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -38,6 +33,14 @@ import { convertToAmerican } from "Utils/dates";
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import { useIntl, FormattedMessage } from 'react-intl'
+import {
+  Approve,
+  ApproveExpire,
+  Deny,
+  Expire,
+  Extend,
+  Submit,
+} from "Components/StateIcons"
 
 
 function setInitialState() {
@@ -47,7 +50,9 @@ function setInitialState() {
       'approve': false,
       'deny': false,
       'extend': false,
-      'expire': false
+      'expire': false,
+      'approve-expire': false,
+      'submit-extend': false
     }
   )
   return newState
@@ -628,57 +633,108 @@ export const ManageRequestsChange = ({manageProject=false}) => {
 };
 
 
-const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
+const ProjectState = ({requestState, setCommentDisabled, setRequestState, initialProjectState}) => {
+  let currentState = findTrueState(requestState)
+
   return (
     <>
-      <Col md={{size: 2}}/>
-      <Col md={{size: 2}}>
-        <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Odobren"
-            description="managereq-change-approve"
-          />
-        </p>
-        <Button
-          style={{height: '30px', width: '30px'}}
-          outline={!requestState['approve']}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'approve'))
-          }}
-          color="success"
-        />
-      </Col>
+      {
+        (currentState === 'submit-extend' || initialProjectState === 'submit-extend') ?
+          <Col md={{size: 2}}/>
+        :
+          <Col md={{size: 3}}/>
+      }
+      {
+        (currentState == 'submit-extend' || currentState == 'extend') ?
+          <Col md={{size: 2}}>
+            <Extend/>
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Produljen"
+                description="managereq-change-extend"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['extend']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'extend'))
+              }}
+              color="success"
+            />
+          </Col>
+        :
+          currentState == 'approve-expire' ?
+            <Col md={{size: 2}}>
+              <ApproveExpire/>
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Pred istekom"
+                  description="managereq-change-approveexpire"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve-expire']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve-expire'))
+                }}
+                color="success"
+              />
+            </Col>
+          :
+            <Col md={{size: 2}}>
+              <Approve/>{' '}
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Odobren"
+                  description="managereq-change-approve"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve'))
+                }}
+                color="success"
+              />
+            </Col>
+      }
+      {
+        (currentState === 'submit-extend' || initialProjectState === 'submit-extend') &&
+          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+            <Submit/>{' '}
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Obrada"
+                description="managereq-change-process"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['submit-extend']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'submit-extend'))
+              }}
+              color="success"
+            />
+          </Col>
+      }
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-warning"
-          icon={faTimeline}/>{' '}
+        <Expire/>{' '}
         <br/>
         <p className="fs-5">
           <FormattedMessage
-            defaultMessage="Produljenje"
-            description="managereq-change-extend"
-          />
-        </p>
-        <Button
-          outline={!requestState['extend']}
-          style={{height: '30px', width: '30px'}}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'extend'))
-          }}
-          color="success"/>
-      </Col>
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-danger"
-          icon={faCalendarXmark}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Istekao"
+            defaultMessage="Završen"
             description="managereq-change-expire"
           />
         </p>
@@ -697,72 +753,118 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState}) => {
 
 
 const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
+  let currentState = findTrueState(requestState)
+
   return (
     <>
-      <Col md={{size: 2}}>
-        <FontAwesomeIcon className="fa-3x text-success" style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Odobren"
-            description="managereq-change-approve"
-          />
-        </p>
-        <Button
-          style={{height: '30px', width: '30px'}}
-          outline={!requestState['approve']}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'approve'))
-          }}
-          color="success"
-        />
-      </Col>
+      <Col md={{size: 1}}/>
+      {
+        (currentState == 'submit-extend' || currentState == 'extend') ?
+          <Col md={{size: 2}}>
+            <Extend/>
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Produljen"
+                description="managereq-change-extend"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['extend']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'extend'))
+              }}
+              color="success"
+            />
+          </Col>
+        :
+          currentState == 'approve-expire' ?
+            <Col md={{size: 2}}>
+              <ApproveExpire/>
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Pred istekom"
+                  description="managereq-change-approveexpire"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve-expire']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve-expire'))
+                }}
+                color="success"
+              />
+            </Col>
+          :
+            <Col md={{size: 2}}>
+              <Approve/>{' '}
+              <br/>
+              <p className="fs-5">
+                <FormattedMessage
+                  defaultMessage="Odobren"
+                  description="managereq-change-approve"
+                />
+              </p>
+              <Button
+                style={{height: '30px', width: '30px'}}
+                outline={!requestState['approve']}
+                onClick={() => {
+                  setCommentDisabled(true)
+                  setRequestState(ToggleState(requestState, 'approve'))
+                }}
+                color="success"
+              />
+            </Col>
+      }
+      {
+        (currentState == 'submit-extend' || currentState == 'extend') ?
+          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+            <Submit/>{' '}
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Obrada"
+                description="managereq-change-process"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['submit-extend']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'submit-extend'))
+              }}
+              color="success"
+            />
+          </Col>
+        :
+          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+            <Submit/>{' '}
+            <br/>
+            <p className="fs-5">
+              <FormattedMessage
+                defaultMessage="Obrada"
+                description="managereq-change-process"
+              />
+            </p>
+            <Button
+              style={{height: '30px', width: '30px'}}
+              outline={!requestState['submit']}
+              onClick={() => {
+                setCommentDisabled(true)
+                setRequestState(ToggleState(requestState, 'submit'))
+              }}
+              color="success"
+            />
+          </Col>
+      }
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-warning"
-          icon={faCog}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Obrada"
-            description="managereq-change-process"
-          />
-        </p>
-        <Button
-          style={{height: '30px', width: '30px'}}
-          outline={!requestState['submit']}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'submit'))
-          }}
-          color="success"
-        />
-      </Col>
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-warning"
-          icon={faTimeline}/>{' '}
-        <br/>
-        <p className="fs-5">
-          <FormattedMessage
-            defaultMessage="Produljenje"
-            description="managereq-change-extend"
-          />
-        </p>
-        <Button
-          outline={!requestState['extend']}
-          style={{height: '30px', width: '30px'}}
-          onClick={() => {
-            setCommentDisabled(true)
-            setRequestState(ToggleState(requestState, 'extend'))
-          }}
-          color="success"/>
-      </Col>
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-danger"
-          icon={faTimes}/>{' '}
+        <Deny/>{' '}
         <br/>
         <p className="fs-5">
           <FormattedMessage
@@ -780,13 +882,11 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           color="success"/>
       </Col>
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
-        <FontAwesomeIcon
-          className="fa-3x text-danger"
-          icon={faCalendarXmark}/>{' '}
+        <Expire/>{' '}
         <br/>
         <p className="fs-5">
           <FormattedMessage
-            defaultMessage="Istekao"
+            defaultMessage="Završen"
             description="managereq-change-expire"
           />
         </p>
@@ -951,6 +1051,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               requestState={requestState}
               setCommentDisabled={setCommentDisabled}
               setRequestState={setRequestState}
+              initialProjectState={initialProjectState}
             />
           :
             <RequestState
@@ -980,10 +1081,24 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                 { StateShortString(initialProjectState) }
               </span>
               <br/>
-              <FormattedMessage
-                defaultMessage='Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".'
-                description="managereq-change-remark-msg"
-              />
+              {
+                initialProjectState === 'approve-expire' ?
+                  <FormattedMessage
+                    defaultMessage='Voditelj je dužan podnijeti zahtjev za produljenjem'
+                    description="managereq-change-remark-msg-1"
+                  />
+                :
+                  initialProjectState === 'submit-extend' ?
+                    <FormattedMessage
+                      defaultMessage='Voditelj će biti obaviješten emailom o promjeni stanja u "Produljen" ili "Odbijen".'
+                      description="managereq-change-remark-msg-2"
+                    />
+                  :
+                    <FormattedMessage
+                      defaultMessage='Voditelj će biti obaviješten emailom o promjeni stanja u "Odobren" ili "Odbijen".'
+                      description="managereq-change-remark-msg"
+                    />
+              }
             </p>
           </Col>
         </Row>

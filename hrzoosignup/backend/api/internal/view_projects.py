@@ -328,6 +328,27 @@ class Projects(APIView):
             if state.name == 'expire' or state.name == 'submit':
                 p_obj.is_active = False
             elif state.name == 'extend':
+                try:
+                    pe_obj = models.ProjectExtend.objects.filter(project__id=p_obj.pk).order_by('date')
+                    pe_obj = pe_obj.last()
+                    pe_obj.date_approved = timezone.now()
+                    pe_obj.approved_by = {
+                        'first_name': self.request.user.first_name,
+                        'last_name': self.request.user.last_name,
+                        'person_uniqueid': self.request.user.person_uniqueid,
+                        'username': self.request.user.username
+                    }
+                    pe_obj.approved = True
+                    pe_obj.save()
+                except models.ProjectExtend.DoesNotExist:
+                    err_response = {
+                        'status': {
+                            'code': status.HTTP_404_NOT_FOUND,
+                            'message': '{} - No extension request found'.format(request.user.username)
+                        }
+                    }
+                    logger.error(err_response)
+                    return Response(err_response, status=status.HTTP_404_NOT_FOUND)
                 p_obj.is_active = True
 
             serializer = ProjectSerializer(p_obj, data=request.data)

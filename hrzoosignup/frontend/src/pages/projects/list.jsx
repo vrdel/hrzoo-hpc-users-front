@@ -13,14 +13,14 @@ import {
   HZSIPagination
 } from "Components/TableHelpers";
 import { convertToEuropean } from "Utils/dates";
-import { Badge, Col, Input, Row, Table, Popover } from "reactstrap";
+import { Badge, Col, Input, Row, Table, Popover, Tooltip } from "reactstrap";
 import { PageTitle } from "Components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { CustomReactSelect } from "Components/CustomReactSelect";
 import { TypeColor, TypeString } from "Config/map-projecttypes";
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
-import { StateIcons } from "Config/map-states";
+import { StateIcons, StateProjectString } from "Config/map-states";
 import { useNavigate, Link } from "react-router-dom";
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
@@ -96,6 +96,24 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const isOpened = (toolid) => {
     if (popoverOpened !== undefined)
       return popoverOpened[toolid]
+  }
+
+  const [tooltipOpened, setTooltipOpened] = useState(undefined);
+  const showTooltip = (toolid) => {
+    let showed = new Object()
+    if (tooltipOpened === undefined && toolid) {
+      showed[toolid] = true
+      setTooltipOpened(showed)
+    }
+    else {
+      showed = JSON.parse(JSON.stringify(tooltipOpened))
+      showed[toolid] = !showed[toolid]
+      setTooltipOpened(showed)
+    }
+  }
+  const isOpenedTooltip = (toolid) => {
+    if (tooltipOpened !== undefined)
+      return tooltipOpened[toolid]
   }
 
   useEffect(() => {
@@ -356,8 +374,16 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { calcIndex(index) }
                       </td>
-                      <td className="p-3 align-middle text-center">
+                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
+                        <Tooltip
+                          placement='top'
+                          isOpen={isOpenedTooltip(project.identifier)}
+                          target={'Tooltip-' + index}
+                          toggle={() => showTooltip(project.identifier)}
+                        >
+                          { StateProjectString(project.state.name) }
+                        </Tooltip>
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
                         <Row>
@@ -514,7 +540,7 @@ export const ProjectsList = () => {
   if (status === 'success' && data && pageTitle)
     return (
       <ProjectsListForm
-        data={ data.filter(e => ["approve", "extend", "expire"].includes(e.state.name.toLowerCase())) }
+        data={ data.filter(e => ["approve", "extend", "expire", "submit-extend", "approve-expire"].includes(e.state.name.toLowerCase())) }
         pageTitle={ pageTitle }
       />
     )

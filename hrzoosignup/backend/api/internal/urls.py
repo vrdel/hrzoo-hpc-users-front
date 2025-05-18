@@ -32,6 +32,7 @@ urlpatterns = [
     path('projects/', views.Projects.as_view(), name='projects'),
     path('projects/role/<str:targetrole>', views.ProjectsRole.as_view(), name='projectsrole'),
     re_path('projects/(?P<specific>.*)', views.Projects.as_view(), name='projects'),
+    path('project-extend/<str:projid>', views.ProjectExtend.as_view(), name='projectextend'),
     path('science-software/', views.ScienceSoftware.as_view(), name='sciencesoftware'),
     path('science-software/<int:id>', views.ScienceSoftware.as_view(), name='sciencesoftware'),
 ] + router.urls

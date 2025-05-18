@@ -33,5 +33,19 @@
     "fields": {
       "name": "expire"
      }
+  },
+  {
+    "model": "backend.State",
+    "pk": 6,
+    "fields": {
+      "name": "approve-expire"
+     }
+  },
+  {
+    "model": "backend.State",
+    "pk": 7,
+    "fields": {
+      "name": "submit-extend"
+     }
   }
 ]

@@ -35,6 +35,10 @@
     "defaultMessage": "Spremi promjene",
     "description": "managereq-change-button-save"
   },
+  "/EQUFG": {
+    "defaultMessage": "Produljenjen",
+    "description": "renderstate-extend"
+  },
   "/N26lV": {
     "defaultMessage": "Prijava neuspješna: Pozivni kod je istekao",
     "description": "email-invite-code-expired"
@@ -227,6 +231,10 @@
     "defaultMessage": "Da li ste sigurni da želite dodati navedene suradnike na projekt?",
     "description": "memberships-modalmsg-internal"
   },
+  "412tPX": {
+    "defaultMessage": "Projekt je završen",
+    "description": "stateprojectstring-expire"
+  },
   "43Vm52": {
     "defaultMessage": "Korisnička oznaka kopirana u međuspremnik",
     "description": "popover-username-copy-ok"
@@ -250,10 +258,6 @@
   "4jNx7L": {
     "defaultMessage": "Nemate javnih ključeva dodanih",
     "description": "publickeys-list-nokeys"
-  },
-  "4jkyMa": {
-    "defaultMessage": "Zahtjev je istekao",
-    "description": "statestring-expire"
   },
   "4sQ+vh": {
     "defaultMessage": "Nijedan projekt ne zadovoljava pretragu",
@@ -347,6 +351,10 @@
     "defaultMessage": "Korisnik",
     "description": "userdetails-popover-user"
   },
+  "6q9RYD": {
+    "defaultMessage": "Zahtjev je pred istekom",
+    "description": "statestring-submitextend"
+  },
   "6yeF5o": {
     "defaultMessage": "Zahtjev je uspješno promijenjen",
     "description": "managereq-change-changed-2"
@@ -399,6 +407,10 @@
     "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
     "description": "userlist-minibutton-msg-3"
   },
+  "81QlzP": {
+    "defaultMessage": "Pred istekom",
+    "description": "renderstate-approveexpire"
+  },
   "8AVSwM": {
     "defaultMessage": "Iskorištenje resursa",
     "description": "linktitle-accounting"
@@ -410,6 +422,10 @@
   "8dPx+P": {
     "defaultMessage": "Popis aplikacija dostupnih na klasteru",
     "description": "linktitle-software"
+  },
+  "8daRp3": {
+    "defaultMessage": "Završen",
+    "description": "stateshort-expire"
   },
   "8g6QYF": {
     "defaultMessage": "Brodogradnja",
@@ -430,6 +446,10 @@
   "8vx/9w": {
     "defaultMessage": "Obrada projekta",
     "description": "managereq-change-modal-title-1"
+  },
+  "8wALOB": {
+    "defaultMessage": "Projekt je odobren",
+    "description": "stateprojectstring-approve"
   },
   "9D1eT/": {
     "defaultMessage": "Prijava neuspjela, pogrešno korisničko ime i lozinka",
@@ -458,10 +478,6 @@
   "9vAKOS": {
     "defaultMessage": "Javni ključ:",
     "description": "publickeys-list-keycontent"
-  },
-  "9vyKuM": {
-    "defaultMessage": "Produžen",
-    "description": "tablehelpers-optionstates-6"
   },
   "9xTRRJ": {
     "defaultMessage": "Matični broj znanstvenika (MBZ) nije poznat",
@@ -695,6 +711,10 @@
     "defaultMessage": "Osoba:",
     "description": "software-cardbody-person"
   },
+  "DmC3b6": {
+    "defaultMessage": "Produljen",
+    "description": "stateshort-extend"
+  },
   "DqpQay": {
     "defaultMessage": "Tip",
     "description": "myreq-list-type"
@@ -718,10 +738,6 @@
   "EHi/e9": {
     "defaultMessage": "Farmacija",
     "description": "science-field-29"
-  },
-  "EN67wt": {
-    "defaultMessage": "Produljenje",
-    "description": "renderstate-extend"
   },
   "ENvJpe": {
     "defaultMessage": "Ime",
@@ -883,6 +899,10 @@
     "defaultMessage": "Ime",
     "description": "users-table-croris-firstname"
   },
+  "Hx/jaO": {
+    "defaultMessage": "Zahtjev je produljen",
+    "description": "statestring-extend"
+  },
   "I/dgYm": {
     "defaultMessage": "Trajanje:",
     "description": "generalproject-duration"
@@ -906,14 +926,6 @@
   "IX8Pax": {
     "defaultMessage": "Šifra:",
     "description": "researchselected-projectid"
-  },
-  "Ikm5Es": {
-    "defaultMessage": "Istekao",
-    "description": "stateshort-expire"
-  },
-  "Im/hLO": {
-    "defaultMessage": "Istekao",
-    "description": "managereq-change-expire"
   },
   "IqwjN5": {
     "defaultMessage": "Prezime",
@@ -979,6 +991,10 @@
     "defaultMessage": "Uloga",
     "description": "userinfo-croris-role"
   },
+  "KlDt4S": {
+    "defaultMessage": "Projekt je produljen",
+    "description": "stateprojectstring-extend"
+  },
   "KnyhrF": {
     "defaultMessage": "Aktivni",
     "description": "userlist-button-active"
@@ -994,10 +1010,6 @@
   "L2Z7Eh": {
     "defaultMessage": "Brisanje modulefilea aplikacije",
     "description": "software-modaltitle"
-  },
-  "LBM528": {
-    "defaultMessage": "Istekao",
-    "description": "statestringuser-expire"
   },
   "LK4ilW": {
     "defaultMessage": "Interdisciplinarne društvene znanosti",
@@ -1038,6 +1050,10 @@
   "MLgK3x": {
     "defaultMessage": "Obrada",
     "description": "managereq-change-process-title-2"
+  },
+  "MRnF0C": {
+    "defaultMessage": "Produljenje",
+    "description": "tablehelpers-optionstates-7"
   },
   "MTd8cf": {
     "defaultMessage": "Prijava eduGAIN",
@@ -1103,9 +1119,17 @@
     "defaultMessage": "Odbijen",
     "description": "renderstate-denied"
   },
+  "NmU8j0": {
+    "defaultMessage": "Projekt je pred istekom",
+    "description": "stateprojectstring-submitextend"
+  },
   "No5Y5w": {
     "defaultMessage": "Institucijski projekt",
     "description": "requesttype-label-institutional"
+  },
+  "O9mQYO": {
+    "defaultMessage": "Završen",
+    "description": "managereq-change-expire"
   },
   "OA86Kt": {
     "defaultMessage": "Ime i prezime",
@@ -1194,6 +1218,10 @@
   "QU9bH3": {
     "defaultMessage": "Metalurgija",
     "description": "science-field-15"
+  },
+  "Qhl17+": {
+    "defaultMessage": "Pred istekom",
+    "description": "stateshort-approveexpire"
   },
   "QoBBEg": {
     "defaultMessage": "Greška prilikom kopiranja javnog ključa u međuspremnik",
@@ -1295,6 +1323,10 @@
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TOuMA+": {
+    "defaultMessage": "Voditelj će biti obaviješten emailom o promjeni stanja u \"Produljen\" ili \"Odbijen\".",
+    "description": "managereq-change-remark-msg-2"
+  },
   "TVRDUD": {
     "defaultMessage": "Udio",
     "description": "newreqind-scientific-ratio"
@@ -1387,6 +1419,10 @@
     "defaultMessage": "Radnje",
     "description": "software-table-actions"
   },
+  "WIkWY9": {
+    "defaultMessage": "Produljen",
+    "description": "managereq-change-extend"
+  },
   "WL3CC8": {
     "defaultMessage": "Pravila korištenja usluge Napredno računanje",
     "description": "loginoffical-terms"
@@ -1439,6 +1475,10 @@
     "defaultMessage": "Logopedija",
     "description": "science-field-45"
   },
+  "XmzTXL": {
+    "defaultMessage": "Zatraženo produljenje",
+    "description": "stateshort-submitextend"
+  },
   "Y+WVo0": {
     "defaultMessage": "Područje",
     "description": "scientific-domain-placeholder-field"
@@ -1463,6 +1503,10 @@
     "defaultMessage": "Naziv",
     "description": "popover-projectinfo-name"
   },
+  "YlKibC": {
+    "defaultMessage": "Projekt je pred istekom",
+    "description": "statestringuser-approveexpire"
+  },
   "Yn5LNX": {
     "defaultMessage": "Detalji korisnika",
     "description": "popover-user-details"
@@ -1479,6 +1523,10 @@
     "defaultMessage": "Odobren",
     "description": "managereq-change-approve"
   },
+  "ZNEQJU": {
+    "defaultMessage": "Zahtjev za produljenjem podnesen i čeka na obradu",
+    "description": "statestringuser-submitextend"
+  },
   "ZRMcsw": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće odjavljivati suradnike",
     "description": "userstable-croris-toast-invite-fail-2"
@@ -1494,10 +1542,6 @@
   "aAbUGj": {
     "defaultMessage": "Prijava s regularnim AAI@EduHR",
     "description": "saml2-not-allowed-button-label-regular"
-  },
-  "aEN6CZ": {
-    "defaultMessage": "Istekao",
-    "description": "tablehelpers-optionstates-5"
   },
   "aPSUqH": {
     "defaultMessage": "Napomena:",
@@ -1559,6 +1603,10 @@
     "defaultMessage": "Interdisciplinarne prirodne znanosti",
     "description": "science-field-7"
   },
+  "cJh2AY": {
+    "defaultMessage": "Projekt se produljuje",
+    "description": "stateprojectstring-submitextend"
+  },
   "cNIEbm": {
     "defaultMessage": "Odaberi",
     "description": "researchproj-button-label"
@@ -1618,6 +1666,14 @@
   "dWYd5Z": {
     "defaultMessage": "Broj ne može biti veći od {number}",
     "description": "schema-great-n"
+  },
+  "dYAzc6": {
+    "defaultMessage": "Produljen",
+    "description": "tablehelpers-optionstates-6"
+  },
+  "de7Kyx": {
+    "defaultMessage": "Pred istekom",
+    "description": "managereq-change-approveexpire"
   },
   "dn45ZP": {
     "defaultMessage": "Trajanje",
@@ -1719,6 +1775,10 @@
     "defaultMessage": "Popis svih korisnika koji nisu ni na jednom aktivnom projektu",
     "description": "linktitle-usersinactive"
   },
+  "gsxCJu": {
+    "defaultMessage": "Zahtjev je završen",
+    "description": "statestring-expire"
+  },
   "gx5Ush": {
     "defaultMessage": "Odjava",
     "description": "navigation-modaltitle"
@@ -1730,10 +1790,6 @@
   "h41Ik7": {
     "defaultMessage": "Softver",
     "description": "navlinks-software"
-  },
-  "h5uXWs": {
-    "defaultMessage": "Produljenje",
-    "description": "managereq-change-extend"
   },
   "h78Eiu": {
     "defaultMessage": "Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
@@ -1762,6 +1818,10 @@
   "hj4YOP": {
     "defaultMessage": "Novi zahtjev",
     "description": "linktitle-newrequest"
+  },
+  "hn0Nwx": {
+    "defaultMessage": "Voditelj je dužan podnijeti zahtjev za produljenjem",
+    "description": "managereq-change-remark-msg-1"
   },
   "hrHnbY": {
     "defaultMessage": "Interdisciplinarne biotehničke znanosti",
@@ -1802,10 +1862,6 @@
   "izNmIO": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće dodati suradnike",
     "description": "userstable-general-toast-invite-fail-2"
-  },
-  "j/8HUp": {
-    "defaultMessage": "Zahtjev čeka na produljenje",
-    "description": "statestring-extend"
   },
   "j6QjlA": {
     "defaultMessage": "Stanje:",
@@ -1919,10 +1975,6 @@
     "defaultMessage": "Ukupna količina radne memorije (GB):",
     "description": "cloudfields-nram"
   },
-  "mIOI8m": {
-    "defaultMessage": "Produljenje",
-    "description": "stateshort-extend"
-  },
   "mNOzeP": {
     "defaultMessage": "Javni ključ nije bilo moguće izbrisati: { error}",
     "description": "publickeys-list-toast-fail"
@@ -1990,6 +2042,10 @@
   "odvkpW": {
     "defaultMessage": "PRIRODNE ZNANOSTI",
     "description": "science-domain-map-1"
+  },
+  "okS+Tq": {
+    "defaultMessage": "Završen",
+    "description": "tablehelpers-optionstates-5"
   },
   "ouf6xV": {
     "defaultMessage": "Morate odabrati jedan tip zahtjeva da biste nastavili",
@@ -2063,6 +2119,10 @@
     "defaultMessage": "Računarstvo",
     "description": "science-field-16"
   },
+  "qVBSOd": {
+    "defaultMessage": "Produljenje",
+    "description": "renderstate-submitextend"
+  },
   "qWvZqN": {
     "defaultMessage": "Poljoprivreda (agronomija)",
     "description": "science-field-30"
@@ -2119,6 +2179,10 @@
     "defaultMessage": "Zahtjev je podnesen i čeka na obradu",
     "description": "statestringuser-submit"
   },
+  "stFV7b": {
+    "defaultMessage": "Završen",
+    "description": "statestringuser-expire"
+  },
   "sy0MO9": {
     "defaultMessage": "Dodan javni ključ",
     "description": "users-table-croris-keyadd"
@@ -2174,6 +2238,10 @@
   "u6Rz3Z": {
     "defaultMessage": "Povijest",
     "description": "science-field-54"
+  },
+  "uTpwjq": {
+    "defaultMessage": "Ističe",
+    "description": "tablehelpers-optionstates-8"
   },
   "uW3ZtA": {
     "defaultMessage": "DRUŠTVENE ZNANOSTI",
@@ -2298,6 +2366,10 @@
   "yDf4qQ": {
     "defaultMessage": "Elektrotehnika",
     "description": "science-field-10"
+  },
+  "yLPaCC": {
+    "defaultMessage": "Podnesen zahtjev za produljenjem",
+    "description": "statestring-submitextend"
   },
   "yQX1Hw": {
     "defaultMessage": "korisnika",

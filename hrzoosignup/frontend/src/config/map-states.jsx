@@ -1,13 +1,14 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCheckDouble,
-  faCog,
-  faTimes,
-  faTimeline,
-  faCalendarXmark,
-} from '@fortawesome/free-solid-svg-icons';
 import { FormattedMessage } from 'react-intl'
+import {
+  Approve,
+  ApproveExpire,
+  Deny,
+  Expire,
+  Extend,
+  Submit,
+  SubmitExtend,
+} from "Components/StateIcons"
 
 
 export function StateIcons(state_name, small=false) {
@@ -17,11 +18,13 @@ export function StateIcons(state_name, small=false) {
     size = "fa-2x"
 
   let state2icon = {
-    'submit': <FontAwesomeIcon className={`text-warning ${size}`} icon={faCog}/>,
-    'approve': <FontAwesomeIcon className={`text-success ${size}`} icon={faCheckDouble}/>,
-    'deny': <FontAwesomeIcon className={`text-danger ${size}`} icon={faTimes}/>,
-    'expire': <FontAwesomeIcon className={`text-danger ${size}`} icon={faCalendarXmark}/>,
-    'extend': <FontAwesomeIcon className={`text-warning ${size}`} icon={faTimeline}/>
+    'submit': <Submit size={size} />,
+    'approve': <Approve size={size} />,
+    'deny': <Deny size={size} />,
+    'expire': <Expire size={size} />,
+    'extend': <Extend size={size}/>,
+    'approve-expire': <ApproveExpire size={size}/>,
+    'submit-extend': <SubmitExtend size={size}/>
   }
 
   return state2icon[state_name]
@@ -42,12 +45,48 @@ export function StateString(state_name) {
       description="statestring-deny"
     />,
     'expire': <FormattedMessage
-      defaultMessage="Zahtjev je istekao"
+      defaultMessage="Zahtjev je završen"
       description="statestring-expire"
     />,
     'extend': <FormattedMessage
-      defaultMessage="Zahtjev čeka na produljenje"
+      defaultMessage="Zahtjev je produljen"
       description="statestring-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Podnesen zahtjev za produljenjem"
+      description="statestring-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Zahtjev je pred istekom"
+      description="statestring-submitextend"
+    />
+  }
+
+  return state2string[state_name]
+}
+
+
+export function StateProjectString(state_name) {
+  let state2string = {
+    'approve': <FormattedMessage
+      defaultMessage="Projekt je odobren"
+      description="stateprojectstring-approve"
+    />,
+    'expire': <FormattedMessage
+      defaultMessage="Projekt je završen"
+      description="stateprojectstring-expire"
+    />,
+    'extend': <FormattedMessage
+      defaultMessage="Projekt je produljen"
+      description="stateprojectstring-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Projekt se produljuje"
+      description="stateprojectstring-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Projekt je pred istekom"
+      description="stateprojectstring-submitextend"
     />
   }
 
@@ -65,12 +104,20 @@ export function StateStringUser(state_name) {
       description="statestringuser-approve"
     />,
     'expire': <FormattedMessage
-      defaultMessage="Istekao"
+      defaultMessage="Završen"
       description="statestringuser-expire"
     />,
     'extend': <FormattedMessage
       defaultMessage="Produljen"
       description="statestringuser-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Zahtjev za produljenjem podnesen i čeka na obradu"
+      description="statestringuser-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Projekt je pred istekom"
+      description="statestringuser-approveexpire"
     />
   }
 
@@ -92,12 +139,20 @@ export function StateShortString(state_name) {
       description="stateshort-deny"
     />,
     'expire': <FormattedMessage
-      defaultMessage="Istekao"
+      defaultMessage="Završen"
       description="stateshort-expire"
     />,
     'extend': <FormattedMessage
-      defaultMessage="Produljenje"
+      defaultMessage="Produljen"
       description="stateshort-extend"
+    />,
+    'submit-extend': <FormattedMessage
+      defaultMessage="Zatraženo produljenje"
+      description="stateshort-submitextend"
+    />,
+    'approve-expire': <FormattedMessage
+      defaultMessage="Pred istekom"
+      description="stateshort-approveexpire"
     />,
   }
 
