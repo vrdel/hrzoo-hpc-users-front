@@ -1,13 +1,93 @@
+import base64
+import copy
 import datetime
+from unittest import mock
 
+import requests
 from backend import models
+from django.core.cache import cache
 from django.test import TestCase
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.test import APIRequestFactory
-from django.core.cache import cache
 
 from .test_utils import create_mock_db
+
+mock_dashboard_institutions = [
+    {
+        'ustanovaId': 133,
+        'vrstaUstanove': 'institut',
+        'naziv': 'Institut Ruđer Bošković',
+        'velicina': None,
+        'oib': '69715301002',
+        'realm': 'irb.hr',
+        'mbu': '098'
+    },
+    {
+        'ustanovaId': 27,
+        'vrstaUstanove': 'fakultet',
+        'naziv': 'Sveučilište u Zagrebu, Fakultet elektrotehnike i računarstva',
+        'velicina': None,
+        'oib': '57029260362',
+        'realm': 'fer.hr',
+        'mbu': '036'
+    },
+    {
+        'ustanovaId': 50,
+        'vrstaUstanove': 'fakultet',
+        'naziv': 'Sveučilište u Zagrebu, Prirodoslovno-matematički fakultet',
+        'velicina': None,
+        'oib': '28163265527',
+        'realm': 'pmf.hr',
+        'mbu': '119'
+    },
+    {
+        'ustanovaId': 61,
+        'vrstaUstanove': 'fakultet',
+        'naziv': 'Sveučilište u Splitu, Prirodoslovno-matematički fakultet',
+        'velicina': None,
+        'oib': '20858497843',
+        'realm': 'pmfst.hr',
+        'mbu': '177'
+    }
+]
+
+
+class MockResponse:
+    def __init__(self, data=None, status_code=201):
+        self.data = data
+        self.status_code = status_code
+
+        if self.status_code == 201:
+            self.reason = "CREATED"
+
+        elif self.status_code == 400:
+            self.reason = "BAD REQUEST"
+
+        elif self.status_code == 403:
+            self.reason = "FORBIDDEN"
+
+        elif self.status_code == 500:
+            self.reason = "SERVER ERROR"
+
+        else:
+            self.reason = None
+
+        if self.status_code >= 300:
+            self.ok = False
+
+        else:
+            self.ok = True
+
+    def raise_for_status(self):
+        if 500 > self.status_code >= 300:
+            raise requests.exceptions.RequestException("Some request exception")
+
+        elif self.status_code >= 500:
+            raise requests.exceptions.RequestException()
+
+    def json(self):
+        return self.data
 
 
 class ResourceUsageAPITests(TestCase):
@@ -1851,7 +1931,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url":
@@ -1925,7 +2005,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -1992,7 +2072,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -2057,7 +2137,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "name": "Project name 4",
                     "ustanova": {
                         "naziv": "Prirodoslovno-matematički fakultet, Zagreb",
-                        "oib": "12345678901",
+                        "oib": "28163265527",
                         "mbu": "119"
                     },
                     "croris_url": "https://www.croris.hr/projekti/projekt/666",
@@ -2119,7 +2199,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -2175,7 +2255,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
-                        "oib": "01234567890",
+                        "oib": "57029260362",
                         "mbu": "036"
                     },
                     "croris_url": "",
@@ -2280,7 +2360,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2315,7 +2395,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -2350,7 +2430,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user9.id,
-                        "person_oib": "",
+                        "person_oib": "99999999999",
                         "first_name": "Albert",
                         "last_name": "Trotter",
                         "person_mail": "uncle.albert@biol.pmf.hr",
@@ -2385,7 +2465,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2417,7 +2497,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user3.id,
-                        "person_oib": "",
+                        "person_oib": "33333333333",
                         "first_name": "Ford",
                         "last_name": "Prefect",
                         "person_mail": "ford.prefect@fer.hr",
@@ -2449,7 +2529,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user4.id,
-                        "person_oib": "",
+                        "person_oib": "44444444444",
                         "first_name": "Zaphod",
                         "last_name": "Beeblebrox",
                         "person_mail": "zb@fer.hr",
@@ -2577,7 +2657,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user7.id,
-                        "person_oib": "",
+                        "person_oib": "77777777777",
                         "first_name": "Derek",
                         "last_name": "Trotter",
                         "person_mail": "delboy@biol.pmf.hr",
@@ -2611,7 +2691,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user8.id,
-                        "person_oib": "",
+                        "person_oib": "88888888888",
                         "first_name": "Rodney",
                         "last_name": "Trotter",
                         "person_mail": "dave@biol.pmf.hr",
@@ -2645,7 +2725,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -2676,7 +2756,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2707,7 +2787,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2760,7 +2840,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2795,7 +2875,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -2830,7 +2910,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user7.id,
-                        "person_oib": "",
+                        "person_oib": "77777777777",
                         "first_name": "Derek",
                         "last_name": "Trotter",
                         "person_mail": "delboy@biol.pmf.hr",
@@ -2864,7 +2944,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user8.id,
-                        "person_oib": "",
+                        "person_oib": "88888888888",
                         "first_name": "Rodney",
                         "last_name": "Trotter",
                         "person_mail": "dave@biol.pmf.hr",
@@ -2898,7 +2978,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user9.id,
-                        "person_oib": "",
+                        "person_oib": "99999999999",
                         "first_name": "Albert",
                         "last_name": "Trotter",
                         "person_mail": "uncle.albert@biol.pmf.hr",
@@ -2944,7 +3024,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -2979,7 +3059,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user1.id,
-                        "person_oib": "",
+                        "person_oib": "11111111111",
                         "first_name": "Arthur",
                         "last_name": "Dent",
                         "person_mail": "arthur.dent@fer.hr",
@@ -3011,7 +3091,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user2.id,
-                        "person_oib": "",
+                        "person_oib": "22222222222",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
                         "person_mail": "trillian@fer.hr",
@@ -3046,7 +3126,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user3.id,
-                        "person_oib": "",
+                        "person_oib": "33333333333",
                         "first_name": "Ford",
                         "last_name": "Prefect",
                         "person_mail": "ford.prefect@fer.hr",
@@ -3078,7 +3158,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user4.id,
-                        "person_oib": "",
+                        "person_oib": "44444444444",
                         "first_name": "Zaphod",
                         "last_name": "Beeblebrox",
                         "person_mail": "zb@fer.hr",
@@ -3110,7 +3190,7 @@ class UserProjectAPITests(TestCase):
                 {
                     "user": {
                         "id": self.user9.id,
-                        "person_oib": "",
+                        "person_oib": "99999999999",
                         "first_name": "Albert",
                         "last_name": "Trotter",
                         "person_mail": "uncle.albert@biol.pmf.hr",
@@ -3143,4 +3223,662 @@ class UserProjectAPITests(TestCase):
                     "date_joined": None
                 }
             ]
+        )
+
+
+class NewProjectsAPITests(TestCase):
+    def setUp(self):
+        create_mock_db()
+
+        hrzoo = models.Organization4APIKey.objects.get(name="hrzoo")
+        merlin = models.Organization4APIKey.objects.get(name="merlin")
+        name, key = models.MyAPIKey.objects.create_key(
+            name="test", organization=merlin
+        )
+        name2, key2 = models.MyAPIKey.objects.create_key(
+            name="test2", organization=hrzoo
+        )
+        self.token = key
+        self.token2 = key2
+
+        self.factory = APIRequestFactory()
+
+        dashboard_token = base64.b64encode(
+            f"dashboard_username:dashboard_pass".encode("ascii")
+        )
+        self.dashboard_headers = {
+            "Authorization": f"Basic {dashboard_token.decode('ascii')}"
+        }
+
+        self.data = {
+            "user": {
+                "first_name": "Arthur",
+                "last_name": "Dent",
+                "person_oib": "11111111111",
+                "person_mail": "arthur.dent@fer.hr",
+                "username": "user119@fer.hr"
+            },
+            "project_type": "practical",
+            "date_end": "2025-12-31",
+            "date_start": "2025-01-01",
+            "name": "New project 7",
+            "reason":
+                "Duis aute irure dolor in reprehenderit in voluptate velit "
+                "esse cillum dolore eu fugiat nulla pariatur.",
+            "institute": 133,
+            "science_field": [
+                {
+                    "name": "PRIRODNE ZNANOSTI",
+                    "percent": 100,
+                    "scientificfields": [
+                        {
+                            'name': 'Biologija',
+                            "percent": 50
+                        },
+                        {
+                            'name': 'Fizika',
+                            "percent": 50
+                        }
+                    ]
+                }
+            ],
+            "resources_type": ["JUPYTER"]
+        }
+
+    def test_post_unauthorized(self):
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        request = self.client.post(
+            "/api/v1/projects",
+            content_type="application/json",
+            data=self.data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+
+    def test_post_wrong_organization(self):
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        request = self.client.post(
+            "/api/v1/projects",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+            content_type="application/json",
+            data=self.data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user(self, mock_now, mock_requests_get):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=self.data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.Project.objects.all()), 7)
+        project = models.Project.objects.get(name="New project 7")
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_201_CREATED,
+                    "project_id": project.id,
+                    "message": "Project successfully created"
+                }
+            }
+        )
+        self.assertEqual(project.identifier, "NR-2025-05-001")
+        self.assertEqual(project.institute, "Institut Ruđer Bošković")
+        self.assertEqual(
+            project.reason,
+            "Duis aute irure dolor in reprehenderit in voluptate velit "
+            "esse cillum dolore eu fugiat nulla pariatur.",
+        )
+        self.assertEqual(
+            project.date_approved, datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_start, datetime.date(2025, 1, 1))
+        self.assertEqual(project.date_end, datetime.date(2025, 12, 31))
+        self.assertEqual(project.bogus_end, None)
+        self.assertEqual(
+            project.date_submitted, datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(
+            project.approved_by, {
+                "first_name": "Merlin",
+                "last_name": "Moodle",
+                "person_uniqueid": "merlin@srce.hr",
+                "username": "merlin@srce.hr",
+            }
+        )
+        self.assertEqual(project.denied_by, None)
+        self.assertEqual(project.changed_by, None)
+        self.assertEqual(project.change_history, None)
+        self.assertEqual(
+            project.science_field, [
+                {
+                    "name": {
+                        "value": "PRIRODNE ZNANOSTI",
+                        "label": "PRIRODNE ZNANOSTI"
+                    },
+                    "percent": 100,
+                    "scientificfields": [
+                        {
+                            'name': {
+                                'label': 'Biologija',
+                                'value': 'Biologija'
+                            },
+                            "percent": 50
+                        },
+                        {
+                            'name': {
+                                'label': 'Fizika',
+                                'value': 'Fizika'
+                            },
+                            "percent": 50
+                        }
+                    ]
+                }
+            ]
+        )
+        self.assertEqual(project.science_software, [])
+        self.assertEqual(project.science_extrasoftware, "")
+        self.assertFalse(project.science_extrasoftware_help)
+        self.assertEqual(project.resources_numbers, {})
+        self.assertTrue(project.is_active)
+        self.assertEqual(project.croris_title, "")
+        self.assertEqual(project.croris_start, None)
+        self.assertEqual(project.croris_end, None)
+        self.assertEqual(project.croris_identifier, "")
+        self.assertEqual(project.croris_id, None)
+        self.assertEqual(project.croris_summary, "")
+        self.assertEqual(project.croris_collaborators, None)
+        self.assertEqual(project.croris_lead, None)
+        self.assertEqual(project.croris_finance, None)
+        self.assertEqual(project.croris_institute, None)
+        self.assertEqual(project.croris_type, "")
+        self.assertEqual(
+            project.staff_resources_type, [
+                {"label": "JUPYTER", "value": "JUPYTER"}
+            ]
+        )
+        self.assertEqual(project.state.name, "approve")
+        self.assertEqual(len(project.users.all()), 1)
+        self.assertEqual(
+            [user.username for user in project.users.all()], ["user119@fer.hr"]
+        )
+        self.assertEqual(project.project_type.name, "practical")
+        self.assertEqual(
+            len(models.UserProject.objects.filter(
+                user=models.User.objects.get(person_username="adent"))
+            ), 5
+        )
+        userproject = models.UserProject.objects.get(
+            user=models.User.objects.get(person_username="adent"),
+            project=project
+        )
+        self.assertEqual(userproject.role.name, "lead")
+        self.assertEqual(
+            userproject.date_joined, datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_new_user(self, mock_now, mock_requests_get):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        data = copy.deepcopy(self.data)
+        data["user"] = {
+            "first_name": "John J.",
+            "last_name": "Rambo",
+            "person_oib": "00000000000",
+            "person_mail": "jj.rambo@kif.hr",
+            "username": "jjrambo@kif.hr"
+        }
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.Project.objects.all()), 7)
+        project = models.Project.objects.get(name="New project 7")
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_201_CREATED,
+                    "project_id": project.id,
+                    "message": "Project successfully created"
+                }
+            }
+        )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(project.identifier, "NR-2025-05-001")
+        self.assertEqual(project.institute, "Institut Ruđer Bošković")
+        self.assertEqual(
+            project.reason,
+            "Duis aute irure dolor in reprehenderit in voluptate velit "
+            "esse cillum dolore eu fugiat nulla pariatur.",
+        )
+        self.assertEqual(
+            project.date_approved, datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_start, datetime.date(2025, 1, 1))
+        self.assertEqual(project.date_end, datetime.date(2025, 12, 31))
+        self.assertEqual(project.bogus_end, None)
+        self.assertEqual(
+            project.date_submitted, datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            )
+        )
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(
+            project.approved_by, {
+                "first_name": "Merlin",
+                "last_name": "Moodle",
+                "person_uniqueid": "merlin@srce.hr",
+                "username": "merlin@srce.hr",
+            }
+        )
+        self.assertEqual(project.denied_by, None)
+        self.assertEqual(project.changed_by, None)
+        self.assertEqual(project.change_history, None)
+        self.assertEqual(
+            project.science_field, [
+                {
+                    "name": {
+                        "value": "PRIRODNE ZNANOSTI",
+                        "label": "PRIRODNE ZNANOSTI"
+                    },
+                    "percent": 100,
+                    "scientificfields": [
+                        {
+                            'name': {
+                                'label': 'Biologija',
+                                'value': 'Biologija'
+                            },
+                            "percent": 50
+                        },
+                        {
+                            'name': {
+                                'label': 'Fizika',
+                                'value': 'Fizika'
+                            },
+                            "percent": 50
+                        }
+                    ]
+                }
+            ]
+        )
+        self.assertEqual(project.science_software, [])
+        self.assertEqual(project.science_extrasoftware, "")
+        self.assertFalse(project.science_extrasoftware_help)
+        self.assertEqual(project.resources_numbers, {})
+        self.assertTrue(project.is_active)
+        self.assertEqual(project.croris_title, "")
+        self.assertEqual(project.croris_start, None)
+        self.assertEqual(project.croris_end, None)
+        self.assertEqual(project.croris_identifier, "")
+        self.assertEqual(project.croris_id, None)
+        self.assertEqual(project.croris_summary, "")
+        self.assertEqual(project.croris_collaborators, None)
+        self.assertEqual(project.croris_lead, None)
+        self.assertEqual(project.croris_finance, None)
+        self.assertEqual(project.croris_institute, None)
+        self.assertEqual(project.croris_type, "")
+        self.assertEqual(project.staff_resources_type, [
+            {"label": "JUPYTER", "value": "JUPYTER"}
+        ])
+        self.assertEqual(project.state.name, "approve")
+        self.assertEqual(len(project.users.all()), 1)
+        user = models.User.objects.get(person_oib="00000000000")
+        self.assertEqual(
+            [user.username for user in project.users.all()], ["jjrambo@kif.hr"]
+        )
+        self.assertEqual(project.project_type.name, "practical")
+        self.assertEqual(len(models.UserProject.objects.filter(user=user)), 1)
+        userproject = models.UserProject.objects.get(user=user, project=project)
+        self.assertEqual(userproject.role.name, "lead")
+        self.assertEqual(
+            userproject.date_joined, datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_wrong_resource(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        data = copy.deepcopy(self.data)
+        data["resources_type"] = ["MEH"]
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertFalse(mock_requests_get.called)
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message":
+                        "resources_type: MEH is not among allowed resources"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_wrong_project_type(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        data = copy.deepcopy(self.data)
+        data["project_type"] = "meh"
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(mock_requests_get.called)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message": "project_type: meh is not valid project type"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_nonexisting_institute_id(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        data = copy.deepcopy(self.data)
+        data["institute"] = 14
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_404_NOT_FOUND,
+                    "message": "Institution with id=14 not found"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_error_fetching_institutes_with_msg(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=None, status_code=400
+        )
+        data = copy.deepcopy(self.data)
+        data["institute"] = 14
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message": "Error fetching institutions: "
+                               "Some request exception"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_existing_user_error_fetching_institutes_without_msg(
+            self, mock_now, mock_requests_get
+    ):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=None, status_code=500
+        )
+        data = copy.deepcopy(self.data)
+        data["institute"] = 14
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        with self.settings(
+                DASHBOARD_USERNAME="dashboard_username",
+                DASHBOARD_PASS="dashboard_pass",
+                DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                           "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        mock_requests_get.assert_called_once_with(
+            "https://webdev.dashboard.srce.hr/api/ustanove",
+            headers=self.dashboard_headers
+        )
+        self.assertEqual(
+            request.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_500_INTERNAL_SERVER_ERROR,
+                    "message": "Error fetching institutions"
+                }
+            }
         )

@@ -8,6 +8,7 @@ from django.utils import timezone
 def create_mock_db():
     models.Organization4APIKey.objects.create(name="hrzoo")
     models.Organization4APIKey.objects.create(name="merlin")
+    models.ProjectCount.objects.create(counter=1)
     type1 = models.ProjectType.objects.create(name="research-croris")
     type2 = models.ProjectType.objects.create(name="thesis")
     type3 = models.ProjectType.objects.create(name="practical")
@@ -258,6 +259,16 @@ def create_mock_db():
         date_end=datetime.date(2025, 12, 31),
         date_approved=datetime.datetime(2024, 5, 4, 12, 0, 13, tzinfo=pytz.UTC)
     )
+    models.User.objects.create_user(
+        username="merlin@srce.hr",
+        first_name="Merlin",
+        last_name="Moodle",
+        person_mail="merlin@srce.hr",
+        person_uniqueid="merlin@srce.hr",
+        person_institution="Sveučilišni računski centar - Srce",
+        status=True,
+        mailinglist_subscribe=True
+    )
     user1 = models.User.objects.create_user(
         username="user119@fer.hr",
         person_uniqueid="user119@fer.hr",
@@ -265,6 +276,7 @@ def create_mock_db():
         croris_last_name="Dent",
         first_name="Arthur",
         last_name="Dent",
+        person_oib="11111111111",
         person_username="adent",
         person_mail="arthur.dent@fer.hr",
         person_institution="Fakultet elektrotehnike i računarstva",
@@ -274,6 +286,7 @@ def create_mock_db():
     user2 = models.User.objects.create_user(
         username="user454@fer.hr",
         person_uniqueid="user454@fer.hr",
+        person_oib="22222222222",
         croris_first_name="Tricia",
         croris_last_name="McMillan",
         first_name="Tricia",
@@ -287,6 +300,7 @@ def create_mock_db():
     user3 = models.User.objects.create_user(
         username="user45@fer.hr",
         person_uniqueid="user45@fer.hr",
+        person_oib="33333333333",
         croris_first_name="Ford",
         croris_last_name="Prefect",
         first_name="Ford",
@@ -300,6 +314,7 @@ def create_mock_db():
     user4 = models.User.objects.create_user(
         username="user70@fer.hr",
         person_uniqueid="user70@fer.hr",
+        person_oib="44444444444",
         croris_first_name="Zaphod",
         croris_last_name="Beeblebrox",
         first_name="Zaphod",
@@ -333,6 +348,7 @@ def create_mock_db():
     user7 = models.User.objects.create_user(
         username="delboy@pmf.hr",
         person_uniqueid="delboy@pmf.hr",
+        person_oib="77777777777",
         croris_first_name="Derek",
         croris_last_name="Trotter",
         first_name="Derek",
@@ -346,6 +362,7 @@ def create_mock_db():
     user8 = models.User.objects.create_user(
         username="dave@pmf.hr",
         person_uniqueid="dave@pmf.hr",
+        person_oib="88888888888",
         croris_first_name="Rodney",
         croris_last_name="Trotter",
         first_name="Rodney",
@@ -359,6 +376,7 @@ def create_mock_db():
     user9 = models.User.objects.create_user(
         username="uncle_albert@pmf.hr",
         person_uniqueid="uncle_albert@pmf.hr",
+        person_oib="99999999999",
         croris_first_name="Albert",
         croris_last_name="Trotter",
         first_name="Albert",
@@ -461,14 +479,22 @@ def create_mock_db():
         name_short="Fakultet elektrotehnike i računarstva",
         name_long="Sveučilište u Zagrebu, Fakultet elektrotehnike i "
                   "računarstva",
-        oib="01234567890",
+        oib="57029260362",
         mbu="036",
         parent="Sveučilište u Zagrebu"
     )
     models.CrorisInstitutions.objects.create(
         active=True,
+        name_short="Institut Ruđer Bošković",
+        name_long="Institut Ruđer Bošković",
+        oib="69715301002",
+        mbu="098",
+        parent=""
+    )
+    models.CrorisInstitutions.objects.create(
+        active=True,
         name_short="Prirodoslovno-matematički fakultet, Zagreb",
-        oib="12345678901",
+        oib="28163265527",
         mbu="119",
         parent="Sveučilište u Zagrebu"
     )

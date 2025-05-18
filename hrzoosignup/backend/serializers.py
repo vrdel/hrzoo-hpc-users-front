@@ -1,6 +1,8 @@
+import copy
 import datetime
 
 from backend import models
+from backend.utils.gen_username import gen_username
 from backend.utils.usage_data_preparation import Usage
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -18,6 +20,28 @@ def get_ssh_key_fingerprint(ssh_key):
     key_body = base64.b64decode(ssh_key.strip().split()[1].encode('ascii'))
     fp_plain = hashlib.md5(key_body).hexdigest()  # noqa: S303
     return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
+
+
+def get_project_identifier(project_type):
+    cobj = models.ProjectCount.objects.get()
+    if project_type == "research-institutional":
+        identifier = "NRI-{}-{:03}".format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+    elif project_type == "internal":
+        identifier = "NRM-{}-{:03}".format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+    elif project_type == "srce-workshop":
+        identifier = 'NRR-{}-{:03}'.format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+    else:
+        identifier = 'NR-{}-{:03}'.format(
+            timezone.now().strftime('%Y-%m'), cobj.counter
+        )
+
+    return identifier, cobj
 
 
 class RoleSerializer(serializers.ModelSerializer):
@@ -618,3 +642,173 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
             "finance", "approved_resources", "users"
         ]
         model = models.Project
+
+
+class NewProjectLeadUserSerializer(serializers.Serializer):
+    first_name = serializers.CharField(max_length=128)
+    last_name = serializers.CharField(max_length=128)
+    person_oib = serializers.CharField(max_length=11, allow_blank=True)
+    person_mail = serializers.EmailField(max_length=64)
+    username = serializers.CharField(max_length=128)
+
+
+class ScientificFieldSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=128)
+    percent = serializers.IntegerField()
+
+
+class ResourcesTypeSerializer(serializers.ListSerializer):
+    child = serializers.CharField(max_length=128)
+
+
+class NewProjectScienceFieldSerializer(serializers.Serializer):
+    name = serializers.CharField(max_length=128)
+    percent = serializers.IntegerField()
+    scientificfields = ScientificFieldSerializer(many=True)
+
+
+class NewProjectsSerializer(serializers.Serializer):
+    user = NewProjectLeadUserSerializer()
+    project_type = serializers.CharField(required=True)
+    date_end = serializers.DateField(format="%Y-%m-%d")
+    date_start = serializers.DateField(format="%Y-%m-%d")
+    name = serializers.CharField(max_length=256)
+    reason = serializers.CharField(max_length=4096)
+    institute = serializers.IntegerField()
+    science_field = NewProjectScienceFieldSerializer(many=True)
+    resources_type = ResourcesTypeSerializer()
+
+    @staticmethod
+    def validate_project_type(value):
+        try:
+            models.ProjectType.objects.get(name=value)
+
+            return value
+
+        except models.ProjectType.DoesNotExist:
+            raise serializers.ValidationError(
+                f"{value} is not valid project type"
+            )
+
+
+    @staticmethod
+    def validate_science_field(field_value):
+        for item in field_value:
+            for key, value in item.items():
+                if key == "name":
+                    item["name"] = {
+                        "label": value,
+                        "value": value
+                    }
+
+                elif key == "scientificfields":
+                    for item2 in item[key]:
+                        item2["name"] = {
+                            "label": item2["name"],
+                            "value": item2["name"]
+                        }
+
+        return field_value
+
+    @staticmethod
+    def validate_resources_type(value):
+        for val in value:
+            if val.lower() not in settings.ALLOWED_RESOURCES:
+                raise serializers.ValidationError(
+                    f"{val} is not among allowed resources"
+                )
+
+            else:
+                new_value = []
+                for item in value:
+                    new_value.append({"label": item, "value": item})
+
+        return new_value
+
+    @staticmethod
+    def validate_user(value):
+        try:
+            models.User.objects.get(person_oib=value["person_oib"])
+
+        except models.User.DoesNotExist:
+            value["person_username"] = gen_username(
+                value["first_name"], value["last_name"]
+            )
+            value["person_uniqueid"] = value["username"]
+            value["status"] = True
+            value["mailinglist_subscribe"] = True
+            models.User.objects.create_user(**value)
+
+        return value
+
+    @staticmethod
+    def _get_institution_name(dashboard_institutions, inst_id):
+        ustanova = [
+            ustanova for ustanova in dashboard_institutions if
+            ustanova["ustanovaId"] == inst_id
+        ][0]
+        institution = ustanova["naziv"]
+
+        if ustanova["oib"]:
+            try:
+                institution = models.CrorisInstitutions.objects.get(
+                    oib=ustanova["oib"]
+                ).name_short
+
+            except models.CrorisInstitutions.DoesNotExist:
+                pass
+
+        elif ustanova["mbu"]:
+            try:
+                institution = models.CrorisInstitutions.objects.get(
+                    mbu=ustanova["mbu"]
+                ).name_short
+
+            except models.CrorisInstitutions.DoesNotExist:
+                pass
+
+        return institution
+
+    def save(self, **kwargs):
+        merlin_user = models.User.objects.get(username="merlin@srce.hr")
+        data = copy.deepcopy(self.validated_data)
+        user = copy.deepcopy(self.validated_data["user"])
+        del data["user"]
+
+        data["date_submitted"] = timezone.now()
+        identifier, cobj = get_project_identifier(data["project_type"])
+        data["identifier"] = identifier
+        data["project_type"] = models.ProjectType.objects.get(
+            name=data["project_type"]
+        )
+        data["science_software"] = []
+        data["science_extrasoftware_help"] = False
+        data["resources_numbers"] = {}
+        data["is_active"] = True
+        data["approved_by"] = {
+            "first_name": merlin_user.first_name,
+            "last_name": merlin_user.last_name,
+            "person_uniqueid": merlin_user.person_uniqueid,
+            "username": merlin_user.username
+        }
+        data["date_approved"] = timezone.now()
+        data["staff_resources_type"] = data["resources_type"]
+        data["state"] = models.State.objects.get(name="approve")
+        data["institute"] = self._get_institution_name(
+            kwargs["dashboard_institutions"], data["institute"]
+        )
+        project = models.Project(**data)
+        project.save()
+
+        cobj.counter += 1
+        cobj.save()
+
+        userproject_obj = models.UserProject(
+            user=models.User.objects.get(person_oib=user["person_oib"]),
+            project=project,
+            role=models.Role.objects.get(name="lead"),
+            date_joined=timezone.now()
+        )
+        userproject_obj.save()
+
+        return project
