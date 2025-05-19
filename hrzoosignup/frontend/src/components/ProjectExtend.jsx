@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import {
   Button,
+  Badge,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
   FormFeedback,
-  Form,
+  Form
 }
 from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -50,7 +51,9 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
               defaultMessage="Zahtjev za produljenjem projekta"
               description="projectextend-title"
             />{' '}
-            {project.identifier}
+            <Badge color={"secondary fw-normal"}>
+              {project.identifier}
+            </Badge>
           </ModalHeader>
           <ModalBody>
             <Row className="mt-3">
@@ -117,7 +120,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                 </span>
               </Col>
             </Row>
-            <Row className="mt-3">
+            <Row className="mt-5 mb-5">
               <Col md={{size: 10, offset: 1}}>
                 <Label
                   htmlFor="requestExplain"
