@@ -10,11 +10,11 @@ from 'reactstrap';
 import {FormattedMessage} from 'react-intl';
 
 
-export const ProjectExtend = ({isOpen, toggle, title, msg, onYes}) => (
+export const ProjectExtend = ({isOpen, toggle, project, onYes}) => (
   <Modal isOpen={isOpen} toggle={toggle}>
-    <ModalHeader toggle={toggle}>{title}</ModalHeader>
+    <ModalHeader toggle={toggle}>{project}</ModalHeader>
     <ModalBody>
-      {msg}
+      Foobar
     </ModalBody>
     <ModalFooter>
       <Button color="primary" onClick={() => {

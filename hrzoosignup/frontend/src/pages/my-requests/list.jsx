@@ -19,7 +19,6 @@ import { StateIcons, StateString } from 'Config/map-states';
 import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faMagnifyingGlass,
   faCopy,
   faTimeline,
 } from '@fortawesome/free-solid-svg-icons';
@@ -28,6 +27,7 @@ import { useIntl, FormattedMessage } from 'react-intl'
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
+import { ProjectExtend } from 'Components/ProjectExtend';
 import _ from "lodash";
 
 
@@ -36,6 +36,9 @@ const MyRequestsList = () => {
   const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
   const intl = useIntl()
+
+  const [projectExtend, setProjectExtend] = useState(undefined)
+  const [targetProjectExtend, setTargetProjectExtend] = useState(undefined)
 
   const {status, data: nrProjects, error} = useQuery({
       queryKey: ['projects-lead'],
@@ -125,6 +128,11 @@ const MyRequestsList = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
+        <ProjectExtend
+          isOpen={projectExtend}
+          toggle={() => setProjectExtend(!projectExtend)}
+          project={targetProjectExtend}
+        />
         <Row className="mt-4 ms-1 me-1 mb-5">
           <Col>
             <Table responsive hover className="shadow-sm">
@@ -267,7 +275,13 @@ const MyRequestsList = () => {
                         </Row>
                       </td>
                       <td className="align-middle text-center">
-                        <Button size="sm" color={project.state.name === 'approve-expire' ? "warning" : "light"} onClick={() => {}}>
+                        <Button
+                          size="sm"
+                          color={project.state.name === 'approve-expire' ? "warning" : "light"}
+                          onClick={() => {
+                            setProjectExtend(true)
+                            setTargetProjectExtend(project.identifier)
+                          }}>
                           <FontAwesomeIcon icon={faTimeline} />
                         </Button>
                       </td>
