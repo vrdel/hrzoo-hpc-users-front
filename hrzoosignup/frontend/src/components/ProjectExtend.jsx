@@ -27,7 +27,6 @@ import {
 } from "react-hook-form";
 import { IntlContext } from 'Components/IntlContextProvider';
 import { ErrorMessage } from '@hookform/error-message';
-import 'Styles/staff-change-disabled.css';
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
@@ -189,16 +188,18 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                 />
               </Col>
             </Row>
+            <Row>
+              <Col className="d-flex justify-content-center mb-4">
+                <Button color="success" type="submit">
+                  <FontAwesomeIcon icon={faFile}/>{' '}
+                  <FormattedMessage
+                    defaultMessage="Podnesi"
+                    description="projectextend-buttonyes"
+                  />
+                </Button>{' '}
+              </Col>
+            </Row>
           </ModalBody>
-          <ModalFooter className="justify-content-center">
-            <Button color="success" type="submit">
-              <FontAwesomeIcon icon={faFile}/>{' '}
-              <FormattedMessage
-                defaultMessage="Podnesi"
-                description="projectextend-buttonyes"
-              />
-            </Button>{' '}
-          </ModalFooter>
         </Form>
       </Modal>
     )
