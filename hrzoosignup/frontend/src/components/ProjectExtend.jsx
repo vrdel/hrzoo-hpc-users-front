@@ -5,6 +5,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  FormFeedback,
   Form,
 }
 from 'reactstrap';
@@ -24,6 +25,7 @@ import {
   useForm,
 } from "react-hook-form";
 import { IntlContext } from 'Components/IntlContextProvider';
+import { ErrorMessage } from '@hookform/error-message';
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
@@ -35,8 +37,8 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
     }
   });
   const onSubmit = (data) => {
-    toggle()
     alert(JSON.stringify(data, null, 2))
+    toggle()
   }
 
   if (project) {
@@ -78,10 +80,12 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                   aria-label="currentDateEnd">
                   <FormattedMessage
                     description="projectextend-currentend"
-                    defaultMessage="Novi završni datum:"
+                    defaultMessage="<b>Novi završni datum:</b>"
+                    values={{
+                      b: (chunks) => <b>{chunks}</b>
+                    }}
                   />
                   <span className="ms-1 fw-bold text-danger">*</span>
-
                 </Label>
                 <span>
                   <Controller
@@ -111,6 +115,44 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                     }
                   />
                 </span>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col md={{size: 10, offset: 1}}>
+                <Label
+                  htmlFor="requestExplain"
+                  aria-label="requestExplain">
+                  <FormattedMessage
+                    description="generalfields-explanation"
+                    defaultMessage="Obrazloženje:"
+                  />
+                  <span className="ms-1 fw-bold text-danger">*</span>
+                </Label>
+                <Controller
+                  name="requestExplain"
+                  control={control}
+                  rules={{required: true}}
+                  render={ ({field}) =>
+                    <textarea
+                      id="requestExplain"
+                      {...field}
+                      aria-label="requestExplain"
+                      type="text"
+                      disabled={false}
+                      className={`form-control ${errors && errors.requestExplain ? "is-invalid" : ''}`}
+                      rows="10"
+                    />
+                  }
+                />
+                <ErrorMessage
+                  errors={errors}
+                  name="requestExplain"
+                  render={({ message }) =>
+                    <FormFeedback className="end-0">
+                      { message }
+                    </FormFeedback>
+                  }
+                />
               </Col>
             </Row>
           </ModalBody>
