@@ -21,6 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
   faCopy,
+  faTimeline,
 } from '@fortawesome/free-solid-svg-icons';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl, FormattedMessage } from 'react-intl'
@@ -266,8 +267,8 @@ const MyRequestsList = () => {
                         </Row>
                       </td>
                       <td className="align-middle text-center">
-                        <Button color="light" onClick={() => navigate(encodeURIComponent(project.identifier))}>
-                          <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <Button color="light" onClick={() => {}}>
+                          <FontAwesomeIcon icon={faTimeline} />
                         </Button>
                       </td>
                     </tr>
