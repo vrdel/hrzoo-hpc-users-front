@@ -12,6 +12,7 @@ from backend.utils.various import contains_exception
 
 logger = logging.getLogger('hrzoosignup.tasks')
 
+
 class FetchCrorisInstitution(object):
     def __init__(self):
         # self.headers = {'Accept': 'application/json'}
