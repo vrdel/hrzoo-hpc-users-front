@@ -27,6 +27,7 @@ import {
 } from "react-hook-form";
 import { IntlContext } from 'Components/IntlContextProvider';
 import { ErrorMessage } from '@hookform/error-message';
+import 'Styles/staff-change-disabled.css';
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
@@ -35,6 +36,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
       newEndDate: '',
+      projectName: ''
     }
   });
   const onSubmit = (data) => {
@@ -43,6 +45,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
   }
 
   if (project) {
+    setValue('projectName', project.name)
     return (
       <Modal isOpen={isOpen} toggle={toggle} centered={true} size="lg">
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -56,6 +59,34 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
             </Badge>
           </ModalHeader>
           <ModalBody>
+            <Row className="mt-3 mb-5">
+              <Col className="d-flex flex-column justify-content-end"  md={{size: 10, offset: 1}}>
+                <Label
+                  htmlFor="projectName"
+                  aria-label="projectName">
+                  <FormattedMessage
+                    description="projectextend-projectname"
+                    defaultMessage="Naziv:"
+                  />
+                </Label>
+                <Controller
+                  name="projectName"
+                  control={control}
+                  rules={{required: true}}
+                  render={ ({field}) =>
+                    <textarea
+                      id="projectName"
+                      {...field}
+                      aria-label="projectName"
+                      type="text"
+                      className="form-control fs-5"
+                      disabled
+                      rows="3"
+                    />
+                  }
+                />
+              </Col>
+            </Row>
             <Row className="mt-3">
               <Col className="d-flex flex-column justify-content-end" md={{size: 4, offset: 2}}>
                 <Label
