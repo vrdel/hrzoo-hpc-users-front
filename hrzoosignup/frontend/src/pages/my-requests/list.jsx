@@ -267,7 +267,7 @@ const MyRequestsList = () => {
                         </Row>
                       </td>
                       <td className="align-middle text-center">
-                        <Button color="light" onClick={() => {}}>
+                        <Button size="sm" color={project.state.name === 'approve-expire' ? "warning" : "light"} onClick={() => {}}>
                           <FontAwesomeIcon icon={faTimeline} />
                         </Button>
                       </td>
