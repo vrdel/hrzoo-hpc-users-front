@@ -278,6 +278,7 @@ const MyRequestsList = () => {
                         <Button
                           size="sm"
                           color={project.state.name === 'approve-expire' ? "warning" : "light"}
+                          disabled={project.state.name !== 'approve-expire'}
                           onClick={() => {
                             setProjectExtend(true)
                             setTargetProjectExtend(project.identifier)
