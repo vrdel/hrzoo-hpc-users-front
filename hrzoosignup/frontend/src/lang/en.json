@@ -1831,6 +1831,10 @@
     "defaultMessage": "Collaborator",
     "description": "users-table-general-collaborator"
   },
+  "i16niy": {
+    "defaultMessage": "Submit",
+    "description": "projectextend-buttonyes"
+  },
   "iDW2N0": {
     "defaultMessage": "Srce{br}workshop",
     "description": "project-type-workshop"
@@ -2058,6 +2062,10 @@
   "oxy1bl": {
     "defaultMessage": "Request on behalf of research project successfully submitted",
     "description": "researchselected-toast-msg-success"
+  },
+  "oyVYkA": {
+    "defaultMessage": "Request for extension of project",
+    "description": "projectextend-title"
   },
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit new request?",

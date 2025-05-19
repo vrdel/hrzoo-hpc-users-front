@@ -1831,6 +1831,10 @@
     "defaultMessage": "Suradnik",
     "description": "users-table-general-collaborator"
   },
+  "i16niy": {
+    "defaultMessage": "Podnesi",
+    "description": "projectextend-buttonyes"
+  },
   "iDW2N0": {
     "defaultMessage": "Srce{br}radionica",
     "description": "project-type-workshop"
@@ -2058,6 +2062,10 @@
   "oxy1bl": {
     "defaultMessage": "Zahtjev temeljem istraživačkog projekta je uspješno podnesen",
     "description": "researchselected-toast-msg-success"
+  },
+  "oyVYkA": {
+    "defaultMessage": "Zahtjev za produljenjem projekta",
+    "description": "projectextend-title"
   },
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",
