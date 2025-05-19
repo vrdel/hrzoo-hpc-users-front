@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from backend.dbmodels.apikey import Organization4APIKey
+from backend.dbmodels.apikey import Organization4APIKey, MyAPIKey
 from backend.dbmodels.institution import CrorisInstitutions
 from backend.dbmodels.invite import CustomInvitation
 from backend.dbmodels.project import ProjectCount, State, ProjectType, Project, StaffComment
