@@ -281,7 +281,7 @@ const MyRequestsList = () => {
                           disabled={project.state.name !== 'approve-expire'}
                           onClick={() => {
                             setProjectExtend(true)
-                            setTargetProjectExtend(project.identifier)
+                            setTargetProjectExtend(project)
                           }}>
                           <FontAwesomeIcon icon={faTimeline} />
                         </Button>
