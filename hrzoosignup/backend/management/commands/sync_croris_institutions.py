@@ -75,10 +75,12 @@ class Command(BaseCommand):
         return result
 
     async def _clean_and_fetch(self):
-        await CrorisInstitutions.objects.all().adelete()
         croris_instits = FetchCrorisInstitution()
         task_fetch = asyncio.create_task(croris_instits.run())
         self.inactive_instits, self.active_instits = await task_fetch
+
+        if self.inactive_instits and self.active_instits:
+            await CrorisInstitutions.objects.all().adelete()
 
     def handle(self, *args, **options):
         try:

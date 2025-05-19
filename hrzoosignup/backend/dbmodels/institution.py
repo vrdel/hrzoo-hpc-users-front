@@ -34,7 +34,7 @@ class CrorisInstitutions(models.Model):
     )
     mbs = models.CharField(
         _('MBS number'),
-        max_length=9,
+        max_length=12,
         blank=True,
     )
     mbu = models.CharField(

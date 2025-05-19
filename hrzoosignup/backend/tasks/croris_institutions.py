@@ -12,12 +12,11 @@ from backend.utils.various import contains_exception
 
 logger = logging.getLogger('hrzoosignup.tasks')
 
+
 class FetchCrorisInstitution(object):
     def __init__(self):
         # self.headers = {'Accept': 'application/json'}
-        auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
-        self.session = SessionWithRetry(logger, auth=auth,
-                                        handle_session_close=True)
+        self.session = SessionWithRetry(logger, handle_session_close=True)
 
     async def run(self):
         try:
