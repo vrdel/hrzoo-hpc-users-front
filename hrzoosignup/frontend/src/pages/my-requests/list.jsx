@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from 'reactstrap';
 import { fetchNrProjectsLead } from 'Api/projects';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { StateIcons, StateString } from 'Config/map-states';
@@ -28,11 +28,13 @@ import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectExtend } from 'Components/ProjectExtend';
+import { url_ui_prefix } from 'Config/general';
 import _ from "lodash";
 
 
 const MyRequestsList = () => {
   const { LinkTitles } = useContext(SharedData)
+  const { projId } = useParams()
   const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
   const intl = useIntl()
@@ -68,6 +70,12 @@ const MyRequestsList = () => {
     setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
+    if (projId && status === 'success') {
+      let targetProject = nrProjects.filter((project) => project.identifier === projId)
+      setProjectExtend(true)
+      setTargetProjectExtend(targetProject[0])
+      navigate(url_ui_prefix + '/my-requests')
+    }
   }, [location.pathname, status, intl])
 
   if (status === 'loading' && pageTitle)
