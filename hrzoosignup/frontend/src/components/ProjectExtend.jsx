@@ -45,6 +45,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
       requestExplain: ''
     }
   });
+
   const onSubmit = (data) => {
     let dataToSend = new Object()
     dataToSend['reason'] = data['requestExplain']
