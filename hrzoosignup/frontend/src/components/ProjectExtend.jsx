@@ -26,7 +26,7 @@ import {
 } from "react-hook-form";
 import { IntlContext } from 'Components/IntlContextProvider';
 import { ErrorMessage } from '@hookform/error-message';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { extendProject } from "Api/projects";
 import { AuthContext } from 'Components/AuthContextProvider';
 import { toast } from 'react-toastify'
@@ -36,6 +36,7 @@ import { convertToAmerican } from 'Utils/dates';
 export const ProjectExtend = ({isOpen, toggle, project}) => {
   const { locale } = useContext(IntlContext)
   const { csrfToken } = useContext(AuthContext)
+  const queryClient = useQueryClient()
 
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
@@ -45,13 +46,11 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
     }
   });
   const onSubmit = (data) => {
-    alert(JSON.stringify(data, null, 2))
     let dataToSend = new Object()
     dataToSend['reason'] = data['requestExplain']
     dataToSend['approved'] = false
     dataToSend['date_end'] = convertToAmerican(data['newEndDate'])
     doAdd(dataToSend)
-    toggle()
   }
 
   const addMutation = useMutation({
@@ -62,6 +61,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
 
   const doAdd = (data) => addMutation.mutate(data, {
     onSuccess: () => {
+      queryClient.invalidateQueries("projects-lead")
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -72,6 +72,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
           delay: 500,
+          onClose: setTimeout(() => toggle(), 1500)
         }
       )
     },
