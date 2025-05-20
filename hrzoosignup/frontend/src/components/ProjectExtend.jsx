@@ -30,6 +30,7 @@ import { useMutation } from '@tanstack/react-query';
 import { extendProject } from "Api/projects";
 import { AuthContext } from 'Components/AuthContextProvider';
 import { toast } from 'react-toastify'
+import { convertToAmerican } from 'Utils/dates';
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
@@ -48,9 +49,9 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
     let dataToSend = new Object()
     dataToSend['reason'] = data['requestExplain']
     dataToSend['approved'] = false
-    dataToSend['date_end'] = data['newEndDate']
+    dataToSend['date_end'] = convertToAmerican(data['newEndDate'])
     doAdd(dataToSend)
-    // toggle()
+    toggle()
   }
 
   const addMutation = useMutation({

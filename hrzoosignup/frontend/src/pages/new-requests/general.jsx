@@ -30,7 +30,7 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';
 import validateRequestDates from 'Utils/validate-dates-startend';
-import { convertToAmerican } from 'Utils/dates.jsx';
+import { convertToAmerican } from 'Utils/dates';
 import {FormattedMessage} from 'react-intl';
 import { useIntl } from 'react-intl'
 import * as yup from "yup";
