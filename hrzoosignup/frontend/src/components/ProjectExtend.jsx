@@ -4,7 +4,6 @@ import {
   Badge,
   Modal,
   ModalBody,
-  ModalFooter,
   ModalHeader,
   FormFeedback,
   Form
@@ -27,21 +26,72 @@ import {
 } from "react-hook-form";
 import { IntlContext } from 'Components/IntlContextProvider';
 import { ErrorMessage } from '@hookform/error-message';
+import { useMutation } from '@tanstack/react-query';
+import { extendProject } from "Api/projects";
+import { AuthContext } from 'Components/AuthContextProvider';
+import { toast } from 'react-toastify'
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
   const { locale } = useContext(IntlContext)
+  const { csrfToken } = useContext(AuthContext)
 
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
       newEndDate: '',
-      projectName: ''
+      projectName: '',
+      requestExplain: ''
     }
   });
   const onSubmit = (data) => {
     alert(JSON.stringify(data, null, 2))
-    toggle()
+    let dataToSend = new Object()
+    dataToSend['reason'] = data['requestExplain']
+    dataToSend['approved'] = false
+    dataToSend['date_end'] = data['newEndDate']
+    doAdd(dataToSend)
+    // toggle()
   }
+
+  const addMutation = useMutation({
+    mutationFn: (data) => {
+      return extendProject(project.identifier, data, csrfToken)
+    },
+  })
+
+  const doAdd = (data) => addMutation.mutate(data, {
+    onSuccess: () => {
+      toast.success(
+        <span className="font-monospace text-dark">
+          <FormattedMessage
+            defaultMessage="Zahtjev je uspješno podnesen"
+            description="newrequest-toast-ok"
+          />
+        </span>, {
+          toastId: 'genproj-ok-add',
+          autoClose: 2500,
+          delay: 500,
+        }
+      )
+    },
+    onError: (error) => {
+      toast.error(
+        <span className="font-monospace text-dark">
+          <FormattedMessage
+            defaultMessage="Zahtjev nije bilo moguće podnijeti: { errmsg }"
+            description="newrequest-toast-fail"
+            values={{
+              errmsg: error.message
+            }}
+          />
+        </span>, {
+          toastId: 'genproj-fail-add',
+          autoClose: 2500,
+          delay: 500
+        }
+      )
+    }
+  })
 
   if (project) {
     setValue('projectName', project.name)
@@ -113,7 +163,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                   aria-label="currentDateEnd">
                   <FormattedMessage
                     description="projectextend-currentend"
-                    defaultMessage="<b>Novi završni datum:</b>"
+                    defaultMessage="<b>Novi</b> završni datum:"
                     values={{
                       b: (chunks) => <b>{chunks}</b>
                     }}

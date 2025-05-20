@@ -315,3 +315,45 @@ export async function canSubmitInstituteProject()
   if (error_msg)
     throw new Error(`Error fetching institutional project permission: ${error_msg}`)
 }
+
+
+export async function extendProject(projectId, data, csrftoken)
+{
+  let error_msg = ''
+
+  try {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/project-extend/${projectId}`, {
+      method: 'POST',
+      mode: 'cors',
+      cache: 'no-cache',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken,
+        'Referer': 'same-origin'
+      },
+      body: data && JSON.stringify(data)
+    })
+
+    if (response.ok)
+      return await response.json()
+
+    if (!response.ok) {
+      try {
+        let json = await response.json();
+        error_msg = `${response.status} ${response.statusText} in POST: ${json?.status?.message}`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in POST`
+      }
+
+    }
+  }
+  catch (err) {
+    error_msg = `${err} in POST`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error adding project extension request: ${error_msg}`)
+}
