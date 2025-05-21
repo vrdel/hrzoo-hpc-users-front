@@ -382,10 +382,14 @@ class ProjectsUsersAPI(APIView):
 
         except serializers.ValidationError as e:
             status_code = status.HTTP_400_BAD_REQUEST
+            error_set = set()
+            for key, value in serializer.errors.items():
+                error_set.add(f"{key}: {str(value[0])}")
+
             msg = {
                 "status": {
                     "code": status_code,
-                    "message": str(e)
+                    "message": " ".join(error_set)
                 }
             }
 
