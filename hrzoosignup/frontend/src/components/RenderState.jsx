@@ -106,7 +106,7 @@ export const RenderStateIcon = ({reqState}) => {
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <span className="fa-layers fa-3x fa-fw">
           <FontAwesomeIcon icon={faQuestion} className="text-danger" transform="shrink-8 right-8 down-3" />
-          <FontAwesomeIcon icon={faTimeline} className="text-warning" transform="shrink-2 up-2"/>
+          <FontAwesomeIcon icon={faTimeline} className="text-success" transform="shrink-2 up-2"/>
         </span>
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage

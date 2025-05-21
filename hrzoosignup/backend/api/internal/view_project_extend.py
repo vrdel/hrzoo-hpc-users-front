@@ -35,6 +35,7 @@ class ProjectExtend(APIView):
                 logger.error(msg)
                 return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
+            # TODO: validate new date_end
             request.data['project'] = up_obj.project.pk
             request.data['date'] = timezone.now()
             request.data['approved'] = False
@@ -66,4 +67,11 @@ class ProjectExtend(APIView):
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, **kwargs):
-        pass
+        ups_obj = models.UserProject.objects.filter(user=request.user, role__name='lead')
+        interested_projects = ups_obj.values_list('project', flat=True)
+        pes_obj = models.ProjectExtend.objects.filter(project__in=interested_projects)
+        if pes_obj:
+            serializer = ProjectExtendSerializer(pes_obj, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_200_OK)
