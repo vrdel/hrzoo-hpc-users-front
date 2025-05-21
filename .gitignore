@@ -38,5 +38,6 @@ hrzoosignup/frontend/*.local
 *.njsproj
 *.sln
 *.sw?
+*.whl
 tags
 docker_kz/

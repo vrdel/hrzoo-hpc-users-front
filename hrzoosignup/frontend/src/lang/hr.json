@@ -3,6 +3,10 @@
     "defaultMessage": "Nema podataka iz sustava CroRIS",
     "description": "newqrequest-no-crorisdata"
   },
+  "+9ILeQ": {
+    "defaultMessage": "Zatraži produljenje",
+    "description": "manreq-button-extension"
+  },
   "+Pcbkp": {
     "defaultMessage": "Korisnička oznaka",
     "description": "userins-useridentifier"
@@ -378,6 +382,10 @@
   "7GLux1": {
     "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
     "description": "resourcefields-ram"
+  },
+  "7W7skx": {
+    "defaultMessage": "Naziv:",
+    "description": "projectextend-projectname"
   },
   "7baQax": {
     "defaultMessage": "suradnik",
@@ -1019,6 +1027,10 @@
     "defaultMessage": "Pri odbijanju projekta morate se izjasniti o razlogu.",
     "description": "managereq-change-toast-msg3"
   },
+  "LT/xtp": {
+    "defaultMessage": "Završen",
+    "description": "renderstate-expire"
+  },
   "Lb7qIs": {
     "defaultMessage": "Da",
     "description": "users-table-general-isadded"
@@ -1323,6 +1335,10 @@
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TNqlJf": {
+    "defaultMessage": "Novi završni datum:",
+    "description": "projectextend-currentend"
+  },
   "TOuMA+": {
     "defaultMessage": "Voditelj će biti obaviješten emailom o promjeni stanja u \"Produljen\" ili \"Odbijen\".",
     "description": "managereq-change-remark-msg-2"
@@ -1386,10 +1402,6 @@
   "V//ozu": {
     "defaultMessage": "Obradio:",
     "description": "managereq-change-handled"
-  },
-  "VF0fKZ": {
-    "defaultMessage": "Istekao",
-    "description": "renderstate-expire"
   },
   "VOeDTJ": {
     "defaultMessage": "Tip",
@@ -1831,6 +1843,10 @@
     "defaultMessage": "Suradnik",
     "description": "users-table-general-collaborator"
   },
+  "i16niy": {
+    "defaultMessage": "Podnesi",
+    "description": "projectextend-buttonyes"
+  },
   "iDW2N0": {
     "defaultMessage": "Srce{br}radionica",
     "description": "project-type-workshop"
@@ -2027,6 +2043,10 @@
     "defaultMessage": "Srce Radionica",
     "description": "tablehelpers-optiontypes-8"
   },
+  "oCx5bp": {
+    "defaultMessage": "Trenutni završni datum:",
+    "description": "projectextend-currentend"
+  },
   "oEvVvn": {
     "defaultMessage": "Zahtjev nije bilo moguće podnijeti - validacija znanstvenih područja i polja neuspješna",
     "description": "domain-fields-both-fail"
@@ -2058,6 +2078,10 @@
   "oxy1bl": {
     "defaultMessage": "Zahtjev temeljem istraživačkog projekta je uspješno podnesen",
     "description": "researchselected-toast-msg-success"
+  },
+  "oyVYkA": {
+    "defaultMessage": "Zahtjev za produljenjem projekta",
+    "description": "projectextend-title"
   },
   "p+6Cku": {
     "defaultMessage": "Da li ste sigurni da želite podnijeti novi zahtjev?",

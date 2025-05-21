@@ -151,6 +151,9 @@ const BaseRoutes = () => {
               <Route path="my-requests" element={
                 <MyRequestsList /> }
               />
+              <Route path="my-requests/extend/:projId" element={
+                <MyRequestsList /> }
+              />
               <Route path="my-requests/:projId" element={
                 <MyRequestChange /> }
               />

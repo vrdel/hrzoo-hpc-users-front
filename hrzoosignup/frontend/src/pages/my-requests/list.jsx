@@ -12,29 +12,35 @@ import {
   Tooltip,
 } from 'reactstrap';
 import { fetchNrProjectsLead } from 'Api/projects';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { StateIcons, StateString } from 'Config/map-states';
 import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faMagnifyingGlass,
   faCopy,
+  faTimeline,
 } from '@fortawesome/free-solid-svg-icons';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl, FormattedMessage } from 'react-intl'
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
+import { ProjectExtend } from 'Components/ProjectExtend';
+import { url_ui_prefix } from 'Config/general';
 import _ from "lodash";
 
 
 const MyRequestsList = () => {
   const { LinkTitles } = useContext(SharedData)
+  const { projId } = useParams()
   const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
   const intl = useIntl()
+
+  const [projectExtend, setProjectExtend] = useState(undefined)
+  const [targetProjectExtend, setTargetProjectExtend] = useState(undefined)
 
   const {status, data: nrProjects, error} = useQuery({
       queryKey: ['projects-lead'],
@@ -64,6 +70,12 @@ const MyRequestsList = () => {
     setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
+    if (projId && status === 'success') {
+      let targetProject = nrProjects.filter((project) => project.identifier === projId)
+      setProjectExtend(true)
+      setTargetProjectExtend(targetProject[0])
+      navigate(url_ui_prefix + '/my-requests')
+    }
   }, [location.pathname, status, intl])
 
   if (status === 'loading' && pageTitle)
@@ -124,6 +136,11 @@ const MyRequestsList = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
+        <ProjectExtend
+          isOpen={projectExtend}
+          toggle={() => setProjectExtend(!projectExtend)}
+          project={targetProjectExtend}
+        />
         <Row className="mt-4 ms-1 me-1 mb-5">
           <Col>
             <Table responsive hover className="shadow-sm">
@@ -266,8 +283,15 @@ const MyRequestsList = () => {
                         </Row>
                       </td>
                       <td className="align-middle text-center">
-                        <Button color="light" onClick={() => navigate(encodeURIComponent(project.identifier))}>
-                          <FontAwesomeIcon icon={faMagnifyingGlass} />
+                        <Button
+                          size="sm"
+                          color={project.state.name === 'approve-expire' ? "warning" : "light"}
+                          disabled={project.state.name !== 'approve-expire'}
+                          onClick={() => {
+                            setProjectExtend(true)
+                            setTargetProjectExtend(project)
+                          }}>
+                          <FontAwesomeIcon icon={faTimeline} />
                         </Button>
                       </td>
                     </tr>

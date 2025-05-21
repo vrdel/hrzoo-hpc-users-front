@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Row, Form } from 'reactstrap';
+import { Col, Row, Form, Button } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -24,6 +24,12 @@ import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl } from 'react-intl'
 import { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { FormattedMessage } from 'react-intl'
+import { ProjectExtend } from 'Components/ProjectExtend';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTimeline,
+} from '@fortawesome/free-solid-svg-icons';
+
 
 function setInitialState() {
   let newState = new Object(
@@ -51,6 +57,9 @@ export const MyRequestChange = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  const [projectExtend, setProjectExtend] = useState(undefined)
+  const [targetProjectExtend, setTargetProjectExtend] = useState(undefined)
 
   const { ResourceTypesToSelect } = useContext(SharedData);
 
@@ -235,6 +244,11 @@ export const MyRequestChange = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
+        <ProjectExtend
+          isOpen={projectExtend}
+          toggle={() => setProjectExtend(!projectExtend)}
+          project={targetProjectExtend}
+        />
         <ModalAreYouSure
           isOpen={areYouSureModal}
           toggle={() => setAreYouSureModal(!areYouSureModal)}
@@ -263,9 +277,23 @@ export const MyRequestChange = () => {
                         description="manreq-change-request-state"
                       />
                     </span>
-                    <p className="fw-normal">
-                      <RenderStateIcon reqState={requestState} />
-                    </p>
+                    <RenderStateIcon reqState={requestState} />
+                    {
+                      nrProject.state.name === "approve-expire" &&
+                        <Button
+                          className="mt-4"
+                          color="warning"
+                          onClick={() => {
+                            setProjectExtend(true)
+                            setTargetProjectExtend(nrProject)
+                          }}>
+                          <FontAwesomeIcon icon={faTimeline} />{' '}
+                          <FormattedMessage
+                            defaultMessage="Zatraži produljenje"
+                            description="manreq-button-extension"
+                          />
+                        </Button>
+                    }
                   </Col>
                   <Col sm={{size: 10}} md={{size: 6}} lg={{size: 3}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">

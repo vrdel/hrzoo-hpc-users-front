@@ -3,6 +3,10 @@
     "defaultMessage": "No data from CroRIS system",
     "description": "newqrequest-no-crorisdata"
   },
+  "+9ILeQ": {
+    "defaultMessage": "Request extension",
+    "description": "manreq-button-extension"
+  },
   "+Pcbkp": {
     "defaultMessage": "User identifier",
     "description": "userins-useridentifier"
@@ -378,6 +382,10 @@
   "7GLux1": {
     "defaultMessage": "Average amount of working memory per job (GB):",
     "description": "resourcefields-ram"
+  },
+  "7W7skx": {
+    "defaultMessage": "Project name:",
+    "description": "projectextend-projectname"
   },
   "7baQax": {
     "defaultMessage": "collaborator",
@@ -1019,6 +1027,10 @@
     "defaultMessage": "When denying project, you must state the reason.",
     "description": "managereq-change-toast-msg3"
   },
+  "LT/xtp": {
+    "defaultMessage": "Ended",
+    "description": "renderstate-expire"
+  },
   "Lb7qIs": {
     "defaultMessage": "Yes",
     "description": "users-table-general-isadded"
@@ -1323,6 +1335,10 @@
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
   },
+  "TNqlJf": {
+    "defaultMessage": "New end date:",
+    "description": "projectextend-currentend"
+  },
   "TOuMA+": {
     "defaultMessage": "Manager will be notified by email about the change of status to \"Extended\" or \"Denied\".",
     "description": "managereq-change-remark-msg-2"
@@ -1386,10 +1402,6 @@
   "V//ozu": {
     "defaultMessage": "Handled:",
     "description": "managereq-change-handled"
-  },
-  "VF0fKZ": {
-    "defaultMessage": "Expired",
-    "description": "renderstate-expire"
   },
   "VOeDTJ": {
     "defaultMessage": "Type",
@@ -1831,6 +1843,10 @@
     "defaultMessage": "Collaborator",
     "description": "users-table-general-collaborator"
   },
+  "i16niy": {
+    "defaultMessage": "Submit",
+    "description": "projectextend-buttonyes"
+  },
   "iDW2N0": {
     "defaultMessage": "Srce{br}workshop",
     "description": "project-type-workshop"
@@ -2027,6 +2043,10 @@
     "defaultMessage": "Srce Workshop",
     "description": "tablehelpers-optiontypes-8"
   },
+  "oCx5bp": {
+    "defaultMessage": "Current end date:",
+    "description": "projectextend-currentend"
+  },
   "oEvVvn": {
     "defaultMessage": "Request could not be submitted - validation of scientific domains and fields unsuccessful",
     "description": "domain-fields-both-fail"
@@ -2058,6 +2078,10 @@
   "oxy1bl": {
     "defaultMessage": "Request on behalf of research project successfully submitted",
     "description": "researchselected-toast-msg-success"
+  },
+  "oyVYkA": {
+    "defaultMessage": "Request for extension of project",
+    "description": "projectextend-title"
   },
   "p+6Cku": {
     "defaultMessage": "Are you sure you want to submit new request?",

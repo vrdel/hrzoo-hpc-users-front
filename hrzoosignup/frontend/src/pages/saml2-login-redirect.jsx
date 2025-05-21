@@ -29,11 +29,11 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
       const defaultRedirect = sessionData.userdetails.is_staff
         || sessionData.userdetails.is_superuser
         ? defaultAuthnRedirectStaff
-          : sessionData.config.enable_accounting 
+          : sessionData.config.enable_accounting
           ? sessionData.userdetails.userproject_set.map(item => item.role.name).includes("lead") ?
             defaultAuthnRedirectWithAccountingLead
             :
-             defaultAuthnRedirectWithAccounting 
+             defaultAuthnRedirectWithAccounting
               : defaultAuthnRedirect
       let wantVisit = JSON.parse(localStorage.getItem('referrer'))
       if (wantVisit && wantVisit.length > 0) {
@@ -43,12 +43,14 @@ const Saml2LoginRedirect = ({sessionData=undefined}) => {
           wantVisit = wantVisit[wantVisit.length - 2]
         else if (wantVisit.length == 1)
           wantVisit = wantVisit[0]
-        if (wantVisit !== defaultUnAuthnRedirect && !wantVisit.includes('saml2-login-redirect'))
+        if (wantVisit.includes('my-requests/extend'))
+          navigate(wantVisit)
+        else if (wantVisit !== defaultUnAuthnRedirect && !wantVisit.includes('saml2-login-redirect'))
           navigate(wantVisit)
         else
           navigate(defaultRedirect)
       }
-      else
+      else if (!location.pathname.includes('my-requests/extend'))
         navigate(defaultRedirect)
       localStorage.removeItem('referrer')
     }

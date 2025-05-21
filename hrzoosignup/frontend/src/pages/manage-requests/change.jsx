@@ -250,7 +250,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
 
   const navigate = useNavigate()
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
 
   const {status, data: nrProject, error} = useQuery({
       queryKey: ['change-project', projId],
