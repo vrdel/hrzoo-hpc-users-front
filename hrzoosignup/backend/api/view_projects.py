@@ -363,6 +363,92 @@ class ProjectsUsersAPI(APIView):
     permission_classes = (MerlinHasAPIKey,)
     serializer_class = backend_serializers.ProjectsUsersSerializer
 
+    @extend_schema(
+        responses={
+            200: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": 200,
+                        "message": "Invitations sent to: user1@example.com, "
+                                   "user2@example.com, user3@example.com"
+                    }
+                },
+                description="OK",
+                examples=[
+                    OpenApiExample(
+                        "OK",
+                        value={
+                            "status": {
+                                "code": 200,
+                                "message":
+                                    "Invitations sent to: user1@example.com, "
+                                    "user2@example.com, user3@example.com"
+                            }
+                        }
+                    )
+                ]
+            ),
+            400: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": 400,
+                        "message":
+                            "requester: User with OIB 123456789 does not exist"
+                    }
+                },
+                description="Bad request",
+                examples=[
+                    OpenApiExample(
+                        "Bad request",
+                        value={
+                            "status": {
+                                "code": 400,
+                                "message":
+                                    "requester: User with OIB 123456789 does "
+                                    "not exist"
+                            }
+                        }
+                    )
+                ]
+            ),
+            403: OpenApiResponse(
+                response={
+                    "detail": "Authentication credentials were not provided."
+                },
+                description="Forbidden",
+                examples=[
+                    OpenApiExample(
+                        "Forbidden",
+                        value={
+                            "detail":
+                                "Authentication credentials were not provided."
+                        }
+                    )
+                ]
+            ),
+            418: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": 418,
+                        "message": "Problem sending email to: user1@example.com"
+                    }
+                },
+                description="I'm a teapot",
+                examples=[
+                    OpenApiExample(
+                        "I'm a teapot",
+                        value={
+                            "status": {
+                                "code": 418,
+                                "message": "Problem sending email to: "
+                                           "user1@example.com"
+                            }
+                        }
+                    )
+                ]
+            )
+        }
+    )
     def post(self, request):
         serializer = backend_serializers.ProjectsUsersSerializer(
             data=request.data
