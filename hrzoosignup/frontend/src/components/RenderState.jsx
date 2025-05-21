@@ -24,7 +24,7 @@ export const RenderStateIcon = ({reqState}) => {
           className="fa-3x text-success"
           style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
         <br/>
-        <p className="fs-5 mt-1">
+        <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Odobren"
             description="renderstate-approve"
@@ -37,7 +37,7 @@ export const RenderStateIcon = ({reqState}) => {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-warning" icon={faCog}/>{' '}
-        <p className="fs-5 mt-1">
+        <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Obrada"
             description="renderstate-process"
@@ -50,7 +50,7 @@ export const RenderStateIcon = ({reqState}) => {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-warning" icon={faTimeline}/>{' '}
-        <p className="fs-5 mt-1">
+        <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Produljenjen"
             description="renderstate-extend"
@@ -63,7 +63,7 @@ export const RenderStateIcon = ({reqState}) => {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-danger" icon={faTimes}/>{' '}
-        <p className="fs-5 mt-1">
+        <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Odbijen"
             description="renderstate-denied"
@@ -76,7 +76,7 @@ export const RenderStateIcon = ({reqState}) => {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
         <FontAwesomeIcon className="fa-3x text-danger" icon={faCalendarXmark}/>{' '}
-        <p className="fs-5 mt-1">
+        <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Istekao"
             description="renderstate-expire"
@@ -92,7 +92,7 @@ export const RenderStateIcon = ({reqState}) => {
           <FontAwesomeIcon icon={faHourglassStart} className="text-warning" transform="shrink-9 right-8 down-3" />
           <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-1 up-2"/>
         </span>
-        <p className="fs-5 mt-1">
+        <p className="fs-5 mt-1 text-nowrap fw-normal">
           <FormattedMessage
             defaultMessage="Pred istekom"
             description="renderstate-approveexpire"
@@ -108,7 +108,7 @@ export const RenderStateIcon = ({reqState}) => {
           <FontAwesomeIcon icon={faQuestion} className="text-danger" transform="shrink-8 right-8 down-3" />
           <FontAwesomeIcon icon={faTimeline} className="text-warning" transform="shrink-2 up-2"/>
         </span>
-        <p className="fs-5 mt-1">
+        <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Produljenje"
             description="renderstate-submitextend"

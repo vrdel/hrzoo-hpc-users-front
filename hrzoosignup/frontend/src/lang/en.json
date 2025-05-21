@@ -3,6 +3,10 @@
     "defaultMessage": "No data from CroRIS system",
     "description": "newqrequest-no-crorisdata"
   },
+  "+9ILeQ": {
+    "defaultMessage": "Request extension",
+    "description": "manreq-button-extension"
+  },
   "+Pcbkp": {
     "defaultMessage": "User identifier",
     "description": "userins-useridentifier"
@@ -378,6 +382,10 @@
   "7GLux1": {
     "defaultMessage": "Average amount of working memory per job (GB):",
     "description": "resourcefields-ram"
+  },
+  "7W7skx": {
+    "defaultMessage": "Project name:",
+    "description": "projectextend-projectname"
   },
   "7baQax": {
     "defaultMessage": "collaborator",
@@ -850,6 +858,10 @@
   "GbOJbt": {
     "defaultMessage": "Invitation could not be cancelled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
+  },
+  "GmUnQ1": {
+    "defaultMessage": "<b>New</b> end date:",
+    "description": "projectextend-currentend"
   },
   "Gvyjsl": {
     "defaultMessage": "New scientific field",
@@ -2030,6 +2042,10 @@
   "oBW7cy": {
     "defaultMessage": "Srce Workshop",
     "description": "tablehelpers-optiontypes-8"
+  },
+  "oCx5bp": {
+    "defaultMessage": "Current end date:",
+    "description": "projectextend-currentend"
   },
   "oEvVvn": {
     "defaultMessage": "Request could not be submitted - validation of scientific domains and fields unsuccessful",

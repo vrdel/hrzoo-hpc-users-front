@@ -3,6 +3,10 @@
     "defaultMessage": "Nema podataka iz sustava CroRIS",
     "description": "newqrequest-no-crorisdata"
   },
+  "+9ILeQ": {
+    "defaultMessage": "Zatraži produljenje",
+    "description": "manreq-button-extension"
+  },
   "+Pcbkp": {
     "defaultMessage": "Korisnička oznaka",
     "description": "userins-useridentifier"
@@ -378,6 +382,10 @@
   "7GLux1": {
     "defaultMessage": "Prosječna količina radne memorije po poslu (GB):",
     "description": "resourcefields-ram"
+  },
+  "7W7skx": {
+    "defaultMessage": "Naziv:",
+    "description": "projectextend-projectname"
   },
   "7baQax": {
     "defaultMessage": "suradnik",
@@ -850,6 +858,10 @@
   "GbOJbt": {
     "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
+  },
+  "GmUnQ1": {
+    "defaultMessage": "<b>Novi</b> završni datum:",
+    "description": "projectextend-currentend"
   },
   "Gvyjsl": {
     "defaultMessage": "Novo znanstveno polje",
@@ -2030,6 +2042,10 @@
   "oBW7cy": {
     "defaultMessage": "Srce Radionica",
     "description": "tablehelpers-optiontypes-8"
+  },
+  "oCx5bp": {
+    "defaultMessage": "Trenutni završni datum:",
+    "description": "projectextend-currentend"
   },
   "oEvVvn": {
     "defaultMessage": "Zahtjev nije bilo moguće podnijeti - validacija znanstvenih područja i polja neuspješna",
