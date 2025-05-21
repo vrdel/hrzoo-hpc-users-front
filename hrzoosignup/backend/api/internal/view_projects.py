@@ -263,6 +263,7 @@ class Projects(APIView):
                 if value == True:
                     break
 
+            was_state = p_obj.state.name
             state = models.State.objects.get(name=key)
             p_obj.name = request.data['requestName']
             p_obj.reason = request.data['requestExplain']
@@ -299,6 +300,11 @@ class Projects(APIView):
                         project.email_deny_project_en(person_mail, p_obj.name,
                                                       p_obj.project_type,
                                                       staff_comment)
+                # if ops is denying project extension, project is over
+                if was_state == 'submit-extend':
+                    state = models.State.objects.get(name='expire')
+                    p_obj.state = state
+                    p_obj.save()
 
             if state.name == 'approve':
                 if not p_obj.approved_by:
