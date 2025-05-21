@@ -931,10 +931,10 @@ class ProjectsUsersSerializer(serializers.Serializer):
     def invite(self, request):
         self.is_valid(raise_exception=True)
 
-        try:
-            sent_invites = list()
-
-            for email in self.validated_data["students"]:
+        sent_invites = list()
+        errors = dict()
+        for email in self.validated_data["students"]:
+            try:
                 invite = models.CustomInvitation.create(
                     email,
                     inviter=self.validated_data["requester"],
@@ -944,7 +944,8 @@ class ProjectsUsersSerializer(serializers.Serializer):
                 invite.send_invitation(request)
                 sent_invites.append(email)
 
-            return sent_invites
+            except Exception as e:
+                errors.update({email: str(e)})
+                continue
 
-        except Exception:
-            raise
+        return sent_invites, errors

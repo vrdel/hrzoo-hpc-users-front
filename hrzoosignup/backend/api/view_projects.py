@@ -370,17 +370,43 @@ class ProjectsUsersAPI(APIView):
 
         try:
             serializer.is_valid(raise_exception=True)
-            sent_invites = serializer.invite(request)
-            status_code = status.HTTP_200_OK
-            msg = {
-                "status": {
-                    "code": status_code,
-                    "message":
-                        f"Invitations sent to: {', '.join(sent_invites)}"
-                }
-            }
+            sent_invites, errors = serializer.invite(request)
 
-        except serializers.ValidationError as e:
+            if not errors:
+                status_code = status.HTTP_200_OK
+                msg = {
+                    "status": {
+                        "code": status_code,
+                        "message":
+                            f"Invitations sent to: {', '.join(sent_invites)}"
+                    }
+                }
+
+            else:
+                status_code = status.HTTP_418_IM_A_TEAPOT
+
+                errors_msg = "problem sending email to:"
+                for key, value in errors.items():
+                    errors_msg = f"{errors_msg} {key}: {value},"
+
+                if len(sent_invites) > 0:
+                    msg = (
+                        f"Invitations sent to: {', '.join(sent_invites)}; "
+                        f"{errors_msg.strip(',')}"
+                    )
+
+                else:
+                    status_code = status.HTTP_400_BAD_REQUEST
+                    msg = errors_msg.capitalize().strip(",")
+
+                msg = {
+                    "status": {
+                        "code": status_code,
+                        "message": msg
+                    }
+                }
+
+        except serializers.ValidationError:
             status_code = status.HTTP_400_BAD_REQUEST
             error_set = set()
             for key, value in serializer.errors.items():

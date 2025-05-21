@@ -90,8 +90,8 @@ class MockResponse:
         return self.data
 
 
-def mock_pass(*args, **kwargs):
-    pass
+def mock_exception(msg):
+    raise Exception(msg)
 
 
 class ResourceUsageAPITests(TestCase):
