@@ -90,6 +90,10 @@ class MockResponse:
         return self.data
 
 
+def mock_pass(*args, **kwargs):
+    pass
+
+
 class ResourceUsageAPITests(TestCase):
     def setUp(self):
         create_mock_db()
@@ -4022,16 +4026,43 @@ class ProjectsUsersAPITests(TestCase):
 
         self.factory = APIRequestFactory()
 
-        project1 = models.Project.objects.get(identifier="project-1")
+        self.project5 = models.Project.objects.get(identifier="project-5")
+        self.user2 = models.User.objects.get(person_oib="22222222222")
 
         self.data = {
-            "project_id": project1.id,
-            "users": [
+            "requester": {
+                "first_name": "Tricia",
+                "last_name": "McMillan",
+                "person_oib": "22222222222",
+                "person_mail": "trillian@fer.hr",
+                "username": "user454@fer.hr"
+            },
+            "project": self.project5.id,
+            "students": [
                 "user1@example.com",
                 "user2@example.com",
                 "user3@example.com"
             ]
         }
+
+        self.invite1 = models.CustomInvitation(
+            "user1@example.com",
+            inviter=self.user2,
+            project=self.project5,
+            person_oib=""
+        )
+        self.invite2 = models.CustomInvitation(
+            "user2@example.com",
+            inviter=self.user2,
+            project=self.project5,
+            person_oib=""
+        )
+        self.invite3 = models.CustomInvitation(
+            "user3@example.com",
+            inviter=self.user2,
+            project=self.project5,
+            person_oib=""
+        )
 
     def test_post_unauthorized(self):
         request = self.client.post(
@@ -4059,3 +4090,54 @@ class ProjectsUsersAPITests(TestCase):
             request.json(),
             {"detail": "Authentication credentials were not provided."}
         )
+
+    def test_post_students_invites(self):
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=self.data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 200,
+                    "message": "Invitations sent to: user1@example.com, "
+                               "user2@example.com, user3@example.com"
+                }
+            }
+        )
+        self.assertEqual(invitation_model.create.call_count, 3)
+        invitation_model.create.assert_has_calls([
+            mock.call(
+                "user1@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            ),
+            mock.call(
+                "user2@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            ),
+            mock.call(
+                "user3@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            )
+        ], any_order=True)

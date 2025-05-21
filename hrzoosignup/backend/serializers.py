@@ -887,3 +887,64 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
             "reason", "resources_type",  "state", "users", "science_field"
         ]
         model = models.Project
+
+
+class StudentsListSerializer(serializers.ListSerializer):
+    child = serializers.EmailField(max_length=128)
+
+
+class ProjectsUsersSerializer(serializers.Serializer):
+    requester = NewProjectLeadUserSerializer()
+    project = serializers.IntegerField()
+    students = StudentsListSerializer()
+
+    @staticmethod
+    def validate_requester(value):
+        if value["person_oib"]:
+            try:
+                return models.User.objects.get(person_oib=value["person_oib"])
+
+            except models.User.DoesNotExist:
+                raise serializers.ValidationError(
+                    f"User with OIB {value['person_oib']} does not exist"
+                )
+
+        else:
+            try:
+                return models.User.objects.get(username=value["username"])
+
+            except models.User.DoesNotExist:
+                raise serializers.ValidationError(
+                    f"User with username {value['username']} does not exist"
+                )
+
+    @staticmethod
+    def validate_project(value):
+        try:
+            return models.Project.objects.get(id=value)
+
+        except models.Project.DoesNotExist:
+            raise serializers.ValidationError(
+                f"There is no project with id {value}"
+            )
+
+    def invite(self, request):
+        self.is_valid(raise_exception=True)
+
+        try:
+            sent_invites = list()
+
+            for email in self.validated_data["students"]:
+                invite = models.CustomInvitation.create(
+                    email,
+                    inviter=self.validated_data["requester"],
+                    project=self.validated_data["project"],
+                    person_oib=""
+                )
+                invite.send_invitation(request)
+                sent_invites.append(email)
+
+            return sent_invites
+
+        except Exception:
+            raise

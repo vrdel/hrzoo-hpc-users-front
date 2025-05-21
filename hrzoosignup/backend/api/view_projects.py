@@ -361,6 +361,32 @@ class MerlinProjectsAPI(APIView):
 
 class ProjectsUsersAPI(APIView):
     permission_classes = (MerlinHasAPIKey,)
+    serializer_class = backend_serializers.ProjectsUsersSerializer
 
-    def post(self):
-        pass
+    def post(self, request):
+        serializer = backend_serializers.ProjectsUsersSerializer(
+            data=request.data
+        )
+
+        try:
+            serializer.is_valid(raise_exception=True)
+            sent_invites = serializer.invite(request)
+            status_code = status.HTTP_200_OK
+            msg = {
+                "status": {
+                    "code": status_code,
+                    "message":
+                        f"Invitations sent to: {', '.join(sent_invites)}"
+                }
+            }
+
+        except serializers.ValidationError as e:
+            status_code = status.HTTP_400_BAD_REQUEST
+            msg = {
+                "status": {
+                    "code": status_code,
+                    "message": str(e)
+                }
+            }
+
+        return Response(msg, status=status_code)
