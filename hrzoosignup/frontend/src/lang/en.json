@@ -1031,6 +1031,10 @@
     "defaultMessage": "When denying project, you must state the reason.",
     "description": "managereq-change-toast-msg3"
   },
+  "LT/xtp": {
+    "defaultMessage": "Ended",
+    "description": "renderstate-expire"
+  },
   "Lb7qIs": {
     "defaultMessage": "Yes",
     "description": "users-table-general-isadded"
@@ -1398,10 +1402,6 @@
   "V//ozu": {
     "defaultMessage": "Handled:",
     "description": "managereq-change-handled"
-  },
-  "VF0fKZ": {
-    "defaultMessage": "Expired",
-    "description": "renderstate-expire"
   },
   "VOeDTJ": {
     "defaultMessage": "Type",

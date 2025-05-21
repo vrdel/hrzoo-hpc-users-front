@@ -78,7 +78,7 @@ export const RenderStateIcon = ({reqState}) => {
         <FontAwesomeIcon className="fa-3x text-danger" icon={faCalendarXmark}/>{' '}
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
-            defaultMessage="Istekao"
+            defaultMessage="Završen"
             description="renderstate-expire"
           />
         </p>

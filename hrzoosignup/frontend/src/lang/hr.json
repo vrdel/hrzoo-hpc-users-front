@@ -1031,6 +1031,10 @@
     "defaultMessage": "Pri odbijanju projekta morate se izjasniti o razlogu.",
     "description": "managereq-change-toast-msg3"
   },
+  "LT/xtp": {
+    "defaultMessage": "Završen",
+    "description": "renderstate-expire"
+  },
   "Lb7qIs": {
     "defaultMessage": "Da",
     "description": "users-table-general-isadded"
@@ -1398,10 +1402,6 @@
   "V//ozu": {
     "defaultMessage": "Obradio:",
     "description": "managereq-change-handled"
-  },
-  "VF0fKZ": {
-    "defaultMessage": "Istekao",
-    "description": "renderstate-expire"
   },
   "VOeDTJ": {
     "defaultMessage": "Tip",
