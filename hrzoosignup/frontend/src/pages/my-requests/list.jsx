@@ -11,7 +11,7 @@ import {
   Table,
   Tooltip,
 } from 'reactstrap';
-import { fetchNrProjectsLead } from 'Api/projects';
+import { fetchNrProjectsLead, fetchExtendProject } from 'Api/projects';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
@@ -47,6 +47,11 @@ const MyRequestsList = () => {
       queryFn: fetchNrProjectsLead
   })
 
+  const {status: statusPE, data: projectsExtends} = useQuery({
+      queryKey: ['projectsextends-lead'],
+      queryFn: fetchExtendProject
+  })
+
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
     let showed = new Object()
@@ -66,6 +71,23 @@ const MyRequestsList = () => {
       return tooltipOpened[toolid]
   }
 
+  function isExtended(projId) {
+    // TODO: refine: last extension for the project must be approved
+    let extendedProjIds = new Set(projectsExtends.map((entry) => {
+      if (entry.approved)
+        return entry.project
+    }))
+    if (extendedProjIds.has(projId))
+      return true
+    else
+      return false
+  }
+
+  function lastExtension(projId) {
+    let extendedProjects = projectsExtends.filter((entry) => entry.project === projId && entry.approved)
+    return extendedProjects[extendedProjects.length - 1].date_end
+  }
+
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
@@ -76,9 +98,9 @@ const MyRequestsList = () => {
       setTargetProjectExtend(targetProject[0])
       navigate(url_ui_prefix + '/my-requests')
     }
-  }, [location.pathname, status, intl])
+  }, [location.pathname, status, statusPE, intl])
 
-  if (status === 'loading' && pageTitle)
+  if ((status === 'loading' || statusPE === 'loading') && pageTitle)
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">
@@ -281,6 +303,16 @@ const MyRequestsList = () => {
                             { convertToEuropean(project.date_end)}
                           </Col>
                         </Row>
+                        {
+                          isExtended(project.id) &&
+                            <Row>
+                              <Col className="text-success">
+                                <strong>
+                                  { convertToEuropean(lastExtension(project.id)) }
+                                </strong>
+                              </Col>
+                            </Row>
+                        }
                       </td>
                       <td className="align-middle text-center">
                         <Button

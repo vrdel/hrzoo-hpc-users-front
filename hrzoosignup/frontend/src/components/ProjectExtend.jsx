@@ -27,7 +27,7 @@ import {
 import { IntlContext } from 'Components/IntlContextProvider';
 import { ErrorMessage } from '@hookform/error-message';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { extendProject } from "Api/projects";
+import { addExtendProject } from "Api/projects";
 import { AuthContext } from 'Components/AuthContextProvider';
 import { toast } from 'react-toastify'
 import { convertToAmerican } from 'Utils/dates';
@@ -68,7 +68,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
 
   const addMutation = useMutation({
     mutationFn: (data) => {
-      return extendProject(project.identifier, data, csrfToken)
+      return addExtendProject(project.identifier, data, csrfToken)
     },
   })
 
