@@ -859,10 +859,6 @@
     "defaultMessage": "Invitation could not be cancelled: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
   },
-  "GmUnQ1": {
-    "defaultMessage": "<b>New</b> end date:",
-    "description": "projectextend-currentend"
-  },
   "Gvyjsl": {
     "defaultMessage": "New scientific field",
     "description": "scientific-domain-science-field"
@@ -1338,6 +1334,10 @@
   "TH7L+k": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-myrequests-view"
+  },
+  "TNqlJf": {
+    "defaultMessage": "New end date:",
+    "description": "projectextend-currentend"
   },
   "TOuMA+": {
     "defaultMessage": "Manager will be notified by email about the change of status to \"Extended\" or \"Denied\".",

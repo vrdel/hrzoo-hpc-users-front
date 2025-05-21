@@ -46,6 +46,18 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
     }
   });
 
+  function addSixmonths(endDate) {
+    let dateEnd = new Date(endDate)
+    let sixMonthsOffset = new Date(dateEnd.setMonth(dateEnd.getMonth() + 6))
+    return sixMonthsOffset
+  }
+
+  function addOneDayOffset(endDate) {
+    let dateEnd = new Date(endDate)
+    let oneDayOffset = new Date(dateEnd.setDate(dateEnd.getDate() + 1))
+    return oneDayOffset
+  }
+
   const onSubmit = (data) => {
     let dataToSend = new Object()
     dataToSend['reason'] = data['requestExplain']
@@ -166,10 +178,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                   aria-label="currentDateEnd">
                   <FormattedMessage
                     description="projectextend-currentend"
-                    defaultMessage="<b>Novi</b> završni datum:"
-                    values={{
-                      b: (chunks) => <b>{chunks}</b>
-                    }}
+                    defaultMessage="Novi završni datum:"
                   />
                   <span className="ms-1 fw-bold text-danger">*</span>
                 </Label>
@@ -183,6 +192,8 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                         forwardedRef={field.ref}
                         required={true}
                         disabled={false}
+                        minDate={addOneDayOffset(new Date(project.date_end))}
+                        maxDate={addSixmonths(new Date(project.date_end))}
                         onChange={(value) => {
                           if (value) {
                             value.setHours(23)

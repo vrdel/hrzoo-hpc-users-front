@@ -859,10 +859,6 @@
     "defaultMessage": "Pozivnicu nije bilo moguće otkazati: {br} { error }",
     "description": "memberships-toast-invitecancel-fail"
   },
-  "GmUnQ1": {
-    "defaultMessage": "<b>Novi</b> završni datum:",
-    "description": "projectextend-currentend"
-  },
   "Gvyjsl": {
     "defaultMessage": "Novo znanstveno polje",
     "description": "scientific-domain-science-field"
@@ -1338,6 +1334,10 @@
   "TH7L+k": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
     "description": "linktitle-myrequests-view"
+  },
+  "TNqlJf": {
+    "defaultMessage": "Novi završni datum:",
+    "description": "projectextend-currentend"
   },
   "TOuMA+": {
     "defaultMessage": "Voditelj će biti obaviješten emailom o promjeni stanja u \"Produljen\" ili \"Odbijen\".",
