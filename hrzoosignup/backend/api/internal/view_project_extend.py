@@ -74,4 +74,4 @@ class ProjectExtend(APIView):
             serializer = ProjectExtendSerializer(pes_obj, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-            return Response(status=status.HTTP_200_OK)
+            return Response(list(), status=status.HTTP_200_OK)

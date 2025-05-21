@@ -72,13 +72,16 @@ const MyRequestsList = () => {
   }
 
   function isExtended(projId) {
-    // TODO: refine: last extension for the project must be approved
+    if (projectsExtends.length === 0)
+      return false
+    let isLastApproved = projectsExtends.filter(entry => entry.project === projId)
+    isLastApproved = isLastApproved[isLastApproved.length - 1].approved
     let extendedProjIds = new Set(projectsExtends.map((entry) => {
       if (entry.approved)
         return entry.project
     }))
     if (extendedProjIds.has(projId))
-      return true
+      return true && isLastApproved
     else
       return false
   }
