@@ -24,6 +24,7 @@ import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl } from 'react-intl'
 import { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { FormattedMessage } from 'react-intl'
+import { ProjectExtend } from 'Components/ProjectExtend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimeline,
@@ -56,6 +57,9 @@ export const MyRequestChange = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
+
+  const [projectExtend, setProjectExtend] = useState(undefined)
+  const [targetProjectExtend, setTargetProjectExtend] = useState(undefined)
 
   const { ResourceTypesToSelect } = useContext(SharedData);
 
@@ -240,6 +244,11 @@ export const MyRequestChange = () => {
         <Row>
           <PageTitle pageTitle={pageTitle}/>
         </Row>
+        <ProjectExtend
+          isOpen={projectExtend}
+          toggle={() => setProjectExtend(!projectExtend)}
+          project={targetProjectExtend}
+        />
         <ModalAreYouSure
           isOpen={areYouSureModal}
           toggle={() => setAreYouSureModal(!areYouSureModal)}
@@ -274,8 +283,8 @@ export const MyRequestChange = () => {
                         <Button
                           color="warning"
                           onClick={() => {
-                            // setProjectExtend(true)
-                            // setTargetProjectExtend(project)
+                            setProjectExtend(true)
+                            setTargetProjectExtend(nrProject)
                           }}>
                           <FontAwesomeIcon icon={faTimeline} />{' '}
                           <FormattedMessage
