@@ -39,10 +39,6 @@
     "defaultMessage": "Spremi promjene",
     "description": "managereq-change-button-save"
   },
-  "/EQUFG": {
-    "defaultMessage": "Produljenjen",
-    "description": "renderstate-extend"
-  },
   "/N26lV": {
     "defaultMessage": "Prijava neuspješna: Pozivni kod je istekao",
     "description": "email-invite-code-expired"
@@ -1238,6 +1234,10 @@
   "QoBBEg": {
     "defaultMessage": "Greška prilikom kopiranja javnog ključa u međuspremnik",
     "description": "tableuserkeys-toast-fail"
+  },
+  "R+AoSi": {
+    "defaultMessage": "Produljen",
+    "description": "renderstate-extend"
   },
   "R7WXFa": {
     "defaultMessage": "Status",

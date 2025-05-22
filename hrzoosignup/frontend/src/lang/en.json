@@ -39,10 +39,6 @@
     "defaultMessage": "Save changes",
     "description": "managereq-change-button-save"
   },
-  "/EQUFG": {
-    "defaultMessage": "Extended",
-    "description": "renderstate-extend"
-  },
   "/N26lV": {
     "defaultMessage": "Registration unsucessful: Invitation code expired",
     "description": "email-invite-code-expired"
@@ -1238,6 +1234,10 @@
   "QoBBEg": {
     "defaultMessage": "Error while copying public key to clipboard",
     "description": "tableuserkeys-toast-fail"
+  },
+  "R+AoSi": {
+    "defaultMessage": "Extended",
+    "description": "renderstate-extend"
   },
   "R7WXFa": {
     "defaultMessage": "Status",

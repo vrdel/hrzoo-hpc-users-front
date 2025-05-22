@@ -88,7 +88,10 @@ const MyRequestsList = () => {
 
   function lastExtension(projId) {
     let extendedProjects = projectsExtends.filter((entry) => entry.project === projId && entry.approved)
-    return extendedProjects[extendedProjects.length - 1].date_end
+    if (extendedProjects.length > 0)
+      return extendedProjects[extendedProjects.length - 1].date_end
+    else
+      return false
   }
 
   useEffect(() => {
@@ -307,7 +310,7 @@ const MyRequestsList = () => {
                           </Col>
                         </Row>
                         {
-                          isExtended(project.id) &&
+                          lastExtension(project.id) &&
                             <Row>
                               <Col className="text-success">
                                 <strong>
