@@ -24,12 +24,10 @@ import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl } from 'react-intl'
 import { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { FormattedMessage } from 'react-intl'
-import { ProjectExtend } from 'Components/ProjectExtend';
+import { ProjectExtend, ProjectExtendTable } from 'Components/ProjectExtend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimeline,
-  faCheckCircle,
-  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -363,76 +361,7 @@ export const MyRequestChange = () => {
                 </Row>
                 {
                   (nrProject.state.name === 'extend' || nrProject.state.name === 'submit-extend') &&
-                  <>
-                    <Row>
-                      <Col md={{size: 4}} lg={{size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 fw-bold fs-5 ms-4">
-                        <span>
-                          <FormattedMessage
-                            defaultMessage="Produljenja:"
-                            description="myreq-change-exten-table-title"
-                          />
-                        </span>
-                      </Col>
-                    </Row>
-                    <Row className="ms-5 me-5">
-                      <Col>
-                        <Table responsive hover className="shadow-sm">
-                          <thead id="hzsi-thead" className="align-middle text-center text-white">
-                            <tr>
-                              <th className="fw-normal" style={{width: '52px'}}>
-                                <FormattedMessage
-                                  defaultMessage="Odobreno"
-                                  description="myreq-change-exten-state"
-                                />
-                              </th>
-                              <th className="fw-normal" style={{width: '200px'}}>
-                                <FormattedMessage
-                                  defaultMessage="Datum završetka"
-                                  description="myreq-change-exten-dateend"
-                                />
-                              </th>
-                              <th className="fw-normal">
-                                <FormattedMessage
-                                  defaultMessage="Obrazloženje"
-                                  description="myreq-change-exten-dateend"
-                                />
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
-                              projectsExtends.map((extend, index) =>
-                                <tr key={index}>
-                                  <td className="p-3 align-middle text-center">
-                                    {
-                                      extend.approved ?
-                                        <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
-                                      :
-                                        <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }} />
-                                    }
-                                  </td>
-                                  <td className={`p-3 align-middle text-center ${extend.approved ? 'text-success' : 'text-muted'} fs-5 font-monospace font-monospace`}>
-                                    { extend.date_end }
-                                  </td>
-                                  <td className="p-3 align-middle text-center">
-                                    <textarea
-                                      id="extendReason"
-                                      aria-label="extendReason"
-                                      type="text"
-                                      disabled={true}
-                                      className="form-control fs-6"
-                                      rows="1"
-                                      defaultValue={extend.reason}
-                                    />
-                                  </td>
-                                </tr>
-                              )
-                            }
-                          </tbody>
-                        </Table>
-                      </Col>
-                    </Row>
-                  </>
+                    <ProjectExtendTable projectsExtends={projectsExtends} />
                 }
                 <Row style={{height: '50px'}}>
                 </Row>
