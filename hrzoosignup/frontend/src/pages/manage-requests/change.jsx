@@ -4,13 +4,15 @@ import GeneralFields, { CroRisDescription } from 'Components/fields-request/Gene
 import { SharedData } from '../root';
 import { Col, Label, Row, Button, Form, FormGroup, Input, Table } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
-import { fetchNrSpecificProject, changeProject, deleteProject } from 'Api/projects';
+import { fetchNrSpecificProject, changeProject, deleteProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSave,
   faCopy,
+  faCheckCircle,
+  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -338,6 +340,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
     if (status === 'success' && nrProject) {
       rhfProps.setValue('requestCroRisId', nrProject.croris_id)
       rhfProps.setValue('requestCroRisFinance', nrProject.croris_finance)
+      rhfProps.setValue('requestIdentifier', nrProject.identifier)
       rhfProps.setValue('requestName', nrProject.name)
       rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('requestExplain', nrProject.reason)
@@ -914,6 +917,11 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   const approvedBy = getValues('approved_by')
   const changedBy = getValues('changed_by')
 
+  const {status: statusPE, data: projectsExtends} = useQuery({
+      queryKey: ['change-projectsextends-lead'],
+      queryFn: () => fetchExtendSpecificProject(getValues('requestIdentifier'))
+  })
+
   const intl = useIntl()
 
   let sendEmailDisabled = true
@@ -1102,6 +1110,79 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             </p>
           </Col>
         </Row>
+      }
+      {
+        (requestState['extend'] || requestState['submit-extend']) && projectsExtends &&
+        <>
+          <Row>
+            <Col md={{size: 4}} lg={{size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 fw-bold fs-5 ms-4">
+              <span>
+                <FormattedMessage
+                  defaultMessage="Produljenja:"
+                  description="myreq-change-exten-table-title"
+                />
+              </span>
+            </Col>
+          </Row>
+          <Row className="ms-5 me-5">
+            <Col>
+              <Table responsive hover className="shadow-sm">
+                <thead id="hzsi-thead" className="align-middle text-center text-white">
+                  <tr>
+                    <th className="fw-normal" style={{width: '52px'}}>
+                      <FormattedMessage
+                        defaultMessage="Odobreno"
+                        description="myreq-change-exten-state"
+                      />
+                    </th>
+                    <th className="fw-normal" style={{width: '200px'}}>
+                      <FormattedMessage
+                        defaultMessage="Datum završetka"
+                        description="myreq-change-exten-dateend"
+                      />
+                    </th>
+                    <th className="fw-normal">
+                      <FormattedMessage
+                        defaultMessage="Obrazloženje"
+                        description="myreq-change-exten-dateend"
+                      />
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    projectsExtends.map((extend, index) =>
+                      <tr key={index}>
+                        <td className="p-3 align-middle text-center">
+                          {
+                            extend.approved ?
+                              <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                            :
+                              <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }} />
+                          }
+                        </td>
+                        <td className={`p-3 align-middle text-center ${extend.approved ? 'text-success' : 'text-muted'} fs-5 font-monospace font-monospace`}>
+                          { extend.date_end }
+                        </td>
+                        <td className="p-3 align-middle text-center">
+                          <textarea
+                            id="extendReason"
+                            aria-label="extendReason"
+                            type="text"
+                            disabled={true}
+                            className="form-control fs-6"
+                            rows="1"
+                            defaultValue={extend.reason}
+                          />
+                        </td>
+                      </tr>
+                    )
+                  }
+                </tbody>
+              </Table>
+            </Col>
+          </Row>
+        </>
       }
       <Row className="mt-4">
         <Col style={{width: '150px'}} md={{size: 1}}/>
