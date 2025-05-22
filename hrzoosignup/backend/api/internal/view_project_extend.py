@@ -67,11 +67,23 @@ class ProjectExtend(APIView):
             return Response(err_response, status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, **kwargs):
-        ups_obj = models.UserProject.objects.filter(user=request.user, role__name='lead')
-        interested_projects = ups_obj.values_list('project', flat=True)
-        pes_obj = models.ProjectExtend.objects.filter(project__in=interested_projects)
-        if pes_obj:
-            serializer = ProjectExtendSerializer(pes_obj, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+        projid = kwargs.get('projid', None)
+
+        if projid:
+            ups_obj = models.UserProject.objects.filter(user=request.user, role__name='lead', project__identifier=projid)
+            interested_projects = ups_obj.values_list('project', flat=True)
+            pes_obj = models.ProjectExtend.objects.filter(project__in=interested_projects)
+            if pes_obj:
+                serializer = ProjectExtendSerializer(pes_obj, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
         else:
-            return Response(list(), status=status.HTTP_200_OK)
+            ups_obj = models.UserProject.objects.filter(user=request.user, role__name='lead')
+            interested_projects = ups_obj.values_list('project', flat=True)
+            pes_obj = models.ProjectExtend.objects.filter(project__in=interested_projects)
+            if pes_obj:
+                serializer = ProjectExtendSerializer(pes_obj, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(list(), status=status.HTTP_200_OK)
