@@ -1,4 +1,4 @@
-import { url_api_prefix } from '../config/general';
+import { url_api_prefix } from 'Config/general';
 
 
 export async function addResearchProject(data, csrftoken)
@@ -386,4 +386,34 @@ export async function fetchExtendProject()
 
   if (error_msg)
     throw new Error(`Error fetching ProjectExtend data: ${error_msg}`)
+}
+
+
+export async function fetchExtendSpecificProject(projId)
+{
+  let error_msg = ''
+
+  try {
+    let response = await fetch(`${url_api_prefix}/api/v1/internal/project-extend/${projId}`)
+
+    if (response.ok)
+      return await response.json()
+
+    if (!response.ok) {
+      try {
+        await response.json();
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+      catch (err1) {
+        error_msg = `${response.status} ${response.statusText} in GET`
+      }
+    }
+
+  }
+  catch (err) {
+    error_msg = `${err} in ${projId} GET`;
+  }
+
+  if (error_msg)
+    throw new Error(`Error fetching ProjectExtend ${projId} data: ${error_msg}`)
 }
