@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Row, Form, Button } from 'reactstrap';
+import { Col, Row, Form, Button, Table } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -161,7 +161,6 @@ export const MyRequestChange = () => {
 
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-
   }, [location.pathname, nrProject, status, intl])
 
   const onSubmit = (data) => {
@@ -355,6 +354,41 @@ export const MyRequestChange = () => {
                     </p>
                   </Col>
                 </Row>
+                {
+                  (nrProject.state.name === 'extend' || nrProject.state.name === 'submit-extend') &&
+                  <Row className="mt-4 ms-1 me-1 mb-5">
+                    <Col>
+                      <Table responsive hover className="shadow-sm">
+                        <thead id="hzsi-thead" className="align-middle text-center text-white">
+                          <tr>
+                            <th className="fw-normal">
+                              <FormattedMessage
+                                defaultMessage="Odobreno"
+                                description="myreq-change-exten-state"
+                              />
+                            </th>
+                            <th className="fw-normal">
+                              <FormattedMessage
+                                defaultMessage="Datum završetka"
+                                description="myreq-change-exten-dateend"
+                              />
+                            </th>
+                            <th className="fw-normal">
+                              <FormattedMessage
+                                defaultMessage="Obrazloženje"
+                                description="myreq-change-exten-dateend"
+                              />
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                          }
+                        </tbody>
+                      </Table>
+                    </Col>
+                  </Row>
+                }
                 <Row style={{height: '50px'}}>
                 </Row>
                 <RequestHorizontalRulerRed />

@@ -156,7 +156,6 @@ const MyRequestsList = () => {
           </tr>
         </thead>
       </EmptyTableSpinner>
-
     )
   else if (nrProjects?.length > 0 && pageTitle)
     return (
@@ -310,7 +309,7 @@ const MyRequestsList = () => {
                           </Col>
                         </Row>
                         {
-                          lastExtension(project.id) &&
+                          isExtended(project.id) &&
                             <Row>
                               <Col className="text-success">
                                 <strong>
