@@ -4,7 +4,7 @@ import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
 import { Col, Row, Form, Button, Table } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
-import { fetchNrSpecificProject, changeProject } from 'Api/projects';
+import { fetchNrSpecificProject, changeProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -28,6 +28,8 @@ import { ProjectExtend } from 'Components/ProjectExtend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimeline,
+  faCheckCircle,
+  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -68,6 +70,11 @@ export const MyRequestChange = () => {
   const {status, data: nrProject, error} = useQuery({
       queryKey: ['change-project', projId],
       queryFn: () => fetchNrSpecificProject(projId),
+  })
+
+  const {status: statusPE, data: projectsExtends} = useQuery({
+      queryKey: ['change-projectsextends-lead'],
+      queryFn: () => fetchExtendSpecificProject(projId)
   })
 
   const changeMutation = useMutation({
@@ -161,7 +168,7 @@ export const MyRequestChange = () => {
 
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, nrProject, status, intl])
+  }, [location.pathname, nrProject, status, statusPE, intl])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState
@@ -237,7 +244,7 @@ export const MyRequestChange = () => {
     })
   }
 
-  if (nrProject && requestState) {
+  if (nrProject && requestState && projectsExtends) {
     return (
       <>
         <Row>
@@ -383,6 +390,24 @@ export const MyRequestChange = () => {
                         </thead>
                         <tbody>
                           {
+                            projectsExtends.map((extend, index) =>
+                              <tr key={index}>
+                                <td className="p-3 align-middle text-center">
+                                  {
+                                    extend.approved ?
+                                      <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                                    :
+                                      <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }} />
+                                  }
+                                </td>
+                                <td className="p-3 align-middle text-center">
+                                  { extend.date_end }
+                                </td>
+                                <td className="p-3 align-middle text-center">
+                                  { extend.reason }
+                                </td>
+                              </tr>
+                            )
                           }
                         </tbody>
                       </Table>
