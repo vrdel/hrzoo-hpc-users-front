@@ -50,6 +50,7 @@ class ProjectExtend(APIView):
                 p_obj.save()
                 cache.delete("ext-users-projects")
                 cache.delete('projects-get-all')
+                cache.delete('projectsextends-get-all')
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -83,6 +84,10 @@ class ProjectExtend(APIView):
                 return Response(status=status.HTTP_404_NOT_FOUND)
         else:
             if request.user.is_staff or request.user.is_superuser:
+                ret_data = cache.get('projectsextends-get-all')
+                if ret_data:
+                    return Response(ret_data, status=status.HTTP_200_OK)
+            if request.user.is_staff or request.user.is_superuser:
                 ups_obj = models.UserProject.objects.filter(role__name='lead')
             else:
                 ups_obj = models.UserProject.objects.filter(user=request.user, role__name='lead')
@@ -90,6 +95,8 @@ class ProjectExtend(APIView):
             pes_obj = models.ProjectExtend.objects.filter(project__in=interested_projects)
             if pes_obj:
                 serializer = ProjectExtendSerializer(pes_obj, many=True)
+                if request.user.is_staff or request.user.is_superuser:
+                    cache.set('projectsextends-get-all', serializer.data, None)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 return Response(list(), status=status.HTTP_200_OK)
