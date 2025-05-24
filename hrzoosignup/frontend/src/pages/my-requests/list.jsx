@@ -29,6 +29,7 @@ import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectExtend } from 'Components/ProjectExtend';
 import { url_ui_prefix } from 'Config/general';
+import { isExtended, lastExtension } from 'Utils/project-extends';
 import _ from "lodash";
 
 
@@ -69,31 +70,6 @@ const MyRequestsList = () => {
   const isOpened = (toolid) => {
     if (tooltipOpened !== undefined)
       return tooltipOpened[toolid]
-  }
-
-  function isExtended(projId) {
-    if (projectsExtends.length === 0)
-      return false
-    let isLastApproved = projectsExtends.filter(entry => entry.project === projId)
-    if (isLastApproved.length === 0)
-      return false
-    isLastApproved = isLastApproved[isLastApproved.length - 1].approved
-    let extendedProjIds = new Set(projectsExtends.map((entry) => {
-      if (entry.approved)
-        return entry.project
-    }))
-    if (extendedProjIds.has(projId))
-      return true && isLastApproved
-    else
-      return false
-  }
-
-  function lastExtension(projId) {
-    let extendedProjects = projectsExtends.filter((entry) => entry.project === projId && entry.approved)
-    if (extendedProjects.length > 0)
-      return extendedProjects[extendedProjects.length - 1].date_end
-    else
-      return false
   }
 
   useEffect(() => {
@@ -311,11 +287,11 @@ const MyRequestsList = () => {
                           </Col>
                         </Row>
                         {
-                          isExtended(project.id) &&
+                          isExtended(project.id, projectsExtends) &&
                             <Row>
                               <Col className="text-success">
                                 <strong>
-                                  { convertToEuropean(lastExtension(project.id)) }
+                                  { convertToEuropean(lastExtension(project.id, projectsExtends)) }
                                 </strong>
                               </Col>
                             </Row>

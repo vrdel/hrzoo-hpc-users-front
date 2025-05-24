@@ -33,7 +33,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addExtendProject } from "Api/projects";
 import { AuthContext } from 'Components/AuthContextProvider';
 import { toast } from 'react-toastify'
-import { convertToAmerican } from 'Utils/dates';
+import { convertToAmerican, addSixmonths, addOneDayOffset } from 'Utils/dates';
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
@@ -48,18 +48,6 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
       requestExplain: ''
     }
   });
-
-  function addSixmonths(endDate) {
-    let dateEnd = new Date(endDate)
-    let sixMonthsOffset = new Date(dateEnd.setMonth(dateEnd.getMonth() + 6))
-    return sixMonthsOffset
-  }
-
-  function addOneDayOffset(endDate) {
-    let dateEnd = new Date(endDate)
-    let oneDayOffset = new Date(dateEnd.setDate(dateEnd.getDate() + 1))
-    return oneDayOffset
-  }
 
   const onSubmit = (data) => {
     let dataToSend = new Object()

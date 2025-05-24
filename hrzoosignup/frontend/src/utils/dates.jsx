@@ -16,3 +16,15 @@ export function convertToAmerican(ddmmyyyy) {
 export function convertTimeToEuropean(yyyymmdd) {
   return format(parseISO(yyyymmdd), 'H:mm')
 }
+
+export function addSixmonths(endDate) {
+  let dateEnd = new Date(endDate)
+  let sixMonthsOffset = new Date(dateEnd.setMonth(dateEnd.getMonth() + 6))
+  return sixMonthsOffset
+}
+
+export function addOneDayOffset(endDate) {
+  let dateEnd = new Date(endDate)
+  let oneDayOffset = new Date(dateEnd.setDate(dateEnd.getDate() + 1))
+  return oneDayOffset
+}
