@@ -67,6 +67,10 @@
     "defaultMessage": "Foreign Collaborator",
     "description": "users-table-general-collaborator-foreign"
   },
+  "097q+e": {
+    "defaultMessage": "Project state:",
+    "description": "managereq-change-process-title-3"
+  },
   "09Nk19": {
     "defaultMessage": "Paste the public key component (id_rsa.pub) into the form or upload it from file on local disk",
     "description": "publickeys-add-remarkmsg"
@@ -347,10 +351,6 @@
     "defaultMessage": "Processing",
     "description": "stateshort-submit"
   },
-  "6doVi6": {
-    "defaultMessage": "Request state:",
-    "description": "managereq-change-process-title-4"
-  },
   "6mOAPi": {
     "defaultMessage": "User",
     "description": "userdetails-popover-user"
@@ -550,6 +550,10 @@
   "B5kFsW": {
     "defaultMessage": "Collaborator",
     "description": "users-table-croris-collaborator"
+  },
+  "B7lQe7": {
+    "defaultMessage": "Request state:",
+    "description": "managereq-change-process-title-4"
   },
   "B8Lcj2": {
     "defaultMessage": "Project identifier copied to clipboard",
@@ -1934,10 +1938,6 @@
   "kCbCrR": {
     "defaultMessage": "Login AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
-  },
-  "kDxvBn": {
-    "defaultMessage": "Project state",
-    "description": "managereq-change-process-title-3"
   },
   "kIVxF7": {
     "defaultMessage": "Duration:",

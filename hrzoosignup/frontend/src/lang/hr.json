@@ -67,6 +67,10 @@
     "defaultMessage": "Strani suradnik",
     "description": "users-table-general-collaborator-foreign"
   },
+  "097q+e": {
+    "defaultMessage": "Stanje projekta:",
+    "description": "managereq-change-process-title-3"
+  },
   "09Nk19": {
     "defaultMessage": "U formu se zalijepi javna komponenta ključa (id_rsa.pub) ili se ista može učitati iz datoteke",
     "description": "publickeys-add-remarkmsg"
@@ -347,10 +351,6 @@
     "defaultMessage": "Obrada",
     "description": "stateshort-submit"
   },
-  "6doVi6": {
-    "defaultMessage": "Stanje zahtjeva",
-    "description": "managereq-change-process-title-4"
-  },
   "6mOAPi": {
     "defaultMessage": "Korisnik",
     "description": "userdetails-popover-user"
@@ -550,6 +550,10 @@
   "B5kFsW": {
     "defaultMessage": "Suradnik",
     "description": "users-table-croris-collaborator"
+  },
+  "B7lQe7": {
+    "defaultMessage": "Stanje zahtjeva:",
+    "description": "managereq-change-process-title-4"
   },
   "B8Lcj2": {
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
@@ -1934,10 +1938,6 @@
   "kCbCrR": {
     "defaultMessage": "Prijava AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
-  },
-  "kDxvBn": {
-    "defaultMessage": "Stanje projekta",
-    "description": "managereq-change-process-title-3"
   },
   "kIVxF7": {
     "defaultMessage": "Trajanje:",

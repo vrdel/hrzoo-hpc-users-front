@@ -1036,12 +1036,12 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               manageProject
                 ?
                   intl.formatMessage({
-                    defaultMessage: "Stanje projekta" ,
+                    defaultMessage: "Stanje projekta:" ,
                     description: "managereq-change-process-title-3"
                   })
                 :
                   intl.formatMessage({
-                    defaultMessage: "Stanje zahtjeva",
+                    defaultMessage: "Stanje zahtjeva:",
                     description: "managereq-change-process-title-4"
                   })
             }
