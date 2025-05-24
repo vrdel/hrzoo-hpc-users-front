@@ -306,6 +306,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'is_active',
             'name',
             'project_type',
+            'pk',
             'reason',
             'resources_numbers',
             'resources_type',

@@ -75,6 +75,8 @@ const MyRequestsList = () => {
     if (projectsExtends.length === 0)
       return false
     let isLastApproved = projectsExtends.filter(entry => entry.project === projId)
+    if (isLastApproved.length === 0)
+      return false
     isLastApproved = isLastApproved[isLastApproved.length - 1].approved
     let extendedProjIds = new Set(projectsExtends.map((entry) => {
       if (entry.approved)
