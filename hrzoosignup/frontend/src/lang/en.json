@@ -23,6 +23,10 @@
     "defaultMessage": "Name, institution, identifier and assigned resources",
     "description": "project-list-nameinstidres"
   },
+  "+oCjhj": {
+    "defaultMessage": "Extensions:",
+    "description": "myreq-change-exten-table-title"
+  },
   "//xZcz": {
     "defaultMessage": "Number cannot be less than 1",
     "description": "schema-less-1"
@@ -344,7 +348,7 @@
     "description": "stateshort-submit"
   },
   "6doVi6": {
-    "defaultMessage": "Request state",
+    "defaultMessage": "Request state:",
     "description": "managereq-change-process-title-4"
   },
   "6mOAPi": {
@@ -1191,6 +1195,10 @@
     "defaultMessage": "Resources",
     "description": "userschange-project-resources"
   },
+  "PodD0J": {
+    "defaultMessage": "Explanation",
+    "description": "myreq-change-exten-dateend"
+  },
   "Pxvi7f": {
     "defaultMessage": "My requests",
     "description": "linktitle-myrequests"
@@ -1530,6 +1538,10 @@
   "Z3Agwx": {
     "defaultMessage": "Resources",
     "description": "popover-projectinfo-resources"
+  },
+  "Z3HciT": {
+    "defaultMessage": "Approved",
+    "description": "myreq-change-exten-state"
   },
   "ZG4yGb": {
     "defaultMessage": "Approved",
@@ -1878,6 +1890,10 @@
   "izNmIO": {
     "defaultMessage": "Project is not active, so it is not possible to add collaborators",
     "description": "userstable-general-toast-invite-fail-2"
+  },
+  "j+Tj4B": {
+    "defaultMessage": "End date",
+    "description": "myreq-change-exten-dateend"
   },
   "j6QjlA": {
     "defaultMessage": "State:",

@@ -23,6 +23,10 @@
     "defaultMessage": "Naziv, institucija, šifra i dodijeljeni resursi",
     "description": "project-list-nameinstidres"
   },
+  "+oCjhj": {
+    "defaultMessage": "Produljenja:",
+    "description": "myreq-change-exten-table-title"
+  },
   "//xZcz": {
     "defaultMessage": "Broj ne može biti manji od 1",
     "description": "schema-less-1"
@@ -1191,6 +1195,10 @@
     "defaultMessage": "Resursi",
     "description": "userschange-project-resources"
   },
+  "PodD0J": {
+    "defaultMessage": "Obrazloženje",
+    "description": "myreq-change-exten-dateend"
+  },
   "Pxvi7f": {
     "defaultMessage": "Moji zahtjevi",
     "description": "linktitle-myrequests"
@@ -1530,6 +1538,10 @@
   "Z3Agwx": {
     "defaultMessage": "Resursi",
     "description": "popover-projectinfo-resources"
+  },
+  "Z3HciT": {
+    "defaultMessage": "Odobreno",
+    "description": "myreq-change-exten-state"
   },
   "ZG4yGb": {
     "defaultMessage": "Odobren",
@@ -1878,6 +1890,10 @@
   "izNmIO": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće dodati suradnike",
     "description": "userstable-general-toast-invite-fail-2"
+  },
+  "j+Tj4B": {
+    "defaultMessage": "Datum završetka",
+    "description": "myreq-change-exten-dateend"
   },
   "j6QjlA": {
     "defaultMessage": "Stanje:",

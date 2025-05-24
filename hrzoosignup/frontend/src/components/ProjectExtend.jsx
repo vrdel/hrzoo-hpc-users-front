@@ -290,7 +290,7 @@ export const ProjectExtendTable = ({projectsExtends}) => {
         </Col>
       </Row>
       <Row className="ms-5 me-5">
-        <Col>
+        <Col md={{size: 10, offset: 1}}>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr>
