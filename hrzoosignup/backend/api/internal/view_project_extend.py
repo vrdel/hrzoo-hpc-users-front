@@ -73,7 +73,7 @@ class ProjectExtend(APIView):
             if request.user.is_staff or request.user.is_superuser:
                 ups_obj = models.UserProject.objects.filter(role__name='lead', project__identifier=projid)
             else:
-                ups_obj = models.UserProject.objects.filter(request.user, role__name='lead', project__identifier=projid)
+                ups_obj = models.UserProject.objects.filter(user=request.user, role__name='lead', project__identifier=projid)
             interested_projects = ups_obj.values_list('project', flat=True)
             pes_obj = models.ProjectExtend.objects.filter(project__in=interested_projects)
             if pes_obj:

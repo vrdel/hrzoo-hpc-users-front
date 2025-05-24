@@ -361,7 +361,7 @@ export const MyRequestChange = () => {
                 </Row>
                 {
                   (nrProject.state.name === 'extend' || nrProject.state.name === 'submit-extend') &&
-                    <ProjectExtendTable projectsExtends={projectsExtends} />
+                    <ProjectExtendTable projectsExtends={projectsExtends}/>
                 }
                 <Row style={{height: '50px'}}>
                 </Row>

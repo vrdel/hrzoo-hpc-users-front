@@ -276,11 +276,21 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
 }
 
 
-export const ProjectExtendTable = ({projectsExtends}) => {
+export const ProjectExtendTable = ({projectsExtends, myView=true}) => {
+  let colTitle = "ps-2 pe-2 mt-4 pt-1 pb-3 fw-bold fs-5 ms-4"
+  let tableSize = { size: 11 }
+  let rowTable = "ms-5 me-5"
+
+  if (!myView) {
+    colTitle = "fw-bold fs-5 pb-2 ms-3"
+    tableSize = {}
+    rowTable = "ms-1"
+  }
+
   return (
     <>
       <Row>
-        <Col md={{size: 4}} lg={{size: 2}} className="ps-2 pe-2 mt-4 pt-1 pb-3 fw-bold fs-5 ms-4">
+        <Col className={colTitle}>
           <span>
             <FormattedMessage
               defaultMessage="Produljenja:"
@@ -289,8 +299,8 @@ export const ProjectExtendTable = ({projectsExtends}) => {
           </span>
         </Col>
       </Row>
-      <Row className="ms-5 me-5">
-        <Col md={{size: 10, offset: 1}}>
+      <Row className={rowTable}>
+        <Col md={tableSize}>
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr>

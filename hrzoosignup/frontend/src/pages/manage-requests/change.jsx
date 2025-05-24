@@ -1112,7 +1112,11 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       }
       {
         (requestState['extend'] || requestState['submit-extend']) && projectsExtends &&
-          <ProjectExtendTable projectsExtends={projectsExtends} />
+        <Row className="ms-1 mt-3">
+          <Col md={{size: 10, offset: 1}}>
+            <ProjectExtendTable projectsExtends={projectsExtends} myView={false} />
+          </Col>
+        </Row>
       }
       <Row className="mt-4">
         <Col style={{width: '150px'}} md={{size: 1}}/>
