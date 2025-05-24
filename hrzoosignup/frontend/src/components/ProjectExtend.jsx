@@ -278,13 +278,13 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
 
 export const ProjectExtendTable = ({projectsExtends, myView=true}) => {
   let colTitle = "ps-2 pe-2 mt-4 pt-1 pb-3 fw-bold fs-5 ms-4"
-  let tableSize = { size: 11 }
+  let tableSize = { size: 12 }
   let rowTable = "ms-5 me-5"
 
   if (!myView) {
-    colTitle = "fw-bold fs-5 pb-2 ms-3"
+    colTitle = "fw-bold fs-5 pb-2 ms-md-3"
     tableSize = {}
-    rowTable = "ms-1"
+    rowTable = "ms-md-1"
   }
 
   return (
