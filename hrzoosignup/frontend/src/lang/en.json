@@ -23,6 +23,10 @@
     "defaultMessage": "Name, institution, identifier and assigned resources",
     "description": "project-list-nameinstidres"
   },
+  "+oCjhj": {
+    "defaultMessage": "Extensions:",
+    "description": "myreq-change-exten-table-title"
+  },
   "//xZcz": {
     "defaultMessage": "Number cannot be less than 1",
     "description": "schema-less-1"
@@ -38,10 +42,6 @@
   "/8epZ+": {
     "defaultMessage": "Save changes",
     "description": "managereq-change-button-save"
-  },
-  "/EQUFG": {
-    "defaultMessage": "Extended",
-    "description": "renderstate-extend"
   },
   "/N26lV": {
     "defaultMessage": "Registration unsucessful: Invitation code expired",
@@ -66,6 +66,10 @@
   "/uuN9L": {
     "defaultMessage": "Foreign Collaborator",
     "description": "users-table-general-collaborator-foreign"
+  },
+  "097q+e": {
+    "defaultMessage": "Project state:",
+    "description": "managereq-change-process-title-3"
   },
   "09Nk19": {
     "defaultMessage": "Paste the public key component (id_rsa.pub) into the form or upload it from file on local disk",
@@ -347,10 +351,6 @@
     "defaultMessage": "Processing",
     "description": "stateshort-submit"
   },
-  "6doVi6": {
-    "defaultMessage": "Request state",
-    "description": "managereq-change-process-title-4"
-  },
   "6mOAPi": {
     "defaultMessage": "User",
     "description": "userdetails-popover-user"
@@ -550,6 +550,10 @@
   "B5kFsW": {
     "defaultMessage": "Collaborator",
     "description": "users-table-croris-collaborator"
+  },
+  "B7lQe7": {
+    "defaultMessage": "Request state:",
+    "description": "managereq-change-process-title-4"
   },
   "B8Lcj2": {
     "defaultMessage": "Project identifier copied to clipboard",
@@ -1195,6 +1199,10 @@
     "defaultMessage": "Resources",
     "description": "userschange-project-resources"
   },
+  "PodD0J": {
+    "defaultMessage": "Explanation",
+    "description": "myreq-change-exten-dateend"
+  },
   "Pxvi7f": {
     "defaultMessage": "My requests",
     "description": "linktitle-myrequests"
@@ -1238,6 +1246,10 @@
   "QoBBEg": {
     "defaultMessage": "Error while copying public key to clipboard",
     "description": "tableuserkeys-toast-fail"
+  },
+  "R+AoSi": {
+    "defaultMessage": "Extended",
+    "description": "renderstate-extend"
   },
   "R7WXFa": {
     "defaultMessage": "Status",
@@ -1530,6 +1542,10 @@
   "Z3Agwx": {
     "defaultMessage": "Resources",
     "description": "popover-projectinfo-resources"
+  },
+  "Z3HciT": {
+    "defaultMessage": "Approved",
+    "description": "myreq-change-exten-state"
   },
   "ZG4yGb": {
     "defaultMessage": "Approved",
@@ -1879,6 +1895,10 @@
     "defaultMessage": "Project is not active, so it is not possible to add collaborators",
     "description": "userstable-general-toast-invite-fail-2"
   },
+  "j+Tj4B": {
+    "defaultMessage": "End date",
+    "description": "myreq-change-exten-dateend"
+  },
   "j6QjlA": {
     "defaultMessage": "State:",
     "description": "memberships-project-state"
@@ -1918,10 +1938,6 @@
   "kCbCrR": {
     "defaultMessage": "Login AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
-  },
-  "kDxvBn": {
-    "defaultMessage": "Project state",
-    "description": "managereq-change-process-title-3"
   },
   "kIVxF7": {
     "defaultMessage": "Duration:",

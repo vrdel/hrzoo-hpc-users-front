@@ -23,6 +23,10 @@
     "defaultMessage": "Naziv, institucija, šifra i dodijeljeni resursi",
     "description": "project-list-nameinstidres"
   },
+  "+oCjhj": {
+    "defaultMessage": "Produljenja:",
+    "description": "myreq-change-exten-table-title"
+  },
   "//xZcz": {
     "defaultMessage": "Broj ne može biti manji od 1",
     "description": "schema-less-1"
@@ -38,10 +42,6 @@
   "/8epZ+": {
     "defaultMessage": "Spremi promjene",
     "description": "managereq-change-button-save"
-  },
-  "/EQUFG": {
-    "defaultMessage": "Produljenjen",
-    "description": "renderstate-extend"
   },
   "/N26lV": {
     "defaultMessage": "Prijava neuspješna: Pozivni kod je istekao",
@@ -66,6 +66,10 @@
   "/uuN9L": {
     "defaultMessage": "Strani suradnik",
     "description": "users-table-general-collaborator-foreign"
+  },
+  "097q+e": {
+    "defaultMessage": "Stanje projekta:",
+    "description": "managereq-change-process-title-3"
   },
   "09Nk19": {
     "defaultMessage": "U formu se zalijepi javna komponenta ključa (id_rsa.pub) ili se ista može učitati iz datoteke",
@@ -347,10 +351,6 @@
     "defaultMessage": "Obrada",
     "description": "stateshort-submit"
   },
-  "6doVi6": {
-    "defaultMessage": "Stanje zahtjeva",
-    "description": "managereq-change-process-title-4"
-  },
   "6mOAPi": {
     "defaultMessage": "Korisnik",
     "description": "userdetails-popover-user"
@@ -550,6 +550,10 @@
   "B5kFsW": {
     "defaultMessage": "Suradnik",
     "description": "users-table-croris-collaborator"
+  },
+  "B7lQe7": {
+    "defaultMessage": "Stanje zahtjeva:",
+    "description": "managereq-change-process-title-4"
   },
   "B8Lcj2": {
     "defaultMessage": "Šifra projekta kopirana u međuspremnik",
@@ -1195,6 +1199,10 @@
     "defaultMessage": "Resursi",
     "description": "userschange-project-resources"
   },
+  "PodD0J": {
+    "defaultMessage": "Obrazloženje",
+    "description": "myreq-change-exten-dateend"
+  },
   "Pxvi7f": {
     "defaultMessage": "Moji zahtjevi",
     "description": "linktitle-myrequests"
@@ -1238,6 +1246,10 @@
   "QoBBEg": {
     "defaultMessage": "Greška prilikom kopiranja javnog ključa u međuspremnik",
     "description": "tableuserkeys-toast-fail"
+  },
+  "R+AoSi": {
+    "defaultMessage": "Produljen",
+    "description": "renderstate-extend"
   },
   "R7WXFa": {
     "defaultMessage": "Status",
@@ -1530,6 +1542,10 @@
   "Z3Agwx": {
     "defaultMessage": "Resursi",
     "description": "popover-projectinfo-resources"
+  },
+  "Z3HciT": {
+    "defaultMessage": "Odobreno",
+    "description": "myreq-change-exten-state"
   },
   "ZG4yGb": {
     "defaultMessage": "Odobren",
@@ -1879,6 +1895,10 @@
     "defaultMessage": "Projekt nije aktivan pa nije moguće dodati suradnike",
     "description": "userstable-general-toast-invite-fail-2"
   },
+  "j+Tj4B": {
+    "defaultMessage": "Datum završetka",
+    "description": "myreq-change-exten-dateend"
+  },
   "j6QjlA": {
     "defaultMessage": "Stanje:",
     "description": "memberships-project-state"
@@ -1918,10 +1938,6 @@
   "kCbCrR": {
     "defaultMessage": "Prijava AAI@EduHR",
     "description": "loginpriv-labelaaieduhr"
-  },
-  "kDxvBn": {
-    "defaultMessage": "Stanje projekta",
-    "description": "managereq-change-process-title-3"
   },
   "kIVxF7": {
     "defaultMessage": "Trajanje:",

@@ -4,7 +4,7 @@ import GeneralFields, { CroRisDescription } from 'Components/fields-request/Gene
 import { SharedData } from '../root';
 import { Col, Label, Row, Button, Form, FormGroup, Input, Table } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
-import { fetchNrSpecificProject, changeProject, deleteProject } from 'Api/projects';
+import { fetchNrSpecificProject, changeProject, deleteProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,6 +41,7 @@ import {
   Extend,
   Submit,
 } from "Components/StateIcons"
+import { ProjectExtendTable } from 'Components/ProjectExtend';
 
 
 function setInitialState() {
@@ -338,6 +339,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
     if (status === 'success' && nrProject) {
       rhfProps.setValue('requestCroRisId', nrProject.croris_id)
       rhfProps.setValue('requestCroRisFinance', nrProject.croris_finance)
+      rhfProps.setValue('requestIdentifier', nrProject.identifier)
       rhfProps.setValue('requestName', nrProject.name)
       rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('requestExplain', nrProject.reason)
@@ -914,6 +916,11 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   const approvedBy = getValues('approved_by')
   const changedBy = getValues('changed_by')
 
+  const {status: statusPE, data: projectsExtends} = useQuery({
+      queryKey: ['change-projectsextends-lead'],
+      queryFn: () => fetchExtendSpecificProject(getValues('requestIdentifier'))
+  })
+
   const intl = useIntl()
 
   let sendEmailDisabled = true
@@ -1029,12 +1036,12 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               manageProject
                 ?
                   intl.formatMessage({
-                    defaultMessage: "Stanje projekta" ,
+                    defaultMessage: "Stanje projekta:" ,
                     description: "managereq-change-process-title-3"
                   })
                 :
                   intl.formatMessage({
-                    defaultMessage: "Stanje zahtjeva",
+                    defaultMessage: "Stanje zahtjeva:",
                     description: "managereq-change-process-title-4"
                   })
             }
@@ -1100,6 +1107,14 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                     />
               }
             </p>
+          </Col>
+        </Row>
+      }
+      {
+        (requestState['extend'] || requestState['submit-extend']) && projectsExtends &&
+        <Row className="ms-1 mt-3">
+          <Col md={{size: 10, offset: 1}}>
+            <ProjectExtendTable projectsExtends={projectsExtends} myView={false} />
           </Col>
         </Row>
       }

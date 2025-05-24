@@ -11,7 +11,7 @@ import {
   Table,
   Tooltip,
 } from 'reactstrap';
-import { fetchNrProjectsLead } from 'Api/projects';
+import { fetchNrProjectsLead, fetchExtendProject } from 'Api/projects';
 import { useNavigate, Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
@@ -29,6 +29,7 @@ import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectExtend } from 'Components/ProjectExtend';
 import { url_ui_prefix } from 'Config/general';
+import { isExtended, lastExtension } from 'Utils/project-extends';
 import _ from "lodash";
 
 
@@ -45,6 +46,11 @@ const MyRequestsList = () => {
   const {status, data: nrProjects, error} = useQuery({
       queryKey: ['projects-lead'],
       queryFn: fetchNrProjectsLead
+  })
+
+  const {status: statusPE, data: projectsExtends} = useQuery({
+      queryKey: ['projectsextends-lead'],
+      queryFn: fetchExtendProject
   })
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
@@ -76,9 +82,9 @@ const MyRequestsList = () => {
       setTargetProjectExtend(targetProject[0])
       navigate(url_ui_prefix + '/my-requests')
     }
-  }, [location.pathname, status, intl])
+  }, [location.pathname, status, statusPE, intl])
 
-  if (status === 'loading' && pageTitle)
+  if ((status === 'loading' || statusPE === 'loading') && pageTitle)
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">
@@ -128,7 +134,6 @@ const MyRequestsList = () => {
           </tr>
         </thead>
       </EmptyTableSpinner>
-
     )
   else if (nrProjects?.length > 0 && pageTitle)
     return (
@@ -281,6 +286,16 @@ const MyRequestsList = () => {
                             { convertToEuropean(project.date_end)}
                           </Col>
                         </Row>
+                        {
+                          isExtended(project.id, projectsExtends) &&
+                            <Row>
+                              <Col className="text-success">
+                                <strong>
+                                  { convertToEuropean(lastExtension(project.id, projectsExtends)) }
+                                </strong>
+                              </Col>
+                            </Row>
+                        }
                       </td>
                       <td className="align-middle text-center">
                         <Button

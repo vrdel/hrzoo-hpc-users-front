@@ -167,7 +167,6 @@ class ProjectTypeSerializer(serializers.ModelSerializer):
         model = models.ProjectType
 
 
-
 class ProjectSerializerGet(serializers.ModelSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
     state = StateSerializer()

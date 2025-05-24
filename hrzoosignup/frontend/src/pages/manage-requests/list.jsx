@@ -4,7 +4,7 @@ import { Col, Row, Table, Tooltip, Input } from 'reactstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { PageTitle } from 'Components/PageTitle';
 import { StateIcons, StateString } from 'Config/map-states';
-import { fetchAllNrProjects } from 'Api/projects';
+import { fetchAllNrProjects, fetchExtendProject } from 'Api/projects';
 import { useQuery } from '@tanstack/react-query';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -30,13 +30,15 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
+import { isExtended, lastExtension } from 'Utils/project-extends';
 import _ from "lodash";
 
 
-const ManageRequestsTable = ({ data, pageTitle }) => {
+const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
   const [pageSize, setPageSize] = useState(30)
   const [pageIndex, setPageIndex] = useState(0)
   const intl = useIntl()
+
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
@@ -293,7 +295,7 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                 <td className="p-2 align-middle text-center">{" "}</td>
               </tr>
               {
-                fieldsView.length > 0 ?
+                (fieldsView.length > 0 && projectsExtends) ?
                   fieldsView.map((project, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center">
@@ -368,6 +370,16 @@ const ManageRequestsTable = ({ data, pageTitle }) => {
                         { convertToEuropean(project.date_start) }
                         <br/>
                         { convertToEuropean(project.date_end) }
+                        {
+                          isExtended(project.pk, projectsExtends) &&
+                            <Row>
+                              <Col className="text-success">
+                                <strong>
+                                  { convertToEuropean(lastExtension(project.pk, projectsExtends)) }
+                                </strong>
+                              </Col>
+                            </Row>
+                        }
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         {
@@ -432,17 +444,22 @@ export const ManageRequestsList = () => {
       queryFn: fetchAllNrProjects
   })
 
+  const {status: statusPE, data: projectsExtends} = useQuery({
+      queryKey: ['all-projectsextends-lead'],
+      queryFn: fetchExtendProject
+  })
+
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
   }, [location.pathname, status, intl])
 
-
-  if (status === 'success' && nrProjects && pageTitle)
+  if (status === 'success' && statusPE === 'success' && nrProjects && pageTitle)
     return (
       <ManageRequestsTable
         data={ nrProjects }
+        projectsExtends={ projectsExtends }
         pageTitle={ pageTitle }
       />
     )

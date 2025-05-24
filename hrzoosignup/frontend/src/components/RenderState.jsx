@@ -1,16 +1,15 @@
 import React from 'react';
 import { findTrueState } from '../utils/reqstate';
 import { Col } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faCog,
-  faTimes,
-  faTimeline,
-  faCalendarXmark,
-  faCheckDouble,
-  faHourglassStart,
-  faQuestion
-} from '@fortawesome/free-solid-svg-icons';
+  Approve,
+  ApproveExpire,
+  Deny,
+  Expire,
+  Extend,
+  Submit,
+  SubmitExtend
+} from "Components/StateIcons"
 import { FormattedMessage } from 'react-intl'
 
 
@@ -20,9 +19,7 @@ export const RenderStateIcon = ({reqState}) => {
   if (targetState === 'approve') {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
-        <FontAwesomeIcon
-          className="fa-3x text-success"
-          style={{color: '#00ff00'}} icon={faCheckDouble}/>{' '}
+        <Approve />
         <br/>
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
@@ -36,7 +33,7 @@ export const RenderStateIcon = ({reqState}) => {
   else if (targetState === 'submit') {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
-        <FontAwesomeIcon className="fa-3x text-warning" icon={faCog}/>{' '}
+        <Submit />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Obrada"
@@ -49,10 +46,10 @@ export const RenderStateIcon = ({reqState}) => {
   else if (targetState === 'extend') {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
-        <FontAwesomeIcon className="fa-3x text-warning" icon={faTimeline}/>{' '}
+        <Extend />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
-            defaultMessage="Produljenjen"
+            defaultMessage="Produljen"
             description="renderstate-extend"
           />
         </p>
@@ -62,7 +59,7 @@ export const RenderStateIcon = ({reqState}) => {
   else if (targetState === 'deny') {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
-        <FontAwesomeIcon className="fa-3x text-danger" icon={faTimes}/>{' '}
+        <Deny />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Odbijen"
@@ -75,7 +72,7 @@ export const RenderStateIcon = ({reqState}) => {
   else if (targetState === 'expire') {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
-        <FontAwesomeIcon className="fa-3x text-danger" icon={faCalendarXmark}/>{' '}
+        <Expire />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Završen"
@@ -88,10 +85,7 @@ export const RenderStateIcon = ({reqState}) => {
   else if (targetState === 'approve-expire') {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
-        <span className="fa-layers fa-3x fa-fw">
-          <FontAwesomeIcon icon={faHourglassStart} className="text-warning" transform="shrink-9 right-8 down-3" />
-          <FontAwesomeIcon icon={faCheckDouble} className="text-success" transform="shrink-1 up-2"/>
-        </span>
+        <ApproveExpire />
         <p className="fs-5 mt-1 text-nowrap fw-normal">
           <FormattedMessage
             defaultMessage="Pred istekom"
@@ -104,10 +98,7 @@ export const RenderStateIcon = ({reqState}) => {
   else if (targetState === 'submit-extend') {
     return(
       <Col md={{size: 2}} className="d-flex flex-column align-items-center">
-        <span className="fa-layers fa-3x fa-fw">
-          <FontAwesomeIcon icon={faQuestion} className="text-danger" transform="shrink-8 right-8 down-3" />
-          <FontAwesomeIcon icon={faTimeline} className="text-warning" transform="shrink-2 up-2"/>
-        </span>
+        <SubmitExtend />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
             defaultMessage="Produljenje"

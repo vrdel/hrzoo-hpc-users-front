@@ -6,12 +6,15 @@ import {
   ModalBody,
   ModalHeader,
   FormFeedback,
-  Form
+  Form,
+  Table
 }
 from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFile,
+  faCheckCircle,
+  faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import {FormattedMessage} from 'react-intl';
 import DatePicker from 'react-date-picker';
@@ -27,10 +30,10 @@ import {
 import { IntlContext } from 'Components/IntlContextProvider';
 import { ErrorMessage } from '@hookform/error-message';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { extendProject } from "Api/projects";
+import { addExtendProject } from "Api/projects";
 import { AuthContext } from 'Components/AuthContextProvider';
 import { toast } from 'react-toastify'
-import { convertToAmerican } from 'Utils/dates';
+import { convertToAmerican, addSixmonths, addOneDayOffset } from 'Utils/dates';
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
@@ -46,18 +49,6 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
     }
   });
 
-  function addSixmonths(endDate) {
-    let dateEnd = new Date(endDate)
-    let sixMonthsOffset = new Date(dateEnd.setMonth(dateEnd.getMonth() + 6))
-    return sixMonthsOffset
-  }
-
-  function addOneDayOffset(endDate) {
-    let dateEnd = new Date(endDate)
-    let oneDayOffset = new Date(dateEnd.setDate(dateEnd.getDate() + 1))
-    return oneDayOffset
-  }
-
   const onSubmit = (data) => {
     let dataToSend = new Object()
     dataToSend['reason'] = data['requestExplain']
@@ -68,7 +59,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
 
   const addMutation = useMutation({
     mutationFn: (data) => {
-      return extendProject(project.identifier, data, csrfToken)
+      return addExtendProject(project.identifier, data, csrfToken)
     },
   })
 
@@ -271,5 +262,92 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
   else
     return null
 }
+
+
+export const ProjectExtendTable = ({projectsExtends, myView=true}) => {
+  let colTitle = "ps-2 pe-2 mt-4 pt-1 pb-3 fw-bold fs-5 ms-4"
+  let tableSize = { size: 12 }
+  let rowTable = "ms-5 me-5"
+
+  if (!myView) {
+    colTitle = "fw-bold fs-5 pb-2 ms-md-3"
+    tableSize = {}
+    rowTable = "ms-md-1"
+  }
+
+  return (
+    <>
+      <Row>
+        <Col className={colTitle}>
+          <span>
+            <FormattedMessage
+              defaultMessage="Produljenja:"
+              description="myreq-change-exten-table-title"
+            />
+          </span>
+        </Col>
+      </Row>
+      <Row className={rowTable}>
+        <Col md={tableSize}>
+          <Table responsive hover className="shadow-sm">
+            <thead id="hzsi-thead" className="align-middle text-center text-white">
+              <tr>
+                <th className="fw-normal" style={{width: '52px'}}>
+                  <FormattedMessage
+                    defaultMessage="Odobreno"
+                    description="myreq-change-exten-state"
+                  />
+                </th>
+                <th className="fw-normal" style={{width: '200px'}}>
+                  <FormattedMessage
+                    defaultMessage="Datum završetka"
+                    description="myreq-change-exten-dateend"
+                  />
+                </th>
+                <th className="fw-normal">
+                  <FormattedMessage
+                    defaultMessage="Obrazloženje"
+                    description="myreq-change-exten-dateend"
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                projectsExtends.map((extend, index) =>
+                  <tr key={index}>
+                    <td className="p-3 align-middle text-center">
+                      {
+                        extend.approved ?
+                          <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                        :
+                          <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }} />
+                      }
+                    </td>
+                    <td className={`p-3 align-middle text-center ${extend.approved ? 'text-success' : 'text-muted'} fs-5 font-monospace font-monospace`}>
+                      { extend.date_end }
+                    </td>
+                    <td className="p-3 align-middle text-center">
+                      <textarea
+                        id="extendReason"
+                        aria-label="extendReason"
+                        type="text"
+                        disabled={true}
+                        className="form-control fs-6"
+                        rows="1"
+                        defaultValue={extend.reason}
+                      />
+                    </td>
+                  </tr>
+                )
+              }
+            </tbody>
+          </Table>
+        </Col>
+      </Row>
+    </>
+  )
+}
+
 
 export default ProjectExtend

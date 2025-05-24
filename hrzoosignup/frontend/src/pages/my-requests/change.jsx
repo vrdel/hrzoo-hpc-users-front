@@ -2,9 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Row, Form, Button } from 'reactstrap';
+import { Col, Row, Form, Button, Table } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
-import { fetchNrSpecificProject, changeProject } from 'Api/projects';
+import { fetchNrSpecificProject, changeProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { useIntl } from 'react-intl'
 import { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { FormattedMessage } from 'react-intl'
-import { ProjectExtend } from 'Components/ProjectExtend';
+import { ProjectExtend, ProjectExtendTable } from 'Components/ProjectExtend';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimeline,
@@ -68,6 +68,11 @@ export const MyRequestChange = () => {
   const {status, data: nrProject, error} = useQuery({
       queryKey: ['change-project', projId],
       queryFn: () => fetchNrSpecificProject(projId),
+  })
+
+  const {status: statusPE, data: projectsExtends} = useQuery({
+      queryKey: ['change-projectsextends-lead'],
+      queryFn: () => fetchExtendSpecificProject(projId)
   })
 
   const changeMutation = useMutation({
@@ -161,8 +166,7 @@ export const MyRequestChange = () => {
 
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-
-  }, [location.pathname, nrProject, status, intl])
+  }, [location.pathname, nrProject, status, statusPE, intl])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState
@@ -238,7 +242,7 @@ export const MyRequestChange = () => {
     })
   }
 
-  if (nrProject && requestState) {
+  if (nrProject && requestState && projectsExtends) {
     return (
       <>
         <Row>
@@ -355,6 +359,10 @@ export const MyRequestChange = () => {
                     </p>
                   </Col>
                 </Row>
+                {
+                  (nrProject.state.name === 'extend' || nrProject.state.name === 'submit-extend') &&
+                    <ProjectExtendTable projectsExtends={projectsExtends}/>
+                }
                 <Row style={{height: '50px'}}>
                 </Row>
                 <RequestHorizontalRulerRed />
