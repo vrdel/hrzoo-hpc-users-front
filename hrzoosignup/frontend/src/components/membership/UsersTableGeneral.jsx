@@ -425,10 +425,18 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         { '\u2212' }
                       </td>
                       <td className="align-middle text-center">
-                        <FormattedMessage
-                          defaultMessage="Suradnik"
-                          description="users-table-general-collaborator"
-                        />
+                        {
+                          (user.invtype === 'foreign') ?
+                            <FormattedMessage
+                              defaultMessage="Strani suradnik"
+                              description="users-table-general-collaborator-foreign"
+                            />
+                          :
+                            <FormattedMessage
+                              defaultMessage="Suradnik"
+                              description="users-table-general-collaborator"
+                            />
+                        }
                       </td>
                       <td className="align-middle text-center">
                         { user.email }
@@ -559,43 +567,46 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         </CardBody>
                       </Card>
                     </Collapse>
-                    <Collapse isOpen={isOpen3} style={{width: '80%'}}>
-                      <Card className="ps-4 pe-4 pt-4">
-                        <CardTitle>
-                          <FormattedMessage
-                            defaultMessage="Upiši email adrese stranih suradnika koje želiš pozvati na projekt"
-                            description="users-table-general-cardtitle-3"
-                          />
-                        </CardTitle>
-                        <CardBody className="mb-4">
-                          <Controller
-                            name="foreignCollaboratorEmails"
-                            control={control}
-                            render={ ({field}) =>
-                              <CustomCreatableSelect
-                                name="collaboratorEmails"
-                                forwardedRef={field.ref}
-                                placeholder={intl.formatMessage({
-                                  defaultMessage: "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
-                                  description: "users-table-croris-placeholder-2"
-                                })}
-                                fontSize="18px"
-                                onChange={(e) => setValue('foreignCollaboratorEmails', e)}
-                              />
-                            }
-                          />
-                          <div className="d-flex align-items-center justify-content-center">
-                            <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
-                              <FontAwesomeIcon icon={faPaperPlane}/>{' '}
-                              <FormattedMessage
-                                defaultMessage="Pošalji poveznice za prijavu"
-                                description="users-table-general-invite-send"
-                              />
-                            </Button>
-                          </div>
-                        </CardBody>
-                      </Card>
-                    </Collapse>
+                    {
+                      (project.project_type['name'] === 'practical') &&
+                      <Collapse isOpen={isOpen3} style={{width: '80%'}}>
+                        <Card className="ps-4 pe-4 pt-4">
+                          <CardTitle>
+                            <FormattedMessage
+                              defaultMessage="Upiši email adrese stranih suradnika koje želiš pozvati na projekt"
+                              description="users-table-general-cardtitle-3"
+                            />
+                          </CardTitle>
+                          <CardBody className="mb-4">
+                            <Controller
+                              name="foreignCollaboratorEmails"
+                              control={control}
+                              render={ ({field}) =>
+                                <CustomCreatableSelect
+                                  name="collaboratorEmails"
+                                  forwardedRef={field.ref}
+                                  placeholder={intl.formatMessage({
+                                    defaultMessage: "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
+                                    description: "users-table-general-placeholder-2"
+                                  })}
+                                  fontSize="18px"
+                                  onChange={(e) => setValue('foreignCollaboratorEmails', e)}
+                                />
+                              }
+                            />
+                            <div className="d-flex align-items-center justify-content-center">
+                              <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                                <FontAwesomeIcon icon={faPaperPlane}/>{' '}
+                                <FormattedMessage
+                                  defaultMessage="Pošalji poveznice za prijavu"
+                                  description="users-table-general-invite-send"
+                                />
+                              </Button>
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Collapse>
+                    }
                   </Col>
                 </Row>
                 {

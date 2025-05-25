@@ -2011,6 +2011,10 @@
     "defaultMessage": "Role",
     "description": "memberships-user-role"
   },
+  "mDl32b": {
+    "defaultMessage": "collab1@email.de ENTER/TAB collab2@email.uk...",
+    "description": "users-table-general-placeholder-2"
+  },
   "mHHLJK": {
     "defaultMessage": "Total amount of RAM (GB):",
     "description": "cloudfields-nram"

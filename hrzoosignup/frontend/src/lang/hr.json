@@ -2011,6 +2011,10 @@
     "defaultMessage": "Uloga",
     "description": "memberships-user-role"
   },
+  "mDl32b": {
+    "defaultMessage": "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
+    "description": "users-table-general-placeholder-2"
+  },
   "mHHLJK": {
     "defaultMessage": "Ukupna količina radne memorije (GB):",
     "description": "cloudfields-nram"
