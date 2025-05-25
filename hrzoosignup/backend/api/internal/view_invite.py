@@ -139,7 +139,8 @@ class Invites(APIView):
 
                 # foreign collaborators must authn via eduGAIN
                 # if proj_type.name == 'research-croris' and inv_type == 'foreign' and not edugain_authn:
-                if proj_type.name == 'research-croris' and inv_type == 'foreign' and request.user.person_type == 'local':
+                if (proj_type.name == 'research-croris' or proj_type.name == 'practical') \
+                        and inv_type == 'foreign' and request.user.person_type == 'local':
                     msg = {
                         'status': {
                             'code': status.HTTP_400_BAD_REQUEST,
@@ -175,7 +176,7 @@ class Invites(APIView):
                     return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
                 # (inv_type == 'foreign' and edugain_authn)):
-                if (proj_type.name == 'research-croris'):
+                if (proj_type.name == 'research-croris' or proj_type.name == 'practical'):
                     if ((inv_oib == request.user.person_oib and inv_type == 'local') or
                         (inv_type == 'foreign' and request.user.person_type == 'foreign')):
                         associate_user_to_project(user, proj)
@@ -429,11 +430,21 @@ class Invites(APIView):
 
             else:
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
+                foreign_emails = list()
+                if proj_type.name == 'practical':
+                    foreign_emails = [col['value'] for col in request.data['foreignCollaboratorEmails']]
                 for email in emails:
                     invite = Invitation.create(email, inviter=request.user,
                                                project=proj, person_oib='')
                     invite.send_invitation(request)
                     record_invites.append(invite)
+
+                if foreign_emails:
+                    for email in foreign_emails:
+                        invite = Invitation.create(email, inviter=request.user,
+                                                   project=proj)
+                        invite.send_invitation(request)
+                        record_invites.append(invite)
 
             msg = {
                 'status': {

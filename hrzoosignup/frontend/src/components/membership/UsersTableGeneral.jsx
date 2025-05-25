@@ -69,6 +69,25 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
       )
   }
 
+  const [isOpen3, setIsOpen3] = useState(false);
+  const toggle3 = () => {
+    if (project.is_active)
+      return setIsOpen3(!isOpen3);
+    else
+      toast.error(
+        <span className="font-monospace text-white">
+          <FormattedMessage
+            defaultMessage="Projekt nije aktivan pa nije moguće pozivati suradnike"
+            description="userstable-general-toast-invite-fail-2"
+          /><br/>
+        </span>, {
+          theme: 'colored',
+          toastId: 'invit-fail-sent',
+          autoClose: 3500,
+        }
+      )
+  }
+
   const { data: dataActiveUsers } = useQuery({
 		queryKey: ["active-users"],
 		queryFn: fetchUsers,
@@ -84,7 +103,8 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
       collaboratorEmails: '',
-      collaboratorUids: ''
+      collaboratorUids: '',
+      foreignCollaboratorEmails: ''
     }
   });
 
@@ -405,10 +425,18 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         { '\u2212' }
                       </td>
                       <td className="align-middle text-center">
-                        <FormattedMessage
-                          defaultMessage="Suradnik"
-                          description="users-table-general-collaborator"
-                        />
+                        {
+                          (user.invtype === 'foreign') ?
+                            <FormattedMessage
+                              defaultMessage="Strani suradnik"
+                              description="users-table-general-collaborator-foreign"
+                            />
+                          :
+                            <FormattedMessage
+                              defaultMessage="Suradnik"
+                              description="users-table-general-collaborator"
+                            />
+                        }
                       </td>
                       <td className="align-middle text-center">
                         { user.email }
@@ -478,6 +506,16 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       />
                     </Button>
                     {
+                      (project.project_type['name'] === 'practical') &&
+                      <Button active={isOpen3} color="info" className="ms-0 ms-md-3 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle3}>
+                        <FontAwesomeIcon icon={faArrowDown}/>{' '}
+                        <FormattedMessage
+                          defaultMessage="Pozovi strane suradnike"
+                          description="users-table-general-foreign-collabcall-2"
+                        />
+                      </Button>
+                    }
+                    {
                       (project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop')
                       && (userDetails.is_staff || userDetails.is_superuser) &&
                       <Button color="success" active={isOpen2} onClick={toggle2} className="ms-0 ms-md-3 mt-sm-2 mt-md-0">
@@ -529,6 +567,46 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         </CardBody>
                       </Card>
                     </Collapse>
+                    {
+                      (project.project_type['name'] === 'practical') &&
+                      <Collapse isOpen={isOpen3} style={{width: '80%'}}>
+                        <Card className="ps-4 pe-4 pt-4">
+                          <CardTitle>
+                            <FormattedMessage
+                              defaultMessage="Upiši email adrese stranih suradnika koje želiš pozvati na projekt"
+                              description="users-table-general-cardtitle-3"
+                            />
+                          </CardTitle>
+                          <CardBody className="mb-4">
+                            <Controller
+                              name="foreignCollaboratorEmails"
+                              control={control}
+                              render={ ({field}) =>
+                                <CustomCreatableSelect
+                                  name="collaboratorEmails"
+                                  forwardedRef={field.ref}
+                                  placeholder={intl.formatMessage({
+                                    defaultMessage: "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
+                                    description: "users-table-general-placeholder-2"
+                                  })}
+                                  fontSize="18px"
+                                  onChange={(e) => setValue('foreignCollaboratorEmails', e)}
+                                />
+                              }
+                            />
+                            <div className="d-flex align-items-center justify-content-center">
+                              <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                                <FontAwesomeIcon icon={faPaperPlane}/>{' '}
+                                <FormattedMessage
+                                  defaultMessage="Pošalji poveznice za prijavu"
+                                  description="users-table-general-invite-send"
+                                />
+                              </Button>
+                            </div>
+                          </CardBody>
+                        </Card>
+                      </Collapse>
+                    }
                   </Col>
                 </Row>
                 {

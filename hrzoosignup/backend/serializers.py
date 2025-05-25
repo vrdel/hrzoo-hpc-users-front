@@ -362,7 +362,8 @@ class InvitesSerializer(serializers.ModelSerializer):
             'email',
             'created',
             'accepted',
-            'inviter'
+            'inviter',
+            'invtype'
         )
         model = models.CustomInvitation
 
