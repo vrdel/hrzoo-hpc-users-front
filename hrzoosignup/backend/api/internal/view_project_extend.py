@@ -81,7 +81,7 @@ class ProjectExtend(APIView):
                 serializer = ProjectExtendSerializer(pes_obj, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
-                return Response(status=status.HTTP_404_NOT_FOUND)
+                return Response(list(), status=status.HTTP_200_OK)
         else:
             if request.user.is_staff or request.user.is_superuser:
                 ret_data = cache.get('projectsextends-get-all')
