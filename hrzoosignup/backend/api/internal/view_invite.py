@@ -429,11 +429,21 @@ class Invites(APIView):
 
             else:
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
+                foreign_emails = list()
+                if proj_type.name == 'practical':
+                    foreign_emails = [col['value'] for col in request.data['foreignCollaboratorEmails']]
                 for email in emails:
                     invite = Invitation.create(email, inviter=request.user,
                                                project=proj, person_oib='')
                     invite.send_invitation(request)
                     record_invites.append(invite)
+
+                if foreign_emails:
+                    for email in foreign_emails:
+                        invite = Invitation.create(email, inviter=request.user,
+                                                   project=proj)
+                        invite.send_invitation(request)
+                        record_invites.append(invite)
 
             msg = {
                 'status': {

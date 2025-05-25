@@ -103,7 +103,8 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     defaultValues: {
       collaboratorEmails: '',
-      collaboratorUids: ''
+      collaboratorUids: '',
+      foreignCollaboratorEmails: ''
     }
   });
 
