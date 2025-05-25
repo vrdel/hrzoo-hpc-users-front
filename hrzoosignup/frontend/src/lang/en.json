@@ -395,6 +395,10 @@
     "defaultMessage": "New scientific field",
     "description": "newreqind-scientific-newfield"
   },
+  "7kxeXK": {
+    "defaultMessage": "Project is not active, therefore it is not possible to invite collaborators",
+    "description": "userstable-general-toast-invite-fail-2"
+  },
   "7oHfZW": {
     "defaultMessage": "Error while copying user's email to clipboard",
     "description": "managereq-change-minibutton-msg-1"
@@ -1015,6 +1019,10 @@
     "defaultMessage": "By logging into the system, you confirm that you accept",
     "description": "loginofficial-termsstring"
   },
+  "Ku+Q+5": {
+    "defaultMessage": "Invite foreign collaborators",
+    "description": "users-table-general-foreign-collabcall-2"
+  },
   "Kzh4nh": {
     "defaultMessage": "Role",
     "description": "userschange-project-role"
@@ -1108,7 +1116,7 @@
     "description": "manreq-change-modalmsg"
   },
   "N7CK9d": {
-    "defaultMessage": "You are invited to project within the Advanced computing service and by confirming, you also agree to the",
+    "defaultMessage": "You are invited to project within the Advanced Computing service and by confirming, you also agree to the",
     "description": "email-invite-cardbody"
   },
   "NF44j4": {
@@ -2131,6 +2139,10 @@
     "defaultMessage": "User's email copied to clipboard",
     "description": "popover-emailuser-copy-ok"
   },
+  "py6eQQ": {
+    "defaultMessage": "Enter email addresses of foreign collaborators you wish to invite to project",
+    "description": "users-table-general-cardtitle-3"
+  },
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",
     "description": "linktitle-managerequests-change"
@@ -2332,7 +2344,7 @@
     "description": "resourcefields-ncpu"
   },
   "vhUojX": {
-    "defaultMessage": "Terms of Use of Advanced computing service",
+    "defaultMessage": "Terms of Use of Advanced Computing service",
     "description": "loginofficial-terms"
   },
   "vo4MPK": {

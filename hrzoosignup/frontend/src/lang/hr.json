@@ -395,6 +395,10 @@
     "defaultMessage": "Novo znanstveno polje",
     "description": "newreqind-scientific-newfield"
   },
+  "7kxeXK": {
+    "defaultMessage": "Projekt nije aktivan pa nije moguće pozivati suradnike",
+    "description": "userstable-general-toast-invite-fail-2"
+  },
   "7oHfZW": {
     "defaultMessage": "Greška prilikom kopiranja emaila korisnika u međuspremnik",
     "description": "managereq-change-minibutton-msg-1"
@@ -1014,6 +1018,10 @@
   "KssuSi": {
     "defaultMessage": "Prijavom u sustav potvrđujete da prihvaćate",
     "description": "loginofficial-termsstring"
+  },
+  "Ku+Q+5": {
+    "defaultMessage": "Pozovi strane suradnike",
+    "description": "users-table-general-foreign-collabcall-2"
   },
   "Kzh4nh": {
     "defaultMessage": "Uloga",
@@ -2130,6 +2138,10 @@
   "po6NY6": {
     "defaultMessage": "Email korisnika kopiran u međuspremnik",
     "description": "popover-emailuser-copy-ok"
+  },
+  "py6eQQ": {
+    "defaultMessage": "Upiši email adrese stranih suradnika koje želiš pozvati na projekt",
+    "description": "users-table-general-cardtitle-3"
   },
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
