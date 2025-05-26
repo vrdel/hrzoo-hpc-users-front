@@ -356,10 +356,18 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         ? "align-middle text-center fst-italic border-bottom border-secondary"
                         : "align-middle text-center"
                       }>
-                        <FormattedMessage
-                          defaultMessage="Suradnik"
-                          description="users-table-general-collaborator"
-                        />
+                        {
+                          (user['user'].person_type === 'foreign') ?
+                            <FormattedMessage
+                              defaultMessage="Strani suradnik"
+                              description="users-table-general-collaborator-foreign"
+                            />
+                          :
+                            <FormattedMessage
+                              defaultMessage="Suradnik"
+                              description="users-table-general-collaborator"
+                            />
+                        }
                       </td>
                       <td className={
                         user['user']['person_oib'] === userDetails.person_oib
