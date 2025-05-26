@@ -302,7 +302,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
                 <td>
                   {
                     croRisProjects['person_info']['croris_id'] ?
-                      <a href={`https://www.croris.hr/osobe/profil/${croRisProjects['person_info']['croris_id']}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+                      <a href={`https://www.croris.hr/osobe/profil/${croRisProjects['person_info']['croris_id']}`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
                         https://www.croris.hr/osobe/profil/{croRisProjects['person_info']['croris_id']}
                       </a>
                     :
