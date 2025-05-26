@@ -44,7 +44,8 @@ class IsSessionActive(APIView):
                     'saml2_idp': saml2_idp,
                     'config': {
                         'enable_edugain': settings.SAML_EDUGAINENABLE,
-                        "enable_accounting": settings.SHOW_GRAPHS
+                        "enable_accounting": settings.SHOW_GRAPHS,
+                        "extend_warning_days": settings.EXTEND_WARNING_DAYS
                     }
                 },
                 status=status.HTTP_200_OK)
