@@ -17,6 +17,7 @@ export const AuthContextProvider = ( {children} ) => {
   const [userDetails, setUserdetails] = useState("")
   const [csrfToken, setCsrfToken] = useState("")
   const [loginType, setLoginType] = useState("")
+  const [backendConfig, setBackendConfig] = useState(undefined)
   const [enableAccounting, setEnableAccounting] = useState(false)
   const navigate = useNavigate()
   const queryClient = useQueryClient();
@@ -25,16 +26,17 @@ export const AuthContextProvider = ( {children} ) => {
     setIsLoggedIn(true)
     setUserdetails(session.userdetails)
     setCsrfToken(session.csrftoken)
+    setBackendConfig(session.config)
     setEnableAccounting(session.config.enable_accounting)
 
     const defaultRedirect = session.userdetails.is_staff
       || session.userdetails.is_superuser
       ? defaultAuthnRedirectStaff
-        : enableAccounting 
+        : enableAccounting
           ? session.userdetails.userproject_set.map(item => item.role.name).includes("lead") ?
             defaultAuthnRedirectWithAccountingLead
             :
-             defaultAuthnRedirectWithAccounting 
+             defaultAuthnRedirectWithAccounting
               : defaultAuthnRedirect
 
     let wantVisit = JSON.parse(localStorage.getItem('referrer'))
@@ -58,12 +60,13 @@ export const AuthContextProvider = ( {children} ) => {
     setUserdetails("")
     setLoginType("")
     setEnableAccounting(false)
+    setBackendConfig(false)
     localStorage.removeItem('referrer')
     queryClient.invalidateQueries("sessionactive")
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
-    setUserdetails, login, logout, csrfToken, setCsrfToken, loginType,
+    setUserdetails, backendConfig, login, logout, csrfToken, setCsrfToken, loginType,
     setLoginType, enableAccounting, setEnableAccounting }
 
   return (

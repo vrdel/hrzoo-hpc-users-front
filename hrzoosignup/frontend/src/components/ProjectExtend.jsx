@@ -33,12 +33,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addExtendProject } from "Api/projects";
 import { AuthContext } from 'Components/AuthContextProvider';
 import { toast } from 'react-toastify'
-import { convertToAmerican, addSixmonths, addOneDayOffset } from 'Utils/dates';
+import { convertToAmerican, addGraceMonths, addOneDayOffset } from 'Utils/dates';
 
 
 export const ProjectExtend = ({isOpen, toggle, project}) => {
   const { locale } = useContext(IntlContext)
-  const { csrfToken } = useContext(AuthContext)
+  const { csrfToken, backendConfig } = useContext(AuthContext)
   const queryClient = useQueryClient()
 
   const { control, handleSubmit, setValue, formState: { errors } } = useForm({
@@ -184,7 +184,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                         required={true}
                         disabled={false}
                         minDate={addOneDayOffset(new Date(project.date_end))}
-                        maxDate={addSixmonths(new Date(project.date_end))}
+                        maxDate={addGraceMonths(new Date(project.date_end), backendConfig.grace_months)}
                         onChange={(value) => {
                           if (value) {
                             value.setHours(23)

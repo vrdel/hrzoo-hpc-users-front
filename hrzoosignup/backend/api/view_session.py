@@ -45,6 +45,7 @@ class IsSessionActive(APIView):
                     'config': {
                         'enable_edugain': settings.SAML_EDUGAINENABLE,
                         "enable_accounting": settings.SHOW_GRAPHS,
+                        "grace_months": settings.GRACE_MONTHS,
                         "extend_warning_days": settings.EXTEND_WARNING_DAYS
                     }
                 },

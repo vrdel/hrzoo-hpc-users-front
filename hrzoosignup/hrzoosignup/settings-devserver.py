@@ -39,6 +39,7 @@ try:
     INSTITUTION_MAP = config.get('GENERAL', 'InstitutionMap')
     PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
     EXTEND_WARNING_DAYS = config.getint('GENERAL', 'ExtendWarningDays')
+    GRACE_MONTHS = config.getint('GENERAL', 'GracePeriodMonths')
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
     HOST_CERT = config.get('SECURITY', 'HostCert')
