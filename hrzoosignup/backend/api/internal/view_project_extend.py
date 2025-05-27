@@ -8,6 +8,8 @@ from django.conf import settings
 from django.core.cache import cache
 from django.utils import timezone
 
+from dateutil.relativedelta import relativedelta
+
 from backend import models
 from backend.serializers_internal import ProjectExtendSerializer
 
@@ -31,7 +33,7 @@ class ProjectExtend(APIView):
             new_date_end = new_date_end.date()
 
             if (new_date_end <= up_obj.project.date_end
-                or (new_date_end - up_obj.project.date_end) > datetime.timedelta(days=settings.EXTEND_WARNING_DAYS)):
+                or (new_date_end > up_obj.project.date_end + relativedelta(months=settings.GRACE_MONTHS))):
                 msg = {
                     'status': {
                         'code': status.HTTP_400_BAD_REQUEST,
