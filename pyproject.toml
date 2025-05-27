@@ -17,6 +17,7 @@ pymemcache = "*"
 safety = "*"
 Unidecode = "*"
 pandas = "2.2.2"
+python-dateutil = "*"
 ipdb = "*"
 
 [tool.poetry.group.devel]
