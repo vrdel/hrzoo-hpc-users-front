@@ -66,8 +66,9 @@ export const AuthContextProvider = ( {children} ) => {
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
-    setUserdetails, backendConfig, login, logout, csrfToken, setCsrfToken, loginType,
-    setLoginType, enableAccounting, setEnableAccounting }
+    setUserdetails, backendConfig, setBackendConfig, login, logout, csrfToken,
+    setCsrfToken, loginType, setLoginType, enableAccounting,
+    setEnableAccounting }
 
   return (
     <AuthContext.Provider value={authContextValue}>

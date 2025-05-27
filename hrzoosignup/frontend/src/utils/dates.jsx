@@ -17,7 +17,7 @@ export function convertTimeToEuropean(yyyymmdd) {
   return format(parseISO(yyyymmdd), 'H:mm')
 }
 
-export function addGraceMonths(endDate, numMonths) {
+export function addGraceMonths(endDate, numMonths=3) {
   let dateEnd = new Date(endDate)
   let monthsOffset = new Date(dateEnd.setMonth(dateEnd.getMonth() + numMonths))
   return monthsOffset

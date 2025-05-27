@@ -184,7 +184,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                         required={true}
                         disabled={false}
                         minDate={addOneDayOffset(new Date(project.date_end))}
-                        maxDate={addGraceMonths(new Date(project.date_end), backendConfig.grace_months)}
+                        maxDate={addGraceMonths(new Date(project.date_end), backendConfig?.grace_months)}
                         onChange={(value) => {
                           if (value) {
                             value.setHours(23)
