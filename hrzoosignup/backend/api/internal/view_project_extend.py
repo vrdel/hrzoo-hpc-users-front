@@ -4,12 +4,16 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.conf import settings
 from django.core.cache import cache
 from django.utils import timezone
+
+from dateutil.relativedelta import relativedelta
 
 from backend import models
 from backend.serializers_internal import ProjectExtendSerializer
 
+import datetime
 import logging
 
 logger = logging.getLogger('hrzoosignup.views')
@@ -24,6 +28,20 @@ class ProjectExtend(APIView):
 
         try:
             up_obj = models.UserProject.objects.get(project__identifier=projid, user=request.user, role__name='lead')
+
+            new_date_end = datetime.datetime.strptime(request.data['date_end'], '%Y-%m-%d')
+            new_date_end = new_date_end.date()
+
+            if (new_date_end <= up_obj.project.date_end
+                or (new_date_end > up_obj.project.date_end + relativedelta(months=settings.GRACE_MONTHS))):
+                msg = {
+                    'status': {
+                        'code': status.HTTP_400_BAD_REQUEST,
+                        'message': '{} - Malformed new date_end'.format(request.user.username)
+                    }
+                }
+                logger.error(msg)
+                return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
             if up_obj.project.state.name != 'approve-expire':
                 msg = {

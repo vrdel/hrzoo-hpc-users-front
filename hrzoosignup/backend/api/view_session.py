@@ -25,7 +25,9 @@ class IsSessionActive(APIView):
                     "error": "Session not active",
                     'config': {
                         'enable_edugain': settings.SAML_EDUGAINENABLE,
-                        "enable_accounting": settings.SHOW_GRAPHS
+                        "enable_accounting": settings.SHOW_GRAPHS,
+                        "grace_months": settings.GRACE_MONTHS,
+                        "extend_warning_days": settings.EXTEND_WARNING_DAYS
                     }
                 },
                 status=status.HTTP_200_OK
@@ -44,7 +46,9 @@ class IsSessionActive(APIView):
                     'saml2_idp': saml2_idp,
                     'config': {
                         'enable_edugain': settings.SAML_EDUGAINENABLE,
-                        "enable_accounting": settings.SHOW_GRAPHS
+                        "enable_accounting": settings.SHOW_GRAPHS,
+                        "grace_months": settings.GRACE_MONTHS,
+                        "extend_warning_days": settings.EXTEND_WARNING_DAYS
                     }
                 },
                 status=status.HTTP_200_OK)

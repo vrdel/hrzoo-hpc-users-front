@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Col,
   Container,

@@ -346,6 +346,7 @@ class Projects(APIView):
                     }
                     pe_obj.approved = True
                     pe_obj.save()
+                    cache.delete('projectsextends-get-all')
                 except models.ProjectExtend.DoesNotExist:
                     err_response = {
                         'status': {
