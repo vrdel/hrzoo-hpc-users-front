@@ -175,8 +175,34 @@ class Invites(APIView):
                     logger.error(msg)
                     return Response(msg, status=status.HTTP_400_BAD_REQUEST)
 
-                # (inv_type == 'foreign' and edugain_authn)):
-                if (proj_type.name == 'research-croris' or proj_type.name == 'practical'):
+                if (proj_type.name == 'practical'):
+                    associate_user_to_project(user, proj)
+
+                    if settings.EMAIL_SEND:
+                        if get_invite.inviter.person_type == 'local':
+                            useremail.email_approve_membership(get_invite.inviter.person_mail,
+                                                               proj.name, user)
+                        elif get_invite.inviter.person_type == 'foreign':
+                            useremail.email_approve_membership_en(get_invite.inviter.person_mail,
+                                                                  proj.name,
+                                                                  user)
+
+                    msg = {
+                        'status': {
+                            'code': status.HTTP_201_CREATED,
+                            'message': '{} associated to project {}'.format(
+                                user.person_uniqueid,
+                                proj.identifier)
+                        }
+                    }
+                    logger.info(msg)
+                    cache.delete("ext-users-projects")
+                    cache.delete("usersinfoinactive-get")
+                    cache.delete("usersinfo-get")
+                    cache.delete("projects-get-all")
+                    return Response(msg, status=status.HTTP_201_CREATED)
+
+                elif (proj_type.name == 'research-croris'):
                     if ((inv_oib == request.user.person_oib and inv_type == 'local') or
                         (inv_type == 'foreign' and request.user.person_type == 'foreign')):
                         associate_user_to_project(user, proj)
