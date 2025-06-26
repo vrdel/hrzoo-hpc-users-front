@@ -197,3 +197,10 @@ class NewProjectsAPI(APIView):
                 },
                 status=status_code
             )
+
+
+class MerlinProjectsAPI(APIView):
+    permission_classes = (MerlinHasAPIKey,)
+
+    def get(self, request, proj_id):
+        pass

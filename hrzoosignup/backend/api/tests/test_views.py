@@ -3882,3 +3882,43 @@ class NewProjectsAPITests(TestCase):
                 }
             }
         )
+
+
+class MerlinProjectsAPITests(TestCase):
+    def setUp(self):
+        create_mock_db()
+
+        hrzoo = models.Organization4APIKey.objects.get(name="hrzoo")
+        merlin = models.Organization4APIKey.objects.get(name="merlin")
+
+        self.project5 = models.Project.objects.get(identifier="project-5")
+
+        name, key = models.MyAPIKey.objects.create_key(
+            name="test", organization=merlin
+        )
+        name2, key2 = models.MyAPIKey.objects.create_key(
+            name="test2", organization=hrzoo
+        )
+        self.token = key
+        self.token2 = key2
+
+        self.factory = APIRequestFactory()
+
+    def test_get_unauthorized(self):
+        request = self.client.get(f"/api/v1/projects/{self.project5.id}")
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+
+    def test_post_wrong_organization(self):
+        request = self.client.get(
+            f"/api/v1/projects/{self.project5.id}",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
