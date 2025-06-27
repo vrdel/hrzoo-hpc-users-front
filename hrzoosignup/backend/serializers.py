@@ -516,6 +516,32 @@ class AccountingUsersSerializer(serializers.ModelSerializer):
         model = models.User
 
 
+def _flatten_scientific_field(field):
+    reformat_sfs = list()
+
+    for sf in field:
+        rsf = dict()
+        rsf['name'] = sf['name']['value']
+        rsf['percent'] = sf['percent']
+        rsf['scientificfields'] = list()
+        for fl in sf['scientificfields']:
+            rsf_s = dict()
+            rsf_s['name'] = fl['name']['value']
+            rsf_s['percent'] = fl['percent']
+            rsf['scientificfields'].append(rsf_s)
+
+        reformat_sfs.append(rsf)
+
+    return reformat_sfs
+
+
+def _flatten_resources_type(res_types):
+    if res_types:
+        return [t['value'] for t in res_types]
+    else:
+        return []
+
+
 class AccountingUserProjectSerializer(serializers.ModelSerializer):
     sifra = serializers.SerializerMethodField()
     date_from = serializers.DateField(source="date_start")
@@ -527,7 +553,8 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
     approved_resources = serializers.SerializerMethodField()
     users = AccountingUsersSerializer(many=True)
 
-    def get_sifra(self, obj):
+    @staticmethod
+    def get_sifra(obj):
         sifra = obj.identifier
         for field in settings.PROJECT_IDENTIFIER_MAP:
             if field['from'] in sifra:
@@ -535,10 +562,12 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
 
         return sifra
 
-    def get_type(self, obj):
+    @staticmethod
+    def get_type(obj):
         return obj.project_type.name
 
-    def get_finance(self, obj):
+    @staticmethod
+    def get_finance(obj):
         if obj.croris_finance:
             return obj.croris_finance
         else:
@@ -552,7 +581,8 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
             except models.CrorisInstitutions.DoesNotExist:
                 return [obj.institute]
 
-    def get_ustanova(self, obj):
+    @staticmethod
+    def get_ustanova(obj):
         try:
             ustanova = models.CrorisInstitutions.objects.get(
                 name_short=obj.institute
@@ -577,30 +607,12 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
                 "mbu": ""
             }
 
-    def get_croris_url(self, obj):
+    @staticmethod
+    def get_croris_url(obj):
         if obj.croris_id:
             return f'https://www.croris.hr/projekti/projekt/{obj.croris_id}'
         else:
             return ''
-
-    @staticmethod
-    def _flatten_field(field):
-        reformat_sfs = list()
-
-        for sf in field:
-            rsf = dict()
-            rsf['name'] = sf['name']['value']
-            rsf['percent'] = sf['percent']
-            rsf['scientificfields'] = list()
-            for fl in sf['scientificfields']:
-                rsf_s = dict()
-                rsf_s['name'] = fl['name']['value']
-                rsf_s['percent'] = fl['percent']
-                rsf['scientificfields'].append(rsf_s)
-
-            reformat_sfs.append(rsf)
-
-        return reformat_sfs
 
     @staticmethod
     def _set_realm_from_map(inst_name):
@@ -623,17 +635,15 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
 
         return realm_inst
 
-    def get_approved_resources(self, obj):
+    @staticmethod
+    def get_approved_resources(obj):
         res_types = obj.staff_resources_type
-        if res_types:
-            return [t['value'] for t in res_types]
-        else:
-            return []
+        return _flatten_resources_type(res_types)
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
         ret["date_approved"] = ret["date_approved"][0:10]
-        ret["science_field"] = self._flatten_field(ret["science_field"])
+        ret["science_field"] = _flatten_scientific_field(ret["science_field"])
 
         return ret
 
@@ -714,6 +724,7 @@ class NewProjectsSerializer(serializers.Serializer):
 
     @staticmethod
     def validate_resources_type(value):
+        new_value = []
         for val in value:
             if val.lower() not in settings.ALLOWED_RESOURCES:
                 raise serializers.ValidationError(
@@ -721,7 +732,6 @@ class NewProjectsSerializer(serializers.Serializer):
                 )
 
             else:
-                new_value = []
                 for item in value:
                     new_value.append({"label": item, "value": item})
 
@@ -814,3 +824,66 @@ class NewProjectsSerializer(serializers.Serializer):
         userproject_obj.save()
 
         return project
+
+
+class MerlinProjectUsersSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(source="user.id")
+    username = serializers.CharField(source="user.username")
+    person_mail = serializers.CharField(source="user.person_mail")
+    first_name = serializers.CharField(source="user.first_name")
+    last_name = serializers.CharField(source="user.last_name")
+    person_oib = serializers.CharField(max_length=11, source="user.person_oib")
+    person_uniqueid = serializers.CharField(source="user.person_uniqueid")
+    person_institution = serializers.CharField(
+        max_length=128, source="user.person_institution"
+    )
+    role = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_role(obj):
+        return obj.role.name
+
+    class Meta:
+        fields = [
+            "id", "username", "person_mail", "first_name", "last_name",
+            "person_oib", "person_uniqueid", "person_institution", "role"
+        ]
+        model = models.UserProject
+
+
+class MerlinProjectsSerializer(serializers.ModelSerializer):
+    date_approved = serializers.DateTimeField(format="%Y-%m-%d")
+    date_submitted = serializers.DateTimeField(format="%Y-%m-%d")
+    project_type = serializers.SerializerMethodField()
+    resources_type = ResourcesTypeSerializer()
+    state = serializers.SerializerMethodField()
+    users = serializers.SerializerMethodField()
+
+    def get_users(self, obj):
+        user_projects = models.UserProject.objects.filter(project=obj)
+        return MerlinProjectUsersSerializer(user_projects, many=True).data
+
+    @staticmethod
+    def get_project_type(obj):
+        return obj.project_type.name
+
+    @staticmethod
+    def get_state(obj):
+        return obj.state.name
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        ret["resources_type"] = _flatten_resources_type(
+            instance.staff_resources_type
+        )
+        ret["science_field"] = _flatten_scientific_field(ret["science_field"])
+
+        return ret
+
+    class Meta:
+        fields = [
+            "id", "date_approved", "date_start", "date_end", "date_submitted",
+            "identifier", "institute", "is_active", "name", "project_type",
+            "reason", "resources_type",  "state", "users", "science_field"
+        ]
+        model = models.Project
