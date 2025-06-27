@@ -201,6 +201,10 @@ class NewProjectsAPI(APIView):
 
 class MerlinProjectsAPI(APIView):
     permission_classes = (MerlinHasAPIKey,)
+    serializer_class = backend_serializers.MerlinProjectsSerializer
 
     def get(self, request, proj_id):
-        pass
+        project = models.Project.objects.get(id=proj_id)
+        serializer = backend_serializers.MerlinProjectsSerializer(project)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

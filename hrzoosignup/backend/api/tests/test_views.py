@@ -3893,6 +3893,9 @@ class MerlinProjectsAPITests(TestCase):
 
         self.project5 = models.Project.objects.get(identifier="project-5")
 
+        self.user1 = models.User.objects.get(person_username="adent")
+        self.user2 = models.User.objects.get(person_username="tmcmilla")
+
         name, key = models.MyAPIKey.objects.create_key(
             name="test", organization=merlin
         )
@@ -3912,13 +3915,76 @@ class MerlinProjectsAPITests(TestCase):
             {"detail": "Authentication credentials were not provided."}
         )
 
-    def test_post_wrong_organization(self):
+    def test_get_wrong_organization(self):
         request = self.client.get(
             f"/api/v1/projects/{self.project5.id}",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"}
         )
         self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(
             request.json(),
             {"detail": "Authentication credentials were not provided."}
+        )
+
+    def test_get_project_info(self):
+        request = self.client.get(
+            f"/api/v1/projects/{self.project5.id}",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"}
+        )
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            request.json(),
+            {
+                "id": self.project5.id,
+                "date_approved": "2024-05-03",
+                "date_start": "2024-05-01",
+                "date_end": "2025-12-31",
+                "date_submitted": None,
+                "identifier": "project-5",
+                "institute": "Fakultet elektrotehnike i računarstva",
+                "is_active": True,
+                "name": "Project name 5",
+                "project_type": "practical",
+                "reason": "",
+                "resources_type": ["PADOBRAN", "JUPYTER"],
+                "science_field": [
+                    {
+                        "name": "TEHNIČKE ZNANOSTI",
+                        "percent": 100,
+                        "scientificfields": [
+                            {
+                                'name': 'Računarstvo',
+                                "percent": 100
+                            }
+                        ]
+                    }
+                ],
+                "state": "approve",
+                "users": [
+                    {
+                        "id": self.user2.id,
+                        "username": "user454@fer.hr",
+                        "person_mail": "trillian@fer.hr",
+                        "first_name": "Tricia",
+                        "last_name": "McMillan",
+                        "person_oib": "22222222222",
+                        "role": "lead",
+                        "person_uniqueid": "user454@fer.hr",
+                        "person_institution":
+                            "Fakultet elektrotehnike i računarstva"
+                    },
+                    {
+                        "id": self.user1.id,
+                        "username": "user119@fer.hr",
+                        "person_mail": "arthur.dent@fer.hr",
+                        "first_name": "Arthur",
+                        "last_name": "Dent",
+                        "person_oib": "11111111111",
+                        "role": "collaborator",
+                        "person_uniqueid": "user119@fer.hr",
+                        "person_institution":
+                            "Fakultet elektrotehnike i računarstva"
+                    }
+                ]
+            }
         )
