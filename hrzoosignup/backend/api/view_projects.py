@@ -212,6 +212,133 @@ class MerlinProjectsAPI(APIView):
             }
         }
 
+    @extend_schema(
+        responses={
+            200: OpenApiResponse(
+                response={
+                    "id": 0,
+                    "date_approved": "2024-05-03",
+                    "date_start": "2024-05-01",
+                    "date_end": "2025-12-31",
+                    "date_submitted": "2024-05-03",
+                    "identifier": "string",
+                    "institute": "string",
+                    "is_active": True,
+                    "name": "string",
+                    "project_type": "string",
+                    "reason": "string",
+                    "resources_type": ["string"],
+                    "science_field": [
+                        {
+                            "name": "string",
+                            "percent": 100,
+                            "scientificfields": [
+                                {
+                                    'name': 'string',
+                                    "percent": 100
+                                }
+                            ]
+                        }
+                    ],
+                    "state": "string",
+                    "users": [
+                        {
+                            "id": 0,
+                            "username": "string",
+                            "person_mail": "string",
+                            "first_name": "string",
+                            "last_name": "string",
+                            "person_oib": "string",
+                            "role": "string",
+                            "person_uniqueid": "string",
+                            "person_institution": "string"
+                        }
+                    ]
+                },
+                description="OK",
+                examples=[
+                    OpenApiExample(
+                        "OK",
+                        value={
+                            "id": 0,
+                            "date_approved": "2024-05-03",
+                            "date_start": "2024-05-01",
+                            "date_end": "2025-12-31",
+                            "date_submitted": "2024-05-03",
+                            "identifier": "string",
+                            "institute": "string",
+                            "is_active": True,
+                            "name": "string",
+                            "project_type": "string",
+                            "reason": "",
+                            "resources_type": ["string"],
+                            "science_field": [
+                                {
+                                    "name": "string",
+                                    "percent": 100,
+                                    "scientificfields": [
+                                        {
+                                            'name': 'string',
+                                            "percent": 100
+                                        }
+                                    ]
+                                }
+                            ],
+                            "state": "string",
+                            "users": [
+                                {
+                                    "id": 0,
+                                    "username": "string",
+                                    "person_mail": "string",
+                                    "first_name": "string",
+                                    "last_name": "string",
+                                    "person_oib": "string",
+                                    "role": "string",
+                                    "person_uniqueid": "string",
+                                    "person_institution": "string"
+                                }
+                            ]
+                        }
+                    )
+                ]
+            ),
+            403: OpenApiResponse(
+                response={
+                    "detail": "Authentication credentials were not provided."
+                },
+                description="Forbidden",
+                examples=[
+                    OpenApiExample(
+                        "Forbidden",
+                        value={
+                            "detail":
+                                "Authentication credentials were not provided."
+                        }
+                    )
+                ]
+            ),
+            404: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": status.HTTP_404_NOT_FOUND,
+                        "message": "Project with id <proj_id> does not exist"
+                    }
+                },
+                description="Not Found",
+                examples=[
+                    OpenApiExample(
+                        "Not Found",
+                        value={
+                            "status": {
+                                "code": status.HTTP_404_NOT_FOUND,
+                                "message": "Project with id <proj_id> does not exist"
+                            }
+                        }
+                    )
+                ]
+            )
+        }
+    )
     def get(self, request, proj_id):
         try:
             project = models.Project.objects.get(id=proj_id)
