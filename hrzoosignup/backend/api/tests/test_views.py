@@ -3988,3 +3988,18 @@ class MerlinProjectsAPITests(TestCase):
                 ]
             }
         )
+
+    def test_get_project_info_nonexisting_id(self):
+        request = self.client.get(
+            "/api/v1/projects/9999",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"}
+        )
+        self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_404_NOT_FOUND,
+                    "message": "Project with id 9999 does not exist"
+                }
+            }
+        )

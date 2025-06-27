@@ -203,8 +203,30 @@ class MerlinProjectsAPI(APIView):
     permission_classes = (MerlinHasAPIKey,)
     serializer_class = backend_serializers.MerlinProjectsSerializer
 
-    def get(self, request, proj_id):
-        project = models.Project.objects.get(id=proj_id)
-        serializer = backend_serializers.MerlinProjectsSerializer(project)
+    @staticmethod
+    def _generate_error_response_message(msg, code):
+        return {
+            "status": {
+                "code": code,
+                "message": msg
+            }
+        }
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get(self, request, proj_id):
+        try:
+            project = models.Project.objects.get(id=proj_id)
+            serializer = backend_serializers.MerlinProjectsSerializer(
+                project
+            )
+
+            data = serializer.data
+            status_code = status.HTTP_200_OK
+
+        except models.Project.DoesNotExist:
+            status_code = status.HTTP_404_NOT_FOUND
+            data = self._generate_error_response_message(
+                msg = f"Project with id {proj_id} does not exist",
+                code=status_code
+            )
+
+        return Response(data=data, status=status_code)
