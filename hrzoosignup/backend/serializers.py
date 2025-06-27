@@ -852,6 +852,8 @@ class MerlinProjectUsersSerializer(serializers.ModelSerializer):
 
 
 class MerlinProjectsSerializer(serializers.ModelSerializer):
+    date_approved = serializers.DateTimeField(format="%Y-%m-%d")
+    date_submitted = serializers.DateTimeField(format="%Y-%m-%d")
     project_type = serializers.SerializerMethodField()
     resources_type = ResourcesTypeSerializer()
     state = serializers.SerializerMethodField()
@@ -871,12 +873,10 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
-        ret["date_approved"] = ret["date_approved"][0:10]
         ret["resources_type"] = _flatten_resources_type(
-            ret["staff_resources_type"]
+            instance.staff_resources_type
         )
         ret["science_field"] = _flatten_scientific_field(ret["science_field"])
-        del ret["staff_resources_type"]
 
         return ret
 
@@ -884,7 +884,6 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
         fields = [
             "id", "date_approved", "date_start", "date_end", "date_submitted",
             "identifier", "institute", "is_active", "name", "project_type",
-            "reason", "resources_type", "staff_resources_type", "state",
-            "users", "science_field"
+            "reason", "resources_type",  "state", "users", "science_field"
         ]
         model = models.Project
