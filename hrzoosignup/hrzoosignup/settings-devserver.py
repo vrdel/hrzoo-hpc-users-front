@@ -139,6 +139,11 @@ if ',' in ALLOWED_HOSTS:
 else:
     ALLOWED_HOSTS = [ALLOWED_HOSTS]
 
+if ',' in EMAILUS:
+    EMAILUS = [e.strip() for e in EMAILUS.split(',')]
+else:
+    EMAILUS = [EMAILUS]
+
 # have PERMISSIONS_STAFF as array usernames
 if ',' in PERMISSIONS_STAFF:
     PERMISSIONS_STAFF = [u.strip() for u in PERMISSIONS_STAFF.split(',')]

@@ -19,7 +19,7 @@ vaš zahtjev za korištenje usluge Napredno računanje "{name}" je prihvaćen.
         body,
         settings.EMAILFROM,
         [to],
-        [settings.EMAILUS])
+        settings.EMAILUS)
 
     return em.send(fail_silently=True)
 
@@ -44,7 +44,7 @@ s obrazloženjem:
         body,
         settings.EMAILFROM,
         [to],
-        [settings.EMAILUS])
+        settings.EMAILUS)
 
     return em.send(fail_silently=True)
 
@@ -83,7 +83,7 @@ Pogledaj prijavu: https://computing.srce.hr/ui/requests/{prident}
         'Prijava ' + project_type_subject,
         body,
         settings.EMAILFROM,
-        [settings.EMAILUS])
+        settings.EMAILUS)
 
     return em.send(fail_silently=True)
 
@@ -105,7 +105,7 @@ Your request to use the Advanced Computing service "{name}" has been accepted.
         body,
         settings.EMAILFROMEN,
         [to],
-        [settings.EMAILUS])
+        settings.EMAILUS)
 
     return em.send(fail_silently=True)
 
@@ -130,6 +130,6 @@ following explanation:
         body,
         settings.EMAILFROMEN,
         [to],
-        [settings.EMAILUS])
+        settings.EMAILUS)
 
     return em.send(fail_silently=True)

@@ -18,7 +18,7 @@ korisnik {user.first_name} {user.last_name}, {user.username} je dodao novi SSH j
         subject,
         body,
         settings.EMAILFROM,
-        [settings.EMAILUS]
+        settings.EMAILUS
     )
 
     return em.send(fail_silently=True)

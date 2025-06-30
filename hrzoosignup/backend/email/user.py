@@ -20,7 +20,7 @@ suradnik {collab.first_name} {collab.last_name} je potvrdio prijavu na projekt
         body,
         settings.EMAILFROM,
         [to],
-        [settings.EMAILUS]
+        settings.EMAILUS
     )
 
     return em.send(fail_silently=True)
@@ -44,7 +44,7 @@ The collaborator {collab.first_name} {collab.last_name} has confirmed registrati
         body,
         settings.EMAILFROMEN,
         [to],
-        [settings.EMAILUS]
+        settings.EMAILUS
     )
 
     return em.send(fail_silently=True)
