@@ -357,3 +357,152 @@ class MerlinProjectsAPI(APIView):
             )
 
         return Response(data=data, status=status_code)
+
+
+class ProjectsUsersAPI(APIView):
+    permission_classes = (MerlinHasAPIKey,)
+    serializer_class = backend_serializers.ProjectsUsersSerializer
+
+    @extend_schema(
+        responses={
+            200: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": 200,
+                        "message": "Invitations sent to: user1@example.com, "
+                                   "user2@example.com, user3@example.com"
+                    }
+                },
+                description="OK",
+                examples=[
+                    OpenApiExample(
+                        "OK",
+                        value={
+                            "status": {
+                                "code": 200,
+                                "message":
+                                    "Invitations sent to: user1@example.com, "
+                                    "user2@example.com, user3@example.com"
+                            }
+                        }
+                    )
+                ]
+            ),
+            400: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": 400,
+                        "message":
+                            "requester: User with OIB 123456789 does not exist"
+                    }
+                },
+                description="Bad request",
+                examples=[
+                    OpenApiExample(
+                        "Bad request",
+                        value={
+                            "status": {
+                                "code": 400,
+                                "message":
+                                    "requester: User with OIB 123456789 does "
+                                    "not exist"
+                            }
+                        }
+                    )
+                ]
+            ),
+            403: OpenApiResponse(
+                response={
+                    "detail": "Authentication credentials were not provided."
+                },
+                description="Forbidden",
+                examples=[
+                    OpenApiExample(
+                        "Forbidden",
+                        value={
+                            "detail":
+                                "Authentication credentials were not provided."
+                        }
+                    )
+                ]
+            ),
+            418: OpenApiResponse(
+                response={
+                    "status": {
+                        "code": 418,
+                        "message": "Problem sending email to: user1@example.com"
+                    }
+                },
+                description="I'm a teapot",
+                examples=[
+                    OpenApiExample(
+                        "I'm a teapot",
+                        value={
+                            "status": {
+                                "code": 418,
+                                "message": "Problem sending email to: "
+                                           "user1@example.com"
+                            }
+                        }
+                    )
+                ]
+            )
+        }
+    )
+    def post(self, request):
+        serializer = backend_serializers.ProjectsUsersSerializer(
+            data=request.data
+        )
+
+        try:
+            serializer.is_valid(raise_exception=True)
+            sent_invites, errors = serializer.invite(request)
+
+            if not errors:
+                status_code = status.HTTP_200_OK
+                msg = {
+                    "status": {
+                        "code": status_code,
+                        "message":
+                            f"Invitations sent to: {', '.join(sent_invites)}"
+                    }
+                }
+
+            else:
+                status_code = status.HTTP_418_IM_A_TEAPOT
+
+                errors_msg = "problem sending email to:"
+                for key, value in errors.items():
+                    errors_msg = f"{errors_msg} {key}: {value},"
+
+                if len(sent_invites) > 0:
+                    msg = (
+                        f"Invitations sent to: {', '.join(sent_invites)}; "
+                        f"{errors_msg.strip(',')}"
+                    )
+
+                else:
+                    status_code = status.HTTP_400_BAD_REQUEST
+                    msg = errors_msg.capitalize().strip(",")
+
+                msg = {
+                    "status": {
+                        "code": status_code,
+                        "message": msg
+                    }
+                }
+
+        except serializers.ValidationError:
+            status_code = status.HTTP_400_BAD_REQUEST
+            error_set = set()
+            for key, value in serializer.errors.items():
+                error_set.add(f"{key}: {str(value[0])}")
+
+            msg = {
+                "status": {
+                    "code": status_code,
+                    "message": " ".join(error_set)
+                }
+            }
+
+        return Response(msg, status=status_code)

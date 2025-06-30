@@ -90,6 +90,10 @@ class MockResponse:
         return self.data
 
 
+def mock_exception(msg):
+    raise Exception(msg)
+
+
 class ResourceUsageAPITests(TestCase):
     def setUp(self):
         create_mock_db()
@@ -4003,3 +4007,255 @@ class MerlinProjectsAPITests(TestCase):
                 }
             }
         )
+
+
+class ProjectsUsersAPITests(TestCase):
+    def setUp(self):
+        create_mock_db()
+
+        hrzoo = models.Organization4APIKey.objects.get(name="hrzoo")
+        merlin = models.Organization4APIKey.objects.get(name="merlin")
+        name, key = models.MyAPIKey.objects.create_key(
+            name="test", organization=merlin
+        )
+        name2, key2 = models.MyAPIKey.objects.create_key(
+            name="test2", organization=hrzoo
+        )
+        self.token = key
+        self.token2 = key2
+
+        self.factory = APIRequestFactory()
+
+        self.project5 = models.Project.objects.get(identifier="project-5")
+        self.user2 = models.User.objects.get(person_oib="22222222222")
+
+        self.data = {
+            "requester": {
+                "first_name": "Tricia",
+                "last_name": "McMillan",
+                "person_oib": "22222222222",
+                "person_mail": "trillian@fer.hr",
+                "username": "user454@fer.hr"
+            },
+            "project": self.project5.id,
+            "students": [
+                "user1@example.com",
+                "user2@example.com",
+                "user3@example.com"
+            ]
+        }
+
+        self.invite1 = models.CustomInvitation(
+            "user1@example.com",
+            inviter=self.user2,
+            project=self.project5,
+            person_oib=""
+        )
+        self.invite2 = models.CustomInvitation(
+            "user2@example.com",
+            inviter=self.user2,
+            project=self.project5,
+            person_oib=""
+        )
+        self.invite3 = models.CustomInvitation(
+            "user3@example.com",
+            inviter=self.user2,
+            project=self.project5,
+            person_oib=""
+        )
+
+    def test_post_unauthorized(self):
+        request = self.client.post(
+            "/api/v1/projectsusers",
+            content_type="application/json",
+            data=self.data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+
+    def test_post_wrong_organization(self):
+        request = self.client.post(
+            "/api/v1/projectsusers",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+            content_type="application/json",
+            data=self.data,
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            request.json(),
+            {"detail": "Authentication credentials were not provided."}
+        )
+
+    def test_post_students_invites(self):
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=self.data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 200,
+                    "message": "Invitations sent to: user1@example.com, "
+                               "user2@example.com, user3@example.com"
+                }
+            }
+        )
+        self.assertEqual(invitation_model.create.call_count, 3)
+        invitation_model.create.assert_has_calls([
+            mock.call(
+                "user1@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            ),
+            mock.call(
+                "user2@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            ),
+            mock.call(
+                "user3@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            )
+        ], any_order=True)
+
+    def test_post_students_invites_requester_without_oib(self):
+        data = copy.deepcopy(self.data)
+        data["requester"]["person_oib"] = ""
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 200,
+                    "message": "Invitations sent to: user1@example.com, "
+                               "user2@example.com, user3@example.com"
+                }
+            }
+        )
+        self.assertEqual(invitation_model.create.call_count, 3)
+        invitation_model.create.assert_has_calls([
+            mock.call(
+                "user1@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            ),
+            mock.call(
+                "user2@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            ),
+            mock.call(
+                "user3@example.com",
+                inviter=self.user2,
+                project=self.project5,
+                person_oib=""
+            )
+        ], any_order=True)
+
+    def test_post_students_invites_requester_with_nonexisting_oib(self):
+        data = copy.deepcopy(self.data)
+        data["requester"]["person_oib"] = "123456789"
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 400,
+                    "message":
+                        "requester: User with OIB 123456789 does not exist"
+                }
+            }
+        )
+        self.assertFalse(invitation_model.create.called)
+
+    def test_post_students_invites_nonexisting_project(self):
+        data = copy.deepcopy(self.data)
+        data["project"] = 9999999
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 400,
+                    "message": "project: There is no project with id 9999999"
+                }
+            }
+        )
+        self.assertFalse(invitation_model.create.called)
