@@ -930,6 +930,18 @@ class ProjectsUsersSerializer(serializers.Serializer):
 
     def invite(self, request):
         self.is_valid(raise_exception=True)
+        project = self.validated_data["project"]
+        project.date_changed = timezone.now()
+        user = get_user_model().objects.get(
+            username="merlin@srce.hr"
+        )
+        project.changed_by = {
+            "username": user.username,
+            "last_name": user.last_name,
+            "first_name": user.first_name,
+            "person_uniqueid": user.person_uniqueid
+        }
+        project.save()
 
         sent_invites = list()
         errors = dict()
@@ -938,7 +950,7 @@ class ProjectsUsersSerializer(serializers.Serializer):
                 invite = models.CustomInvitation.create(
                     email,
                     inviter=self.validated_data["requester"],
-                    project=self.validated_data["project"],
+                    project=project,
                     person_oib=""
                 )
                 invite.send_invitation(request)

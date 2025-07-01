@@ -4028,6 +4028,7 @@ class ProjectsUsersAPITests(TestCase):
 
         self.project5 = models.Project.objects.get(identifier="project-5")
         self.user2 = models.User.objects.get(person_oib="22222222222")
+        self.user_merlin = models.User.objects.get(username="merlin@srce.hr")
 
         self.data = {
             "requester": {
@@ -4063,6 +4064,9 @@ class ProjectsUsersAPITests(TestCase):
             project=self.project5,
             person_oib=""
         )
+        self.changedate = datetime.datetime(
+            2025, 7, 1, 8, 7, 16, tzinfo=datetime.timezone.utc
+        )
 
     def test_post_unauthorized(self):
         request = self.client.post(
@@ -4091,7 +4095,9 @@ class ProjectsUsersAPITests(TestCase):
             {"detail": "Authentication credentials were not provided."}
         )
 
-    def test_post_students_invites(self):
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites(self, mock_now):
+        mock_now.return_value = self.changedate
         invitation_model = mock.MagicMock()
         invitation_model_instance = invitation_model.return_value
         invitation_model_instance.create = mock.MagicMock(
@@ -4120,6 +4126,7 @@ class ProjectsUsersAPITests(TestCase):
                 }
             }
         )
+        project = models.Project.objects.get(id=self.project5.id)
         self.assertEqual(invitation_model.create.call_count, 3)
         invitation_model.create.assert_has_calls([
             mock.call(
@@ -4141,8 +4148,17 @@ class ProjectsUsersAPITests(TestCase):
                 person_oib=""
             )
         ], any_order=True)
+        self.assertEqual(project.date_changed, self.changedate)
+        self.assertEqual(project.changed_by, {
+            "username": "merlin@srce.hr",
+            "last_name": "Moodle",
+            "first_name": "Merlin",
+            "person_uniqueid": "merlin@srce.hr"
+        })
 
-    def test_post_students_invites_requester_without_oib(self):
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_requester_without_oib(self, mock_now):
+        mock_now.return_value = self.changedate
         data = copy.deepcopy(self.data)
         data["requester"]["person_oib"] = ""
         invitation_model = mock.MagicMock()
@@ -4173,6 +4189,7 @@ class ProjectsUsersAPITests(TestCase):
                 }
             }
         )
+        project = models.Project.objects.get(id=self.project5.id)
         self.assertEqual(invitation_model.create.call_count, 3)
         invitation_model.create.assert_has_calls([
             mock.call(
@@ -4194,8 +4211,19 @@ class ProjectsUsersAPITests(TestCase):
                 person_oib=""
             )
         ], any_order=True)
+        self.assertEqual(project.date_changed, self.changedate)
+        self.assertEqual(project.changed_by, {
+            "username": "merlin@srce.hr",
+            "last_name": "Moodle",
+            "first_name": "Merlin",
+            "person_uniqueid": "merlin@srce.hr"
+        })
 
-    def test_post_students_invites_requester_with_nonexisting_oib(self):
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_requester_with_nonexisting_oib(
+            self, mock_now
+    ):
+        mock_now.return_value = self.changedate
         data = copy.deepcopy(self.data)
         data["requester"]["person_oib"] = "123456789"
         invitation_model = mock.MagicMock()
@@ -4227,8 +4255,13 @@ class ProjectsUsersAPITests(TestCase):
             }
         )
         self.assertFalse(invitation_model.create.called)
+        project = models.Project.objects.get(id=self.project5.id)
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.changed_by, None)
 
-    def test_post_students_invites_nonexisting_project(self):
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_nonexisting_project(self, mock_now):
+        mock_now.return_value = self.changedate
         data = copy.deepcopy(self.data)
         data["project"] = 9999999
         invitation_model = mock.MagicMock()
@@ -4259,3 +4292,6 @@ class ProjectsUsersAPITests(TestCase):
             }
         )
         self.assertFalse(invitation_model.create.called)
+        project = models.Project.objects.get(id=self.project5.id)
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.changed_by, None)
