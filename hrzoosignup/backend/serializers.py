@@ -803,7 +803,9 @@ class NewProjectsSerializer(serializers.Serializer):
             "person_uniqueid": merlin_user.person_uniqueid,
             "username": merlin_user.username
         }
-        data["date_approved"] = timezone.now()
+        date_approved = timezone.now()
+        data["date_approved"] = date_approved
+        data["date_changed"] = date_approved
         data["staff_resources_type"] = data["resources_type"]
         data["state"] = models.State.objects.get(name="approve")
         data["institute"] = self._get_institution_name(
@@ -930,6 +932,18 @@ class ProjectsUsersSerializer(serializers.Serializer):
 
     def invite(self, request):
         self.is_valid(raise_exception=True)
+        project = self.validated_data["project"]
+        project.date_changed = timezone.now()
+        user = get_user_model().objects.get(
+            username="merlin@srce.hr"
+        )
+        project.changed_by = {
+            "username": user.username,
+            "last_name": user.last_name,
+            "first_name": user.first_name,
+            "person_uniqueid": user.person_uniqueid
+        }
+        project.save()
 
         sent_invites = list()
         errors = dict()
@@ -938,7 +952,7 @@ class ProjectsUsersSerializer(serializers.Serializer):
                 invite = models.CustomInvitation.create(
                     email,
                     inviter=self.validated_data["requester"],
-                    project=self.validated_data["project"],
+                    project=project,
                     person_oib=""
                 )
                 invite.send_invitation(request)
