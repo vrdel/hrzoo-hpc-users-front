@@ -3366,7 +3366,7 @@ class NewProjectsAPITests(TestCase):
                 "status": {
                     "code": status.HTTP_201_CREATED,
                     "project_id": project.id,
-                    "message": "Project successfully created"
+                    "message": "Projekt uspješno kreiran"
                 }
             }
         )
@@ -3526,7 +3526,7 @@ class NewProjectsAPITests(TestCase):
                 "status": {
                     "code": status.HTTP_201_CREATED,
                     "project_id": project.id,
-                    "message": "Project successfully created"
+                    "message": "Projekt uspješno kreiran"
                 }
             }
         )
@@ -3677,8 +3677,7 @@ class NewProjectsAPITests(TestCase):
             request.data, {
                 "status": {
                     "code": status.HTTP_400_BAD_REQUEST,
-                    "message":
-                        "resources_type: MEH is not among allowed resources"
+                    "message": "MEH nije dozvoljeni tip resursa"
                 }
             }
         )
@@ -3728,7 +3727,7 @@ class NewProjectsAPITests(TestCase):
             request.data, {
                 "status": {
                     "code": status.HTTP_400_BAD_REQUEST,
-                    "message": "project_type: meh is not valid project type"
+                    "message": "meh nije dozvoljeni tip projekta"
                 }
             }
         )
@@ -3781,7 +3780,7 @@ class NewProjectsAPITests(TestCase):
             request.data, {
                 "status": {
                     "code": status.HTTP_404_NOT_FOUND,
-                    "message": "Institution with id=14 not found"
+                    "message": "Institucija id=14 nije pronađena"
                 }
             }
         )
@@ -3834,7 +3833,7 @@ class NewProjectsAPITests(TestCase):
             request.data, {
                 "status": {
                     "code": status.HTTP_400_BAD_REQUEST,
-                    "message": "Error fetching institutions: "
+                    "message": "Problem s dohvatom institucija: "
                                "Some request exception"
                 }
             }
@@ -3866,10 +3865,10 @@ class NewProjectsAPITests(TestCase):
         data["institute"] = 14
         self.assertEqual(len(models.Project.objects.all()), 6)
         with self.settings(
-                DASHBOARD_USERNAME="dashboard_username",
-                DASHBOARD_PASS="dashboard_pass",
-                DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
-                                           "ustanove"
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
         ):
             request = self.client.post(
                 "/api/v1/projects",
@@ -3890,7 +3889,192 @@ class NewProjectsAPITests(TestCase):
             request.data, {
                 "status": {
                     "code": status.HTTP_500_INTERNAL_SERVER_ERROR,
-                    "message": "Error fetching institutions"
+                    "message": "Problem s dohvatom institucija"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_wrong_data(self, mock_now, mock_requests_get):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        data = copy.deepcopy(self.data)
+        data.pop("project_type")
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message": "Polje project_type je obavezno"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_missing_user(self, mock_now, mock_requests_get):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        data = copy.deepcopy(self.data)
+        data.pop("user")
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message": "Polje user je obavezno"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_missing_username(self, mock_now, mock_requests_get):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        data = copy.deepcopy(self.data)
+        data["user"].pop("username")
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message": "Polje username u polju user je obavezno"
+                }
+            }
+        )
+
+    @mock.patch("backend.api.view_projects.requests.get")
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_project_wrong_date_format(self, mock_now, mock_requests_get):
+        mock_now.side_effect = [
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 23, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            ),
+            datetime.datetime(
+                2025, 5, 7, 11, 53, 28, tzinfo=datetime.timezone.utc
+            )
+        ]
+        mock_requests_get.return_value = MockResponse(
+            data=mock_dashboard_institutions
+        )
+        self.assertEqual(len(models.Project.objects.all()), 6)
+        data = copy.deepcopy(self.data)
+        data["date_end"] = "2025-31-12"
+        with self.settings(
+            DASHBOARD_USERNAME="dashboard_username",
+            DASHBOARD_PASS="dashboard_pass",
+            DASHBOARD_API_INSTITUTIONS="https://webdev.dashboard.srce.hr/api/"
+                                       "ustanove"
+        ):
+            request = self.client.post(
+                "/api/v1/projects",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            request.data, {
+                "status": {
+                    "code": status.HTTP_400_BAD_REQUEST,
+                    "message": "Krivi format u polju date_end - "
+                               "koristite format YYYY-MM-DD"
                 }
             }
         )
@@ -4011,7 +4195,7 @@ class MerlinProjectsAPITests(TestCase):
             request.data, {
                 "status": {
                     "code": status.HTTP_404_NOT_FOUND,
-                    "message": "Project with id 9999 does not exist"
+                    "message": "Projekt id=9999 nije pronađen"
                 }
             }
         )
@@ -4129,8 +4313,9 @@ class ProjectsUsersAPITests(TestCase):
             response.data, {
                 "status": {
                     "code": 200,
-                    "message": "Invitations sent to: user1@example.com, "
-                               "user2@example.com, user3@example.com"
+                    "message": "Pozivnice poslane na adrese: "
+                               "user1@example.com, user2@example.com, "
+                               "user3@example.com"
                 }
             }
         )
@@ -4192,8 +4377,9 @@ class ProjectsUsersAPITests(TestCase):
             response.data, {
                 "status": {
                     "code": 200,
-                    "message": "Invitations sent to: user1@example.com, "
-                               "user2@example.com, user3@example.com"
+                    "message": "Pozivnice poslane na adrese: "
+                               "user1@example.com, user2@example.com, "
+                               "user3@example.com"
                 }
             }
         )
@@ -4257,8 +4443,7 @@ class ProjectsUsersAPITests(TestCase):
             response.data, {
                 "status": {
                     "code": 400,
-                    "message":
-                        "requester: User with OIB 123456789 does not exist"
+                    "message": "Korisnik s OIB-om 123456789 nije pronađen"
                 }
             }
         )
@@ -4295,7 +4480,7 @@ class ProjectsUsersAPITests(TestCase):
             response.data, {
                 "status": {
                     "code": 400,
-                    "message": "project: There is no project with id 9999999"
+                    "message": "Projekt id=9999999 nije pronađen"
                 }
             }
         )

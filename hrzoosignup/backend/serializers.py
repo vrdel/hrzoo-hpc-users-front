@@ -681,7 +681,7 @@ class NewProjectScienceFieldSerializer(serializers.Serializer):
 
 class NewProjectsSerializer(serializers.Serializer):
     user = NewProjectLeadUserSerializer()
-    project_type = serializers.CharField(required=True)
+    project_type = serializers.CharField()
     date_end = serializers.DateField(format="%Y-%m-%d")
     date_start = serializers.DateField(format="%Y-%m-%d")
     name = serializers.CharField(max_length=256)
@@ -699,7 +699,7 @@ class NewProjectsSerializer(serializers.Serializer):
 
         except models.ProjectType.DoesNotExist:
             raise serializers.ValidationError(
-                f"{value} is not valid project type"
+                f"{value} nije dozvoljeni tip projekta"
             )
 
 
@@ -728,7 +728,7 @@ class NewProjectsSerializer(serializers.Serializer):
         for val in value:
             if val.lower() not in settings.ALLOWED_RESOURCES:
                 raise serializers.ValidationError(
-                    f"{val} is not among allowed resources"
+                    f"{val} nije dozvoljeni tip resursa"
                 )
 
             else:
@@ -908,7 +908,7 @@ class ProjectsUsersSerializer(serializers.Serializer):
 
             except models.User.DoesNotExist:
                 raise serializers.ValidationError(
-                    f"User with OIB {value['person_oib']} does not exist"
+                    f"Korisnik s OIB-om {value['person_oib']} nije pronađen"
                 )
 
         else:
@@ -917,7 +917,8 @@ class ProjectsUsersSerializer(serializers.Serializer):
 
             except models.User.DoesNotExist:
                 raise serializers.ValidationError(
-                    f"User with username {value['username']} does not exist"
+                    f"Korisnik s korisničkim imenom {value['username']} nije "
+                    f"pronađen"
                 )
 
     @staticmethod
@@ -927,7 +928,7 @@ class ProjectsUsersSerializer(serializers.Serializer):
 
         except models.Project.DoesNotExist:
             raise serializers.ValidationError(
-                f"There is no project with id {value}"
+                f"Projekt id={value} nije pronađen"
             )
 
     def invite(self, request):
