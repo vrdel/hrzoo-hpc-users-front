@@ -803,7 +803,9 @@ class NewProjectsSerializer(serializers.Serializer):
             "person_uniqueid": merlin_user.person_uniqueid,
             "username": merlin_user.username
         }
-        data["date_approved"] = timezone.now()
+        date_approved = timezone.now()
+        data["date_approved"] = date_approved
+        data["date_changed"] = date_approved
         data["staff_resources_type"] = data["resources_type"]
         data["state"] = models.State.objects.get(name="approve")
         data["institute"] = self._get_institution_name(

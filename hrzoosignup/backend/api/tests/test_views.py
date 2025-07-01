@@ -3390,7 +3390,11 @@ class NewProjectsAPITests(TestCase):
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
             )
         )
-        self.assertEqual(project.date_changed, None)
+        self.assertEqual(
+            project.date_changed, datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            )
+        )
         self.assertEqual(
             project.approved_by, {
                 "first_name": "Merlin",
@@ -3550,7 +3554,11 @@ class NewProjectsAPITests(TestCase):
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
             )
         )
-        self.assertEqual(project.date_changed, None)
+        self.assertEqual(
+            project.date_changed, datetime.datetime(
+                2025, 5, 7, 11, 53, 25, tzinfo=datetime.timezone.utc
+            )
+        )
         self.assertEqual(
             project.approved_by, {
                 "first_name": "Merlin",
