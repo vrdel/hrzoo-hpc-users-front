@@ -389,8 +389,9 @@ class ProjectsUsersAPI(APIView):
                 response={
                     "status": {
                         "code": 200,
-                        "message": "Pozivnice poslane za: user1@example.com, "
-                                   "user2@example.com, user3@example.com"
+                        "message": "Pozivnice poslane na adrese: "
+                                   "user1@example.com, user2@example.com, "
+                                   "user3@example.com"
                     }
                 },
                 description="OK",
@@ -401,8 +402,9 @@ class ProjectsUsersAPI(APIView):
                             "status": {
                                 "code": 200,
                                 "message":
-                                    "Pozivnice poslane za: user1@example.com, "
-                                    "user2@example.com, user3@example.com"
+                                    "Pozivnice poslane na adrese: "
+                                    "user1@example.com, user2@example.com, "
+                                    "user3@example.com"
                             }
                         }
                     )
@@ -519,7 +521,30 @@ class ProjectsUsersAPI(APIView):
             status_code = status.HTTP_400_BAD_REQUEST
             error_set = set()
             for key, value in serializer.errors.items():
-                error_set.add(str(value[0]))
+                if key == "students" and len(request.data["students"]) > 0:
+                    for ind, email_err in enumerate(serializer.errors[key]):
+                        if email_err:
+                            error_set.add(
+                                f"Adresa {request.data['students'][ind]} "
+                                f"nije valjana"
+                            )
+                else:
+                    try:
+                        if str(value[0]) == "This field is required.":
+                            error_set.add(f"Polje {key} je obavezno")
+
+                        else:
+                            error_set.add(str(value[0]))
+
+                    except KeyError:
+                        for key1, value1 in serializer.errors[key].items():
+                            if str(value1[0]) == "This field is required.":
+                                error_set.add(
+                                    f"Polje {key1} u polju {key} je obavezno"
+                                )
+
+                            else:
+                                error_set.add(str(value1[0]))
 
             msg = {
                 "status": {

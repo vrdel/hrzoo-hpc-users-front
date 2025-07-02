@@ -460,7 +460,6 @@ class UsageSerializer(serializers.Serializer):
     instance_id = serializers.CharField(required=False, allow_blank=True)
     flavor = serializers.CharField(required=False, allow_blank=True)
     vcpus = serializers.CharField(required=False, allow_blank=True)
-    ngpus = serializers.CharField(required=False, allow_blank=True)
     started_at = serializers.CharField(required=False, allow_blank=True)
     ended_at = serializers.CharField(
         required=False, allow_blank=True, allow_null=True
@@ -478,7 +477,7 @@ class ResourceUsageSerializer(serializers.Serializer):
                 usage.save(resource=kwargs["resource"])
 
             except KeyError as e:
-                serializers.ValidationError(f"Missing {str(e)} field")
+                raise serializers.ValidationError(f"Missing {str(e)} field")
 
             else:
                 return usage
@@ -930,6 +929,13 @@ class ProjectsUsersSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 f"Projekt id={value} nije pronađen"
             )
+
+    def validate_students(self, value):
+        if len(value) == 0:
+            raise serializers.ValidationError("Nije zadana niti jedna adresa")
+
+        else:
+            return value
 
     def invite(self, request):
         self.is_valid(raise_exception=True)

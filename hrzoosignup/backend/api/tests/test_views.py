@@ -4488,3 +4488,189 @@ class ProjectsUsersAPITests(TestCase):
         project = models.Project.objects.get(id=self.project5.id)
         self.assertEqual(project.date_changed, None)
         self.assertEqual(project.changed_by, None)
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_missing_entry(self, mock_now):
+        mock_now.return_value = self.changedate
+        data = copy.deepcopy(self.data)
+        data.pop("project")
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 400,
+                    "message": "Polje project je obavezno"
+                }
+            }
+        )
+        self.assertFalse(invitation_model.create.called)
+        project = models.Project.objects.get(id=self.project5.id)
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.changed_by, None)
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_missing_requester(self, mock_now):
+        mock_now.return_value = self.changedate
+        data = copy.deepcopy(self.data)
+        data.pop("requester")
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 400,
+                    "message": "Polje requester je obavezno"
+                }
+            }
+        )
+        self.assertFalse(invitation_model.create.called)
+        project = models.Project.objects.get(id=self.project5.id)
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.changed_by, None)
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_missing_requester_data(self, mock_now):
+        mock_now.return_value = self.changedate
+        data = copy.deepcopy(self.data)
+        data["requester"].pop("username")
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 400,
+                    "message": "Polje username u polju requester je obavezno"
+                }
+            }
+        )
+        self.assertFalse(invitation_model.create.called)
+        project = models.Project.objects.get(id=self.project5.id)
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.changed_by, None)
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_empty_students_list(self, mock_now):
+        mock_now.return_value = self.changedate
+        data = copy.deepcopy(self.data)
+        data["students"] = []
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 400,
+                    "message": "Nije zadana niti jedna adresa"
+                }
+            }
+        )
+        self.assertFalse(invitation_model.create.called)
+        project = models.Project.objects.get(id=self.project5.id)
+        self.assertEqual(project.date_changed, None)
+        self.assertEqual(project.changed_by, None)
+
+    @mock.patch("backend.serializers.timezone.now")
+    def test_post_students_invites_invalid_email_address(self, mock_now):
+        mock_now.return_value = self.changedate
+        data = copy.deepcopy(self.data)
+        data["students"] = [
+            "user1@example.com",
+            "user2@example",
+            "user3@example.com"
+        ]
+        invitation_model = mock.MagicMock()
+        invitation_model_instance = invitation_model.return_value
+        invitation_model_instance.create = mock.MagicMock(
+            side_effect=[self.invite1, self.invite2, self.invite3]
+        )
+        self.invite1.send_invitation = mock.MagicMock()
+        self.invite2.send_invitation = mock.MagicMock()
+        self.invite3.send_invitation = mock.MagicMock()
+        with mock.patch(
+                "backend.serializers.models.CustomInvitation", invitation_model
+        ):
+            response = self.client.post(
+                "/api/v1/projectsusers",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data=data,
+                format="json"
+            )
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(
+            response.data, {
+                "status": {
+                    "code": 400,
+                    "message": "Adresa user2@example nije valjana"
+                }
+            }
+        )
+        self.assertEqual(invitation_model.create.call_count, 0)
