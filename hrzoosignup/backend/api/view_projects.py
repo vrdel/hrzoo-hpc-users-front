@@ -261,11 +261,15 @@ class MerlinProjectsAPI(APIView):
                         }
                     ],
                     "state": "string",
+                    "sent_invitations": [
+                        "email1@example.com",
+                        "email2@example.com"
+                    ],
                     "users": [
                         {
                             "id": 0,
                             "username": "string",
-                            "person_mail": "string",
+                            "person_mail": "email1@example.com",
                             "first_name": "string",
                             "last_name": "string",
                             "person_oib": "string",
@@ -290,7 +294,7 @@ class MerlinProjectsAPI(APIView):
                             "is_active": True,
                             "name": "string",
                             "project_type": "string",
-                            "reason": "",
+                            "reason": "string",
                             "resources_type": ["string"],
                             "science_field": [
                                 {
@@ -305,11 +309,15 @@ class MerlinProjectsAPI(APIView):
                                 }
                             ],
                             "state": "string",
+                            "sent_invitations": [
+                                "email1@example.com",
+                                "email2@example.com"
+                            ],
                             "users": [
                                 {
                                     "id": 0,
                                     "username": "string",
-                                    "person_mail": "string",
+                                    "person_mail": "email1@example.com",
                                     "first_name": "string",
                                     "last_name": "string",
                                     "person_oib": "string",
