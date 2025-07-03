@@ -3,6 +3,7 @@ import datetime
 import pytz
 from backend import models
 from django.utils import timezone
+from django.utils.crypto import get_random_string
 
 
 def create_mock_db():
@@ -736,4 +737,27 @@ def create_mock_db():
             "started_at": 1718533146.0,
             "instance_id": "123432451-14322143-13412"
         }
+    )
+    models.CustomInvitation.objects.create(
+        key=get_random_string(64).lower(),
+        email="ford.prefect@fer.hr",
+        project=project5,
+        created=datetime.datetime(
+            2025, 7, 3, 8, 52, 49, 485431, tzinfo=datetime.timezone.utc
+        ),
+        sent=datetime.datetime(
+            2025, 7, 3, 8, 55, 58, 978750, tzinfo=datetime.timezone.utc
+        ),
+        person_oib="33333333333",
+        invtype="local"
+    )
+    models.CustomInvitation.objects.create(
+        key=get_random_string(64).lower(),
+        email="zb@fer.hr",
+        project=project5,
+        created=datetime.datetime(
+            2025, 7, 3, 8, 52, 49, 485431, tzinfo=datetime.timezone.utc
+        ),
+        person_oib="44444444444",
+        invtype="local"
     )

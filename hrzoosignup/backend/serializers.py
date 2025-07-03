@@ -859,10 +859,21 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
     resources_type = ResourcesTypeSerializer()
     state = serializers.SerializerMethodField()
     users = serializers.SerializerMethodField()
+    sent_invitations = serializers.SerializerMethodField()
 
     def get_users(self, obj):
         user_projects = models.UserProject.objects.filter(project=obj)
         return MerlinProjectUsersSerializer(user_projects, many=True).data
+
+    def get_sent_invitations(self, obj):
+        users = self.get_users(obj)
+        accepted = [user["person_mail"] for user in users]
+        sent = [
+            inv.email for inv in models.CustomInvitation.objects.filter(
+                project=obj
+            ) if inv.sent
+        ]
+        return sorted(list(set(accepted).union(set(sent))))
 
     @staticmethod
     def get_project_type(obj):
@@ -885,7 +896,8 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
         fields = [
             "id", "date_approved", "date_start", "date_end", "date_submitted",
             "identifier", "institute", "is_active", "name", "project_type",
-            "reason", "resources_type",  "state", "users", "science_field"
+            "reason", "resources_type", "state", "users", "science_field",
+            "sent_invitations"
         ]
         model = models.Project
 
