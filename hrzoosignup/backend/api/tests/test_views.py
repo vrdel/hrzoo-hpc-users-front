@@ -4156,6 +4156,11 @@ class MerlinProjectsAPITests(TestCase):
                     }
                 ],
                 "state": "approve",
+                "sent_invitations": [
+                    "arthur.dent@fer.hr",
+                    "ford.prefect@fer.hr",
+                    "trillian@fer.hr"
+                ],
                 "users": [
                     {
                         "id": self.user2.id,
