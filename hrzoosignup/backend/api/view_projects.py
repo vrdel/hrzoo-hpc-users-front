@@ -48,7 +48,7 @@ class NewProjectsAPI(APIView):
                             "status": {
                                 "code": 201,
                                 "project_id": 1,
-                                "message": "Project successfully created"
+                                "message": "Projekt uspješno kreiran"
                             }
                         }
                     )
@@ -58,8 +58,7 @@ class NewProjectsAPI(APIView):
                 response={
                     "status": {
                         "code": 400,
-                        "message":
-                            "project_type: TEST is not valid project type"
+                        "message": "TEST nije dozvoljeni tip projekta"
                     }
                 },
                 description="Bad request",
@@ -69,8 +68,7 @@ class NewProjectsAPI(APIView):
                         value={
                             "status": {
                                 "code": 400,
-                                "message": "project_type: TEST is not valid "
-                                           "project type"
+                                "message": "TEST nije dozvoljeni tip resursa"
                             }
                         }
                     ),
@@ -79,8 +77,7 @@ class NewProjectsAPI(APIView):
                         value={
                             "status": {
                                 "code": 400,
-                                "message": "resources_type: TEST is not among "
-                                           "allowed resources"
+                                "message": "TEST nije dozvoljeni tip resursa"
                             }
                         }
                     )
@@ -129,7 +126,7 @@ class NewProjectsAPI(APIView):
 
                 except requests.exceptions.RequestException as e:
                     status_code = response.status_code
-                    error_msg = f"Error fetching institutions"
+                    error_msg = f"Problem s dohvatom institucija"
 
                     if str(e):
                         error_msg = f"{error_msg}: {str(e)}"
@@ -159,8 +156,9 @@ class NewProjectsAPI(APIView):
                             "status": {
                                 "code": status_code,
                                 "message":
-                                    f"Institution with "
-                                    f"id={request.data['institute']} not found"
+                                    f"Institucija "
+                                    f"id={request.data['institute']} nije "
+                                    f"pronađena"
                             }
                         }
                     )
@@ -171,7 +169,7 @@ class NewProjectsAPI(APIView):
                             "status": {
                                 "code": status.HTTP_201_CREATED,
                                 "project_id": project.id,
-                                "message": "Project successfully created"
+                                "message": "Projekt uspješno kreiran"
                             }
                         },
                         status=status.HTTP_201_CREATED
@@ -186,7 +184,29 @@ class NewProjectsAPI(APIView):
             status_code = status.HTTP_400_BAD_REQUEST
             error_set = set()
             for key, value in serializer.errors.items():
-                error_set.add(f"{key}: {str(value[0])}")
+                try:
+                    if str(value[0]) == "This field is required.":
+                        error_set.add(f"Polje {key} je obavezno")
+
+                    elif str(value[0]).startswith("Date has wrong format"):
+                        error_set.add(
+                            f"Krivi format u polju {key} - koristite format "
+                            f"YYYY-MM-DD"
+                        )
+
+                    else:
+                        error_set.add(str(value[0]))
+
+                except KeyError:
+                    if key == "user":
+                        for key1, value1 in serializer.errors[key].items():
+                            if str(value1[0]) == "This field is required.":
+                                error_set.add(
+                                    f"Polje {key1} u polju {key} je obavezno"
+                                )
+
+                            else:
+                                error_set.add(str(value1[0]))
 
             return Response(
                 {
@@ -321,7 +341,7 @@ class MerlinProjectsAPI(APIView):
                 response={
                     "status": {
                         "code": status.HTTP_404_NOT_FOUND,
-                        "message": "Project with id <proj_id> does not exist"
+                        "message": "Projekt id=<proj_id> nije pronađen"
                     }
                 },
                 description="Not Found",
@@ -331,7 +351,7 @@ class MerlinProjectsAPI(APIView):
                         value={
                             "status": {
                                 "code": status.HTTP_404_NOT_FOUND,
-                                "message": "Project with id <proj_id> does not exist"
+                                "message": "Projekt id=<proj_id> nije pronađen"
                             }
                         }
                     )
@@ -352,7 +372,7 @@ class MerlinProjectsAPI(APIView):
         except models.Project.DoesNotExist:
             status_code = status.HTTP_404_NOT_FOUND
             data = self._generate_error_response_message(
-                msg = f"Project with id {proj_id} does not exist",
+                msg = f"Projekt id={proj_id} nije pronađen",
                 code=status_code
             )
 
@@ -369,8 +389,9 @@ class ProjectsUsersAPI(APIView):
                 response={
                     "status": {
                         "code": 200,
-                        "message": "Invitations sent to: user1@example.com, "
-                                   "user2@example.com, user3@example.com"
+                        "message": "Pozivnice poslane na adrese: "
+                                   "user1@example.com, user2@example.com, "
+                                   "user3@example.com"
                     }
                 },
                 description="OK",
@@ -381,8 +402,9 @@ class ProjectsUsersAPI(APIView):
                             "status": {
                                 "code": 200,
                                 "message":
-                                    "Invitations sent to: user1@example.com, "
-                                    "user2@example.com, user3@example.com"
+                                    "Pozivnice poslane na adrese: "
+                                    "user1@example.com, user2@example.com, "
+                                    "user3@example.com"
                             }
                         }
                     )
@@ -392,8 +414,7 @@ class ProjectsUsersAPI(APIView):
                 response={
                     "status": {
                         "code": 400,
-                        "message":
-                            "requester: User with OIB 123456789 does not exist"
+                        "message": "Korisnik s OIB-om 123456789 nije pronađen"
                     }
                 },
                 description="Bad request",
@@ -404,8 +425,7 @@ class ProjectsUsersAPI(APIView):
                             "status": {
                                 "code": 400,
                                 "message":
-                                    "requester: User with OIB 123456789 does "
-                                    "not exist"
+                                    "Korisnik s OIB-om 123456789 nije pronađen"
                             }
                         }
                     )
@@ -430,7 +450,9 @@ class ProjectsUsersAPI(APIView):
                 response={
                     "status": {
                         "code": 418,
-                        "message": "Problem sending email to: user1@example.com"
+                        "message":
+                            "Problem sa slanjem emaila na adresu: "
+                            "user1@example.com"
                     }
                 },
                 description="I'm a teapot",
@@ -440,8 +462,9 @@ class ProjectsUsersAPI(APIView):
                         value={
                             "status": {
                                 "code": 418,
-                                "message": "Problem sending email to: "
-                                           "user1@example.com"
+                                "message":
+                                    "Problem sa slanjem emaila na adresu: "
+                                    "user1@example.com"
                             }
                         }
                     )
@@ -464,20 +487,22 @@ class ProjectsUsersAPI(APIView):
                     "status": {
                         "code": status_code,
                         "message":
-                            f"Invitations sent to: {', '.join(sent_invites)}"
+                            f"Pozivnice poslane na adrese: "
+                            f"{', '.join(sent_invites)}"
                     }
                 }
 
             else:
                 status_code = status.HTTP_418_IM_A_TEAPOT
 
-                errors_msg = "problem sending email to:"
+                errors_msg = "problem sa slanjem emaila na adresu:"
                 for key, value in errors.items():
-                    errors_msg = f"{errors_msg} {key}: {value},"
+                    errors_msg = f"{errors_msg} {value},"
 
                 if len(sent_invites) > 0:
                     msg = (
-                        f"Invitations sent to: {', '.join(sent_invites)}; "
+                        f"Pozivnice poslane na adrese: "
+                        f"{', '.join(sent_invites)}; "
                         f"{errors_msg.strip(',')}"
                     )
 
@@ -496,7 +521,30 @@ class ProjectsUsersAPI(APIView):
             status_code = status.HTTP_400_BAD_REQUEST
             error_set = set()
             for key, value in serializer.errors.items():
-                error_set.add(f"{key}: {str(value[0])}")
+                if key == "students" and len(request.data["students"]) > 0:
+                    for ind, email_err in enumerate(serializer.errors[key]):
+                        if email_err:
+                            error_set.add(
+                                f"Adresa {request.data['students'][ind]} "
+                                f"nije valjana"
+                            )
+                else:
+                    try:
+                        if str(value[0]) == "This field is required.":
+                            error_set.add(f"Polje {key} je obavezno")
+
+                        else:
+                            error_set.add(str(value[0]))
+
+                    except KeyError:
+                        for key1, value1 in serializer.errors[key].items():
+                            if str(value1[0]) == "This field is required.":
+                                error_set.add(
+                                    f"Polje {key1} u polju {key} je obavezno"
+                                )
+
+                            else:
+                                error_set.add(str(value1[0]))
 
             msg = {
                 "status": {
