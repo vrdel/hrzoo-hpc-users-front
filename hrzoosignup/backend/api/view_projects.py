@@ -4,6 +4,7 @@ import requests
 from backend import models
 from backend import serializers as backend_serializers
 from backend.dbmodels.apikey import HRZOOHasAPIKey, MerlinHasAPIKey
+from backend.email.project import email_auto_approve_project
 from django.conf import settings
 from django.core.cache import cache
 from drf_spectacular.utils import extend_schema, OpenApiExample, OpenApiResponse
@@ -145,6 +146,8 @@ class NewProjectsAPI(APIView):
                     project = serializer.save(
                         dashboard_institutions=institutions
                     )
+                    if settings.EMAIL_SEND:
+                        email_auto_approve_project(name=request.data["name"])
                     cache.delete('projects-get-all')
                     cache.delete("ext-users-projects")
 
