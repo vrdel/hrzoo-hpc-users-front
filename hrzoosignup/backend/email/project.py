@@ -133,3 +133,25 @@ following explanation:
         settings.EMAILUS)
 
     return em.send(fail_silently=True)
+
+
+def email_auto_approve_project(name):
+    subject = "Merlin zahtjev odobren"
+
+    body = \
+        f"""\
+Poštovani/a,
+
+zahtjev za korištenje usluge Napredno računanje "{name}" je automatski prihvaćen.
+
+{settings.EMAILSIGNATURE}
+"""
+
+    em = EmailMessage(
+        subject,
+        body,
+        settings.EMAILFROM,
+        settings.EMAILUS
+    )
+
+    return em.send(fail_silently=True)

@@ -94,6 +94,10 @@ def mock_exception(msg):
     raise Exception(msg)
 
 
+def mock_function(*args, **kwargs):
+    pass
+
+
 class ResourceUsageAPITests(TestCase):
     def setUp(self):
         create_mock_db()
@@ -3320,9 +3324,12 @@ class NewProjectsAPITests(TestCase):
         )
         self.assertEqual(len(models.Project.objects.all()), 6)
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_existing_user(self, mock_now, mock_requests_get):
+    def test_post_project_existing_user(
+            self, mock_now, mock_requests_get, mock_email
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3340,6 +3347,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         self.assertEqual(len(models.Project.objects.all()), 6)
         with self.settings(
             DASHBOARD_USERNAME="dashboard_username",
@@ -3359,6 +3367,7 @@ class NewProjectsAPITests(TestCase):
             headers=self.dashboard_headers
         )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        mock_email.assert_called_once_with(name="New project 7")
         self.assertEqual(len(models.Project.objects.all()), 7)
         project = models.Project.objects.get(name="New project 7")
         self.assertEqual(
@@ -3476,9 +3485,12 @@ class NewProjectsAPITests(TestCase):
             )
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_new_user(self, mock_now, mock_requests_get):
+    def test_post_project_new_user(
+            self, mock_now, mock_requests_get, mock_email
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3496,6 +3508,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         data = copy.deepcopy(self.data)
         data["user"] = {
             "first_name": "John J.",
@@ -3520,6 +3533,7 @@ class NewProjectsAPITests(TestCase):
             )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.Project.objects.all()), 7)
+        mock_email.assert_called_once_with(name="New project 7")
         project = models.Project.objects.get(name="New project 7")
         self.assertEqual(
             request.data, {
@@ -3632,10 +3646,11 @@ class NewProjectsAPITests(TestCase):
             )
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
     def test_post_project_existing_user_wrong_resource(
-            self, mock_now, mock_requests_get
+            self, mock_now, mock_requests_get, mock_email
     ):
         mock_now.side_effect = [
             datetime.datetime(
@@ -3654,6 +3669,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         data = copy.deepcopy(self.data)
         data["resources_type"] = ["MEH"]
         self.assertEqual(len(models.Project.objects.all()), 6)
@@ -3671,6 +3687,7 @@ class NewProjectsAPITests(TestCase):
                 format="json"
             )
         self.assertFalse(mock_requests_get.called)
+        self.assertFalse(mock_email.called)
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(len(models.Project.objects.all()), 6)
         self.assertEqual(
@@ -3682,10 +3699,11 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
     def test_post_project_existing_user_wrong_project_type(
-            self, mock_now, mock_requests_get
+            self, mock_now, mock_requests_get, mock_email
     ):
         mock_now.side_effect = [
             datetime.datetime(
@@ -3704,6 +3722,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         data = copy.deepcopy(self.data)
         data["project_type"] = "meh"
         self.assertEqual(len(models.Project.objects.all()), 6)
@@ -3722,6 +3741,7 @@ class NewProjectsAPITests(TestCase):
             )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertFalse(mock_requests_get.called)
+        self.assertFalse(mock_email.called)
         self.assertEqual(len(models.Project.objects.all()), 6)
         self.assertEqual(
             request.data, {
@@ -3732,10 +3752,11 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
     def test_post_project_existing_user_nonexisting_institute_id(
-            self, mock_now, mock_requests_get
+            self, mock_now, mock_requests_get, mock_email
     ):
         mock_now.side_effect = [
             datetime.datetime(
@@ -3754,6 +3775,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         data = copy.deepcopy(self.data)
         data["institute"] = 14
         self.assertEqual(len(models.Project.objects.all()), 6)
@@ -3774,6 +3796,7 @@ class NewProjectsAPITests(TestCase):
             "https://webdev.dashboard.srce.hr/api/ustanove",
             headers=self.dashboard_headers
         )
+        self.assertFalse(mock_email.called)
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(len(models.Project.objects.all()), 6)
         self.assertEqual(
@@ -3785,10 +3808,11 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
     def test_post_project_existing_user_error_fetching_institutes_with_msg(
-            self, mock_now, mock_requests_get
+            self, mock_now, mock_requests_get, mock_email
     ):
         mock_now.side_effect = [
             datetime.datetime(
@@ -3807,6 +3831,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=None, status_code=400
         )
+        mock_email.side_effect = mock_function
         data = copy.deepcopy(self.data)
         data["institute"] = 14
         self.assertEqual(len(models.Project.objects.all()), 6)
@@ -3827,6 +3852,7 @@ class NewProjectsAPITests(TestCase):
             "https://webdev.dashboard.srce.hr/api/ustanove",
             headers=self.dashboard_headers
         )
+        self.assertFalse(mock_email.called)
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(len(models.Project.objects.all()), 6)
         self.assertEqual(
@@ -3839,10 +3865,11 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
     def test_post_project_existing_user_error_fetching_institutes_without_msg(
-            self, mock_now, mock_requests_get
+            self, mock_now, mock_requests_get, mock_email
     ):
         mock_now.side_effect = [
             datetime.datetime(
@@ -3861,6 +3888,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=None, status_code=500
         )
+        mock_email.side_effect = mock_function
         data = copy.deepcopy(self.data)
         data["institute"] = 14
         self.assertEqual(len(models.Project.objects.all()), 6)
@@ -3881,6 +3909,7 @@ class NewProjectsAPITests(TestCase):
             "https://webdev.dashboard.srce.hr/api/ustanove",
             headers=self.dashboard_headers
         )
+        self.assertFalse(mock_email.called)
         self.assertEqual(
             request.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR
         )
@@ -3894,9 +3923,12 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_wrong_data(self, mock_now, mock_requests_get):
+    def test_post_project_wrong_data(
+            self, mock_now, mock_requests_get, mock_email
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3914,6 +3946,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         self.assertEqual(len(models.Project.objects.all()), 6)
         data = copy.deepcopy(self.data)
         data.pop("project_type")
@@ -3931,6 +3964,7 @@ class NewProjectsAPITests(TestCase):
                 format="json"
             )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(mock_email.called)
         self.assertEqual(
             request.data, {
                 "status": {
@@ -3940,9 +3974,12 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_missing_user(self, mock_now, mock_requests_get):
+    def test_post_project_missing_user(
+            self, mock_now, mock_requests_get, mock_email
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -3960,6 +3997,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         self.assertEqual(len(models.Project.objects.all()), 6)
         data = copy.deepcopy(self.data)
         data.pop("user")
@@ -3977,6 +4015,7 @@ class NewProjectsAPITests(TestCase):
                 format="json"
             )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(mock_email.called)
         self.assertEqual(
             request.data, {
                 "status": {
@@ -3986,9 +4025,12 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_missing_username(self, mock_now, mock_requests_get):
+    def test_post_project_missing_username(
+            self, mock_now, mock_requests_get, mock_email
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -4006,6 +4048,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         self.assertEqual(len(models.Project.objects.all()), 6)
         data = copy.deepcopy(self.data)
         data["user"].pop("username")
@@ -4023,6 +4066,7 @@ class NewProjectsAPITests(TestCase):
                 format="json"
             )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(mock_email.called)
         self.assertEqual(
             request.data, {
                 "status": {
@@ -4032,9 +4076,12 @@ class NewProjectsAPITests(TestCase):
             }
         )
 
+    @mock.patch("backend.api.view_projects.email_auto_approve_project")
     @mock.patch("backend.api.view_projects.requests.get")
     @mock.patch("backend.serializers.timezone.now")
-    def test_post_project_wrong_date_format(self, mock_now, mock_requests_get):
+    def test_post_project_wrong_date_format(
+            self, mock_now, mock_requests_get, mock_email
+    ):
         mock_now.side_effect = [
             datetime.datetime(
                 2025, 5, 7, 11, 53, 20, tzinfo=datetime.timezone.utc
@@ -4052,6 +4099,7 @@ class NewProjectsAPITests(TestCase):
         mock_requests_get.return_value = MockResponse(
             data=mock_dashboard_institutions
         )
+        mock_email.side_effect = mock_function
         self.assertEqual(len(models.Project.objects.all()), 6)
         data = copy.deepcopy(self.data)
         data["date_end"] = "2025-31-12"
@@ -4069,6 +4117,7 @@ class NewProjectsAPITests(TestCase):
                 format="json"
             )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertFalse(mock_email.called)
         self.assertEqual(
             request.data, {
                 "status": {
