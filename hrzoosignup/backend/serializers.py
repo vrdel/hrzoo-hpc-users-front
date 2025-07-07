@@ -471,10 +471,12 @@ class ResourceUsageSerializer(serializers.Serializer):
 
     def save(self, **kwargs):
         if len(self.validated_data["usage"]) > 0:
-            usage = Usage(data=self.validated_data["usage"])
+            usage = Usage(
+                data=self.validated_data["usage"], resource=kwargs["resource"]
+            )
 
             try:
-                usage.save(resource=kwargs["resource"])
+                usage.save()
 
             except KeyError as e:
                 raise serializers.ValidationError(f"Missing {str(e)} field")

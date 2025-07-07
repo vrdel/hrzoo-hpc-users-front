@@ -21,9 +21,9 @@ class Command(BaseCommand):
         with open(options["file"], "r") as f:
             data = json.load(f)
 
-        usage = Usage(data=data["usage"])
+        usage = Usage(data=data["usage"], resource=options["resource"])
 
-        usage.save(resource=options["resource"])
+        usage.save()
 
         error_message = ""
         if len(usage.missing_projects) > 0:

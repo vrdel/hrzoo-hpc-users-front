@@ -70,8 +70,9 @@ def _prepare_job_data(data):
 
 
 class Usage:
-    def __init__(self, data):
+    def __init__(self, data, resource):
         self.data = data
+        self.resource = resource
 
         self.projects_mapping = dict()
         for proj in models.Project.objects.all():
@@ -199,7 +200,7 @@ class Usage:
 
         return projects_dict, missing_projects
 
-    def save(self, resource):
+    def save(self):
         df = self.create_dataframe()
 
         model_instances = list()
@@ -224,7 +225,7 @@ class Usage:
 
                     if len(
                         set(tags).intersection(
-                            set(RESOURCES_TAGS_MAPPING[resource])
+                            set(RESOURCES_TAGS_MAPPING[self.resource])
                         )
                     ) > 0:
                         project = user_project.project
@@ -237,7 +238,7 @@ class Usage:
                         else None,
                         project=project,
                         end_time=record["end_time"],
-                        resource_name=resource,
+                        resource_name=self.resource,
                         accounting_record=json.loads(record["job_data"])
                     )
                 )
