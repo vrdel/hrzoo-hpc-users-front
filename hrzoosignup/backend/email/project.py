@@ -136,7 +136,7 @@ following explanation:
 
 
 def email_auto_approve_project(name):
-    subject = 'Zahtjev odobren'
+    subject = "Merlin zahtjev odobren"
 
     body = \
         f"""\
