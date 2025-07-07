@@ -1239,10 +1239,9 @@ class ResourceUsageAPITests(TestCase):
                         "project": None,
                         "start_time": "1717845508",
                         "end_time": "1717849428",
-                        "queue": "gpu",
+                        "queue": "cpu",
                         "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
+                        "qtime": "1717796832"
                     },
                     {
                         "user": "adent",
@@ -1283,12 +1282,10 @@ class ResourceUsageAPITests(TestCase):
             "walltime": "3920",
             "ncpus": "4",
             "start_time": "1717845508",
-            "queue": "gpu",
+            "queue": "cpu",
             "wait_time": "2",
             "qtime": "1717796832",
-            "ngpus": "2",
-            "cpuh": 4.3556,
-            "gpuh": 2.1778
+            "cpuh": 4.3556
         })
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
@@ -1304,13 +1301,11 @@ class ResourceUsageAPITests(TestCase):
             "jobid": "12346",
             "walltime": "10",
             "ncpus": "18",
-            "ngpus": None,
             "start_time": "1716001512",
             "queue": "queue1",
             "wait_time": "2",
             "qtime": "",
-            "cpuh": 0.05,
-            "gpuh": 0.
+            "cpuh": 0.05
         })
 
     def test_post_data_without_user(self):
@@ -1419,10 +1414,9 @@ class ResourceUsageAPITests(TestCase):
                         "project": "project-1",
                         "start_time": "1717845508",
                         "end_time": "1717849428",
-                        "queue": "gpu",
+                        "queue": "cpu",
                         "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
+                        "qtime": "1717796832"
                     },
                     {
                         "user": "adent",
@@ -1463,12 +1457,10 @@ class ResourceUsageAPITests(TestCase):
             "walltime": "3920",
             "ncpus": "4",
             "start_time": "1717845508",
-            "queue": "gpu",
+            "queue": "cpu",
             "wait_time": "2",
             "qtime": "1717796832",
-            "ngpus": "2",
-            "cpuh": 4.3556,
-            "gpuh": 2.1778
+            "cpuh": 4.3556
         })
         self.assertEqual(usage2.user, self.user1)
         self.assertEqual(usage2.project, self.project1)
@@ -1484,13 +1476,11 @@ class ResourceUsageAPITests(TestCase):
             "jobid": "12346",
             "walltime": "10",
             "ncpus": "18",
-            "ngpus": None,
             "start_time": "1716001512",
             "queue": "queue1",
             "wait_time": "2",
             "qtime": "",
-            "cpuh": 0.05,
-            "gpuh": 0.
+            "cpuh": 0.05
         })
 
     def test_post_data_wrong_resource(self):

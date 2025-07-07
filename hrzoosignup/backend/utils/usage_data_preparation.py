@@ -41,7 +41,7 @@ def _calculate_processor_hour(data, key):
 
             return round(int(data[key]) * walltime / 3600., 4)
 
-    except ValueError:
+    except (ValueError, KeyError):
         return 0
 
 
@@ -127,16 +127,20 @@ class Usage:
             self.projects.update(projects)
             self.missing_projects.extend(missing_projects)
 
-            if "ncpus" in df:
+            if self.resource not in ["jupyter", "cloud"]:
                 df["cpuh"] = df.apply(lambda row: _calculate_cpuh(row), axis=1)
 
-            if "vcpus" in df:
+            if self.resource == "cloud":
                 df["cpuh"] = df.apply(
                     lambda row: _calculate_cloud_cpuh(row), axis=1
                 )
 
-            if "ngpus" in df:
+            if self.resource in ["supek", "cloud"]:
                 df["gpuh"] = df.apply(lambda row: _calculate_gpuh(row), axis=1)
+                df["ngpus"] = df.apply(
+                    lambda row: row["ngpus"] if "ngpus" in row else None,
+                    axis=1
+                )
 
             df["end_time"] = df.apply(
                 lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
