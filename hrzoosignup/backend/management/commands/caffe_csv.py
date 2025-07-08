@@ -27,41 +27,34 @@ class Command(BaseCommand):
 
         data = pd.DataFrame({"short_name": indicators.institutions()})
 
-        data["institute"] = data.apply(
-            lambda row: short2long(institution_long_names, row["short_name"]),
-            axis=1
-        )
+        institute = list()
+        supek_cpuh = list()
+        supek_gpuh = list()
+        padobran = list()
+        n_supek_cpuh = list()
+        n_supek_gpuh = list()
+        n_padobran = list()
+        for short_name in indicators.institutions():
+            institute.append(short2long(institution_long_names, short_name))
+            supek_cpuh.append(indicators.supek_cpuh(institution=short_name))
+            supek_gpuh.append(indicators.supek_gpuh(institution=short_name)[0])
+            padobran.append(indicators.padobran(institution=short_name)[0])
+            n_supek_cpuh.append(
+                indicators.supek_gpuh(institution=short_name)[2]
+            )
+            n_supek_gpuh.append(
+                indicators.supek_gpuh(institution=short_name)[1]
+            )
+            n_padobran.append(indicators.padobran(institution=short_name)[1])
 
-        data["supek_cpuh"] = data.apply(
-            lambda row: indicators.supek_cpuh(institution=row.short_name),
-            axis=1
-        )
-
-        data["supek_gpuh"] = data.apply(
-            lambda row: indicators.supek_gpuh(institution=row.short_name)[0],
-            axis=1
-        )
-
-        data["padobran"] = data.apply(
-            lambda row: indicators.padobran(institution=row.short_name)[0],
-            axis=1
-        )
-
-        data["n_supek_cpuh"] = data.apply(
-            lambda row: indicators.supek_gpuh(institution=row.short_name)[2],
-            axis=1
-        )
-
-        data["n_supek_gpuh"] = data.apply(
-            lambda row: indicators.supek_gpuh(institution=row.short_name)[1],
-            axis=1
-        )
-
-        data["n_padobran"] = data.apply(
-            lambda row: indicators.padobran(institution=row.short_name)[1],
-            axis=1
-        )
-
-        data.drop(["short_name"], axis="columns", inplace=True)
+        data = pd.DataFrame({
+            "institute": institute,
+            "supek_cpuh": supek_cpuh,
+            "supek_gpuh": supek_gpuh,
+            "padobran": padobran,
+            "n_supek_cpuh": n_supek_cpuh,
+            "n_supek_gpuh": n_supek_gpuh,
+            "n_padobran": n_padobran
+        })
 
         data.to_csv(options["filename"], index=False, sep="*")
