@@ -3,6 +3,7 @@ import copy
 import datetime
 from unittest import mock
 
+import pytz
 import requests
 from backend import models
 from django.core.cache import cache
@@ -121,6 +122,9 @@ class ResourceUsageAPITests(TestCase):
         self.project6 = models.Project.objects.get(name="Project name 6")
         self.user1 = models.User.objects.get(person_username="adent")
         self.user2 = models.User.objects.get(person_username="tmcmilla")
+
+        self.state1 = models.State.objects.get(name="approve")
+        self.project_type3 = models.ProjectType.objects.get(name="practical")
 
         self.factory = APIRequestFactory()
 
@@ -1843,6 +1847,159 @@ class ResourceUsageAPITests(TestCase):
             request2.json(),
             {"detail": "Authentication credentials were not provided."}
         )
+
+    def test_post_cloud_data_with_project_identifier_mapping(self):
+        project = models.Project.objects.create(
+            identifier="Project 11111 (bla-meh)",
+            name="Project with paranthesis in identifier",
+            institute="Fakultet elektrotehnike i računarstva",
+            science_extrasoftware_help=False,
+            is_active=True,
+            state=self.state1,
+            project_type=self.project_type3,
+            resources_type=[
+                {"label": "CLOUD", "value": "CLOUD"},
+                {"label": "JUPYTER", "value": "JUPYTER"}
+            ],
+            staff_resources_type=[
+                {"label": "CLOUD", "value": "CLOUD"},
+                {"label": "JUPYTER", "value": "JUPYTER"}
+            ],
+            science_field=[
+                {
+                    'name': {
+                        'label': 'TEHNIČKE ZNANOSTI',
+                        'value': 'TEHNIČKE ZNANOSTI'
+                    },
+                    'percent': 100,
+                    'scientificfields': [{
+                        'name': {
+                            'label': 'Računarstvo', 'value': 'Računarstvo'
+                        },
+                        'percent': 100
+                    }]
+                }
+            ],
+            date_start=datetime.date(2024, 5, 1),
+            date_end=datetime.date(2025, 12, 31),
+            date_approved=datetime.datetime(
+                2024, 5, 3, 12, 0, 13, tzinfo=pytz.UTC
+            )
+        )
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
+        request = self.client.post(
+            "/api/v1/accounting/records?resource=cloud",
+            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+            content_type="application/json",
+            data={
+                "usage": [
+                    {
+                        "project": "project-3",
+                        "end_time": "1727906399",
+                        "start_time": "1727733601",
+                        "instance_id": "1212121212",
+                        "vcpus": "16",
+                        "started_at": "1725015063",
+                        "ended_at": None,
+                        "ngpus": "1",
+                        "flavor": "m1.gpu.1"
+                    },
+                    {
+                        "project": "project-4",
+                        "end_time": "1727906399",
+                        "start_time": "1727733601",
+                        "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
+                        "vcpus": "4",
+                        "started_at": "1727782030",
+                        "ended_at": None,
+                        "flavor": "m1.half.windows"
+                    },
+                    {
+                        "project": "11111-bla-meh",
+                        "end_time": "1727906399",
+                        "start_time": "1727733601",
+                        "instance_id": "13241243135132",
+                        "vcpus": "64",
+                        "started_at": "1719313795",
+                        "ended_at": "1727761972",
+                        "flavor": "m1.medium"
+                    }
+                ]
+            },
+            format="json"
+        )
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(len(models.ResourceUsage.objects.all()), 16)
+        cloud_usage = models.ResourceUsage.objects.filter(
+            resource_name="cloud"
+        )
+        self.assertEqual(len(cloud_usage), 5)
+        usage1 = [
+            usage for usage in cloud_usage if usage.project == self.project3
+        ][0]
+        usage2 = [
+            usage for usage in cloud_usage if usage.project == self.project4
+        ][0]
+        usage3 = [
+            usage for usage in cloud_usage if usage.project == project
+        ][0]
+        self.assertEqual(usage1.user, None)
+        self.assertEqual(usage1.resource_name, "cloud")
+        self.assertEqual(
+            usage1.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone.get_current_timezone()
+            )
+        )
+        self.assertEqual(usage1.accounting_record, {
+            "start_time": "1727733601",
+            "instance_id": "1212121212",
+            "vcpus": "16",
+            "started_at": "1725015063",
+            "ended_at": None,
+            "ngpus": "1",
+            "flavor": "m1.gpu.1",
+            "cpuh": 767.9911,
+            "gpuh": 47.9994
+        })
+        self.assertEqual(usage2.user, None)
+        self.assertEqual(usage2.resource_name, "cloud")
+        self.assertEqual(
+            usage2.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone.get_current_timezone()
+            )
+        )
+        self.assertEqual(usage2.accounting_record, {
+            "start_time": "1727733601",
+            "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
+            "vcpus": "4",
+            "ngpus": None,
+            "started_at": "1727782030",
+            "ended_at": None,
+            "flavor": "m1.half.windows",
+            "cpuh": 138.1878,
+            "gpuh": 0
+        })
+        self.assertEqual(usage3.user, None)
+        self.assertEqual(usage3.resource_name, "cloud")
+        self.assertEqual(
+            usage3.end_time, timezone.make_aware(
+                datetime.datetime(2024, 10, 2, 23, 59, 59),
+                timezone.get_current_timezone()
+            )
+        )
+        self.assertEqual(usage3.accounting_record, {
+            "start_time": "1727733601",
+            "instance_id": "13241243135132",
+            "vcpus": "64",
+            "ngpus": None,
+            "started_at": "1719313795",
+            "ended_at": "1727761972",
+            "flavor": "m1.medium",
+            "gpuh": 0,
+            "cpuh": 504.3733
+        })
 
 
 class AccountingUserProjectAPITests(TestCase):
