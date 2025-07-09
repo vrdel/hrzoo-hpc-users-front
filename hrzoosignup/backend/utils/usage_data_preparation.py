@@ -41,7 +41,7 @@ def _calculate_processor_hour(data, key):
 
             return round(int(data[key]) * walltime / 3600., 4)
 
-    except ValueError:
+    except (ValueError, KeyError):
         return 0
 
 
@@ -70,13 +70,10 @@ def _prepare_job_data(data):
 
 
 class Usage:
-    def __init__(self, data):
-        self.df = pd.DataFrame.from_records(data)
-        if "project" not in self.df:
-            self.df["project"] = self.df.apply(lambda row: None, axis=1)
-
-        if "user" not in self.df:
-            self.df["user"] = self.df.apply(lambda row: None, axis=1)
+    def __init__(self, data, resource, chunk_size):
+        self.data = data
+        self.resource = resource
+        self.chunk_size = chunk_size
 
         self.projects_mapping = dict()
         for proj in models.Project.objects.all():
@@ -95,46 +92,79 @@ class Usage:
                 new_identifier: original_identifier
             })
 
-        self.users, self.missing_users = self._users(
-            self.df["user"].unique()
-        )
-        self.projects, self.missing_projects = self._projects(
-            self.df["project"].unique()
-        )
+        self.users = dict()
+        self.missing_users = list()
+        self.projects = dict()
+        self.missing_projects = list()
+
+    def _split_into_chunks(self, n_chunks):
+        avg = math.ceil(len(self.data) / float(n_chunks))
+        chunks = list()
+        last = 0
+
+        while last < len(self.data):
+            chunks.append(self.data[last:last + avg])
+            last += avg
+
+        return chunks
 
     def create_dataframe(self):
-        if "ncpus" in self.df:
-            self.df["cpuh"] = self.df.apply(
-                lambda row: _calculate_cpuh(row), axis=1
+        n_rows = len(self.data)
+        n_chunks = math.ceil(n_rows / self.chunk_size)
+        chunks = self._split_into_chunks(n_chunks)
+
+        dfs = list()
+        for chunk in chunks:
+            df = pd.DataFrame.from_records(chunk)
+
+            if "project" not in df:
+                df["project"] = df.apply(lambda row: None, axis=1)
+
+            if "user" not in df:
+                df["user"] = df.apply(lambda row: None, axis=1)
+
+            users, missing_users = self._users(df["user"].unique())
+            projects, missing_projects = self._projects(df["project"].unique())
+
+            self.users.update(users)
+            self.missing_users.extend(missing_users)
+            self.projects.update(projects)
+            self.missing_projects.extend(missing_projects)
+
+            if self.resource not in ["jupyter", "cloud"]:
+                df["cpuh"] = df.apply(lambda row: _calculate_cpuh(row), axis=1)
+
+            if self.resource == "cloud":
+                df["cpuh"] = df.apply(
+                    lambda row: _calculate_cloud_cpuh(row), axis=1
+                )
+
+            if self.resource in ["supek", "cloud"]:
+                df["gpuh"] = df.apply(lambda row: _calculate_gpuh(row), axis=1)
+                df["ngpus"] = df.apply(
+                    lambda row: row["ngpus"] if "ngpus" in row else None,
+                    axis=1
+                )
+
+            df["end_time"] = df.apply(
+                lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
+                    int(row["end_time"])
+                ), timezone=timezone.get_current_timezone()),
+                axis=1
             )
 
-        if "vcpus" in self.df:
-            self.df["cpuh"] = self.df.apply(
-                lambda row: _calculate_cloud_cpuh(row), axis=1
+            df["job_data"] = df.apply(
+                lambda row: _prepare_job_data(row), axis=1
             )
 
-        if "ngpus" in self.df:
-            self.df["gpuh"] = self.df.apply(
-                lambda row: _calculate_gpuh(row), axis=1
-            )
+            df = df[
+                (~df.user.isin(self.missing_users)) *
+                (~df.project.isin(self.missing_projects))
+            ]
 
-        self.df["end_time"] = self.df.apply(
-            lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
-                int(row["end_time"])
-            ), timezone=timezone.get_current_timezone()),
-            axis=1
-        )
+            dfs.append(df)
 
-        self.df["job_data"] = self.df.apply(
-            lambda row: _prepare_job_data(row), axis=1
-        )
-
-        df = self.df[
-            (~self.df.user.isin(self.missing_users)) *
-            (~self.df.project.isin(self.missing_projects))
-        ]
-
-        return df
+        return pd.concat(dfs, ignore_index=True)
 
     @staticmethod
     def _users(users):
@@ -178,7 +208,7 @@ class Usage:
 
         return projects_dict, missing_projects
 
-    def save(self, resource):
+    def save(self):
         df = self.create_dataframe()
 
         model_instances = list()
@@ -202,9 +232,9 @@ class Usage:
                     ]
 
                     if len(
-                            set(tags).intersection(
-                                set(RESOURCES_TAGS_MAPPING[resource])
-                            )
+                        set(tags).intersection(
+                            set(RESOURCES_TAGS_MAPPING[self.resource])
+                        )
                     ) > 0:
                         project = user_project.project
                         break
@@ -216,7 +246,7 @@ class Usage:
                         else None,
                         project=project,
                         end_time=record["end_time"],
-                        resource_name=resource,
+                        resource_name=self.resource,
                         accounting_record=json.loads(record["job_data"])
                     )
                 )
