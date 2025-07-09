@@ -126,41 +126,42 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 15)
         usage1 = models.ResourceUsage.objects.filter(
@@ -216,41 +217,42 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_different_organization_token(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token2}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(
             request.json(),
@@ -260,53 +262,55 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_empty_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={"usage": []},
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={"usage": []},
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_200_OK)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
 
     def test_post_data_user_uniqueid(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "user119@fer.hr",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "user119@fer.hr",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "user119@fer.hr",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "user119@fer.hr",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 15)
         usage1 = models.ResourceUsage.objects.filter(
@@ -362,53 +366,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_multiple_users(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "tmcmilla",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "tmcmilla",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 16)
         usage1 = models.ResourceUsage.objects.filter(
@@ -487,53 +492,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_unique_id_multiple_users(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "user119@fer.hr",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "user119@fer.hr",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "user454@fer.hr",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "user119@fer.hr",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "user119@fer.hr",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "user454@fer.hr",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 16)
         usage1 = models.ResourceUsage.objects.filter(
@@ -612,53 +618,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_nonexisting_user(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "nonexisting",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "nonexisting",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             request.data["status"]["message"], "User nonexisting not found"
@@ -717,53 +724,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_nonexisting_user_uniqueid(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "user119@fer.hr",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "user119@fer.hr",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "nonexisting199@fer.hr",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "user119@fer.hr",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "user119@fer.hr",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "nonexisting199@fer.hr",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             request.data["status"]["message"],
@@ -823,53 +831,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_multiple_nonexisting_user(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "nonexisting1",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "nonexisting2",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "nonexisting1",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "nonexisting2",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             request.data["status"]["message"],
@@ -904,53 +913,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_multiple_nonexisting_user_uniqueids(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "nonexisting1@fer.hr",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "user119@fer.hr",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "nonexisting2@fer.hr",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "nonexisting1@fer.hr",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "user119@fer.hr",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "nonexisting2@fer.hr",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             request.data["status"]["message"],
@@ -985,41 +995,42 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_nonexisting_project(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "nonexisting-project",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "nonexisting-project",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             request.data["status"]["message"],
@@ -1054,53 +1065,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_nonexisting_user_and_project(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "nonexisting-project",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "nonexisting",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "nonexisting-project",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "nonexisting",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             request.data["status"]["message"],
@@ -1135,41 +1147,42 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_without_project(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": None,
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": None,
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 15)
         usage1 = models.ResourceUsage.objects.filter(
@@ -1225,40 +1238,41 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_without_project_another_resource(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=galaxy",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": None,
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "cpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=galaxy",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": None,
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "cpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 15)
         usage1 = models.ResourceUsage.objects.filter(
@@ -1310,41 +1324,42 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_without_user(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": None,
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": None,
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 15)
         usage1 = models.ResourceUsage.objects.filter(
@@ -1400,40 +1415,41 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_without_user_another_resource(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=galaxy",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": None,
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "cpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=galaxy",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": None,
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "cpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 15)
         usage1 = models.ResourceUsage.objects.filter(
@@ -1485,53 +1501,54 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_wrong_resource(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=mrkva",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            format="json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "12345",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "project-1",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    },
-                    {
-                        "user": "adent",
-                        "jobid": "12346",
-                        "walltime": "10",
-                        "ncpus": "18",
-                        "project": "project-1",
-                        "start_time": "1716001512",
-                        "end_time": "1716001522",
-                        "queue": "queue1",
-                        "wait_time": "2",
-                        "qtime": ""
-                    },
-                    {
-                        "user": "nonexisting",
-                        "jobid": "12843",
-                        "walltime": "13",
-                        "ncpus": "2",
-                        "project": "project-3",
-                        "start_time": "1720520646",
-                        "end_time": "1720520659",
-                        "queue": "queue2",
-                        "wait_time": "4",
-                        "qtime": "8"
-                    }
-                ]
-            }
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=mrkva",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                format="json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "12345",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "project-1",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        },
+                        {
+                            "user": "adent",
+                            "jobid": "12346",
+                            "walltime": "10",
+                            "ncpus": "18",
+                            "project": "project-1",
+                            "start_time": "1716001512",
+                            "end_time": "1716001522",
+                            "queue": "queue1",
+                            "wait_time": "2",
+                            "qtime": ""
+                        },
+                        {
+                            "user": "nonexisting",
+                            "jobid": "12843",
+                            "walltime": "13",
+                            "ncpus": "2",
+                            "project": "project-3",
+                            "start_time": "1720520646",
+                            "end_time": "1720520659",
+                            "queue": "queue2",
+                            "wait_time": "4",
+                            "qtime": "8"
+                        }
+                    ]
+                }
+            )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             request.data["status"]["message"], "Nonexisting resource"
@@ -1540,28 +1557,29 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_jupyter_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=jupyter",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "user119@fer.hr",
-                        "jupyter_cpu_h": 17.17,
-                        "jupyter_gpu_h": 0,
-                        "end_time": "1727906399"
-                    },
-                    {
-                        "user": "user454@fer.hr",
-                        "jupyter_cpu_h": 0.73,
-                        "jupyter_gpu_h": 0.18,
-                        "end_time": "1727906399"
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=jupyter",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "user119@fer.hr",
+                            "jupyter_cpu_h": 17.17,
+                            "jupyter_gpu_h": 0,
+                            "end_time": "1727906399"
+                        },
+                        {
+                            "user": "user454@fer.hr",
+                            "jupyter_cpu_h": 0.73,
+                            "jupyter_gpu_h": 0.18,
+                            "end_time": "1727906399"
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 15)
         jupyter_usage = models.ResourceUsage.objects.filter(
@@ -1602,26 +1620,27 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_jupyter_data_without_end_time_entry(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=jupyter",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "user119@fer.hr",
-                        "jupyter_cpu_h": 17.17,
-                        "jupyter_gpu_h": 0,
-                    },
-                    {
-                        "user": "user454@fer.hr",
-                        "jupyter_cpu_h": 0.73,
-                        "jupyter_gpu_h": 0.18,
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=jupyter",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "user119@fer.hr",
+                            "jupyter_cpu_h": 17.17,
+                            "jupyter_gpu_h": 0,
+                        },
+                        {
+                            "user": "user454@fer.hr",
+                            "jupyter_cpu_h": 0.73,
+                            "jupyter_gpu_h": 0.18,
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertEqual(
             request.data["status"]["message"],
@@ -1630,47 +1649,48 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_cloud_data(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=cloud",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "project": "project-3",
-                        "end_time": "1727906399",
-                        "start_time": "1727733601",
-                        "instance_id": "1212121212",
-                        "vcpus": "16",
-                        "started_at": "1725015063",
-                        "ended_at": None,
-                        "ngpus": "1",
-                        "flavor": "m1.gpu.1"
-                    },
-                    {
-                        "project": "project-4",
-                        "end_time": "1727906399",
-                        "start_time": "1727733601",
-                        "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
-                        "vcpus": "4",
-                        "started_at": "1727782030",
-                        "ended_at": None,
-                        "flavor": "m1.half.windows"
-                    },
-                    {
-                        "project": "project-5",
-                        "end_time": "1727906399",
-                        "start_time": "1727733601",
-                        "instance_id": "13241243135132",
-                        "vcpus": "64",
-                        "started_at": "1719313795",
-                        "ended_at": "1727761972",
-                        "flavor": "m1.medium"
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=cloud",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "project": "project-3",
+                            "end_time": "1727906399",
+                            "start_time": "1727733601",
+                            "instance_id": "1212121212",
+                            "vcpus": "16",
+                            "started_at": "1725015063",
+                            "ended_at": None,
+                            "ngpus": "1",
+                            "flavor": "m1.gpu.1"
+                        },
+                        {
+                            "project": "project-4",
+                            "end_time": "1727906399",
+                            "start_time": "1727733601",
+                            "instance_id": "d591480f-6e2b-4817-9c54-b12d0d2d731f",
+                            "vcpus": "4",
+                            "started_at": "1727782030",
+                            "ended_at": None,
+                            "flavor": "m1.half.windows"
+                        },
+                        {
+                            "project": "project-5",
+                            "end_time": "1727906399",
+                            "start_time": "1727733601",
+                            "instance_id": "13241243135132",
+                            "vcpus": "64",
+                            "started_at": "1719313795",
+                            "ended_at": "1727761972",
+                            "flavor": "m1.medium"
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 16)
         cloud_usage = models.ResourceUsage.objects.filter(
@@ -1746,29 +1766,30 @@ class ResourceUsageAPITests(TestCase):
 
     def test_post_data_improper_project_id(self):
         self.assertEqual(len(models.ResourceUsage.objects.all()), 13)
-        request = self.client.post(
-            "/api/v1/accounting/records?resource=supek",
-            **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
-            content_type="application/json",
-            data={
-                "usage": [
-                    {
-                        "user": "adent",
-                        "jobid": "1234566",
-                        "walltime": "3920",
-                        "ncpus": "4",
-                        "project": "123456",
-                        "start_time": "1717845508",
-                        "end_time": "1717849428",
-                        "queue": "gpu",
-                        "wait_time": "2",
-                        "qtime": "1717796832",
-                        "ngpus": "2"
-                    }
-                ]
-            },
-            format="json"
-        )
+        with self.settings(CHUNK_SIZE=2):
+            request = self.client.post(
+                "/api/v1/accounting/records?resource=supek",
+                **{'HTTP_AUTHORIZATION': f"Api-Key {self.token}"},
+                content_type="application/json",
+                data={
+                    "usage": [
+                        {
+                            "user": "adent",
+                            "jobid": "1234566",
+                            "walltime": "3920",
+                            "ncpus": "4",
+                            "project": "123456",
+                            "start_time": "1717845508",
+                            "end_time": "1717849428",
+                            "queue": "gpu",
+                            "wait_time": "2",
+                            "qtime": "1717796832",
+                            "ngpus": "2"
+                        }
+                    ]
+                },
+                format="json"
+            )
         self.assertEqual(request.status_code, status.HTTP_201_CREATED)
         self.assertEqual(len(models.ResourceUsage.objects.all()), 14)
         usage = models.ResourceUsage.objects.get(

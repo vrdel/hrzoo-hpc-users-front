@@ -1,6 +1,7 @@
 import json
 
 from backend.utils.usage_data_preparation import Usage
+from django.conf import settings
 from django.core.management.base import BaseCommand
 
 
@@ -21,7 +22,11 @@ class Command(BaseCommand):
         with open(options["file"], "r") as f:
             data = json.load(f)
 
-        usage = Usage(data=data["usage"], resource=options["resource"])
+        usage = Usage(
+            data=data["usage"],
+            resource=options["resource"],
+            chunk_size=settings.CHUNK_SIZE
+        )
 
         usage.save()
 

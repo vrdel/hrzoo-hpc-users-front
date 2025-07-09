@@ -70,9 +70,10 @@ def _prepare_job_data(data):
 
 
 class Usage:
-    def __init__(self, data, resource):
+    def __init__(self, data, resource, chunk_size):
         self.data = data
         self.resource = resource
+        self.chunk_size = chunk_size
 
         self.projects_mapping = dict()
         for proj in models.Project.objects.all():
@@ -106,7 +107,7 @@ class Usage:
 
     def create_dataframe(self):
         n_rows = len(self.data)
-        n_chunks = math.ceil(n_rows / 5000)
+        n_chunks = math.ceil(n_rows / self.chunk_size)
         chunks = self._split_into_chunks(n_chunks)
 
         dfs = list()

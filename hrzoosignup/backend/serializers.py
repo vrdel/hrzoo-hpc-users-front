@@ -472,7 +472,9 @@ class ResourceUsageSerializer(serializers.Serializer):
     def save(self, **kwargs):
         if len(self.validated_data["usage"]) > 0:
             usage = Usage(
-                data=self.validated_data["usage"], resource=kwargs["resource"]
+                data=self.validated_data["usage"],
+                resource=kwargs["resource"],
+                chunk_size=settings.CHUNK_SIZE
             )
 
             try:
