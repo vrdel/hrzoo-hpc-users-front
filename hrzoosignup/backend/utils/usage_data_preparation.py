@@ -80,17 +80,20 @@ class Usage:
 
         self.projects_mapping = dict()
         for proj in models.Project.objects.all():
+            original_identifier = proj.identifier
+            new_identifier = original_identifier
             for field in settings.PROJECT_IDENTIFIER_MAP:
-                if field["from"] in proj.identifier:
-                    self.projects_mapping.update({
-                        proj.identifier.replace(field["from"], field["to"]):
-                            proj.identifier
-                    })
+                if field["from"] in new_identifier:
+                    new_identifier = new_identifier.replace(
+                        field["from"], field["to"]
+                    )
 
                 else:
-                    self.projects_mapping.update({
-                        proj.identifier: proj.identifier
-                    })
+                    continue
+
+            self.projects_mapping.update({
+                new_identifier: original_identifier
+            })
 
         self.users, self.missing_users = self._users(
             self.df["user"].unique()
