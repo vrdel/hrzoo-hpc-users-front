@@ -1,9 +1,10 @@
 import datetime
 
-from rest_framework import serializers
-from django.contrib.auth import get_user_model
-
 from backend import models
+from backend.utils.accounting import get_institute_long_name, short2long, \
+    institutions_realms_dict, get_realm
+from django.contrib.auth import get_user_model
+from rest_framework import serializers
 
 
 class ScienceSoftwareSerializer(serializers.ModelSerializer):
@@ -282,3 +283,86 @@ class UserSerializerFiltered(serializers.ModelSerializer):
             'userproject_set',
         )
         model = get_user_model()
+
+
+class ResourceUsageSerializer(serializers.ModelSerializer):
+    project = serializers.SerializerMethodField()
+    institution = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
+    cpuh = serializers.SerializerMethodField()
+    gpuh = serializers.SerializerMethodField()
+    walltime = serializers.SerializerMethodField()
+    wait_time = serializers.SerializerMethodField()
+    realm = serializers.SerializerMethodField()
+    tag = serializers.SerializerMethodField()
+    vm = serializers.SerializerMethodField()
+
+    def _get_institutions(self):
+        return institutions_realms_dict()
+
+    def _get_long_names(self):
+        return get_institute_long_name()
+
+    def get_project(self, obj):
+        return obj.project.name
+
+    def get_institution(self, obj):
+        return short2long(self._get_long_names(), obj.project.institute)
+
+    def get_type(self, obj):
+        return obj.project.project_type.name
+
+    @staticmethod
+    def _get_field(obj, field):
+        if obj.resource_name == "jupyter" and field in ["cpuh", "gpuh"]:
+            field = f"jupyter_{field[0:3]}_h"
+
+        try:
+            return obj.accounting_record[field]
+
+        except KeyError:
+            return None
+
+    def get_cpuh(self, obj):
+        return self._get_field(obj, "cpuh")
+
+    def get_gpuh(self, obj):
+        return self._get_field(obj, "gpuh")
+
+    def get_walltime(self, obj):
+        return self._get_field(obj, "walltime")
+
+    def get_wait_time(self, obj):
+        try:
+            return self._get_field(obj, "wait_time")
+
+        except TypeError:
+            return None
+
+    def get_realm(self, obj):
+        return get_realm(self._get_institutions(), obj.project.institute)
+
+    def get_tag(self, obj):
+        if obj.resource_name in ["supek", "padobran"]:
+            if "gpu" in obj.accounting_record["queue"]:
+                return "GPU"
+
+            else:
+                return "CPU"
+
+        else:
+            return None
+
+    def get_vm(self, obj):
+        try:
+            return self._get_field(obj, "instance_id")
+
+        except KeyError:
+            return ""
+
+    class Meta:
+        fields = [
+            "project", "institution", "type", "resource_name", "cpuh",
+            "gpuh", "walltime", "wait_time", "realm", "tag", "vm"
+        ]
+        model = models.ResourceUsage
