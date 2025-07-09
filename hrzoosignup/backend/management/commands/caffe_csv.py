@@ -25,8 +25,6 @@ class Command(BaseCommand):
 
         institution_long_names = get_institute_long_name()
 
-        data = pd.DataFrame({"short_name": indicators.institutions()})
-
         institute = list()
         supek_cpuh = list()
         supek_gpuh = list()
