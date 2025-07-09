@@ -81,6 +81,7 @@ Staff = dvrcic@aai-test.hr
 [ACCOUNTING]
 ShowGraphs = True
 AllowedResources = supek, cloud, padobran, jupyter, galaxy
+ChunkSize = 5000
 
 [EMAIL]
 Send = True

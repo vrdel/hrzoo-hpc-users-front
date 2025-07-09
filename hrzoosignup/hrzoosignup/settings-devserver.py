@@ -104,6 +104,7 @@ try:
             "ACCOUNTING", "AllowedResources"
         ).split(",")
     ]
+    CHUNK_SIZE = config.getint("ACCOUNTING", "ChunkSize")
 
     EMAIL_SEND = config.getboolean('EMAIL', 'Send')
     EMAILFROM = config.get('EMAIL', 'From')
