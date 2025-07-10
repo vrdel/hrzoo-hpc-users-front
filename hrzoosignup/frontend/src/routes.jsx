@@ -24,7 +24,7 @@ import Saml2LoginRedirect from 'Pages/saml2-login-redirect';
 import Saml2NotAllowed from 'Pages/saml2-not-allowed';
 import PublicKeys from 'Pages/public-keys/list';
 import NewPublicKey from 'Pages/public-keys/add';
-import Memberships from 'Pages/memberships';
+import MembershipsChange from 'Pages/memberships/change';
 import MyInfo from 'Pages/my-info';
 import NotFound from 'Pages/notfound';
 import Root from 'Pages/root';
@@ -196,7 +196,7 @@ const BaseRoutes = () => {
                 <NewPublicKey /> }
               />
               <Route path="memberships" element={
-                <Memberships /> }
+                <MembershipsChange /> }
               />
               <Route path="my-info" element={
                 <MyInfo /> }

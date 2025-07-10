@@ -175,7 +175,7 @@ const BriefProjectInfo = ({project}) => {
   )
 }
 
-const Memberships = () => {
+const MembershipsChange = () => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const [invitesSent, setInvitesSent] = useState(undefined);
@@ -626,4 +626,4 @@ const Memberships = () => {
     )
 };
 
-export default Memberships;
+export default MembershipsChange;
