@@ -114,7 +114,11 @@ const MembershipsList = () => {
         </thead>
       </EmptyTableSpinner>
     ) 
-  else if (projects?.length > 0 && pageTitle)
+  else if (status === "success" && statusPE === "success" && pageTitle) {
+    let projectsApproved = projects.filter(project => 
+      project.state.name !== "deny" && project.state.name !== "submit"
+    )
+
     return (
       <>
         <Row>
@@ -165,7 +169,7 @@ const MembershipsList = () => {
               </thead>
               <tbody>
                 {
-                  projects.map((project, index) =>
+                  projectsApproved.map((project, index) =>
                     <tr key={index}>
                       <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
@@ -274,6 +278,7 @@ const MembershipsList = () => {
         </Row>
       </>
     )
+  }
 };
 
 
