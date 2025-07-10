@@ -165,6 +165,18 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Novi zahtjev temeljem odabranog istraživačkog projekta',
         description: 'linktitle-newreq-research'
       })
+  
+  if (loc.includes('/memberships/') && loc.match(/[%\w.\d-_]+$/)) {
+    let identifier = loc.match(/[%\w.\d-_]+$/)
+    if (identifier[0].includes('%'))
+      identifier = Array(decodeURIComponent(identifier[0]))
+    return intl.formatMessage({
+        defaultMessage: 'Pregledavanje i upravljanje članstvima projekta {identifier}',
+        description: 'linktitle-memberships-change'
+      },
+      {identifier}
+    ).join(' ')
+  }
 
   return url2linktitle[loc]
 }
