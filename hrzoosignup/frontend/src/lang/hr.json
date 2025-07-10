@@ -1495,6 +1495,10 @@
     "defaultMessage": "Neka znanstvena područja se pojavljuju više puta.",
     "description": "domain-fields-science-area-multi"
   },
+  "X3X0kU": {
+    "defaultMessage": "Pregledavanje i upravljanje članstvima projekta {identifier}",
+    "description": "linktitle-memberships-change"
+  },
   "XNAgu+": {
     "defaultMessage": "Email",
     "description": "popover-email"

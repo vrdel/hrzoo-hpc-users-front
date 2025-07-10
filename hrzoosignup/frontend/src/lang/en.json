@@ -1495,6 +1495,10 @@
     "defaultMessage": "Some scientific domains appear multiple times.",
     "description": "domain-fields-science-area-multi"
   },
+  "X3X0kU": {
+    "defaultMessage": "Viewing and management of members of project {identifier}",
+    "description": "linktitle-memberships-change"
+  },
   "XNAgu+": {
     "defaultMessage": "Email",
     "description": "popover-email"
