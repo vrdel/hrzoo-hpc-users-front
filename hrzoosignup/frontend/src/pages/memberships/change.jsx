@@ -448,7 +448,7 @@ const MembershipsChange = () => {
   if (nrStatus === 'success'
     && invitesStatus === 'success'
     && nrProjects && pageTitle) {
-    let project = nrProjects.filter(project => project.identifier = projId)[0]
+    let project = nrProjects.filter(project => project.identifier == projId)[0]
 
     return (
       <>
