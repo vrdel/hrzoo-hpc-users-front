@@ -63,7 +63,7 @@ export function LinkTitles(loc, intl) {
       description: 'linktitle-myinfo'
     }),
     [url_ui_prefix + '/memberships']: intl.formatMessage({
-      defaultMessage: 'Popis i upravljanje članovima na odobrenim zahtjevima/projektima',
+      defaultMessage: 'Popis članstava na odobrenim zahtjevima/projektima',
       description: "linktitle-memberships"
     }),
     [url_ui_prefix + '/users']:

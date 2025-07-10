@@ -879,6 +879,10 @@
     "defaultMessage": "Aeronautics, Rocket and Space Technology",
     "description": "science-field-21"
   },
+  "H1mbQf": {
+    "defaultMessage": "List of memberships on approved requests/projects",
+    "description": "linktitle-memberships"
+  },
   "H5oET0": {
     "defaultMessage": "Yes",
     "description": "users-table-croris-yes"
@@ -1662,10 +1666,6 @@
   "crrunT": {
     "defaultMessage": "Key name",
     "description": "tableuserkeys-keyname"
-  },
-  "cvu7tz": {
-    "defaultMessage": "List and manage members on approved requests/projects",
-    "description": "linktitle-memberships"
   },
   "d+mmOJ": {
     "defaultMessage": "Denied",

@@ -67,7 +67,7 @@ const MembershipsList = () => {
     if (status === "success" && statusPE === "success") {
       navigate(url_ui_prefix + "/memberships")
     }
-  }, [location.pathname, status, url_ui_prefix])
+  }, [location.pathname, status, statusPE, url_ui_prefix, intl])
 
   if (status === "loading" && pageTitle)
     return (
@@ -118,7 +118,7 @@ const MembershipsList = () => {
     return (
       <>
         <Row>
-          <PageTitle pageTitle={pageTitle}/>
+          <PageTitle pageTitle={ pageTitle }/>
         </Row>
         <Row className="mt-4 ms-1 me-1 mb-5">
           <Col>

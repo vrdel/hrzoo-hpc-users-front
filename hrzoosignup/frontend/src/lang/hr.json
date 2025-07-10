@@ -879,6 +879,10 @@
     "defaultMessage": "Zrakoplovstvo, raketna i svemirska tehnika",
     "description": "science-field-21"
   },
+  "H1mbQf": {
+    "defaultMessage": "Popis članstava na odobrenim zahtjevima/projektima",
+    "description": "linktitle-memberships"
+  },
   "H5oET0": {
     "defaultMessage": "Da",
     "description": "users-table-croris-yes"
@@ -1662,10 +1666,6 @@
   "crrunT": {
     "defaultMessage": "Ime ključa",
     "description": "tableuserkeys-keyname"
-  },
-  "cvu7tz": {
-    "defaultMessage": "Popis i upravljanje članovima na odobrenim zahtjevima/projektima",
-    "description": "linktitle-memberships"
   },
   "d+mmOJ": {
     "defaultMessage": "Odbijen",
