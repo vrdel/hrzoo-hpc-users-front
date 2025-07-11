@@ -494,9 +494,6 @@ const MembershipsChange = () => {
                   </span>
                 </CardHeader>
                 <CardBody className="mb-1 bg-light p-0 m-0">
-                  <Row className='mt-2'>
-                    <BriefProjectInfo project={project} />
-                  </Row>
                   <Row>
                     {
                       // <BriefSummary project={project}/>
@@ -519,6 +516,9 @@ const MembershipsChange = () => {
                         )}
                         onSubmit={onSubmit} />
                   }
+                  <Row className='mt-2'>
+                    <BriefProjectInfo project={project} />
+                  </Row>
                 </CardBody>
               </Card>
             </Col>
