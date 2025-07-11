@@ -30,7 +30,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
-import { Link } from "react-router-dom";
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -469,9 +468,9 @@ const Memberships = () => {
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
                       <CardHeader className="d-flex align-items-center flex-column flex-md-row justify-content-between">
-                        <Link className="fs-5 fw-bold text-dark flex-grow-1" to={encodeURIComponent(project.identifier)}>
-                          { project?.name}
-                        </Link>
+                        <span className="fs-5 fw-bold text-dark flex-grow-1">
+                          { project?.name }
+                        </span>
                         <span className="d-flex justify-content-center flex-row">
                           <Badge color={"secondary fw-normal"}>
                             { project.identifier }
