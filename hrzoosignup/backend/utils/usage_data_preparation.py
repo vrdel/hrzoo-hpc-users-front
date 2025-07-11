@@ -108,63 +108,55 @@ class Usage:
 
         return chunks
 
-    def create_dataframe(self):
-        n_rows = len(self.data)
-        n_chunks = math.ceil(n_rows / self.chunk_size)
-        chunks = self._split_into_chunks(n_chunks)
+    def create_dataframe(self, chunk):
+        df = pd.DataFrame.from_records(chunk)
 
-        dfs = list()
-        for chunk in chunks:
-            df = pd.DataFrame.from_records(chunk)
+        if "project" not in df:
+            df["project"] = df.apply(lambda row: None, axis=1)
 
-            if "project" not in df:
-                df["project"] = df.apply(lambda row: None, axis=1)
+        if "user" not in df:
+            df["user"] = df.apply(lambda row: None, axis=1)
 
-            if "user" not in df:
-                df["user"] = df.apply(lambda row: None, axis=1)
+        users, missing_users = self._users(df["user"].unique())
+        projects, missing_projects = self._projects(df["project"].unique())
 
-            users, missing_users = self._users(df["user"].unique())
-            projects, missing_projects = self._projects(df["project"].unique())
+        self.users.update(users)
+        self.missing_users.extend(missing_users)
+        self.projects.update(projects)
+        self.missing_projects.extend(missing_projects)
 
-            self.users.update(users)
-            self.missing_users.extend(missing_users)
-            self.projects.update(projects)
-            self.missing_projects.extend(missing_projects)
+        if self.resource not in ["jupyter", "cloud"]:
+            df["cpuh"] = df.apply(lambda row: _calculate_cpuh(row), axis=1)
 
-            if self.resource not in ["jupyter", "cloud"]:
-                df["cpuh"] = df.apply(lambda row: _calculate_cpuh(row), axis=1)
+        if self.resource == "cloud":
+            df["cpuh"] = df.apply(
+                lambda row: _calculate_cloud_cpuh(row), axis=1
+            )
 
-            if self.resource == "cloud":
-                df["cpuh"] = df.apply(
-                    lambda row: _calculate_cloud_cpuh(row), axis=1
-                )
-
-            if self.resource in ["supek", "cloud"]:
-                df["gpuh"] = df.apply(lambda row: _calculate_gpuh(row), axis=1)
-                df["ngpus"] = df.apply(
-                    lambda row: row["ngpus"] if "ngpus" in row else None,
-                    axis=1
-                )
-
-            df["end_time"] = df.apply(
-                lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
-                    int(row["end_time"])
-                ), timezone=timezone.get_current_timezone()),
+        if self.resource in ["supek", "cloud"]:
+            df["gpuh"] = df.apply(lambda row: _calculate_gpuh(row), axis=1)
+            df["ngpus"] = df.apply(
+                lambda row: row["ngpus"] if "ngpus" in row else None,
                 axis=1
             )
 
-            df["job_data"] = df.apply(
-                lambda row: _prepare_job_data(row), axis=1
-            )
+        df["end_time"] = df.apply(
+            lambda row: timezone.make_aware(datetime.datetime.fromtimestamp(
+                int(row["end_time"])
+            ), timezone=timezone.get_current_timezone()),
+            axis=1
+        )
 
-            df = df[
-                (~df.user.isin(self.missing_users)) *
-                (~df.project.isin(self.missing_projects))
-            ]
+        df["job_data"] = df.apply(
+            lambda row: _prepare_job_data(row), axis=1
+        )
 
-            dfs.append(df)
+        df = df[
+            (~df.user.isin(self.missing_users)) *
+            (~df.project.isin(self.missing_projects))
+        ]
 
-        return pd.concat(dfs, ignore_index=True)
+        return df
 
     @staticmethod
     def _users(users):
@@ -209,46 +201,51 @@ class Usage:
         return projects_dict, missing_projects
 
     def save(self):
-        df = self.create_dataframe()
+        n_rows = len(self.data)
+        n_chunks = math.ceil(n_rows / self.chunk_size)
+        chunks = self._split_into_chunks(n_chunks)
 
-        model_instances = list()
+        for chunk in chunks:
+            df = self.create_dataframe(chunk)
 
-        for record in df.to_dict("records"):
-            project = None
-            if record["project"]:
-                project = models.Project.objects.get(
-                    identifier=self.projects_mapping[record["project"]]
-                )
+            model_instances = list()
 
-            else:
-                user_projects = models.UserProject.objects.filter(
-                    user=self.users[record["user"]]
-                ).order_by("-date_joined")
-
-                for user_project in user_projects:
-                    tags = [
-                        item["value"] for item in
-                        user_project.project.resources_type
-                    ]
-
-                    if len(
-                        set(tags).intersection(
-                            set(RESOURCES_TAGS_MAPPING[self.resource])
-                        )
-                    ) > 0:
-                        project = user_project.project
-                        break
-
-            if project:
-                model_instances.append(
-                    models.ResourceUsage(
-                        user=self.users[record["user"]] if record["user"]
-                        else None,
-                        project=project,
-                        end_time=record["end_time"],
-                        resource_name=self.resource,
-                        accounting_record=json.loads(record["job_data"])
+            for record in df.to_dict("records"):
+                project = None
+                if record["project"]:
+                    project = models.Project.objects.get(
+                        identifier=self.projects_mapping[record["project"]]
                     )
-                )
 
-        models.ResourceUsage.objects.bulk_create(model_instances)
+                else:
+                    user_projects = models.UserProject.objects.filter(
+                        user=self.users[record["user"]]
+                    ).order_by("-date_joined")
+
+                    for user_project in user_projects:
+                        tags = [
+                            item["value"] for item in
+                            user_project.project.resources_type
+                        ]
+
+                        if len(
+                            set(tags).intersection(
+                                set(RESOURCES_TAGS_MAPPING[self.resource])
+                            )
+                        ) > 0:
+                            project = user_project.project
+                            break
+
+                if project:
+                    model_instances.append(
+                        models.ResourceUsage(
+                            user=self.users[record["user"]] if record["user"]
+                            else None,
+                            project=project,
+                            end_time=record["end_time"],
+                            resource_name=self.resource,
+                            accounting_record=json.loads(record["job_data"])
+                        )
+                    )
+
+            models.ResourceUsage.objects.bulk_create(model_instances)
