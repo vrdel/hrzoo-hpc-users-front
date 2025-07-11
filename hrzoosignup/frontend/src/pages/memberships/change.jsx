@@ -30,6 +30,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
+import { useParams } from 'react-router-dom';
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -175,8 +176,12 @@ const BriefProjectInfo = ({project}) => {
   )
 }
 
-const Memberships = () => {
+const MembershipsChange = () => {
   const { LinkTitles } = useContext(SharedData);
+  const { projId } = useParams()
+  const { csrfToken } = useContext(AuthContext);
+  const intl = useIntl()
+
   const [pageTitle, setPageTitle] = useState(undefined);
   const [invitesSent, setInvitesSent] = useState(undefined);
 
@@ -185,8 +190,6 @@ const Memberships = () => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
-  const { csrfToken } = useContext(AuthContext);
-  const intl = useIntl()
 
   const queryClient = useQueryClient();
 
@@ -445,9 +448,7 @@ const Memberships = () => {
   if (nrStatus === 'success'
     && invitesStatus === 'success'
     && nrProjects && pageTitle) {
-    let projectsApproved = nrProjects.filter(project =>
-      project.state.name !== 'deny' && project.state.name !== 'submit'
-    )
+    let project = nrProjects.filter(project => project.identifier == projId)[0]
 
     return (
       <>
@@ -459,84 +460,71 @@ const Memberships = () => {
           toggle={() => setAreYouSureModal(!areYouSureModal)}
           title={modalTitle}
           msg={modalMsg}
-          onYes={onYesCallback} />
-        {
-          projectsApproved.length > 0 ?
-            projectsApproved.map((project, i) =>
-              <React.Fragment key={`projects-${i}`}>
-                <Row className="mb-5" key={`row-${i}`}>
-                  <Col key={`col-${i}`}>
-                    <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
-                      <CardHeader className="d-flex align-items-center flex-column flex-md-row justify-content-between">
-                        <span className="fs-5 fw-bold text-dark flex-grow-1">
-                          { project?.name }
-                        </span>
-                        <span className="d-flex justify-content-center flex-row">
-                          <Badge color={"secondary fw-normal"}>
-                            { project.identifier }
-                          </Badge>
-                          <MiniButton
-                            color="light"
-                            onClick={(e) => copyToClipboard(
-                              e, project.identifier,
-                              intl.formatMessage({
-                                defaultMessage: "Šifra projekta kopirana u međuspremnik",
-                                description: "memberships-clipboard-ok"
-                              }),
-                              intl.formatMessage({
-                                defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
-                                description: "memberships-clipboard-fail"
-                              }),
-                              "id-request"
-                            )}
-                          >
-                            <FontAwesomeIcon size="xs" icon={faCopy} />
-                          </MiniButton>
-                        </span>
-                      </CardHeader>
-                      <CardBody className="mb-1 bg-light p-0 m-0">
-                        {
-                          project.project_type.name === 'research-croris' ?
-                            <UsersTableCroris project={project}
-                              invites={invitesSent?.filter(inv =>
-                                inv.project.identifier === project.identifier
-                                && !inv.accepted
-                              )}
-                              onSubmit={onSubmit} />
-                          :
-                            <UsersTableGeneral
-                              project={project}
-                              invites={invitesSent?.filter(inv =>
-                                inv.project.identifier === project.identifier
-                                && !inv.accepted
-                              )}
-                              onSubmit={onSubmit} />
-                        }
-                        <Row>
-                          <BriefProjectInfo project={project} />
-                        </Row>
-                        <Row>
-                          {
-                            // <BriefSummary project={project}/>
-                          }
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
-                <Row style={{height: '100px'}}/>
-              </React.Fragment>
-            )
-          :
-            <Row className="mt-3 mb-3">
-              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
-                <FormattedMessage
-                  defaultMessage="Nemate prijavljenih sudjelovanja na odobrenim projektima"
-                  description="memberships-no-assignments"
-                />
-              </Col>
-            </Row>
-        }
+          onYes={onYesCallback} 
+        />
+        <React.Fragment key={`projects-${projId}`}>
+          <Row className="mb-5" key={`row-${projId}`}>
+            <Col key={`col-${projId}`}>
+              <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${projId}`}>
+                <CardHeader className="d-flex align-items-center flex-column flex-md-row justify-content-between">
+                  <span className="fs-5 fw-bold text-dark flex-grow-1">
+                    { project?.name }
+                  </span>
+                  <span className="d-flex justify-content-center flex-row">
+                    <Badge color={"secondary fw-normal"}>
+                      { project.identifier }
+                    </Badge>
+                    <MiniButton
+                      color="light"
+                      onClick={(e) => copyToClipboard(
+                        e, project.identifier,
+                        intl.formatMessage({
+                          defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                          description: "memberships-clipboard-ok"
+                        }),
+                        intl.formatMessage({
+                          defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                          description: "memberships-clipboard-fail"
+                        }),
+                        "id-request"
+                      )}
+                    >
+                      <FontAwesomeIcon size="xs" icon={faCopy} />
+                    </MiniButton>
+                  </span>
+                </CardHeader>
+                <CardBody className="mb-1 bg-light p-0 m-0">
+                  <Row className='mt-2'>
+                    <BriefProjectInfo project={project} />
+                  </Row>
+                  <Row>
+                    {
+                      // <BriefSummary project={project}/>
+                    }
+                  </Row>
+                  {
+                    project?.project_type?.name === 'research-croris' ?
+                      <UsersTableCroris project={project}
+                        invites={invitesSent?.filter(inv =>
+                          inv.project.identifier === project.identifier
+                          && !inv.accepted
+                        )}
+                        onSubmit={onSubmit} />
+                    :
+                      <UsersTableGeneral
+                        project={project}
+                        invites={invitesSent?.filter(inv =>
+                          inv.project.identifier === project.identifier
+                          && !inv.accepted
+                        )}
+                        onSubmit={onSubmit} />
+                  }
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+          <Row style={{height: '100px'}}/>
+        </React.Fragment>
       </>
     )
   }
@@ -626,4 +614,4 @@ const Memberships = () => {
     )
 };
 
-export default Memberships;
+export default MembershipsChange;

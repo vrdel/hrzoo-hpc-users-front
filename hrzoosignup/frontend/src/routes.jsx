@@ -24,7 +24,8 @@ import Saml2LoginRedirect from 'Pages/saml2-login-redirect';
 import Saml2NotAllowed from 'Pages/saml2-not-allowed';
 import PublicKeys from 'Pages/public-keys/list';
 import NewPublicKey from 'Pages/public-keys/add';
-import Memberships from 'Pages/memberships';
+import MembershipsChange from 'Pages/memberships/change';
+import MembershipsList from 'Pages/memberships/list';
 import MyInfo from 'Pages/my-info';
 import NotFound from 'Pages/notfound';
 import Root from 'Pages/root';
@@ -39,8 +40,6 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { UsersList, UsersInactiveList } from 'Pages/users/list';
 import UserChange from 'Pages/users/change';
 import { ProjectsList } from 'Pages/projects/list';
-
-
 
 
 function getAndSetReferrer() {
@@ -196,7 +195,10 @@ const BaseRoutes = () => {
                 <NewPublicKey /> }
               />
               <Route path="memberships" element={
-                <Memberships /> }
+                <MembershipsList /> }
+              />
+              <Route path="memberships/:projId" element={
+                <MembershipsChange /> }
               />
               <Route path="my-info" element={
                 <MyInfo /> }
