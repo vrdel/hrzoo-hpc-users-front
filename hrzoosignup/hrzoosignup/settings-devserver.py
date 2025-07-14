@@ -172,6 +172,11 @@ except FileNotFoundError as e:
     print(SAML_EDUGAINMAP + ': %s' % repr(e))
     pass
 
+if ',' in SAML_EDUGAINATTRS:
+    SAML_EDUGAINATTRS = [e.strip() for e in SAML_EDUGAINATTRS.split(',')]
+else:
+    SAML_EDUGAINATTRS = [SAML_EDUGAINATTRS]
+
 try:
     with open(REALM_MAP, mode='r', encoding='utf-8') as fp:
         MAP_REALMS = json.loads(fp.read())
