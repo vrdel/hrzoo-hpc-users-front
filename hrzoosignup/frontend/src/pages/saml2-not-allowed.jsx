@@ -18,6 +18,7 @@ import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { useIntl } from 'react-intl'
 
+
 const AlertRegular= () =>
   <>
     <Alert color="danger">
@@ -41,6 +42,40 @@ const AlertRegular= () =>
   </>
 
 
+const AlertEduGainAttrs = () =>
+  <>
+    <Alert color="danger" className="fs-4 text-center">
+      <FormattedMessage
+        defaultMessage="Autentikacija eduGAIN-om nije uspjela."
+        description="saml2-not-allowed-alertedugainattrs-1"
+      />
+    </Alert>
+    <p className="fs-5 p-1">
+      <FormattedMessage
+        defaultMessage="Kako bi se osiguralo ispravno funkcioniranje ove aplikacije, potrebni su sljedeći obvezni eduGAIN atributi:"
+        description="saml2-not-allowed-alertedugainattrs-2"
+      />
+    </p>
+    <p className="text-center fw-bold fw-italic fs-5 p-4">
+      <FormattedMessage
+        defaultMessage="<mark>givenName, sn, eduPersonPrincipalName, mail</mark>"
+        description="saml2-not-allowed-alertedugainattrs-3"
+        values={{
+          b: (chunks) => <b>{chunks}</b>,
+          mark: (chunks) => <mark>{chunks}</mark>
+        }}
+      />
+    </p>
+    <hr />
+    <p className="p-2 fs-5 text-center">
+      <FormattedMessage
+        defaultMessage="Ovi atributi su ključni za autentikaciju i personalizaciju. Molimo kontaktirajte administratora vašeg davatelja identiteta (IdP) kako biste zatražili otpuštanje potrebnih atributa."
+        description="saml2-not-allowed-alertedugainattrs-4"
+      />
+    </p>
+  </>
+
+
 const AlertMultiple = () =>
   <Alert color="danger">
     <p className="fs-4 mb-4 text-center">
@@ -60,6 +95,7 @@ const AlertMultiple = () =>
 const Saml2NotAllowed = () => {
   const { errorType } = useParams()
   const multipleUsersError = errorType === 'multiple'
+  const eduGainAttrs = errorType === 'edugainattrs'
   const { locale, setLocale } = useContext(IntlContext)
   const intl = useIntl()
 
@@ -92,10 +128,13 @@ const Saml2NotAllowed = () => {
             </CardHeader>
             <CardBody className="pt-5 pb-5">
               {
-                !multipleUsersError ?
-                  <AlertRegular />
-                :
+                multipleUsersError ?
                   <AlertMultiple />
+                :
+                  eduGainAttrs ?
+                    <AlertEduGainAttrs />
+                  :
+                    <AlertRegular />
               }
             </CardBody>
             <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
