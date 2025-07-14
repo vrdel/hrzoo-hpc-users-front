@@ -832,28 +832,44 @@ class NewProjectsSerializer(serializers.Serializer):
 
 
 class MerlinProjectUsersSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(source="user.id")
-    username = serializers.CharField(source="user.username")
-    person_mail = serializers.CharField(source="user.person_mail")
+    email = serializers.CharField(source="user.person_mail")
     first_name = serializers.CharField(source="user.first_name")
     last_name = serializers.CharField(source="user.last_name")
-    person_oib = serializers.CharField(max_length=11, source="user.person_oib")
-    person_uniqueid = serializers.CharField(source="user.person_uniqueid")
-    person_institution = serializers.CharField(
-        max_length=128, source="user.person_institution"
-    )
     role = serializers.SerializerMethodField()
+    accepted = serializers.SerializerMethodField()
 
     @staticmethod
     def get_role(obj):
         return obj.role.name
 
+    def get_accepted(self, obj):
+        return True
+
     class Meta:
-        fields = [
-            "id", "username", "person_mail", "first_name", "last_name",
-            "person_oib", "person_uniqueid", "person_institution", "role"
-        ]
+        fields = ["email", "first_name", "last_name", "role", "accepted"]
         model = models.UserProject
+
+
+class MerlinSentInvitationsSerializer(serializers.ModelSerializer):
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+    role = serializers.SerializerMethodField()
+
+    def get_first_name(self, obj):
+        return ""
+
+    def get_last_name(self, obj):
+        return ""
+
+    def get_role(self, obj):
+        return "collaborator"
+
+    def get_accepted(self, obj):
+        return False
+
+    class Meta:
+        fields = ["email", "first_name", "last_name", "role", "accepted"]
+        model = models.CustomInvitation
 
 
 class MerlinProjectsSerializer(serializers.ModelSerializer):
@@ -863,21 +879,18 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
     resources_type = ResourcesTypeSerializer()
     state = serializers.SerializerMethodField()
     users = serializers.SerializerMethodField()
-    sent_invitations = serializers.SerializerMethodField()
 
     def get_users(self, obj):
         user_projects = models.UserProject.objects.filter(project=obj)
-        return MerlinProjectUsersSerializer(user_projects, many=True).data
-
-    def get_sent_invitations(self, obj):
-        users = self.get_users(obj)
-        accepted = [user["person_mail"] for user in users]
-        sent = [
-            inv.email for inv in models.CustomInvitation.objects.filter(
-                project=obj
-            ) if inv.sent
-        ]
-        return sorted(list(set(accepted).union(set(sent))))
+        invited_users = models.CustomInvitation.objects.filter(project=obj)
+        data = MerlinProjectUsersSerializer(
+            user_projects, many=True
+        ).data
+        invited_users_data = MerlinSentInvitationsSerializer(
+            invited_users, many=True
+        ).data
+        data.extend(invited_users_data)
+        return data
 
     @staticmethod
     def get_project_type(obj):
@@ -900,8 +913,7 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
         fields = [
             "id", "date_approved", "date_start", "date_end", "date_submitted",
             "identifier", "institute", "is_active", "name", "project_type",
-            "reason", "resources_type", "state", "users", "science_field",
-            "sent_invitations"
+            "reason", "resources_type", "state", "users", "science_field"
         ]
         model = models.Project
 

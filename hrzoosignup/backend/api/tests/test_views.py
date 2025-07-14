@@ -4373,35 +4373,34 @@ class MerlinProjectsAPITests(TestCase):
                     }
                 ],
                 "state": "approve",
-                "sent_invitations": [
-                    "arthur.dent@fer.hr",
-                    "ford.prefect@fer.hr",
-                    "trillian@fer.hr"
-                ],
                 "users": [
                     {
-                        "id": self.user2.id,
-                        "username": "user454@fer.hr",
-                        "person_mail": "trillian@fer.hr",
+                        "email": "trillian@fer.hr",
                         "first_name": "Tricia",
                         "last_name": "McMillan",
-                        "person_oib": "22222222222",
                         "role": "lead",
-                        "person_uniqueid": "user454@fer.hr",
-                        "person_institution":
-                            "Fakultet elektrotehnike i računarstva"
+                        "accepted": True
                     },
                     {
-                        "id": self.user1.id,
-                        "username": "user119@fer.hr",
-                        "person_mail": "arthur.dent@fer.hr",
+                        "email": "arthur.dent@fer.hr",
                         "first_name": "Arthur",
                         "last_name": "Dent",
-                        "person_oib": "11111111111",
                         "role": "collaborator",
-                        "person_uniqueid": "user119@fer.hr",
-                        "person_institution":
-                            "Fakultet elektrotehnike i računarstva"
+                        "accepted": True
+                    },
+                    {
+                        "email": "ford.prefect@fer.hr",
+                        "first_name": "",
+                        "last_name": "",
+                        "role": "collaborator",
+                        "accepted": False
+                    },
+                    {
+                        "email": "zb@fer.hr",
+                        "first_name": "",
+                        "last_name": "",
+                        "role": "collaborator",
+                        "accepted": False
                     }
                 ]
             }
