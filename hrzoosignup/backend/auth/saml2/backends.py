@@ -51,11 +51,16 @@ class SAML2Backend(Saml2Backend):
             institute = attributes.get('o', '')
             affiliation = attributes.get('eduPersonAffiliation', '')
 
+            present_attrs = set()
             for attr in settings.SAML_EDUGAINATTRS:
-                if not attributes.get(attr):
-                    logger.error(f'Mandatory attribute {attr} not presented')
-                    request.saml2_edugainattrs = True
-                    return None
+                if attributes.get(attr, None):
+                    present_attrs.add(attr)
+
+            missing = set(settings.SAML_EDUGAINATTRS).difference(present_attrs)
+            if missing:
+                logger.error(f'Mandatory attribute {missing} not presented')
+                request.saml2_edugainattrs = True
+                return None
 
             if isinstance(first_name, list):
                 first_name = first_name[0]
