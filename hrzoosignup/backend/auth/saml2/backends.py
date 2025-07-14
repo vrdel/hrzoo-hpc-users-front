@@ -50,6 +50,13 @@ class SAML2Backend(Saml2Backend):
             email = attributes.get('mail', '')
             institute = attributes.get('o', '')
             affiliation = attributes.get('eduPersonAffiliation', '')
+
+            for attr in settings.SAML_EDUGAINATTRS:
+                if not attributes.get(attr):
+                    logger.error(f'Mandatory attribute {attr} not presented')
+                    request.saml2_edugainattrs = True
+                    return None
+
             if isinstance(first_name, list):
                 first_name = first_name[0]
             if isinstance(last_name, list):
