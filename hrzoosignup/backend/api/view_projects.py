@@ -264,21 +264,13 @@ class MerlinProjectsAPI(APIView):
                         }
                     ],
                     "state": "string",
-                    "sent_invitations": [
-                        "email1@example.com",
-                        "email2@example.com"
-                    ],
                     "users": [
                         {
-                            "id": 0,
-                            "username": "string",
-                            "person_mail": "email1@example.com",
+                            "accepted": True,
+                            "email": "email1@example.com",
                             "first_name": "string",
                             "last_name": "string",
-                            "person_oib": "string",
-                            "role": "string",
-                            "person_uniqueid": "string",
-                            "person_institution": "string"
+                            "role": "string"
                         }
                     ]
                 },
@@ -312,21 +304,13 @@ class MerlinProjectsAPI(APIView):
                                 }
                             ],
                             "state": "string",
-                            "sent_invitations": [
-                                "email1@example.com",
-                                "email2@example.com"
-                            ],
                             "users": [
                                 {
-                                    "id": 0,
-                                    "username": "string",
-                                    "person_mail": "email1@example.com",
+                                    "accepted": True,
+                                    "email": "email1@example.com",
                                     "first_name": "string",
                                     "last_name": "string",
-                                    "person_oib": "string",
-                                    "role": "string",
-                                    "person_uniqueid": "string",
-                                    "person_institution": "string"
+                                    "role": "string"
                                 }
                             ]
                         }
