@@ -89,8 +89,8 @@ const BaseRoutes = () => {
           <Route path="ui" element={<Root />}>
             <Route path="login-priv" element={<LoginPrivate sessionData={sessionData} />}/>
             <Route path="login" element={<LoginOffical sessionData={sessionData} />}/>
-            <Route path="saml2-not-allowed/" element={<Saml2NotAllowed />}>
-              <Route path=":errorType" element={<Saml2NotAllowed />}/>
+            <Route path="saml2-not-allowed/" element={<Saml2NotAllowed sessionData={sessionData} />}>
+              <Route path=":errorType" element={<Saml2NotAllowed sessionData={sessionData} />}/>
             </Route>
             <Route path="login-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} /> }

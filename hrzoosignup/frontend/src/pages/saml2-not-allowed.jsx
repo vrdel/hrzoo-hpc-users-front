@@ -42,34 +42,27 @@ const AlertRegular= () =>
   </>
 
 
-const AlertEduGainAttrs = () =>
+const AlertEduGainAttrs = ({sessionData}) =>
   <>
     <Alert color="danger" className="fs-4 text-center">
       <FormattedMessage
-        defaultMessage="Autentikacija eduGAIN-om nije uspjela."
+        defaultMessage="Autentikacija eduGAIN-om nije uspjela"
         description="saml2-not-allowed-alertedugainattrs-1"
       />
     </Alert>
     <p className="fs-5 p-1">
       <FormattedMessage
-        defaultMessage="Kako bi se osiguralo ispravno funkcioniranje ove aplikacije, potrebni su sljedeći obvezni eduGAIN atributi:"
+        defaultMessage="Kako bi se osiguralo ispravno funkcioniranje aplikacije, potrebni su sljedeći eduGAIN atributi:"
         description="saml2-not-allowed-alertedugainattrs-2"
       />
     </p>
-    <p className="text-center fw-bold fw-italic fs-5 p-4">
-      <FormattedMessage
-        defaultMessage="<mark>givenName, sn, eduPersonPrincipalName, mail</mark>"
-        description="saml2-not-allowed-alertedugainattrs-3"
-        values={{
-          b: (chunks) => <b>{chunks}</b>,
-          mark: (chunks) => <mark>{chunks}</mark>
-        }}
-      />
+    <p className="text-center fw-bold fw-italic font-monospace fs-5 p-4">
+      <mark>{sessionData.config.edugainattrs.join(', ')}</mark>
     </p>
     <p className="ps-2 pe-2 fs-5 fst-italic text-center">
       <FormattedMessage
         defaultMessage="Molimo kontaktirajte administratora vašeg davatelja identiteta (IdP) kako biste zatražili otpuštanje potrebnih atributa."
-        description="saml2-not-allowed-alertedugainattrs-4"
+        description="saml2-not-allowed-alertedugainattrs-3"
       />
     </p>
   </>
@@ -91,7 +84,7 @@ const AlertMultiple = () =>
   </Alert>
 
 
-const Saml2NotAllowed = () => {
+const Saml2NotAllowed = ({sessionData}) => {
   const { errorType } = useParams()
   const multipleUsersError = errorType === 'multiple'
   const eduGainAttrs = errorType === 'edugainattrs'
@@ -131,7 +124,7 @@ const Saml2NotAllowed = () => {
                   <AlertMultiple />
                 :
                   eduGainAttrs ?
-                    <AlertEduGainAttrs />
+                    <AlertEduGainAttrs sessionData={sessionData} />
                   :
                     <AlertRegular />
               }
