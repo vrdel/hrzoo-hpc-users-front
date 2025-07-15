@@ -15,10 +15,10 @@ def custom_acs_failure(request, exception=None, status=403, **kwargs):
         failed_authn_multiresults = getattr(request, 'saml2_backend_multiple', None)
         failed_authn_edugainattrs = getattr(request, 'saml2_edugainattrs', None)
         if failed_authn_multiresults:
-            return HttpResponseRedirect('/ui/saml2-not-allowed/multiple')
+            return HttpResponseRedirect('/ui/saml2-error/edugainmultiple')
         elif failed_authn_edugainattrs:
-            return HttpResponseRedirect('/ui/saml2-not-allowed/edugainattrs')
+            return HttpResponseRedirect('/ui/saml2-error/edugainattrs')
         else:
-            return HttpResponseRedirect('/ui/saml2-not-allowed')
+            return HttpResponseRedirect('/ui/saml2-error/general')
     else:
         return render(request, 'djangosaml2/login_error.html', {'exception': exception}, status=status)

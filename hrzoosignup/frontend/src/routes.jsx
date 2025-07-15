@@ -21,7 +21,7 @@ import SrceWorkShopRequest from 'Pages/new-requests/srce-workshop';
 import NewRequestIndex from 'Pages/new-requests/index';
 import EmailInvitation from 'Pages/email-invite';
 import Saml2LoginRedirect from 'Pages/saml2-login-redirect';
-import Saml2NotAllowed from 'Pages/saml2-not-allowed';
+import Saml2Error from 'Pages/saml2-error';
 import PublicKeys from 'Pages/public-keys/list';
 import NewPublicKey from 'Pages/public-keys/add';
 import MembershipsChange from 'Pages/memberships/change';
@@ -29,7 +29,6 @@ import MembershipsList from 'Pages/memberships/list';
 import MyInfo from 'Pages/my-info';
 import NotFound from 'Pages/notfound';
 import Root from 'Pages/root';
-import Saml2Error from 'Pages/saml2-error';
 import {
   MyAccounting,
   ProjectAccounting,
@@ -96,14 +95,11 @@ const BaseRoutes = () => {
             <Route path="login" element={
               <LoginOffical sessionData={sessionData} />}
             />
-            <Route path="saml2-error" element={
-              <Saml2Error />}
-            />
-            <Route path="saml2-not-allowed/" element={
-              <Saml2NotAllowed sessionData={sessionData} />}
+            <Route path="saml2-error/" element={
+              <Saml2Error sessionData={sessionData} />}
             >
               <Route path=":errorType" element={
-                <Saml2NotAllowed sessionData={sessionData} />}
+                <Saml2Error sessionData={sessionData} />}
               />
             </Route>
             <Route path="login-email/:inviteKey" element={
