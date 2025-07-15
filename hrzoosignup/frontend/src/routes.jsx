@@ -29,6 +29,7 @@ import MembershipsList from 'Pages/memberships/list';
 import MyInfo from 'Pages/my-info';
 import NotFound from 'Pages/notfound';
 import Root from 'Pages/root';
+import Saml2Error from 'Pages/saml2-error';
 import {
   MyAccounting,
   ProjectAccounting,
@@ -86,11 +87,24 @@ const BaseRoutes = () => {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="ui" element={<Root />}>
-            <Route path="login-priv" element={<LoginPrivate sessionData={sessionData} />}/>
-            <Route path="login" element={<LoginOffical sessionData={sessionData} />}/>
-            <Route path="saml2-not-allowed/" element={<Saml2NotAllowed sessionData={sessionData} />}>
-              <Route path=":errorType" element={<Saml2NotAllowed sessionData={sessionData} />}/>
+          <Route path="ui" element={
+            <Root /> }
+          >
+            <Route path="login-priv" element={
+              <LoginPrivate sessionData={sessionData} />}
+            />
+            <Route path="login" element={
+              <LoginOffical sessionData={sessionData} />}
+            />
+            <Route path="saml2-error" element={
+              <Saml2Error />}
+            />
+            <Route path="saml2-not-allowed/" element={
+              <Saml2NotAllowed sessionData={sessionData} />}
+            >
+              <Route path=":errorType" element={
+                <Saml2NotAllowed sessionData={sessionData} />}
+              />
             </Route>
             <Route path="login-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} /> }
