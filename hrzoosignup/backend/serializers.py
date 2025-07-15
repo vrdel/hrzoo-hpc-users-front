@@ -864,9 +864,6 @@ class MerlinSentInvitationsSerializer(serializers.ModelSerializer):
     def get_role(self, obj):
         return "collaborator"
 
-    def get_accepted(self, obj):
-        return False
-
     class Meta:
         fields = ["email", "first_name", "last_name", "role", "accepted"]
         model = models.CustomInvitation
@@ -889,7 +886,9 @@ class MerlinProjectsSerializer(serializers.ModelSerializer):
         invited_users_data = MerlinSentInvitationsSerializer(
             invited_users, many=True
         ).data
-        data.extend(invited_users_data)
+        data.extend(
+            [user for user in invited_users_data if not user["accepted"]]
+        )
         return data
 
     @staticmethod
