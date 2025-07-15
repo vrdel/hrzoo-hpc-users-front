@@ -61,7 +61,7 @@ const AlertEduGainAttrs = ({sessionData}) =>
     </p>
     <p className="ps-2 pe-2 fs-5 fst-italic text-center">
       <FormattedMessage
-        defaultMessage="Molimo kontaktirajte administratora vašeg davatelja identiteta (IdP) kako biste zatražili otpuštanje potrebnih atributa."
+        defaultMessage="Molimo kontaktirajte administratora vašeg davatelja identiteta (IdP) kako biste zatražili otpuštanje potrebnih atributa"
         description="saml2-not-allowed-alertedugainattrs-3"
       />
     </p>
