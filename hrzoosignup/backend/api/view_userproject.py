@@ -7,6 +7,8 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+import datetime
+
 
 class UserProjectAPI(APIView):
     permission_classes = (HRZOOHasAPIKey,)
@@ -31,7 +33,7 @@ class UserProjectAPI(APIView):
                 for tag in tags:
                     query |= Q(project__staff_resources_type__contains=[{"label": tag, "value": tag}])
                 db_interested = models.UserProject.objects.filter(query).distinct()
-                db_interested = db_interested.filter(project__is_active=True)
+                db_interested = db_interested.filter(project__is_active=True, project__date_start__lte=datetime.datetime.now().date())
 
             if cached_interested:
                 return Response(cached_interested, status=status.HTTP_200_OK)
@@ -53,7 +55,7 @@ class UserProjectAPI(APIView):
                 for project in projects:
                     query |= Q(project__identifier=project)
                 db_interested = models.UserProject.objects.filter(query).distinct()
-                db_interested = db_interested.filter(project__is_active=True)
+                db_interested = db_interested.filter(project__is_active=True, project__date_start__lte=datetime.datetime.now().date())
 
             if cached_interested:
                 return Response(cached_interested, status=status.HTTP_200_OK)
@@ -68,7 +70,7 @@ class UserProjectAPI(APIView):
                 return Response(ret_data, status=status.HTTP_200_OK)
 
             db_interested = models.UserProject.objects.all()
-            db_interested = db_interested.filter(project__is_active=True)
+            db_interested = db_interested.filter(project__is_active=True, project__date_start__lte=datetime.datetime.now().date())
             serializer = serializers.UserProjectSerializer2(db_interested, many=True)
             cache.set('ext-users-projects', serializer.data, None)
 
