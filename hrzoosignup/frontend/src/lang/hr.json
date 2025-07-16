@@ -1039,6 +1039,10 @@
     "defaultMessage": "Interdisciplinarne društvene znanosti",
     "description": "science-field-50"
   },
+  "LRkOn1": {
+    "defaultMessage": "Molimo kontaktirajte administratora vašeg davatelja identiteta (IdP) kako biste zatražili otpuštanje potrebnih atributa",
+    "description": "saml2-not-allowed-alertedugainattrs-3"
+  },
   "LSB0GB": {
     "defaultMessage": "Pri odbijanju projekta morate se izjasniti o razlogu.",
     "description": "managereq-change-toast-msg3"
@@ -1427,6 +1431,10 @@
     "defaultMessage": "Obradio:",
     "description": "managereq-change-handled"
   },
+  "VGXFGM": {
+    "defaultMessage": "Autentikacija eduGAIN-om nije uspjela",
+    "description": "saml2-not-allowed-alertedugainattrs-1"
+  },
   "VOeDTJ": {
     "defaultMessage": "Tip",
     "description": "publickeys-list-type"
@@ -1518,6 +1526,10 @@
   "XmzTXL": {
     "defaultMessage": "Zatraženo produljenje",
     "description": "stateshort-submitextend"
+  },
+  "XtsnpR": {
+    "defaultMessage": "Kako bi se osiguralo ispravno funkcioniranje aplikacije, potrebni su sljedeći eduGAIN atributi:",
+    "description": "saml2-not-allowed-alertedugainattrs-2"
   },
   "Y+WVo0": {
     "defaultMessage": "Područje",

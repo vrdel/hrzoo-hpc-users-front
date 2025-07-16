@@ -55,6 +55,7 @@ try:
     SAML_EDUGAINIDPMATCH = config.get('SAML2', 'EduGainIdPMatch')
     SAML_AAIEDUHRIDPMATCH = config.get('SAML2', 'AAIEduHRIdPMatch')
     SAML_EDUGAINMAP = config.get('SAML2', 'EduGainUserMap')
+    SAML_EDUGAINATTRS = config.get('SAML2', 'EduGainAttributes')
 
     CONNECTION_TIMEOUT = config.getint('CONNECTION', 'Timeout')
     CONNECTION_RETRY = config.getint('CONNECTION', 'Retry')
@@ -170,6 +171,11 @@ try:
 except FileNotFoundError as e:
     print(SAML_EDUGAINMAP + ': %s' % repr(e))
     pass
+
+if ',' in SAML_EDUGAINATTRS:
+    SAML_EDUGAINATTRS = [e.strip() for e in SAML_EDUGAINATTRS.split(',')]
+else:
+    SAML_EDUGAINATTRS = [SAML_EDUGAINATTRS]
 
 try:
     with open(REALM_MAP, mode='r', encoding='utf-8') as fp:

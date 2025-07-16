@@ -21,7 +21,7 @@ import SrceWorkShopRequest from 'Pages/new-requests/srce-workshop';
 import NewRequestIndex from 'Pages/new-requests/index';
 import EmailInvitation from 'Pages/email-invite';
 import Saml2LoginRedirect from 'Pages/saml2-login-redirect';
-import Saml2NotAllowed from 'Pages/saml2-not-allowed';
+import Saml2Error from 'Pages/saml2-error';
 import PublicKeys from 'Pages/public-keys/list';
 import NewPublicKey from 'Pages/public-keys/add';
 import MembershipsChange from 'Pages/memberships/change';
@@ -86,11 +86,21 @@ const BaseRoutes = () => {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="ui" element={<Root />}>
-            <Route path="login-priv" element={<LoginPrivate sessionData={sessionData} />}/>
-            <Route path="login" element={<LoginOffical sessionData={sessionData} />}/>
-            <Route path="saml2-not-allowed/" element={<Saml2NotAllowed />}>
-              <Route path=":errorType" element={<Saml2NotAllowed />}/>
+          <Route path="ui" element={
+            <Root /> }
+          >
+            <Route path="login-priv" element={
+              <LoginPrivate sessionData={sessionData} />}
+            />
+            <Route path="login" element={
+              <LoginOffical sessionData={sessionData} />}
+            />
+            <Route path="saml2-error/" element={
+              <Saml2Error sessionData={sessionData} />}
+            >
+              <Route path=":errorType" element={
+                <Saml2Error sessionData={sessionData} />}
+              />
             </Route>
             <Route path="login-email/:inviteKey" element={
               <EmailInvitation sessionData={sessionData} /> }

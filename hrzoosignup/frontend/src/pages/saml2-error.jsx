@@ -18,6 +18,7 @@ import SrceLogoHeadMidEn from 'Assets/srce-logo-head-mid-en.png';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { useIntl } from 'react-intl'
 
+
 const AlertRegular= () =>
   <>
     <Alert color="danger">
@@ -41,6 +42,32 @@ const AlertRegular= () =>
   </>
 
 
+const AlertEduGainAttrs = ({sessionData}) =>
+  <>
+    <Alert color="danger" className="fs-4 text-center">
+      <FormattedMessage
+        defaultMessage="Autentikacija eduGAIN-om nije uspjela"
+        description="saml2-not-allowed-alertedugainattrs-1"
+      />
+    </Alert>
+    <p className="fs-5 p-1">
+      <FormattedMessage
+        defaultMessage="Kako bi se osiguralo ispravno funkcioniranje aplikacije, potrebni su sljedeći eduGAIN atributi:"
+        description="saml2-not-allowed-alertedugainattrs-2"
+      />
+    </p>
+    <p className="text-center fw-bold fw-italic font-monospace fs-5 p-4">
+      <mark>{sessionData.config.edugainattrs.join(', ')}</mark>
+    </p>
+    <p className="ps-2 pe-2 fs-5 fst-italic text-center">
+      <FormattedMessage
+        defaultMessage="Molimo kontaktirajte administratora vašeg davatelja identiteta (IdP) kako biste zatražili otpuštanje potrebnih atributa"
+        description="saml2-not-allowed-alertedugainattrs-3"
+      />
+    </p>
+  </>
+
+
 const AlertMultiple = () =>
   <Alert color="danger">
     <p className="fs-4 mb-4 text-center">
@@ -57,9 +84,10 @@ const AlertMultiple = () =>
   </Alert>
 
 
-const Saml2NotAllowed = () => {
+const Saml2Error = ({sessionData}) => {
   const { errorType } = useParams()
-  const multipleUsersError = errorType === 'multiple'
+  const multipleUsersError = errorType === 'edugainmultiple'
+  const eduGainAttrs = errorType === 'edugainattrs'
   const { locale, setLocale } = useContext(IntlContext)
   const intl = useIntl()
 
@@ -92,10 +120,13 @@ const Saml2NotAllowed = () => {
             </CardHeader>
             <CardBody className="pt-5 pb-5">
               {
-                !multipleUsersError ?
-                  <AlertRegular />
-                :
+                multipleUsersError ?
                   <AlertMultiple />
+                :
+                  eduGainAttrs ?
+                    <AlertEduGainAttrs sessionData={sessionData} />
+                  :
+                    <AlertRegular />
               }
             </CardBody>
             <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
@@ -114,4 +145,4 @@ const Saml2NotAllowed = () => {
   )
 };
 
-export default Saml2NotAllowed;
+export default Saml2Error;

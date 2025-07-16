@@ -3,22 +3,23 @@ package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.9"
-aiohttp = "*"
 Django = "4.*"
+Unidecode = "*"
+aiohttp = "*"
 dj-rest-auth= "5.*"
+django-invitations = "*"
 django-webpack-loader = "*"
 djangorestframework = "*"
 djangorestframework-api-key = "*"
 djangosaml2 = "*"
-django-invitations = "*"
 drf-spectacular = "*"
+ipdb = "*"
+pandas = "2.2.2"
 psycopg2-binary = "*"
 pymemcache = "*"
-safety = "*"
-Unidecode = "*"
-pandas = "2.2.2"
 python-dateutil = "*"
-ipdb = "*"
+rich = "*"
+safety = "*"
 
 [tool.poetry.group.devel]
 optional = true
