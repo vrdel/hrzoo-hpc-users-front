@@ -84,7 +84,7 @@ const AlertMultiple = () =>
   </Alert>
 
 
-const Saml2NotAllowed = ({sessionData}) => {
+const Saml2Error = ({sessionData}) => {
   const { errorType } = useParams()
   const multipleUsersError = errorType === 'edugainmultiple'
   const eduGainAttrs = errorType === 'edugainattrs'
@@ -145,4 +145,4 @@ const Saml2NotAllowed = ({sessionData}) => {
   )
 };
 
-export default Saml2NotAllowed;
+export default Saml2Error;
