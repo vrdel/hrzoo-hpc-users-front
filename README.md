@@ -24,12 +24,12 @@ docker/$ docker compose up
 Application dependencies are not installed during bootstrap of development container enviroment and need to be installed separately, both backend Python/Django and frontend ReactJS dependencies.
 
 Dependencies of backend Python code is handled with `poetry`. Application code is mapped from host into created virtual environment emulating its installation in virtual environment, but for successfull application run, all of its dependencies need to be part of virtual environment as well. For the backend Python code, that can be done with:
-``
+```
 docker exec -t -u user -i hzsi-web /bin/zsh
 cd ~/hrzoosignup-source
 sudo sh -c '. /opt/hrzoo-signup/bin/activate; /usr/local/bin/poetry install --no-root --with devel'
 sudo mkdir -p /opt/hrzoo-signup/var/log
-``
+```
 So commands are run in the context of container. `Makefile` targets will be introduced shortly after to simplify this step.
 
 Save the changes of virtualn enviroment in container:
