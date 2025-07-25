@@ -55,7 +55,7 @@ class UserProjectAPI(APIView):
                 for project in projects:
                     query |= Q(project__identifier=project)
                 db_interested = models.UserProject.objects.filter(query).distinct()
-                db_interested = db_interested.filter(project__is_active=True, project__date_start__lte=datetime.datetime.now().date())
+                db_interested = db_interested.filter(project__is_active=True)
 
             if cached_interested:
                 return Response(cached_interested, status=status.HTTP_200_OK)
