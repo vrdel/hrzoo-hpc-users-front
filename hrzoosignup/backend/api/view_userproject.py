@@ -44,25 +44,15 @@ class UserProjectAPI(APIView):
 
         elif projects:
             projects = projects.split(',')
-            cached_data = cache.get('ext-users-projects')
 
-            if cached_data:
-                for project in projects:
-                    for up in cached_data:
-                        if project in up['project']['identifier']:
-                            cached_interested.append(up)
-            else:
-                for project in projects:
-                    query |= Q(project__identifier=project)
-                db_interested = models.UserProject.objects.filter(query).distinct()
-                db_interested = db_interested.filter(project__is_active=True)
+            for project in projects:
+                query |= Q(project__identifier=project)
+            db_interested = models.UserProject.objects.filter(query).distinct()
+            db_interested = db_interested.filter(project__is_active=True)
 
-            if cached_interested:
-                return Response(cached_interested, status=status.HTTP_200_OK)
-            else:
-                serializer = \
-                    serializers.UserProjectSerializer2(db_interested, many=True)
-                return Response(serializer.data, status=status.HTTP_200_OK)
+            serializer = \
+                serializers.UserProjectSerializer2(db_interested, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
             ret_data = cache.get('ext-users-projects')
