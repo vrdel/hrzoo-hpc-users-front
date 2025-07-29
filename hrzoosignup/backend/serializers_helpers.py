@@ -20,3 +20,11 @@ class RoleSerializer(serializers.ModelSerializer):
             'name',
         )
         model = models.Role
+
+
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.State

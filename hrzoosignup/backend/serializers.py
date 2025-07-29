@@ -9,10 +9,12 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework import serializers
 
-from .serializers_helpers import RoleSerializer, get_ssh_key_fingerprint
+from .serializers_helpers import (
+    RoleSerializer, get_ssh_key_fingerprint, StateSerializer
+)
 
 
-def get_project_identifier(project_type):
+def _get_project_identifier(project_type):
     cobj = models.ProjectCount.objects.get()
     if project_type == "research-institutional":
         identifier = "NRI-{}-{:03}".format(
@@ -76,14 +78,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             'users',
         )
         model = models.Project
-
-
-class StateSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.State
 
 
 class ProjectTypeSerializer(serializers.ModelSerializer):
@@ -773,7 +767,7 @@ class NewProjectsSerializer(serializers.Serializer):
         del data["user"]
 
         data["date_submitted"] = timezone.now()
-        identifier, cobj = get_project_identifier(data["project_type"])
+        identifier, cobj = _get_project_identifier(data["project_type"])
         data["identifier"] = identifier
         data["project_type"] = models.ProjectType.objects.get(
             name=data["project_type"]

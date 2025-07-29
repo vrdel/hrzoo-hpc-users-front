@@ -6,7 +6,9 @@ from backend.utils.accounting import get_institute_long_name, short2long, \
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .serializers_helpers import RoleSerializer, get_ssh_key_fingerprint
+from .serializers_helpers import (
+    RoleSerializer, get_ssh_key_fingerprint, StateSerializer
+)
 
 
 class ScienceSoftwareSerializer(serializers.ModelSerializer):
@@ -121,14 +123,6 @@ class UsersSerializer(serializers.ModelSerializer):
             'userproject_set'
         )
         model = get_user_model()
-
-
-class StateSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.State
 
 
 class StaffComment(serializers.ModelSerializer):
