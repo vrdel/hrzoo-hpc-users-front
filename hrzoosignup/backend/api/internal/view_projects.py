@@ -4,7 +4,8 @@ import logging
 
 from backend import models
 from backend.email import project
-from backend.serializers import ProjectSerializer, ProjectSerializerGet
+from backend.serializers import ProjectSerializer
+from backend.serializers_internal import ProjectSerializerGet
 from backend.utils.gen_username import gen_username
 from django.conf import settings
 from django.core.cache import cache

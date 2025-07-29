@@ -230,57 +230,6 @@ class UsersSerializer(serializers.ModelSerializer):
         model = get_user_model()
 
 
-class ProjectSerializerGet(serializers.ModelSerializer):
-    users = UsersSerializerFiltered(many=True, read_only=True)
-    state = StateSerializer()
-    project_type = ProjectTypeSerializer()
-    userproject_set = UserProjectSerializer(many=True, read_only=True)
-    staffcomment_set = StaffComment(many=True, read_only=True)
-
-    class Meta:
-        fields = (
-            'id',
-            'approved_by',
-            'croris_collaborators',
-            'croris_end',
-            'croris_finance',
-            'croris_id',
-            'croris_identifier',
-            'croris_institute',
-            'croris_lead',
-            'croris_start',
-            'croris_summary',
-            'croris_title',
-            'croris_type',
-            'changed_by',
-            'date_approved',
-            'date_changed',
-            'date_end',
-            'date_start',
-            'date_submitted',
-            'denied_by',
-            'identifier',
-            'institute',
-            'is_active',
-            'name',
-            'project_type',
-            'pk',
-            'reason',
-            'resources_numbers',
-            'resources_type',
-            'science_extrasoftware',
-            'science_extrasoftware_help',
-            'science_field',
-            'science_software',
-            'staff_resources_type',
-            'staffcomment_set',
-            'state',
-            'userproject_set',
-            'users',
-        )
-        model = models.Project
-
-
 class AccountingProjectUsersSerializerGet(serializers.ModelSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
     state = StateSerializer()
