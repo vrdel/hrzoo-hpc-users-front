@@ -142,7 +142,7 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
         return obj.sshpublickey_set.count() > 0
 
 
-class UsersSerializerFiltered2(serializers.ModelSerializer):
+class UsersSerializer4SSHKeys(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
@@ -387,7 +387,7 @@ class SshKeysSerializer(serializers.ModelSerializer):
 
 
 class SshKeysSerializer2(SshKeysSerializer):
-    user = UsersSerializerFiltered2(read_only=True)
+    user = UsersSerializer4SSHKeys(read_only=True)
 
 
 class ScienceSoftwareSerializer(serializers.ModelSerializer):
