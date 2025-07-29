@@ -8,7 +8,7 @@ from rest_framework import serializers
 
 from .serializers_helpers import (
     RoleSerializer, get_ssh_key_fingerprint, StateSerializer,
-    ProjectTypeSerializer
+    ProjectTypeSerializer, StaffComment
 )
 
 
@@ -94,17 +94,6 @@ class UsersProjectSerializer(serializers.ModelSerializer):
             'date_joined'
         )
         model = models.UserProject
-
-
-class StaffComment(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'comment',
-            'date',
-            'comment_by',
-            'project_state'
-        )
-        model = models.StaffComment
 
 
 class ProjectSerializerGet(serializers.ModelSerializer):

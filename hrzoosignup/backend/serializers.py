@@ -11,7 +11,7 @@ from rest_framework import serializers
 
 from .serializers_helpers import (
     RoleSerializer, get_ssh_key_fingerprint, StateSerializer,
-    ProjectTypeSerializer
+    ProjectTypeSerializer, StaffComment
 )
 
 
@@ -228,17 +228,6 @@ class UsersSerializer(serializers.ModelSerializer):
             'userproject_set'
         )
         model = get_user_model()
-
-
-class StaffComment(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'comment',
-            'date',
-            'comment_by',
-            'project_state'
-        )
-        model = models.StaffComment
 
 
 class ProjectSerializerGet(serializers.ModelSerializer):
