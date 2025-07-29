@@ -1,5 +1,8 @@
+import datetime
+
 from backend import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 from rest_framework import serializers
 
 
@@ -80,16 +83,19 @@ class GeneralSshKeysSerializer(serializers.ModelSerializer):
     def validate_name(self, value):
         value = value.strip()
 
-        if value in list(models.SSHPublicKey.objects. \
-                                 filter(user=self.initial_data['user']).values_list('name', flat=True)):
-            raise serializers.ValidationError(
-                'Key of that name already exists'
-            )
+        if value in list(
+                models.SSHPublicKey.objects.filter(
+                    user=self.initial_data['user']
+                ).values_list('name', flat=True)
+        ):
+            raise serializers.ValidationError('Key of that name already exists')
         return value
 
     def create(self, validated_data):
         complete = dict()
-        complete['fingerprint'] = get_ssh_key_fingerprint(validated_data['public_key'])
+        complete['fingerprint'] = get_ssh_key_fingerprint(
+            validated_data['public_key']
+        )
         complete.update({key: value for key, value in validated_data.items()})
         complete['date_created'] = timezone.make_aware(datetime.datetime.now())
         user = get_user_model().objects.get(id=self.initial_data['user'])
