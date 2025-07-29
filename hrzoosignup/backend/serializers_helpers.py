@@ -20,30 +20,3 @@ class RoleSerializer(serializers.ModelSerializer):
             'name',
         )
         model = models.Role
-
-
-class StateSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.State
-
-
-class ProjectTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.ProjectType
-
-
-class StaffComment(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'comment',
-            'date',
-            'comment_by',
-            'project_state'
-        )
-        model = models.StaffComment

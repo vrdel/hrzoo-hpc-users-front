@@ -6,10 +6,34 @@ from backend.utils.accounting import get_institute_long_name, short2long, \
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .serializers_helpers import (
-    RoleSerializer, get_ssh_key_fingerprint, StateSerializer,
-    ProjectTypeSerializer, StaffComment
-)
+from .serializers_helpers import RoleSerializer, get_ssh_key_fingerprint
+
+
+class _StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.State
+
+
+class _ProjectTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.ProjectType
+
+
+class _StaffComment(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'comment',
+            'date',
+            'comment_by',
+            'project_state'
+        )
+        model = models.StaffComment
 
 
 class ScienceSoftwareSerializer(serializers.ModelSerializer):
@@ -98,10 +122,10 @@ class UsersProjectSerializer(serializers.ModelSerializer):
 
 class ProjectSerializerGet(serializers.ModelSerializer):
     users = UsersSerializerFiltered(many=True, read_only=True)
-    state = StateSerializer()
-    project_type = ProjectTypeSerializer()
+    state = _StateSerializer()
+    project_type = _ProjectTypeSerializer()
     userproject_set = UsersProjectSerializer(many=True, read_only=True)
-    staffcomment_set = StaffComment(many=True, read_only=True)
+    staffcomment_set = _StaffComment(many=True, read_only=True)
 
     class Meta:
         fields = (
@@ -159,8 +183,8 @@ class ProjectExtendSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializerFiltered(serializers.ModelSerializer):
-    project_type = ProjectTypeSerializer()
-    state = StateSerializer()
+    project_type = _ProjectTypeSerializer()
+    state = _StateSerializer()
 
     class Meta:
         fields = (

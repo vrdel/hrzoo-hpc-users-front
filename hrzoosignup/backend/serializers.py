@@ -9,10 +9,7 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework import serializers
 
-from .serializers_helpers import (
-    RoleSerializer, get_ssh_key_fingerprint, StateSerializer,
-    ProjectTypeSerializer, StaffComment
-)
+from .serializers_helpers import RoleSerializer, get_ssh_key_fingerprint
 
 
 def _get_project_identifier(project_type):
@@ -228,35 +225,6 @@ class UsersSerializer(serializers.ModelSerializer):
             'userproject_set'
         )
         model = get_user_model()
-
-
-class AccountingProjectUsersSerializerGet(serializers.ModelSerializer):
-    users = UsersSerializerFiltered(many=True, read_only=True)
-    state = StateSerializer()
-    project_type = ProjectTypeSerializer()
-    userproject_set = UserProjectSerializer(many=True, read_only=True)
-    staffcomment_set = StaffComment(many=True, read_only=True)
-
-    class Meta:
-        fields = (
-            'id',
-            'identifier',
-            'institute',
-            'name',
-            'project_type',
-            'resources_numbers',
-            'resources_type',
-            'science_extrasoftware',
-            'science_extrasoftware_help',
-            'science_field',
-            'science_software',
-            'staff_resources_type',
-            'staffcomment_set',
-            'state',
-            'userproject_set',
-            'users',
-        )
-        model = models.Project
 
 
 class InvitesSerializer(serializers.ModelSerializer):
