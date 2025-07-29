@@ -151,7 +151,7 @@ class UsersSerializer4SSHKeys(serializers.ModelSerializer):
         model = get_user_model()
 
 
-class UsersSerializerFiltered3(serializers.ModelSerializer):
+class Users4UserProjectsSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
@@ -185,7 +185,7 @@ class UserProjectSerializer(serializers.ModelSerializer):
 
 
 class UserProjectSerializer2(serializers.ModelSerializer):
-    user = UsersSerializerFiltered3()
+    user = Users4UserProjectsSerializer()
     project = ProjectSerializerFiltered()
 
     class Meta:
