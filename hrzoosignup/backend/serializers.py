@@ -9,6 +9,8 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework import serializers
 
+from .serializers_helpers import RoleSerializer
+
 
 def get_ssh_key_fingerprint(ssh_key):
     # How to get fingerprint from ssh key:
@@ -42,14 +44,6 @@ def get_project_identifier(project_type):
         )
 
     return identifier, cobj
-
-
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.Role
 
 
 class ProjectSerializer(serializers.ModelSerializer):

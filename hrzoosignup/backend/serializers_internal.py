@@ -6,6 +6,8 @@ from backend.utils.accounting import get_institute_long_name, short2long, \
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from .serializers_helpers import RoleSerializer
+
 
 class ScienceSoftwareSerializer(serializers.ModelSerializer):
     class Meta:
@@ -87,14 +89,6 @@ class SshKeysSerializer(serializers.ModelSerializer):
         user = get_user_model().objects.get(id=self.initial_data['user'])
         complete['user'] = user
         return models.SSHPublicKey.objects.create(**complete)
-
-
-class RoleSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.Role
 
 
 class UsersProjectSerializer(serializers.ModelSerializer):
