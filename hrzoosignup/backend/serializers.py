@@ -10,7 +10,8 @@ from django.utils import timezone
 from rest_framework import serializers
 
 from .serializers_helpers import (
-    RoleSerializer, get_ssh_key_fingerprint, StateSerializer
+    RoleSerializer, get_ssh_key_fingerprint, StateSerializer,
+    ProjectTypeSerializer
 )
 
 
@@ -78,14 +79,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             'users',
         )
         model = models.Project
-
-
-class ProjectTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = (
-            'name',
-        )
-        model = models.ProjectType
 
 
 class ProjectSerializerFiltered(serializers.ModelSerializer):

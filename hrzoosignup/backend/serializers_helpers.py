@@ -28,3 +28,11 @@ class StateSerializer(serializers.ModelSerializer):
             'name',
         )
         model = models.State
+
+
+class ProjectTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'name',
+        )
+        model = models.ProjectType
