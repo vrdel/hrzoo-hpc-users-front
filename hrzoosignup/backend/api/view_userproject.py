@@ -12,7 +12,7 @@ import datetime
 
 class UserProjectAPI(APIView):
     permission_classes = (HRZOOHasAPIKey,)
-    serializer_class = serializers.UserProjectSerializer2
+    serializer_class = serializers.UserProjectSerializer
 
     def get(self, request):
         tags = self.request.query_params.get('tags')
@@ -39,7 +39,7 @@ class UserProjectAPI(APIView):
                 return Response(cached_interested, status=status.HTTP_200_OK)
             else:
                 serializer = \
-                    serializers.UserProjectSerializer2(db_interested, many=True)
+                    serializers.UserProjectSerializer(db_interested, many=True)
                 return Response(serializer.data, status=status.HTTP_200_OK)
 
         elif projects:
@@ -51,7 +51,7 @@ class UserProjectAPI(APIView):
             db_interested = db_interested.filter(project__is_active=True)
 
             serializer = \
-                serializers.UserProjectSerializer2(db_interested, many=True)
+                serializers.UserProjectSerializer(db_interested, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
@@ -61,7 +61,7 @@ class UserProjectAPI(APIView):
 
             db_interested = models.UserProject.objects.all()
             db_interested = db_interested.filter(project__is_active=True, project__date_start__lte=datetime.datetime.now().date())
-            serializer = serializers.UserProjectSerializer2(db_interested, many=True)
+            serializer = serializers.UserProjectSerializer(db_interested, many=True)
             cache.set('ext-users-projects', serializer.data, None)
 
             return Response(serializer.data, status=status.HTTP_200_OK)

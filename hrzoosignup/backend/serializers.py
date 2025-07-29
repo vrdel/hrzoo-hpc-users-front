@@ -171,6 +171,19 @@ class Users4UserProjectsSerializer(serializers.ModelSerializer):
 
 
 class UserProjectSerializer(serializers.ModelSerializer):
+    user = Users4UserProjectsSerializer()
+    project = ProjectSerializerFiltered()
+
+    class Meta:
+        fields = (
+            'user',
+            'project',
+            'date_joined',
+        )
+        model = models.UserProject
+
+
+class _UserProjectSerializer(serializers.ModelSerializer):
     role = RoleSerializer()
     user = UsersSerializerFiltered()
 
@@ -184,21 +197,8 @@ class UserProjectSerializer(serializers.ModelSerializer):
         model = models.UserProject
 
 
-class UserProjectSerializer2(serializers.ModelSerializer):
-    user = Users4UserProjectsSerializer()
-    project = ProjectSerializerFiltered()
-
-    class Meta:
-        fields = (
-            'user',
-            'project',
-            'date_joined',
-        )
-        model = models.UserProject
-
-
 class UsersSerializer(serializers.ModelSerializer):
-    userproject_set = UserProjectSerializer(many=True, read_only=True)
+    userproject_set = _UserProjectSerializer(many=True, read_only=True)
 
     class Meta:
         fields = (
