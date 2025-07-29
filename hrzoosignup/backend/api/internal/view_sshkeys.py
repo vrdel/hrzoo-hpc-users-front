@@ -1,22 +1,18 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
-from rest_framework.renderers import JSONRenderer
-
-from backend.serializers import SshKeysSerializer
-from backend.models import SSHPublicKey
-from backend.email import sshkey as keyemail
-from backend import models
-
-from django.conf import settings
-from django.core.cache import cache
-from django.db import IntegrityError
-
 import json
 import logging
 
+from backend import models
+from backend.email import sshkey as keyemail
+from backend.models import SSHPublicKey
+from backend.serializers_internal import SshKeysSerializer
+from django.conf import settings
+from django.core.cache import cache
+from django.db import IntegrityError
+from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 logger = logging.getLogger('hrzoosignup.views')
 

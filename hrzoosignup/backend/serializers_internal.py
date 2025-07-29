@@ -1,12 +1,10 @@
-import datetime
-
 from backend import models
 from backend.utils.accounting import get_institute_long_name, short2long, \
     institutions_realms_dict, get_realm
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from .serializers_helpers import RoleSerializer, get_ssh_key_fingerprint
+from .serializers_helpers import RoleSerializer, GeneralSshKeysSerializer
 
 
 class _StateSerializer(serializers.ModelSerializer):
@@ -57,53 +55,8 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
         model = get_user_model()
 
 
-class SshKeysSerializer(serializers.ModelSerializer):
-    user = UsersSerializerFiltered(read_only=True)
-
-    class Meta:
-        fields = (
-            'name',
-            'fingerprint',
-            'public_key',
-            'date_created',
-            'user'
-        )
-        model = models.SSHPublicKey
-        read_only_fields = ('fingerprint', )
-
-    def validate_public_key(self, value):
-        value = value.strip()
-        if len(value.splitlines()) > 1:
-            raise serializers.ValidationError(
-                'Key is not valid: it should be single line.'
-            )
-
-        try:
-            get_ssh_key_fingerprint(value)
-        except (IndexError, TypeError):
-            raise serializers.ValidationError(
-                'Key is not valid: cannot generate fingerprint from it.'
-            )
-        return value
-
-    def validate_name(self, value):
-        value = value.strip()
-
-        if value in list(models.SSHPublicKey.objects.\
-                         filter(user=self.initial_data['user']).values_list('name', flat=True)):
-            raise serializers.ValidationError(
-                'Key of that name already exists'
-            )
-        return value
-
-    def create(self, validated_data):
-        complete = dict()
-        complete['fingerprint'] = get_ssh_key_fingerprint(validated_data['public_key'])
-        complete.update({key: value for key, value in validated_data.items()})
-        complete['date_created'] = datetime.datetime.now()
-        user = get_user_model().objects.get(id=self.initial_data['user'])
-        complete['user'] = user
-        return models.SSHPublicKey.objects.create(**complete)
+class SshKeysSerializer(GeneralSshKeysSerializer):
+    pass
 
 
 class UsersProjectSerializer(serializers.ModelSerializer):
