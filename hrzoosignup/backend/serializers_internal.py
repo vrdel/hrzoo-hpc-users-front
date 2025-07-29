@@ -318,3 +318,63 @@ class ResourceUsageSerializer(serializers.ModelSerializer):
             "gpuh", "walltime", "wait_time", "realm", "tag", "vm"
         ]
         model = models.ResourceUsage
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'approved_by',
+            'change_history',
+            'changed_by',
+            'croris_collaborators',
+            'croris_end',
+            'croris_finance',
+            'croris_id',
+            'croris_identifier',
+            'croris_institute',
+            'croris_lead',
+            'croris_start',
+            'croris_summary',
+            'croris_title',
+            'croris_type',
+            'changed_by',
+            'date_approved',
+            'date_changed',
+            'date_end',
+            'date_start',
+            'date_submitted',
+            'denied_by',
+            'id',
+            'identifier',
+            'institute',
+            'is_active',
+            'name',
+            'project_type',
+            'reason',
+            'resources_numbers',
+            'resources_type',
+            'science_extrasoftware',
+            'science_extrasoftware_help',
+            'science_field',
+            'science_software',
+            'staff_resources_type',
+            'state',
+            'users',
+        )
+        model = models.Project
+
+
+class InvitesSerializer(serializers.ModelSerializer):
+    inviter = UsersSerializerFiltered(read_only=True)
+    project = ProjectSerializer(read_only=True)
+
+    class Meta:
+        fields = (
+            'project',
+            'email',
+            'created',
+            'accepted',
+            'inviter',
+            'invtype'
+        )
+        model = models.CustomInvitation

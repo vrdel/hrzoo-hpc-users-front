@@ -4,8 +4,7 @@ import logging
 
 from backend import models
 from backend.email import project
-from backend.serializers import ProjectSerializer
-from backend.serializers_internal import ProjectSerializerGet
+from backend.serializers_internal import ProjectSerializer, ProjectSerializerGet
 from backend.utils.gen_username import gen_username
 from django.conf import settings
 from django.core.cache import cache
@@ -18,7 +17,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 # TODO: dev only
-from rest_framework.permissions import AllowAny
+# from rest_framework.permissions import AllowAny
 
 
 logger = logging.getLogger('hrzoosignup.views')
