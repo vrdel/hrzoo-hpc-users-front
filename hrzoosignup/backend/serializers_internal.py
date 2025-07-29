@@ -96,36 +96,6 @@ class UsersProjectSerializer(serializers.ModelSerializer):
         model = models.UserProject
 
 
-class UsersSerializer(serializers.ModelSerializer):
-    userproject_set = UsersProjectSerializer(many=True, read_only=True)
-
-    class Meta:
-        fields = (
-            'croris_first_name',
-            'croris_last_name',
-            'croris_mail',
-            'date_joined',
-            'first_name',
-            'id',
-            'is_active',
-            'is_staff',
-            'is_superuser',
-            'last_login',
-            'last_name',
-            'person_affiliation',
-            'person_institution',
-            'person_mail',
-            'person_oib',
-            'person_organisation',
-            'person_uniqueid',
-            'pk',
-            'status',
-            'username',
-            'userproject_set'
-        )
-        model = get_user_model()
-
-
 class StaffComment(serializers.ModelSerializer):
     class Meta:
         fields = (
