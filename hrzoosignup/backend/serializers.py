@@ -162,12 +162,6 @@ class SshKeysSerializer(GeneralSshKeysSerializer):
     user = UsersSerializer4SSHKeys(read_only=True)
 
 
-class ScienceSoftwareSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = ('pk', 'name', 'created', 'added_by')
-        model = models.ScienceSoftware
-
-
 class ResourceUsageListSerializer(serializers.Serializer):
     jobid = serializers.CharField()
 
