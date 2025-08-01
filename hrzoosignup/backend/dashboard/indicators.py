@@ -32,26 +32,34 @@ class Indicators:
     def _supek_usage(self, institution):
         return models.ResourceUsage.objects.filter(
             project__in=self._projects(institution),
-            resource_name="supek"
-        )
+            resource_name="supek",
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).values("accounting_record")
 
     def _vrancic_usage(self, institution):
         return models.ResourceUsage.objects.filter(
             project__in=self._projects(institution),
-            resource_name="cloud"
-        )
+            resource_name="cloud",
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).values("accounting_record")
 
     def _jupyter_usage(self, institution):
         return models.ResourceUsage.objects.filter(
             project__in=self._projects(institution),
-            resource_name="jupyter"
-        )
+            resource_name="jupyter",
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).values("accounting_record")
 
     def _padobran_usage(self, institution):
         return models.ResourceUsage.objects.filter(
             project__in=self._projects(institution),
-            resource_name="padobran"
-        )
+            resource_name="padobran",
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).values("accounting_record")
 
 
 class DashboardIndicators(Indicators):
@@ -143,9 +151,8 @@ class DashboardIndicators(Indicators):
 
     def supek_cpu(self, institution):
         return round(sum(
-            float(item.accounting_record["cpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["cpuh"]) for item
+            in self._supek_usage(institution)
         ), 2)
 
     def aggregated_supek_cpu(self, university):
@@ -156,9 +163,8 @@ class DashboardIndicators(Indicators):
 
     def supek_gpu(self, institution):
         return round(sum(
-            float(item.accounting_record["gpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["gpuh"]) for item
+            in self._supek_usage(institution)
         ), 2)
 
     def aggregated_supek_gpu(self, university):
@@ -169,9 +175,8 @@ class DashboardIndicators(Indicators):
 
     def vrancic_cpu(self, institution):
         return round(sum(
-            float(item.accounting_record["cpuh"]) for item in
-            self._vrancic_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["cpuh"]) for item
+            in self._vrancic_usage(institution)
         ), 2)
 
     def aggregated_vrancic_cpu(self, university):
@@ -182,9 +187,8 @@ class DashboardIndicators(Indicators):
 
     def vrancic_gpu(self, institution):
         return round(sum(
-            float(item.accounting_record["gpuh"]) for item in
-            self._vrancic_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["gpuh"]) for item in
+            self._vrancic_usage(institution)
         ), 2)
 
     def aggregated_vrancic_gpu(self, university):
@@ -195,9 +199,8 @@ class DashboardIndicators(Indicators):
 
     def padobran(self, institution):
         return round(sum(
-            float(item.accounting_record["cpuh"]) for item in
-            self._padobran_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["cpuh"]) for item in
+            self._padobran_usage(institution)
         ), 2)
 
     def aggregated_padobran(self, university):
@@ -208,9 +211,8 @@ class DashboardIndicators(Indicators):
 
     def jupyter_cpu(self, institution):
         return round(sum(
-            float(item.accounting_record["jupyter_cpu_h"]) for item in
-            self._jupyter_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["jupyter_cpu_h"]) for item in
+            self._jupyter_usage(institution)
         ), 2)
 
     def aggregated_jupyter_cpu(self, university):
@@ -221,9 +223,8 @@ class DashboardIndicators(Indicators):
 
     def jupyter_gpu(self, institution):
         return round(sum(
-            float(item.accounting_record["jupyter_gpu_h"]) for item in
-            self._jupyter_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["jupyter_gpu_h"]) for item in
+            self._jupyter_usage(institution)
         ), 2)
 
     def aggregated_jupyter_gpu(self, university):
@@ -239,9 +240,8 @@ class CaffeIndicators(Indicators):
 
     def _supek_cpuh(self, institution):
         return [
-            float(item.accounting_record["cpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["cpuh"]) for item
+            in self._supek_usage(institution)
         ]
 
     def supek_cpuh(self, institution):
@@ -250,9 +250,8 @@ class CaffeIndicators(Indicators):
 
     def _supek_gpuh(self, institution):
         return [
-            float(item.accounting_record["gpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["gpuh"]) for item
+            in self._supek_usage(institution)
         ]
 
     def supek_gpuh(self, institution):
@@ -266,9 +265,8 @@ class CaffeIndicators(Indicators):
 
     def _padobran_cpuh(self, institution):
         return [
-            float(item.accounting_record["cpuh"]) for item in
-            self._padobran_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
+            float(item["accounting_record"]["cpuh"]) for item in
+            self._padobran_usage(institution)
         ]
 
     def padobran(self, institution):
