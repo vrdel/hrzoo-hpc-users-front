@@ -3,7 +3,14 @@ import datetime
 
 from backend import models
 from backend.utils.accounting import get_active_projects, get_active_users
+from django.db.models import Sum, Func, F, DecimalField
 from django.utils import timezone
+
+
+class CastJSONBToFloat(Func):
+    function = None
+    template = "(%(expressions)s)::float"
+    output_field = DecimalField()
 
 
 class Indicators:
@@ -29,28 +36,36 @@ class Indicators:
             item.institute == institution
         ]
 
-    def _supek_usage(self, institution):
-        return models.ResourceUsage.objects.filter(
+    def _get_usage(self, institution, resource_name, field):
+        result = models.ResourceUsage.objects.filter(
             project__in=self._projects(institution),
-            resource_name="supek"
+            resource_name=resource_name,
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).annotate(
+            accounting_field=CastJSONBToFloat(F(f"accounting_record__{field}"))
+        ).aggregate(
+            total=Sum("accounting_field")
+        )["total"]
+
+        if result:
+            return round(float(result), 2)
+
+        else:
+            return 0
+
+    def supek_cpu(self, institution):
+        return self._get_usage(
+            institution=institution,
+            resource_name="supek",
+            field="cpuh"
         )
 
-    def _vrancic_usage(self, institution):
-        return models.ResourceUsage.objects.filter(
-            project__in=self._projects(institution),
-            resource_name="cloud"
-        )
-
-    def _jupyter_usage(self, institution):
-        return models.ResourceUsage.objects.filter(
-            project__in=self._projects(institution),
-            resource_name="jupyter"
-        )
-
-    def _padobran_usage(self, institution):
-        return models.ResourceUsage.objects.filter(
-            project__in=self._projects(institution),
-            resource_name="padobran"
+    def supek_gpu(self, institution):
+        return self._get_usage(
+            institution=institution,
+            resource_name="supek",
+            field="gpuh"
         )
 
 
@@ -141,25 +156,11 @@ class DashboardIndicators(Indicators):
             self._get_university_components(university)
         ])
 
-    def supek_cpu(self, institution):
-        return round(sum(
-            float(item.accounting_record["cpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ), 2)
-
     def aggregated_supek_cpu(self, university):
         return sum(
             self.supek_cpu(institution) for institution in
             self._get_university_components(university)
         )
-
-    def supek_gpu(self, institution):
-        return round(sum(
-            float(item.accounting_record["gpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ), 2)
 
     def aggregated_supek_gpu(self, university):
         return sum([
@@ -168,11 +169,11 @@ class DashboardIndicators(Indicators):
         ])
 
     def vrancic_cpu(self, institution):
-        return round(sum(
-            float(item.accounting_record["cpuh"]) for item in
-            self._vrancic_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ), 2)
+        return self._get_usage(
+            institution=institution,
+            resource_name="cloud",
+            field="cpuh"
+        )
 
     def aggregated_vrancic_cpu(self, university):
         return sum([
@@ -181,11 +182,11 @@ class DashboardIndicators(Indicators):
         ])
 
     def vrancic_gpu(self, institution):
-        return round(sum(
-            float(item.accounting_record["gpuh"]) for item in
-            self._vrancic_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ), 2)
+        return self._get_usage(
+            institution=institution,
+            resource_name="cloud",
+            field="gpuh"
+        )
 
     def aggregated_vrancic_gpu(self, university):
         return sum([
@@ -194,11 +195,11 @@ class DashboardIndicators(Indicators):
         ])
 
     def padobran(self, institution):
-        return round(sum(
-            float(item.accounting_record["cpuh"]) for item in
-            self._padobran_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ), 2)
+        return self._get_usage(
+            institution=institution,
+            resource_name="padobran",
+            field="cpuh"
+        )
 
     def aggregated_padobran(self, university):
         return sum([
@@ -207,11 +208,11 @@ class DashboardIndicators(Indicators):
         ])
 
     def jupyter_cpu(self, institution):
-        return round(sum(
-            float(item.accounting_record["jupyter_cpu_h"]) for item in
-            self._jupyter_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ), 2)
+        return self._get_usage(
+            institution=institution,
+            resource_name="jupyter",
+            field="jupyter_cpu_h"
+        )
 
     def aggregated_jupyter_cpu(self, university):
         return sum([
@@ -220,11 +221,11 @@ class DashboardIndicators(Indicators):
         ])
 
     def jupyter_gpu(self, institution):
-        return round(sum(
-            float(item.accounting_record["jupyter_gpu_h"]) for item in
-            self._jupyter_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ), 2)
+        return self._get_usage(
+            institution=institution,
+            resource_name="jupyter",
+            field="jupyter_gpu_h"
+        )
 
     def aggregated_jupyter_gpu(self, university):
         return sum([
@@ -237,40 +238,41 @@ class CaffeIndicators(Indicators):
     def institutions(self):
         return list(set(item.institute for item in self._projects_in_period()))
 
-    def _supek_cpuh(self, institution):
-        return [
-            float(item.accounting_record["cpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ]
-
     def supek_cpuh(self, institution):
-        supek_usage = self._supek_cpuh(institution)
-        return round(sum(supek_usage), 2)
-
-    def _supek_gpuh(self, institution):
-        return [
-            float(item.accounting_record["gpuh"]) for item
-            in self._supek_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ]
+        return self.supek_cpu(institution)
 
     def supek_gpuh(self, institution):
-        supek_usage = self._supek_gpuh(institution)
-        gpu_jobs = [item for item in supek_usage if item != 0]
+        supek_usage = self.supek_gpu(institution)
+        gpu_jobs = models.ResourceUsage.objects.filter(
+            project__in=self._projects(institution),
+            resource_name="supek",
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).annotate(
+            gpuh=CastJSONBToFloat(F(f"accounting_record__gpuh"))
+        ).exclude(gpuh=0).count()
+        all_jobs = models.ResourceUsage.objects.filter(
+            project__in=self._projects(institution),
+            resource_name="supek",
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).count()
         return (
-            round(sum(supek_usage), 2),
-            len(gpu_jobs),
-            len(supek_usage) - len(gpu_jobs)
+            supek_usage,
+            gpu_jobs,
+            all_jobs - gpu_jobs
         )
 
-    def _padobran_cpuh(self, institution):
-        return [
-            float(item.accounting_record["cpuh"]) for item in
-            self._padobran_usage(institution) if
-            self.start_date <= item.end_time <= self.end_date
-        ]
-
     def padobran(self, institution):
-        usage = self._padobran_cpuh(institution)
-        return round(sum(usage), 2), len(usage)
+        usage = self._get_usage(
+            institution=institution,
+            resource_name="padobran",
+            field="cpuh"
+        )
+        nr_jobs = models.ResourceUsage.objects.filter(
+            project__in=self._projects(institution),
+            resource_name="padobran",
+            end_time__gte=self.start_date,
+            end_time__lte=self.end_date
+        ).count()
+        return usage, nr_jobs
