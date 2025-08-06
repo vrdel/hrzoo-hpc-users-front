@@ -183,7 +183,8 @@ class Command(BaseCommand):
 
                 if user_inst_oib and croris_institute:
                     if user.person_institution != croris_institute.name_short:
-                        self.stdout.write(self.style.NOTICE(f'User {user.username} old institution name {user.person_institution} updated to new CroRIS name {croris_institute}'))
+                        old_institution = user.person_institution if user.person_institution else 'NONE'
+                        self.stdout.write(self.style.NOTICE(f'User {user.username} old institution name {old_institution} updated to new CroRIS name {croris_institute}'))
                         if options.get('cron', None):
                             logger.info(f'User {user.username} institution name updated to new CroRIS name {croris_institute}')
                         if options.get('confirm_yes', None):
