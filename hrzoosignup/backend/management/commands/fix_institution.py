@@ -284,14 +284,16 @@ class Command(BaseCommand):
                     pass
 
             if user.person_institution in self.inst_maps.all_from():
-                user.person_institution = self.inst_maps.get(user.person_institution)
-                self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
-                if options.get('cron', None):
-                    logger.info(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}')
-                if options.get('confirm_yes', None):
-                    user.person_institution_manual_set = True
-                    any_changed = True
-                    user.save()
+                institution_map = self.inst_maps.get(user.person_institution)
+                if user.person_institution != institution_map:
+                    user.person_institution = institution_map
+                    self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
+                    if options.get('cron', None):
+                        logger.info(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}')
+                    if options.get('confirm_yes', None):
+                        user.person_institution_manual_set = True
+                        any_changed = True
+                        user.save()
 
         for user in users:
             if 'gmail' in user.person_mail:
