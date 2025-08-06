@@ -205,7 +205,7 @@ class Command(BaseCommand):
             try:
                 query = Q()
                 if 'forenzi' in user.person_organisation:
-                    foren_st = CrorisInstitutions.objects.get(contact_email='forenzika@unist.hr')
+                    foren_st = CrorisInstitutions.objects.get(contact_email='forenzika@forenzika.unist.hr')
                     if user.person_institution != foren_st.name_short:
                         self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {foren_st.name_short}'))
                         if options.get('cron', None):
