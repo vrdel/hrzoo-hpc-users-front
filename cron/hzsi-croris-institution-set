@@ -1,1 +1,1 @@
-*/4 * * * * apache . /opt/hrzoo-signup/bin/activate; $VIRTUAL_ENV/bin/hzsi-manage fix_institution --user --yes --cron
+*/4 * * * * apache . /opt/hrzoo-signup/bin/activate; $VIRTUAL_ENV/bin/hzsi-manage fix_institution --user --yes --cron; $VIRTUAL_ENV/bin/hzsi-manage fix_institution --project --yes --cron'
