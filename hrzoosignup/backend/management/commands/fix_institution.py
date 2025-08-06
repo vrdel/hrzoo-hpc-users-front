@@ -163,9 +163,9 @@ class Command(BaseCommand):
             userproj = UserProject.objects.filter(project_id=project.id).filter(role__name='lead')
             userlead_institution = userproj[0].user.person_institution
             if project.institute != userlead_institution:
-                self.stdout.write(self.style.NOTICE(f'Changing project {project.identifier} institute of lead institute: {project.institute}'))
+                self.stdout.write(self.style.NOTICE(f'Changing project {project.identifier} institute of lead institute: {userlead_institution}'))
                 if options.get('cron', None):
-                    logger.info(f'Changing project {project.identifier} institute of lead institute: {project.institute}')
+                    logger.info(f'Changing project {project.identifier} institute of lead institute: {userlead_institution}')
                 if options.get('confirm_yes', None):
                     project.institute = userlead_institution
                     any_changed = True
@@ -178,6 +178,24 @@ class Command(BaseCommand):
         users = self.user_model.objects.all()
         for user in users:
             try:
+                user_inst_oib = user.person_institution_oib
+                croris_institute = CrorisInstitutions.objects.get(oib=user_inst_oib)
+
+                if user_inst_oib and croris_institute:
+                    if user.person_institution != croris_institute.name_short and not user.person_institution_manual_set:
+                        old_institution = user.person_institution if user.person_institution else 'NONE'
+                        self.stdout.write(self.style.NOTICE(f'User {user.username} old institution name {old_institution} updated to new CroRIS name {croris_institute}'))
+                        if options.get('cron', None):
+                            logger.info(f'User {user.username} institution name updated to new CroRIS name {croris_institute}')
+                        if options.get('confirm_yes', None):
+                            any_changed = True
+                            user.person_institution = croris_institute.name_short
+                            user.save()
+
+            except CrorisInstitutions.DoesNotExist:
+                pass
+
+            try:
                 email_domain = user.person_mail.split('@')[1]
                 if 'gmail' in email_domain or 'biocentre' in email_domain:
                     continue
@@ -187,7 +205,7 @@ class Command(BaseCommand):
             try:
                 query = Q()
                 if 'forenzi' in user.person_organisation:
-                    foren_st = CrorisInstitutions.objects.get(contact_email='forenzika@unist.hr')
+                    foren_st = CrorisInstitutions.objects.get(contact_email='forenzika@forenzika.unist.hr')
                     if user.person_institution != foren_st.name_short:
                         self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {foren_st.name_short}'))
                         if options.get('cron', None):
@@ -267,14 +285,16 @@ class Command(BaseCommand):
                     pass
 
             if user.person_institution in self.inst_maps.all_from():
-                user.person_institution = self.inst_maps.get(user.person_institution)
-                self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
-                if options.get('cron', None):
-                    logger.info(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}')
-                if options.get('confirm_yes', None):
-                    user.person_institution_manual_set = True
-                    any_changed = True
-                    user.save()
+                institution_map = self.inst_maps.get(user.person_institution)
+                if user.person_institution != institution_map:
+                    user.person_institution = institution_map
+                    self.stdout.write(self.style.NOTICE(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}'))
+                    if options.get('cron', None):
+                        logger.info(f'Setting institution from institution_map.json for {user.username} to {user.person_institution}')
+                    if options.get('confirm_yes', None):
+                        user.person_institution_manual_set = True
+                        any_changed = True
+                        user.save()
 
         for user in users:
             if 'gmail' in user.person_mail:
