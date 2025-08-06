@@ -178,6 +178,23 @@ class Command(BaseCommand):
         users = self.user_model.objects.all()
         for user in users:
             try:
+                user_inst_oib = user.person_institution_oib
+                croris_institute = CrorisInstitutions.objects.get(oib=user_inst_oib)
+
+                if user_inst_oib and croris_institute:
+                    if user.person_institution != croris_institute.name_short:
+                        self.stdout.write(self.style.NOTICE(f'User {user.username} old institution name {user.person_institution} updated to new CroRIS name {croris_institute}'))
+                        if options.get('cron', None):
+                            logger.info(f'User {user.username} institution name updated to new CroRIS name {croris_institute}')
+                        if options.get('confirm_yes', None):
+                            any_changed = True
+                            user.person_institution = croris_institute.name_short
+                            user.save()
+
+            except CrorisInstitutions.DoesNotExist:
+                pass
+
+            try:
                 email_domain = user.person_mail.split('@')[1]
                 if 'gmail' in email_domain or 'biocentre' in email_domain:
                     continue
