@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.utils.crypto import get_random_string
 
 from backend.models import Project, UserProject, Role
-from backend.serializers import SshKeysSerializer
+from backend.serializers_internal import SshKeysSerializer
 from backend.models import SSHPublicKey
 from backend.utils.gen_username import gen_username
 

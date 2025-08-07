@@ -11,14 +11,14 @@ from backend.dbmodels.apikey import HRZOOHasAPIKey
 
 class SshKeysAPI(APIView):
     permission_classes = (HRZOOHasAPIKey,)
-    serializer_class = serializers.SshKeysSerializer2
+    serializer_class = serializers.SshKeysSerializer
 
     def get(self, request):
         ret_data = cache.get('ext-sshkeys')
         if ret_data:
             return Response(ret_data, status=status.HTTP_200_OK)
 
-        serializer = serializers.SshKeysSerializer2(
+        serializer = serializers.SshKeysSerializer(
             SSHPublicKey.objects.all(), many=True
         )
         cache.set('ext-sshkeys', serializer.data, None)

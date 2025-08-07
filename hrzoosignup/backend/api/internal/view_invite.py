@@ -1,29 +1,24 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.permissions import AllowAny
-from rest_framework import status
-from rest_framework.renderers import JSONRenderer
-
-from invitations.utils import get_invitation_model
-
-from backend import models
-from backend.email import user as useremail
-from backend.serializers import InvitesSerializer
-from backend.utils.gen_username import gen_username
-from .view_croris import CroRISInfo
-
-import json
-import requests
 import datetime
 import logging
 
+import requests
+from backend import models
+from backend.email import user as useremail
+from backend.serializers_internal import InvitesSerializer
+from backend.utils.gen_username import gen_username
+from django.conf import settings
 from django.core.cache import cache
 from django.db import IntegrityError
-from django.conf import settings
 from django.utils import timezone
+from invitations.utils import get_invitation_model
+from rest_framework import status
+from rest_framework.authentication import SessionAuthentication
+from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from .view_croris import CroRISInfo
 
 logger = logging.getLogger('hrzoosignup.views')
 

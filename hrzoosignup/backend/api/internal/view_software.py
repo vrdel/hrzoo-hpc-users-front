@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from backend.serializers import ScienceSoftwareSerializer
+from backend.serializers_internal import ScienceSoftwareSerializer
 from backend import models
 
 import logging

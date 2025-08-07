@@ -14,19 +14,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-class ProjectsAPI(APIView):
-    permission_classes = (HRZOOHasAPIKey,)
-    serializer_class = backend_serializers.ProjectSerializerFiltered
-
-    def get(self, request):
-        projects = models.Project.objects.all()
-        serializer = backend_serializers.ProjectSerializerFiltered(
-            projects, many=True
-        )
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
 class NewProjectsAPI(APIView):
     permission_classes = (MerlinHasAPIKey,)
     serializer_class = backend_serializers.NewProjectsSerializer
