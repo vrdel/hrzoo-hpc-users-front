@@ -73,10 +73,8 @@ class Command(BaseCommand):
             help="Flag indicating call from cron",
         )
 
-    async def _task_resync_croris_institutions(self, options, projects):
-        any_changed = False
+    async def _fetch_croris_institutions(self, options, projects):
         try:
-            projects_db = Project.objects.all()
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
             self.session = SessionWithRetry(logger, auth=auth,
                                             handle_session_close=True)
@@ -92,6 +90,7 @@ class Command(BaseCommand):
             if exc_raised:
                 raise exc
             else:
+                projects_institutes = list()
                 for project in response:
                     project = json.loads(project)
                     metadata_institutes = []
@@ -102,23 +101,32 @@ class Command(BaseCommand):
                                 {
                                     'class': institute['klasifikacija']['naziv'],
                                     'name': institute['naziv']
-
                                 }
                             )
-                        if options.get('confirm_yes', None):
-                            target = await projects_db.aget(croris_id=project['id'])
-                            if target.croris_institute != metadata_institutes:
-                                any_changed = True
-                                target.croris_institute = metadata_institutes
-                                self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
-                                if options.get('cron', None):
-                                    logger.info(f'Changing croris_institute for {target.croris_identifier}')
-                                await target.asave()
+                    projects_institutes.append({
+                        'id': project['id'],
+                        'institutes': metadata_institutes
+                    })
 
-            return any_changed
+                return projects_institutes
 
         finally:
             await self.session.close()
+
+    async def _apply_changes_institutions(self, options, projects_institutes):
+        any_changed = False
+        projects_db = Project.objects.all()
+        for pi in projects_institutes:
+            target = await projects_db.aget(croris_id=pi['id'])
+            if target.croris_institute != pi['institutes']:
+                any_changed = True
+                target.croris_institute = pi['institutes']
+                self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
+                if options.get('cron', None):
+                    logger.info(f'Changing croris_institute for {target.croris_identifier}')
+                await target.asave()
+
+        return any_changed
 
     def _task_fix_project_institutions(self, options):
         any_changed = False
@@ -350,7 +358,9 @@ class Command(BaseCommand):
         if options.get('research_resync_yes', None):
             projects_all = Project.objects.filter(project_type__name='research-croris')
             try:
-                any_changed_project = asyncio.run(self._task_resync_croris_institutions(options, projects_all))
+                projects_institutes = asyncio.run(self._fetch_croris_institutions(options, projects_all))
+                if options.get('confirm_yes', None):
+                    any_changed_project = asyncio.run(self._apply_changes_institutions(options, projects_institutes))
             except (HZSIHttpError, KeyboardInterrupt):
                 pass
 
