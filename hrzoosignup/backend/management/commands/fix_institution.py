@@ -128,7 +128,7 @@ class Command(BaseCommand):
 
         return any_changed
 
-    def _task_fix_project_institutions(self, options):
+    def _fix_project_institutions(self, options):
         any_changed = False
         projects_croris = Project.objects.filter(project_type__name='research-croris')
         projects_other = Project.objects.exclude(project_type__name='research-croris')
@@ -181,7 +181,7 @@ class Command(BaseCommand):
 
         return any_changed
 
-    def _task_fix_user_institutions(self, options):
+    def _fix_user_institutions(self, options):
         any_changed = False
         users = self.user_model.objects.all()
         for user in users:
@@ -326,7 +326,7 @@ class Command(BaseCommand):
 
         return any_changed
 
-    def _task_set_realm_institutions(self, options):
+    def _set_realm_institutions(self, options):
         any_changed = False
         users = self.user_model.objects.all()
         for user in users:
@@ -353,7 +353,7 @@ class Command(BaseCommand):
         any_changed_user, any_changed_project = False, False
 
         if options.get('user_yes', None):
-            any_changed_user = self._task_fix_user_institutions(options)
+            any_changed_user = self._fix_user_institutions(options)
 
         if options.get('research_resync_yes', None):
             projects_institutes = list()
@@ -368,10 +368,10 @@ class Command(BaseCommand):
                 pass
 
         if options.get('project_yes', None):
-            any_changed_project = self._task_fix_project_institutions(options)
+            any_changed_project = self._fix_project_institutions(options)
 
         if options.get('realm_yes', None):
-            self._task_set_realm_institutions(options)
+            self._set_realm_institutions(options)
 
         if any_changed_user or any_changed_project:
             cache.delete("usersinfoinactive-get")
