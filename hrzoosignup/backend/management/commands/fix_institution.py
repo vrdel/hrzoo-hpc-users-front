@@ -13,7 +13,7 @@ from backend.utils.institution import InstitutionMap
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
-from backend.utils.various import contains_exception
+from backend.utils.various import contains_exception, chunk_list
 
 import logging
 import asyncio
@@ -73,15 +73,15 @@ class Command(BaseCommand):
             help="Flag indicating call from cron",
         )
 
-    async def _fetch_croris_institutions(self, options, projects):
+    async def _fetch_croris_institutions(self, options, project_ids):
         try:
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
             self.session = SessionWithRetry(logger, auth=auth,
                                             handle_session_close=True)
             coros = []
-            async for project in projects:
+            for project_id in project_ids:
                 coros.append(
-                    self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
+                    self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project_id)))
                 )
 
             response = await asyncio.gather(*coros, return_exceptions=True)
@@ -121,9 +121,9 @@ class Command(BaseCommand):
             if target.croris_institute != pi['institutes']:
                 any_changed = True
                 target.croris_institute = pi['institutes']
-                self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
+                self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier} to {pi["institutes"]}'))
                 if options.get('cron', None):
-                    logger.info(f'Changing croris_institute for {target.croris_identifier}')
+                    logger.info(f'Changing croris_institute for {target.croris_identifier} to {pi["institutes"]}')
                 await target.asave()
 
         return any_changed
@@ -356,9 +356,12 @@ class Command(BaseCommand):
             any_changed_user = self._task_fix_user_institutions(options)
 
         if options.get('research_resync_yes', None):
-            projects_all = Project.objects.filter(project_type__name='research-croris')
+            projects_institutes = list()
+            projects_ids = Project.objects.filter(project_type__name='research-croris').values_list('croris_id', flat=True)
             try:
-                projects_institutes = asyncio.run(self._fetch_croris_institutions(options, projects_all))
+                for projids in chunk_list(projects_ids, settings.CRORIS_PARALLELSYNCERS):
+                    chunk = asyncio.run(self._fetch_croris_institutions(options, projids))
+                    projects_institutes += chunk
                 if options.get('confirm_yes', None):
                     any_changed_project = asyncio.run(self._apply_changes_institutions(options, projects_institutes))
             except (HZSIHttpError, KeyboardInterrupt):
