@@ -92,18 +92,19 @@ class Command(BaseCommand):
 
         for project in projects_db:
             try:
-                self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} financiers {projects_financiers[project.croris_id]}'))
                 if options.get('confirm_yes', None):
-                    project.croris_finance = projects_financiers[project.croris_id]
-                    project.save()
-                    any_changed = True
+                    if project.croris_finance != projects_financiers[project.croris_id]:
+                        self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} financiers {projects_financiers[project.croris_id]}'))
+                        project.croris_finance = projects_financiers[project.croris_id]
+                        project.save()
+                        any_changed = True
             except KeyError:
                 self.stdout.write(self.style.ERROR(f'No project {project.identifier} found in fetched CroRIS data'))
 
         return any_changed
 
     def handle(self, *args, **options):
-        any_changed_project = False
+        any_changed_project = None
 
         try:
             projects_financiers = dict()

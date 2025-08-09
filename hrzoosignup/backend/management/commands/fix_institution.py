@@ -27,7 +27,7 @@ logger = logging.getLogger('hrzoosignup.crons')
 
 
 class Command(BaseCommand):
-    help = "Fix user and project institutions by aligning them with the names from CroRIS"
+    help = "Fix user and project institutions by aligning them with the names from CroRIS. Alo set realms institutions."
 
     def __init__(self):
         super().__init__()
