@@ -51,6 +51,7 @@ Username = user
 Password = pass
 Grace_Days = 180
 InstitutionLongName = True
+ParallelSyncers = 10
 
 
 [DASHBOARD]

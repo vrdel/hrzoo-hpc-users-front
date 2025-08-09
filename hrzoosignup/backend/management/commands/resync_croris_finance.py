@@ -9,7 +9,7 @@ from backend.utils.institution import long_name
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
-from backend.utils.various import contains_exception
+from backend.utils.various import contains_exception, chunk_list
 
 import logging
 import asyncio
@@ -40,18 +40,17 @@ class Command(BaseCommand):
             help="Use name_long for financiers",
         )
 
-    async def _task_resync_croris_finance(self, options):
+    async def _fetch_croris_finance(self, options, project_ids):
         project_financiers = dict()
         try:
 
-            projects_db = Project.objects.filter(project_type__name='research-croris')
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
             self.session = SessionWithRetry(logger, auth=auth,
                                             handle_session_close=True)
             coros = []
-            async for project in projects_db:
+            for project_id in project_ids:
                 coros.append(
-                    self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
+                    self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project_id)))
                 )
 
             response = await asyncio.gather(*coros, return_exceptions=True)
@@ -86,32 +85,37 @@ class Command(BaseCommand):
         finally:
             await self.session.close()
 
-    def _task_fix_project_financiers(self, options, projects_financiers):
+    def _fix_project_financiers(self, options, projects_financiers):
         any_changed = False
 
         projects_db = Project.objects.filter(project_type__name='research-croris')
 
         for project in projects_db:
             try:
-                self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} financiers {projects_financiers[project.croris_id]}'))
                 if options.get('confirm_yes', None):
-                    project.croris_finance = projects_financiers[project.croris_id]
-                    project.save()
-                    any_changed = True
+                    if project.croris_finance != projects_financiers[project.croris_id]:
+                        self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} financiers {projects_financiers[project.croris_id]}'))
+                        project.croris_finance = projects_financiers[project.croris_id]
+                        project.save()
+                        any_changed = True
             except KeyError:
                 self.stdout.write(self.style.ERROR(f'No project {project.identifier} found in fetched CroRIS data'))
 
         return any_changed
 
     def handle(self, *args, **options):
-        any_changed_project = False
+        any_changed_project = None
 
         try:
-            projects_financiers = asyncio.run(self._task_resync_croris_finance(options))
+            projects_financiers = dict()
+            projects_ids = Project.objects.filter(project_type__name='research-croris').values_list('croris_id', flat=True)
+            for projids in chunk_list(projects_ids, settings.CRORIS_PARALLELSYNCERS):
+                chunk = asyncio.run(self._fetch_croris_finance(options, projids))
+                projects_financiers.update(chunk)
         except (HZSIHttpError, KeyboardInterrupt):
             pass
 
-        any_changed_project = self._task_fix_project_financiers(options, projects_financiers)
+        any_changed_project = self._fix_project_financiers(options, projects_financiers)
 
         if any_changed_project:
             cache.delete("usersinfoinactive-get")

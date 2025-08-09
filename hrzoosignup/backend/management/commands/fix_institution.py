@@ -13,7 +13,7 @@ from backend.utils.institution import InstitutionMap
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
-from backend.utils.various import contains_exception
+from backend.utils.various import contains_exception, chunk_list
 
 import logging
 import asyncio
@@ -27,7 +27,7 @@ logger = logging.getLogger('hrzoosignup.crons')
 
 
 class Command(BaseCommand):
-    help = "Fix user and project institutions by aligning them with the names from CroRIS"
+    help = "Fix user and project institutions by aligning them with the names from CroRIS. Alo set realms institutions."
 
     def __init__(self):
         super().__init__()
@@ -73,17 +73,15 @@ class Command(BaseCommand):
             help="Flag indicating call from cron",
         )
 
-    async def _task_resync_croris_institutions(self, options, projects):
-        any_changed = False
+    async def _fetch_croris_institutions(self, options, project_ids):
         try:
-            projects_db = Project.objects.all()
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
             self.session = SessionWithRetry(logger, auth=auth,
                                             handle_session_close=True)
             coros = []
-            async for project in projects:
+            for project_id in project_ids:
                 coros.append(
-                    self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
+                    self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project_id)))
                 )
 
             response = await asyncio.gather(*coros, return_exceptions=True)
@@ -92,6 +90,7 @@ class Command(BaseCommand):
             if exc_raised:
                 raise exc
             else:
+                projects_institutes = list()
                 for project in response:
                     project = json.loads(project)
                     metadata_institutes = []
@@ -102,25 +101,34 @@ class Command(BaseCommand):
                                 {
                                     'class': institute['klasifikacija']['naziv'],
                                     'name': institute['naziv']
-
                                 }
                             )
-                        if options.get('confirm_yes', None):
-                            target = await projects_db.aget(croris_id=project['id'])
-                            if target.croris_institute != metadata_institutes:
-                                any_changed = True
-                                target.croris_institute = metadata_institutes
-                                self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier}'))
-                                if options.get('cron', None):
-                                    logger.info(f'Changing croris_institute for {target.croris_identifier}')
-                                await target.asave()
+                    projects_institutes.append({
+                        'id': project['id'],
+                        'institutes': metadata_institutes
+                    })
 
-            return any_changed
+                return projects_institutes
 
         finally:
             await self.session.close()
 
-    def _task_fix_project_institutions(self, options):
+    async def _apply_changes_institutions(self, options, projects_institutes):
+        any_changed = False
+        projects_db = Project.objects.all()
+        for pi in projects_institutes:
+            target = await projects_db.aget(croris_id=pi['id'])
+            if target.croris_institute != pi['institutes']:
+                any_changed = True
+                target.croris_institute = pi['institutes']
+                self.stdout.write(self.style.NOTICE(f'Changing croris_institute for {target.croris_identifier} to {pi["institutes"]}'))
+                if options.get('cron', None):
+                    logger.info(f'Changing croris_institute for {target.croris_identifier} to {pi["institutes"]}')
+                await target.asave()
+
+        return any_changed
+
+    def _fix_project_institutions(self, options):
         any_changed = False
         projects_croris = Project.objects.filter(project_type__name='research-croris')
         projects_other = Project.objects.exclude(project_type__name='research-croris')
@@ -173,7 +181,7 @@ class Command(BaseCommand):
 
         return any_changed
 
-    def _task_fix_user_institutions(self, options):
+    def _fix_user_institutions(self, options):
         any_changed = False
         users = self.user_model.objects.all()
         for user in users:
@@ -318,7 +326,7 @@ class Command(BaseCommand):
 
         return any_changed
 
-    def _task_set_realm_institutions(self, options):
+    def _set_realm_institutions(self, options):
         any_changed = False
         users = self.user_model.objects.all()
         for user in users:
@@ -345,20 +353,25 @@ class Command(BaseCommand):
         any_changed_user, any_changed_project = False, False
 
         if options.get('user_yes', None):
-            any_changed_user = self._task_fix_user_institutions(options)
+            any_changed_user = self._fix_user_institutions(options)
 
         if options.get('research_resync_yes', None):
-            projects_all = Project.objects.filter(project_type__name='research-croris')
+            projects_institutes = list()
+            projects_ids = Project.objects.filter(project_type__name='research-croris').values_list('croris_id', flat=True)
             try:
-                any_changed_project = asyncio.run(self._task_resync_croris_institutions(options, projects_all))
+                for projids in chunk_list(projects_ids, settings.CRORIS_PARALLELSYNCERS):
+                    chunk = asyncio.run(self._fetch_croris_institutions(options, projids))
+                    projects_institutes += chunk
+                if options.get('confirm_yes', None):
+                    any_changed_project = asyncio.run(self._apply_changes_institutions(options, projects_institutes))
             except (HZSIHttpError, KeyboardInterrupt):
                 pass
 
         if options.get('project_yes', None):
-            any_changed_project = self._task_fix_project_institutions(options)
+            any_changed_project = self._fix_project_institutions(options)
 
         if options.get('realm_yes', None):
-            self._task_set_realm_institutions(options)
+            self._set_realm_institutions(options)
 
         if any_changed_user or any_changed_project:
             cache.delete("usersinfoinactive-get")
