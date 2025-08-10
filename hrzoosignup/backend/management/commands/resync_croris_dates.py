@@ -16,11 +16,11 @@ import json
 import datetime
 
 
-logger = logging.getLogger('hrzoosignup.tasks')
+logger = logging.getLogger('hrzoosignup.crons')
 
 
 class Command(BaseCommand):
-    help = "Fix user and project institutions by aligning them with the names from CroRIS"
+    help = "Refresh start and end dates for approved research projects with recent CroRIS dates"
 
     def __init__(self):
         super().__init__()
@@ -34,6 +34,12 @@ class Command(BaseCommand):
             action="store_true",
             dest="confirm_yes",
             help="Make changes",
+        )
+        parser.add_argument(
+            "--cron",
+            action="store_true",
+            dest="cron",
+            help="Flag indicating call from cron",
         )
 
     async def _fetch_croris_dates(self, project_ids):
@@ -83,6 +89,8 @@ class Command(BaseCommand):
                 if croris_start != project.date_start:
                     self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date start from {project.date_start} to {croris_start}'))
                     if options.get('confirm_yes', None):
+                        if options.get('cron', None):
+                            logger.info(f'Changing research project {project.identifier} date start from {project.date_start} to {croris_start}')
                         project.date_start = croris_start
                         project.croris_start = croris_start
                         project.save()
@@ -90,12 +98,16 @@ class Command(BaseCommand):
                 if croris_end != project.date_end:
                     self.stdout.write(self.style.NOTICE(f'Changing research project {project.identifier} date end from {project.date_end} to {croris_end}'))
                     if options.get('confirm_yes', None):
+                        if options.get('cron', None):
+                            logger.info(f'Changing research project {project.identifier} date end from {project.date_end} to {croris_end}')
                         project.date_end = croris_end
                         project.croris_end = croris_end
                         project.save()
                         any_changed = True
             except KeyError:
                 self.stdout.write(self.style.ERROR(f'No project {project.identifier} found in fetched CroRIS data'))
+                if options.get('cron', None):
+                    logger.info(f'No project {project.identifier} found in fetched CroRIS data')
 
         return any_changed
 
