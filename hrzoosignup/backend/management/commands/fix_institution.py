@@ -4,8 +4,6 @@ from django.core.cache import cache
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
-from backend.utils.gen_username import gen_username
-from backend.models import User
 from backend.models import Project
 from backend.models import UserProject
 from backend.models import CrorisInstitutions
@@ -19,9 +17,6 @@ import logging
 import asyncio
 import json
 
-import random
-
-ALPHACHARS = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz"
 
 logger = logging.getLogger('hrzoosignup.crons')
 

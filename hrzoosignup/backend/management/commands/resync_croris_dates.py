@@ -16,11 +16,11 @@ import json
 import datetime
 
 
-logger = logging.getLogger('hrzoosignup.tasks')
+logger = logging.getLogger('hrzoosignup.crons')
 
 
 class Command(BaseCommand):
-    help = "Fix user and project institutions by aligning them with the names from CroRIS"
+    help = "Refresh start and end dates for approved research projects with recent CroRIS dates"
 
     def __init__(self):
         super().__init__()
@@ -34,6 +34,12 @@ class Command(BaseCommand):
             action="store_true",
             dest="confirm_yes",
             help="Make changes",
+        )
+        parser.add_argument(
+            "--cron",
+            action="store_true",
+            dest="cron",
+            help="Flag indicating call from cron",
         )
 
     async def _fetch_croris_dates(self, project_ids):
