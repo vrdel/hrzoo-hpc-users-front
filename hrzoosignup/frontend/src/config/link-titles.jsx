@@ -174,12 +174,18 @@ export function LinkTitles(loc, intl) {
     let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = Array(decodeURIComponent(identifier[0]))
-    return intl.formatMessage({
-        defaultMessage: 'Pregledavanje i upravljanje članstvima projekta {identifier}',
-        description: 'linktitle-memberships-change'
-      },
-      {identifier}
-    ).join(' ')
+    if (identifier[0] === 'inactive')
+      return intl.formatMessage({
+        defaultMessage: 'Popis članstava na završenim zahtjevima/projektima',
+        description: "linktitle-membershipsinactive"
+      })
+    else
+      return intl.formatMessage({
+          defaultMessage: 'Pregledavanje i upravljanje članstvima projekta {identifier}',
+          description: 'linktitle-memberships-change'
+        },
+        {identifier}
+      ).join(' ')
   }
 
   return url2linktitle[loc]
