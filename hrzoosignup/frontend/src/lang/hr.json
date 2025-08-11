@@ -595,6 +595,10 @@
     "defaultMessage": "Vrijeme:",
     "description": "manreq-change-time"
   },
+  "BiDb4e": {
+    "defaultMessage": "Popis članstava na završenim zahtjevima/projektima",
+    "description": "linktitle-membershipsinactive"
+  },
   "Bj7/HV": {
     "defaultMessage": "Prijava neuspješna: Pozivnica je namijenjena domaćim suradnicima koji se autenticiraju s regularnim AAI@EduHR",
     "description": "email-invite-fail-local-edugain"

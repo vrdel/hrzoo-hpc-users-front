@@ -595,6 +595,10 @@
     "defaultMessage": "Changed:",
     "description": "manreq-change-time"
   },
+  "BiDb4e": {
+    "defaultMessage": "List of memberships on ended requests/projects",
+    "description": "linktitle-membershipsinactive"
+  },
   "Bj7/HV": {
     "defaultMessage": "Registration unsuccessful: Invitation is intended for domestic collaborators who authenticate with regular AAI@EduHR credentials",
     "description": "email-invite-fail-local-edugain"
