@@ -5,8 +5,6 @@ import { fetchNrSpecificProject } from "Api/projects"
 import { useQuery } from "@tanstack/react-query";
 import {
   Badge,
-  Button,
-  ButtonGroup,
   Col,
   Input,
   Popover,
@@ -18,7 +16,7 @@ import {
 import { PageTitle } from 'Components/PageTitle';
 import { MiniButton } from 'Components/MiniButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faCopy, faSearch, faTimesCircle, faCheck, faXmark, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCopy, faSearch, faTimesCircle, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "Components/TableHelpers";
 import { buildOptionsFromArray } from "Utils/select-tools";
@@ -33,6 +31,7 @@ import { extractCollaborators, extractLeaderName } from "Utils/users_help";
 import { StateIcons } from 'Config/map-states';
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from 'react-intl';
+import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
 import _ from 'lodash';
 
 
@@ -176,34 +175,6 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
   }
   else
     return null
-}
-
-
-const ButtonGroupActiveInactive = ({activeList}) => {
-  let navigate = useNavigate()
-
-  return (
-    <ButtonGroup size="sm">
-      <Button className="mt-1 mb-1 mr-3" color="light"
-        active={ activeList }
-        onClick={ () => { navigate('/ui/users') } }>
-        <FontAwesomeIcon icon={ faCheck } />{' '}
-        <FormattedMessage
-          defaultMessage="Aktivni"
-          description="userlist-button-active"
-        />
-      </Button>
-      <Button className="ml-1 mt-1 mb-1" color="light"
-        active={ !activeList }
-        onClick={ () => { navigate('/ui/users/inactive') } }>
-        <FontAwesomeIcon icon={ faXmark } />{' '}
-        <FormattedMessage
-          defaultMessage="Neaktivni"
-          description="userlist-button-inactive"
-        />
-      </Button>
-    </ButtonGroup>
-  )
 }
 
 
