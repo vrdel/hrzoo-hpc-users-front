@@ -30,6 +30,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
+import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -175,7 +176,7 @@ const BriefProjectInfo = ({project}) => {
   )
 }
 
-const Memberships = () => {
+const Memberships = ({inactive=false}) => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const [invitesSent, setInvitesSent] = useState(undefined);
@@ -445,14 +446,22 @@ const Memberships = () => {
   if (nrStatus === 'success'
     && invitesStatus === 'success'
     && nrProjects && pageTitle) {
-    let projectsApproved = nrProjects.filter(project =>
-      project.state.name !== 'deny' && project.state.name !== 'submit'
-    )
+    let projectsApproved = undefined
+    if (!inactive)
+      projectsApproved = nrProjects.filter(project =>
+        project.state.name !== 'deny' && project.state.name !== 'submit' && project.is_active
+      )
+    else
+      projectsApproved = nrProjects.filter(project =>
+        project.state.name !== 'deny' && project.state.name !== 'submit' && !project.is_active
+      )
 
     return (
       <>
         <Row className="mb-5">
-          <PageTitle pageTitle={pageTitle}/>
+          <PageTitle pageTitle={pageTitle}>
+            <ButtonGroupActiveInactive activeList={!inactive} urls={{active: '/ui/memberships', inactive: '/ui/memberships/inactive'}} />
+          </PageTitle>
         </Row>
         <ModalAreYouSure
           isOpen={areYouSureModal}

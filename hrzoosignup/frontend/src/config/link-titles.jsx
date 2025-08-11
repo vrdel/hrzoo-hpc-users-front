@@ -66,6 +66,10 @@ export function LinkTitles(loc, intl) {
       defaultMessage: 'Popis članstava na odobrenim zahtjevima/projektima',
       description: "linktitle-memberships"
     }),
+    [url_ui_prefix + '/memberships/inactive']: intl.formatMessage({
+      defaultMessage: 'Popis članstava na završenim zahtjevima/projektima',
+      description: "linktitle-membershipsinactive"
+    }),
     [url_ui_prefix + '/users']:
       intl.formatMessage({
         defaultMessage: 'Popis svih korisnika na aktivnim projektima',
@@ -165,17 +169,23 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Novi zahtjev temeljem odabranog istraživačkog projekta',
         description: 'linktitle-newreq-research'
       })
-  
+
   if (loc.includes('/memberships/') && loc.match(/[%\w.\d-_]+$/)) {
     let identifier = loc.match(/[%\w.\d-_]+$/)
     if (identifier[0].includes('%'))
       identifier = Array(decodeURIComponent(identifier[0]))
-    return intl.formatMessage({
-        defaultMessage: 'Pregledavanje i upravljanje članstvima projekta {identifier}',
-        description: 'linktitle-memberships-change'
-      },
-      {identifier}
-    ).join(' ')
+    if (identifier[0] === 'inactive')
+      return intl.formatMessage({
+        defaultMessage: 'Popis članstava na završenim zahtjevima/projektima',
+        description: "linktitle-membershipsinactive"
+      })
+    else
+      return intl.formatMessage({
+          defaultMessage: 'Pregledavanje i upravljanje članstvima projekta {identifier}',
+          description: 'linktitle-memberships-change'
+        },
+        {identifier}
+      ).join(' ')
   }
 
   return url2linktitle[loc]
