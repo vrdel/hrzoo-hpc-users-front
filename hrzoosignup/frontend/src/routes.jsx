@@ -207,6 +207,9 @@ const BaseRoutes = () => {
               <Route path="memberships" element={
                 <MembershipsList /> }
               />
+              <Route path="memberships/inactive" element={
+                <MembershipsList inactive={true} /> }
+              />
               <Route path="memberships/:projId" element={
                 <MembershipsChange /> }
               />
