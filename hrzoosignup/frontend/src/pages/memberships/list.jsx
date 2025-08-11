@@ -447,6 +447,14 @@ const Memberships = ({inactive=false}) => {
     && invitesStatus === 'success'
     && nrProjects && pageTitle) {
     let projectsApproved = undefined
+    let anyProjectInactive = false
+
+    for (var nrProject of nrProjects)
+      if (!nrProject.is_active) {
+        anyProjectInactive = true
+        break
+      }
+
     if (!inactive)
       projectsApproved = nrProjects.filter(project =>
         project.state.name !== 'deny' && project.state.name !== 'submit' && project.is_active
@@ -460,7 +468,10 @@ const Memberships = ({inactive=false}) => {
       <>
         <Row className="mb-5">
           <PageTitle pageTitle={pageTitle}>
-            <ButtonGroupActiveInactive activeList={!inactive} urls={{active: '/ui/memberships', inactive: '/ui/memberships/inactive'}} />
+            {
+              anyProjectInactive &&
+                <ButtonGroupActiveInactive activeList={!inactive} urls={{active: '/ui/memberships', inactive: '/ui/memberships/inactive'}} />
+            }
           </PageTitle>
         </Row>
         <ModalAreYouSure
