@@ -175,7 +175,7 @@ const BriefProjectInfo = ({project}) => {
   )
 }
 
-const Memberships = () => {
+const Memberships = ({inactive=false}) => {
   const { LinkTitles } = useContext(SharedData);
   const [pageTitle, setPageTitle] = useState(undefined);
   const [invitesSent, setInvitesSent] = useState(undefined);
@@ -445,9 +445,15 @@ const Memberships = () => {
   if (nrStatus === 'success'
     && invitesStatus === 'success'
     && nrProjects && pageTitle) {
-    let projectsApproved = nrProjects.filter(project =>
-      project.state.name !== 'deny' && project.state.name !== 'submit'
-    )
+    let projectsApproved = undefined
+    if (!inactive)
+      projectsApproved = nrProjects.filter(project =>
+        project.state.name !== 'deny' && project.state.name !== 'submit' && project.is_active
+      )
+    else
+      projectsApproved = nrProjects.filter(project =>
+        project.state.name !== 'deny' && project.state.name !== 'submit' && !project.is_active
+      )
 
     return (
       <>
