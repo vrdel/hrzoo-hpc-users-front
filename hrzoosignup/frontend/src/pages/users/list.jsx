@@ -289,7 +289,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
     <>
       <Row>
         <PageTitle pageTitle={ pageTitle }>
-          <ButtonGroupActiveInactive activeList={activeList} />
+          <ButtonGroupActiveInactive activeList={activeList} urls={{active: '/ui/users', inactive: '/ui/users/inactive'}} />
         </PageTitle>
       </Row>
       <Row className="mt-4">
@@ -699,7 +699,7 @@ export const UsersInactiveList = () => {
       <EmptyTableSpinner
         pageTitle={pageTitle}
         PageTitleChild={ButtonGroupActiveInactive}
-        PageTitleChildProps={{activeList: false}}
+        PageTitleChildProps={{activeList: false, urls: {active: '/ui/users', inactive: '/ui/users/inactive'}}}
         colSpan={7}
       >
         <thead id="hzsi-thead" className="align-middle text-center text-white">
@@ -791,7 +791,7 @@ export const UsersList = () => {
       <EmptyTableSpinner
         pageTitle={pageTitle}
         PageTitleChild={ButtonGroupActiveInactive}
-        PageTitleChildProps={{activeList: true}}
+        PageTitleChildProps={{activeList: true, urls: {active: '/ui/users', inactive: '/ui/users/inactive'}}}
         colSpan={7}
       >
         <thead id="hzsi-thead" className="align-middle text-center text-white">

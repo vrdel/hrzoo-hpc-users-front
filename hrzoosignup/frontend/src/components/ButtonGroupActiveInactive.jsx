@@ -9,14 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormattedMessage } from 'react-intl';
 
 
-const ButtonGroupActiveInactive = ({activeList}) => {
+const ButtonGroupActiveInactive = ({activeList, urls}) => {
   let navigate = useNavigate()
 
   return (
     <ButtonGroup size="sm">
       <Button className="mt-1 mb-1 mr-3" color="light"
         active={ activeList }
-        onClick={ () => { navigate('/ui/users') } }>
+        onClick={ () => { navigate(urls.active) } }>
         <FontAwesomeIcon icon={ faCheck } />{' '}
         <FormattedMessage
           defaultMessage="Aktivni"
@@ -25,7 +25,7 @@ const ButtonGroupActiveInactive = ({activeList}) => {
       </Button>
       <Button className="ml-1 mt-1 mb-1" color="light"
         active={ !activeList }
-        onClick={ () => { navigate('/ui/users/inactive') } }>
+        onClick={ () => { navigate(urls.inactive) } }>
         <FontAwesomeIcon icon={ faXmark } />{' '}
         <FormattedMessage
           defaultMessage="Neaktivni"
