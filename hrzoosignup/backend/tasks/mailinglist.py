@@ -157,7 +157,7 @@ class ListUnsubscribe(object):
         response = await asyncio.gather(*coros, return_exceptions=True)
         exc_raised, exc = contains_exception(response)
 
-        ret_msg = None
+        ret_msgs = list()
 
         if exc_raised:
             await self.session.close()
@@ -167,18 +167,18 @@ class ListUnsubscribe(object):
             for res in response:
                 if res[0]:
                     self.users[nu].mailinglist_subscribe = False
-                    ret_msg = f"User {self.users[nu].username} unsubscribed from {settings.MAILINGLIST_NAME}"
+                    ret_msgs.append(f"User {self.users[nu].username} unsubscribed from {settings.MAILINGLIST_NAME}")
                     await self.users[nu].asave()
                     await self.session.close()
                 else:
                     if res[1].status == 404:
-                        ret_msg = f"User {self.users[nu].username} already unsubscribed from {settings.MAILINGLIST_NAME}, setting flag to False"
+                        ret_msgs.append(f"User {self.users[nu].username} already unsubscribed from {settings.MAILINGLIST_NAME}, setting flag to False")
                         self.users[nu].mailinglist_subscribe = False
                         await self.users[nu].asave()
                         await self.session.close()
                     else:
                         await self.session.close()
-                        ret_msg = f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}: {repr(res[1])}"
+                        ret_msgs.append(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}: {repr(res[1])}")
                 nu += 1
 
-        return ret_msg
+        return ret_msgs

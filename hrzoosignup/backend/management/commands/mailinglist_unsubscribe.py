@@ -48,10 +48,11 @@ class Command(BaseCommand):
             try:
                 list_unsubscribe = ListUnsubscribe(users_to_unsubscribe, cron=options.get('cron', None))
                 if users_to_unsubscribe:
-                    ret_msg = asyncio.run(list_unsubscribe.run())
-                    self.stdout.write(self.style.SUCCESS(ret_msg))
-                    if options.get('cron', None):
-                        logger.info(ret_msg)
+                    ret_msgs = asyncio.run(list_unsubscribe.run())
+                    for ret_msg in ret_msgs:
+                        self.stdout.write(self.style.SUCCESS(ret_msg))
+                        if options.get('cron', None):
+                            logger.info(ret_msg)
                 else:
                     self.stdout.write(self.style.SUCCESS('No users to unsubscribe'))
 
