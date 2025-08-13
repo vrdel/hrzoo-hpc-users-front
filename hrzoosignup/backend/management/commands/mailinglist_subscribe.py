@@ -25,6 +25,12 @@ class Command(BaseCommand):
             dest="confirm_yes",
             help="Make changes",
         )
+        parser.add_argument(
+            "--cron",
+            action="store_true",
+            dest="cron",
+            help="Flag indicating call from cron",
+        )
 
     def handle(self, *args, **options):
         logger.info("Subscribing eligible users to mailing list...")
@@ -32,9 +38,12 @@ class Command(BaseCommand):
         all_users = self.user_model.objects.all()
 
         users_to_subscribe = list()
-        for user in all_users:
-            if user.status == True and user.mailinglist_subscribe == False:
-                users_to_subscribe.append(user)
+        # TODO: revert
+        # for user in all_users:
+            # if user.status == True and user.mailinglist_subscribe == False:
+                # users_to_subscribe.append(user)
+
+        users_to_subscribe.append(all_users.get(username='dvrcic@srce.hr'))
 
         if not options.get('confirm_yes', None):
             self.stdout.write(self.style.WARNING('List of users that will be subscribed'))
@@ -42,15 +51,19 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.WARNING(f'{user.username}'))
         else:
             try:
+
                 list_subscribe = ListSubscribe(users_to_subscribe)
-                asyncio.run(list_subscribe.run())
-                if users_to_subscribe:
-                    logger.info(f'User to subscribe: {repr([user.username for user in users_to_subscribe])}')
-                    logger.info(f'Details in {os.environ["VIRTUAL_ENV"]}/var/log/tasks.log ')
+                ret_msg = asyncio.run(list_subscribe.run())
+                if users_to_subscribe and ret_msg:
+                    self.stdout.write(self.style.SUCCESS(ret_msg))
+                    if options.get('cron', None):
+                        logger.info(ret_msg)
                 else:
-                    logger.info('No users to subscribe')
+                    self.stdout.write(self.style.SUCCESS('No users to subscribe'))
+                    if options.get('cron', None):
+                        logger.info('No users to subscribe')
 
-            except (HZSIHttpError, KeyboardInterrupt):
-                pass
-
-            logger.info("Subscribing eligible users to mailing list... DONE")
+            except (HZSIHttpError, KeyboardInterrupt) as exc:
+                self.stdout.write(self.style.SUCCESS(exc))
+                if options.get('cron', None):
+                    logger.error(exc)

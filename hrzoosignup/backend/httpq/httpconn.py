@@ -133,7 +133,7 @@ class SessionWithRetry(object):
         except Exception as exc:
             raise HZSIHttpError(repr(exc)) from exc
 
-    async def http_delete(self, url, data, headers=None):
+    async def http_delete(self, url, data=None, headers=None):
         try:
             content = await self._http_method('delete', url, data=data, headers=headers)
             return content

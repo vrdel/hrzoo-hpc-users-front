@@ -9,14 +9,15 @@ from backend.httpq.httpconn import SessionWithRetry
 from backend.utils.various import contains_exception
 
 
-logger = logging.getLogger('hrzoosignup.tasks')
+logger = logging.getLogger('hrzoosignup.cron')
 
 
 class ListSubscribe(object):
-    def __init__(self, users):
+    def __init__(self, users, cron=False):
         self.headers = dict()
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.users = users
+        self.cron = cron
 
     async def maillist_id(self, headers):
         headers = dict()
@@ -51,10 +52,9 @@ class ListSubscribe(object):
         except HZSIHttpError as exc:
             errormsg = ('{}').format(str(exc))
 
-            logger.error('Failed subscribing user %s on %s: %s' % (username,
-                                                                   settings.MAILINGLIST_NAME,
-                                                                   errormsg))
-            return (False, exc)
+            raise HZSIHttpError('Failed subscribing user %s on %s: %s' % (username,
+                                                                          settings.MAILINGLIST_NAME,
+                                                                          errormsg))
 
     async def run(self):
         auth = settings.MAILINGLIST_CREDENTIALS.split(':')
@@ -63,8 +63,7 @@ class ListSubscribe(object):
         try:
             list_id = await self.maillist_id(self.headers)
         except HZSIHttpError as exc:
-            logger.error(f"Error fetch mailing list id {repr(exc)}")
-            raise SystemExit(1)
+            raise HZSIHttpError(f"Error fetch mailing list id {repr(exc)}")
 
         coros = []
 
@@ -74,6 +73,8 @@ class ListSubscribe(object):
         response = await asyncio.gather(*coros, return_exceptions=True)
         exc_raised, exc = contains_exception(response)
 
+        ret_msg = None
+
         if exc_raised:
             raise exc
         else:
@@ -81,25 +82,28 @@ class ListSubscribe(object):
             for res in response:
                 if res[0]:
                     self.users[nu].mailinglist_subscribe = True
-                    logger.info(f"User {self.users[nu].username} subscribed to {settings.MAILINGLIST_NAME}")
+                    ret_msg = f"User {self.users[nu].username} subscribed to {settings.MAILINGLIST_NAME}"
                     await self.users[nu].asave()
                 else:
                     if res[1].status == 409:
-                        logger.info(f"User {self.users[nu].username} already subscribed to {settings.MAILINGLIST_NAME}, setting flag to True")
+                        ret_msg = f"User {self.users[nu].username} already subscribed to {settings.MAILINGLIST_NAME}, setting flag to True"
                         self.users[nu].mailinglist_subscribe = True
                         await self.users[nu].asave()
                     else:
-                        logger.error(f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}")
+                        raise HZSIHttpError(f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}")
                 nu += 1
 
         await self.session.close()
+        return ret_msg
 
 
 class ListUnsubscribe(object):
-    def __init__(self, users):
+    def __init__(self, users, cron=False, django_stdout=None):
         self.headers = dict()
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.users = users
+        self.cron = cron
+        self.std = django_stdout
 
     async def maillist_id(self, headers):
         headers = dict()
@@ -129,10 +133,14 @@ class ListUnsubscribe(object):
 
         except HZSIHttpError as exc:
             errormsg = ('{}').format(str(exc))
+            self.std.stdout.write(self.std.style.NOTICE('Failed unsubscribing user %s on %s: %s' % (username,
+                                                                                                    settings.MAILINGLIST_NAME,
+                                                                                                    errormsg)))
+            if self.cron:
+                logger.error('Failed unsubscribing user %s on %s: %s' % (username,
+                                                                         settings.MAILINGLIST_NAME,
+                                                                         errormsg))
 
-            logger.error('Failed unsubscribing user %s on %s: %s' % (username,
-                                                                     settings.MAILINGLIST_NAME,
-                                                                     errormsg))
             return (False, exc)
 
     async def run(self):
@@ -142,7 +150,9 @@ class ListUnsubscribe(object):
         try:
             list_id = await self.maillist_id(self.headers)
         except HZSIHttpError as exc:
-            logger.error(f"Error fetch mailing list id {repr(exc)}")
+            self.std.stdout.write(self.std.style.NOTICE(f"Error fetch mailing list id {repr(exc)}"))
+            if self.cron:
+                logger.error(f"Error fetch mailing list id {repr(exc)}")
             raise SystemExit(1)
 
         coros = []
@@ -160,15 +170,21 @@ class ListUnsubscribe(object):
             for res in response:
                 if res[0]:
                     self.users[nu].mailinglist_subscribe = False
-                    logger.info(f"User {self.users[nu].username} unsubscribed from {settings.MAILINGLIST_NAME}")
+                    self.std.stdout.write(self.std.style.NOTICE(f"User {self.users[nu].username} unsubscribed from {settings.MAILINGLIST_NAME}"))
+                    if self.cron:
+                        logger.info(f"User {self.users[nu].username} unsubscribed from {settings.MAILINGLIST_NAME}")
                     await self.users[nu].asave()
                 else:
                     if res[1].status == 409:
-                        logger.info(f"User {self.users[nu].username} already unsubscribed from {settings.MAILINGLIST_NAME}, setting flag to False")
+                        self.std.stdout.write(self.std.style.NOTICE(f"User {self.users[nu].username} already unsubscribed from {settings.MAILINGLIST_NAME}, setting flag to False"))
+                        if self.cron:
+                            logger.info(f"User {self.users[nu].username} already unsubscribed from {settings.MAILINGLIST_NAME}, setting flag to False")
                         self.users[nu].mailinglist_subscribe = False
                         await self.users[nu].asave()
                     else:
-                        logger.error(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}")
+                        self.std.stdout.write(self.std.style.ERROR(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}"))
+                        if self.cron:
+                            logger.error(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}")
                 nu += 1
 
         await self.session.close()
