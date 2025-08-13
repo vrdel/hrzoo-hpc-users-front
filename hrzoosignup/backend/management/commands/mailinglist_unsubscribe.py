@@ -33,17 +33,12 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        logger.info("Unsubscribing eligible users from mailing list...")
-
         all_users = self.user_model.objects.all()
-
         users_to_unsubscribe = list()
-        # TODO: revert
-        # for user in all_users:
-            # if user.status == False and user.mailinglist_subscribe == True:
-                # users_to_unsubscribe.append(user)
 
-        users_to_unsubscribe.append(all_users.get(username='dvrcic@srce.hr'))
+        for user in all_users:
+            if user.status == False and user.mailinglist_subscribe == True:
+                users_to_unsubscribe.append(user)
 
         if not options.get('confirm_yes', None):
             self.stdout.write(self.style.WARNING('List of users that will be unsubscribed'))

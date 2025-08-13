@@ -32,8 +32,6 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        logger.info("Flagging users as inactive...")
-
         all_users = self.user_model.objects.all()
 
         any_changed = False

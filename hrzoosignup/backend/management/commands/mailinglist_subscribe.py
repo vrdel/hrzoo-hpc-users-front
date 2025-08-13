@@ -35,12 +35,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         all_users = self.user_model.objects.all()
         users_to_subscribe = list()
-        # TODO: revert
-        # for user in all_users:
-            # if user.status == True and user.mailinglist_subscribe == False:
-                # users_to_subscribe.append(user)
 
-        users_to_subscribe.append(all_users.get(username='dvrcic@srce.hr'))
+        for user in all_users:
+            if user.status == True and user.mailinglist_subscribe == False:
+                users_to_subscribe.append(user)
 
         if not options.get('confirm_yes', None):
             self.stdout.write(self.style.WARNING('List of users that will be subscribed'))
