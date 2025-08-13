@@ -24,6 +24,12 @@ class Command(BaseCommand):
             dest="confirmed_yes",
             help="Explicity state to agree to make the changes",
         )
+        parser.add_argument(
+            "--cron",
+            action="store_true",
+            dest="cron",
+            help="Flag indicating call from cron",
+        )
 
     def handle(self, *args, **options):
         logger.info("Flagging users as inactive...")
@@ -44,14 +50,16 @@ class Command(BaseCommand):
             ])
             if all_inactive and user.status != False:
                 if options.get('confirmed_yes', None):
-                    logger.info(f'Marking user {user.username} inactive')
+                    self.stdout.write(self.style.NOTICE(f'Marking user {user.username} inactive'))
+                    if options.get('cron', None):
+                        logger.info(f'Marking user {user.username} inactive')
                     user.status = False
                     any_changed = True
                     user.save()
                 else:
-                    logger.info(
+                    self.stdout.write(self.style.NOTICE(
                         f'User {user.username} would be marked as inactive'
-                    )
+                    ))
 
         if any_changed:
             cache.delete("usersinfoinactive-get")
@@ -59,6 +67,4 @@ class Command(BaseCommand):
             cache.delete("ext-users-projects")
             cache.delete('projects-get-all')
         else:
-            logger.info('No changes')
-
-        logger.info("Flagging users as inactive...")
+            self.stdout.write(self.style.NOTICE('No changes'))
