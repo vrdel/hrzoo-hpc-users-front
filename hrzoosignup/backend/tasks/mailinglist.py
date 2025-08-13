@@ -93,7 +93,7 @@ class ListSubscribe(object):
                         await self.session.close()
                     else:
                         await self.session.close()
-                        raise HZSIHttpError(f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}: {repr(res[1])}")
+                        ret_msg = f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}: {repr(res[1])}"
                 nu += 1
 
         return ret_msg
@@ -171,14 +171,14 @@ class ListUnsubscribe(object):
                     await self.users[nu].asave()
                     await self.session.close()
                 else:
-                    if res[1].status == 409:
+                    if res[1].status == 404:
                         ret_msg = f"User {self.users[nu].username} already unsubscribed from {settings.MAILINGLIST_NAME}, setting flag to False"
                         self.users[nu].mailinglist_subscribe = False
                         await self.users[nu].asave()
                         await self.session.close()
                     else:
                         await self.session.close()
-                        raise HZSIHttpError(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}: {repr(res[1])}")
+                        ret_msg = f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}: {repr(res[1])}"
                 nu += 1
 
         return ret_msg
