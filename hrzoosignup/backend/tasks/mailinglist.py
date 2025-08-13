@@ -119,7 +119,7 @@ class ListUnsubscribe(object):
     async def unsubscribe_maillist(self, email, username, list_id):
         try:
             response = await self.session.http_delete(
-                '{}/lists/{}/members/{}'.format(settings.MAILINGLIST_SERVER, list_id, email),
+                '{}/lists/{}/member/{}'.format(settings.MAILINGLIST_SERVER, list_id, email),
             )
 
             if response.status >= 200 and response.status < 300:
