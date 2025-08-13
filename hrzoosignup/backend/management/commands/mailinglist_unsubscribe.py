@@ -3,7 +3,7 @@ import logging
 import os
 
 from backend.httpq.excep import HZSIHttpError
-from backend.tasks.mailinglist import ListSubscribe
+from backend.tasks.mailinglist import ListUnsubscribe
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
@@ -11,7 +11,7 @@ logger = logging.getLogger("hrzoosignup.crons")
 
 
 class Command(BaseCommand):
-    help = "Subscribe eligible users to mailing list"
+    help = "Unsubscribe eligible users from mailing list"
 
     def __init__(self):
         super().__init__()
@@ -34,28 +34,27 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         all_users = self.user_model.objects.all()
-        users_to_subscribe = list()
+        users_to_unsubscribe = list()
 
         for user in all_users:
-            if user.status == True and user.mailinglist_subscribe == False:
-                users_to_subscribe.append(user)
+            if user.status == False and user.mailinglist_subscribe == True:
+                users_to_unsubscribe.append(user)
 
         if not options.get('confirm_yes', None):
-            self.stdout.write(self.style.WARNING('List of users that will be subscribed'))
-            for user in users_to_subscribe:
+            self.stdout.write(self.style.WARNING('List of users that will be unsubscribed'))
+            for user in users_to_unsubscribe:
                 self.stdout.write(self.style.WARNING(f'{user.username}'))
         else:
             try:
-
-                list_subscribe = ListSubscribe(users_to_subscribe, options.get('cron', None))
-                if users_to_subscribe:
-                    ret_msgs = asyncio.run(list_subscribe.run())
+                list_unsubscribe = ListUnsubscribe(users_to_unsubscribe, cron=options.get('cron', None))
+                if users_to_unsubscribe:
+                    ret_msgs = asyncio.run(list_unsubscribe.run())
                     for ret_msg in ret_msgs:
                         self.stdout.write(self.style.SUCCESS(ret_msg))
                         if options.get('cron', None):
                             logger.info(ret_msg)
                 else:
-                    self.stdout.write(self.style.SUCCESS('No users to subscribe'))
+                    self.stdout.write(self.style.SUCCESS('No users to unsubscribe'))
 
             except (HZSIHttpError, KeyboardInterrupt) as exc:
                 self.stdout.write(self.style.ERROR(exc))

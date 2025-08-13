@@ -57,6 +57,11 @@ RUN sudo python3.9 -m venv /opt/hrzoo-signup
 RUN sudo sh -c '\
   . /opt/hrzoo-signup/bin/activate \
   && pip install -U pip'
+RUN python3.9 -m venv /home/user/pgcli-venv
+RUN sh -c '\
+  . /home/user/pgcli-venv/bin/activate \
+  && pip install -U pip \
+  && pip install -U pgcli'
 RUN curl -sfL https://git.io/chezmoi | sh
 COPY chezmoi-config-apply.sh /home/user
 CMD ["sudo", "/usr/bin/supervisord", "-nc",  "/etc/supervisord.conf"]
