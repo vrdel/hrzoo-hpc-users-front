@@ -72,7 +72,7 @@ class ListSubscribe(object):
         response = await asyncio.gather(*coros, return_exceptions=True)
         exc_raised, exc = contains_exception(response)
 
-        ret_msg = None
+        ret_msgs = list
 
         if exc_raised:
             await self.session.close()
@@ -82,21 +82,21 @@ class ListSubscribe(object):
             for res in response:
                 if res[0]:
                     self.users[nu].mailinglist_subscribe = True
-                    ret_msg = f"User {self.users[nu].username} subscribed to {settings.MAILINGLIST_NAME}"
+                    ret_msgs.append(f"User {self.users[nu].username} subscribed to {settings.MAILINGLIST_NAME}")
                     await self.users[nu].asave()
                     await self.session.close()
                 else:
                     if res[1].status == 409:
-                        ret_msg = f"User {self.users[nu].username} already subscribed to {settings.MAILINGLIST_NAME}, setting flag to True"
+                        ret_msgs.append(f"User {self.users[nu].username} already subscribed to {settings.MAILINGLIST_NAME}, setting flag to True")
                         self.users[nu].mailinglist_subscribe = True
                         await self.users[nu].asave()
                         await self.session.close()
                     else:
                         await self.session.close()
-                        ret_msg = f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}: {repr(res[1])}"
+                        ret_msgs.append(f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}: {repr(res[1])}")
                 nu += 1
 
-        return ret_msg
+        return ret_msgs
 
 
 class ListUnsubscribe(object):

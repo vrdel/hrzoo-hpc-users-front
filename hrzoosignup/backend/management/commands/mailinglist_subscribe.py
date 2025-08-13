@@ -49,10 +49,11 @@ class Command(BaseCommand):
 
                 list_subscribe = ListSubscribe(users_to_subscribe, options.get('cron', None))
                 if users_to_subscribe:
-                    ret_msg = asyncio.run(list_subscribe.run())
-                    self.stdout.write(self.style.SUCCESS(ret_msg))
-                    if options.get('cron', None):
-                        logger.info(ret_msg)
+                    ret_msgs = asyncio.run(list_subscribe.run())
+                    for ret_msg in ret_msgs:
+                        self.stdout.write(self.style.SUCCESS(ret_msg))
+                        if options.get('cron', None):
+                            logger.info(ret_msg)
                 else:
                     self.stdout.write(self.style.SUCCESS('No users to subscribe'))
 
