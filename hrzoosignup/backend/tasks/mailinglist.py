@@ -93,7 +93,7 @@ class ListSubscribe(object):
                         await self.session.close()
                     else:
                         await self.session.close()
-                        raise HZSIHttpError(f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}")
+                        raise HZSIHttpError(f"Error subscribing user {self.users[nu].username} to {settings.MAILINGLIST_NAME}: {repr(res[1])}")
                 nu += 1
 
         return ret_msg
@@ -182,7 +182,7 @@ class ListUnsubscribe(object):
                         await self.session.close()
                     else:
                         await self.session.close()
-                        raise HZSIHttpError(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}")
+                        raise HZSIHttpError(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}: {repr(res[1])}")
                 nu += 1
 
         return ret_msg
