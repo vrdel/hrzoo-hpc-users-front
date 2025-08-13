@@ -3,7 +3,7 @@ import logging
 import os
 
 from backend.httpq.excep import HZSIHttpError
-from backend.tasks.mailinglist_subscribe import ListSubscribe
+from backend.tasks.mailinglist import ListSubscribe
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
