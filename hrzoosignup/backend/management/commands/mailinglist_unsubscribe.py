@@ -51,15 +51,18 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.WARNING(f'{user.username}'))
         else:
             try:
-                list_subscribe = ListUnsubscribe(users_to_unsubscribe, cron=options.get('cron', None), django_stdout={'stdout': self.stdout, 'style': self.style})
-                asyncio.run(list_subscribe.run())
-                if users_to_unsubscribe:
-                    logger.info(f'User to unsubscribe: {repr([user.username for user in users_to_unsubscribe])}')
-                    logger.info(f'Details in {os.environ["VIRTUAL_ENV"]}/var/log/tasks.log ')
+                list_unsubscribe = ListUnsubscribe(users_to_unsubscribe, cron=options.get('cron', None), django_stdout={'stdout': self.stdout, 'style': self.style})
+                ret_msg = asyncio.run(list_unsubscribe.run())
+                if users_to_unsubscribe and ret_msg:
+                    self.stdout.write(self.style.SUCCESS(ret_msg))
+                    if options.get('cron', None):
+                        logger.info(ret_msg)
                 else:
-                    logger.info('No users to unsubscribe')
+                    self.stdout.write(self.style.SUCCESS('No users to unsubscribe'))
+                    if options.get('cron', None):
+                        logger.info('No users to unsubscribe')
 
-            except (HZSIHttpError, KeyboardInterrupt):
-                pass
-
-            logger.info("Unsubscribing eligible users to mailing list... DONE")
+            except (HZSIHttpError, KeyboardInterrupt) as exc:
+                self.stdout.write(self.style.ERROR(exc))
+                if options.get('cron', None):
+                    logger.error(exc)

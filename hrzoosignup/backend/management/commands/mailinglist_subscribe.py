@@ -64,6 +64,6 @@ class Command(BaseCommand):
                         logger.info('No users to subscribe')
 
             except (HZSIHttpError, KeyboardInterrupt) as exc:
-                self.stdout.write(self.style.SUCCESS(exc))
+                self.stdout.write(self.style.ERROR(exc))
                 if options.get('cron', None):
                     logger.error(exc)
