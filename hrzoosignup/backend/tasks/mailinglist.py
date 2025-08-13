@@ -93,3 +93,82 @@ class ListSubscribe(object):
                 nu += 1
 
         await self.session.close()
+
+
+class ListUnsubscribe(object):
+    def __init__(self, users):
+        self.headers = dict()
+        self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        self.users = users
+
+    async def maillist_id(self, headers):
+        headers = dict()
+
+        response = await self.session.http_get('{}/lists/{}'.format(
+            settings.MAILINGLIST_SERVER, settings.MAILINGLIST_NAME),
+            headers=headers
+        )
+
+        if response:
+            list_id = json.loads(response)['list_id']
+
+            return list_id
+        else:
+            return False
+
+    async def unsubscribe_maillist(self, email, username, list_id):
+        try:
+            response = await self.session.http_delete(
+                '{}/lists/{}/members/{}'.format(settings.MAILINGLIST_SERVER, list_id, email),
+            )
+
+            if response.status >= 200 and response.status < 300:
+                return (True, response)
+            else:
+                return (False, response)
+
+        except HZSIHttpError as exc:
+            errormsg = ('{}').format(str(exc))
+
+            logger.error('Failed unsubscribing user %s on %s: %s' % (username,
+                                                                     settings.MAILINGLIST_NAME,
+                                                                     errormsg))
+            return (False, exc)
+
+    async def run(self):
+        auth = settings.MAILINGLIST_CREDENTIALS.split(':')
+        self.session = SessionWithRetry(logger, auth=auth, handle_session_close=True)
+
+        try:
+            list_id = await self.maillist_id(self.headers)
+        except HZSIHttpError as exc:
+            logger.error(f"Error fetch mailing list id {repr(exc)}")
+            raise SystemExit(1)
+
+        coros = []
+
+        for user in self.users:
+            coros.append(self.unsubscribe_maillist(user.person_mail, user.username, list_id))
+
+        response = await asyncio.gather(*coros, return_exceptions=True)
+        exc_raised, exc = contains_exception(response)
+
+        if exc_raised:
+            raise exc
+        else:
+            nu = 0
+            for res in response:
+                if res[0]:
+                    self.users[nu].mailinglist_subscribe = False
+                    logger.info(f"User {self.users[nu].username} unsubscribed from {settings.MAILINGLIST_NAME}")
+                    await self.users[nu].asave()
+                else:
+                    if res[1].status == 409:
+                        logger.info(f"User {self.users[nu].username} already unsubscribed from {settings.MAILINGLIST_NAME}, setting flag to False")
+                        self.users[nu].mailinglist_subscribe = False
+                        await self.users[nu].asave()
+                    else:
+                        logger.error(f"Error unsubscribing user {self.users[nu].username} from {settings.MAILINGLIST_NAME}")
+                nu += 1
+
+        await self.session.close()
