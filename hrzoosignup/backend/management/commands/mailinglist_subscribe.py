@@ -33,10 +33,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        logger.info("Subscribing eligible users to mailing list...")
-
         all_users = self.user_model.objects.all()
-
         users_to_subscribe = list()
         # TODO: revert
         # for user in all_users:
@@ -52,7 +49,7 @@ class Command(BaseCommand):
         else:
             try:
 
-                list_subscribe = ListSubscribe(users_to_subscribe)
+                list_subscribe = ListSubscribe(users_to_subscribe, options.get('cron', None))
                 ret_msg = asyncio.run(list_subscribe.run())
                 if users_to_subscribe and ret_msg:
                     self.stdout.write(self.style.SUCCESS(ret_msg))

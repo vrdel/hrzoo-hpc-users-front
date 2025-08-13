@@ -100,12 +100,11 @@ class ListSubscribe(object):
 
 
 class ListUnsubscribe(object):
-    def __init__(self, users, cron=False, django_stdout=None):
+    def __init__(self, users, cron=False):
         self.headers = dict()
         self.headers['Content-Type'] = 'application/x-www-form-urlencoded'
         self.users = users
         self.cron = cron
-        self.std = django_stdout
 
     async def maillist_id(self, headers):
         headers = dict()
@@ -148,10 +147,7 @@ class ListUnsubscribe(object):
         try:
             list_id = await self.maillist_id(self.headers)
         except HZSIHttpError as exc:
-            self.std.stdout.write(self.std.style.NOTICE(f"Error fetch mailing list id {repr(exc)}"))
-            if self.cron:
-                logger.error(f"Error fetch mailing list id {repr(exc)}")
-            raise SystemExit(1)
+            raise HZSIHttpError(f"Error fetch mailing list id {repr(exc)}")
 
         coros = []
 
