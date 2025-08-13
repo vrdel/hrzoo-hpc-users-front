@@ -46,7 +46,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.WARNING(f'{user.username}'))
         else:
             try:
-                list_unsubscribe = ListUnsubscribe(users_to_unsubscribe, cron=options.get('cron', None), django_stdout={'stdout': self.stdout, 'style': self.style})
+                list_unsubscribe = ListUnsubscribe(users_to_unsubscribe, cron=options.get('cron', None))
                 ret_msg = asyncio.run(list_unsubscribe.run())
                 if users_to_unsubscribe and ret_msg:
                     self.stdout.write(self.style.SUCCESS(ret_msg))
