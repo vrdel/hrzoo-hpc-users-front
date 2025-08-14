@@ -44,13 +44,15 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
-            'person_mail',
             'first_name',
             'last_name',
-            'person_oib',
-            'person_uniqueid',
             'person_institution',
-            'person_organisation'
+            'person_mail',
+            'person_oib',
+            'person_organisation',
+            'person_uniqueid',
+            'status',
+            'username'
         )
         model = get_user_model()
 
