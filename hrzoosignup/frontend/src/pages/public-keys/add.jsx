@@ -88,7 +88,7 @@ const NewPublicKey = () => {
   })
   const doAdd = (data) => addMutation.mutate(data, {
     onSuccess: () => {
-      queryClient.invalidateQueries('ssh-keys');
+      queryClient.invalidateQueries({ queryKey: 'ssh-keys' });
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage

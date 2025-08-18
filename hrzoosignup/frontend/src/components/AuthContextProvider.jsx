@@ -62,7 +62,7 @@ export const AuthContextProvider = ( {children} ) => {
     setEnableAccounting(false)
     setBackendConfig(false)
     localStorage.removeItem('referrer')
-    queryClient.invalidateQueries("sessionactive")
+    queryClient.invalidateQueries({ queryKey: "sessionactive" })
   }
 
   const authContextValue = { isLoggedIn, setIsLoggedIn, userDetails,
