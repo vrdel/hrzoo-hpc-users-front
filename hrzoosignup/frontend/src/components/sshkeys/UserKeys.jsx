@@ -147,7 +147,7 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
                 </tr>
             }
             {
-              statusSshKeys === 'loading' &&
+              statusSshKeys === 'pending' &&
                 <tr key="4">
                   <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-5">
                     <Spinner

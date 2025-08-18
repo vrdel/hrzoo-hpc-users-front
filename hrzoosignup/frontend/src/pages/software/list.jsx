@@ -556,7 +556,7 @@ export const SoftwareList = () => {
       dataOpsUsers={dataOpsUsers}
     />
 
-  else if (statusSoftware === 'loading' || statusOpsUsers === 'loading')
+  else if (statusSoftware === 'pending' || statusOpsUsers === 'pending')
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={5}
         PageTitleChild={ButtonAdd}

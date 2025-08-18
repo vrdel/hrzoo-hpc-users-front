@@ -544,7 +544,7 @@ export const ProjectsList = () => {
         pageTitle={ pageTitle }
       />
     )
-  else if (status === 'loading' && pageTitle)
+  else if (status === 'pending' && pageTitle)
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={6}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">

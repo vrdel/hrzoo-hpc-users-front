@@ -529,7 +529,7 @@ const MembershipsChange = () => {
     )
   }
 
-  else if (nrStatus === 'loading' || invitesStatus === 'loading' && pageTitle)
+  else if (nrStatus === 'pending' || invitesStatus === 'pending' && pageTitle)
     return (
       <React.Fragment>
         <Row className="mb-5">
