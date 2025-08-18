@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 import { LinkTitles } from 'Config/link-titles';
 import { RequestTypesToSelect, UrlToRequestType } from 'Config/request-types';
 import { ResourceTypesToSelect, ResourceTypesToSelectAdmin } from 'Config/resource-types';

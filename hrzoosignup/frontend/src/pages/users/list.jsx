@@ -21,7 +21,7 @@ import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
 import { HZSIPagination, TablePaginationHelper, EmptyTable, SortArrow } from "Components/TableHelpers";
 import { buildOptionsFromArray } from "Utils/select-tools";
 import { CustomReactSelect } from "Components/CustomReactSelect";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router";
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';

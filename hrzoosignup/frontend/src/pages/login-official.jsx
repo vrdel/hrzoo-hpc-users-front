@@ -14,7 +14,7 @@ import {
   defaultAuthnRedirectWithAccounting,
   defaultAuthnRedirectWithAccountingLead
 } from 'Config/default-redirect';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';

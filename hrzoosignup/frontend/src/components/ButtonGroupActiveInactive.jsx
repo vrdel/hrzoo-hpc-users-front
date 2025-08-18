@@ -3,7 +3,7 @@ import {
   Button,
   ButtonGroup,
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FormattedMessage } from 'react-intl';

@@ -24,7 +24,7 @@ import ModalAreYouSure from 'Components/ModalAreYouSure';
 import { useForm, Controller } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { url_ui_prefix } from 'Config/general';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { useIntl, FormattedMessage } from 'react-intl'

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { CustomReactSelect } from 'Components/CustomReactSelect';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router';
 import { Col, Row, Button, Label } from 'reactstrap';
 import { SharedData } from 'Pages/root';
 import { PageTitle } from 'Components/PageTitle';

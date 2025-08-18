@@ -21,7 +21,7 @@ import { CustomReactSelect } from "Components/CustomReactSelect";
 import { TypeColor, TypeString } from "Config/map-projecttypes";
 import { extractCollaborators, extractLeaderName } from "Utils/users_help";
 import { StateIcons, StateProjectString } from "Config/map-states";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router";
 import { defaultUnAuthnRedirect } from 'Config/default-redirect';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';

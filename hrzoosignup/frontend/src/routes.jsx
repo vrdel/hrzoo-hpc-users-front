@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import {
   Routes, Route, BrowserRouter
-} from 'react-router-dom';
+} from 'react-router';
 import BasePage from 'Components/BasePage';
 import LoginPrivate from 'Pages/login-private';
 import LoginOffical from 'Pages/login-official';
@@ -84,7 +84,11 @@ const BaseRoutes = () => {
 
   if (sessionStatus == 'success' && sessionData) {
     return (
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+        }}
+      >
         <Routes>
           <Route path="ui" element={
             <Root /> }

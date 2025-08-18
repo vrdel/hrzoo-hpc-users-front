@@ -10,7 +10,7 @@ import {
   CardFooter
 } from 'reactstrap';
 import 'Styles/login-official.css';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 import { FormattedMessage } from 'react-intl';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';

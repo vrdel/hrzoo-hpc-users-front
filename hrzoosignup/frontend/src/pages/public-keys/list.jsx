@@ -23,7 +23,7 @@ import {
 import 'Styles/content.css';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { fetchNrProjects } from 'Api/projects';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';

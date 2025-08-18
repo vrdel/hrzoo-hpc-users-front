@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { AuthContext } from 'Components/AuthContextProvider';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
   defaultUnAuthnRedirect,
   defaultAuthnRedirect,
