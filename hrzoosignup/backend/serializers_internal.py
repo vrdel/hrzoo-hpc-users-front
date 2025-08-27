@@ -41,6 +41,8 @@ class ScienceSoftwareSerializer(serializers.ModelSerializer):
 
 
 class UsersSerializerFiltered(serializers.ModelSerializer):
+    sshkeys = serializers.SerializerMethodField()
+
     class Meta:
         fields = (
             'id',
@@ -52,9 +54,14 @@ class UsersSerializerFiltered(serializers.ModelSerializer):
             'person_organisation',
             'person_uniqueid',
             'status',
-            'username'
+            'username',
+            'sshkeys',
+            'person_type'
         )
         model = get_user_model()
+
+    def get_sshkeys(self, obj):
+        return obj.sshpublickey_set.count() > 0
 
 
 class SshKeysSerializer(GeneralSshKeysSerializer):
