@@ -410,6 +410,7 @@ class DashboardTests(TestCase):
             ), 3.43
         )
 
+
 class CaffeIndicatorsTests(TestCase):
     def setUp(self):
         create_mock_db()
@@ -482,8 +483,12 @@ class CaffeIndicatorsTests(TestCase):
             }
         )
 
-        self.indicators5 = CaffeIndicators(month=5, year=2024)
-        self.indicators7 = CaffeIndicators(month=7, year=2024)
+        self.indicators5 = CaffeIndicators(
+            start_date="2024-05-01", end_date="2024-05-31"
+        )
+        self.indicators7 = CaffeIndicators(
+            start_date="2024-07-01", end_date="2024-07-31"
+        )
 
     def test_institutions(self):
         self.assertEqual(

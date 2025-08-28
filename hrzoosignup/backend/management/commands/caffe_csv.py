@@ -9,10 +9,12 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "-m", "--month", type=int, dest="month", help="month"
+            "-s", "--start-date", type=str, dest="start_date",
+            help="start date in format YYYY-MM-DD"
         )
         parser.add_argument(
-            "-y", "--year", type=int, dest="year", help="year"
+            "-e", "--end-date", type=str, dest="end_date",
+            help="end date in format YYYY-MM-DD"
         )
         parser.add_argument(
             "-f", "--filename", type=str, dest="filename", help="file name"
@@ -20,7 +22,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         indicators = CaffeIndicators(
-            month=options["month"], year=options["year"]
+            start_date=options["start_date"],
+            end_date=options["end_date"]
         )
 
         institution_long_names = get_institute_long_name()

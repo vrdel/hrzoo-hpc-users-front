@@ -235,6 +235,23 @@ class DashboardIndicators(Indicators):
 
 
 class CaffeIndicators(Indicators):
+    def __init__(self, start_date, end_date):
+        start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+        end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+
+        self.start_date = timezone.make_aware(
+            datetime.datetime(start_date.year, start_date.month, 1, 0, 0, 0),
+            timezone=timezone.get_current_timezone()
+        )
+        self.end_date = timezone.make_aware(
+            datetime.datetime(
+                end_date.year, end_date.month,
+                calendar.monthrange(
+                    end_date.year, end_date.month)[1], 23, 59, 59
+            ),
+            timezone=timezone.get_current_timezone()
+        )
+
     def institutions(self):
         return list(set(item.institute for item in self._projects_in_period()))
 
