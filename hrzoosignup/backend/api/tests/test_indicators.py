@@ -529,3 +529,20 @@ class CaffeIndicatorsTests(TestCase):
                 institution="Fakultet elektrotehnike i računarstva"
             ), (74.01, 2)
         )
+
+    def test_wrong_start_date_format(self):
+        with self.assertRaises(Exception) as context:
+            CaffeIndicators(start_date="20240501", end_date="2024-05-31")
+        self.assertEqual(
+            context.exception.__str__(),
+            "Start date '20240501' does not match format '%Y-%m-%d'"
+        )
+
+
+    def test_wrong_end_date_format(self):
+        with self.assertRaises(Exception) as context:
+            CaffeIndicators(start_date="2024-05-01", end_date="20240531")
+        self.assertEqual(
+            context.exception.__str__(),
+            "End date '20240531' does not match format '%Y-%m-%d'"
+        )

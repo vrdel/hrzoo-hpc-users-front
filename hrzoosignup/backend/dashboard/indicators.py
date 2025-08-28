@@ -236,8 +236,9 @@ class DashboardIndicators(Indicators):
 
 class CaffeIndicators(Indicators):
     def __init__(self, start_date, end_date):
-        start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
-        end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+        self.date_format = "%Y-%m-%d"
+        start_date = self._start_date(start_date)
+        end_date = self._end_date(end_date)
 
         self.start_date = timezone.make_aware(
             datetime.datetime(start_date.year, start_date.month, 1, 0, 0, 0),
@@ -251,6 +252,30 @@ class CaffeIndicators(Indicators):
             ),
             timezone=timezone.get_current_timezone()
         )
+
+    def _start_date(self, start_date):
+        try:
+            return datetime.datetime.strptime(
+                start_date, self.date_format
+            ).date()
+
+        except ValueError:
+            raise Exception(
+                f"Start date '{start_date}' does not match format "
+                f"'{self.date_format}'"
+            )
+
+    def _end_date(self, end_date):
+        try:
+            return datetime.datetime.strptime(
+                end_date, self.date_format
+            ).date()
+
+        except ValueError:
+            raise Exception(
+                f"End date '{end_date}' does not match format "
+                f"'{self.date_format}'"
+            )
 
     def institutions(self):
         return list(set(item.institute for item in self._projects_in_period()))
