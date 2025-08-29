@@ -410,6 +410,7 @@ class DashboardTests(TestCase):
             ), 3.43
         )
 
+
 class CaffeIndicatorsTests(TestCase):
     def setUp(self):
         create_mock_db()
@@ -482,8 +483,12 @@ class CaffeIndicatorsTests(TestCase):
             }
         )
 
-        self.indicators5 = CaffeIndicators(month=5, year=2024)
-        self.indicators7 = CaffeIndicators(month=7, year=2024)
+        self.indicators5 = CaffeIndicators(
+            start_date="2024-05-01", end_date="2024-05-31"
+        )
+        self.indicators7 = CaffeIndicators(
+            start_date="2024-07-01", end_date="2024-07-31"
+        )
 
     def test_institutions(self):
         self.assertEqual(
@@ -523,4 +528,21 @@ class CaffeIndicatorsTests(TestCase):
             self.indicators7.padobran(
                 institution="Fakultet elektrotehnike i računarstva"
             ), (74.01, 2)
+        )
+
+    def test_wrong_start_date_format(self):
+        with self.assertRaises(Exception) as context:
+            CaffeIndicators(start_date="20240501", end_date="2024-05-31")
+        self.assertEqual(
+            context.exception.__str__(),
+            "Start date '20240501' does not match format '%Y-%m-%d'"
+        )
+
+
+    def test_wrong_end_date_format(self):
+        with self.assertRaises(Exception) as context:
+            CaffeIndicators(start_date="2024-05-01", end_date="20240531")
+        self.assertEqual(
+            context.exception.__str__(),
+            "End date '20240531' does not match format '%Y-%m-%d'"
         )
