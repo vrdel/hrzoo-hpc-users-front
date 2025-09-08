@@ -31,7 +31,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
   const [collaboratorsEmailFile, setCollaboratorsEmailFile] = useState(undefined)
+  const [ foreignCollaboratorEmailFile, setForeignCollaboratorEmailFile ] = useState(undefined)
   const refFileCollaboratorsInput = useRef(null)
+  const refFileForeignCollaboratorsInput = useRef(null)
   const intl = useIntl()
 
   const [isOpen, setIsOpen] = useState(false);
@@ -121,7 +123,18 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
         "collaboratorEmails", emails.map((item => {return {value: item, label: item}}))
       )
     }
-  }, [collaboratorsEmailFile, setValue, resetField])
+  }, [collaboratorsEmailFile])
+
+  useEffect(() => {
+    if (foreignCollaboratorEmailFile) {
+      let emails = foreignCollaboratorEmailFile.split("\n")
+      emails = emails.filter(email => email)
+      resetField("foreignCollaboratorEmails")
+      setValue(
+        "foreignCollaboratorEmails", emails.map((item => {return {value: item, label: item}}))
+      )
+    }
+  }, [foreignCollaboratorEmailFile])
 
   function concatenateAndSortUsers(active, inactive) {
     let activeUsers = _.map(active, (user) => {
@@ -231,6 +244,14 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     const reader = new FileReader()
     reader.onload = (event) => {
       setCollaboratorsEmailFile(event.target.result)
+    }
+    reader.readAsText(event.target.files[0])
+  }
+
+  function uploadForeignCollabFile(event) {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setForeignCollaboratorEmailFile(event.target.result)
     }
     reader.readAsText(event.target.files[0])
   }
@@ -620,10 +641,26 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <Collapse isOpen={isOpen3} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
-                            <FormattedMessage
-                              defaultMessage="Upiši email adrese stranih suradnika koje želiš pozvati na projekt"
-                              description="users-table-general-cardtitle-3"
-                            />
+                            <div className="d-flex align-middle justify-content-between">
+                              <FormattedMessage
+                                defaultMessage="Upišite email adrese stranih suradnika koje želite pozvati na projekt ili učitajte datoteku"
+                                description="users-table-general-cardtitle-3"
+                              />
+                              <Input
+                                type='file'
+                                id="fileInput"
+                                className="d-none"
+                                innerRef={ refFileForeignCollaboratorsInput }
+                                onChange={ (e) => { uploadForeignCollabFile(e) }}
+                              />
+                              <Button color="success" onClick={() => refFileForeignCollaboratorsInput.current.click()}>
+                                <FontAwesomeIcon icon={faFile}/>{' '}
+                                <FormattedMessage
+                                  defaultMessage="Učitaj"
+                                  description="publickeys-add-load"
+                                />
+                              </Button>
+                            </div>
                           </CardTitle>
                           <CardBody className="mb-4">
                             <Controller
@@ -631,8 +668,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               control={control}
                               render={ ({field}) =>
                                 <CustomCreatableSelect
-                                  name="collaboratorEmails"
+                                  name="foreignCollaboratorEmails"
                                   forwardedRef={field.ref}
+                                  value={ field.value }
                                   placeholder={intl.formatMessage({
                                     defaultMessage: "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
                                     description: "users-table-general-placeholder-2"
