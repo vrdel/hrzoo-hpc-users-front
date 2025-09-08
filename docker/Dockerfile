@@ -37,7 +37,7 @@ RUN dnf -y install epel-release && \
       yum-utils \
       zsh
 RUN pip install -U pip; pip3 install -U pip
-RUN dnf module install -y nodejs:18
+RUN dnf module install -y nodejs:20
 RUN ln -s /home/user /home/dvrcic
 RUN passwd -d root
 VOLUME [ "/sys/fs/cgroup" ]
