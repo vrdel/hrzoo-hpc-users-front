@@ -171,10 +171,6 @@
     "defaultMessage": "Law",
     "description": "science-field-38"
   },
-  "2LPtd3": {
-    "defaultMessage": "Enter the email addresses of the collaborators you wish to invite to project",
-    "description": "users-table-general-cardtitle-1"
-  },
   "2LXEHx": {
     "defaultMessage": "Field",
     "description": "newreqind-scientific-field"
@@ -1963,6 +1959,10 @@
     "defaultMessage": "Actions",
     "description": "tableuserkeys-actions"
   },
+  "jorbR8": {
+    "defaultMessage": "Enter email addresses of foreign collaborators you wish to invite to project or upload from file",
+    "description": "users-table-general-cardtitle-3"
+  },
   "k0Z6h0": {
     "defaultMessage": "Fundamental Medical Sciences",
     "description": "science-field-24"
@@ -2166,10 +2166,6 @@
   "po6NY6": {
     "defaultMessage": "User's email copied to clipboard",
     "description": "popover-emailuser-copy-ok"
-  },
-  "py6eQQ": {
-    "defaultMessage": "Enter email addresses of foreign collaborators you wish to invite to project",
-    "description": "users-table-general-cardtitle-3"
   },
   "pyGIbR": {
     "defaultMessage": "Viewing request {identifier}",

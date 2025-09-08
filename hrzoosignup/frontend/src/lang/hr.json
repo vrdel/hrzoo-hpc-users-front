@@ -1959,6 +1959,10 @@
     "defaultMessage": "Radnje",
     "description": "tableuserkeys-actions"
   },
+  "jorbR8": {
+    "defaultMessage": "Upišite email adrese stranih suradnika koje želite pozvati na projekt ili učitajte datoteku",
+    "description": "users-table-general-cardtitle-3"
+  },
   "k0Z6h0": {
     "defaultMessage": "Temeljne medicinske znanosti",
     "description": "science-field-24"
@@ -2162,10 +2166,6 @@
   "po6NY6": {
     "defaultMessage": "Email korisnika kopiran u međuspremnik",
     "description": "popover-emailuser-copy-ok"
-  },
-  "py6eQQ": {
-    "defaultMessage": "Upiši email adrese stranih suradnika koje želiš pozvati na projekt",
-    "description": "users-table-general-cardtitle-3"
   },
   "pyGIbR": {
     "defaultMessage": "Pregledavanje zahtjeva {identifier}",
