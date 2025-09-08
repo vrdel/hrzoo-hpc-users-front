@@ -84,7 +84,7 @@ const MyRequestsList = () => {
     }
   }, [location.pathname, status, statusPE, intl])
 
-  if ((status === 'loading' || statusPE === 'loading') && pageTitle)
+  if ((status === 'pending' || statusPE === 'pending') && pageTitle)
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={7}>
         <thead id="hzsi-thead" className="align-middle text-center text-white">

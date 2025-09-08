@@ -694,7 +694,7 @@ export const UsersInactiveList = () => {
       navigate(defaultUnAuthnRedirect)
 	}, [location.pathname, status, intl])
 
-  if (status === 'loading' && pageTitle)
+  if (status === 'pending' && pageTitle)
     return (
       <EmptyTableSpinner
         pageTitle={pageTitle}
@@ -786,7 +786,7 @@ export const UsersList = () => {
       navigate(defaultUnAuthnRedirect)
 	}, [location.pathname, status, intl])
 
-  if (status === 'loading' && pageTitle)
+  if (status === 'pending' && pageTitle)
     return (
       <EmptyTableSpinner
         pageTitle={pageTitle}

@@ -65,7 +65,9 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
 
   const doAdd = (data) => addMutation.mutate(data, {
     onSuccess: () => {
-      queryClient.invalidateQueries("projects-lead")
+      queryClient.invalidateQueries({
+        queryKey: "projects-lead"
+      })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage

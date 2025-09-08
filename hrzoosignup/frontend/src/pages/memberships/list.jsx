@@ -259,7 +259,7 @@ const Memberships = ({inactive=false}) => {
   const doAdd = async (data) => {
     try {
       const ret = await addInvite(data, csrfToken)
-      queryClient.invalidateQueries('invites')
+      queryClient.invalidateQueries({ queryKey: 'invites' })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -297,7 +297,7 @@ const Memberships = ({inactive=false}) => {
   const doAddInternal = async (data) => {
     try {
       const ret = await addUserToInternalProject(data['projectid'], data['collaboratorUids'], csrfToken)
-      queryClient.invalidateQueries('projects')
+      queryClient.invalidateQueries({ queryKey: 'projects' })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -354,7 +354,7 @@ const Memberships = ({inactive=false}) => {
   const doSignoff = async (data) => {
     try {
       const ret = await removeUserFromProject(data['project'], data['remove_users'], csrfToken)
-      queryClient.invalidateQueries('projects')
+      queryClient.invalidateQueries({ queryKey: 'projects' })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -392,7 +392,7 @@ const Memberships = ({inactive=false}) => {
   const doInviteRemove = async (data) => {
     try {
       const ret = await delInvite(data, csrfToken)
-      queryClient.invalidateQueries('invites')
+      queryClient.invalidateQueries({ queryKey: 'invites' })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -561,7 +561,7 @@ const Memberships = ({inactive=false}) => {
     )
   }
 
-  else if (nrStatus === 'loading' || invitesStatus === 'loading' && pageTitle)
+  else if (nrStatus === 'pending' || invitesStatus === 'pending' && pageTitle)
     return (
       <React.Fragment>
         <Row className="mb-5">

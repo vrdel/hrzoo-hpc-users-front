@@ -475,7 +475,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
   const doDelete = () => {
     deleteMutation.mutate(projId, {
       onSuccess: () => {
-        queryClient.invalidateQueries('all-projects')
+        queryClient.invalidateQueries({ queryKey: 'all-projects' })
         toast.success(
           <span className="font-monospace text-dark">
             {
@@ -528,7 +528,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
     // alert(JSON.stringify(data, null, 2))
     changeMutation.mutate(data, {
       onSuccess: () => {
-        queryClient.invalidateQueries('change-project')
+        queryClient.invalidateQueries({ queryKey: 'change-project' })
         toast.success(
           <span className="font-monospace text-dark">
             {

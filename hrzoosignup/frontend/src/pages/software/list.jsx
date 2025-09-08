@@ -118,7 +118,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
 
   const doAdd = (data) => addMutation.mutate(data, {
     onSuccess: () => {
-      queryClient.invalidateQueries('science-software-list')
+      queryClient.invalidateQueries({ queryKey: 'science-software-list' })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -153,7 +153,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     remove(data.index)
     return deleteMutation.mutate(data, {
       onSuccess: () => {
-        queryClient.invalidateQueries('science-software-list')
+        queryClient.invalidateQueries({ queryKey: 'science-software-list' })
         toast.success(
           <span className="font-monospace text-dark">
             <FormattedMessage
@@ -556,7 +556,7 @@ export const SoftwareList = () => {
       dataOpsUsers={dataOpsUsers}
     />
 
-  else if (statusSoftware === 'loading' || statusOpsUsers === 'loading')
+  else if (statusSoftware === 'pending' || statusOpsUsers === 'pending')
     return (
       <EmptyTableSpinner pageTitle={pageTitle} colSpan={5}
         PageTitleChild={ButtonAdd}
