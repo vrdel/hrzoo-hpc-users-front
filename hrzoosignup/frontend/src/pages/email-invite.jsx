@@ -4,8 +4,7 @@ import { Col, Row,
   Alert, Container,
   Card, CardHeader,
   CardBody, CardFooter, Progress } from 'reactstrap';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate  } from 'react-router';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import NotFound from 'Pages/notfound';

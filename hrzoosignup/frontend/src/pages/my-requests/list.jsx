@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from 'reactstrap';
 import { fetchNrProjectsLead, fetchExtendProject } from 'Api/projects';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { convertToEuropean, convertTimeToEuropean } from 'Utils/dates';
 import { StateIcons, StateString } from 'Config/map-states';

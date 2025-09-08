@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from '../root';
 import { Col, Row, Table, Tooltip, Input } from 'reactstrap';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router';
 import { PageTitle } from 'Components/PageTitle';
 import { StateIcons, StateString } from 'Config/map-states';
 import { fetchAllNrProjects, fetchExtendProject } from 'Api/projects';

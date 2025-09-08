@@ -30,7 +30,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 
 export const BriefSummary = ({project, isSubmitted}) => {

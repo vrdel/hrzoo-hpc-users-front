@@ -23,7 +23,7 @@ import {
   Spinner,
   UncontrolledTooltip
 } from "reactstrap";
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router';
 import { PageTitle } from 'Components/PageTitle';
 import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Tooltip } from 'recharts';
 import { toast } from 'react-toastify';

@@ -6,7 +6,7 @@ import Navigation from 'Components/Navigation';
 import NavigationLinks from 'Components/NavigationLinks';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import Footer from 'Components/Footer';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router';
 import 'Styles/content.css';
 import { doLogout } from 'Api/auth';
 import { fetchCroRISMe } from 'Api/croris';

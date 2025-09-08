@@ -25,7 +25,7 @@ import { addGeneralProject } from 'Api/projects';
 import 'Styles/datepicker.css';
 import { useMutation } from '@tanstack/react-query';
 import { url_ui_prefix } from 'Config/general';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { AuthContext } from 'Components/AuthContextProvider';
 import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';

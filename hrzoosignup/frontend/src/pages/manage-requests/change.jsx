@@ -12,7 +12,7 @@ import {
   faSave,
   faCopy,
 } from '@fortawesome/free-solid-svg-icons';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router';
 import {
   useForm,
   useFormContext,

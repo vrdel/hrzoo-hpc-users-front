@@ -7,7 +7,7 @@ import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router';
 import {
   useForm,
   FormProvider,

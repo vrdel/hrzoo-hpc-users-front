@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from 'react';
 import { fetchSpecificUser } from "Api/users";
 import { fetchCroRISUser } from "Api/croris";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from 'react-router-dom';
 import { SharedData } from 'Pages/root';
 import { Row, Col, Table, Badge } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
@@ -12,7 +11,7 @@ import { EmptyCroRis, CroRisInfo } from 'Components/user-info/CroRis';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import { StateIcons } from "Config/map-states";
-import { Link } from 'react-router-dom';
+import { Link, useParams  } from 'react-router';
 import { convertToEuropean } from 'Utils/dates';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import {

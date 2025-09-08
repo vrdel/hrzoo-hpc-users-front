@@ -24,7 +24,7 @@ import {
   defaultAuthnRedirectWithAccounting,
   defaultAuthnRedirectWithAccountingLead
 } from 'Config/default-redirect';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { LanguageButtonLogin } from 'Components/LocaleButton';
 import { IntlContext } from 'Components/IntlContextProvider';
 import SrceLogoHeadMid from 'Assets/srce-logo-head-mid.png';
