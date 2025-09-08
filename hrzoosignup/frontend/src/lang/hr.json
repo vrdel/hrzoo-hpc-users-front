@@ -119,6 +119,10 @@
     "defaultMessage": "Vrsta:",
     "description": "generalproject-type"
   },
+  "1a7PLX": {
+    "defaultMessage": "Upišite email adrese suradnika koje želite pozvati na projekt ili učitajte iz datoteke",
+    "description": "users-table-general-cardtitle-1"
+  },
   "1cK4mi": {
     "defaultMessage": "Financijer:",
     "description": "croris-description-financier"
@@ -166,10 +170,6 @@
   "2LK5hw": {
     "defaultMessage": "Pravo",
     "description": "science-field-38"
-  },
-  "2LPtd3": {
-    "defaultMessage": "Upiši email adrese suradnika koje želiš pozvati na projekt",
-    "description": "users-table-general-cardtitle-1"
   },
   "2LXEHx": {
     "defaultMessage": "Područje",

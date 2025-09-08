@@ -119,6 +119,10 @@
     "defaultMessage": "Type:",
     "description": "generalproject-type"
   },
+  "1a7PLX": {
+    "defaultMessage": "Enter email addresses of collaborators you wish to invite to project or upload from file",
+    "description": "users-table-general-cardtitle-1"
+  },
   "1cK4mi": {
     "defaultMessage": "Financier:",
     "description": "croris-description-financier"
