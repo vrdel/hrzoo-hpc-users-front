@@ -585,26 +585,30 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     <Collapse isOpen={isOpen} style={{width: '80%'}}>
                       <Card className="ps-4 pe-4 pt-4">
                         <CardTitle>
-                          <div className="d-flex align-middle justify-content-between">
-                            <FormattedMessage
-                              defaultMessage="Upišite email adrese suradnika koje želite pozvati na projekt ili učitajte iz datoteke"
-                              description="users-table-general-cardtitle-1"
-                            />
-                            <Input
-                              type='file'
-                              id="fileInput"
-                              className="d-none"
-                              innerRef={ refFileCollaboratorsInput }
-                              onChange={ (e) => { uploadFile(e) }}
-                            />
-                            <Button color="success" onClick={() => refFileCollaboratorsInput.current.click()}>
-                              <FontAwesomeIcon icon={faFile}/>{' '}
+                          <Row className="no-gutters">
+                            <Col md={{ size: 10 }}>
                               <FormattedMessage
-                                defaultMessage="Učitaj"
-                                description="publickeys-add-load"
+                                defaultMessage="Upišite email adrese suradnika koje želite pozvati na projekt ili učitajte iz datoteke"
+                                description="users-table-general-cardtitle-1"
                               />
-                            </Button>
-                          </div>
+                            </Col>
+                            <Col md={{ size: 2 }} className="text-center p-0">
+                              <Input
+                                type='file'
+                                id="fileInput"
+                                className="d-none"
+                                innerRef={ refFileCollaboratorsInput }
+                                onChange={ (e) => { uploadFile(e) }}
+                              />
+                              <Button className="d-inline-flex align-items-center" size="sm" color="success" onClick={() => refFileCollaboratorsInput.current.click()}>
+                                <FontAwesomeIcon className="me-2" icon={faFile}/>{' '}
+                                <FormattedMessage
+                                  defaultMessage="Učitaj"
+                                  description="publickeys-add-load"
+                                />
+                              </Button>
+                            </Col>
+                          </Row>
                         </CardTitle>
                         <CardBody className="mb-4">
                           <Controller
@@ -641,26 +645,30 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <Collapse isOpen={isOpen3} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
-                            <div className="d-flex align-middle justify-content-between">
-                              <FormattedMessage
-                                defaultMessage="Upišite email adrese stranih suradnika koje želite pozvati na projekt ili učitajte datoteku"
-                                description="users-table-general-cardtitle-3"
-                              />
-                              <Input
-                                type='file'
-                                id="fileInput"
-                                className="d-none"
-                                innerRef={ refFileForeignCollaboratorsInput }
-                                onChange={ (e) => { uploadForeignCollabFile(e) }}
-                              />
-                              <Button color="success" onClick={() => refFileForeignCollaboratorsInput.current.click()}>
-                                <FontAwesomeIcon icon={faFile}/>{' '}
+                            <Row className="no-gutters">
+                              <Col md={{ size: 10 }}>
                                 <FormattedMessage
-                                  defaultMessage="Učitaj"
-                                  description="publickeys-add-load"
+                                  defaultMessage="Upišite email adrese stranih suradnika koje želite pozvati na projekt ili učitajte datoteku"
+                                  description="users-table-general-cardtitle-3"
                                 />
-                              </Button>
-                            </div>
+                              </Col>
+                              <Col md={{ size: 2 }} className="text-center p-0">
+                                <Input
+                                  type='file'
+                                  id="fileInput"
+                                  className="d-none"
+                                  innerRef={ refFileForeignCollaboratorsInput }
+                                  onChange={ (e) => { uploadForeignCollabFile(e) }}
+                                />
+                                <Button className="d-inline-flex align-items-center" size="sm" color="success" onClick={() => refFileForeignCollaboratorsInput.current.click()}>
+                                  <FontAwesomeIcon icon={faFile}/>{' '}
+                                  <FormattedMessage
+                                    defaultMessage="Učitaj"
+                                    description="publickeys-add-load"
+                                  />
+                                </Button>
+                              </Col>
+                            </Row>
                           </CardTitle>
                           <CardBody className="mb-4">
                             <Controller
