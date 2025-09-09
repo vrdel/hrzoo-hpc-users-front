@@ -1975,6 +1975,10 @@
     "defaultMessage": "Duration:",
     "description": "memberships-project-duration"
   },
+  "kKL5vf": {
+    "defaultMessage": "Invalid email addresses found: {invalid}",
+    "description": "userstable-invalid-email-toast-fail"
+  },
   "kZb+W5": {
     "defaultMessage": "My service status, digital identity and CroRIS metadata",
     "description": "linktitle-myinfo"
