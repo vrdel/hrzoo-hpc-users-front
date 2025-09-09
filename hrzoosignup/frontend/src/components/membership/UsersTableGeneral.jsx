@@ -114,25 +114,60 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     mode: "all"
   });
 
+  const validateEmails = ({ emailFile, field }) => {
+    const emails = emailFile.split(/\r?\n/)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let invalidLines = [];
+    let validLines = [];
+    emails.forEach((line) => {
+      const trimmed = line.trim();
+      if (trimmed === "") return; // ignoring empty lines
+      if (!emailRegex.test(trimmed)) {
+        invalidLines.push(trimmed)
+      } else {
+        validLines.push({ label: trimmed, value: trimmed })
+      }
+    })
+    resetField(field)
+    setValue(field, validLines)
+    
+    if (invalidLines.length > 0) 
+      toast.error(
+        <span className="font-monospace text-white">
+          {
+            intl.formatMessage({
+              defaultMessage: "Pronađene neispravne email adrese: {invalid}",
+              description: "userstable-invalid-email-toast-fail"
+            },
+            {
+              invalid: invalidLines.join(", ")
+            }
+          )
+          }
+        </span>,
+        {
+          theme: 'colored',
+          toastId: 'invalid-emails-imported',
+          autoClose: 2500
+        }
+    )
+  }
+
   useEffect(() => {
     if (collaboratorsEmailFile) {
-      let emails = collaboratorsEmailFile.split("\n")
-      emails = emails.filter(email => email)
-      resetField("collaboratorEmails")
-      setValue(
-        "collaboratorEmails", emails.map((item => {return {value: item, label: item}}))
-      )
+      validateEmails({
+        emailFile: collaboratorsEmailFile,
+        field: "collaboratorEmails"
+      })
     }
   }, [collaboratorsEmailFile])
 
   useEffect(() => {
     if (foreignCollaboratorEmailFile) {
-      let emails = foreignCollaboratorEmailFile.split("\n")
-      emails = emails.filter(email => email)
-      resetField("foreignCollaboratorEmails")
-      setValue(
-        "foreignCollaboratorEmails", emails.map((item => {return {value: item, label: item}}))
-      )
+      validateEmails({
+        emailFile: foreignCollaboratorEmailFile,
+        field: "foreignCollaboratorEmails"
+      })
     }
   }, [foreignCollaboratorEmailFile])
 
