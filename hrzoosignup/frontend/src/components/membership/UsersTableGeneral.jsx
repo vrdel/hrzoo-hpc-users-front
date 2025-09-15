@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { Col, Collapse, Row, Card, CardTitle, CardBody,
   Table, Button, Form, Tooltip, Input } from 'reactstrap';
 import { useForm, Controller } from 'react-hook-form';
@@ -9,6 +9,7 @@ import {
   faArrowDown,
   faCheck,
   faEnvelope,
+  faFile,
   faKey,
   faPaperPlane,
   faPlus,
@@ -29,6 +30,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const { userDetails } = useContext(AuthContext);
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
+  const [collaboratorsEmailFile, setCollaboratorsEmailFile] = useState(undefined)
+  const [ foreignCollaboratorEmailFile, setForeignCollaboratorEmailFile ] = useState(undefined)
+  const refFileCollaboratorsInput = useRef(null)
+  const refFileForeignCollaboratorsInput = useRef(null)
   const intl = useIntl()
 
   const [isOpen, setIsOpen] = useState(false);
@@ -100,13 +105,71 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     enabled: project.project_type['name'] === 'internal' && (userDetails.is_staff || userDetails.is_superuser)
 	})
 
-  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
+  const { control, handleSubmit, setValue, resetField } = useForm({
     defaultValues: {
       collaboratorEmails: '',
       collaboratorUids: '',
       foreignCollaboratorEmails: ''
-    }
+    },
+    mode: "all"
   });
+
+  const validateEmails = ({ emailFile, field }) => {
+    const emails = emailFile.split(/\r?\n/)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    let invalidLines = [];
+    let validLines = [];
+    emails.forEach((line) => {
+      const trimmed = line.trim();
+      if (trimmed === "") return; // ignoring empty lines
+      if (!emailRegex.test(trimmed)) {
+        invalidLines.push(trimmed)
+      } else {
+        validLines.push({ label: trimmed, value: trimmed })
+      }
+    })
+    resetField(field)
+    setValue(field, validLines)
+    
+    if (invalidLines.length > 0) 
+      toast.error(
+        <span className="font-monospace text-white">
+          {
+            intl.formatMessage({
+              defaultMessage: "Pronađene neispravne email adrese: {invalid}",
+              description: "userstable-invalid-email-toast-fail"
+            },
+            {
+              invalid: invalidLines.join(", ")
+            }
+          )
+          }
+        </span>,
+        {
+          theme: 'colored',
+          toastId: 'invalid-emails-imported',
+          autoClose: 2500
+        }
+    )
+  }
+
+  useEffect(() => {
+    if (collaboratorsEmailFile) {
+      validateEmails({
+        emailFile: collaboratorsEmailFile,
+        field: "collaboratorEmails"
+      })
+    }
+  }, [collaboratorsEmailFile])
+
+  useEffect(() => {
+    if (foreignCollaboratorEmailFile) {
+      validateEmails({
+        emailFile: foreignCollaboratorEmailFile,
+        field: "foreignCollaboratorEmails"
+      })
+    }
+  }, [foreignCollaboratorEmailFile])
 
   function concatenateAndSortUsers(active, inactive) {
     let activeUsers = _.map(active, (user) => {
@@ -210,6 +273,22 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
         })
       }
     }
+  }
+
+  function uploadFile(event) {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setCollaboratorsEmailFile(event.target.result)
+    }
+    reader.readAsText(event.target.files[0])
+  }
+
+  function uploadForeignCollabFile(event) {
+    const reader = new FileReader()
+    reader.onload = (event) => {
+      setForeignCollaboratorEmailFile(event.target.result)
+    }
+    reader.readAsText(event.target.files[0])
   }
 
   return (
@@ -541,10 +620,30 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     <Collapse isOpen={isOpen} style={{width: '80%'}}>
                       <Card className="ps-4 pe-4 pt-4">
                         <CardTitle>
-                          <FormattedMessage
-                            defaultMessage="Upiši email adrese suradnika koje želiš pozvati na projekt"
-                            description="users-table-general-cardtitle-1"
-                          />
+                          <Row className="no-gutters">
+                            <Col md={{ size: 10 }}>
+                              <FormattedMessage
+                                defaultMessage="Upišite email adrese suradnika koje želite pozvati na projekt ili učitajte iz datoteke"
+                                description="users-table-general-cardtitle-1"
+                              />
+                            </Col>
+                            <Col md={{ size: 2 }} className="text-center p-0">
+                              <Input
+                                type='file'
+                                id="fileInput"
+                                className="d-none"
+                                innerRef={ refFileCollaboratorsInput }
+                                onChange={ (e) => { uploadFile(e) }}
+                              />
+                              <Button className="d-inline-flex align-items-center" size="sm" color="success" onClick={() => refFileCollaboratorsInput.current.click()}>
+                                <FontAwesomeIcon className="me-2" icon={faFile}/>{' '}
+                                <FormattedMessage
+                                  defaultMessage="Učitaj"
+                                  description="publickeys-add-load"
+                                />
+                              </Button>
+                            </Col>
+                          </Row>
                         </CardTitle>
                         <CardBody className="mb-4">
                           <Controller
@@ -554,6 +653,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               <CustomCreatableSelect
                                 name="collaboratorEmails"
                                 forwardedRef={field.ref}
+                                value={ field.value }
                                 placeholder={intl.formatMessage({
                                   defaultMessage: "suradnik1@email.hr ENTER/TAB suradnik2@email.hr...",
                                   description: "users-table-general-placeholder-2"
@@ -580,10 +680,30 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       <Collapse isOpen={isOpen3} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <CardTitle>
-                            <FormattedMessage
-                              defaultMessage="Upiši email adrese stranih suradnika koje želiš pozvati na projekt"
-                              description="users-table-general-cardtitle-3"
-                            />
+                            <Row className="no-gutters">
+                              <Col md={{ size: 10 }}>
+                                <FormattedMessage
+                                  defaultMessage="Upišite email adrese stranih suradnika koje želite pozvati na projekt ili učitajte datoteku"
+                                  description="users-table-general-cardtitle-3"
+                                />
+                              </Col>
+                              <Col md={{ size: 2 }} className="text-center p-0">
+                                <Input
+                                  type='file'
+                                  id="fileInput"
+                                  className="d-none"
+                                  innerRef={ refFileForeignCollaboratorsInput }
+                                  onChange={ (e) => { uploadForeignCollabFile(e) }}
+                                />
+                                <Button className="d-inline-flex align-items-center" size="sm" color="success" onClick={() => refFileForeignCollaboratorsInput.current.click()}>
+                                  <FontAwesomeIcon icon={faFile}/>{' '}
+                                  <FormattedMessage
+                                    defaultMessage="Učitaj"
+                                    description="publickeys-add-load"
+                                  />
+                                </Button>
+                              </Col>
+                            </Row>
                           </CardTitle>
                           <CardBody className="mb-4">
                             <Controller
@@ -591,8 +711,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                               control={control}
                               render={ ({field}) =>
                                 <CustomCreatableSelect
-                                  name="collaboratorEmails"
+                                  name="foreignCollaboratorEmails"
                                   forwardedRef={field.ref}
+                                  value={ field.value }
                                   placeholder={intl.formatMessage({
                                     defaultMessage: "suradnik1@email.de ENTER/TAB suradnik2@email.uk...",
                                     description: "users-table-general-placeholder-2"
