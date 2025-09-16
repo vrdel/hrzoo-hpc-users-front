@@ -88,7 +88,6 @@ class ListSubscribe(object):
                     await self.session.close()
                 else:
                     if res[1].status == 409:
-                        import ipdb; ipdb.set_trace()
                         ret_msgs.append(f"User {self.users[nu].username} already subscribed to {settings.MAILINGLIST_NAME}, setting flag to True")
                         self.users[nu].mailinglist_subscribe = True
                         await self.users[nu].asave()
