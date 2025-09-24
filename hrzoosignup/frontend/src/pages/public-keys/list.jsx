@@ -89,7 +89,7 @@ const PublicKeys = () => {
   })
   const doDelete = (keyname) => deleteMutation.mutate(keyname, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: 'ssh-keys' });
+      queryClient.invalidateQueries({ queryKey: ['ssh-keys'] });
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
