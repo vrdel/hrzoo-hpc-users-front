@@ -118,7 +118,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
 
   const doAdd = (data) => addMutation.mutate(data, {
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: 'science-software-list' })
+      queryClient.invalidateQueries({ queryKey: ['science-software-list'] })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -153,7 +153,7 @@ const SoftwareListTableForm = ({pageTitle, dataSoftware, dataOpsUsers}) => {
     remove(data.index)
     return deleteMutation.mutate(data, {
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: 'science-software-list' })
+        queryClient.invalidateQueries({ queryKey: ['science-software-list'] })
         toast.success(
           <span className="font-monospace text-dark">
             <FormattedMessage

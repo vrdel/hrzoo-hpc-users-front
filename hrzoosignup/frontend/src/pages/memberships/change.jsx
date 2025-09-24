@@ -261,7 +261,7 @@ const MembershipsChange = () => {
   const doAdd = async (data) => {
     try {
       const ret = await addInvite(data, csrfToken)
-      queryClient.invalidateQueries({ queryKey: 'invites' })
+      queryClient.invalidateQueries({ queryKey: ['invites'] })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -299,7 +299,7 @@ const MembershipsChange = () => {
   const doAddInternal = async (data) => {
     try {
       const ret = await addUserToInternalProject(data['projectid'], data['collaboratorUids'], csrfToken)
-      queryClient.invalidateQueries({ queryKey: 'projects' })
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -356,7 +356,7 @@ const MembershipsChange = () => {
   const doSignoff = async (data) => {
     try {
       const ret = await removeUserFromProject(data['project'], data['remove_users'], csrfToken)
-      queryClient.invalidateQueries({ queryKey: 'projects' })
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -394,7 +394,7 @@ const MembershipsChange = () => {
   const doInviteRemove = async (data) => {
     try {
       const ret = await delInvite(data, csrfToken)
-      queryClient.invalidateQueries({ queryKey: 'invites' })
+      queryClient.invalidateQueries({ queryKey: ['invites'] })
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
@@ -460,7 +460,7 @@ const MembershipsChange = () => {
           toggle={() => setAreYouSureModal(!areYouSureModal)}
           title={modalTitle}
           msg={modalMsg}
-          onYes={onYesCallback} 
+          onYes={onYesCallback}
         />
         <React.Fragment key={`projects-${projId}`}>
           <Row className="mb-5" key={`row-${projId}`}>

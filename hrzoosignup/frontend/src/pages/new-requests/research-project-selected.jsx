@@ -346,7 +346,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
 
   const doAdd = (data) => addMutation.mutate(data, {
     onSuccess: () => {
-      // queryClient.invalidateQueries({ queryKey: 'my-projects' });
+      // queryClient.invalidateQueries({ queryKey: ['my-projects'] });
       toast.success(
         <span className="font-monospace text-dark">
           <FormattedMessage
