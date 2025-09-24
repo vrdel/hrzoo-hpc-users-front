@@ -54,7 +54,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                       </Row>
                       <Row className="mt-3">
                         <Col>
-                          <a className="fw-normal" href={`https://www.croris.hr/projekti/projekt/${project['croris_id']}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+                          <a className="fw-normal" href={`https://www.croris.hr/projekti/projekt/${project['croris_id']}`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
                             https://www.croris.hr/projekti/projekt/{project['croris_id']}
                           </a>
                         </Col>
@@ -85,7 +85,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                       </Row>
                       <Row className="mt-3">
                         <Col>
-                          <a className="fw-normal" href={`https://www.croris.hr/projekti/projekt/${project['croris_id']}/`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+                          <a className="fw-normal" href={`https://www.croris.hr/projekti/projekt/${project['croris_id']}`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
                             https://www.croris.hr/projekti/projekt/{project['croris_id']}
                           </a>
                         </Col>
