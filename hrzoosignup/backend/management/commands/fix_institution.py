@@ -213,11 +213,11 @@ class Command(BaseCommand):
                         self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {foren_st.name_short}'))
                         if options.get('cron', None):
                             logger.info(f'Setting active institution for {user.username} to {foren_st.name_short}')
-                    any_changed = True
                     if options.get('confirm_yes', None):
                         if user.person_institution != foren_st.name_short:
                             user.person_institution = foren_st.name_short
                             user.person_institution_manual_set = True
+                            any_changed = True
                             user.save()
                 if 'pmf' in person_id_domain or 'ffzg' in person_id_domain:
                     query |= Q(contact_web__contains=person_id_domain, active=True)
@@ -231,9 +231,9 @@ class Command(BaseCommand):
                     self.stdout.write(self.style.NOTICE(f'Setting active institution for {user.username} to {found.name_short}'))
                     if options.get('cron', None):
                         logger.info(f'Setting active institution for {user.username} to {found.name_short}')
-                    any_changed = True
                     if options.get('confirm_yes', None):
                         user.person_institution_manual_set = True
+                        any_changed = True
                         user.save()
             except CrorisInstitutions.MultipleObjectsReturned:
                 if 'pmf' in person_id_domain or 'ffzg' in person_id_domain:
@@ -252,6 +252,7 @@ class Command(BaseCommand):
                                 logger.info(f'Resolving active institution for {user.username} to {found.name_short}')
                             if options.get('confirm_yes', None):
                                 user.person_institution_manual_set = True
+                                any_changed = True
                                 user.save()
             except CrorisInstitutions.DoesNotExist:
                 try:
@@ -266,8 +267,8 @@ class Command(BaseCommand):
                             logger.info(f'Setting inactive institution for {user.username} to {found.name_short}')
                         if options.get('confirm_yes', None):
                             user.person_institution_manual_set = True
-                            user.save()
                             any_changed = True
+                            user.save()
                 except CrorisInstitutions.MultipleObjectsReturned:
                     query = Q()
                     query |= Q(contact_web__contains=email_domain, active=False)
