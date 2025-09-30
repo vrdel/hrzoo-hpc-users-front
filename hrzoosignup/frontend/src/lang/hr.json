@@ -1,4 +1,8 @@
 {
+  "+3q+VV": {
+    "defaultMessage": "Datoteku nije moguće pročitati. Svaka linija datoteke bi trebala sadržavati jednu ispravnu email adresu.\nPrimjer:\nsuradnik1@email.hr\nsuradnik2@email.hr",
+    "description": "userstable-invalid-email-toast-fail"
+  },
   "+3wL+Z": {
     "defaultMessage": "Nema podataka iz sustava CroRIS",
     "description": "newqrequest-no-crorisdata"
@@ -1974,10 +1978,6 @@
   "kIVxF7": {
     "defaultMessage": "Trajanje:",
     "description": "memberships-project-duration"
-  },
-  "kKL5vf": {
-    "defaultMessage": "Pronađene neispravne email adrese: {invalid}",
-    "description": "userstable-invalid-email-toast-fail"
   },
   "kZb+W5": {
     "defaultMessage": "Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS",

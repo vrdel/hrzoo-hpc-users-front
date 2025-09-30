@@ -1,4 +1,8 @@
 {
+  "+3q+VV": {
+    "defaultMessage": "Unable to read file. Each line should contain a valid email address\nExample:\ncollab1@email.hr\ncollab2@email.hr",
+    "description": "userstable-invalid-email-toast-fail"
+  },
   "+3wL+Z": {
     "defaultMessage": "No data from CroRIS system",
     "description": "newqrequest-no-crorisdata"
@@ -1974,10 +1978,6 @@
   "kIVxF7": {
     "defaultMessage": "Duration:",
     "description": "memberships-project-duration"
-  },
-  "kKL5vf": {
-    "defaultMessage": "Invalid email addresses found: {invalid}",
-    "description": "userstable-invalid-email-toast-fail"
   },
   "kZb+W5": {
     "defaultMessage": "My service status, digital identity and CroRIS metadata",
