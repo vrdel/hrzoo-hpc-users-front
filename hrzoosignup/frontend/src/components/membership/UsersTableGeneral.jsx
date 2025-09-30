@@ -136,7 +136,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
         <span className="font-monospace text-white">
           {
             intl.formatMessage({
-              defaultMessage: "Pronađene neispravne email adrese: {invalid}",
+              defaultMessage: "Datoteku nije moguće pročitati. Svaka linija datoteke bi trebala sadržavati jednu ispravnu email adresu.\n\nPrimjer:\nsuradnik1@email.hr\nsuradnik2@email.hr",
               description: "userstable-invalid-email-toast-fail"
             },
             {
