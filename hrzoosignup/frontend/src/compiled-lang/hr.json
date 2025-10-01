@@ -1,4 +1,5 @@
 {
+  "+3q+VV": "Datoteku nije moguće pročitati. Svaka linija datoteke bi trebala sadržavati jednu ispravnu email adresu.\nPrimjer:\nsuradnik1@email.hr\nsuradnik2@email.hr",
   "+3wL+Z": "Nema podataka iz sustava CroRIS",
   "+9ILeQ": "Zatraži produljenje",
   "+Pcbkp": "Korisnička oznaka",
@@ -493,7 +494,6 @@
   "k0Z6h0": "Temeljne medicinske znanosti",
   "kCbCrR": "Prijava AAI@EduHR",
   "kIVxF7": "Trajanje:",
-  "kKL5vf": "Pronađene neispravne email adrese: {invalid}",
   "kZb+W5": "Status na usluzi, moji podaci u imeniku matične ustanove i sustavu CroRIS",
   "kbJbJF": "Ime",
   "kgUSnq": "Potvrđujem",
