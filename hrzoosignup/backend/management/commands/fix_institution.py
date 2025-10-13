@@ -244,6 +244,8 @@ class Command(BaseCommand):
                     query |= Q(contact_email__contains=email_domain, active=True)
                 multiple_found = CrorisInstitutions.objects.filter(query)
                 for found in multiple_found:
+                    if user.person_institution in multiple_found.values_list('name_short', flat=True):
+                        continue
                     if user.person_organisation and (user.person_organisation.lower() in found.name_acronym.lower() or user.person_organisation.lower() in found.contact_email.lower()):
                         if user.person_institution != found.name_short:
                             user.person_institution = found.name_short
