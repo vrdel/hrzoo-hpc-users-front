@@ -267,7 +267,7 @@ WSGI_APPLICATION = 'hrzoosignup.wsgi.application'
 
 
 INVITATIONS_INVITATION_MODEL = 'backend.CustomInvitation'
-INVITATIONS_INVITATION_EXPIRY = 7
+INVITATIONS_INVITATION_EXPIRY = 14
 INVITATIONS_SIGNUP_REDIRECT = '/api/v1/internal/invites-userlink/'
 
 # vary this from CustomInvitation
