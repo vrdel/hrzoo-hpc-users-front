@@ -51,7 +51,7 @@ RUN sudo sh -c '\
   . /opt/poetry-tool/bin/activate \
   && pip install -U pip \
   && pip install -U setuptools==69.2.0 \
-  && pip install -U poetry==1.*'
+  && pip install -U poetry==2.*'
 RUN sudo ln -s /opt/poetry-tool/bin/poetry /usr/local/bin/
 RUN sudo python3.9 -m venv /opt/hrzoo-signup
 RUN sudo sh -c '\
