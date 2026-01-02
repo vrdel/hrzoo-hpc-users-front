@@ -39,12 +39,12 @@ const Navigation = () => {
             locale === 'hr' ?
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                 target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR" style={{ width: 550, height: "auto" }} />
+                <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR" style={{ width: 530, height: "auto" }} />
               </a>
             :
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                 target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN" style={{ width: 560, height: "auto" }} />
+                <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN" style={{ width: 540, height: "auto" }} />
               </a>
           }
         </span>
@@ -53,12 +53,12 @@ const Navigation = () => {
             locale === 'hr' ?
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                 target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR" style={{ width: 340, height: "auto" }} />
+                <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR" style={{ width: 320, height: "auto" }} />
               </a>
             :
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                 target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN" style={{ width: 350, height: "auto" }} />
+                <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN" style={{ width: 330, height: "auto" }} />
               </a>
           }
         </span>
