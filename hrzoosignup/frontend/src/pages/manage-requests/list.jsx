@@ -35,7 +35,7 @@ import _ from "lodash";
 
 
 const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
-  const [pageSize, setPageSize] = useState(30)
+  const [pageSize, setPageSize] = useState(50)
   const [pageIndex, setPageIndex] = useState(0)
   const intl = useIntl()
 
