@@ -11,7 +11,6 @@ import {
 } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faLaptopCode,
   faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons';
 import 'Styles/nav.css';
@@ -21,8 +20,8 @@ import UserDetailsPopover from 'Components/UserDetailsPopover';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { LanguageButtonNav } from 'Components/LocaleButton';
 import { FormattedMessage } from 'react-intl';
-import SrceLogoHead from 'Assets/srce-logo-head.png';
-import SrceLogoHeadEn from 'Assets/srce-logo-head-en.png';
+import SrceLogoHead from 'Assets/srce-logo-head.svg';
+import SrceLogoHeadEn from 'Assets/srce-logo-head-en.svg';
 import SrceLogoHeadSmall from 'Assets/srce-logo-head-small.png';
 import SrceLogoHeadSmallEn from 'Assets/srce-logo-head-small-en.png';
 import { useIntl } from 'react-intl'
@@ -43,12 +42,12 @@ const Navigation = () => {
             locale === 'hr' ?
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                 target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR"/>
+                <img src={SrceLogoHead} id="srcelogohr" alt="SRCE Logo HR" style={{ width: 550, height: "auto" }} />
               </a>
             :
               <a href={intl.formatMessage({ defaultMessage: "https://www.srce.unizg.hr/napredno-racunanje", description: 'navigation-brand-link' })}
                 target="_blank" rel="noopener noreferrer">
-                <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN"/>
+                <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN" style={{ width: 560, height: "auto" }} />
               </a>
           }
         </span>
