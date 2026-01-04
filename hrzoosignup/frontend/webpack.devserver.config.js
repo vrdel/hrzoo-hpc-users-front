@@ -18,7 +18,10 @@ module.exports = {
     headers: { 'Access-Control-Allow-Origin': '*' },
   },
   plugins: [
-    new BundleTracker({filename: 'webpack-stats.json'}),
+    new BundleTracker({
+        filename: 'webpack-stats.json',
+        path: path.resolve(process.cwd())
+      })
   ],
   module: {
     rules: [
