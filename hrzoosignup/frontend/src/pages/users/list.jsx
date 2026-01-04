@@ -179,7 +179,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
 
 
 const UsersListTable = ({ data, pageTitle, activeList=false }) => {
-  const [pageSize, setPageSize] = useState(30)
+  const [pageSize, setPageSize] = useState(50)
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
   const [sortJoined, setSortJoined] = useState(true)

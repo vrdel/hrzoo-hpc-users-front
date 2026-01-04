@@ -63,7 +63,7 @@ const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
 
 
 const ProjectsListForm = ({ data, pageTitle }) => {
-  const [pageSize, setPageSize] = useState(30)
+  const [pageSize, setPageSize] = useState(50)
   const [pageIndex, setPageIndex] = useState(0)
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
   const intl = useIntl()
