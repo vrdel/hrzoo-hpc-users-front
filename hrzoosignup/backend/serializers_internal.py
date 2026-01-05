@@ -34,12 +34,6 @@ class _StaffComment(serializers.ModelSerializer):
         model = models.StaffComment
 
 
-class ScienceSoftwareSerializer(serializers.ModelSerializer):
-    class Meta:
-        fields = ('pk', 'name', 'created', 'added_by')
-        model = models.ScienceSoftware
-
-
 class UsersSerializerFiltered(serializers.ModelSerializer):
     sshkeys = serializers.SerializerMethodField()
 
@@ -119,10 +113,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'reason',
             'resources_numbers',
             'resources_type',
-            'science_extrasoftware',
-            'science_extrasoftware_help',
             'science_field',
-            'science_software',
             'staff_resources_type',
             'staffcomment_set',
             'state',
@@ -315,10 +306,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'reason',
             'resources_numbers',
             'resources_type',
-            'science_extrasoftware',
-            'science_extrasoftware_help',
             'science_field',
-            'science_software',
             'staff_resources_type',
             'state',
             'users',
