@@ -1864,7 +1864,6 @@ class ResourceUsageAPITests(TestCase):
             identifier="Project 11111 (bla-meh)",
             name="Project with paranthesis in identifier",
             institute="Fakultet elektrotehnike i računarstva",
-            science_extrasoftware_help=False,
             is_active=True,
             state=self.state1,
             project_type=self.project_type3,
@@ -3610,9 +3609,6 @@ class NewProjectsAPITests(TestCase):
                 }
             ]
         )
-        self.assertEqual(project.science_software, [])
-        self.assertEqual(project.science_extrasoftware, "")
-        self.assertFalse(project.science_extrasoftware_help)
         self.assertEqual(project.resources_numbers, {})
         self.assertTrue(project.is_active)
         self.assertEqual(project.croris_title, "")
@@ -3779,9 +3775,6 @@ class NewProjectsAPITests(TestCase):
                 }
             ]
         )
-        self.assertEqual(project.science_software, [])
-        self.assertEqual(project.science_extrasoftware, "")
-        self.assertFalse(project.science_extrasoftware_help)
         self.assertEqual(project.resources_numbers, {})
         self.assertTrue(project.is_active)
         self.assertEqual(project.croris_title, "")

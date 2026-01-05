@@ -79,8 +79,6 @@ function intlSchemaResolve(intl) {
         description: 'schema-mandatory'
       })
     ),
-    scientificSoftwareExtra: yup.string(),
-    scientificSoftwareHelp: yup.boolean(),
     requestResourceType: yup.array().of(yup.object()),
     HPCnSlotsCPU: yup.number()
       .min(1, intl.formatMessage({
