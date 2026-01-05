@@ -286,6 +286,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     defaultValues: {
       requestName: '',
       requestExplain: '',
+      requestUsesAI: 'missing',
       startDate: '',
       endDate: '',
       requestInstitute: userDetails.person_institution,
@@ -368,6 +369,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     dataToSend['date_start'] = convertToAmerican(data['startDate'])
     dataToSend['name'] = data['requestName']
     dataToSend['reason'] = data['requestExplain']
+    dataToSend['uses_ai_tech'] = data['requestUsesAI']
     dataToSend['institute'] = userDetails.person_institution
     dataToSend['project_type'] = projectType
     dataToSend['science_field'] = data['scientificDomain']

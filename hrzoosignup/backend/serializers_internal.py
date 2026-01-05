@@ -310,6 +310,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'staff_resources_type',
             'state',
             'users',
+            'uses_ai_tech'
         )
         model = models.Project
 
