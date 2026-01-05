@@ -161,19 +161,6 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
           />
         </NavLink>
       </NavItem>
-      <NavItem key="software" className="mt-1">
-        <NavLink
-          style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
-          to='/ui/software'
-        >
-          <FontAwesomeIcon icon={faWindowRestore} />{" "}
-          <FormattedMessage
-            description="navlinks-software"
-            defaultMessage="Softver"
-          />
-        </NavLink>
-      </NavItem>
     </>
   )
 }

@@ -85,11 +85,6 @@ export function LinkTitles(loc, intl) {
         defaultMessage: 'Popis svih odobrenih projekata',
         description: 'linktitle-projects'
       }),
-    [url_ui_prefix + '/software']:
-      intl.formatMessage({
-        defaultMessage: 'Popis aplikacija dostupnih na klasteru',
-        description: 'linktitle-software'
-      }),
     [url_ui_prefix + '/my-accounting']: intl.formatMessage({
       defaultMessage: 'Iskorištenje resursa',
       description: "linktitle-accounting"
