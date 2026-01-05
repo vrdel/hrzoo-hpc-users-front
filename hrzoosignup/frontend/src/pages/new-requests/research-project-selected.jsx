@@ -27,7 +27,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { ErrorMessage } from '@hookform/error-message';
 import ResourceFields from 'Components/fields-request/ResourceFields';
 import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
-import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { toast } from 'react-toastify'
 import { addResearchProject } from 'Api/projects';
 import { convertToIso8601 } from 'Utils/dates';
@@ -82,9 +81,6 @@ function intlSchemaResolve(intl) {
         ))
       }
     )).required(),
-    scientificSoftware: yup.array().min(0).of(yup.object()),
-    scientificSoftwareExtra: yup.string(),
-    scientificSoftwareHelp: yup.boolean(),
     requestResourceType: yup.array().of(yup.object()),
     HPCnSlotsCPU: yup.number()
       .min(1, intl.formatMessage({
@@ -312,9 +308,6 @@ const ResearchProjectRequestSelected = ({projectType}) => {
           ]
         },
       ],
-      scientificSoftware: [],
-      scientificSoftwareExtra: '',
-      scientificSoftwareHelp: false
     }
   });
 
@@ -406,12 +399,6 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     dataToSend['name'] = projectTarget.title
     dataToSend['reason'] = data['requestExplain']
     dataToSend['project_type'] = projectType
-    if (data.scientificSoftware)
-      dataToSend['science_software'] = data.scientificSoftware.map(e => e.value)
-    else
-      dataToSend['science_software'] = []
-    dataToSend['science_extrasoftware'] = data['scientificSoftwareExtra']
-    dataToSend['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
     dataToSend['science_field'] = data['scientificDomain']
     dataToSend['resources_numbers'] = {
       'HPCnSlotsCPU': data['HPCnSlotsCPU'],
@@ -482,7 +469,6 @@ const ResearchProjectRequestSelected = ({projectType}) => {
               </Col>
             </Row>
             <BaseNewScientificDomain />
-            <ScientificSoftware />
             <ResourceFields />
             <Row>
               <RequestHorizontalRuler />

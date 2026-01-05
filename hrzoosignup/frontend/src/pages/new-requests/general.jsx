@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import RequestHorizontalRuler from 'Components/RequestHorizontalRuler';
 import ResourceFields from 'Components/fields-request/ResourceFields';
 import GeneralFields from 'Components/fields-request/GeneralFields';
-import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import {
   Button,
   Col,
@@ -80,7 +79,6 @@ function intlSchemaResolve(intl) {
         description: 'schema-mandatory'
       })
     ),
-    scientificSoftware: yup.array().min(0).of(yup.object()),
     scientificSoftwareExtra: yup.string(),
     scientificSoftwareHelp: yup.boolean(),
     requestResourceType: yup.array().of(yup.object()),
@@ -308,9 +306,6 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
           ]
         },
       ],
-      scientificSoftware: [],
-      scientificSoftwareExtra: '',
-      scientificSoftwareHelp: false
     }
   });
 
@@ -377,12 +372,6 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     dataToSend['reason'] = data['requestExplain']
     dataToSend['institute'] = userDetails.person_institution
     dataToSend['project_type'] = projectType
-    if (data.scientificSoftware)
-      dataToSend['science_software'] = data.scientificSoftware.map(e => e.value)
-    else
-      dataToSend['science_software'] = []
-    dataToSend['science_extrasoftware'] = data['scientificSoftwareExtra']
-    dataToSend['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
     dataToSend['science_field'] = data['scientificDomain']
     dataToSend['resources_numbers'] = {
       'HPCnSlotsCPU': data['HPCnSlotsCPU'],
@@ -428,7 +417,6 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
         <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
           <RequestHorizontalRuler />
           <GeneralFields isInstitute={projectType === 'research-institutional' ? true : false}/>
-          <ScientificSoftware />
           <ResourceFields />
           <RequestHorizontalRuler />
           <Row className="mt-2 mb-5 text-center">

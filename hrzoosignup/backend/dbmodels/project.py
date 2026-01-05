@@ -91,16 +91,6 @@ class Project(models.Model):
         blank=True,
         null=True
     )
-    science_software = models.JSONField(
-        blank=True,
-        null=True
-    )
-    science_extrasoftware = models.CharField(
-        _("Extra software needed on project"),
-        max_length=256,
-        blank=True,
-    )
-    science_extrasoftware_help = models.BooleanField()
     resources_numbers = models.JSONField(
         blank=True,
         null=True

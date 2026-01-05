@@ -267,9 +267,6 @@ class Projects(APIView):
             p_obj.resources_type = request.data['requestResourceType']
             p_obj.state = state
             p_obj.science_field = request.data['scientificDomain']
-            p_obj.science_software = request.data['scientificSoftware']
-            p_obj.science_extrasoftware = request.data['scientificSoftwareExtra']
-            p_obj.science_extrasoftware_help = request.data['scientificSoftwareHelp']
             p_obj.staff_resources_type = request.data.get('staff_requestResourceType')
             p_obj.resources_numbers = request.data['resources_numbers']
             p_obj.date_start = request.data['date_start']
