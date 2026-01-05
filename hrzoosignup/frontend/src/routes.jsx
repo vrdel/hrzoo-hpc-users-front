@@ -11,7 +11,6 @@ import { ProjectChange } from 'Pages/projects/change';
 import NewRequest from 'Pages/new-request';
 import { ManageRequestsChange } from 'Pages/manage-requests/change';
 import { ManageRequestsList } from 'Pages/manage-requests/list';
-import { SoftwareList } from 'Pages/software/list';
 import ResearchProjectRequest from 'Pages/new-requests/research-project';
 import ResearchProjectRequestSelected from 'Pages/new-requests/research-project-selected';
 import GeneralRequest from 'Pages/new-requests/general';
@@ -154,11 +153,6 @@ const BaseRoutes = () => {
               <Route path="users/inactive/:userId" element={
                 <ProtectedRoute sessionData={sessionData}>
                   <UserChange />
-                </ProtectedRoute> }
-              />
-              <Route path="software" element={
-                <ProtectedRoute sessionData={sessionData}>
-                  <SoftwareList />
                 </ProtectedRoute> }
               />
               <Route path="my-requests" element={
