@@ -2,11 +2,10 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Row, Form, Button, Table } from 'reactstrap';
+import { Col, Row, Form, Button} from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import ScientificSoftware from 'Components/fields-request/ScientificSoftware';
 import { useParams, useNavigate } from 'react-router';
 import {
   useForm,
@@ -81,7 +80,6 @@ export const MyRequestChange = () => {
       data['is_active'] = true
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
-      data['science_extrasoftware_help'] = data['scientificSoftwareHelp'] ? true : false
       data['staff_resources_type'] = data['staff_requestResourceType']
       return changeProject(projId, data)
     }
@@ -109,9 +107,6 @@ export const MyRequestChange = () => {
           ]
         },
       ],
-      scientificSoftware: '',
-      scientificSoftwareExtra: '',
-      scientificSoftwareHelp: '',
       staff_requestResourceType: '',
       staff_comment: ''
     }
@@ -127,14 +122,6 @@ export const MyRequestChange = () => {
       rhfProps.setValue('startDate', nrProject.date_start)
       rhfProps.setValue('endDate', nrProject.date_end)
       rhfProps.setValue('scientificDomain', nrProject.science_field)
-      rhfProps.setValue('scientificSoftware', nrProject.science_software.map(e => (
-        {
-          'label' : e,
-          'value' : e
-        }
-      )))
-      rhfProps.setValue('scientificSoftwareExtra', nrProject.science_extrasoftware)
-      rhfProps.setValue('scientificSoftwareHelp', nrProject.science_extrasoftware_help)
       rhfProps.setValue('HPCnSlotsCPU', nrProject.resources_numbers.HPCnSlotsCPU)
       rhfProps.setValue('HPCnSlotsGPU', nrProject.resources_numbers.HPCnSlotsGPU)
       rhfProps.setValue('HPCnRAM', nrProject.resources_numbers.HPCnSlotsRAM)
@@ -371,7 +358,6 @@ export const MyRequestChange = () => {
                   nrProject.project_type.name === 'research-croris' &&
                     <CroRisDescription fieldsDisabled={true}/>
                 }
-                <ScientificSoftware fieldsDisabled={true} />
                 <ResourceFields fieldsDisabled={true} />
                 <Row style={{height: '50px'}}>
                 </Row>
