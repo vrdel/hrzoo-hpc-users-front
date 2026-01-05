@@ -3,10 +3,7 @@ import {
   Button,
 } from 'reactstrap';
 import Cookies from 'js-cookie';
-import EnFlag20 from 'Assets/en-flag-20.png';
-import EnFlag30 from 'Assets/en-flag-30.png';
-import HrFlag20 from 'Assets/hr-flag-20.png';
-import HrFlag30 from 'Assets/hr-flag-30.png';
+import "flag-icons/css/flag-icons.min.css";
 
 
 export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
@@ -27,8 +24,8 @@ export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
     <Button size="sm" color="light"
       onClick={ () => alternateLocale() } >
       <span className={`${small ? 'fs-5 m-0 p-0' : 'fs-4 m-0 p-0'}`}>
-        { locale === 'en' && <img src={HrFlag30} alt="Croatian flag"/> }
-        { locale === 'hr' && <img src={EnFlag30} alt="English flag"/> }
+        { locale === 'en' && <span className="fi fi-hr" style={{width: 30, height: 'auto'}}></span> }
+        { locale === 'hr' && <span className="fi fi-gb" style={{width: 30, height: 'auto'}}></span> }
       </span>
       {' '}
       <span className={`${small ? 'fs-6' : 'fs-5'}`}>
@@ -55,8 +52,8 @@ export const LanguageButtonNav = ({locale, setLocale}) => {
     <Button size="sm" color="light"
       onClick={ () => alternateLocale() } >
       <span className="fs-6 m-0 p-0">
-        { locale === 'en' && <img src={HrFlag20} alt="Croatian flag"/> }
-        { locale === 'hr' && <img src={EnFlag20} alt="English flag"/> }
+        { locale === 'en' && <span className="fi fi-hr" style={{width: 20, height: 'auto'}}></span> }
+        { locale === 'hr' && <span className="fi fi-gb" style={{width: 20, height: 'auto'}}></span> }
       </span>
       <br/>
       { locale === 'hr' ? 'en'.toUpperCase() : 'hr'.toUpperCase() }
