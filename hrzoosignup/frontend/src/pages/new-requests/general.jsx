@@ -286,7 +286,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     defaultValues: {
       requestName: '',
       requestExplain: '',
-      requestUsesAI: 'missing',
+      requestUsesAI: '',
       startDate: '',
       endDate: '',
       requestInstitute: userDetails.person_institution,

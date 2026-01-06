@@ -291,6 +291,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     defaultValues: {
       requestName: '',
       requestExplain: '',
+      requestUsesAI: '',
       startDate: '',
       endDate: '',
       requestResourceType: [],
@@ -398,6 +399,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     dataToSend['date_start'] = convertToAmerican(convertToIso8601(projectTarget.start))
     dataToSend['name'] = projectTarget.title
     dataToSend['reason'] = data['requestExplain']
+    dataToSend['uses_ai_tech'] = data['requestUsesAI']
     dataToSend['project_type'] = projectType
     dataToSend['science_field'] = data['scientificDomain']
     dataToSend['resources_numbers'] = {
