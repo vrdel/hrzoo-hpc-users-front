@@ -675,6 +675,10 @@
     "defaultMessage": "Odaberi...",
     "description": "users-table-general-placeholder"
   },
+  "DIHGcs": {
+    "defaultMessage": "Projekt koristi tehnologije umjetne inteligencije:",
+    "description": "requestusesai-description"
+  },
   "DJN4Jp": {
     "defaultMessage": "Popis svih odobrenih projekata",
     "description": "linktitle-projects"
@@ -1022,6 +1026,10 @@
   "LiONnn": {
     "defaultMessage": "Odaberi",
     "description": "resourcefields-placeholder"
+  },
+  "LquO75": {
+    "defaultMessage": "Da",
+    "description": "requestusesai-label-yes"
   },
   "M8y/Pt": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće odjavljivati suradnike",
@@ -1763,6 +1771,10 @@
     "defaultMessage": "Obriši zahtjev",
     "description": "managereq-change-buttonlabel-delete-2"
   },
+  "gTR6l7": {
+    "defaultMessage": "Odaberi",
+    "description": "requestusesai-placeholder"
+  },
   "gZNSSG": {
     "defaultMessage": "Udjeli znanstvenih polja zajedno u znanstvenom području moraju biti 100%.",
     "description": "domain-fields-ratio-fields"
@@ -1978,6 +1990,10 @@
   "moaMHd": {
     "defaultMessage": "Email korisnika kopiran u međuspremnik",
     "description": "userinfo-croris-clipboard-ok"
+  },
+  "muSfXQ": {
+    "defaultMessage": "Ne",
+    "description": "requestusesai-label-no"
   },
   "n32QyA": {
     "defaultMessage": "https://www.srce.unizg.hr/",

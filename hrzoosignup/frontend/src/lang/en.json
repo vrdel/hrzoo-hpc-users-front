@@ -675,6 +675,10 @@
     "defaultMessage": "Select...",
     "description": "users-table-general-placeholder"
   },
+  "DIHGcs": {
+    "defaultMessage": "Project uses artificial intelligence technologies:",
+    "description": "requestusesai-description"
+  },
   "DJN4Jp": {
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
@@ -1022,6 +1026,10 @@
   "LiONnn": {
     "defaultMessage": "Select",
     "description": "resourcefields-placeholder"
+  },
+  "LquO75": {
+    "defaultMessage": "Yes",
+    "description": "requestusesai-label-yes"
   },
   "M8y/Pt": {
     "defaultMessage": "Project is not active, therefore it is not possible to unregister collaborators",
@@ -1763,6 +1771,10 @@
     "defaultMessage": "Delete request",
     "description": "managereq-change-buttonlabel-delete-2"
   },
+  "gTR6l7": {
+    "defaultMessage": "Select",
+    "description": "requestusesai-placeholder"
+  },
   "gZNSSG": {
     "defaultMessage": "Ratio of scientific fields within scientific domain must total 100%.",
     "description": "domain-fields-ratio-fields"
@@ -1978,6 +1990,10 @@
   "moaMHd": {
     "defaultMessage": "User's email copied to clipboard",
     "description": "userinfo-croris-clipboard-ok"
+  },
+  "muSfXQ": {
+    "defaultMessage": "No",
+    "description": "requestusesai-label-no"
   },
   "n32QyA": {
     "defaultMessage": "https://www.srce.unizg.hr/en",
