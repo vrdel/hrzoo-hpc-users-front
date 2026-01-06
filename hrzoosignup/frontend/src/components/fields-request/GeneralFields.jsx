@@ -536,6 +536,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                   defaultMessage="Projekt koristi tehnologije umjetne inteligencije:"
                 />
               </Label>
+              <span className="ms-1 fw-bold text-danger">*</span>
             </Col>
           </Row>
           <Row>
