@@ -37,6 +37,8 @@ import { convertToAmerican } from 'Utils/dates';
 import { FormattedMessage, useIntl } from 'react-intl';
 import * as yup from "yup";
 import { AuthContext } from 'Components/AuthContextProvider';
+import RequestUsesAISelectOptions from 'Config/request-usesai';
+import { CustomReactSelect } from 'Components/CustomReactSelect';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -470,6 +472,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
                 />
               </Col>
             </Row>
+            <RequestUsesAI />
             <BaseNewScientificDomain />
             <ResourceFields />
             <Row>
@@ -630,5 +633,56 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
     </>
   )
 }
+
+
+const RequestUsesAI = ({fieldsDisabled=false}) => {
+  const { control, getValues, setValue, formState: {errors} } = useFormContext();
+  const intl = useIntl()
+
+  return (
+    <Row className="mt-4">
+      <Row>
+        <Col md={{size: 4, offset: 1}}>
+          <Label
+            htmlFor="requestUsesAI"
+            aria-label="requestUsesAI"
+            className="mr-2 text-right form-label">
+            <FormattedMessage
+              description="requestusesai-description"
+              defaultMessage="Projekt koristi tehnologije umjetne inteligencije:"
+            />
+          </Label>
+          <span className="ms-1 fw-bold text-danger">*</span>
+        </Col>
+      </Row>
+      <Row>
+        <Col md={{size: 1, offset: 1}}>
+          <Controller
+            name="requestUsesAI"
+            control={control}
+            render={ ({field}) =>
+              <CustomReactSelect
+                aria-label="requestUsesAI"
+                closeMenuOnSelect={true}
+                controlWidth="100%"
+                forwardedRef={field.ref}
+                id="requestUsesAI"
+                isDisabled={fieldsDisabled}
+                options={RequestUsesAISelectOptions(intl)}
+                placeholder={intl.formatMessage({
+                  defaultMessage: "Odaberi",
+                  description: "requestusesai-placeholder"
+                })}
+                value={getValues('requestUsesAI')}
+                onChange={(e) => setValue('requestUsesAI', e)}
+              />
+            }
+          />
+        </Col>
+      </Row>
+    </Row>
+  )
+}
+
 
 export default ResearchProjectRequestSelected;
