@@ -441,6 +441,13 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               <span className="visually-hidden">EU</span>
                             </span>
                           }
+                          {
+                            project.uses_ai_tech === 'yes' &&
+                            <span className="position-absolute fw-normal top-100 start-0 translate-middle badge rounded-pill bg-danger">
+                              AI
+                              <span className="visually-hidden">AI</span>
+                            </span>
+                          }
                         </span>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
