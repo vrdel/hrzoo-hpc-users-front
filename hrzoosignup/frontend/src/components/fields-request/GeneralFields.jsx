@@ -550,6 +550,8 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                     closeMenuOnSelect={true}
                     controlWidth="100%"
                     forwardedRef={field.ref}
+                    rules={{required: true}}
+                    error={errors && errors.requestUsesAI ? true : false}
                     id="requestUsesAI"
                     isDisabled={fieldsDisabled}
                     options={RequestUsesAISelectOptions(intl)}
@@ -560,6 +562,15 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                     value={getValues('requestUsesAI')}
                     onChange={(e) => setValue('requestUsesAI', e)}
                   />
+                }
+              />
+              <ErrorMessage
+                errors={errors}
+                name="requestUsesAI"
+                render={({ message }) =>
+                  <FormFeedback className="end-0">
+                    { message }
+                  </FormFeedback>
                 }
               />
             </Col>

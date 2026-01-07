@@ -49,6 +49,15 @@ function intlSchemaResolve(intl) {
         description: 'schema-mandatory'
       })
     ),
+    requestUsesAI: yup.object().shape({
+      'label': yup.string().required(),
+      'value': yup.string().required()
+    }).required(
+      intl.formatMessage({
+        defaultMessage: "Obvezno",
+        description: 'schema-mandatory'
+      })
+    ),
     scientificDomain: yup.array().of(yup.object().shape(
       {
         name: yup.object().shape({
