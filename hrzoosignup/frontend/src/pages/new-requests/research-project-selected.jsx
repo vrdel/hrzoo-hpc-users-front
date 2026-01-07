@@ -64,6 +64,15 @@ function intlSchemaResolve(intl) {
         description: 'schema-mandatory'
       })
     ),
+    requestUsesAI: yup.object().shape({
+      'label': yup.string().required(),
+      'value': yup.string().required()
+    }).required(
+      intl.formatMessage({
+        defaultMessage: "Obvezno",
+        description: 'schema-mandatory'
+      })
+    ),
     scientificDomain: yup.array().of(yup.object().shape(
       {
         name: yup.object().shape({
@@ -659,6 +668,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
         <Col md={{size: 1, offset: 1}}>
           <Controller
             name="requestUsesAI"
+            rules={{required: true}}
             control={control}
             render={ ({field}) =>
               <CustomReactSelect
@@ -666,6 +676,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
                 closeMenuOnSelect={true}
                 controlWidth="100%"
                 forwardedRef={field.ref}
+                error={errors && errors.requestUsesAI ? true : false}
                 id="requestUsesAI"
                 isDisabled={fieldsDisabled}
                 options={RequestUsesAISelectOptions(intl)}
@@ -676,6 +687,15 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
                 value={getValues('requestUsesAI')}
                 onChange={(e) => setValue('requestUsesAI', e)}
               />
+            }
+          />
+          <ErrorMessage
+            errors={errors}
+            name="requestUsesAI"
+            render={({ message }) =>
+              <FormFeedback className="end-0">
+                { message }
+              </FormFeedback>
             }
           />
         </Col>

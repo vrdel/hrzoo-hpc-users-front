@@ -543,6 +543,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             <Col md={{size: 1, offset: 1}}>
               <Controller
                 name="requestUsesAI"
+                rules={{required: true}}
                 control={control}
                 render={ ({field}) =>
                   <CustomReactSelect
@@ -550,7 +551,6 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                     closeMenuOnSelect={true}
                     controlWidth="100%"
                     forwardedRef={field.ref}
-                    rules={{required: true}}
                     error={errors && errors.requestUsesAI ? true : false}
                     id="requestUsesAI"
                     isDisabled={fieldsDisabled}
