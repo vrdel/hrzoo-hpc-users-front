@@ -43,6 +43,7 @@ import {
 import { ProjectExtendTable } from 'Components/ProjectExtend';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { buildYesNoValue } from 'Utils/select-tools';
+import { extractYesNoValue } from 'Utils/select-tools';
 
 
 function setInitialState() {
@@ -274,6 +275,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       data['is_active'] = true
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
+      data['uses_ai_tech'] = extractYesNoValue(data['requestUsesAI'])
       data['date_start'] = checkAmericanDateAndConvert(data['startDate'])
       data['date_end'] = checkAmericanDateAndConvert(data['endDate'])
 
@@ -310,6 +312,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       requestCroRisId: '',
       requestName: '',
       requestExplain: '',
+      requestUsesAI: '',
       startDate: '',
       endDate: '',
       requestResourceType: '',

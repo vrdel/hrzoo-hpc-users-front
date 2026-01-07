@@ -43,8 +43,8 @@ export function buildYesNoValue(strflag, locale) {
     case 'no':
       if (locale === 'hr')
         return {
-          'label': 'No',
-          'value': 'No'
+          'label': 'Ne',
+          'value': 'Ne'
         }
       else
         return {
