@@ -41,6 +41,8 @@ import {
   Submit,
 } from "Components/StateIcons"
 import { ProjectExtendTable } from 'Components/ProjectExtend';
+import { IntlContext } from 'Components/IntlContextProvider';
+import { buildYesNoValue } from 'Utils/select-tools';
 
 
 function setInitialState() {
@@ -242,6 +244,8 @@ export const ManageRequestsChange = ({manageProject=false}) => {
   const [requestState, setRequestState] = useState(undefined)
   const { csrfToken } = useContext(AuthContext)
   const intl = useIntl()
+  const { locale } = useContext(IntlContext)
+
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -337,6 +341,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       rhfProps.setValue('requestName', nrProject.name)
       rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('requestExplain', nrProject.reason)
+      rhfProps.setValue('requestUsesAI', buildYesNoValue(nrProject.uses_ai_tech, locale))
       rhfProps.setValue('startDate', nrProject.date_start)
       rhfProps.setValue('endDate', nrProject.date_end)
       rhfProps.setValue('scientificDomain', nrProject.science_field)

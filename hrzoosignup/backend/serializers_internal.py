@@ -119,6 +119,7 @@ class ProjectSerializerGet(serializers.ModelSerializer):
             'state',
             'userproject_set',
             'users',
+            'uses_ai_tech'
         )
         model = models.Project
 

@@ -26,3 +26,30 @@ export function extractYesNoValue(obj) {
   else
     return ''
 }
+
+export function buildYesNoValue(strflag, locale) {
+  switch (strflag) {
+    case 'yes':
+      if (locale === 'hr')
+        return {
+          'label': 'Da',
+          'value': 'Da'
+        }
+      else
+        return {
+          'label': 'Yes',
+          'value': 'Yes'
+        }
+    case 'no':
+      if (locale === 'hr')
+        return {
+          'label': 'No',
+          'value': 'No'
+        }
+      else
+        return {
+          'label': 'No',
+          'value': 'No'
+        }
+  }
+}
