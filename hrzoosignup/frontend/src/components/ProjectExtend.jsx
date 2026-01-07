@@ -78,7 +78,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
           delay: 500,
-          onClose: setTimeout(() => toggle(), 1500)
+          onClose: () => toggle()
         }
       )
     },

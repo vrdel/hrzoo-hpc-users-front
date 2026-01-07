@@ -30,6 +30,7 @@ import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';
 import validateRequestDates from 'Utils/validate-dates-startend';
 import { convertToAmerican } from 'Utils/dates';
+import { extractYesNoValue } from 'Utils/select-tools';
 import {FormattedMessage} from 'react-intl';
 import { useIntl } from 'react-intl'
 import * as yup from "yup";
@@ -336,7 +337,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
           delay: 500,
-          onClose: setTimeout(() => {navigate(url_ui_prefix + '/my-requests')}, 1500)
+          onClose: () => {navigate(url_ui_prefix + '/my-requests')}
         }
       )
     },
@@ -378,7 +379,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     dataToSend['date_start'] = convertToAmerican(data['startDate'])
     dataToSend['name'] = data['requestName']
     dataToSend['reason'] = data['requestExplain']
-    dataToSend['uses_ai_tech'] = data['requestUsesAI']
+    dataToSend['uses_ai_tech'] =  extractYesNoValue(data['requestUsesAI'])
     dataToSend['institute'] = userDetails.person_institution
     dataToSend['project_type'] = projectType
     dataToSend['science_field'] = data['scientificDomain']

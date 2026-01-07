@@ -207,7 +207,7 @@ export const MyRequestChange = () => {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
             delay: 500,
-            onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/requests')}, 1500)
+            onClose: () => {navigate(url_ui_prefix + '/requests')}
           }
         )
       },

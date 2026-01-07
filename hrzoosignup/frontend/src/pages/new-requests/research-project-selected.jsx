@@ -39,6 +39,7 @@ import * as yup from "yup";
 import { AuthContext } from 'Components/AuthContextProvider';
 import RequestUsesAISelectOptions from 'Config/request-usesai';
 import { CustomReactSelect } from 'Components/CustomReactSelect';
+import { extractYesNoValue } from 'Utils/select-tools';
 
 
 const ExtractUsers = ({projectUsers}) => {
@@ -362,7 +363,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
           toastId: 'researchproj-ok-add',
           autoClose: 2500,
           delay: 500,
-          onClose: setTimeout(() => {navigate(url_ui_prefix + '/my-requests')}, 1500)
+          onClose: () => {navigate(url_ui_prefix + '/my-requests')}
         }
       )
     },
@@ -410,7 +411,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
     dataToSend['date_start'] = convertToAmerican(convertToIso8601(projectTarget.start))
     dataToSend['name'] = projectTarget.title
     dataToSend['reason'] = data['requestExplain']
-    dataToSend['uses_ai_tech'] = data['requestUsesAI']
+    dataToSend['uses_ai_tech'] = extractYesNoValue(data['requestUsesAI'])
     dataToSend['project_type'] = projectType
     dataToSend['science_field'] = data['scientificDomain']
     dataToSend['resources_numbers'] = {
