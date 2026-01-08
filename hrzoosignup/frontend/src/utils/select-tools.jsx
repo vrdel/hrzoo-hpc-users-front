@@ -14,22 +14,22 @@ export function extractYesNoValue(obj) {
   if (obj && obj.value) {
     switch (obj.value) {
       case 'Da':
-        return 'yes'
+        return true
       case 'Yes':
-        return obj.value.lower()
+        return true
       case 'Ne':
-        return 'no'
+        return false
       case 'No':
-        return obj.value.lower()
+        return false
     }
   }
   else
-    return ''
+    return false
 }
 
-export function buildYesNoValue(strflag, locale) {
-  switch (strflag) {
-    case 'yes':
+export function buildYesNoValue(flag, locale) {
+  switch (flag) {
+    case true:
       if (locale === 'hr')
         return {
           'label': 'Da',
@@ -40,7 +40,7 @@ export function buildYesNoValue(strflag, locale) {
           'label': 'Yes',
           'value': 'Yes'
         }
-    case 'no':
+    case false:
       if (locale === 'hr')
         return {
           'label': 'Ne',

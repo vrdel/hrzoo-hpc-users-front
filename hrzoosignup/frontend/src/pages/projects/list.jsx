@@ -442,7 +442,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                             </span>
                           }
                           {
-                            project.uses_ai_tech === 'yes' &&
+                            project.uses_ai_tech &&
                             <span className="position-absolute fw-normal top-100 start-0 translate-middle badge rounded-pill bg-danger">
                               AI
                               <span className="visually-hidden">AI</span>
