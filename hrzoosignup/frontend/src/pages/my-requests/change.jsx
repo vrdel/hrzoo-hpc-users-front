@@ -28,6 +28,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimeline,
 } from '@fortawesome/free-solid-svg-icons';
+import { buildYesNoValue } from 'Utils/select-tools';
+import { IntlContext } from 'Components/IntlContextProvider';
 
 
 function setInitialState() {
@@ -50,6 +52,7 @@ export const MyRequestChange = () => {
   const { projId } = useParams()
   const [requestState, setRequestState] = useState(undefined)
   const intl = useIntl()
+  const { locale } = useContext(IntlContext)
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -90,6 +93,7 @@ export const MyRequestChange = () => {
       requestCroRisId: '',
       requestName: '',
       requestExplain: '',
+      requestUsesAI: '',
       startDate: '',
       endDate: '',
       requestResourceType: '',
@@ -118,6 +122,7 @@ export const MyRequestChange = () => {
       rhfProps.setValue('requestCroRisFinance', nrProject.croris_finance)
       rhfProps.setValue('requestName', nrProject.name)
       rhfProps.setValue('requestExplain', nrProject.reason)
+      rhfProps.setValue('requestUsesAI', buildYesNoValue(nrProject.uses_ai_tech, locale))
       rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('startDate', nrProject.date_start)
       rhfProps.setValue('endDate', nrProject.date_end)
