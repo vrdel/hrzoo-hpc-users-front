@@ -256,6 +256,13 @@ export const ProjectTypeBadge = ({projectInfo}) => {
             <span className="visually-hidden">AI</span>
           </span>
         }
+        {
+          projectInfo.approved_by?.username === 'merlin@srce.hr' &&
+          <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+            Merlin
+            <span className="visually-hidden">Merlin</span>
+          </span>
+        }
       </span>
     )
   else

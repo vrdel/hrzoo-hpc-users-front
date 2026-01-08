@@ -454,6 +454,13 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               <span className="visually-hidden">AI</span>
                             </span>
                           }
+                          {
+                            project.approved_by?.username === 'merlin@srce.hr' &&
+                            <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+                              Merlin
+                              <span className="visually-hidden">Merlin</span>
+                            </span>
+                          }
                         </span>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
