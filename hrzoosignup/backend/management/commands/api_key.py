@@ -72,6 +72,9 @@ class Command(BaseCommand):
                     'Name: ' + self.style.WARNING(f'{key.name}')
                 )
                 self.stdout.write(
+                    'Organization: ' + self.style.WARNING(f'{key.organization.name}')
+                )
+                self.stdout.write(
                     'Prefix: ' + self.style.WARNING(f'{key.prefix}')
                 )
                 self.stdout.write(
