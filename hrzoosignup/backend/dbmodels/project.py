@@ -25,11 +25,6 @@ class ProjectType(models.Model):
 
 
 class Project(models.Model):
-    class UsesAI(models.TextChoices):
-        YES = 'yes', 'Uses AI technologies'
-        NO = 'no', 'Does not use AI technologies'
-        UNDECLARED = 'undeclared', 'Not declared yet'
-
     identifier = models.CharField(
         _('identifier'),
         max_length=32,
@@ -166,11 +161,7 @@ class Project(models.Model):
     state = models.ForeignKey(State, null=True, on_delete=models.CASCADE)
     users = models.ManyToManyField(User, through='UserProject')
     project_type = models.ForeignKey(ProjectType, null=True, on_delete=models.CASCADE)
-    uses_ai_tech = models.CharField(
-        max_length=10,
-        choices=UsesAI.choices,
-        default=UsesAI.UNDECLARED
-    )
+    uses_ai_tech = models.BooleanField(default=False)
 
 
 class StaffComment(models.Model):
