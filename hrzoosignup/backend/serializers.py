@@ -49,7 +49,8 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
             'project_type',
             'resources_numbers',
             'staff_resources_type',
-            'state'
+            'state',
+            'uses_ai_tech'
         )
         model = models.Project
 
@@ -389,7 +390,7 @@ class AccountingUserProjectSerializer(serializers.ModelSerializer):
         fields = [
             "id", "sifra", "date_from", "date_end", "date_approved", "type",
             "name", "ustanova", "croris_url", "science_field", "realm",
-            "finance", "approved_resources", "users"
+            "finance", "approved_resources", "users", "uses_ai_tech"
         ]
         model = models.Project
 

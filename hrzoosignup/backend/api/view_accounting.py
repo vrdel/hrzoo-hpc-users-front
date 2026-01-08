@@ -90,8 +90,8 @@ class AccountingUserProjectAPI(APIView):
 
         else:
             db_interested = models.Project.objects.all().filter(
-            state__name__in=['approve', 'expire', 'extend']
-        )
+                state__name__in=['approve', 'expire', 'extend']
+            )
 
         serializer = AccountingUserProjectSerializer(db_interested, many=True)
         return Response(serializer.data, status.HTTP_200_OK)
