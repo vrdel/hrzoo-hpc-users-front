@@ -110,15 +110,25 @@ export function buildOptionsTypes(intl) {
     defaultMessage: "Srce Radionica",
     description: "tablehelpers-optiontypes-8"
   })
+  let merlin = intl.formatMessage({
+    defaultMessage: "Merlin",
+    description: "tablehelpers-optiontypes-9"
+  })
+  let ai = intl.formatMessage({
+    defaultMessage: "AI",
+    description: "tablehelpers-optiontypes-10"
+  })
   const optionsTypes = [
     { label: svi, value: "all" },
-    { label: istrazivacki, value: "research-croris" },
-    { label: istrazivackien, value: "research-eu-croris" },
+    { label: ai, value: "ai" },
     { label: institucijski, value: "research-institutional" },
     { label: interni, value: "internal" },
-    { label: rad, value: "thesis" },
+    { label: istrazivacki, value: "research-croris" },
+    { label: istrazivackien, value: "research-eu-croris" },
+    { label: merlin, value: "merlin" },
     { label: nastava, value: "practical" },
-    { label: srceworkshop, value: "srce-workshop" }
+    { label: rad, value: "thesis" },
+    { label: srceworkshop, value: "srce-workshop" },
   ]
 
   return optionsTypes

@@ -1855,6 +1855,10 @@
     "defaultMessage": "Manager",
     "description": "users-table-general-leader"
   },
+  "iT6Twy": {
+    "defaultMessage": "Merlin",
+    "description": "tablehelpers-optiontypes-9"
+  },
   "iYVJE/": {
     "defaultMessage": "Total amount of space for virtual servers on standard storage (GB):",
     "description": "cloudfields-ndiskgb"
@@ -2058,6 +2062,10 @@
   "okS+Tq": {
     "defaultMessage": "Ended",
     "description": "tablehelpers-optionstates-5"
+  },
+  "olAOM7": {
+    "defaultMessage": "AI",
+    "description": "tablehelpers-optiontypes-10"
   },
   "ouf6xV": {
     "defaultMessage": "You must select one type of request to continue",

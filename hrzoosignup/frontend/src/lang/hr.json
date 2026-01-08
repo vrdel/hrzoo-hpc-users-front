@@ -1855,6 +1855,10 @@
     "defaultMessage": "Voditelj",
     "description": "users-table-general-leader"
   },
+  "iT6Twy": {
+    "defaultMessage": "Merlin",
+    "description": "tablehelpers-optiontypes-9"
+  },
   "iYVJE/": {
     "defaultMessage": "Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):",
     "description": "cloudfields-ndiskgb"
@@ -2058,6 +2062,10 @@
   "okS+Tq": {
     "defaultMessage": "Završen",
     "description": "tablehelpers-optionstates-5"
+  },
+  "olAOM7": {
+    "defaultMessage": "AI",
+    "description": "tablehelpers-optiontypes-10"
   },
   "ouf6xV": {
     "defaultMessage": "Morate odabrati jedan tip zahtjeva da biste nastavili",
