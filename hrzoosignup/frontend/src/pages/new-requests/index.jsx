@@ -108,6 +108,35 @@ const NewRequestIndex = () => {
           />
         </Col>
       </Row>
+      <Row className="mt-4">
+        <Row>
+          <Col md={{size: 4, offset: 1}}>
+            <Label
+              htmlFor="requestUsesAI"
+              aria-label="requestUsesAI"
+              className="mr-2 text-right form-label">
+              <FormattedMessage
+                description="requestusesai-description"
+                defaultMessage="Projekt koristi tehnologije umjetne inteligencije:"
+              />
+            </Label>
+            <span className="ms-1 fw-bold text-danger">*</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={{size: 1, offset: 1}}>
+            <Input
+              aria-label="requestUsesAI"
+              disabled={true}
+              id="requestUsesAI"
+              placeholder={intl.formatMessage({
+                defaultMessage: "Odaberi",
+                description: "requestusesai-placeholder"
+              })}
+            />
+          </Col>
+        </Row>
+      </Row>
       <Row className="mt-3 ms-2 d-flex g-0">
         <Col md={{offset: 1}}>
           <Label
