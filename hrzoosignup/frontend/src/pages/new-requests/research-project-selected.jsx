@@ -652,7 +652,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
   return (
     <Row className="mt-4">
       <Row>
-        <Col md={{size: 4, offset: 1}}>
+        <Col md={{size: 4, offset: 1}} sm={{size: 10}} lg={{size: 10, offset: 1}}  xl={{size: 10, offset: 1}} xxl={{size: 10, offset: 1}}>
           <Label
             htmlFor="requestUsesAI"
             aria-label="requestUsesAI"
@@ -666,7 +666,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row>
-        <Col md={{size: 1, offset: 1}}>
+        <Col md={{size: 1, offset: 1}} lg={{offset: 1, size: 2}} xs={{size: 6}} sm={{size: 6}}>
           <Controller
             name="requestUsesAI"
             rules={{required: true}}
