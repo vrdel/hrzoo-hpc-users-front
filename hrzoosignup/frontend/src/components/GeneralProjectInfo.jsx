@@ -249,6 +249,20 @@ export const ProjectTypeBadge = ({projectInfo}) => {
             <span className="visually-hidden">EU</span>
           </span>
         }
+        {
+          projectInfo.uses_ai_tech &&
+          <span className="position-absolute fw-normal top-100 start-0 translate-middle badge rounded-pill bg-danger">
+            AI
+            <span className="visually-hidden">AI</span>
+          </span>
+        }
+        {
+          projectInfo.approved_by?.username === 'merlin@srce.hr' &&
+          <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+            Merlin
+            <span className="visually-hidden">Merlin</span>
+          </span>
+        }
       </span>
     )
   else

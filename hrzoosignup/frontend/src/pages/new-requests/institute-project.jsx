@@ -18,6 +18,15 @@ function intlSchemaResolve(intl) {
         description: 'schema-mandatory'
       })
     ),
+    requestUsesAI: yup.object().shape({
+      'label': yup.string().required(),
+      'value': yup.string().required()
+    }).required(
+      intl.formatMessage({
+        defaultMessage: "Obvezno",
+        description: 'schema-mandatory'
+      })
+    ),
     scientificDomain: yup.array().of(yup.object().shape(
       {
         name: yup.object().shape({
@@ -42,9 +51,6 @@ function intlSchemaResolve(intl) {
         description: 'schema-mandatory'
       })
     ),
-    scientificSoftware: yup.array().min(0).of(yup.object()),
-    scientificSoftwareExtra: yup.string(),
-    scientificSoftwareHelp: yup.boolean(),
     requestResourceType: yup.array().of(yup.object()),
     HPCnSlotsCPU: yup.number()
       .min(1, intl.formatMessage({

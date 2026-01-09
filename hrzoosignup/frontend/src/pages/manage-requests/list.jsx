@@ -114,6 +114,12 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
       fieldsView = fieldsView.filter(e => e.project_type.name === 'research-croris' &&
         _.findIndex(e.croris_finance, (fin) => fin.name?.toLowerCase().includes('euro')) > -1)
 
+    else if (searchType === 'ai')
+      fieldsView = fieldsView.filter(e => e.uses_ai_tech === true)
+
+    else if (searchType === 'merlin')
+      fieldsView = fieldsView.filter(e => e.approved_by?.username === 'merlin@srce.hr')
+
     else if (searchType.toLowerCase() === "all")
       fieldsView = fieldsView.filter(e => allProjectTypes.includes(e.project_type.name.toLowerCase()))
   }

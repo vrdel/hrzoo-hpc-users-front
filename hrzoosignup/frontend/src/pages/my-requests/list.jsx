@@ -273,6 +273,20 @@ const MyRequestsList = () => {
                               <span className="visually-hidden">EU</span>
                             </span>
                           }
+                          {
+                            project.uses_ai_tech &&
+                            <span className="position-absolute fw-normal top-100 start-0 translate-middle badge rounded-pill bg-danger">
+                              AI
+                              <span className="visually-hidden">AI</span>
+                            </span>
+                          }
+                          {
+                            project.approved_by?.username === 'merlin@srce.hr' &&
+                            <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+                              Merlin
+                              <span className="visually-hidden">Merlin</span>
+                            </span>
+                          }
                         </span>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">

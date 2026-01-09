@@ -23,6 +23,8 @@ import { IntlContext } from 'Components/IntlContextProvider';
 import { useIntl } from 'react-intl';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { CustomReactSelect } from 'Components/CustomReactSelect';
+import RequestUsesAISelectOptions from 'Config/request-usesai';
 
 
 const GeneralProjectUsers = ({projectInfo}) => {
@@ -522,9 +524,63 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             :
               null
         }
-        <Col className="ms-1">
-          <BaseNewScientificDomain fieldsDisabled={fieldsDisabled} />
-        </Col>
+        <Row className="mt-4">
+          <Row>
+            <Col md={{size: 4, offset: 1}}>
+              <Label
+                htmlFor="requestUsesAI"
+                aria-label="requestUsesAI"
+                className="mr-2 text-right form-label">
+                <FormattedMessage
+                  description="requestusesai-description"
+                  defaultMessage="Projekt koristi tehnologije umjetne inteligencije:"
+                />
+              </Label>
+              <span className="ms-1 fw-bold text-danger">*</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={{size: 1, offset: 1}}>
+              <Controller
+                name="requestUsesAI"
+                rules={{required: true}}
+                control={control}
+                render={ ({field}) =>
+                  <CustomReactSelect
+                    aria-label="requestUsesAI"
+                    closeMenuOnSelect={true}
+                    controlWidth="100%"
+                    forwardedRef={field.ref}
+                    error={errors && errors.requestUsesAI ? true : false}
+                    id="requestUsesAI"
+                    isDisabled={fieldsDisabled}
+                    options={RequestUsesAISelectOptions(intl)}
+                    placeholder={intl.formatMessage({
+                      defaultMessage: "Odaberi",
+                      description: "requestusesai-placeholder"
+                    })}
+                    value={getValues('requestUsesAI')}
+                    onChange={(e) => setValue('requestUsesAI', e)}
+                  />
+                }
+              />
+              <ErrorMessage
+                errors={errors}
+                name="requestUsesAI"
+                render={({ message }) =>
+                  <FormFeedback className="end-0">
+                    { message }
+                  </FormFeedback>
+                }
+              />
+            </Col>
+          </Row>
+        </Row>
+        <Row>
+          <Col className="ms-1">
+            <BaseNewScientificDomain fieldsDisabled={fieldsDisabled} />
+          </Col>
+        </Row>
       </Row>
     </>
   )

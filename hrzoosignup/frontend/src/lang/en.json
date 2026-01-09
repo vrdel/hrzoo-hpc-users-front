@@ -147,10 +147,6 @@
     "defaultMessage": "Inactive {br} You are not signed into any active project",
     "description": "statusinfo-tooltipinactive-1"
   },
-  "24YkDG": {
-    "defaultMessage": "No applications on HPC cluster",
-    "description": "software-empty-noapp"
-  },
   "2Chv+E": {
     "defaultMessage": "Collaborators",
     "description": "popover-projectinfo-collaborators"
@@ -279,17 +275,9 @@
     "defaultMessage": "manager",
     "description": "userinfo-croris-badgelead"
   },
-  "4yWzsp": {
-    "defaultMessage": "Modulefile or application name:",
-    "description": "software-cardbody-name"
-  },
   "52shcW": {
     "defaultMessage": "Password:",
     "description": "loginpriv-password"
-  },
-  "5CEmst": {
-    "defaultMessage": "New Modulefile successfully added",
-    "description": "software-toast-ok"
   },
   "5FyewV": {
     "defaultMessage": "Interdisciplinary Humanities",
@@ -326,10 +314,6 @@
   "5d/pGK": {
     "defaultMessage": "When approving request, you must specify type of resource allocated",
     "description": "myreq-change-resource"
-  },
-  "5s7i3G": {
-    "defaultMessage": "Modulefile could not be added:",
-    "description": "software-toast-fail"
   },
   "60OZPE": {
     "defaultMessage": "Error while copying user's email to clipboard",
@@ -434,10 +418,6 @@
   "8TkWjh": {
     "defaultMessage": "New scientific domain",
     "description": "scientific-domain-new-domain"
-  },
-  "8dPx+P": {
-    "defaultMessage": "List of scientific software available on HPC clusters",
-    "description": "linktitle-software"
   },
   "8daRp3": {
     "defaultMessage": "Ended",
@@ -547,10 +527,6 @@
     "defaultMessage": "Project details",
     "description": "popover-projectinfo"
   },
-  "B0cTLV": {
-    "defaultMessage": "Search",
-    "description": "software-table-placeholder"
-  },
   "B3IHaF": {
     "defaultMessage": "Ratio of scientific fields together must total 100%.",
     "description": "domain-fields-ratio-domains"
@@ -627,10 +603,6 @@
     "defaultMessage": "Ethnology and Anthropology",
     "description": "science-field-58"
   },
-  "C19oGg": {
-    "defaultMessage": "Modulefile or application name",
-    "description": "software-cardbody-placeholder"
-  },
   "C5xc0q": {
     "defaultMessage": "Active projects registered in CroRIS system that user participates in",
     "description": "userinfo-croris-tablefoot-userview"
@@ -671,10 +643,6 @@
     "defaultMessage": "Projects",
     "description": "myaccounting-projects-button"
   },
-  "Crgy+E": {
-    "defaultMessage": "Modulefile could not be deleted:",
-    "description": "software-toast-del-fail"
-  },
   "D/RQLG": {
     "defaultMessage": "Manager",
     "description": "popover-projectinfo-manager"
@@ -707,6 +675,10 @@
     "defaultMessage": "Select...",
     "description": "users-table-general-placeholder"
   },
+  "DIHGcs": {
+    "defaultMessage": "Project uses artificial intelligence technologies:",
+    "description": "requestusesai-description"
+  },
   "DJN4Jp": {
     "defaultMessage": "List of approved projects",
     "description": "linktitle-projects"
@@ -730,10 +702,6 @@
   "DZE+2s": {
     "defaultMessage": "Edit project",
     "description": "managereq-change-buttonlabel-edit-1"
-  },
-  "Djq0Io": {
-    "defaultMessage": "Person:",
-    "description": "software-cardbody-person"
   },
   "DmC3b6": {
     "defaultMessage": "Extended",
@@ -911,10 +879,6 @@
     "defaultMessage": "Username:",
     "description": "loginpriv-username"
   },
-  "HiPPun": {
-    "defaultMessage": "Select",
-    "description": "sciencesoftware-placeholder"
-  },
   "HpiAmO": {
     "defaultMessage": "No requests meet the search criteria",
     "description": "managereq-emptytable-msg-1"
@@ -966,10 +930,6 @@
   "JE8/B2": {
     "defaultMessage": "General",
     "description": "researchselected-general"
-  },
-  "JLRdCo": {
-    "defaultMessage": "Scientific software",
-    "description": "sciencesoftware-title"
   },
   "Ja7vrQ": {
     "defaultMessage": "Project is not active, therefore it is not possible to invite collaborators",
@@ -1039,10 +999,6 @@
     "defaultMessage": "Role",
     "description": "userschange-project-role"
   },
-  "L2Z7Eh": {
-    "defaultMessage": "Deletion of the application's Modulefile",
-    "description": "software-modaltitle"
-  },
   "LK4ilW": {
     "defaultMessage": "Interdisciplinary Humanities",
     "description": "science-field-50"
@@ -1070,6 +1026,10 @@
   "LiONnn": {
     "defaultMessage": "Select",
     "description": "resourcefields-placeholder"
+  },
+  "LquO75": {
+    "defaultMessage": "Yes",
+    "description": "requestusesai-label-yes"
   },
   "M8y/Pt": {
     "defaultMessage": "Project is not active, therefore it is not possible to unregister collaborators",
@@ -1359,10 +1319,6 @@
     "defaultMessage": "Public key copied to clipboard",
     "description": "tableuserkeys-toast-ok"
   },
-  "TGd1FO": {
-    "defaultMessage": " Assistance required with installation:",
-    "description": "sciencesoftware-help"
-  },
   "TGtlDa": {
     "defaultMessage": "Request could not be deleted:",
     "description": "managereq-change-delete-fail-2"
@@ -1466,10 +1422,6 @@
   "W99Dmu": {
     "defaultMessage": "New request on behalf of Srce workshop",
     "description": "linktitle-newrequest-srceworkshop"
-  },
-  "WCXZ7v": {
-    "defaultMessage": "Actions",
-    "description": "software-table-actions"
   },
   "WIkWY9": {
     "defaultMessage": "Extended",
@@ -1755,10 +1707,6 @@
     "defaultMessage": "No data from CroRIS system",
     "description": "newrequest-reason-nocroris"
   },
-  "ejJ5Dy": {
-    "defaultMessage": "Additional applications that will need to be installed:",
-    "description": "sciencesoftware-list"
-  },
   "f4ZyJh": {
     "defaultMessage": "Add",
     "description": "publickeys-add-label"
@@ -1823,6 +1771,10 @@
     "defaultMessage": "Delete request",
     "description": "managereq-change-buttonlabel-delete-2"
   },
+  "gTR6l7": {
+    "defaultMessage": "Select",
+    "description": "requestusesai-placeholder"
+  },
   "gZNSSG": {
     "defaultMessage": "Ratio of scientific fields within scientific domain must total 100%.",
     "description": "domain-fields-ratio-fields"
@@ -1846,10 +1798,6 @@
   "h2f8JS": {
     "defaultMessage": "List of users on active projects",
     "description": "linktitle-users"
-  },
-  "h41Ik7": {
-    "defaultMessage": "Software",
-    "description": "navlinks-software"
   },
   "h78Eiu": {
     "defaultMessage": "You are registered as principal investigator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
@@ -1903,13 +1851,13 @@
     "defaultMessage": "Select",
     "description": "managereq-change-choose"
   },
-  "iHCTXk": {
-    "defaultMessage": "Modulefile successfully deleted",
-    "description": "software-toast-del-ok"
-  },
   "iRMnQe": {
     "defaultMessage": "Manager",
     "description": "users-table-general-leader"
+  },
+  "iT6Twy": {
+    "defaultMessage": "Merlin",
+    "description": "tablehelpers-optiontypes-9"
   },
   "iYVJE/": {
     "defaultMessage": "Total amount of space for virtual servers on standard storage (GB):",
@@ -1955,10 +1903,6 @@
     "defaultMessage": "Information and Communication Sciences",
     "description": "science-field-40"
   },
-  "jYT96W": {
-    "defaultMessage": "Add",
-    "description": "software-add"
-  },
   "jgOdjw": {
     "defaultMessage": "Actions",
     "description": "tableuserkeys-actions"
@@ -1990,14 +1934,6 @@
   "kgUSnq": {
     "defaultMessage": "Confirm",
     "description": "email-invite-accept"
-  },
-  "kl7PvO": {
-    "defaultMessage": "Added",
-    "description": "software-table-added"
-  },
-  "knAU3C": {
-    "defaultMessage": "applications",
-    "description": "software-pagination"
   },
   "l/AzBt": {
     "defaultMessage": "Internal{br}project",
@@ -2058,6 +1994,10 @@
   "moaMHd": {
     "defaultMessage": "User's email copied to clipboard",
     "description": "userinfo-croris-clipboard-ok"
+  },
+  "muSfXQ": {
+    "defaultMessage": "No",
+    "description": "requestusesai-label-no"
   },
   "n32QyA": {
     "defaultMessage": "https://www.srce.unizg.hr/en",
@@ -2122,6 +2062,10 @@
   "okS+Tq": {
     "defaultMessage": "Ended",
     "description": "tablehelpers-optionstates-5"
+  },
+  "olAOM7": {
+    "defaultMessage": "AI",
+    "description": "tablehelpers-optiontypes-10"
   },
   "ouf6xV": {
     "defaultMessage": "You must select one type of request to continue",
@@ -2207,10 +2151,6 @@
     "defaultMessage": "Agriculture (Agronomy)",
     "description": "science-field-30"
   },
-  "qbhNam": {
-    "defaultMessage": "Application's Modulefile",
-    "description": "software-table-appname"
-  },
   "qbxldc": {
     "defaultMessage": "Active {br} User is signed into at least one active project",
     "description": "statusinfo-tooltipactive-2"
@@ -2242,10 +2182,6 @@
   "s/Dic5": {
     "defaultMessage": "Social Work",
     "description": "science-field-41"
-  },
-  "sOjilB": {
-    "defaultMessage": "Save",
-    "description": "software-cardbody-save"
   },
   "sVu3Vi": {
     "defaultMessage": "Total amount of storage space required for project (GB):",
@@ -2339,10 +2275,6 @@
     "defaultMessage": "Duration",
     "description": "userinfo-croris-duration"
   },
-  "uetI03": {
-    "defaultMessage": "No applications meet the search criteria",
-    "description": "software-empty-nosearchresult"
-  },
   "ugqfVt": {
     "defaultMessage": "Invitation successful, redirecting...",
     "description": "email-invite-success"
@@ -2395,10 +2327,6 @@
     "defaultMessage": "Initial state of request:",
     "description": "managereq-change-remark-initialstate"
   },
-  "w8BGXa": {
-    "defaultMessage": "Applications to be used:",
-    "description": "sciencesoftware-list"
-  },
   "wIxA6K": {
     "defaultMessage": "Assigned resource type:",
     "description": "managereq-change-resource-given"
@@ -2418,10 +2346,6 @@
   "xcGRIN": {
     "defaultMessage": "Assigned resource type:",
     "description": "manreq-change-request-resources"
-  },
-  "xz7pNH": {
-    "defaultMessage": "Time",
-    "description": "software-table-time"
   },
   "xzEckc": {
     "defaultMessage": "Chemistry",
@@ -2467,10 +2391,6 @@
     "defaultMessage": "Active",
     "description": "statestringuser-approve"
   },
-  "yr68G4": {
-    "defaultMessage": "New application",
-    "description": "software-cardheader"
-  },
   "ysQjtn": {
     "defaultMessage": "CroRIS registration",
     "description": "memberships-user-crorisreg"
@@ -2502,10 +2422,6 @@
   "zba6wi": {
     "defaultMessage": "Some collaborators have already been added to project: {br} { error }",
     "description": "memberships-toast-internal-alreadyadded"
-  },
-  "zhTrv8": {
-    "defaultMessage": "Are you sure you want to delete the Modulefile?",
-    "description": "software-modalmsg"
   },
   "ziaUjB": {
     "defaultMessage": "You do not have any projects registered in CroRIS system",

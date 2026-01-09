@@ -1864,7 +1864,6 @@ class ResourceUsageAPITests(TestCase):
             identifier="Project 11111 (bla-meh)",
             name="Project with paranthesis in identifier",
             institute="Fakultet elektrotehnike i računarstva",
-            science_extrasoftware_help=False,
             is_active=True,
             state=self.state1,
             project_type=self.project_type3,
@@ -2104,6 +2103,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "date_approved": "2023-05-03",
                     "type": "research-croris",
                     "name": "Project name 1",
+                    "uses_ai_tech": False,
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
@@ -2178,6 +2178,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "date_approved": "2024-06-09",
                     "type": "research-institutional",
                     "name": "Project name 2",
+                    "uses_ai_tech": False,
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
@@ -2245,6 +2246,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "date_approved": "2024-03-07",
                     "type": "thesis",
                     "name": "Project name 3",
+                    "uses_ai_tech": False,
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
@@ -2311,6 +2313,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "date_approved": "2024-02-02",
                     "type": "research-croris",
                     "name": "Project name 4",
+                    "uses_ai_tech": False,
                     "ustanova": {
                         "naziv": "Prirodoslovno-matematički fakultet, Zagreb",
                         "oib": "28163265527",
@@ -2372,6 +2375,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "date_approved": "2024-05-03",
                     "type": "practical",
                     "name": "Project name 5",
+                    "uses_ai_tech": False,
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
@@ -2420,7 +2424,8 @@ class AccountingUserProjectAPITests(TestCase):
                                         "elektrotehnike i računarstva"
                         }
                     ]
-                },                {
+                },
+                {
                     "id": self.project6.id,
                     "sifra": "123456",
                     "date_from": "2024-05-01",
@@ -2428,6 +2433,7 @@ class AccountingUserProjectAPITests(TestCase):
                     "date_approved": "2024-05-04",
                     "type": "practical",
                     "name": "Project name 6",
+                    "uses_ai_tech": False,
                     "ustanova": {
                         "naziv": "Sveučilište u Zagrebu, Fakultet "
                                  "elektrotehnike i računarstva",
@@ -2521,6 +2527,7 @@ class UserProjectAPITests(TestCase):
         self.user10 = models.User.objects.get(
             username="j.jameson@daily-bugle.com"
         )
+        self.maxDiff = None
 
     def tearDown(self):
         cache.clear()
@@ -2564,7 +2571,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": "2023-05-03T02:00:00+02:00"
                 },
@@ -2599,7 +2607,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2634,7 +2643,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2666,7 +2676,8 @@ class UserProjectAPITests(TestCase):
                             "GPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": "2024-06-10T14:00:13+02:00"
                 },
@@ -2698,7 +2709,8 @@ class UserProjectAPITests(TestCase):
                             "GPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2730,7 +2742,8 @@ class UserProjectAPITests(TestCase):
                             "GPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2762,7 +2775,8 @@ class UserProjectAPITests(TestCase):
                             "CPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2794,7 +2808,8 @@ class UserProjectAPITests(TestCase):
                             "CPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2826,7 +2841,8 @@ class UserProjectAPITests(TestCase):
                             "CPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2860,7 +2876,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "expire"
+                        "state": "expire",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2894,7 +2911,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "expire"
+                        "state": "expire",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2925,7 +2943,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2956,7 +2975,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -2987,7 +3007,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 }
@@ -3044,7 +3065,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": "2023-05-03T02:00:00+02:00"
                 },
@@ -3079,7 +3101,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -3113,7 +3136,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "expire"
+                        "state": "expire",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -3147,7 +3171,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "expire"
+                        "state": "expire",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -3182,7 +3207,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 }
@@ -3228,7 +3254,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": "2023-05-03T02:00:00+02:00"
                 },
@@ -3260,7 +3287,8 @@ class UserProjectAPITests(TestCase):
                             "GPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": "2024-06-10T14:00:13+02:00"
                 },
@@ -3295,7 +3323,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -3327,7 +3356,8 @@ class UserProjectAPITests(TestCase):
                             "GPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -3359,7 +3389,8 @@ class UserProjectAPITests(TestCase):
                             "GPU",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 },
@@ -3394,7 +3425,8 @@ class UserProjectAPITests(TestCase):
                             "PADOBRAN",
                             "JUPYTER"
                         ],
-                        "state": "approve"
+                        "state": "approve",
+                        "uses_ai_tech": False
                     },
                     "date_joined": None
                 }
@@ -3610,9 +3642,6 @@ class NewProjectsAPITests(TestCase):
                 }
             ]
         )
-        self.assertEqual(project.science_software, [])
-        self.assertEqual(project.science_extrasoftware, "")
-        self.assertFalse(project.science_extrasoftware_help)
         self.assertEqual(project.resources_numbers, {})
         self.assertTrue(project.is_active)
         self.assertEqual(project.croris_title, "")
@@ -3779,9 +3808,6 @@ class NewProjectsAPITests(TestCase):
                 }
             ]
         )
-        self.assertEqual(project.science_software, [])
-        self.assertEqual(project.science_extrasoftware, "")
-        self.assertFalse(project.science_extrasoftware_help)
         self.assertEqual(project.resources_numbers, {})
         self.assertTrue(project.is_active)
         self.assertEqual(project.croris_title, "")

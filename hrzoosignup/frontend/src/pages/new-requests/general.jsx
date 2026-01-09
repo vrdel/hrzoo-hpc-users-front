@@ -30,6 +30,7 @@ import ModalAreYouSure from 'Components/ModalAreYouSure';
 import validateDomainAndFields from 'Utils/validate-domain-fields';
 import validateRequestDates from 'Utils/validate-dates-startend';
 import { convertToAmerican } from 'Utils/dates';
+import { extractYesNoValue } from 'Utils/select-tools';
 import {FormattedMessage} from 'react-intl';
 import { useIntl } from 'react-intl'
 import * as yup from "yup";
@@ -44,6 +45,15 @@ function intlSchemaResolve(intl) {
       })
     ),
     requestExplain: yup.string().required(
+      intl.formatMessage({
+        defaultMessage: "Obvezno",
+        description: 'schema-mandatory'
+      })
+    ),
+    requestUsesAI: yup.object().shape({
+      'label': yup.string().required(),
+      'value': yup.string().required()
+    }).required(
       intl.formatMessage({
         defaultMessage: "Obvezno",
         description: 'schema-mandatory'
@@ -79,8 +89,6 @@ function intlSchemaResolve(intl) {
         description: 'schema-mandatory'
       })
     ),
-    scientificSoftwareExtra: yup.string(),
-    scientificSoftwareHelp: yup.boolean(),
     requestResourceType: yup.array().of(yup.object()),
     HPCnSlotsCPU: yup.number()
       .min(1, intl.formatMessage({
@@ -288,6 +296,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     defaultValues: {
       requestName: '',
       requestExplain: '',
+      requestUsesAI: '',
       startDate: '',
       endDate: '',
       requestInstitute: userDetails.person_institution,
@@ -328,7 +337,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
           toastId: 'genproj-ok-add',
           autoClose: 2500,
           delay: 500,
-          onClose: setTimeout(() => {navigate(url_ui_prefix + '/my-requests')}, 1500)
+          onClose: () => {navigate(url_ui_prefix + '/my-requests')}
         }
       )
     },
@@ -370,6 +379,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
     dataToSend['date_start'] = convertToAmerican(data['startDate'])
     dataToSend['name'] = data['requestName']
     dataToSend['reason'] = data['requestExplain']
+    dataToSend['uses_ai_tech'] =  extractYesNoValue(data['requestUsesAI'])
     dataToSend['institute'] = userDetails.person_institution
     dataToSend['project_type'] = projectType
     dataToSend['science_field'] = data['scientificDomain']

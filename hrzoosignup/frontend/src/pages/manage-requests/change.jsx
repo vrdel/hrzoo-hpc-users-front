@@ -41,6 +41,9 @@ import {
   Submit,
 } from "Components/StateIcons"
 import { ProjectExtendTable } from 'Components/ProjectExtend';
+import { IntlContext } from 'Components/IntlContextProvider';
+import { buildYesNoValue } from 'Utils/select-tools';
+import { extractYesNoValue } from 'Utils/select-tools';
 
 
 function setInitialState() {
@@ -242,6 +245,8 @@ export const ManageRequestsChange = ({manageProject=false}) => {
   const [requestState, setRequestState] = useState(undefined)
   const { csrfToken } = useContext(AuthContext)
   const intl = useIntl()
+  const { locale } = useContext(IntlContext)
+
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -270,6 +275,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       data['is_active'] = true
       data['name'] = data['requestName']
       data['reason'] = data['requestExplain']
+      data['uses_ai_tech'] = extractYesNoValue(data['requestUsesAI'])
       data['date_start'] = checkAmericanDateAndConvert(data['startDate'])
       data['date_end'] = checkAmericanDateAndConvert(data['endDate'])
 
@@ -306,6 +312,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       requestCroRisId: '',
       requestName: '',
       requestExplain: '',
+      requestUsesAI: '',
       startDate: '',
       endDate: '',
       requestResourceType: '',
@@ -337,6 +344,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       rhfProps.setValue('requestName', nrProject.name)
       rhfProps.setValue('requestSummary', nrProject.croris_summary)
       rhfProps.setValue('requestExplain', nrProject.reason)
+      rhfProps.setValue('requestUsesAI', buildYesNoValue(nrProject.uses_ai_tech, locale))
       rhfProps.setValue('startDate', nrProject.date_start)
       rhfProps.setValue('endDate', nrProject.date_end)
       rhfProps.setValue('scientificDomain', nrProject.science_field)
@@ -480,7 +488,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
             toastId: 'manreq-ok-delete',
             autoClose: 2500,
             delay: 500,
-            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projects' : '/requests'}`)}, 1500)
+            onClose: () => {navigate(url_ui_prefix + `${manageProject ? '/projects' : '/requests'}`)}
           }
         )
       },
@@ -533,7 +541,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
             toastId: 'manreq-ok-change',
             autoClose: 2500,
             delay: 500,
-            onClose: setTimeout(() => {navigate(url_ui_prefix + `${manageProject ? '/projects' : '/requests'}`)}, 1500)
+            onClose: () => {navigate(url_ui_prefix + `${manageProject ? '/projects' : '/requests'}`)}
           }
         )
       },

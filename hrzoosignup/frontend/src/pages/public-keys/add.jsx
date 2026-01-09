@@ -99,7 +99,7 @@ const NewPublicKey = () => {
           toastId: 'sshkey-ok-add',
           autoClose: 2500,
           delay: 500,
-          onClose: () => setTimeout(() => {navigate(url_ui_prefix + '/public-keys')}, 1500)
+          onClose: () => {navigate(url_ui_prefix + '/public-keys')}
         }
       )
     },
