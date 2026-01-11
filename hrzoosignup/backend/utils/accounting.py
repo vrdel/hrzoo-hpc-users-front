@@ -120,7 +120,7 @@ def get_active_users(start_date, end_date):
 
 def get_usage(start_date, end_date, resources=None):
     if not resources:
-        resources = ["supek", "padobran", "cloud", "galaxy"]
+        resources = ["supek", "padobran", "cloud", "galaxy", "jupyter"]
 
     return models.ResourceUsage.objects.filter(
         Q(end_time__gte=start_date) &
