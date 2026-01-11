@@ -44,11 +44,17 @@ class Command(BaseCommand):
         croris_id = list()
         realm = list()
         users_list = list()
+        institutions_list = list()
         for project in projects:
             project_list.append(project.name)
             project_type_list.append(project.project_type.name)
             project_institute.append(short2long(long_names, project.institute))
-            users_list.append(len(get_users_in_project(project.identifier)))
+            proj_users = get_users_in_project(project.identifier)
+            users_list.append(len(proj_users))
+            users_institutions = sorted([
+                user.person_institution for user in proj_users if user.person_institution not in ["", "Nepoznato"]
+            ])
+            institutions_list.append("|".join(users_institutions))
 
             try:
                 croris_id.append(project.croris_id)
@@ -68,7 +74,8 @@ class Command(BaseCommand):
             "number_of_users": users_list,
             "project_institution": project_institute,
             "croris_id": croris_id,
-            "realm": realm
+            "realm": realm,
+            "users_from_institution": institutions_list,
         })
 
         data.to_csv(options["filename"], index=False, sep="*")
