@@ -45,6 +45,7 @@ class Command(BaseCommand):
         realm = list()
         users_list = list()
         institutions_list = list()
+        ai_flag = list()
         for project in projects:
             project_list.append(project.name)
             project_type_list.append(project.project_type.name)
@@ -55,7 +56,7 @@ class Command(BaseCommand):
                 user.person_institution for user in proj_users if user.person_institution not in ["", "Nepoznato"]
             ])
             institutions_list.append("|".join(users_institutions))
-
+            ai_flag.append(project.uses_ai_tech)
             try:
                 croris_id.append(project.croris_id)
 
@@ -76,6 +77,7 @@ class Command(BaseCommand):
             "croris_id": croris_id,
             "realm": realm,
             "users_from_institution": institutions_list,
+            "ai": ai_flag
         })
 
         data.to_csv(options["filename"], index=False, sep="*")
