@@ -1,17 +1,11 @@
-from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import Permission
-from django.core.cache import cache
+from django.core.management.base import BaseCommand
 
 from django.db import connections
 
 import asyncio
-import os
 import logging
 
-from backend.apps import BackendConfig
 from backend.httpq.excep import HZSIHttpError
-from backend.httpq.httpconn import SessionWithRetry
 from backend.models import CrorisInstitutions
 from backend.tasks.croris_institutions import FetchCrorisInstitution
 
@@ -42,7 +36,7 @@ class Command(BaseCommand):
                 tmp.append(
                     CrorisInstitutions(
                         active=active,
-                        name_long=inst['puniNaziv'],
+                        name_long=inst.get('puniNaziv', inst['kratkiNaziv']),
                         parent=parent['naziv'] if parent else '',
                         name_short=inst['kratkiNaziv'],
                         name_acronym=inst.get('kratica', ''),
