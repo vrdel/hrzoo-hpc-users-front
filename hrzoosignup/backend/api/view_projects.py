@@ -3,7 +3,7 @@ import base64
 import requests
 from backend import models
 from backend import serializers as backend_serializers
-from backend.dbmodels.apikey import HRZOOHasAPIKey, MerlinHasAPIKey
+from backend.dbmodels.apikey import MerlinHasAPIKey
 from backend.email.project import email_auto_approve_project
 from django.conf import settings
 from django.core.cache import cache
