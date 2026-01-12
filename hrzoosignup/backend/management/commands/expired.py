@@ -1,22 +1,15 @@
 from django.contrib.auth import get_user_model
-from django.core.management.base import BaseCommand, CommandError
-from django.db.utils import IntegrityError
-from django.utils import timezone
+from django.core.management.base import BaseCommand
 from datetime import date
 
-from backend.models import Project, UserProject, Role
 from backend.utils.expired import expired_projects, expired_users, parse_enddate
 
-import argparse
 import datetime
 import csv
 
-from rich import print
 from rich import box
-from rich.columns import Columns
 from rich.table import Table
 from rich.console import Console
-from rich.pretty import pprint
 
 
 class Command(BaseCommand):
@@ -32,7 +25,7 @@ class Command(BaseCommand):
         parser.add_argument('--end-date', dest='enddate', type=str, default=date.today(), required=False)
         parser.add_argument('--export-csv', dest='csvfile', type=str, default=None, required=False)
         parser_projects = subparsers.add_parser("projects", help="Show projects")
-        parser_users = subparsers.add_parser("users", help="Show users")
+        _ = subparsers.add_parser("users", help="Show users")
         parser_projects.add_argument('--type', dest="project_type", type=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)", nargs="+")
 
     def _expired_users(self, options):
