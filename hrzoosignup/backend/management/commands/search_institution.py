@@ -17,7 +17,9 @@ class Command(BaseCommand):
         self.user_model = get_user_model()
 
     def add_arguments(self, parser):
-        parser.add_argument('--term', dest='term', type=str, required=False, nargs="+", help="substring that will be search for in the name_long, name_short and acronym")
+        parser.add_argument('--term', dest='term', type=str, required=False, nargs="+", help="Substring that will be search for in the name_long, name_short and acronym")
+        parser.add_argument('--show-name-long', dest='showlong', action='store_true', default=False, required=False, help="Show only name_long of result")
+        parser.add_argument('--show-name-short', dest='showshort', action='store_true', default=False, required=False, help="Show only name_short of result")
 
     def handle(self, *args, **options):
         table = Table(
@@ -52,8 +54,15 @@ class Command(BaseCommand):
             raise SystemExit(1)
 
         i = 1
+        if options.get('showlong', None) or options.get('showshort', None):
+            self.stdout.write(self.style.WARNING("Matched institutions"))
         for m in match:
-            table.add_row(str(i), m.name_long, m.name_short, m.name_acronym, m.oib, m.mbu, m.contact_email, m.contact_email, m.realm, m.parent)
+            if options.get('showlong', None):
+                self.stdout.write(self.style.SUCCESS(m.name_long))
+            elif options.get('showshort', None):
+                self.stdout.write(self.style.SUCCESS(m.name_short))
+            else:
+                table.add_row(str(i), m.name_long, m.name_short, m.name_acronym, m.oib, m.mbu, m.contact_email, m.contact_email, m.realm, m.parent)
             i += 1
 
         if table.row_count:
