@@ -18,6 +18,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument('--term', dest='term', type=str, required=False, nargs="+", help="Substring that will be search for in the name_long, name_short and acronym")
+        parser.add_argument('--contact', dest='contact', type=str, required=False, help="Substring that will be search for in the contact_web, contact_email")
         parser.add_argument('--show-name-long', dest='showlong', action='store_true', default=False, required=False, help="Show only name_long of result")
         parser.add_argument('--show-name-short', dest='showshort', action='store_true', default=False, required=False, help="Show only name_short of result")
 
@@ -39,19 +40,31 @@ class Command(BaseCommand):
         table.add_column("Realm")
         table.add_column("Parent")
 
+        search_contact = options.get('contact', None)
         search_term = options.get('term', None)
+
         if search_term:
             search_term = ' '.join(search_term)
 
-        try:
-            query = Q(name_long__icontains=' '.join(options['term'])) | \
-                Q(name_short__icontains=' '.join(options['term'])) | \
-                Q(name_acronym__icontains=' '.join(options['term']))
-            match = CrorisInstitutions.objects.filter(query)
+            try:
+                query = Q(name_long__icontains=' '.join(options['term'])) | \
+                    Q(name_short__icontains=' '.join(options['term'])) | \
+                    Q(name_acronym__icontains=' '.join(options['term']))
+                match = CrorisInstitutions.objects.filter(query)
 
-        except CrorisInstitutions.DoesNotExist:
-            self.stdout.write(self.style.ERROR('Institutions not found'))
-            raise SystemExit(1)
+            except CrorisInstitutions.DoesNotExist:
+                self.stdout.write(self.style.ERROR('Institutions not found'))
+                raise SystemExit(1)
+
+        elif search_contact:
+            try:
+                query = Q(contact_web__icontains=options['contact']) | \
+                    Q(contact_email__icontains=options['contact'])
+                match = CrorisInstitutions.objects.filter(query)
+
+            except CrorisInstitutions.DoesNotExist:
+                self.stdout.write(self.style.ERROR('Institutions not found'))
+                raise SystemExit(1)
 
         i = 1
         if options.get('showlong', None) or options.get('showshort', None):
@@ -62,7 +75,7 @@ class Command(BaseCommand):
             elif options.get('showshort', None):
                 self.stdout.write(self.style.SUCCESS(m.name_short))
             else:
-                table.add_row(str(i), m.name_long, m.name_short, m.name_acronym, m.oib, m.mbu, m.contact_email, m.contact_email, m.realm, m.parent)
+                table.add_row(str(i), m.name_long, m.name_short, m.name_acronym, m.oib, m.mbu, m.contact_web, m.contact_email, m.realm, m.parent)
             i += 1
 
         if table.row_count:
