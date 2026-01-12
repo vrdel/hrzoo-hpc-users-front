@@ -428,6 +428,7 @@ class NewProjectsSerializer(serializers.Serializer):
     institute = serializers.IntegerField()
     science_field = NewProjectScienceFieldSerializer(many=True)
     resources_type = ResourcesTypeSerializer()
+    uses_ai_tech = serializers.BooleanField(required=False, default=False)
 
     @staticmethod
     def validate_project_type(value):
@@ -440,7 +441,6 @@ class NewProjectsSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 f"{value} nije dozvoljeni tip projekta"
             )
-
 
     @staticmethod
     def validate_science_field(field_value):
