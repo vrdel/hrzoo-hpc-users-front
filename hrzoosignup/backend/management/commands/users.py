@@ -217,9 +217,16 @@ class Command(BaseCommand):
             user.person_type_manual_set = new
             self.stdout.write('Set person_type_manual_set for user {} to {}'.format(user.username, new))
 
+        if options['person_institution_manual_set'] != None:
+            new = bool(options['person_institution_manual_set'])
+            user.person_institution_manual_set = new
+            self.stdout.write('Set person_institution_manual_set for user {} to {}'.format(user.username, new))
+
         if options['institution']:
             user.person_institution = ' '.join(options['institution'])
             self.stdout.write('Set institution for user {} to {}'.format(user.username, user.person_institution))
+            user.person_institution_manual_set = True
+            self.stdout.write('Set person_institution_manual_set for user {} to True'.format(user.username))
 
         user.save()
 
@@ -392,6 +399,8 @@ class Command(BaseCommand):
                                    required=False, help="Set person_type_manual_set field")
         parser_update.add_argument('--institution', dest='institution', nargs='+',
                                    required=False, help='Institution of the user')
+        parser_update.add_argument('--person-institution-manual-set', dest='person_institution_manual_set', type=int, default=None,
+                                   required=False, help="Set person_institution_manual_set field")
 
         parser_list = subparsers.add_parser("list", help="List users based on passed metadata")
         parser_list.add_argument('--username', dest='username', type=str, required=False, help='Username of user')
