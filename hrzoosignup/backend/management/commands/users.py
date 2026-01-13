@@ -235,20 +235,32 @@ class Command(BaseCommand):
         table.add_column("First")
         table.add_column("Last")
         table.add_column("Email")
+        table.add_column("Status")
+        table.add_column("Type")
         table.add_column("Institution")
-        table.add_column("Instiution OIB")
+        table.add_column("InstOIB")
         table.add_column("OIB")
         table.add_column("MBZ")
-        table.add_column("Mailinglist")
+        table.add_column("MailList")
+        table.add_column("InstSet")
+        table.add_column("TypeSet")
 
         search_username = options.get('username', None)
+        search_institution = options.get('institution', None)
+
         if search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username
             )
-            i = 1
-            for m in match:
-                table.add_row(str(i), m.username, m.first_name, m.last_name, m.person_mail, m.person_institution, m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
+        elif search_institution:
+            search_institution = ' '.join(search_institution)
+            match = self.user_model.objects.filter(
+                person_institution__icontains=search_institution
+            )
+
+        i = 1
+        for m in match:
+            table.add_row(str(i), m.username, m.first_name, m.last_name, m.person_mail, str(m.status), m.person_type, m.person_institution, m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe), str(m.person_institution_manual_set), str(m.person_type_manual_set))
             i += 1
 
         if table.row_count:
