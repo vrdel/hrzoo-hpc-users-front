@@ -118,6 +118,19 @@ def get_active_users(start_date, end_date):
     return list(set(users))
 
 
+def get_active_AI_users(start_date, end_date):
+    users = list()
+    for project in get_active_projects(
+            start_date=start_date, end_date=end_date
+    ):
+        if project.uses_ai_tech:
+            users.extend(
+                get_users_in_project(project_identifier=project.identifier)
+            )
+
+    return list(set(users))
+
+
 def get_usage(start_date, end_date, resources=None):
     if not resources:
         resources = ["supek", "padobran", "cloud", "galaxy", "jupyter"]
