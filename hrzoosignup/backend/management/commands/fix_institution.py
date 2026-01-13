@@ -198,6 +198,17 @@ class Command(BaseCommand):
             except CrorisInstitutions.DoesNotExist:
                 pass
 
+            except CrorisInstitutions.MultipleObjectsReturned:
+                self.stdout.write(self.style.WARNING(f'Multiple institutions with same OIB found for {user.username}'))
+                institutions_duplicate_oib = CrorisInstitutions.objects.filter(oib=user_inst_oib)
+                for inst in institutions_duplicate_oib:
+                    self.stdout.write(self.style.WARNING(f'{inst.oib} {inst.name_short}'))
+                if options.get('cron', None):
+                    logger.warning(f'Multiple institutions with same OIB found for {user.username}')
+                    for inst in institutions_duplicate_oib:
+                        logger.warning(f'{inst.oib} {inst.name_short}')
+                continue
+
             try:
                 email_domain = user.person_mail.split('@')[1]
                 if 'gmail' in email_domain or 'biocentre' in email_domain:
