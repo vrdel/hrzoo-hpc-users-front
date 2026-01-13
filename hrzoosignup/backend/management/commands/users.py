@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.cache import cache
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils import timezone
 from django.utils.crypto import get_random_string
@@ -12,6 +12,10 @@ from backend.utils.gen_username import gen_username
 
 import argparse
 import datetime
+
+from rich import box
+from rich.console import Console
+from rich.table import Table
 
 
 class Command(BaseCommand):
@@ -219,6 +223,38 @@ class Command(BaseCommand):
 
         user.save()
 
+    def _user_list(self, options):
+        table = Table(
+            title="List of users",
+            title_justify="left",
+            box=box.ASCII,
+            show_lines=True,
+        )
+        table.add_column("#")
+        table.add_column("Username")
+        table.add_column("First")
+        table.add_column("Last")
+        table.add_column("Email")
+        table.add_column("Institution")
+        table.add_column("Instiution OIB")
+        table.add_column("OIB")
+        table.add_column("MBZ")
+        table.add_column("Mailinglist")
+
+        search_username = options.get('username', None)
+        if search_username:
+            match = self.user_model.objects.filter(
+                username__icontains=search_username
+            )
+            i = 1
+            for m in match:
+                table.add_row(str(i), m.username, m.first_name, m.last_name, m.person_mail, m.person_institution, m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
+            i += 1
+
+        if table.row_count:
+            console = Console()
+            console.print(table)
+
     def _user_delete(self, options):
         try:
             user = self.user_model.objects.get(
@@ -341,6 +377,9 @@ class Command(BaseCommand):
         parser_update.add_argument('--institution', dest='institution', nargs='+',
                                    required=False, help='Institution of the user')
 
+        parser_list = subparsers.add_parser("list", help="List users based on passed metadata")
+        parser_list.add_argument('--username', dest='username', type=str, required=False, help='Username of user')
+        parser_list.add_argument('--institution', dest='institution', nargs='+', required=False, help='Institution of the user')
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
@@ -351,3 +390,6 @@ class Command(BaseCommand):
 
         if options['command'] == 'update':
             self._user_update(options)
+
+        if options['command'] == 'list':
+            self._user_list(options)
