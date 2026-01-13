@@ -55,7 +55,7 @@ class Command(BaseCommand):
             users_institutions = sorted([
                 user.person_institution for user in proj_users if user.person_institution not in ["", "Nepoznato"]
             ])
-            institutions_list.append("|".join(users_institutions))
+            institutions_list.append("|".join(short2long(long_names, users_institutions)))
             ai_flag.append(project.uses_ai_tech)
             try:
                 croris_id.append(project.croris_id)
