@@ -247,6 +247,7 @@ class Command(BaseCommand):
 
         search_username = options.get('username', None)
         search_institution = options.get('institution', None)
+        search_persontype = options.get('person_type', None)
 
         if search_username:
             match = self.user_model.objects.filter(
@@ -256,6 +257,10 @@ class Command(BaseCommand):
             search_institution = ' '.join(search_institution)
             match = self.user_model.objects.filter(
                 person_institution__icontains=search_institution
+            )
+        elif search_persontype:
+            match = self.user_model.objects.filter(
+                person_type__icontains=search_persontype
             )
 
         i = 1
@@ -355,7 +360,6 @@ class Command(BaseCommand):
         parser_create.add_argument('--person-type-manual-set', dest='person_type_manual_set', type=int, default=None,
                                    required=False, help="Set person_type_manual_set field")
 
-
         parser_delete = subparsers.add_parser("delete", help="Remove user based on passed metadata")
         parser_delete.add_argument('--username', dest='username', type=str,
                                    required=True, help='Username of user')
@@ -392,6 +396,7 @@ class Command(BaseCommand):
         parser_list = subparsers.add_parser("list", help="List users based on passed metadata")
         parser_list.add_argument('--username', dest='username', type=str, required=False, help='Username of user')
         parser_list.add_argument('--institution', dest='institution', nargs='+', required=False, help='Institution of the user')
+        parser_list.add_argument('--person-type', dest='person_type', type=str, required=False, help="User is local or foreign")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
