@@ -1,8 +1,5 @@
-from django.contrib.auth import get_user_model
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
-from django.db.utils import IntegrityError
-from django.utils import timezone
 
 from backend.models import Project, State
 

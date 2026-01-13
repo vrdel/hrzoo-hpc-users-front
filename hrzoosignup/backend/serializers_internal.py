@@ -155,6 +155,7 @@ class ProjectSerializerFiltered(serializers.ModelSerializer):
             'project_type',
             'staff_resources_type',
             'state',
+            'uses_ai_tech'
         )
         model = models.Project
 
