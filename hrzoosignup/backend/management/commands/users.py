@@ -220,6 +220,8 @@ class Command(BaseCommand):
         if options['institution']:
             user.person_institution = ' '.join(options['institution'])
             self.stdout.write('Set institution for user {} to {}'.format(user.username, user.person_institution))
+            user.person_institution_manual_set = True
+            self.stdout.write('Set person_institution_manual_set for user {} to True'.format(user.username))
 
         user.save()
 
