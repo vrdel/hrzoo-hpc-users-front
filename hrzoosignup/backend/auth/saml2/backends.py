@@ -137,33 +137,31 @@ class SAML2Backend(Saml2Backend):
             logger.debug('SAML2Backend._update_user()')
             logger.debug(user)
             logger.debug(byte_enc(attributes))
-        try:
-            if not user.person_institution_manual_set:
-                hreduorgoib = attributes.get('hrEduOrgOIB', '')
-                if hreduorgoib:
-                    instit_croris = CrorisInstitutions.objects.filter(oib=hreduorgoib[0])
-                    if user.person_institution != instit_croris[0].name_short:
-                        user.person_institution = instit_croris[0].name_short
+        if not user.person_institution_manual_set:
+            hreduorgoib = attributes.get('hrEduOrgOIB', '')
+            if hreduorgoib:
+                instit_croris = CrorisInstitutions.objects.filter(oib=hreduorgoib[0])
+                if instit_croris and user.person_institution != instit_croris[0].name_short:
+                    user.person_institution = instit_croris[0].name_short
+                    force_save = True
+                else:
+                    try:
+                        if isinstance(user.person_mail, list):
+                            user_email = user.person_mail[0]
+                        else:
+                            user_email = user.person_mail
+                        user_email_domain = user_email.split('@')[1]
+                        found = CrorisInstitutions.objects.get(contact_web__contains=user_email_domain)
+                        user.person_institution = found.name_short
                         force_save = True
 
-        except CrorisInstitutions.DoesNotExist:
-            try:
-                if isinstance(user.person_mail, list):
-                    user_email = user.person_mail[0]
-                else:
-                    user_email = user.person_mail
-                user_email_domain = user_email.split('@')[1]
-                found = CrorisInstitutions.objects.get(contact_web__contains=user_email_domain)
-                user.person_institution = found.name_short
-                force_save = True
+                    except (CrorisInstitutions.DoesNotExist, CrorisInstitutions.MultipleObjectsReturned):
+                        if user.person_institution != attributes['o'][0]:
+                            user.person_institution = attributes['o'][0]
+                            force_save = True
 
-            except (CrorisInstitutions.DoesNotExist, CrorisInstitutions.MultipleObjectsReturned):
-                if user.person_institution != attributes['o'][0]:
-                    user.person_institution = attributes['o'][0]
-                    force_save = True
-
-            except IndexError:
-                pass
+                    except IndexError:
+                        pass
 
         if not user.person_type_manual_set:
             if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
