@@ -181,6 +181,8 @@ class Command(BaseCommand):
         users = self.user_model.objects.all()
         for user in users:
             try:
+                if user.person_institution_manual_set:
+                    continue
                 user_inst_oib = user.person_institution_oib
                 croris_institute = CrorisInstitutions.objects.get(oib=user_inst_oib)
 
