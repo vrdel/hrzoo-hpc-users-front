@@ -31,6 +31,7 @@ import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
+import _ from "lodash";
 
 
 export const BriefSummary = ({project, isSubmitted}) => {
@@ -142,8 +143,29 @@ const BriefProjectInfo = ({project}) => {
           />
         </Label>
         <br/>
-        <span className={`badge fw-normal ${TypeColor(project.project_type.name)}`} >
+        <span className={`badge fw-normal position-relative ${TypeColor(project.project_type.name)}`} >
           { TypeString(project.project_type.name) }
+          {
+            _.findIndex(project.croris_finance, (fin) => fin.name?.toLowerCase().includes('euro')) > -1 &&
+            <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+              EU
+              <span className="visually-hidden">EU</span>
+            </span>
+          }
+          {
+            project.uses_ai_tech &&
+            <span className="position-absolute fw-normal top-100 start-0 translate-middle badge rounded-pill bg-danger">
+              AI
+              <span className="visually-hidden">AI</span>
+            </span>
+          }
+          {
+            project.approved_by?.username === 'merlin@srce.hr' &&
+            <span className="position-absolute fw-normal top-100 start-100 translate-middle badge rounded-pill bg-danger">
+              Merlin
+              <span className="visually-hidden">Merlin</span>
+            </span>
+          }
         </span>
       </Col>
       <Col md={{size: 4}} className="ms-4 ms-sm-4 ms-md-0 me-0">
