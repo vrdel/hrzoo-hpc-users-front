@@ -127,6 +127,7 @@ class Command(BaseCommand):
 
     def _user_update(self, options):
         user, project = None, None
+        any_changed = False
 
         try:
             user = self.user_model.objects.get(
@@ -151,10 +152,7 @@ class Command(BaseCommand):
                 )
                 user.status = True
                 self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
-                cache.delete("ext-users-projects")
-                cache.delete('projects-get-all')
-                cache.delete("usersinfoinactive-get")
-                cache.delete("usersinfo-get")
+                any_changed = True
 
             except Project.DoesNotExist as exc:
                 self.stdout.write(self.style.ERROR('Project does not exist'))
@@ -180,6 +178,7 @@ class Command(BaseCommand):
 
             if serializer.is_valid():
                 serializer.save()
+                any_changed = True
                 self.stdout.write('Added key {} for the user {}'.format(
                     serializer.data['fingerprint'], user.username))
                 cache.delete("ext-sshkeys")
@@ -190,6 +189,7 @@ class Command(BaseCommand):
 
         if options['staff'] != None:
             user.is_staff = bool(options['staff'])
+            any_changed = True
             if user.is_staff:
                 self.stdout.write('Promote user {} to staff'.format(user.username))
             else:
@@ -198,35 +198,48 @@ class Command(BaseCommand):
         if options['email']:
             user.person_mail = options['email']
             user.croris_mail = options['email']
+            any_changed = True
             self.stdout.write('Set email for user {} to {}'.format(user.username, user.person_mail))
 
         if options['oib']:
             user.person_oib = options['oib']
+            any_changed = True
             self.stdout.write('Set OIB for user {} to {}'.format(user.username, user.person_oib))
 
         if options['password']:
             user.set_password(options['password'])
+            any_changed = True
             self.stdout.write('Set password for user')
 
         if options['person_type']:
             user.person_type = options['person_type']
+            any_changed = True
             self.stdout.write('Set person_type for user {} to {}'.format(user.username, options['person_type']))
 
         if options['person_type_manual_set'] != None:
             new = bool(options['person_type_manual_set'])
             user.person_type_manual_set = new
+            any_changed = True
             self.stdout.write('Set person_type_manual_set for user {} to {}'.format(user.username, new))
 
         if options['person_institution_manual_set'] != None:
             new = bool(options['person_institution_manual_set'])
             user.person_institution_manual_set = new
+            any_changed = True
             self.stdout.write('Set person_institution_manual_set for user {} to {}'.format(user.username, new))
 
         if options['institution']:
             user.person_institution = ' '.join(options['institution'])
             self.stdout.write('Set institution for user {} to {}'.format(user.username, user.person_institution))
             user.person_institution_manual_set = True
+            any_changed = True
             self.stdout.write('Set person_institution_manual_set for user {} to True'.format(user.username))
+
+        if any_changed:
+            cache.delete("ext-users-projects")
+            cache.delete('projects-get-all')
+            cache.delete("usersinfoinactive-get")
+            cache.delete("usersinfo-get")
 
         user.save()
 
