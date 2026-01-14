@@ -141,9 +141,9 @@ class SAML2Backend(Saml2Backend):
             if not user.person_institution_manual_set:
                 hreduorgoib = attributes.get('hrEduOrgOIB', '')
                 if hreduorgoib:
-                    instit_croris = CrorisInstitutions.objects.get(oib=hreduorgoib[0])
-                    if user.person_institution != instit_croris.name_short:
-                        user.person_institution = instit_croris.name_short
+                    instit_croris = CrorisInstitutions.objects.filter(oib=hreduorgoib[0])
+                    if user.person_institution != instit_croris[0].name_short:
+                        user.person_institution = instit_croris[0].name_short
                         force_save = True
 
         except CrorisInstitutions.DoesNotExist:
