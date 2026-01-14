@@ -1,0 +1,1 @@
+30 23 * * * apache . /opt/hrzoo-signup/bin/activate; $VIRTUAL_ENV/bin/hzsi-manage resync_croris_names --yes --cron
