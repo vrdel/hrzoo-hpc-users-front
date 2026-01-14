@@ -103,7 +103,6 @@ hrzoosignup = "hrzoosignup/"
 	"etc/institution_map.json.template",
 	"etc/realm_map.json.template",
 	"etc/replacestring_map.json.template",
-	"etc/secretkey",
 	"etc/signature",
 	"etc/signature_en",
 ]
