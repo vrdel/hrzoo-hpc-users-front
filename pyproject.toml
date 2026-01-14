@@ -89,7 +89,7 @@ hrzoosignup = "hrzoosignup/"
   "cron/hzsi-resetprojectcounter", "cron/hzsi-dashboard-send",
   "cron/hzsi-cache-usage", "cron/hzsi-bogusenddate", "cron/hzsi-portfelj-send",
   "cron/hzsi-croris-institutions-sync", "cron/hzsi-croris-institution-set",
-  "cron/hzsi-croris-project-dates-sync"
+  "cron/hzsi-croris-project-dates-sync", "cron/hzsi-croris-project-names-sync"
 ]
 "etc/httpd/conf.d" = [ "apache/vhost-hrzoosignup.conf" ]
 "etc/hrzoosignup" = [
