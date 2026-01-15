@@ -126,122 +126,125 @@ class Command(BaseCommand):
         user.save()
 
     def _user_update(self, options):
-        user, project = None, None
-        any_changed = False
+        users = self.user_model.objects.filter(
+            username__icontains=options['username'],
+        )
 
-        try:
-            user = self.user_model.objects.get(
-                username=options['username'],
-            )
-
-        except self.user_model.DoesNotExist as exc:
-            self.stdout.write(self.style.ERROR('User not found'))
-            self.stdout.write(self.style.NOTICE(repr(exc)))
+        if not users:
+            self.stdout.write(self.style.ERROR('Users matching query not found'))
             raise SystemExit(1)
 
-        if options['project']:
-            try:
-                project = Project.objects.get(identifier=options['project'])
-                role_colab = Role.objects.get(name='collaborator')
-                self.stdout.write('Found project {} \"{}\"'.format(options['project'], project.name))
-                UserProject.objects.create(
-                    user=user,
-                    project=project,
-                    role=role_colab,
-                    date_joined=timezone.make_aware(datetime.datetime.now())
-                )
-                user.status = True
-                self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
+        any_changed = False
+
+        for user in users:
+            project = None
+
+            if options['project']:
+                try:
+                    project = Project.objects.get(identifier=options['project'])
+                    role_colab = Role.objects.get(name='collaborator')
+                    self.stdout.write('Found project {} \"{}\"'.format(options['project'], project.name))
+                    UserProject.objects.create(
+                        user=user,
+                        project=project,
+                        role=role_colab,
+                        date_joined=timezone.make_aware(datetime.datetime.now())
+                    )
+                    user.status = True
+                    self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
+                    any_changed = True
+
+                except Project.DoesNotExist as exc:
+                    self.stdout.write(self.style.ERROR('Project does not exist'))
+                    self.stdout.write(self.style.NOTICE(repr(exc)))
+                    raise SystemExit(1)
+
+                except IntegrityError as exc:
+                    self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
+                    self.stdout.write(self.style.NOTICE(repr(exc)))
+                    raise SystemExit(1)
+
+            if options['key'] or options['keyname']:
+                if not (options['key'] and options['keyname']):
+                    self.stdout.write(self.style.NOTICE('Both key path and key name should be specified'))
+                    raise SystemExit(1)
+
+                key_content = options['key'].read().strip()
+                serializer = SshKeysSerializer(data={
+                    'name': ' '.join(options['keyname']),
+                    'public_key': key_content,
+                    'user': user.id
+                })
+
+                if serializer.is_valid():
+                    serializer.save()
+                    any_changed = True
+                    self.stdout.write('Added key {} for the user {}'.format(
+                        serializer.data['fingerprint'], user.username))
+                    cache.delete("ext-sshkeys")
+                else:
+                    self.stdout.write(self.style.ERROR('Error adding key for the user'))
+                    self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
+                    raise SystemExit(1)
+
+            if options['staff'] != None:
+                user.is_staff = bool(options['staff'])
                 any_changed = True
+                if user.is_staff:
+                    self.stdout.write('Promote user {} to staff'.format(user.username))
+                else:
+                    self.stdout.write('Demote user {} from staff'.format(user.username))
 
-            except Project.DoesNotExist as exc:
-                self.stdout.write(self.style.ERROR('Project does not exist'))
-                self.stdout.write(self.style.NOTICE(repr(exc)))
-                raise SystemExit(1)
-
-            except IntegrityError as exc:
-                self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
-                self.stdout.write(self.style.NOTICE(repr(exc)))
-                raise SystemExit(1)
-
-        if options['key'] or options['keyname']:
-            if not (options['key'] and options['keyname']):
-                self.stdout.write(self.style.NOTICE('Both key path and key name should be specified'))
-                raise SystemExit(1)
-
-            key_content = options['key'].read().strip()
-            serializer = SshKeysSerializer(data={
-                'name': ' '.join(options['keyname']),
-                'public_key': key_content,
-                'user': user.id
-            })
-
-            if serializer.is_valid():
-                serializer.save()
+            if options['email']:
+                user.person_mail = options['email']
+                user.croris_mail = options['email']
                 any_changed = True
-                self.stdout.write('Added key {} for the user {}'.format(
-                    serializer.data['fingerprint'], user.username))
-                cache.delete("ext-sshkeys")
-            else:
-                self.stdout.write(self.style.ERROR('Error adding key for the user'))
-                self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
-                raise SystemExit(1)
+                self.stdout.write('Set email for user {} to {}'.format(user.username, user.person_mail))
 
-        if options['staff'] != None:
-            user.is_staff = bool(options['staff'])
-            any_changed = True
-            if user.is_staff:
-                self.stdout.write('Promote user {} to staff'.format(user.username))
-            else:
-                self.stdout.write('Demote user {} from staff'.format(user.username))
+            if options['oib']:
+                user.person_oib = options['oib']
+                any_changed = True
+                self.stdout.write('Set OIB for user {} to {}'.format(user.username, user.person_oib))
 
-        if options['email']:
-            user.person_mail = options['email']
-            user.croris_mail = options['email']
-            any_changed = True
-            self.stdout.write('Set email for user {} to {}'.format(user.username, user.person_mail))
+            if options['password']:
+                user.set_password(options['password'])
+                any_changed = True
+                self.stdout.write('Set password for user')
 
-        if options['oib']:
-            user.person_oib = options['oib']
-            any_changed = True
-            self.stdout.write('Set OIB for user {} to {}'.format(user.username, user.person_oib))
+            if options['person_type']:
+                user.person_type = options['person_type']
+                any_changed = True
+                self.stdout.write('Set person_type for user {} to {}'.format(user.username, options['person_type']))
 
-        if options['password']:
-            user.set_password(options['password'])
-            any_changed = True
-            self.stdout.write('Set password for user')
+            if options['person_type_manual_set'] != None:
+                new = bool(options['person_type_manual_set'])
+                user.person_type_manual_set = new
+                any_changed = True
+                self.stdout.write('Set person_type_manual_set for user {} to {}'.format(user.username, new))
 
-        if options['person_type']:
-            user.person_type = options['person_type']
-            any_changed = True
-            self.stdout.write('Set person_type for user {} to {}'.format(user.username, options['person_type']))
+            if options['person_institution_manual_set'] != None:
+                new = bool(options['person_institution_manual_set'])
+                user.person_institution_manual_set = new
+                any_changed = True
+                self.stdout.write('Set person_institution_manual_set for user {} to {}'.format(user.username, new))
 
-        if options['person_type_manual_set'] != None:
-            new = bool(options['person_type_manual_set'])
-            user.person_type_manual_set = new
-            any_changed = True
-            self.stdout.write('Set person_type_manual_set for user {} to {}'.format(user.username, new))
+            if options['institution']:
+                if options['institution'][0] == '0':
+                    user.person_institution = ''
+                else:
+                    user.person_institution = ' '.join(options['institution'])
+                self.stdout.write('Set institution for user {} to {}'.format(user.username, user.person_institution))
+                user.person_institution_manual_set = True
+                any_changed = True
+                self.stdout.write('Set person_institution_manual_set for user {} to True'.format(user.username))
 
-        if options['person_institution_manual_set'] != None:
-            new = bool(options['person_institution_manual_set'])
-            user.person_institution_manual_set = new
-            any_changed = True
-            self.stdout.write('Set person_institution_manual_set for user {} to {}'.format(user.username, new))
+            if any_changed:
+                cache.delete("ext-users-projects")
+                cache.delete('projects-get-all')
+                cache.delete("usersinfoinactive-get")
+                cache.delete("usersinfo-get")
 
-        if options['institution']:
-            user.person_institution = ' '.join(options['institution'])
-            self.stdout.write('Set institution for user {} to {}'.format(user.username, user.person_institution))
-            user.person_institution_manual_set = True
-            any_changed = True
-            self.stdout.write('Set person_institution_manual_set for user {} to True'.format(user.username))
-
-        if any_changed:
-            cache.delete("ext-users-projects")
-            cache.delete('projects-get-all')
-            cache.delete("usersinfoinactive-get")
-            cache.delete("usersinfo-get")
-
-        user.save()
+            user.save()
 
     def _user_list(self, options):
         table = Table(
@@ -257,13 +260,14 @@ class Command(BaseCommand):
         table.add_column("Email")
         table.add_column("Status")
         table.add_column("Type")
+        table.add_column("TypeSet")
+        table.add_column("Projects")
         table.add_column("Institution")
+        table.add_column("InstSet")
         table.add_column("InstOIB")
         table.add_column("OIB")
         table.add_column("MBZ")
         table.add_column("MailList")
-        table.add_column("InstSet")
-        table.add_column("TypeSet")
 
         search_username = options.get('username', None)
         search_institution = options.get('institution', None)
@@ -285,7 +289,9 @@ class Command(BaseCommand):
 
         i = 1
         for m in match:
-            table.add_row(str(i), m.username, m.first_name, m.last_name, m.person_mail, str(m.status), m.person_type, m.person_institution, m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe), str(m.person_institution_manual_set), str(m.person_type_manual_set))
+            user_projects = UserProject.objects.filter(user=m)
+
+            table.add_row(str(i), '\n@'.join(m.username.split("@")), m.first_name, m.last_name, '\n@'.join(m.person_mail.split("@")), str(m.status), m.person_type, str(m.person_type_manual_set), '\n'.join([up.project.identifier for up in user_projects]), m.person_institution, str(m.person_institution_manual_set), m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
             i += 1
 
         if table.row_count:
@@ -390,7 +396,7 @@ class Command(BaseCommand):
 
         parser_update = subparsers.add_parser("update", help="Update user based on passed metadata")
         parser_update.add_argument('--username', dest='username', type=str,
-                                   required=True, help='Username of user')
+                                   required=True, help='Username pattern of users')
         parser_update.add_argument('--project', dest='project', type=str, default='',
                                    required=False, help='Project identifier that user will be assigned to')
         parser_update.add_argument('--key-name', dest='keyname', type=str, nargs='+',
