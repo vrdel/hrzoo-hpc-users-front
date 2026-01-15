@@ -257,13 +257,14 @@ class Command(BaseCommand):
         table.add_column("Email")
         table.add_column("Status")
         table.add_column("Type")
+        table.add_column("TypeSet")
+        table.add_column("Projects")
         table.add_column("Institution")
+        table.add_column("InstSet")
         table.add_column("InstOIB")
         table.add_column("OIB")
         table.add_column("MBZ")
         table.add_column("MailList")
-        table.add_column("InstSet")
-        table.add_column("TypeSet")
 
         search_username = options.get('username', None)
         search_institution = options.get('institution', None)
@@ -285,7 +286,9 @@ class Command(BaseCommand):
 
         i = 1
         for m in match:
-            table.add_row(str(i), m.username, m.first_name, m.last_name, m.person_mail, str(m.status), m.person_type, m.person_institution, m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe), str(m.person_institution_manual_set), str(m.person_type_manual_set))
+            user_projects = UserProject.objects.filter(user=m)
+
+            table.add_row(str(i), '\n@'.join(m.username.split("@")), m.first_name, m.last_name, '\n@'.join(m.person_mail.split("@")), str(m.status), m.person_type, str(m.person_type_manual_set), '\n'.join([up.project.identifier for up in user_projects]), m.person_institution, str(m.person_institution_manual_set), m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
             i += 1
 
         if table.row_count:
