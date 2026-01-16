@@ -32,6 +32,7 @@ import { StateIcons } from 'Config/map-states';
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from 'react-intl';
 import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
+import { usePopoverMap } from 'Hooks/popover'
 import _ from 'lodash';
 
 
@@ -183,6 +184,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
   const [sortJoined, setSortJoined] = useState(true)
+  const { isOpen, togglePopover } = usePopoverMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -195,24 +197,6 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
       searchSSHKey: ""
     }
   })
-
-  const [popoverOpened, setPopoverOpened] = useState(undefined);
-  const showPopover = (popid) => {
-    let showed = new Object()
-    if (popoverOpened === undefined && popid) {
-      showed[popid] = true
-      setPopoverOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(popoverOpened))
-      showed[popid] = !showed[popid]
-      setPopoverOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (popoverOpened !== undefined)
-      return popoverOpened[toolid]
-  }
 
   const searchJoined = useWatch({ control, name: "searchJoined" })
   const searchName = useWatch({ control, name: "searchName" })
@@ -586,21 +570,18 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                     color={ `${proj.role === "lead" ? "dark" : "secondary"}` }
                                     className="d-inline-block fw-normal ms-1 text-decoration-underline"
                                     style={{cursor: 'pointer', whiteSpace: 'normal'}}
-                                    onClick={() => {
-                                      showPopover(`${user.id}-${pid}`)
-                                    }}
+                                    onClick={() => togglePopover(`${user.id}-${pid}`)}
                                   >
                                     { proj.identifier }
                                   </Badge>
                                   <Popover
                                     placement="left"
-                                    isOpen={isOpened(`${user.id}-${pid}`)}
+                                    isOpen={isOpen(`${user.id}-${pid}`)}
                                     target={`pop-${user.id}-${pid}`}
-                                    toggle={() => {
-                                      showPopover(`${user.id}-${pid}`)
-                                    }}
+                                    toggle={() => togglePopover(`${user.id}-${pid}`)
+                                    }
                                   >
-                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} showPopover={showPopover} />
+                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} showPopover={togglePopover} />
                                   </Popover>
                                   <MiniButton
                                     color="light"

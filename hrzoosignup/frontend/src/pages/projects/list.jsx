@@ -28,6 +28,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
+import { usePopoverMap } from 'Hooks/popover'
 import _ from "lodash";
 
 
@@ -67,6 +68,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
   const intl = useIntl()
+  const { isOpen, togglePopover } = usePopoverMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -79,24 +81,6 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       searchResourceTypes: ""
     }
   })
-
-  const [popoverOpened, setPopoverOpened] = useState(undefined);
-  const showPopover = (popid) => {
-    let showed = new Object()
-    if (popoverOpened === undefined && popid) {
-      showed[popid] = true
-      setPopoverOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(popoverOpened))
-      showed[popid] = !showed[popid]
-      setPopoverOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (popoverOpened !== undefined)
-      return popoverOpened[toolid]
-  }
 
   const [tooltipOpened, setTooltipOpened] = useState(undefined);
   const showTooltip = (toolid) => {
@@ -472,8 +456,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         <LeadUserBadge
                           index={index}
                           project={project}
-                          isOpened={isOpened}
-                          showPopover={showPopover}
+                          isOpened={isOpen}
+                          showPopover={togglePopover}
                         />
                         {
                           extractCollaborators(project.userproject_set).map((collab, cid) =>
@@ -487,16 +471,15 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               {`${collab.user.first_name} ${collab.user.last_name}`}
                               <Popover
                                 placement="left"
-                                isOpen={isOpened(`${index}-${collab.user.id}`)}
+                                isOpen={isOpen(`${index}-${collab.user.id}`)}
                                 target={`pop-collab-${index}-${collab.user.id}`}
-                                toggle={() => {
-                                  showPopover(`${index}-${collab.user.id}`)
-                                }}
+                                toggle={() => togglePopover(`${index}-${collab.user.id}`)
+                                }
                               >
                                 <PopoverUserInfo
                                   rhfId={`${index}-${collab.user.id}`}
                                   userName={collab.user.username}
-                                  showPopover={showPopover}
+                                  showPopover={togglePopover}
                                 />
                               </Popover>
                             </Badge>
