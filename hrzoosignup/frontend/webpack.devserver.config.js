@@ -66,8 +66,9 @@ module.exports = {
     alias: {
       Api: path.resolve(__dirname, "./src/api"),
       Assets: path.resolve(__dirname, "./src/assets"),
-      Config: path.resolve(__dirname, "./src/config"),
       Components: path.resolve(__dirname, "./src/components"),
+      Config: path.resolve(__dirname, "./src/config"),
+      Hooks: path.resolve(__dirname, "./src/hooks"),
       Pages: path.resolve(__dirname, "./src/pages"),
       Styles: path.resolve(__dirname, "./src/styles"),
       Utils: path.resolve(__dirname, "./src/utils"),
