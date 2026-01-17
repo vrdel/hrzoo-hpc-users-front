@@ -31,6 +31,7 @@ import { MiniButton } from 'Components/MiniButton';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
 import { isExtended, lastExtension } from 'Utils/project-extends';
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import _ from "lodash";
 
 
@@ -38,25 +39,7 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
   const [pageSize, setPageSize] = useState(50)
   const [pageIndex, setPageIndex] = useState(0)
   const intl = useIntl()
-
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
+  const { isOpen: isOpenedTooltip, toggleIndex: showTooltip } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -311,7 +294,7 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
                         { StateIcons(project.state.name) }
                         <Tooltip
                           placement='top'
-                          isOpen={isOpened(project.identifier)}
+                          isOpen={isOpenedTooltip(project.identifier)}
                           target={'Tooltip-' + index}
                           toggle={() => showTooltip(project.identifier)}
                         >

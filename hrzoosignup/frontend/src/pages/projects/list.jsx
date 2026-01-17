@@ -69,6 +69,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
   const intl = useIntl()
   const { isOpen: isOpenPopover, toggleIndex: togglePopover } = useOpenedIndexMap()
+  const { isOpen: isOpenedTooltip, toggleIndex: showTooltip } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -81,24 +82,6 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       searchResourceTypes: ""
     }
   })
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpenedTooltip = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
 
   useEffect(() => {
     setValue('projects', data)
