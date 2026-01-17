@@ -32,7 +32,7 @@ import { StateIcons } from 'Config/map-states';
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from 'react-intl';
 import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
-import { usePopoverMap } from 'Hooks/popover'
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import _ from 'lodash';
 
 
@@ -184,7 +184,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
   const [sortJoined, setSortJoined] = useState(true)
-  const { isOpen, togglePopover } = usePopoverMap()
+  const { isOpen, toggleIndex: togglePopover } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {

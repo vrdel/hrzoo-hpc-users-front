@@ -28,7 +28,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
-import { usePopoverMap } from 'Hooks/popover'
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import _ from "lodash";
 
 
@@ -68,7 +68,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
   const intl = useIntl()
-  const { isOpen, togglePopover } = usePopoverMap()
+  const { isOpen: isOpenPopover, toggleIndex: togglePopover } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -456,7 +456,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         <LeadUserBadge
                           index={index}
                           project={project}
-                          isOpened={isOpen}
+                          isOpened={isOpenPopover}
                           showPopover={togglePopover}
                         />
                         {
@@ -471,7 +471,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               {`${collab.user.first_name} ${collab.user.last_name}`}
                               <Popover
                                 placement="left"
-                                isOpen={isOpen(`${index}-${collab.user.id}`)}
+                                isOpen={isOpenPopover(`${index}-${collab.user.id}`)}
                                 target={`pop-collab-${index}-${collab.user.id}`}
                                 toggle={() => togglePopover(`${index}-${collab.user.id}`)
                                 }
