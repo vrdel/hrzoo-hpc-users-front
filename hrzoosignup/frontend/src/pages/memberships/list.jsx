@@ -31,6 +31,7 @@ import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
 import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import _ from "lodash";
 
 
@@ -65,23 +66,7 @@ export const BriefSummary = ({project, isSubmitted}) => {
 }
 
 const BriefProjectInfo = ({project}) => {
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
+  const { isOpen, toggleIndex } = useOpenedIndexMap()
 
   return (
     <>
@@ -97,9 +82,9 @@ const BriefProjectInfo = ({project}) => {
         </div>
         <Tooltip
           placement='bottom'
-          isOpen={isOpened(project.identifier)}
+          isOpen={isOpen(project.identifier)}
           target={'Tooltip-' + project.identifier.replace(/\/| |\.|:/g, '-')}
-          toggle={() => showTooltip(project.identifier)}
+          toggle={() => toggleIndex(project.identifier)}
         >
           { StateStringUser(project.state.name) }
         </Tooltip>
