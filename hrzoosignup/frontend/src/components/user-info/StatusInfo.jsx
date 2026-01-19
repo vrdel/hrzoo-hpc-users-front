@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Col, Badge, Row, Table, Label, Tooltip, Button } from 'reactstrap';
 import { faCheckCircle, faStopCircle, faCopy, faHome, faGlobe} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useOpenedIndexMap } from 'Hooks/indexed-map';
 
 
 const TooltipMsgActive = ({myInfo=true}) => {
@@ -92,23 +93,7 @@ const TooltipMsgInactive = ({myInfo}) => {
 
 const StatusInfo = ({myInfo=true, userDetails}) => {
   const intl = useIntl()
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
+  const { isOpen, toggleIndex } = useOpenedIndexMap()
 
   if (userDetails && userDetails.first_name && userDetails.person_username)
     return (
@@ -125,9 +110,9 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                     <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
                     <Tooltip
                       placement='right'
-                      isOpen={isOpened(userDetails.first_name)}
+                      isOpen={isOpen(userDetails.first_name)}
                       target={'Tooltip-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => showTooltip(userDetails.first_name)}
+                      toggle={() => toggleIndex(userDetails.first_name)}
                     >
                       <TooltipMsgActive myInfo={myInfo} />
                     </Tooltip>
@@ -137,9 +122,9 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                     <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
                     <Tooltip
                       placement='bottom'
-                      isOpen={isOpened(userDetails.first_name)}
+                      isOpen={isOpen(userDetails.first_name)}
                       target={'Tooltip-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => showTooltip(userDetails.first_name)}
+                      toggle={() => toggleIndex(userDetails.first_name)}
                     >
                       <TooltipMsgInactive myInfo={myInfo} />
                     </Tooltip>
@@ -151,9 +136,9 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                     <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faHome } />
                     <Tooltip
                       placement='right'
-                      isOpen={isOpened(`${userDetails.first_name}-type`)}
+                      isOpen={isOpen(`${userDetails.first_name}-type`)}
                       target={'Tooltip-type-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => showTooltip(`${userDetails.first_name}-type`)}
+                      toggle={() => toggleIndex(`${userDetails.first_name}-type`)}
                     >
                       <TooltipMsgLocal />
                     </Tooltip>
@@ -163,9 +148,9 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                     <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faGlobe } />
                     <Tooltip
                       placement='right'
-                      isOpen={isOpened(`${userDetails.first_name}-type`)}
+                      isOpen={isOpen(`${userDetails.first_name}-type`)}
                       target={'Tooltip-type-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => showTooltip(`${userDetails.first_name}-type`)}
+                      toggle={() => toggleIndex(`${userDetails.first_name}-type`)}
                     >
                       <TooltipMsgGlobe />
                     </Tooltip>
@@ -194,9 +179,9 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                             {userDetails.person_username}
                             <Tooltip
                               placement='right'
-                              isOpen={isOpened(userDetails.person_username)}
+                              isOpen={isOpen(userDetails.person_username)}
                               target={'Tooltip-' + userDetails.person_username}
-                              toggle={() => showTooltip(userDetails.person_username)}
+                              toggle={() => toggleIndex(userDetails.person_username)}
                             >
                               <FormattedMessage
                                 description="statusinfo-tooltip"
