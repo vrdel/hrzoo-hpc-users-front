@@ -30,6 +30,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectExtend } from 'Components/ProjectExtend';
 import { url_ui_prefix } from 'Config/general';
 import { isExtended, lastExtension } from 'Utils/project-extends';
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import _ from "lodash";
 
 
@@ -39,6 +40,8 @@ const MyRequestsList = () => {
   const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
   const intl = useIntl()
+  const { isOpen, toggleIndex } = useOpenedIndexMap()
+
 
   const [projectExtend, setProjectExtend] = useState(undefined)
   const [targetProjectExtend, setTargetProjectExtend] = useState(undefined)
@@ -52,25 +55,6 @@ const MyRequestsList = () => {
       queryKey: ['projectsextends-lead'],
       queryFn: fetchExtendProject
   })
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
 
   useEffect(() => {
     setPageTitle(LinkTitles(location.pathname, intl))
@@ -203,9 +187,9 @@ const MyRequestsList = () => {
                         { StateIcons(project.state.name) }
                         <Tooltip
                           placement='top'
-                          isOpen={isOpened(project.identifier)}
+                          isOpen={isOpen(project.identifier)}
                           target={'Tooltip-' + index}
-                          toggle={() => showTooltip(project.identifier)}
+                          toggle={() => toggleIndex(project.identifier)}
                         >
                           { StateString(project.state.name) }
                         </Tooltip>
