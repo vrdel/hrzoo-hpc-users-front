@@ -8,13 +8,11 @@ import { useQuery } from '@tanstack/react-query';
 import StatusInfo from 'Components/user-info/StatusInfo';
 import InstituteTableInfo from 'Components/user-info/UserInstitute';
 import { EmptyCroRis, CroRisInfo } from 'Components/user-info/CroRis';
-import { useIntl } from 'react-intl'
+import { usePageTitle } from 'Hooks/pagetitle';
 
 
 const MyInfo = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined)
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
   const { userDetails } = useContext(AuthContext)
 
   const {status, data: croRisProjects, error, isFetching} = useQuery({
@@ -22,10 +20,6 @@ const MyInfo = () => {
       queryFn: fetchCroRISMe,
       staleTime: 15 * 60 * 1000
   })
-
-  useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
-  }, [location.pathname, intl])
 
   return (
     <>

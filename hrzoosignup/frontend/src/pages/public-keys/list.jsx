@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from 'Pages/root';
 import {
   Col,
   Row,
@@ -29,11 +28,11 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { EmptyTableSpinner } from 'Components/EmptyTableSpinner';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { useIntl, FormattedMessage } from 'react-intl'
+import { usePageTitle } from 'Hooks/pagetitle';
 
 
 const PublicKeys = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
+  const pageTitle = usePageTitle(location)
   const [showedKeys, setShowedKeys] = useState(undefined);
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -75,12 +74,11 @@ const PublicKeys = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (sshKeysData?.length > 0)
       setSshKeys(sshKeysData)
     else if (sshKeysData?.length === 0)
       setSshKeys(new Array())
-  }, [location.pathname, sshKeysData, intl])
+  }, [sshKeysData])
 
   const deleteMutation = useMutation({
     mutationFn: (keyname) => {

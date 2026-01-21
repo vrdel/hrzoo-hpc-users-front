@@ -16,17 +16,16 @@ import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
 import { FormattedMessage } from 'react-intl';
 import { useIntl } from 'react-intl'
+import { usePageTitle } from 'Hooks/pagetitle';
 
 
 const NewRequest = () => {
-  const [pageTitle, setPageTitle] = useState(undefined)
+  const pageTitle = usePageTitle(location)
   const [buttonDisabled, setButtonDisabled] = useState(undefined)
   const [continueButtonDisabled, setContinueButtonDisabled] = useState(undefined)
   const [selectedProject, setSelectedProject] = useState(undefined)
   const navigate = useNavigate()
-  const { LinkTitles,
-    RequestTypesToSelect,
-    UrlToRequestType } = useContext(SharedData);
+  const { RequestTypesToSelect, UrlToRequestType } = useContext(SharedData);
   const { userDetails } = useContext(AuthContext);
   const intl = useIntl()
 
@@ -51,7 +50,6 @@ const NewRequest = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (location.pathname.endsWith('new-request'))
       setButtonDisabled(false)
     else {
@@ -60,7 +58,7 @@ const NewRequest = () => {
     }
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status, intl])
+  }, [status])
 
   return (
     <>

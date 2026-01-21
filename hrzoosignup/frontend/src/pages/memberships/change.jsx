@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from 'Pages/root';
 import {
   Col,
   Row,
@@ -32,6 +31,7 @@ import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
 import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -184,12 +184,11 @@ const BriefProjectInfo = ({project}) => {
 }
 
 const MembershipsChange = () => {
-  const { LinkTitles } = useContext(SharedData);
+  const pageTitle = usePageTitle(location)
   const { projId } = useParams()
   const { csrfToken } = useContext(AuthContext);
   const intl = useIntl()
 
-  const [pageTitle, setPageTitle] = useState(undefined);
   const [invitesSent, setInvitesSent] = useState(undefined);
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
@@ -448,9 +447,8 @@ const MembershipsChange = () => {
   }
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     setInvitesSent(myInvites)
-  }, [location.pathname, myInvites, intl])
+  }, [myInvites])
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'

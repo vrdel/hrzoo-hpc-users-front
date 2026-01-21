@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from 'Pages/root';
 import {
   Col,
   Row,
@@ -32,6 +31,7 @@ import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
 import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
 import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -184,9 +184,8 @@ const BriefProjectInfo = ({project}) => {
 }
 
 const Memberships = ({inactive=false}) => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
   const [invitesSent, setInvitesSent] = useState(undefined);
+  const pageTitle = usePageTitle(location)
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -446,9 +445,8 @@ const Memberships = ({inactive=false}) => {
   }
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     setInvitesSent(myInvites)
-  }, [location.pathname, myInvites, intl])
+  }, [myInvites])
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'

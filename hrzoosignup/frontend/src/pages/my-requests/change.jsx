@@ -30,6 +30,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { buildYesNoValue } from 'Utils/select-tools';
 import { IntlContext } from 'Components/IntlContextProvider';
+import { usePageTitle } from 'Hooks/pagetitle';
 
 
 function setInitialState() {
@@ -47,9 +48,8 @@ function setInitialState() {
 
 
 export const MyRequestChange = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
   const { projId } = useParams()
+  const pageTitle = usePageTitle(location)
   const [requestState, setRequestState] = useState(undefined)
   const intl = useIntl()
   const { locale } = useContext(IntlContext)
@@ -154,11 +154,9 @@ export const MyRequestChange = () => {
       setRequestState(newState)
     }
 
-    setPageTitle(LinkTitles(location.pathname, intl))
-
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, nrProject, status, statusPE, intl])
+  }, [nrProject, status, statusPE])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState

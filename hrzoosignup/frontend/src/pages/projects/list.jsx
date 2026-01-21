@@ -29,6 +29,7 @@ import { MiniButton } from 'Components/MiniButton';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
 import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -506,10 +507,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
 
 export const ProjectsList = () => {
-  const { LinkTitles } = useContext(SharedData)
-  const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
 
   const { status, error, data } = useQuery({
     queryKey: ["all-projects"],
@@ -517,10 +516,9 @@ export const ProjectsList = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status, intl])
+  }, [status])
 
 
   if (status === 'success' && data && pageTitle)

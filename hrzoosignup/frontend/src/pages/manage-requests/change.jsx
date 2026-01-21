@@ -44,6 +44,7 @@ import { ProjectExtendTable } from 'Components/ProjectExtend';
 import { IntlContext } from 'Components/IntlContextProvider';
 import { buildYesNoValue } from 'Utils/select-tools';
 import { extractYesNoValue } from 'Utils/select-tools';
+import { usePageTitle } from 'Hooks/pagetitle';
 
 
 function setInitialState() {
@@ -237,8 +238,7 @@ const LeadBasicInfo = ({leadInfo}) => {
 
 
 export const ManageRequestsChange = ({manageProject=false}) => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
+  const pageTitle = usePageTitle(location)
   const [commentDisabled, setCommentDisabled] = useState(undefined);
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
@@ -246,7 +246,6 @@ export const ManageRequestsChange = ({manageProject=false}) => {
   const { csrfToken } = useContext(AuthContext)
   const intl = useIntl()
   const { locale } = useContext(IntlContext)
-
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
@@ -381,11 +380,9 @@ export const ManageRequestsChange = ({manageProject=false}) => {
       setRequestState(newState)
     }
 
-    setPageTitle(LinkTitles(location.pathname, intl))
-
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, nrProject, status, intl])
+  }, [nrProject, status])
 
   const onSubmit = (data) => {
     data['requestState'] = requestState

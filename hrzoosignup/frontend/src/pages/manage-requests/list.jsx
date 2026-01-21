@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from '../root';
+import React, { useState, useEffect } from 'react';
 import { Col, Row, Table, Tooltip, Input } from 'reactstrap';
 import { useNavigate, Link } from 'react-router';
 import { PageTitle } from 'Components/PageTitle';
@@ -32,6 +31,7 @@ import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
 import { isExtended, lastExtension } from 'Utils/project-extends';
 import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -423,9 +423,7 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
 
 
 export const ManageRequestsList = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
   const navigate = useNavigate()
 
   const { status, error, data: nrProjects } = useQuery({
@@ -439,10 +437,9 @@ export const ManageRequestsList = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status, intl])
+  }, [status])
 
   if (status === 'success' && statusPE === 'success' && nrProjects && pageTitle)
     return (
