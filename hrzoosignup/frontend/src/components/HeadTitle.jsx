@@ -9,7 +9,7 @@ const HeadTitle = () => {
   const intl = useIntl()
 
   const mainTitle = intl.formatMessage({
-    defaultMessage: "Napredno računanje - Zahtjev",
+    defaultMessage: "Napredno računanje",
     description: "headtitle-main"
   })
 
