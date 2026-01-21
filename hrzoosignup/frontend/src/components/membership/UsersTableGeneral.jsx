@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import { useIntl } from 'react-intl'
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import _ from 'lodash';
 
 
@@ -35,6 +36,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const refFileCollaboratorsInput = useRef(null)
   const refFileForeignCollaboratorsInput = useRef(null)
   const intl = useIntl()
+  const { isOpen: isOpened, toggleIndex: showTooltip } = useOpenedIndexMap()
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -130,8 +132,8 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     })
     resetField(field)
     setValue(field, validLines)
-    
-    if (invalidLines.length > 0) 
+
+    if (invalidLines.length > 0)
       toast.error(
         <span className="font-monospace text-white">
           {
@@ -215,24 +217,6 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     onSubmit({
       email, projectid, inviterid, type
     })
-  }
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
   }
 
   function onChangeCheckOut(i) {

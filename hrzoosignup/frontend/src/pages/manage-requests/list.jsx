@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from '../root';
+import React, { useState, useEffect } from 'react';
 import { Col, Row, Table, Tooltip, Input } from 'reactstrap';
 import { useNavigate, Link } from 'react-router';
 import { PageTitle } from 'Components/PageTitle';
@@ -31,6 +30,8 @@ import { MiniButton } from 'Components/MiniButton';
 import { ProjectTypeBadge } from 'Components/GeneralProjectInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
 import { isExtended, lastExtension } from 'Utils/project-extends';
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -38,25 +39,7 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
   const [pageSize, setPageSize] = useState(50)
   const [pageIndex, setPageIndex] = useState(0)
   const intl = useIntl()
-
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
+  const { isOpen: isOpenedTooltip, toggleIndex: showTooltip } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -311,7 +294,7 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
                         { StateIcons(project.state.name) }
                         <Tooltip
                           placement='top'
-                          isOpen={isOpened(project.identifier)}
+                          isOpen={isOpenedTooltip(project.identifier)}
                           target={'Tooltip-' + index}
                           toggle={() => showTooltip(project.identifier)}
                         >
@@ -440,9 +423,7 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
 
 
 export const ManageRequestsList = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
   const navigate = useNavigate()
 
   const { status, error, data: nrProjects } = useQuery({
@@ -456,10 +437,9 @@ export const ManageRequestsList = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status, intl])
+  }, [status])
 
   if (status === 'success' && statusPE === 'success' && nrProjects && pageTitle)
     return (

@@ -759,10 +759,6 @@
     "defaultMessage": "Processing user request",
     "description": "manreq-change-modaltitle"
   },
-  "FGgkJh": {
-    "defaultMessage": "Advanced Computing - Request",
-    "description": "headtitle-main"
-  },
   "FPhsMI": {
     "defaultMessage": "Approved:",
     "description": "memberships-project-approved"
@@ -1594,6 +1590,10 @@
   "bWWHsM": {
     "defaultMessage": "Inactive",
     "description": "userlist-button-inactive"
+  },
+  "bcxXVv": {
+    "defaultMessage": "Advanced computing",
+    "description": "headtitle-main"
   },
   "buMn5E": {
     "defaultMessage": "Institution",

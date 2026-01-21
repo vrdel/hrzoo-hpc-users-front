@@ -16,6 +16,7 @@ import { extractUsers, extractEmails, emailInInvites } from 'Utils/invites-extra
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import { useIntl } from 'react-intl'
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import _ from 'lodash';
 
 
@@ -30,6 +31,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
   const intl = useIntl()
+  const { isOpen: isOpened, toggleIndex: showTooltip } = useOpenedIndexMap()
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -99,24 +101,6 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
       email, projectid, inviterid, type
     })
     setIsOpen(false)
-  }
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
   }
 
   function onChangeCheckOut(i) {

@@ -30,15 +30,17 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { ProjectExtend } from 'Components/ProjectExtend';
 import { url_ui_prefix } from 'Config/general';
 import { isExtended, lastExtension } from 'Utils/project-extends';
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
 const MyRequestsList = () => {
-  const { LinkTitles } = useContext(SharedData)
   const { projId } = useParams()
-  const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
   const intl = useIntl()
+  const { isOpen, toggleIndex } = useOpenedIndexMap()
+  const pageTitle = usePageTitle(location)
 
   const [projectExtend, setProjectExtend] = useState(undefined)
   const [targetProjectExtend, setTargetProjectExtend] = useState(undefined)
@@ -53,27 +55,7 @@ const MyRequestsList = () => {
       queryFn: fetchExtendProject
   })
 
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
-
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
     if (projId && status === 'success') {
@@ -82,7 +64,7 @@ const MyRequestsList = () => {
       setTargetProjectExtend(targetProject[0])
       navigate(url_ui_prefix + '/my-requests')
     }
-  }, [location.pathname, status, statusPE, intl])
+  }, [status, statusPE])
 
   if ((status === 'pending' || statusPE === 'pending') && pageTitle)
     return (
@@ -203,9 +185,9 @@ const MyRequestsList = () => {
                         { StateIcons(project.state.name) }
                         <Tooltip
                           placement='top'
-                          isOpen={isOpened(project.identifier)}
+                          isOpen={isOpen(project.identifier)}
                           target={'Tooltip-' + index}
-                          toggle={() => showTooltip(project.identifier)}
+                          toggle={() => toggleIndex(project.identifier)}
                         >
                           { StateString(project.state.name) }
                         </Tooltip>

@@ -28,6 +28,8 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
 import PopoverUserInfo from 'Components/PopoverUserInfo';
 import { useIntl, FormattedMessage } from 'react-intl'
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -67,6 +69,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
   const intl = useIntl()
+  const { isOpen: isOpenPopover, toggleIndex: togglePopover } = useOpenedIndexMap()
+  const { isOpen: isOpenedTooltip, toggleIndex: showTooltip } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -79,42 +83,6 @@ const ProjectsListForm = ({ data, pageTitle }) => {
       searchResourceTypes: ""
     }
   })
-
-  const [popoverOpened, setPopoverOpened] = useState(undefined);
-  const showPopover = (popid) => {
-    let showed = new Object()
-    if (popoverOpened === undefined && popid) {
-      showed[popid] = true
-      setPopoverOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(popoverOpened))
-      showed[popid] = !showed[popid]
-      setPopoverOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (popoverOpened !== undefined)
-      return popoverOpened[toolid]
-  }
-
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpenedTooltip = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
 
   useEffect(() => {
     setValue('projects', data)
@@ -472,8 +440,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         <LeadUserBadge
                           index={index}
                           project={project}
-                          isOpened={isOpened}
-                          showPopover={showPopover}
+                          isOpened={isOpenPopover}
+                          showPopover={togglePopover}
                         />
                         {
                           extractCollaborators(project.userproject_set).map((collab, cid) =>
@@ -487,16 +455,15 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               {`${collab.user.first_name} ${collab.user.last_name}`}
                               <Popover
                                 placement="left"
-                                isOpen={isOpened(`${index}-${collab.user.id}`)}
+                                isOpen={isOpenPopover(`${index}-${collab.user.id}`)}
                                 target={`pop-collab-${index}-${collab.user.id}`}
-                                toggle={() => {
-                                  showPopover(`${index}-${collab.user.id}`)
-                                }}
+                                toggle={() => togglePopover(`${index}-${collab.user.id}`)
+                                }
                               >
                                 <PopoverUserInfo
                                   rhfId={`${index}-${collab.user.id}`}
                                   userName={collab.user.username}
-                                  showPopover={showPopover}
+                                  showPopover={togglePopover}
                                 />
                               </Popover>
                             </Badge>
@@ -540,10 +507,8 @@ const ProjectsListForm = ({ data, pageTitle }) => {
 
 
 export const ProjectsList = () => {
-  const { LinkTitles } = useContext(SharedData)
-  const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
 
   const { status, error, data } = useQuery({
     queryKey: ["all-projects"],
@@ -551,10 +516,9 @@ export const ProjectsList = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-  }, [location.pathname, status, intl])
+  }, [status])
 
 
   if (status === 'success' && data && pageTitle)

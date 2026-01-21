@@ -28,11 +28,11 @@ import { useNavigate } from 'react-router';
 import { url_ui_prefix } from 'Config/general';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { useIntl, FormattedMessage } from 'react-intl'
+import { usePageTitle } from 'Hooks/pagetitle';
 
 
 const NewPublicKey = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
+  const pageTitle = usePageTitle(location)
   const [areYouSureModal, setAreYouSureModal] = useState(false)
   const [modalTitle, setModalTitle] = useState(undefined)
   const [modalMsg, setModalMsg] = useState(undefined)
@@ -123,10 +123,9 @@ const NewPublicKey = () => {
   })
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     if (sshKeyFile)
       setValue('public_key', sshKeyFile)
-  }, [location.pathname, sshKeyFile, intl])
+  }, [sshKeyFile])
 
   return (
     <>

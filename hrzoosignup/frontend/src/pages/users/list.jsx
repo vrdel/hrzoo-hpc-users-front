@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { SharedData } from "Pages/root";
+import React, { useEffect, useState } from "react";
 import { fetchUsers, fetchUsersInactive } from "Api/users"
 import { fetchNrSpecificProject } from "Api/projects"
 import { useQuery } from "@tanstack/react-query";
@@ -32,6 +31,8 @@ import { StateIcons } from 'Config/map-states';
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from 'react-intl';
 import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
+import { useOpenedIndexMap } from 'Hooks/indexed-map';
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from 'lodash';
 
 
@@ -183,6 +184,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
   const [pageIndex, setPageIndex] = useState(0)
   const [sortName, setSortName] = useState(undefined)
   const [sortJoined, setSortJoined] = useState(true)
+  const { isOpen, toggleIndex: togglePopover } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -195,24 +197,6 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
       searchSSHKey: ""
     }
   })
-
-  const [popoverOpened, setPopoverOpened] = useState(undefined);
-  const showPopover = (popid) => {
-    let showed = new Object()
-    if (popoverOpened === undefined && popid) {
-      showed[popid] = true
-      setPopoverOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(popoverOpened))
-      showed[popid] = !showed[popid]
-      setPopoverOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (popoverOpened !== undefined)
-      return popoverOpened[toolid]
-  }
 
   const searchJoined = useWatch({ control, name: "searchJoined" })
   const searchName = useWatch({ control, name: "searchName" })
@@ -586,21 +570,18 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                     color={ `${proj.role === "lead" ? "dark" : "secondary"}` }
                                     className="d-inline-block fw-normal ms-1 text-decoration-underline"
                                     style={{cursor: 'pointer', whiteSpace: 'normal'}}
-                                    onClick={() => {
-                                      showPopover(`${user.id}-${pid}`)
-                                    }}
+                                    onClick={() => togglePopover(`${user.id}-${pid}`)}
                                   >
                                     { proj.identifier }
                                   </Badge>
                                   <Popover
                                     placement="left"
-                                    isOpen={isOpened(`${user.id}-${pid}`)}
+                                    isOpen={isOpen(`${user.id}-${pid}`)}
                                     target={`pop-${user.id}-${pid}`}
-                                    toggle={() => {
-                                      showPopover(`${user.id}-${pid}`)
-                                    }}
+                                    toggle={() => togglePopover(`${user.id}-${pid}`)
+                                    }
                                   >
-                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} showPopover={showPopover} />
+                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} showPopover={togglePopover} />
                                   </Popover>
                                   <MiniButton
                                     color="light"
@@ -678,10 +659,8 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
 
 
 export const UsersInactiveList = () => {
-  const { LinkTitles } = useContext(SharedData)
-	const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
 
 	const { status, error, data } = useQuery({
 		queryKey: ["inactive-users"],
@@ -689,10 +668,9 @@ export const UsersInactiveList = () => {
 	})
 
 	useEffect(() => {
-		setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-	}, [location.pathname, status, intl])
+	}, [status])
 
   if (status === 'pending' && pageTitle)
     return (
@@ -770,10 +748,8 @@ export const UsersInactiveList = () => {
 
 
 export const UsersList = () => {
-  const { LinkTitles } = useContext(SharedData)
-	const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
 
 	const { status, error, data } = useQuery({
 		queryKey: ["active-users"],
@@ -781,10 +757,9 @@ export const UsersList = () => {
 	})
 
 	useEffect(() => {
-		setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-	}, [location.pathname, status, intl])
+	}, [status])
 
   if (status === 'pending' && pageTitle)
     return (

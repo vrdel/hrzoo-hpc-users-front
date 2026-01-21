@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { SharedData } from 'Pages/root';
 import {
   Col,
   Row,
@@ -31,6 +30,8 @@ import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
 import { FormattedMessage } from 'react-intl';
 import { useParams } from 'react-router';
+import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -65,23 +66,7 @@ export const BriefSummary = ({project, isSubmitted}) => {
 }
 
 const BriefProjectInfo = ({project}) => {
-  const [tooltipOpened, setTooltipOpened] = useState(undefined);
-  const showTooltip = (toolid) => {
-    let showed = new Object()
-    if (tooltipOpened === undefined && toolid) {
-      showed[toolid] = true
-      setTooltipOpened(showed)
-    }
-    else {
-      showed = JSON.parse(JSON.stringify(tooltipOpened))
-      showed[toolid] = !showed[toolid]
-      setTooltipOpened(showed)
-    }
-  }
-  const isOpened = (toolid) => {
-    if (tooltipOpened !== undefined)
-      return tooltipOpened[toolid]
-  }
+  const { isOpen, toggleIndex } = useOpenedIndexMap()
 
   return (
     <>
@@ -97,9 +82,9 @@ const BriefProjectInfo = ({project}) => {
         </div>
         <Tooltip
           placement='bottom'
-          isOpen={isOpened(project.identifier)}
+          isOpen={isOpen(project.identifier)}
           target={'Tooltip-' + project.identifier.replace(/\/| |\.|:/g, '-')}
-          toggle={() => showTooltip(project.identifier)}
+          toggle={() => toggleIndex(project.identifier)}
         >
           { StateStringUser(project.state.name) }
         </Tooltip>
@@ -199,12 +184,11 @@ const BriefProjectInfo = ({project}) => {
 }
 
 const MembershipsChange = () => {
-  const { LinkTitles } = useContext(SharedData);
+  const pageTitle = usePageTitle(location)
   const { projId } = useParams()
   const { csrfToken } = useContext(AuthContext);
   const intl = useIntl()
 
-  const [pageTitle, setPageTitle] = useState(undefined);
   const [invitesSent, setInvitesSent] = useState(undefined);
 
   const [areYouSureModal, setAreYouSureModal] = useState(false)
@@ -463,9 +447,8 @@ const MembershipsChange = () => {
   }
 
   useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
     setInvitesSent(myInvites)
-  }, [location.pathname, myInvites, intl])
+  }, [myInvites])
 
   if (nrStatus === 'success'
     && invitesStatus === 'success'
