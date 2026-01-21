@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { SharedData } from "Pages/root";
+import React, { useEffect, useState } from "react";
 import { fetchUsers, fetchUsersInactive } from "Api/users"
 import { fetchNrSpecificProject } from "Api/projects"
 import { useQuery } from "@tanstack/react-query";
@@ -32,7 +31,8 @@ import { StateIcons } from 'Config/map-states';
 import { useIntl } from 'react-intl'
 import { FormattedMessage } from 'react-intl';
 import ButtonGroupActiveInactive from 'Components/ButtonGroupActiveInactive';
-import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { useOpenedIndexMap } from 'Hooks/indexed-map';
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from 'lodash';
 
 
@@ -659,10 +659,8 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
 
 
 export const UsersInactiveList = () => {
-  const { LinkTitles } = useContext(SharedData)
-	const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
 
 	const { status, error, data } = useQuery({
 		queryKey: ["inactive-users"],
@@ -670,10 +668,9 @@ export const UsersInactiveList = () => {
 	})
 
 	useEffect(() => {
-		setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-	}, [location.pathname, status, intl])
+	}, [status])
 
   if (status === 'pending' && pageTitle)
     return (
@@ -751,10 +748,8 @@ export const UsersInactiveList = () => {
 
 
 export const UsersList = () => {
-  const { LinkTitles } = useContext(SharedData)
-	const [pageTitle, setPageTitle] = useState(undefined)
   const navigate = useNavigate()
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
 
 	const { status, error, data } = useQuery({
 		queryKey: ["active-users"],
@@ -762,10 +757,9 @@ export const UsersList = () => {
 	})
 
 	useEffect(() => {
-		setPageTitle(LinkTitles(location.pathname, intl))
     if (status === 'error' && error.message.includes('403'))
       navigate(defaultUnAuthnRedirect)
-	}, [location.pathname, status, intl])
+	}, [status])
 
   if (status === 'pending' && pageTitle)
     return (
