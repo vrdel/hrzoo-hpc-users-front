@@ -1,8 +1,7 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React from 'react';
 import { fetchSpecificUser } from "Api/users";
 import { fetchCroRISUser } from "Api/croris";
 import { useQuery } from "@tanstack/react-query";
-import { SharedData } from 'Pages/root';
 import { Row, Col, Table, Badge } from 'reactstrap';
 import { PageTitle } from 'Components/PageTitle';
 import StatusInfo from 'Components/user-info/StatusInfo';
@@ -21,7 +20,8 @@ import { url_ui_prefix } from 'Config/general';
 import { MiniButton } from 'Components/MiniButton';
 import { TableUserKeys } from 'Components/sshkeys/UserKeys';
 import { fetchSshKeys } from 'Api/sshkeys';
-import { useIntl, FormattedMessage } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
+import { usePageTitle } from 'Hooks/pagetitle';
 import _ from "lodash";
 
 
@@ -228,10 +228,8 @@ const UserProjectsTable = ({projects}) => {
 
 
 const UserChange = () => {
-  const { LinkTitles } = useContext(SharedData);
-  const [pageTitle, setPageTitle] = useState(undefined);
   const { userId } = useParams()
-  const intl = useIntl()
+  const pageTitle = usePageTitle(location)
 
   const {status, data: userData, error} = useQuery({
       queryKey: ['change-user', userId],
@@ -251,10 +249,6 @@ const UserChange = () => {
       queryFn: () => fetchSshKeys(targetUsername),
       enabled: !!targetUsername
   })
-
-  useEffect(() => {
-    setPageTitle(LinkTitles(location.pathname, intl))
-  }, [location.pathname, intl])
 
   if (status === 'success' && userData) {
     let interestedProjecs = userData.userproject_set.filter(pro => pro.project.state.name !== 'deny' && pro.project.state.name !== 'submit')
