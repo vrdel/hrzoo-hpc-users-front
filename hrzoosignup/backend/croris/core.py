@@ -359,7 +359,7 @@ class CroRISCore(object):
                             if not project_have_main_leader and iam_lead_institute:
                                 await _set_lead_institute_can_submit()
 
-                        elif settings.CRORIS_LEADINSTITUTESUBMITNATIONAL:
+                        elif settings.CRORIS_LEADINSTITUTESUBMITNATIONAL and iam_lead_institute:
                             await _set_lead_institute_can_submit()
 
     async def _close_session(self):
