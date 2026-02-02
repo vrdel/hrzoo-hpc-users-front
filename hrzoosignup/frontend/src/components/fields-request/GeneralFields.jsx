@@ -146,7 +146,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
             projectInfo.userproject_set.map((user, index) =>
               user.role.name === 'lead' &&
               <Badge
-                color="secondary"
+                color="dark"
                 className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
                 key={`project-users-${index}`}
                 style={{cursor: 'pointer'}}
@@ -217,7 +217,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
           {
             projectInfo.userproject_set.map((user, i) =>
               user.role.name === 'lead' &&
-              <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+              <Badge color="dark" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
                 {
                   user['user']['first_name'] + ' ' + user['user']['last_name']
                 }
