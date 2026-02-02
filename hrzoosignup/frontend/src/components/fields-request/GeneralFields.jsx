@@ -53,7 +53,7 @@ const GeneralProjectUsers = ({projectInfo}) => {
           projectInfo.userproject_set.map((user, index) =>
             user.role.name === 'lead' &&
             <Badge
-              color="secondary"
+              color="dark"
               className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
               style={{cursor: 'pointer'}}
               key={`project-users-${index}`}
