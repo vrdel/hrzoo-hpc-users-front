@@ -134,7 +134,13 @@ export const Persons = ({project, person_info, projectsLeadUsers}) => {
 
       <Col md={{size: 12}}>
         <div className="p-2">
-          <ExtractUsers projectUsers={[person_info, ...projectsLeadUsers[project['croris_id']]]} />
+          <Badge color="dark" className="fs-6 mb-2 fw-normal" key={`project-users-lead`}>
+            { person_info.first_name }
+            {' '}
+            { person_info.last_name }
+          </Badge>
+          {'   '}
+          <ExtractUsers projectUsers={[...projectsLeadUsers[project['croris_id']]]} />
         </div>
       </Col>
     </>
