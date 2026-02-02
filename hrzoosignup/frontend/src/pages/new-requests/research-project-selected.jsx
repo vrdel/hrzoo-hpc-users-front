@@ -597,7 +597,13 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
         </Col>
         <Col md={{size: 8}}>
           <div className="p-2">
-            <ExtractUsers projectUsers={[person_info, ...projectsLeadUsers]} />
+            <Badge color="dark" className="fs-6 mb-2 fw-normal">
+              { person_info.first_name }
+              {' '}
+              { person_info.last_name }
+            </Badge>
+            {'   '}
+            <ExtractUsers projectUsers={[...projectsLeadUsers]} />
           </div>
         </Col>
       </Row>

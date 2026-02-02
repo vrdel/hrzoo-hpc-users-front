@@ -160,10 +160,23 @@ class ProjectsResearch(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-        oib = request.user.person_oib
+        try:
+            models.Project.objects.get(identifier=request.data['croris_identifier'])
+            already_submitted = {
+                'status': {
+                    'code': status.HTTP_409_CONFLICT,
+                    'message': 'Research project already submitted'
+                }
+            }
+            return Response(already_submitted, status=status.HTTP_409_CONFLICT)
+
+        except models.Project.DoesNotExist:
+            pass
 
         # TODO: validate date data picked up from frontend with the CroRIS cached
         # data
+
+        oib = request.user.person_oib
         croris_data = cache.get('{oib}_croris')
         if croris_data:
             lead_status = croris_data['person_info']['lead_status']

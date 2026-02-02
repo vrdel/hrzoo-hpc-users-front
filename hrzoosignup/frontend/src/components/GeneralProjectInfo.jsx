@@ -134,7 +134,13 @@ export const Persons = ({project, person_info, projectsLeadUsers}) => {
 
       <Col md={{size: 12}}>
         <div className="p-2">
-          <ExtractUsers projectUsers={[person_info, ...projectsLeadUsers[project['croris_id']]]} />
+          <Badge color="dark" className="fs-6 mb-2 fw-normal">
+            { person_info.first_name }
+            {' '}
+            { person_info.last_name }
+          </Badge>
+          {'   '}
+          <ExtractUsers projectUsers={[...projectsLeadUsers[project['croris_id']]]} />
         </div>
       </Col>
     </>
@@ -197,7 +203,7 @@ export const CrorisUrl = ({project}) => {
         </Label>
       </Col>
       <Col md={{size: 10}}>
-        <a href={`https://www.croris.hr/projekti/projekt/${project.croris_id}/`} className="ps-2" target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
+        <a href={`https://www.croris.hr/projekti/projekt/${project.croris_id}`} className="ps-2" target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
           https://www.croris.hr/projekti/projekt/{project.croris_id}
         </a>
       </Col>

@@ -307,6 +307,29 @@ class CroRISCore(object):
             i += 1
 
     async def _lead_institute_on_project_associate(self):
+        async def _set_lead_institute_can_submit():
+            self.projects_associate_ids.remove(prjs['id'])
+            for project in self.projects_associate_info:
+                if project['croris_id'] == prjs['id']:
+                    self.projects_associate_info.remove(project)
+
+            pr_fields = await self._extract_project_fields(prjs)
+            self.projects_lead_info.append(pr_fields)
+            for person in prjs['osobeResources']['_embedded']['osobe']:
+                if prjs['id'] not in self.projects_lead_users:
+                    self.projects_lead_users[prjs['id']] = list()
+                if person.get('oib', 0) != self.target_oib:
+                    self.projects_lead_users[prjs['id']].append(
+                        {
+                            'first_name': person['ime'],
+                            'last_name': person['prezime'],
+                            'oib': person.get('oib', ''),
+                            'email': person.get('email', ''),
+                            'institution': person['ustanovaNaziv']
+                        }
+                    )
+            self.person_info['lead_status'] = True
+
         project_associate_should_lead = list()
 
         if self.projects_associate_info:
@@ -314,8 +337,16 @@ class CroRISCore(object):
                 prjs = json.loads(project)
                 if prjs['id'] in self.projects_associate_ids:
                     finance = prjs['financijerResources']
+                    is_eu_project = False
                     if finance and finance.get('_embedded', False):
                         project_have_main_leader = None
+
+                        for fin in finance['_embedded']['financijeri']:
+                            fin_name = await long_name(fin['entityNameHr'])
+                            if 'Europska unija'.lower() in fin_name.lower():
+                                is_eu_project = True
+                                break
+
                         iam_lead_institute = False
                         for person in prjs['osobeResources']['_embedded']['osobe']:
                             if person['klasifikacija']['naziv'].lower() == 'voditelj':
@@ -324,28 +355,12 @@ class CroRISCore(object):
                                 and person.get('oib', 0) == self.target_oib):
                                 iam_lead_institute = True
 
-                        if not project_have_main_leader and iam_lead_institute:
-                            self.projects_associate_ids.remove(prjs['id'])
-                            for project in self.projects_associate_info:
-                                if project['croris_id'] == prjs['id']:
-                                    self.projects_associate_info.remove(project)
+                        if not settings.CRORIS_LEADINSTITUTESUBMITNATIONAL and is_eu_project:
+                            if not project_have_main_leader and iam_lead_institute:
+                                await _set_lead_institute_can_submit()
 
-                            pr_fields = await self._extract_project_fields(prjs)
-                            self.projects_lead_info.append(pr_fields)
-                            for person in prjs['osobeResources']['_embedded']['osobe']:
-                                if prjs['id'] not in self.projects_lead_users:
-                                    self.projects_lead_users[prjs['id']] = list()
-                                if person.get('oib', 0) != self.target_oib:
-                                    self.projects_lead_users[prjs['id']].append(
-                                        {
-                                            'first_name': person['ime'],
-                                            'last_name': person['prezime'],
-                                            'oib': person.get('oib', ''),
-                                            'email': person.get('email', ''),
-                                            'institution': person['ustanovaNaziv']
-                                        }
-                                    )
-                            self.person_info['lead_status'] = True
+                        elif settings.CRORIS_LEADINSTITUTESUBMITNATIONAL and iam_lead_institute:
+                            await _set_lead_institute_can_submit()
 
     async def _close_session(self):
         await self.session.close()

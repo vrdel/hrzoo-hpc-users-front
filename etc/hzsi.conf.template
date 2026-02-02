@@ -52,7 +52,7 @@ Password = pass
 Grace_Days = 180
 InstitutionLongName = True
 ParallelSyncers = 10
-
+LeadInstituteSubmitNational = False
 
 [DASHBOARD]
 API_Institutions = https://webdev.dashboard.srce.hr/api/ustanove
