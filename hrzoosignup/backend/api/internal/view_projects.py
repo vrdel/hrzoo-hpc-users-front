@@ -161,7 +161,7 @@ class ProjectsResearch(APIView):
 
     def post(self, request):
         try:
-            models.Project.objects.get(identifier=request.data['croris_identifier'])
+            models.Project.objects.get(croris_id=request.data['croris_id'])
             already_submitted = {
                 'status': {
                     'code': status.HTTP_409_CONFLICT,
