@@ -106,7 +106,7 @@ class Command(BaseCommand):
                             project_db_metadata = await projects_db.aget(croris_id=project.get('id'))
 
                             project_metadata.update({
-                                'identifier': project.get('hrSifraProjekta', ''),
+                                'identifier': project_db_metadata.identifier,
                                 'croris_id': project.get('id'),
                                 'date_end': datetime.datetime.strptime(project.get('kraj'), '%d.%m.%Y').replace(hour=23, minute=59),
                                 'bogus_end': project_db_metadata.bogus_end,
