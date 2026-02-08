@@ -5,7 +5,7 @@ from backend.models import Project, ResourceUsage
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
-from backend.utils.various import contains_exception
+from backend.utils.various import contains_exception, chunk_list
 
 import asyncio
 import datetime
@@ -20,7 +20,7 @@ logger = logging.getLogger('hrzoosignup.tasks')
 
 
 class Command(BaseCommand):
-    help = "Refresh research project financiers with recent CroRIS project metadata"
+    help = "Fetch publications for research projects"
 
     def __init__(self):
         super().__init__()
@@ -49,6 +49,7 @@ class Command(BaseCommand):
         self.start_date = self._parse_date(options.get('startdate'))
 
         try:
+
             projects_db = Project.objects.filter(project_type__name='research-croris', state__name__in=['approve', 'extend', 'expire'])
 
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
@@ -74,50 +75,51 @@ class Command(BaseCommand):
                         self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
                     )
 
-            response = await asyncio.gather(*coros, return_exceptions=True)
-            exc_raised, exc = contains_exception(response)
+            for sub_coros in chunk_list(coros, settings.CRORIS_PARALLELSYNCERS):
+                response = await asyncio.gather(*sub_coros, return_exceptions=True)
+                exc_raised, exc = contains_exception(response)
 
-            if exc_raised:
-                raise exc
-            else:
-                for project in response:
-                    try:
-                        project = json.loads(project)
-                        publications = []
+                if exc_raised:
+                    raise exc
+                else:
+                    for project in response:
+                        try:
+                            project = json.loads(project)
+                            publications = []
 
-                        publication = project.get('publikacijaResources')
-                        if publication and publication.get('_embedded', False):
-                            for pub in publication['_embedded']['publikacije']:
-                                publications.append({
-                                    'name': pub.get('naslov', ''),
-                                    'authors': pub.get('autori', ''),
-                                    'cfResPublId': pub.get('cfResPublId', ''),
-                                    'type': pub.get('tipPublikacije', ''),
-                                    'category': pub.get('vrstaPublikacije', ''),
-                                    'doi': pub.get('doi', ''),
-                                    'eissn': pub.get('eissn', ''),
-                                })
-                        project_metadata = dict()
-                        titles = project['title']
-                        for title in titles:
-                            if title['cfLangCode'] == 'hr':
-                                project_metadata['title'] = title['naziv']
-                                break
-                        project_db_metadata = await projects_db.aget(croris_id=project.get('id'))
+                            publication = project.get('publikacijaResources')
+                            if publication and publication.get('_embedded', False):
+                                for pub in publication['_embedded']['publikacije']:
+                                    publications.append({
+                                        'name': pub.get('naslov', ''),
+                                        'authors': pub.get('autori', ''),
+                                        'cfResPublId': pub.get('cfResPublId', ''),
+                                        'type': pub.get('tipPublikacije', ''),
+                                        'category': pub.get('vrstaPublikacije', ''),
+                                        'doi': pub.get('doi', ''),
+                                        'eissn': pub.get('eissn', ''),
+                                    })
+                            project_metadata = dict()
+                            titles = project['title']
+                            for title in titles:
+                                if title['cfLangCode'] == 'hr':
+                                    project_metadata['title'] = title['naziv']
+                                    break
+                            project_db_metadata = await projects_db.aget(croris_id=project.get('id'))
 
-                        project_metadata.update({
-                            'identifier': project.get('hrSifraProjekta', ''),
-                            'croris_id': project.get('id'),
-                            'date_end': datetime.datetime.strptime(project.get('kraj'), '%d.%m.%Y').replace(hour=23, minute=59),
-                            'bogus_end': project_db_metadata.bogus_end,
-                            'date_approved': project_db_metadata.date_approved,
-                            'publications': publications,
-                        })
-                        projects_publications.append(project_metadata)
+                            project_metadata.update({
+                                'identifier': project.get('hrSifraProjekta', ''),
+                                'croris_id': project.get('id'),
+                                'date_end': datetime.datetime.strptime(project.get('kraj'), '%d.%m.%Y').replace(hour=23, minute=59),
+                                'bogus_end': project_db_metadata.bogus_end,
+                                'date_approved': project_db_metadata.date_approved,
+                                'publications': publications,
+                            })
+                            projects_publications.append(project_metadata)
 
-                    except TypeError as exc:
-                        self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
-                        continue
+                        except TypeError as exc:
+                            self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
+                            continue
 
             return projects_publications
 
