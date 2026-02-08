@@ -5,6 +5,7 @@ from backend.models import Project, ResourceUsage
 
 from backend.httpq.excep import HZSIHttpError
 from backend.httpq.httpconn import SessionWithRetry
+from backend.utils.accounting import get_active_projects
 from backend.utils.various import contains_exception, chunk_list
 
 import asyncio
@@ -50,7 +51,9 @@ class Command(BaseCommand):
 
         try:
 
-            projects_db = Project.objects.filter(project_type__name='research-croris', state__name__in=['approve', 'extend', 'expire'])
+            projects_db = get_active_projects(self.start_date, self.end_date)
+            # projects_db = Project.objects.filter(project_type__name='research-croris', state__name__in=['approve', 'extend', 'expire'])
+            projects_db = projects_db.filter(project_type__name='research-croris')
 
             auth = (settings.CRORIS_USER, settings.CRORIS_PASSWORD)
             self.session = SessionWithRetry(logger, auth=auth,
@@ -65,15 +68,10 @@ class Command(BaseCommand):
                     except ResourceUsage.DoesNotExist:
                         self.stdout.write(self.style.WARNING(f'Skip project {project.identifier} as no resource usage found'))
                         continue
-                if self.end_date or self.start_date:
-                    if ((project.date_approved.date() >= self.start_date and project.date_approved.date() <= self.end_date)):
-                        coros.append(
-                            self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
-                        )
-                else:
-                    coros.append(
-                        self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
-                    )
+
+                coros.append(
+                    self.session.http_get(settings.API_PROJECT.replace('{projectId}', str(project.croris_id)))
+                )
 
             for sub_coros in chunk_list(coros, settings.CRORIS_PARALLELSYNCERS):
                 response = await asyncio.gather(*sub_coros, return_exceptions=True)
