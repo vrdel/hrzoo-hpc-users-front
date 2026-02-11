@@ -42,6 +42,11 @@ let jupyterResource = {
   "value": "JUPYTER"
 }
 
+let gpuBigMemResource = {
+  "label": "GPU-BIGMEM",
+  "value": "GPU-BIGMEM"
+}
+
 export const ResourceTypesToSelect = [
   bigMemResource,
   cloudBigMemResource,
@@ -49,6 +54,7 @@ export const ResourceTypesToSelect = [
   cloudResource,
   cpuResource,
   gpuResource,
+  gpuBigMemResource,
   jupyterResource,
   padobranResource,
 ]
@@ -60,6 +66,7 @@ export const ResourceTypesToSelectAdmin = [
   cloudResource,
   cpuResource,
   gpuResource,
+  gpuBigMemResource,
   jupyterResource,
   padobranResource,
   penkalaResource
