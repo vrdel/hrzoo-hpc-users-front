@@ -9,7 +9,7 @@ from django.conf import settings
 from django.utils import timezone
 
 RESOURCES_TAGS_MAPPING = {
-    "supek": ["BIGMEM", "CPU", "GPU"],
+    "supek": ["BIGMEM", "CPU", "GPU", "GPU-BIGMEM"],
     "cloud": ["CLOUD", "CLOUD-BIGMEM", "CLOUD-GPU"],
     "padobran": ["PADOBRAN"],
     "jupyter": ["JUPYTER"],
