@@ -272,7 +272,7 @@ class Invites(APIView):
                     croris_info.request = request
                     croris_resp = croris_info.get(request).data
 
-                    if croris_resp:
+                    if croris_resp and 'data' in croris_resp:
                         projects_lead = croris_resp['data']['projects_lead_info']
                         projects_associate = croris_resp['data']['projects_associate_info']
                         if len(projects_lead) > 0:
