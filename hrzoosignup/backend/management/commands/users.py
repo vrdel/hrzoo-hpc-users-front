@@ -280,7 +280,6 @@ class Command(BaseCommand):
             start_date = datetime.date(year, 1, 1)
             end_date = datetime.date(year, 12, 31)
             match = get_active_users(start_date, end_date)
-
         elif search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username
@@ -295,16 +294,22 @@ class Command(BaseCommand):
                 person_type__icontains=search_persontype
             )
 
-        i = 1
-        for m in match:
-            user_projects = UserProject.objects.filter(user=m)
+        onlyusername = bool(options['onlyusername'])
+        if onlyusername:
+            for user in match:
+                print(user.username)
 
-            table.add_row(str(i), '\n@'.join(m.username.split("@")), m.first_name, m.last_name, '\n@'.join(m.person_mail.split("@")), str(m.status), m.person_type, str(m.person_type_manual_set), '\n'.join([up.project.identifier for up in user_projects]), m.person_institution, str(m.person_institution_manual_set), m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
-            i += 1
+        else:
+            i = 1
+            for m in match:
+                user_projects = UserProject.objects.filter(user=m)
 
-        if table.row_count:
-            console = Console()
-            console.print(table)
+                table.add_row(str(i), '\n@'.join(m.username.split("@")), m.first_name, m.last_name, '\n@'.join(m.person_mail.split("@")), str(m.status), m.person_type, str(m.person_type_manual_set), '\n'.join([up.project.identifier for up in user_projects]), m.person_institution, str(m.person_institution_manual_set), m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
+                i += 1
+
+            if table.row_count:
+                console = Console()
+                console.print(table)
 
     def _user_delete(self, options):
         try:
@@ -434,6 +439,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--institution', dest='institution', nargs='+', required=False, help='Institution of the user')
         parser_list.add_argument('--person-type', dest='person_type', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
+        parser_list.add_argument('--only-username', dest='onlyusername', action='store_true', required=False, help="List only username field (AAI UID)")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
