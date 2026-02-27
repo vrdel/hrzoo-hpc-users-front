@@ -9,6 +9,7 @@ from backend.models import Project, UserProject, Role
 from backend.serializers_internal import SshKeysSerializer
 from backend.models import SSHPublicKey
 from backend.utils.gen_username import gen_username
+from backend.utils.accounting import get_active_users
 
 import argparse
 import datetime
@@ -272,8 +273,15 @@ class Command(BaseCommand):
         search_username = options.get('username', None)
         search_institution = options.get('institution', None)
         search_persontype = options.get('person_type', None)
+        list_by_year = options.get('target_year', None)
 
-        if search_username:
+        if list_by_year:
+            year = int(list_by_year)
+            start_date = datetime.date(year, 1, 1)
+            end_date = datetime.date(year, 12, 31)
+            match = get_active_users(start_date, end_date)
+
+        elif search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username
             )
@@ -425,6 +433,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--username', dest='username', type=str, required=False, help='Username of user')
         parser_list.add_argument('--institution', dest='institution', nargs='+', required=False, help='Institution of the user')
         parser_list.add_argument('--person-type', dest='person_type', type=str, required=False, help="User is local or foreign")
+        parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
