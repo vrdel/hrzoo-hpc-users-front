@@ -102,13 +102,13 @@ class Command(BaseCommand):
             else:
                 match = Project.objects.all()
 
-        onlyname_number = options.get('onlynamenumusers', None)
+        nrreport = options.get('nrreport', None)
         onlyname = bool(options['onlyname'])
-        if onlyname_number and onlyname:
+        if nrreport:
             for project in match:
                 institutions = institutions_realms_dict()
                 get_realm(institutions, project.institute)
-                print(project.name, f"({get_realm(institutions, project.institute)})", project.project_type.name, len(project.users.all()))
+                print(project.name, f"({get_realm(institutions, project.institute)})", project.project_type.name, f" {len(project.users.all())}")
         elif onlyname:
             for project in match:
                 print(project.name)
@@ -135,7 +135,7 @@ class Command(BaseCommand):
         parser_list = subparsers.add_parser("list", help="List projects based on passed metadata")
         parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
         parser_list.add_argument('--only-name', dest='onlyname', action='store_true', required=False, help="List only project names")
-        parser_list.add_argument('--only-name-numusers', dest='onlynamenumusers', action='store_true', required=False, help="List only project names and number of users associated")
+        parser_list.add_argument('--nr-report-format', dest='nrreport', action='store_true', required=False, help="List project names according to format of Napredno racunanje")
         parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
 
     def handle(self, *args, **options):
