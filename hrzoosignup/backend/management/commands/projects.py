@@ -105,10 +105,21 @@ class Command(BaseCommand):
         nrreport = options.get('nrreport', None)
         onlyname = bool(options['onlyname'])
         if nrreport:
+            project_type_maps = {
+                'research-croris': 'Istraživački projekt',
+                'research-institutional': 'Institucijski projekt',
+                'thesis': 'Izrada rada',
+                'practical': 'Praktična nastava - Radionica',
+                'internal': 'Testiranje i analiza - Srce',
+                'srce-workshop': 'Praktična nastava - Radionica'
+            }
             for project in match:
                 institutions = institutions_realms_dict()
-                get_realm(institutions, project.institute)
-                print(project.name, f"({get_realm(institutions, project.institute)})", project.project_type.name, f" {len(project.users.all())}")
+                realm = get_realm(institutions, project.institute).replace(".hr", "")
+                out_line = "{} {} {} {}".format(project.name, f"({realm})",
+                                                project_type_maps[project.project_type.name],
+                                                len(project.users.all()))
+                print(out_line)
         elif onlyname:
             for project in match:
                 print(project.name)
