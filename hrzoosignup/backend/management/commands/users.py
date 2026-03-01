@@ -331,7 +331,9 @@ class Command(BaseCommand):
                 if only_unique:
                     # users_in_project = get_users_in_project(target_project.identifier)
                     pr = Project.objects.get(identifier=target_project.identifier)
-                    users_in_project = pr.users.all()
+                    users_in_project = [user for user in
+                                        pr.users.all()
+                                        if user.person_institution not in ["", "Nepoznato"]]
                     for user in users_in_project:
                         if user.id not in seen_users:
                             match.append(user)
@@ -339,7 +341,10 @@ class Command(BaseCommand):
                 else:
                     # match += get_users_in_project(target_project.identifier)
                     pr = Project.objects.get(identifier=target_project.identifier)
-                    match += pr.users.all()
+                    users_in_project = [user for user in
+                                        pr.users.all()
+                                        if user.person_institution not in ["", "Nepoznato"]]
+                    match += users_in_project
         elif search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username

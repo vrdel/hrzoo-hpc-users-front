@@ -114,11 +114,14 @@ class Command(BaseCommand):
                 'srce-workshop': 'Praktična nastava - Radionica'
             }
             for project in match:
+                users_on_project = [user for user in
+                                    project.users.all()
+                                    if user.person_institution not in ["", "Nepoznato"]]
                 institutions = institutions_realms_dict()
                 realm = get_realm(institutions, project.institute).replace(".hr", "")
                 out_line = "{} {} {} {}".format(project.name, f"({realm})",
                                                 project_type_maps[project.project_type.name],
-                                                len(project.users.all()))
+                                                len(users_on_project))
                 print(out_line)
         elif onlyname:
             for project in match:
