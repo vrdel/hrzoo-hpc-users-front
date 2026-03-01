@@ -277,18 +277,31 @@ class Command(BaseCommand):
         search_persontype = options.get('person_type', None)
         list_by_year = options.get('target_year', None)
         only_projects = options.get('onlyprojects', None)
+        only_unique = options.get('onlyunique', None)
 
         if only_projects:
             with only_projects.open() as fp:
                 target_projects = fp.readlines()
             seen_projects = set()
+            seen_users = set()
             for project in target_projects:
                 found_projects = Project.objects.filter(name=project.strip())
                 for target_project in found_projects:
                     if target_project.id in seen_projects:
                         continue
                     seen_projects.add(target_project.id)
-                    match += get_users_in_project(target_project.identifier)
+                    if only_unique:
+                        # users_in_project = get_users_in_project(target_project.identifier)
+                        pr = Project.objects.get(identifier=target_project.identifier)
+                        users_in_project = pr.users.all()
+                        for user in users_in_project:
+                            if user.id not in seen_users:
+                                match.append(user)
+                            seen_users.add(user.id)
+                    else:
+                        # match += get_users_in_project(target_project.identifier)
+                        pr = Project.objects.get(identifier=target_project.identifier)
+                        match += pr.users.all()
 
         elif list_by_year:
             year = int(list_by_year)
@@ -458,6 +471,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--only-username', dest='onlyusername', action='store_true', required=False, help="List only username field (AAI UID)")
         parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
+        parser_list.add_argument('--only-unique', dest='onlyunique', action='store_true', required=False, help="List only unique users on projects listed in file")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
