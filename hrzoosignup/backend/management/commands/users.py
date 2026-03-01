@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils import timezone
 from django.utils.crypto import get_random_string
+from django.db.models import Q
 
 from backend.models import Project, UserProject, Role
 from backend.serializers_internal import SshKeysSerializer
@@ -285,7 +286,8 @@ class Command(BaseCommand):
             seen_projects = set()
             seen_users = set()
             for project in target_projects:
-                found_projects = Project.objects.filter(name=project.strip())
+                query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
+                found_projects = Project.objects.filter(query)
                 for target_project in found_projects:
                     if target_project.id in seen_projects:
                         continue

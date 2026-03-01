@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.core.management.base import BaseCommand
+from django.db.models import Q
 
 from backend.models import Project, State
 
@@ -68,7 +69,9 @@ class Command(BaseCommand):
             seen_projects = set()
             seen_users = set()
             for project in target_projects:
-                found_projects = Project.objects.filter(name=project.strip())
+                query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
+                found_projects = Project.objects.filter(query)
+                # found_projects = Project.objects.filter(name=project.strip())
                 for target_project in found_projects:
                     if target_project.id in seen_projects:
                         continue
@@ -78,15 +81,21 @@ class Command(BaseCommand):
         else:
             match = Project.objects.all()
 
-        i = 1
-        for m in match:
-            # user_projects = UserProject.objects.filter(user=m)
-            table.add_row(str(i), str(m.name), str(m.identifier), str(m.project_type.name), str(m.is_active))
-            i += 1
+        onlyname = bool(options['onlyname'])
+        if onlyname:
+            for project in match:
+                print(project.name)
 
-        if table.row_count:
-            console = Console()
-            console.print(table)
+        else:
+            i = 1
+            for m in match:
+                # user_projects = UserProject.objects.filter(user=m)
+                table.add_row(str(i), str(m.name), str(m.identifier), str(m.project_type.name), str(m.is_active))
+                i += 1
+
+            if table.row_count:
+                console = Console()
+                console.print(table)
 
     def add_arguments(self, parser):
         subparsers = parser.add_subparsers(help="Project subcommands", dest="command")
@@ -99,6 +108,7 @@ class Command(BaseCommand):
 
         parser_list = subparsers.add_parser("list", help="List projects based on passed metadata")
         parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
+        parser_list.add_argument('--only-name', dest='onlyname', action='store_true', required=False, help="List only project names")
 
     def handle(self, *args, **options):
         if options['command'] == 'update':
