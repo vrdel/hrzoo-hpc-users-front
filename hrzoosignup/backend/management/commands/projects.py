@@ -4,6 +4,7 @@ from django.db.models import Q
 
 from backend.models import Project, State
 
+import datetime
 import pathlib
 
 from rich import box
@@ -62,6 +63,7 @@ class Command(BaseCommand):
 
         match = list()
         only_projects = options.get('onlyprojects', None)
+        list_by_year = options.get('target_year', None)
 
         if only_projects:
             with only_projects.open() as fp:
@@ -69,7 +71,15 @@ class Command(BaseCommand):
             seen_projects = set()
             seen_users = set()
             for project in target_projects:
-                query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
+                if list_by_year:
+                    year = int(list_by_year)
+                    start_date = datetime.date(year, 1, 1)
+                    end_date = datetime.date(year, 12, 31)
+                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"]) \
+                            & (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) \
+                            & Q(date_approved__lte=end_date)
+                else:
+                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
                 found_projects = Project.objects.filter(query)
                 # found_projects = Project.objects.filter(name=project.strip())
                 for target_project in found_projects:
@@ -109,6 +119,7 @@ class Command(BaseCommand):
         parser_list = subparsers.add_parser("list", help="List projects based on passed metadata")
         parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
         parser_list.add_argument('--only-name', dest='onlyname', action='store_true', required=False, help="List only project names")
+        parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
 
     def handle(self, *args, **options):
         if options['command'] == 'update':

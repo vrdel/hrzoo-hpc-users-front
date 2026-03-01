@@ -286,7 +286,15 @@ class Command(BaseCommand):
             seen_projects = set()
             seen_users = set()
             for project in target_projects:
-                query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
+                if list_by_year:
+                    year = int(list_by_year)
+                    start_date = datetime.date(year, 1, 1)
+                    end_date = datetime.date(year, 12, 31)
+                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"]) \
+                            & (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) \
+                            & Q(date_approved__lte=end_date)
+                else:
+                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
                 found_projects = Project.objects.filter(query)
                 for target_project in found_projects:
                     if target_project.id in seen_projects:
