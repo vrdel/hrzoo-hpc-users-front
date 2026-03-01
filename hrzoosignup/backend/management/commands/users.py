@@ -9,10 +9,11 @@ from backend.models import Project, UserProject, Role
 from backend.serializers_internal import SshKeysSerializer
 from backend.models import SSHPublicKey
 from backend.utils.gen_username import gen_username
-from backend.utils.accounting import get_active_users
+from backend.utils.accounting import get_active_users, get_users_in_project
 
 import argparse
 import datetime
+import pathlib
 
 from rich import box
 from rich.console import Console
@@ -270,12 +271,26 @@ class Command(BaseCommand):
         table.add_column("MBZ")
         table.add_column("MailList")
 
+        match = list()
         search_username = options.get('username', None)
         search_institution = options.get('institution', None)
         search_persontype = options.get('person_type', None)
         list_by_year = options.get('target_year', None)
+        only_projects = options.get('onlyprojects', None)
 
-        if list_by_year:
+        if only_projects:
+            with only_projects.open() as fp:
+                target_projects = fp.readlines()
+            seen_projects = set()
+            for project in target_projects:
+                found_projects = Project.objects.filter(name=project.strip())
+                for target_project in found_projects:
+                    if target_project.id in seen_projects:
+                        continue
+                    seen_projects.add(target_project.id)
+                    match += get_users_in_project(target_project.identifier)
+
+        elif list_by_year:
             year = int(list_by_year)
             start_date = datetime.date(year, 1, 1)
             end_date = datetime.date(year, 12, 31)
@@ -293,6 +308,8 @@ class Command(BaseCommand):
             match = self.user_model.objects.filter(
                 person_type__icontains=search_persontype
             )
+        else:
+            match = self.user_model.objects.all()
 
         onlyusername = bool(options['onlyusername'])
         if onlyusername:
@@ -440,6 +457,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--person-type', dest='person_type', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--only-username', dest='onlyusername', action='store_true', required=False, help="List only username field (AAI UID)")
+        parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
