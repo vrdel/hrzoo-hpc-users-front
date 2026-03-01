@@ -317,7 +317,29 @@ class Command(BaseCommand):
             year = int(list_by_year)
             start_date = datetime.date(year, 1, 1)
             end_date = datetime.date(year, 12, 31)
-            match = get_active_users(start_date, end_date)
+            query = (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) \
+                    & Q(date_approved__lte=end_date) \
+                    & ~Q(state__name__in=["submit", "deny"])
+            # match = get_active_users(start_date, end_date)
+            found_projects = Project.objects.filter(query)
+            seen_projects = set()
+            seen_users = set()
+            for target_project in found_projects:
+                if target_project.id in seen_projects:
+                    continue
+                seen_projects.add(target_project.id)
+                if only_unique:
+                    # users_in_project = get_users_in_project(target_project.identifier)
+                    pr = Project.objects.get(identifier=target_project.identifier)
+                    users_in_project = pr.users.all()
+                    for user in users_in_project:
+                        if user.id not in seen_users:
+                            match.append(user)
+                        seen_users.add(user.id)
+                else:
+                    # match += get_users_in_project(target_project.identifier)
+                    pr = Project.objects.get(identifier=target_project.identifier)
+                    match += pr.users.all()
         elif search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username
