@@ -4,14 +4,17 @@ from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils import timezone
 from django.utils.crypto import get_random_string
+from django.db.models import Q
 
 from backend.models import Project, UserProject, Role
 from backend.serializers_internal import SshKeysSerializer
 from backend.models import SSHPublicKey
 from backend.utils.gen_username import gen_username
+from backend.utils.accounting import get_active_users, get_users_in_project, get_realm, institutions_realms_dict
 
 import argparse
 import datetime
+import pathlib
 
 from rich import box
 from rich.console import Console
@@ -269,11 +272,80 @@ class Command(BaseCommand):
         table.add_column("MBZ")
         table.add_column("MailList")
 
+        match = list()
         search_username = options.get('username', None)
         search_institution = options.get('institution', None)
         search_persontype = options.get('person_type', None)
+        list_by_year = options.get('target_year', None)
+        only_projects = options.get('onlyprojects', None)
+        only_unique = options.get('onlyunique', None)
 
-        if search_username:
+        if only_projects:
+            with only_projects.open() as fp:
+                target_projects = fp.readlines()
+            seen_projects = set()
+            seen_users = set()
+            for project in target_projects:
+                if list_by_year:
+                    year = int(list_by_year)
+                    start_date = datetime.date(year, 1, 1)
+                    end_date = datetime.date(year, 12, 31)
+                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"]) \
+                            & (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) \
+                            & Q(date_approved__lte=end_date)
+                else:
+                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
+                found_projects = Project.objects.filter(query)
+                for target_project in found_projects:
+                    if target_project.id in seen_projects:
+                        continue
+                    seen_projects.add(target_project.id)
+                    if only_unique:
+                        # users_in_project = get_users_in_project(target_project.identifier)
+                        pr = Project.objects.get(identifier=target_project.identifier)
+                        users_in_project = pr.users.all()
+                        for user in users_in_project:
+                            if user.id not in seen_users:
+                                match.append(user)
+                            seen_users.add(user.id)
+                    else:
+                        # match += get_users_in_project(target_project.identifier)
+                        pr = Project.objects.get(identifier=target_project.identifier)
+                        match += pr.users.all()
+
+        elif list_by_year:
+            year = int(list_by_year)
+            start_date = datetime.date(year, 1, 1)
+            end_date = datetime.date(year, 12, 31)
+            query = (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) \
+                    & Q(date_approved__lte=end_date) \
+                    & ~Q(state__name__in=["submit", "deny"])
+            # match = get_active_users(start_date, end_date)
+            found_projects = Project.objects.filter(query)
+            seen_projects = set()
+            seen_users = set()
+            for target_project in found_projects:
+                if target_project.id in seen_projects:
+                    continue
+                seen_projects.add(target_project.id)
+                if only_unique:
+                    # users_in_project = get_users_in_project(target_project.identifier)
+                    pr = Project.objects.get(identifier=target_project.identifier)
+                    users_in_project = [user for user in
+                                        pr.users.all()
+                                        if user.person_institution not in ["", "Nepoznato"]]
+                    for user in users_in_project:
+                        if user.id not in seen_users:
+                            match.append(user)
+                        seen_users.add(user.id)
+                else:
+                    # match += get_users_in_project(target_project.identifier)
+                    pr = Project.objects.get(identifier=target_project.identifier)
+                    users_in_project = [user for user in
+                                        pr.users.all()
+                                        if user.person_institution not in ["", "Nepoznato"]]
+                    match += users_in_project
+        elif search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username
             )
@@ -286,17 +358,25 @@ class Command(BaseCommand):
             match = self.user_model.objects.filter(
                 person_type__icontains=search_persontype
             )
+        else:
+            match = self.user_model.objects.all()
 
-        i = 1
-        for m in match:
-            user_projects = UserProject.objects.filter(user=m)
+        onlyusername = bool(options['onlyusername'])
+        if onlyusername:
+            for user in match:
+                print(user.username)
 
-            table.add_row(str(i), '\n@'.join(m.username.split("@")), m.first_name, m.last_name, '\n@'.join(m.person_mail.split("@")), str(m.status), m.person_type, str(m.person_type_manual_set), '\n'.join([up.project.identifier for up in user_projects]), m.person_institution, str(m.person_institution_manual_set), m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
-            i += 1
+        else:
+            i = 1
+            for m in match:
+                user_projects = UserProject.objects.filter(user=m)
 
-        if table.row_count:
-            console = Console()
-            console.print(table)
+                table.add_row(str(i), '\n@'.join(m.username.split("@")), m.first_name, m.last_name, '\n@'.join(m.person_mail.split("@")), str(m.status), m.person_type, str(m.person_type_manual_set), '\n'.join([up.project.identifier for up in user_projects]), m.person_institution, str(m.person_institution_manual_set), m.person_institution_oib, m.person_oib, m.croris_mbz, str(m.mailinglist_subscribe))
+                i += 1
+
+            if table.row_count:
+                console = Console()
+                console.print(table)
 
     def _user_delete(self, options):
         try:
@@ -425,6 +505,10 @@ class Command(BaseCommand):
         parser_list.add_argument('--username', dest='username', type=str, required=False, help='Username of user')
         parser_list.add_argument('--institution', dest='institution', nargs='+', required=False, help='Institution of the user')
         parser_list.add_argument('--person-type', dest='person_type', type=str, required=False, help="User is local or foreign")
+        parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
+        parser_list.add_argument('--only-username', dest='onlyusername', action='store_true', required=False, help="List only username field (AAI UID)")
+        parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
+        parser_list.add_argument('--only-unique', dest='onlyunique', action='store_true', required=False, help="List only unique users on projects listed in file")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
