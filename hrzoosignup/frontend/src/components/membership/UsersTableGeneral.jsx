@@ -13,8 +13,10 @@ import {
   faKey,
   faPaperPlane,
   faPlus,
+  faSearch,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import { SortArrow } from 'Components/TableHelpers';
 import { extractUsers } from 'Utils/invites-extracts';
 import { fetchUsers, fetchUsersInactive } from "Api/users"
 import { useQuery } from "@tanstack/react-query";
@@ -37,6 +39,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const refFileForeignCollaboratorsInput = useRef(null)
   const intl = useIntl()
   const { isOpen: isOpened, toggleIndex: showTooltip } = useOpenedIndexMap()
+
+  const [searchFirstName, setSearchFirstName] = useState('')
+  const [searchLastName, setSearchLastName] = useState('')
+  const [sortName, setSortName] = useState(undefined)
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -275,6 +281,19 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     reader.readAsText(event.target.files[0])
   }
 
+  const filterByName = (firstName, lastName) => {
+    let match = true
+    if (searchFirstName)
+      match = match && firstName?.toLowerCase().includes(searchFirstName.toLowerCase())
+    if (searchLastName)
+      match = match && lastName?.toLowerCase().includes(searchLastName.toLowerCase())
+    return match
+  }
+
+  let filteredJoined = alreadyJoined.filter(u => filterByName(u['user'].first_name, u['user'].last_name))
+  if (sortName !== undefined)
+    filteredJoined = _.orderBy(filteredJoined, [u => u['user'].first_name?.toLowerCase(), u => u['user'].last_name?.toLowerCase()], [sortName ? 'desc' : 'asc', sortName ? 'desc' : 'asc'])
+
   return (
     <>
       <Row className={amILead ? 'mt-4 ms-1 ps-0 pe-0 me-1 mb-2 ' : 'mt-4 ms-1 me-1 mb-5'}>
@@ -282,17 +301,27 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
           <Table responsive hover className="shadow-sm bg-white">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr>
-                <th className="fw-normal">
-                  <FormattedMessage
-                    defaultMessage="Ime"
-                    description="users-table-general-firstname"
-                  />
+                <th className="fw-normal" style={{cursor: 'pointer'}}
+                  onClick={() => setSortName(prev => prev === undefined ? true : !prev)}
+                >
+                  <span className="d-flex justify-content-center">
+                    <FormattedMessage
+                      defaultMessage="Ime"
+                      description="users-table-general-firstname"
+                    />
+                    { SortArrow(sortName) }
+                  </span>
                 </th>
-                <th className="fw-normal">
-                  <FormattedMessage
-                    defaultMessage="Prezime"
-                    description="users-table-general-lastname"
-                  />
+                <th className="fw-normal" style={{cursor: 'pointer'}}
+                  onClick={() => setSortName(prev => prev === undefined ? true : !prev)}
+                >
+                  <span className="d-flex justify-content-center">
+                    <FormattedMessage
+                      defaultMessage="Prezime"
+                      description="users-table-general-lastname"
+                    />
+                    { SortArrow(sortName) }
+                  </span>
                 </th>
                 <th className="fw-normal">
                   <FormattedMessage
@@ -325,6 +354,41 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
             </thead>
             <tbody>
               <>
+                <tr>
+                  <td className="p-2 align-middle text-center">
+                    <Input
+                      value={searchFirstName}
+                      onChange={(e) => setSearchFirstName(e.target.value)}
+                      placeholder={intl.formatMessage({
+                        defaultMessage: "Traži",
+                        description: "users-table-general-search-placeholder"
+                      })}
+                      className="form-control"
+                      style={{fontSize: '0.83rem'}}
+                    />
+                  </td>
+                  <td className="p-2 align-middle text-center">
+                    <Input
+                      value={searchLastName}
+                      onChange={(e) => setSearchLastName(e.target.value)}
+                      placeholder={intl.formatMessage({
+                        defaultMessage: "Traži",
+                        description: "users-table-general-search-placeholder"
+                      })}
+                      className="form-control"
+                      style={{fontSize: '0.83rem'}}
+                    />
+                  </td>
+                  <td className="p-2 align-middle text-center">
+                    <FontAwesomeIcon icon={ faSearch } />
+                  </td>
+                  <td className="p-2 align-middle text-center"></td>
+                  <td className="p-2 align-middle text-center"></td>
+                  {
+                    amILead &&
+                    <td className="p-2 align-middle text-center"></td>
+                  }
+                </tr>
                 <tr>
                   <td className={
                     amILead
@@ -398,7 +462,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   }
                 </tr>
                 {
-                  alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
+                  filteredJoined.length > 0 && filteredJoined.map((user, i) => (
                     <tr key={`row-${i}`}>
                       <td className={
                         user['user']['person_oib'] === userDetails.person_oib
