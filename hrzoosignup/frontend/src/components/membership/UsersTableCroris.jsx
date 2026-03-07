@@ -10,8 +10,10 @@ import {
   faPaperPlane,
   faArrowDown,
   faXmark,
-  faKey
+  faKey,
+  faSearch
 } from '@fortawesome/free-solid-svg-icons';
+import { SortArrow } from 'Components/TableHelpers';
 import { extractUsers, extractEmails, emailInInvites } from 'Utils/invites-extracts';
 import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
@@ -32,6 +34,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
   const intl = useIntl()
   const { isOpen: isOpened, toggleIndex: showTooltip } = useOpenedIndexMap()
+
+  const [searchFirstName, setSearchFirstName] = useState('')
+  const [searchLastName, setSearchLastName] = useState('')
+  const [sortName, setSortName] = useState(undefined)
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -149,6 +155,19 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   }, [invites])
 
 
+  const filterByName = (firstName, lastName) => {
+    let match = true
+    if (searchFirstName)
+      match = match && firstName?.toLowerCase().includes(searchFirstName.toLowerCase())
+    if (searchLastName)
+      match = match && lastName?.toLowerCase().includes(searchLastName.toLowerCase())
+    return match
+  }
+
+  let filteredJoined = alreadyJoined.filter(u => filterByName(u['user'].first_name, u['user'].last_name))
+  if (sortName !== undefined)
+    filteredJoined = _.orderBy(filteredJoined, [u => u['user'].first_name?.toLowerCase(), u => u['user'].last_name?.toLowerCase()], [sortName ? 'desc' : 'asc', sortName ? 'desc' : 'asc'])
+
   if (emailInvites !== undefined) {
     let email_invites = emailInvites.map(i => i.email)
 
@@ -166,6 +185,12 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
             missingCollab.push(user)
       }
     })
+
+    let filteredCollaborators = collaborators.filter(u =>
+      !oibsJoined.has(u['oib']) && filterByName(u.first_name, u.last_name)
+    )
+    if (sortName !== undefined)
+      filteredCollaborators = _.orderBy(filteredCollaborators, [u => u.first_name?.toLowerCase(), u => u.last_name?.toLowerCase()], [sortName ? 'desc' : 'asc', sortName ? 'desc' : 'asc'])
 
     let collabNoEmail = true
     for (var collab of missingCollab)
@@ -186,17 +211,27 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
             <Table responsive hover className="shadow-sm bg-white m-0">
               <thead id="hzsi-thead" className="align-middle text-center text-white">
                 <tr>
-                  <th className="fw-normal">
-                    <FormattedMessage
-                      defaultMessage="Ime"
-                      description="users-table-croris-firstname"
-                    />
+                  <th className="fw-normal" style={{cursor: 'pointer'}}
+                    onClick={() => setSortName(prev => prev === undefined ? true : !prev)}
+                  >
+                    <span className="d-flex justify-content-center">
+                      <FormattedMessage
+                        defaultMessage="Ime"
+                        description="users-table-croris-firstname"
+                      />
+                      { SortArrow(sortName) }
+                    </span>
                   </th>
-                  <th className="fw-normal">
-                    <FormattedMessage
-                      defaultMessage="Prezime"
-                      description="users-table-croris-lastname"
-                    />
+                  <th className="fw-normal" style={{cursor: 'pointer'}}
+                    onClick={() => setSortName(prev => prev === undefined ? true : !prev)}
+                  >
+                    <span className="d-flex justify-content-center">
+                      <FormattedMessage
+                        defaultMessage="Prezime"
+                        description="users-table-croris-lastname"
+                      />
+                      { SortArrow(sortName) }
+                    </span>
                   </th>
                   <th className="fw-normal">
                     <FormattedMessage
@@ -235,6 +270,42 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
               </thead>
               <tbody>
                 <>
+                  <tr>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchFirstName}
+                        onChange={(e) => setSearchFirstName(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-croris-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchLastName}
+                        onChange={(e) => setSearchLastName(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-croris-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <FontAwesomeIcon icon={ faSearch } />
+                    </td>
+                    <td className="p-2 align-middle text-center"></td>
+                    <td className="p-2 align-middle text-center"></td>
+                    <td className="p-2 align-middle text-center"></td>
+                    {
+                      amILead &&
+                      <td className="p-2 align-middle text-center"></td>
+                    }
+                  </tr>
                   <tr>
                     <td className={
                       amILead
@@ -318,7 +389,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     }
                   </tr>
                   {
-                    alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
+                    filteredJoined.length > 0 && filteredJoined.map((user, i) => (
                       <tr key={`row-${i}`}>
                         <td className={
                           user['user']['person_oib'] === userDetails.person_oib
@@ -431,8 +502,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     ))
                   }
                   {
-                    collaborators.length > 0 && collaborators.map((user, i) =>
-                      !oibsJoined.has(user['oib']) &&
+                    filteredCollaborators.length > 0 && filteredCollaborators.map((user, i) =>
                         (
                           <tr key={`row-${i + 100}`}>
                             <td className={
