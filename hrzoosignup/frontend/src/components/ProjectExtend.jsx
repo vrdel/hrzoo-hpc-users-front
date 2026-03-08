@@ -2,14 +2,13 @@ import React, { useContext } from 'react';
 import {
   Button,
   Badge,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  FormFeedback,
+  Col,
   Form,
+  Modal,
+  Row,
   Table
 }
-from 'reactstrap';
+from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFile,
@@ -18,11 +17,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {FormattedMessage} from 'react-intl';
 import DatePicker from 'react-date-picker';
-import {
-  Col,
-  Label,
-  Row,
-} from 'reactstrap';
 import {
   Controller,
   useForm,
@@ -104,28 +98,28 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
   if (project) {
     setValue('projectName', project.name)
     return (
-      <Modal isOpen={isOpen} toggle={toggle} centered={true} size="lg">
+      <Modal show={isOpen} onHide={toggle} centered={true} size="lg">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <ModalHeader toggle={toggle} className="text-bg-warning">
+          <Modal.Header closeButton className="text-bg-warning">
             <FormattedMessage
               defaultMessage="Zahtjev za produljenjem projekta"
               description="projectextend-title"
             />{' '}
-            <Badge color={"secondary fw-normal"}>
+            <Badge bg={"secondary"} className="fw-normal">
               {project.identifier}
             </Badge>
-          </ModalHeader>
-          <ModalBody>
+          </Modal.Header>
+          <Modal.Body>
             <Row className="mt-3 mb-5">
               <Col className="d-flex flex-column justify-content-end"  md={{size: 10, offset: 1}}>
-                <Label
+                <Form.Label
                   htmlFor="projectName"
                   aria-label="projectName">
                   <FormattedMessage
                     description="projectextend-projectname"
                     defaultMessage="Naziv:"
                   />
-                </Label>
+                </Form.Label>
                 <Controller
                   name="projectName"
                   control={control}
@@ -146,14 +140,14 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
             </Row>
             <Row className="mt-3">
               <Col className="d-flex flex-column justify-content-end" md={{size: 4, offset: 2}}>
-                <Label
+                <Form.Label
                   htmlFor="currentDateEnd"
                   aria-label="currentDateEnd">
                   <FormattedMessage
                     description="projectextend-currentend"
                     defaultMessage="Trenutni završni datum:"
                   />
-                </Label>
+                </Form.Label>
                 <span>
                   <DatePicker
                     required={true}
@@ -166,7 +160,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                 </span>
               </Col>
               <Col className="d-flex flex-column justify-content-end" md={{size: 4}}>
-                <Label
+                <Form.Label
                   htmlFor="currentDateEnd"
                   aria-label="currentDateEnd">
                   <FormattedMessage
@@ -174,7 +168,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                     defaultMessage="Novi završni datum:"
                   />
                   <span className="ms-1 fw-bold text-danger">*</span>
-                </Label>
+                </Form.Label>
                 <span>
                   <Controller
                     name="newEndDate"
@@ -209,7 +203,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
             </Row>
             <Row className="mt-5 mb-5">
               <Col md={{size: 10, offset: 1}}>
-                <Label
+                <Form.Label
                   htmlFor="requestExplain"
                   aria-label="requestExplain">
                   <FormattedMessage
@@ -217,7 +211,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                     defaultMessage="Obrazloženje:"
                   />
                   <span className="ms-1 fw-bold text-danger">*</span>
-                </Label>
+                </Form.Label>
                 <Controller
                   name="requestExplain"
                   control={control}
@@ -238,16 +232,16 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                   errors={errors}
                   name="requestExplain"
                   render={({ message }) =>
-                    <FormFeedback className="end-0">
+                    <Form.Control.Feedback type="invalid" className="end-0">
                       { message }
-                    </FormFeedback>
+                    </Form.Control.Feedback>
                   }
                 />
               </Col>
             </Row>
             <Row>
               <Col className="d-flex justify-content-center mb-4">
-                <Button color="success" type="submit">
+                <Button variant="success" type="submit">
                   <FontAwesomeIcon icon={faFile}/>{' '}
                   <FormattedMessage
                     defaultMessage="Podnesi"
@@ -256,7 +250,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                 </Button>{' '}
               </Col>
             </Row>
-          </ModalBody>
+          </Modal.Body>
         </Form>
       </Modal>
     )

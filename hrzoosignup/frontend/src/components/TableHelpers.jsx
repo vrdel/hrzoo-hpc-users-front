@@ -3,10 +3,8 @@ import {
   Row,
   Col,
   Pagination,
-  PaginationItem,
-  PaginationLink,
   Placeholder
- } from "reactstrap"
+ } from "react-bootstrap"
 
 
 export const SortArrow = (descending=undefined) => {
@@ -352,30 +350,20 @@ export const HZSIPagination = ({
     <Row className="g-0">
       <Col className="d-flex flex-column flex-md-row align-items-center justify-content-center">
         <Pagination className="mt-2">
-          <PaginationItem disabled={pageIndex === 0}>
-            <PaginationLink aria-label="First" first onClick={() => setPageIndex(0)}/>
-          </PaginationItem>
-          <PaginationItem disabled={pageIndex === 0}>
-            <PaginationLink aria-label="Previous" previous onClick={() => setPageIndex(pageIndex - 1)}/>
-          </PaginationItem>
+          <Pagination.First aria-label="First" disabled={pageIndex === 0} onClick={() => setPageIndex(0)} />
+          <Pagination.Prev aria-label="Previous" disabled={pageIndex === 0} onClick={() => setPageIndex(pageIndex - 1)} />
           {
             [...Array(pageCount)].map((e, i) =>
-              <PaginationItem active={pageIndex === i ? true : false} key={i}>
-                <PaginationLink onClick={() => setPageIndex(i)}>
-                  { i + 1 }
-                </PaginationLink>
-              </PaginationItem>
+              <Pagination.Item active={pageIndex === i ? true : false} key={i} onClick={() => setPageIndex(i)}>
+                { i + 1 }
+              </Pagination.Item>
             )
           }
-          <PaginationItem disabled={pageIndex === pageCount - 1}>
-            <PaginationLink aria-label="Next" next onClick={() => setPageIndex(pageIndex + 1)}/>
-          </PaginationItem>
-          <PaginationItem disabled={pageIndex === pageCount - 1}>
-            <PaginationLink aria-label="Last" last onClick={() => setPageIndex(pageCount - 1)}/>
-          </PaginationItem>
+          <Pagination.Next aria-label="Next" disabled={pageIndex === pageCount - 1} onClick={() => setPageIndex(pageIndex + 1)} />
+          <Pagination.Last aria-label="Last" disabled={pageIndex === pageCount - 1} onClick={() => setPageIndex(pageCount - 1)} />
         </Pagination>
         <Pagination className="mt-0 mt-md-2">
-          <PaginationItem>
+          <Pagination.Item>
             <select
               style={{width: '180px'}}
               className="ms-1 form-control form-select text-primary"
@@ -392,7 +380,7 @@ export const HZSIPagination = ({
                 </option>
               ))}
             </select>
-          </PaginationItem>
+          </Pagination.Item>
         </Pagination>
       </Col>
     </Row>

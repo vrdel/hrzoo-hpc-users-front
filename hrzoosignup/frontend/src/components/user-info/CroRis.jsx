@@ -4,7 +4,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import {FormattedMessage} from 'react-intl';
-import { Col, Badge, Placeholder, Row, Table, Label, Spinner } from 'reactstrap';
+import { Col, Badge, Placeholder, Row, Table, Form, Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl'
 
 
@@ -61,7 +61,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                       </Row>
                     </td>
                     <td className="p-3 align-middle text-center">
-                      <Badge className="fs-6 fw-normal" color="success">
+                      <Badge className="fs-6 fw-normal" bg="success">
                         <FormattedMessage
                           defaultMessage="voditelj"
                           description="userinfo-croris-badgelead"
@@ -92,7 +92,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                       </Row>
                     </td>
                     <td className="p-3 align-middle text-center">
-                      <Badge className="fs-6 fw-normal" color="primary">
+                      <Badge className="fs-6 fw-normal" bg="primary">
                         <FormattedMessage
                           defaultMessage="suradnik"
                           description="userinfo-croris-badgecollab"
@@ -182,12 +182,12 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
     <>
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+          <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Sustav CroRIS"
               description="userinfo-croris-title"
             />
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
       <Row>
@@ -335,12 +335,12 @@ export const EmptyCroRis = ({changeView=false, spinner=false}) => {
     <>
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+          <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Sustav CroRIS"
               description="userinfo-croris-title"
             />
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
       <Row className="mt-3 mb-3">
@@ -348,6 +348,7 @@ export const EmptyCroRis = ({changeView=false, spinner=false}) => {
           {
             spinner ?
               <Spinner
+                animation="border"
                 style={{
                   height: '15rem',
                   width: '15rem',

@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Table, Spinner } from "reactstrap";
+import { Col, Row, Table, Spinner } from "react-bootstrap";
 import { PageTitle } from "./PageTitle";
 
 

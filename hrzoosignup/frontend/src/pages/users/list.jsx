@@ -5,13 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Badge,
   Col,
-  Input,
+  Form,
+  Overlay,
   Popover,
-  PopoverBody,
-  PopoverHeader,
   Row,
   Table,
-} from "reactstrap";
+} from "react-bootstrap";
 import { PageTitle } from 'Components/PageTitle';
 import { MiniButton } from 'Components/MiniButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -50,7 +49,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
 
     return (
       <>
-        <PopoverHeader className="d-flex align-items-center justify-content-between">
+        <Popover.Header className="d-flex align-items-center justify-content-between">
           <span className="me-5 d-flex align-items-center">
             {
               StateIcons(projectData.state.name, true)
@@ -60,8 +59,8 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
             </Badge>
           </span>
           <ProjectTypeBadge projectInfo={projectData} />
-        </PopoverHeader>
-        <PopoverBody>
+        </Popover.Header>
+        <Popover.Body>
           <Row>
             <Col className="fw-bold">
               <FormattedMessage
@@ -170,7 +169,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
               </a>
             </Col>
           </Row>
-        </PopoverBody>
+        </Popover.Body>
       </>
     )
   }

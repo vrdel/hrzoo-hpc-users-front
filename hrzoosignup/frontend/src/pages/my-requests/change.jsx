@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Row, Form, Button} from 'reactstrap';
+import { Col, Row, Form, Button} from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -276,7 +276,7 @@ export const MyRequestChange = () => {
                       nrProject.state.name === "approve-expire" &&
                         <Button
                           className="mt-4"
-                          color="warning"
+                          variant="warning"
                           onClick={() => {
                             setProjectExtend(true)
                             setTargetProjectExtend(nrProject)

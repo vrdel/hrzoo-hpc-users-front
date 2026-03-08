@@ -2,7 +2,7 @@ import React from "react";
 import {
   Button,
   ButtonGroup,
-} from "reactstrap";
+} from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +14,7 @@ const ButtonGroupActiveInactive = ({activeList, urls}) => {
 
   return (
     <ButtonGroup size="sm">
-      <Button className="mt-1 mb-1 mr-3" color="light"
+      <Button className="mt-1 mb-1 mr-3" variant="light"
         active={ activeList }
         onClick={ () => { navigate(urls.active) } }>
         <FontAwesomeIcon icon={ faCheck } />{' '}
@@ -23,7 +23,7 @@ const ButtonGroupActiveInactive = ({activeList, urls}) => {
           description="userlist-button-active"
         />
       </Button>
-      <Button className="ml-1 mt-1 mb-1" color="light"
+      <Button className="ml-1 mt-1 mb-1" variant="light"
         active={ !activeList }
         onClick={ () => { navigate(urls.inactive) } }>
         <FontAwesomeIcon icon={ faXmark } />{' '}

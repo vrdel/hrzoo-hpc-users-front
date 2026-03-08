@@ -9,15 +9,11 @@ import {
 import {
   Button,
   Col,
-  Label,
   Row,
   Card,
-  CardBody,
-  CardHeader,
-  Input,
+  Form,
   InputGroup,
-  InputGroupText,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import DatePicker from 'react-date-picker';
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -40,7 +36,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row>
         <Col md={{size: 10, offset: 1}}>
-          <Label
+          <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
             <FormattedMessage
@@ -48,7 +44,7 @@ const NewRequestIndex = () => {
               defaultMessage="Naziv:"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
           <textarea
             id="requestName"
             aria-label="requestName"
@@ -61,7 +57,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row className="mt-3">
         <Col md={{size: 10, offset: 1}}>
-          <Label
+          <Form.Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
             <FormattedMessage
@@ -69,7 +65,7 @@ const NewRequestIndex = () => {
               defaultMessage="Obrazloženje:"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
           <textarea
             id="requestExplain"
             aria-label="requestExplain"
@@ -82,7 +78,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row className="mt-3">
         <Col md={{size: 5, offset: 1}}>
-          <Label
+          <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
             <FormattedMessage
@@ -90,7 +86,7 @@ const NewRequestIndex = () => {
               defaultMessage="Period korištenja:"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
         </Col>
         <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
           <DatePicker
@@ -111,7 +107,7 @@ const NewRequestIndex = () => {
       <Row className="mt-4">
         <Row>
           <Col md={{size: 4, offset: 1}} sm={{size: 10}} lg={{size: 10, offset: 1}}  xl={{size: 10, offset: 1}} xxl={{size: 10, offset: 1}}>
-            <Label
+            <Form.Label
               htmlFor="requestUsesAI"
               aria-label="requestUsesAI"
               className="mr-2 text-right form-label">
@@ -119,13 +115,13 @@ const NewRequestIndex = () => {
                 description="requestusesai-description"
                 defaultMessage="Projekt koristi tehnologije umjetne inteligencije:"
               />
-            </Label>
+            </Form.Label>
             <span className="ms-1 fw-bold text-danger">*</span>
           </Col>
         </Row>
         <Row>
           <Col md={{size: 1, offset: 1}} lg={{offset: 1, size: 2}} xs={{size: 6}} sm={{size: 6}}>
-            <Input
+            <Form.Control
               aria-label="requestUsesAI"
               disabled={true}
               id="requestUsesAI"
@@ -139,7 +135,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row className="mt-3 ms-2 d-flex g-0">
         <Col md={{offset: 1}}>
-          <Label
+          <Form.Label
             htmlFor="scientificDomain"
             aria-label="scientificDomain"
             className="mt-2 text-right form-label">
@@ -148,12 +144,12 @@ const NewRequestIndex = () => {
               description="newreqind-scientific-domain"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
           <Row>
             <Col className="mb-3" sm={{size: 12}} md={{size: 10}} lg={{size: 10}} xl={{size: 5}}>
               <Card>
-                <CardHeader className="d-inline-flex align-items-center">
-                  <Input
+                <Card.Header className="d-inline-flex align-items-center">
+                  <Form.Control
                     aria-label="scientificDomain"
                     id="scientificDomain"
                     placeholder={ intl.formatMessage({
@@ -163,8 +159,8 @@ const NewRequestIndex = () => {
                     disabled={true}
                     style={{maxWidth: '64%'}}
                   />
-                  <InputGroup style={{maxWidth: '30%'}}>
-                    <Input
+                  <Form.ControlGroup style={{maxWidth: '30%'}}>
+                    <Form.Control
                       className={`ms-1 form-control text-center`}
                       disabled={true}
                       placeholder={ intl.formatMessage({
@@ -173,24 +169,24 @@ const NewRequestIndex = () => {
                       }) }
                       type="number"
                     />
-                    <InputGroupText>
+                    <Form.ControlGroup.Text>
                       %
-                    </InputGroupText>
+                    </InputGroup.Text>
                   </InputGroup>
                   <Button
                     size="sm"
-                    color="danger"
+                    variant="danger"
                     type="button"
                     disabled={true}
                     className="ms-1"
                   >
                     <FontAwesomeIcon icon={faTimes}/>
                   </Button>
-                </CardHeader>
-                <CardBody >
+                </Card.Header>
+                <Card.Body >
                   <Row className="g-0 mb-2" >
                     <Col className="d-inline-flex align-items-center">
-                      <Input
+                      <Form.Control
                         aria-label="scientificDomain"
                         disabled={true}
                         className="rounded"
@@ -201,8 +197,8 @@ const NewRequestIndex = () => {
                         }) }
                         style={{maxWidth: '64%'}}
                       />
-                      <InputGroup style={{maxWidth: '30%'}}>
-                        <Input
+                      <Form.ControlGroup style={{maxWidth: '30%'}}>
+                        <Form.Control
                           className={`ms-1 form-control text-center`}
                           placeholder={ intl.formatMessage({
                             defaultMessage: "Udio",
@@ -211,13 +207,13 @@ const NewRequestIndex = () => {
                           type="number"
                           disabled={true}
                         />
-                        <InputGroupText>
+                        <Form.ControlGroup.Text>
                           %
-                        </InputGroupText>
+                        </InputGroup.Text>
                       </InputGroup>
                       <Button
                         size="sm"
-                        color="danger"
+                        variant="danger"
                         className="ms-1"
                         disabled={true}
                         type="button"
@@ -228,7 +224,7 @@ const NewRequestIndex = () => {
                   </Row>
                   <Row className="g-0">
                     <Col className="text-center">
-                      <Button className="mt-3" size="sm" disabled={true} outline color="success">
+                      <Button className="mt-3" size="sm" disabled={true} variant="outline-success">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
                         <FormattedMessage
                           defaultMessage="Novo znanstveno polje"
@@ -237,7 +233,7 @@ const NewRequestIndex = () => {
                       </Button>
                     </Col>
                   </Row>
-                </CardBody>
+                </Card.Body>
               </Card>
             </Col>
           </Row>
@@ -255,7 +251,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row className="mt-3">
         <Col md={{size: 3, offset: 1}}>
-          <Label
+          <Form.Label
             htmlFor="requestResourceType"
             aria-label="requestResourceType"
             className="mr-2 text-right form-label">
@@ -263,8 +259,8 @@ const NewRequestIndex = () => {
               description="resourcefields-type"
               defaultMessage="Tip resursa:"
             />
-          </Label>
-          <Input
+          </Form.Label>
+          <Form.Control
             aria-label="requestResourceType"
             disabled={true}
             id="requestResourceType"
@@ -277,7 +273,7 @@ const NewRequestIndex = () => {
           HPC
         </Col>
         <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
             className="mr-2 form-label text-center">
@@ -285,20 +281,20 @@ const NewRequestIndex = () => {
               description="resourcefields-ncpu"
               defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               CPU
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="HPCnSlotsGPU"
             aria-label="HPCnSlotsGPU"
             className="mr-2 form-label text-center">
@@ -306,20 +302,20 @@ const NewRequestIndex = () => {
               description="resourcefields-ngpu"
               defaultMessage="Prosječan broj grafičkih procesora po poslu:"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               GPU
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="HPCnRAM"
             aria-label="HPCnRAM"
             className="mr-2 form-label text-center">
@@ -327,20 +323,20 @@ const NewRequestIndex = () => {
               description="resourcefields-ram"
               defaultMessage="Prosječna količina radne memorije po poslu (GB):"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               RAM
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="HPCnTempGB"
             aria-label="HPCnTempGB"
             className="mr-2 form-label text-center">
@@ -348,20 +344,20 @@ const NewRequestIndex = () => {
               description="resourcefields-temp"
               defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               Temp
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="HPCnDiskGB"
             aria-label="HPCnDiskGB"
             className="mr-2 form-label text-center">
@@ -369,16 +365,16 @@ const NewRequestIndex = () => {
               description="resourcefields-disk"
               defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               Disk
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
       </Row>
@@ -388,7 +384,7 @@ const NewRequestIndex = () => {
           CLOUD
         </Col>
         <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
             className="mr-2 form-label text-center">
@@ -396,20 +392,20 @@ const NewRequestIndex = () => {
               description="cloudfields-nvm"
               defaultMessage="Broj virtualnih poslužitelja:"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               VM
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
             className="mr-2 form-label text-center">
@@ -417,20 +413,20 @@ const NewRequestIndex = () => {
               description="cloudfields-vcpu"
               defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               CPU
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
             className="mr-2 form-label text-center">
@@ -438,20 +434,20 @@ const NewRequestIndex = () => {
               description="cloudfields-nram"
               defaultMessage="Ukupna količina radne memorije (GB):"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               RAM
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
             className="mr-2 form-label text-center">
@@ -459,20 +455,20 @@ const NewRequestIndex = () => {
               description="cloudfields-nramvm"
               defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               RAM
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
             className="mr-2 form-label text-center">
@@ -480,22 +476,22 @@ const NewRequestIndex = () => {
               description="cloudfields-ndiskgb"
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               Disk
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
       </Row>
       <Row className="mt-5">
         <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{offset: 1, size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
             className="mr-2 form-label text-center">
@@ -503,20 +499,20 @@ const NewRequestIndex = () => {
               description="cloudfields-nfastdiskgb"
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               Disk
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
         <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
             className="mr-2 form-label text-center">
@@ -524,23 +520,23 @@ const NewRequestIndex = () => {
               description="cloudfields-nips"
               defaultMessage=" Broj javnih IPv4 adresa:"
             />
-          </Label>
-          <InputGroup>
-            <Input
+          </Form.Label>
+          <Form.ControlGroup>
+            <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <InputGroupText>
+            <Form.ControlGroup.Text>
               IP
-            </InputGroupText>
+            </InputGroup.Text>
           </InputGroup>
         </Col>
       </Row>
       <RequestHorizontalRuler />
       <Row className="mt-2 mb-5 text-center">
         <Col>
-          <Button size="lg" disabled={true} color="success">
+          <Button size="lg" disabled={true} variant="success">
             <FontAwesomeIcon icon={faFile}/>{' '}
             <FormattedMessage
               defaultMessage="Podnesi zahtjev"

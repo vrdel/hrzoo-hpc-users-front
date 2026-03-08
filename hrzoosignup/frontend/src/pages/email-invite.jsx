@@ -2,8 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Col, Row,
   Button,
   Alert, Container,
-  Card, CardHeader,
-  CardBody, CardFooter, Progress } from 'reactstrap';
+  Card, ProgressBar } from 'react-bootstrap';
 import { useParams, useNavigate  } from 'react-router';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { defaultUnAuthnRedirect} from 'Config/default-redirect';
@@ -144,7 +143,7 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
             <Col lg={{size: 6}} md={{size: 8}}>
               <Row className="m-lg-4 p-lg-4 m-md-3 p-md-3 m-sm-1 p-sm-1"/>
               <Card className="shadow-lg">
-                <CardHeader
+                <Card.Header
                   id='hzsi-loginheader'
                   className="p-3 d-flex flex-row align-items-center justify-content-center"
                 >
@@ -162,8 +161,8 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
                         </a>
                     }
                   </span>
-                </CardHeader>
-                <CardBody className="pt-5">
+                </Card.Header>
+                <Card.Body className="pt-5">
                   <h4>
                     <span className="fst-italic fw-bold">
                       <FormattedMessage
@@ -188,7 +187,7 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
                   </p>
                   <Row>
                     <Col className="d-flex align-items-center justify-content-around">
-                      <Button className="text-center" size="lg" color="success" onClick={acceptInvite}>
+                      <Button className="text-center" size="lg" variant="success" onClick={acceptInvite}>
                         <FormattedMessage
                           defaultMessage="Potvrđujem"
                           description="email-invite-accept"
@@ -198,29 +197,31 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
                   </Row>
                   <Row className="mt-4">
                     <Col>
-                      <Alert color="success"
-                        isOpen={inviteAlertSuccess}
-                        toggle={() => {
+                      <Alert variant="success"
+                        show={inviteAlertSuccess}
+                        onClose={() => {
                           setInviteAlertSucces(!inviteAlertSuccess)
                           setTimeout(() => {navigate(url_ui_prefix + '/memberships')}, 800)
                         }}
-                        fade={true}>
+                        dismissible
+                        transition={true}>
                         <p className="text-center fs-5">
                           <FormattedMessage
                             defaultMessage="Prijava uspješna, preusmjeravanje..."
                             description="email-invite-success"
                           />
                         </p>
-                        <Progress
+                        <ProgressBar
                           striped
-                          color="success"
+                          variant="success"
                           animated
-                          value={progress}
+                          now={progress}
                         />
                       </Alert>
-                      <Alert color="danger" className="d-flex align-items-center justify-content-center"
-                        isOpen={inviteAlertFail}
-                        toggle={() => setInviteAlertFail(!inviteAlertFail)} fade={true}>
+                      <Alert variant="danger" className="d-flex align-items-center justify-content-center"
+                        show={inviteAlertFail}
+                        onClose={() => setInviteAlertFail(!inviteAlertFail)} dismissible
+                        transition={true}>
                         <p className="text-center fs-5">
                           {
                             customMessage ?
@@ -235,14 +236,14 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
                       </Alert>
                     </Col>
                   </Row>
-                </CardBody>
-                <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+                </Card.Body>
+                <Card.Footer className="bg-transparent d-flex align-items-center justify-content-center">
                   <Row className="m-1">
                     <Col>
                       <LanguageButtonLogin locale={locale} setLocale={setLocale} />
                     </Col>
                   </Row>
-                </CardFooter>
+                </Card.Footer>
               </Card>
             </Col>
             <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
@@ -257,4 +258,3 @@ const EmailInvitation = ({sessionData=undefined, lang=undefined}) => {
 };
 
 export default EmailInvitation;
-

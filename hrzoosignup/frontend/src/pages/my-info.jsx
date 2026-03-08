@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Row, Button } from 'reactstrap';
+import { Row, Button } from 'react-bootstrap';
 import { SharedData } from 'Pages/root';
 import { PageTitle } from 'Components/PageTitle';
 import { AuthContext } from 'Components/AuthContextProvider'

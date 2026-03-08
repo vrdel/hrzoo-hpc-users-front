@@ -13,7 +13,8 @@ import {
   HZSIPagination
 } from "Components/TableHelpers";
 import { convertToEuropean } from "Utils/dates";
-import { Badge, Col, Input, Row, Table, Popover, Tooltip } from "reactstrap";
+import { Badge, Col, Form, Row, Table, Overlay, Tooltip } from "react-bootstrap";
+import Popover from "react-bootstrap/Popover";
 import { PageTitle } from "Components/PageTitle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faCopy } from "@fortawesome/free-solid-svg-icons";
@@ -39,26 +40,29 @@ const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
   return (
     <Badge
       key={`${index}-l`}
-      color="dark"
+      bg="dark"
       id={`pop-lead-${index}-${targetUser.id}`}
       className="fw-normal ms-1 text-decoration-underline"
       style={{cursor: 'pointer'}}
     >
       {`${targetUser.first_name} ${targetUser.last_name}`}
-      <Popover
+      <Overlay
         placement="left"
-        isOpen={isOpened(`${index}-${targetUser.id}`)}
-        target={`pop-lead-${index}-${targetUser.id}`}
-        toggle={() => {
-          showPopover(`${index}-${targetUser.id}`)
-        }}
+        show={isOpened(`${index}-${targetUser.id}`)}
+        target={document.getElementById(`pop-lead-${index}-${targetUser.id}`)}
+        rootClose
+        onHide={() => showPopover(`${index}-${targetUser.id}`)}
       >
-        <PopoverUserInfo
-          rhfId={`${index}-${targetUser.id}`}
-          userName={targetUser.username}
-          showPopover={showPopover}
-        />
-      </Popover>
+        {(props) => (
+          <Popover {...props}>
+            <PopoverUserInfo
+              rhfId={`${index}-${targetUser.id}`}
+              userName={targetUser.username}
+              showPopover={showPopover}
+            />
+          </Popover>
+        )}
+      </Overlay>
     </Badge>
   )
 }
@@ -250,13 +254,12 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         name="searchNameIdentifiterInstitute"
                         control={ control }
                         render={ ({ field }) =>
-                          <Input
+                          <Form.Control
                             { ...field }
                             placeholder={intl.formatMessage({
                               defaultMessage: "Traži",
                               description: "project-list-find"
                             })}
-                            className="form-control"
                             style={{ fontSize: "0.83rem" }}
                           />
                         }
@@ -350,14 +353,17 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                       </td>
                       <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
                         { StateIcons(project.state.name) }
-                        <Tooltip
+                        <Overlay
                           placement='top'
-                          isOpen={isOpenedTooltip(project.identifier)}
-                          target={'Tooltip-' + index}
-                          toggle={() => showTooltip(project.identifier)}
+                          show={isOpenedTooltip(project.identifier)}
+                          target={document.getElementById('Tooltip-' + index)}
                         >
-                          { StateProjectString(project.state.name) }
-                        </Tooltip>
+                          {(props) => (
+                            <Tooltip {...props}>
+                              { StateProjectString(project.state.name) }
+                            </Tooltip>
+                          )}
+                        </Overlay>
                       </td>
                       <td className="p-3 align-middle fw-bold text-center">
                         <Row>
@@ -376,7 +382,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         </Row>
                         <Row className="g-0 d-flex justify-content-center">
                           <Col className="d-flex justify-content-center align-items-center align-self-center">
-                            <Badge color="secondary" className="fw-normal">
+                            <Badge bg="secondary" className="fw-normal">
                               { project.identifier }
                             </Badge>
                             <MiniButton
@@ -447,25 +453,29 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                           extractCollaborators(project.userproject_set).map((collab, cid) =>
                             <Badge
                               key={`${index}-c${cid}`}
-                              color="secondary"
+                              bg="secondary"
                               id={`pop-collab-${index}-${collab.user.id}`}
                               className="fw-normal ms-1 text-decoration-underline"
                               style={{cursor: 'pointer'}}
                             >
                               {`${collab.user.first_name} ${collab.user.last_name}`}
-                              <Popover
+                              <Overlay
                                 placement="left"
-                                isOpen={isOpenPopover(`${index}-${collab.user.id}`)}
-                                target={`pop-collab-${index}-${collab.user.id}`}
-                                toggle={() => togglePopover(`${index}-${collab.user.id}`)
-                                }
+                                show={isOpenPopover(`${index}-${collab.user.id}`)}
+                                target={document.getElementById(`pop-collab-${index}-${collab.user.id}`)}
+                                rootClose
+                                onHide={() => togglePopover(`${index}-${collab.user.id}`)}
                               >
-                                <PopoverUserInfo
-                                  rhfId={`${index}-${collab.user.id}`}
-                                  userName={collab.user.username}
-                                  showPopover={togglePopover}
-                                />
-                              </Popover>
+                                {(props) => (
+                                  <Popover {...props}>
+                                    <PopoverUserInfo
+                                      rhfId={`${index}-${collab.user.id}`}
+                                      userName={collab.user.username}
+                                      showPopover={togglePopover}
+                                    />
+                                  </Popover>
+                                )}
+                              </Overlay>
                             </Badge>
                           )
                         }

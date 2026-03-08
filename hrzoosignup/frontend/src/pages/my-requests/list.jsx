@@ -10,7 +10,8 @@ import {
   Row,
   Table,
   Tooltip,
-} from 'reactstrap';
+  Overlay,
+} from 'react-bootstrap';
 import { fetchNrProjectsLead, fetchExtendProject } from 'Api/projects';
 import { useNavigate, Link, useParams } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
@@ -181,16 +182,22 @@ const MyRequestsList = () => {
                 {
                   nrProjects.map((project, index) =>
                     <tr key={index}>
-                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
+                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}
+                        onClick={() => toggleIndex(project.identifier)}
+                        onMouseEnter={() => toggleIndex(project.identifier)}
+                        onMouseLeave={() => toggleIndex(project.identifier)}>
                         { StateIcons(project.state.name) }
-                        <Tooltip
+                        <Overlay
                           placement='top'
-                          isOpen={isOpen(project.identifier)}
-                          target={'Tooltip-' + index}
-                          toggle={() => toggleIndex(project.identifier)}
+                          show={isOpen(project.identifier)}
+                          target={document.getElementById('Tooltip-' + index)}
                         >
-                          { StateString(project.state.name) }
-                        </Tooltip>
+                          {(props) => (
+                            <Tooltip {...props}>
+                              { StateString(project.state.name) }
+                            </Tooltip>
+                          )}
+                        </Overlay>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
@@ -224,7 +231,7 @@ const MyRequestsList = () => {
                       <td className="p-3 align-middle text-center">
                         <Row className="g-0">
                           <Col className="d-flex justify-content-center align-items-center align-self-center">
-                            <Badge className="fw-normal" color="secondary">{ project.identifier }</Badge>
+                            <Badge className="fw-normal" bg="secondary">{ project.identifier }</Badge>
                             <MiniButton
                               color="light"
                               onClick={(e) => copyToClipboard(
@@ -296,7 +303,7 @@ const MyRequestsList = () => {
                       <td className="align-middle text-center">
                         <Button
                           size="sm"
-                          color={project.state.name === 'approve-expire' ? "warning" : "light"}
+                          variant={project.state.name === 'approve-expire' ? "warning" : "light"}
                           disabled={project.state.name !== 'approve-expire'}
                           onClick={() => {
                             setProjectExtend(true)

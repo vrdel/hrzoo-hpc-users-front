@@ -1,13 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import {
   Navbar,
   Nav,
-  NavItem,
   Badge,
   Popover,
-  PopoverBody,
+  Overlay,
   Button,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faSignOutAlt
@@ -26,6 +25,7 @@ import { useIntl } from 'react-intl'
 
 const Navigation = () => {
   const [popoverOpen, setPopoverOpen] = useState(false)
+  const popoverTarget = useRef(null)
   const modalContext = useContext(ModalContext)
   const { userDetails } = useContext(AuthContext)
   const { locale, setLocale } = useContext(IntlContext)
@@ -33,7 +33,7 @@ const Navigation = () => {
 
   return (
     <Navbar expand="md" id="hzsi-nav" className="shadow-sm border rounded d-flex justify-content-between mt-2 mb-2 pt-3 pb-3">
-      <Nav navbar className="m-1 ms-3">
+      <Nav className="m-1 ms-3">
         <span className="pl-3 font-weight-bold text-center d-none d-md-inline">
           {
             locale === 'hr' ?
@@ -63,32 +63,41 @@ const Navigation = () => {
           }
         </span>
       </Nav>
-      <Nav navbar className="flex-row">
-        <NavItem className="d-flex align-items-center">
+      <Nav className="flex-row">
+        <Nav.Item className="d-flex align-items-center">
           <LanguageButtonNav locale={locale} setLocale={setLocale} />
-        </NavItem>
-        <NavItem className='m-2 text-dark'>
+        </Nav.Item>
+        <Nav.Item className='m-2 text-dark'>
           <>
             <FormattedMessage
               description="navigation-welcome"
               defaultMessage="Dobrodošli"
             />,
             <br/>
-            <span onClick ={() => setPopoverOpen(!popoverOpen)} id="userPopover">
-              <Badge href="#" className="text-dark" color="light"
+            <span onClick ={() => setPopoverOpen(!popoverOpen)} ref={popoverTarget}>
+              <Badge href="#" className="text-dark" bg="light"
                 style={{fontSize: '100%', textDecoration: 'none'}}>
                 <strong>{userDetails?.first_name}</strong>
               </Badge>
             </span>
-            <Popover placement="bottom" isOpen={popoverOpen}
-              target="userPopover" toggle={() => setPopoverOpen(!popoverOpen)}>
-              <PopoverBody>
-                <UserDetailsPopover />
-              </PopoverBody>
-            </Popover>
+            <Overlay
+              target={popoverTarget.current}
+              show={popoverOpen}
+              onHide={() => setPopoverOpen(false)}
+              placement="bottom"
+              rootClose
+            >
+              {(props) => (
+                <Popover {...props}>
+                  <Popover.Body>
+                    <UserDetailsPopover />
+                  </Popover.Body>
+                </Popover>
+              )}
+            </Overlay>
           </>
-        </NavItem>
-        <NavItem className='d-flex align-items-center me-3 m-2 text-light'>
+        </Nav.Item>
+        <Nav.Item className='d-flex align-items-center me-3 m-2 text-light'>
           <Button
             size="sm"
             aria-label="Odjava"
@@ -107,7 +116,7 @@ const Navigation = () => {
             }}>
             <FontAwesomeIcon icon={faSignOutAlt} color="white" />
           </Button>
-        </NavItem>
+        </Nav.Item>
       </Nav>
     </Navbar>
   );

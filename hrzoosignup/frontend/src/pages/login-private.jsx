@@ -7,13 +7,7 @@ import {
   Row,
   Col,
   Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Input,
-  Label,
-  Form,
-  FormGroup } from 'reactstrap';
+  Form } from 'react-bootstrap';
 import 'Styles/login.css';
 import { doUserPassLogin } from 'Api/auth';
 import { AuthContext } from 'Components/AuthContextProvider';
@@ -82,7 +76,7 @@ const LoginPrivate = ({sessionData=undefined}) => {
         <Col>
           <Row className="m-lg-3 p-lg-3 m-md-2 p-md-2 m-sm-1 p-sm-1"/>
           <Card className="shadow-lg ps-2 pe-2" style={{minHeight: '475px', width: '450px'}}>
-            <CardHeader
+            <Card.Header
               id='hzsi-loginheader'
               className="d-sm-inline-flex align-items-center justify-content-around"
             >
@@ -98,50 +92,51 @@ const LoginPrivate = ({sessionData=undefined}) => {
                     <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN" style={{ width: 330, height: "auto" }} />
                   </a>
               }
-            </CardHeader>
-            <CardBody className="pt-5">
+            </Card.Header>
+            <Card.Body className="pt-5">
               <Form onSubmit={handleSubmit(onSubmit)} className="needs-validation">
-                <FormGroup className="text-start">
-                  <Label for="username">
+                <Form.Group className="text-start">
+                  <Form.Label htmlFor="username">
                     <FormattedMessage
                       defaultMessage="Korisničko ime:"
                       description="loginpriv-username"
                     />
-                  </Label>
+                  </Form.Label>
                   <Controller
                     name="username"
                     control={control}
                     rules={{required: true}}
                     render={ ({field}) =>
-                      <Input {...field}
+                      <Form.Control {...field}
                         className={`form-control ${errors.username} && "is-invalid"`}
                       />
                     }
                   />
-                </FormGroup>
-                <FormGroup className="text-start">
-                  <Label for="password">
+                </Form.Group>
+                <Form.Group className="text-start">
+                  <Form.Label htmlFor="password">
                     <FormattedMessage
                       defaultMessage="Lozinka:"
                       description="loginpriv-password"
                     />
-                  </Label>
+                  </Form.Label>
                   <Controller
                     name="password"
                     control={control}
                     rules={{required: true}}
                     render={ ({field}) =>
-                      <Input {...field}
+                      <Form.Control {...field}
                         type="password"
                         className={`form-control ${errors.password} && "is-invalid"`}
                       />
                     }
                   />
-                </FormGroup>
-                <FormGroup>
-                  <Alert color="danger"
-                    isOpen={loginFailedVisible}
-                    toggle={() => setLoginFailedVisible(false)} fade={false}>
+                </Form.Group>
+                <Form.Group>
+                  <Alert variant="danger"
+                    show={loginFailedVisible}
+                    onClose={() => setLoginFailedVisible(false)} dismissible
+                    transition={false}>
                     <p className="text-center">
                       <FormattedMessage
                         defaultMessage="Prijava neuspjela, pogrešno korisničko ime i lozinka"
@@ -149,11 +144,11 @@ const LoginPrivate = ({sessionData=undefined}) => {
                       />
                     </p>
                   </Alert>
-                </FormGroup>
+                </Form.Group>
                 <div className="pt-4">
                 </div>
-                <FormGroup>
-                  <Button color="success" type="submit" block className="mb-3">
+                <Form.Group>
+                  <Button variant="success" type="submit" className="d-block w-100 mb-3">
                     <FormattedMessage
                       defaultMessage="Prijava korisničkim imenom i lozinkom"
                       description="loginpriv-labelusernamepassword"
@@ -176,16 +171,16 @@ const LoginPrivate = ({sessionData=undefined}) => {
                     :
                       ''
                   }
-                </FormGroup>
+                </Form.Group>
               </Form>
-            </CardBody>
-            <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+            </Card.Body>
+            <Card.Footer className="bg-transparent d-flex align-items-center justify-content-center">
               <Row className="m-1">
                 <Col>
                   <LanguageButtonLogin locale={locale} setLocale={setLocale} small={true}/>
                 </Col>
               </Row>
-            </CardFooter>
+            </Card.Footer>
           </Card>
         </Col>
       </Row>

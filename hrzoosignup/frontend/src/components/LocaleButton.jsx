@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Button,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import Cookies from 'js-cookie';
 import "flag-icons/css/flag-icons.min.css";
 
@@ -21,7 +21,7 @@ export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
   }
 
   return (
-    <Button size="sm" color="light"
+    <Button size="sm" variant="light"
       onClick={ () => alternateLocale() } >
       <span className={`${small ? 'fs-5 m-0 p-0' : 'fs-4 m-0 p-0'}`}>
         { locale === 'en' && <span className="fi fi-hr" style={{width: 30, height: 'auto'}}></span> }
@@ -49,7 +49,7 @@ export const LanguageButtonNav = ({locale, setLocale}) => {
   }
 
   return (
-    <Button size="sm" color="light"
+    <Button size="sm" variant="light"
       onClick={ () => alternateLocale() } >
       <span className="fs-6 m-0 p-0">
         { locale === 'en' && <span className="fi fi-hr" style={{width: 20, height: 'auto'}}></span> }

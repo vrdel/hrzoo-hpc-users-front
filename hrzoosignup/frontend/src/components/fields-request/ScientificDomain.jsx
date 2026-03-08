@@ -2,17 +2,12 @@ import React from 'react'
 import { CustomReactSelect } from 'Components/CustomReactSelect';
 import {
   Card,
-  CardHeader,
-  CardBody,
   Col,
   Button,
-  Input,
-  FormFeedback,
+  Form,
   InputGroup,
-  InputGroupText,
-  Label,
   Row,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimes,

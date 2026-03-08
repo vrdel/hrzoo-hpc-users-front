@@ -1,6 +1,6 @@
 import React from 'react';
 import { findTrueState } from '../utils/reqstate';
-import { Col } from 'reactstrap';
+import { Col } from 'react-bootstrap';
 import {
   Approve,
   ApproveExpire,

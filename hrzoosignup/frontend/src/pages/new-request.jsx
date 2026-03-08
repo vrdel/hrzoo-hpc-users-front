@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { CustomReactSelect } from 'Components/CustomReactSelect';
 import { Outlet, useNavigate } from 'react-router';
-import { Col, Row, Button, Label } from 'reactstrap';
+import { Col, Row, Button, Form } from 'react-bootstrap';
 import { SharedData } from 'Pages/root';
 import { PageTitle } from 'Components/PageTitle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -67,7 +67,7 @@ const NewRequest = () => {
       </Row>
       <Row className="mb-2 ms-2 mt-4">
         <Col md={{size: 12}} lg={{size: 9}} className="d-lg-inline-flex d-md-inline-flex d-flex-sm-column d-flex-xs-column align-items-center">
-          <Label
+          <Form.Label
             htmlFor="requestType"
             className="ps-2 pe-2 mt-1 pt-1 pb-1 text-white"
             aria-label="requestType"
@@ -77,7 +77,7 @@ const NewRequest = () => {
               defaultMessage="Tip zahtjeva"
               description="newrequest-label"
             />
-          </Label>
+          </Form.Label>
           <CustomReactSelect
             id="requestType"
             aria-label="requestType"
@@ -207,7 +207,7 @@ const NewRequest = () => {
             value={selectedProject}
           />
           <Button
-            color="success"
+            variant="success"
             className="ms-lg-3 ms-md-3 ms-xs-0 ms-sm-0 mt-sm-3 mt-xs-3 mt-lg-0 mt-md-0 mt-3"
             disabled={buttonDisabled || continueButtonDisabled}
             onClick={() => {

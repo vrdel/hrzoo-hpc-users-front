@@ -3,7 +3,7 @@ import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Table, Label } from 'reactstrap';
+import { Col, Row, Table, Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 
