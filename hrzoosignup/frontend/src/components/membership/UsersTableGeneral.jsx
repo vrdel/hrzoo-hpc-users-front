@@ -318,6 +318,8 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     return filterUser(null, null, role, user.email)
   }) || []
 
+  const totalUsers = 1 + alreadyJoined.length + (invites?.length || 0)
+
   return (
     <>
       <Row className={amILead ? 'mt-4 ms-1 ps-0 pe-0 me-1 mb-2 ' : 'mt-4 ms-1 me-1 mb-5'}>
@@ -371,64 +373,67 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
             </thead>
             <tbody>
               <>
-                <tr>
-                  <td className="p-2 align-middle text-center">
-                    <FontAwesomeIcon icon={ faSearch } />
-                  </td>
-                  <td className="p-2 align-middle text-center">
-                    <Input
-                      value={searchFirstName}
-                      onChange={(e) => setSearchFirstName(e.target.value)}
-                      placeholder={intl.formatMessage({
-                        defaultMessage: "Traži",
-                        description: "users-table-general-search-placeholder"
-                      })}
-                      className="form-control"
-                      style={{fontSize: '0.83rem'}}
-                    />
-                  </td>
-                  <td className="p-2 align-middle text-center">
-                    <Input
-                      value={searchLastName}
-                      onChange={(e) => setSearchLastName(e.target.value)}
-                      placeholder={intl.formatMessage({
-                        defaultMessage: "Traži",
-                        description: "users-table-general-search-placeholder"
-                      })}
-                      className="form-control"
-                      style={{fontSize: '0.83rem'}}
-                    />
-                  </td>
-                  <td className="p-2 align-middle text-center">
-                    <Input
-                      value={searchRole}
-                      onChange={(e) => setSearchRole(e.target.value)}
-                      placeholder={intl.formatMessage({
-                        defaultMessage: "Traži",
-                        description: "users-table-general-search-placeholder"
-                      })}
-                      className="form-control"
-                      style={{fontSize: '0.83rem'}}
-                    />
-                  </td>
-                  <td className="p-2 align-middle text-center">
-                    <Input
-                      value={searchEmail}
-                      onChange={(e) => setSearchEmail(e.target.value)}
-                      placeholder={intl.formatMessage({
-                        defaultMessage: "Traži",
-                        description: "users-table-general-search-placeholder"
-                      })}
-                      className="form-control"
-                      style={{fontSize: '0.83rem'}}
-                    />
-                  </td>
-                  <td className="p-2 align-middle text-center"></td>
-                  {
-                    amILead &&
+                {
+                  totalUsers > 5 &&
+                  <tr>
+                    <td className="p-2 align-middle text-center">
+                      <FontAwesomeIcon icon={ faSearch } />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchFirstName}
+                        onChange={(e) => setSearchFirstName(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchLastName}
+                        onChange={(e) => setSearchLastName(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchRole}
+                        onChange={(e) => setSearchRole(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchEmail}
+                        onChange={(e) => setSearchEmail(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
                     <td className="p-2 align-middle text-center"></td>
-                  }
-                </tr>
+                    {
+                      amILead &&
+                      <td className="p-2 align-middle text-center"></td>
+                    }
+                  </tr>
+                }
                 {
                   allMembers.length > 0 && allMembers.map((user, i) => {
                     const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']

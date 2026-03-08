@@ -205,8 +205,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
       }
     })
 
-    let filteredCollaborators = collaborators.filter(u =>
-      !oibsJoined.has(u['oib']) && filterUser(u.first_name, u.last_name, collabRole, u.email)
+    const notJoinedCollaborators = collaborators.filter(u => !oibsJoined.has(u['oib']))
+
+    let filteredCollaborators = notJoinedCollaborators.filter(u =>
+      filterUser(u.first_name, u.last_name, collabRole, u.email)
     )
 
 
@@ -225,6 +227,8 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     let filteredForeignInvites = foreignInvites.filter(email =>
       filterUser(null, null, foreignCollabRole, email)
     )
+
+    const totalUsers = 1 + alreadyJoined.length + notJoinedCollaborators.length + foreignInvites.length
 
     return (
       <>
@@ -285,65 +289,68 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
               </thead>
               <tbody>
                 <>
-                  <tr>
-                    <td className="p-2 align-middle text-center">
-                      <FontAwesomeIcon icon={ faSearch } />
-                    </td>
-                    <td className="p-2 align-middle text-center">
-                      <Input
-                        value={searchFirstName}
-                        onChange={(e) => setSearchFirstName(e.target.value)}
-                        placeholder={intl.formatMessage({
-                          defaultMessage: "Traži",
-                          description: "users-table-croris-search-placeholder"
-                        })}
-                        className="form-control"
-                        style={{fontSize: '0.83rem'}}
-                      />
-                    </td>
-                    <td className="p-2 align-middle text-center">
-                      <Input
-                        value={searchLastName}
-                        onChange={(e) => setSearchLastName(e.target.value)}
-                        placeholder={intl.formatMessage({
-                          defaultMessage: "Traži",
-                          description: "users-table-croris-search-placeholder"
-                        })}
-                        className="form-control"
-                        style={{fontSize: '0.83rem'}}
-                      />
-                    </td>
-                    <td className="p-2 align-middle text-center">
-                      <Input
-                        value={searchRole}
-                        onChange={(e) => setSearchRole(e.target.value)}
-                        placeholder={intl.formatMessage({
-                          defaultMessage: "Traži",
-                          description: "users-table-croris-search-placeholder"
-                        })}
-                        className="form-control"
-                        style={{fontSize: '0.83rem'}}
-                      />
-                    </td>
-                    <td className="p-2 align-middle text-center">
-                      <Input
-                        value={searchEmail}
-                        onChange={(e) => setSearchEmail(e.target.value)}
-                        placeholder={intl.formatMessage({
-                          defaultMessage: "Traži",
-                          description: "users-table-croris-search-placeholder"
-                        })}
-                        className="form-control"
-                        style={{fontSize: '0.83rem'}}
-                      />
-                    </td>
-                    <td className="p-2 align-middle text-center"></td>
-                    <td className="p-2 align-middle text-center"></td>
-                    {
-                      amILead &&
+                  {
+                    totalUsers > 5 &&
+                    <tr>
+                      <td className="p-2 align-middle text-center">
+                        <FontAwesomeIcon icon={ faSearch } />
+                      </td>
+                      <td className="p-2 align-middle text-center">
+                        <Input
+                          value={searchFirstName}
+                          onChange={(e) => setSearchFirstName(e.target.value)}
+                          placeholder={intl.formatMessage({
+                            defaultMessage: "Traži",
+                            description: "users-table-croris-search-placeholder"
+                          })}
+                          className="form-control"
+                          style={{fontSize: '0.83rem'}}
+                        />
+                      </td>
+                      <td className="p-2 align-middle text-center">
+                        <Input
+                          value={searchLastName}
+                          onChange={(e) => setSearchLastName(e.target.value)}
+                          placeholder={intl.formatMessage({
+                            defaultMessage: "Traži",
+                            description: "users-table-croris-search-placeholder"
+                          })}
+                          className="form-control"
+                          style={{fontSize: '0.83rem'}}
+                        />
+                      </td>
+                      <td className="p-2 align-middle text-center">
+                        <Input
+                          value={searchRole}
+                          onChange={(e) => setSearchRole(e.target.value)}
+                          placeholder={intl.formatMessage({
+                            defaultMessage: "Traži",
+                            description: "users-table-croris-search-placeholder"
+                          })}
+                          className="form-control"
+                          style={{fontSize: '0.83rem'}}
+                        />
+                      </td>
+                      <td className="p-2 align-middle text-center">
+                        <Input
+                          value={searchEmail}
+                          onChange={(e) => setSearchEmail(e.target.value)}
+                          placeholder={intl.formatMessage({
+                            defaultMessage: "Traži",
+                            description: "users-table-croris-search-placeholder"
+                          })}
+                          className="form-control"
+                          style={{fontSize: '0.83rem'}}
+                        />
+                      </td>
                       <td className="p-2 align-middle text-center"></td>
-                    }
-                  </tr>
+                      <td className="p-2 align-middle text-center"></td>
+                      {
+                        amILead &&
+                        <td className="p-2 align-middle text-center"></td>
+                      }
+                    </tr>
+                  }
                   {
                     allMembers.length > 0 && allMembers.map((user, i) => {
                       const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
