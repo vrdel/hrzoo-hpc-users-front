@@ -42,6 +42,8 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
   const [searchFirstName, setSearchFirstName] = useState('')
   const [searchLastName, setSearchLastName] = useState('')
+  const [searchRole, setSearchRole] = useState('')
+  const [searchEmail, setSearchEmail] = useState('')
   const [sortName, setSortName] = useState(undefined)
 
   const [isOpen, setIsOpen] = useState(false);
@@ -281,20 +283,36 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     reader.readAsText(event.target.files[0])
   }
 
-  const filterByName = (firstName, lastName) => {
+  const filterUser = (firstName, lastName, role, email) => {
     let match = true
     if (searchFirstName)
       match = match && firstName?.toLowerCase().includes(searchFirstName.toLowerCase())
     if (searchLastName)
       match = match && lastName?.toLowerCase().includes(searchLastName.toLowerCase())
+    if (searchRole)
+      match = match && role?.toLowerCase().includes(searchRole.toLowerCase())
+    if (searchEmail)
+      match = match && email?.toLowerCase().includes(searchEmail.toLowerCase())
     return match
   }
 
-  const showLead = filterByName(lead['user'].first_name, lead['user'].last_name)
+  const leadRole = intl.formatMessage({ defaultMessage: "Voditelj", description: "users-table-general-leader" })
+  const collabRole = intl.formatMessage({ defaultMessage: "Suradnik", description: "users-table-general-collaborator" })
+  const foreignCollabRole = intl.formatMessage({ defaultMessage: "Strani suradnik", description: "users-table-general-collaborator-foreign" })
 
-  let filteredJoined = alreadyJoined.filter(u => filterByName(u['user'].first_name, u['user'].last_name))
+  const showLead = filterUser(lead['user'].first_name, lead['user'].last_name, leadRole, lead['user'].person_mail)
+
+  let filteredJoined = alreadyJoined.filter(u => {
+    const role = u['user'].person_type === 'foreign' ? foreignCollabRole : collabRole
+    return filterUser(u['user'].first_name, u['user'].last_name, role, u['user'].person_mail)
+  })
   if (sortName !== undefined)
     filteredJoined = _.orderBy(filteredJoined, [u => u['user'].first_name?.toLowerCase(), u => u['user'].last_name?.toLowerCase()], [sortName ? 'desc' : 'asc', sortName ? 'desc' : 'asc'])
+
+  const filteredInvites = invites?.filter(user => {
+    const role = user.invtype === 'foreign' ? foreignCollabRole : collabRole
+    return filterUser(null, null, role, user.email)
+  }) || []
 
   return (
     <>
@@ -387,8 +405,30 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       style={{fontSize: '0.83rem'}}
                     />
                   </td>
-                  <td className="p-2 align-middle text-center"></td>
-                  <td className="p-2 align-middle text-center"></td>
+                  <td className="p-2 align-middle text-center">
+                    <Input
+                      value={searchRole}
+                      onChange={(e) => setSearchRole(e.target.value)}
+                      placeholder={intl.formatMessage({
+                        defaultMessage: "Traži",
+                        description: "users-table-general-search-placeholder"
+                      })}
+                      className="form-control"
+                      style={{fontSize: '0.83rem'}}
+                    />
+                  </td>
+                  <td className="p-2 align-middle text-center">
+                    <Input
+                      value={searchEmail}
+                      onChange={(e) => setSearchEmail(e.target.value)}
+                      placeholder={intl.formatMessage({
+                        defaultMessage: "Traži",
+                        description: "users-table-general-search-placeholder"
+                      })}
+                      className="form-control"
+                      style={{fontSize: '0.83rem'}}
+                    />
+                  </td>
                   <td className="p-2 align-middle text-center"></td>
                   {
                     amILead &&
@@ -574,7 +614,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   ))
                 }
                 {
-                  invites?.length > 0 && invites.map((user, i) => (
+                  filteredInvites.length > 0 && filteredInvites.map((user, i) => (
                     <tr key={`row-${i + 100}`}>
                       <td className="p-3 align-middle text-center">
                         { (showLead ? 1 : 0) + filteredJoined.length + i + 1 }

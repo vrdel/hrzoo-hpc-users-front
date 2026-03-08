@@ -37,6 +37,8 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
 
   const [searchFirstName, setSearchFirstName] = useState('')
   const [searchLastName, setSearchLastName] = useState('')
+  const [searchRole, setSearchRole] = useState('')
+  const [searchEmail, setSearchEmail] = useState('')
   const [sortName, setSortName] = useState(undefined)
 
   const [isOpen, setIsOpen] = useState(false);
@@ -155,18 +157,29 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   }, [invites])
 
 
-  const filterByName = (firstName, lastName) => {
+  const filterUser = (firstName, lastName, role, email) => {
     let match = true
     if (searchFirstName)
       match = match && firstName?.toLowerCase().includes(searchFirstName.toLowerCase())
     if (searchLastName)
       match = match && lastName?.toLowerCase().includes(searchLastName.toLowerCase())
+    if (searchRole)
+      match = match && role?.toLowerCase().includes(searchRole.toLowerCase())
+    if (searchEmail)
+      match = match && email?.toLowerCase().includes(searchEmail.toLowerCase())
     return match
   }
 
-  const showLead = filterByName(lead['user'].first_name, lead['user'].last_name)
+  const leadRole = intl.formatMessage({ defaultMessage: "Voditelj", description: "users-table-croris-lead" })
+  const collabRole = intl.formatMessage({ defaultMessage: "Suradnik", description: "users-table-croris-collaborator" })
+  const foreignCollabRole = intl.formatMessage({ defaultMessage: "Strani suradnik", description: "users-table-general-collaborator-foreign" })
 
-  let filteredJoined = alreadyJoined.filter(u => filterByName(u['user'].first_name, u['user'].last_name))
+  const showLead = filterUser(lead['user'].first_name, lead['user'].last_name, leadRole, lead['user'].person_mail)
+
+  let filteredJoined = alreadyJoined.filter(u => {
+    const role = u['user']['person_type'] === 'local' ? collabRole : foreignCollabRole
+    return filterUser(u['user'].first_name, u['user'].last_name, role, u['user'].person_mail)
+  })
   if (sortName !== undefined)
     filteredJoined = _.orderBy(filteredJoined, [u => u['user'].first_name?.toLowerCase(), u => u['user'].last_name?.toLowerCase()], [sortName ? 'desc' : 'asc', sortName ? 'desc' : 'asc'])
 
@@ -189,7 +202,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     })
 
     let filteredCollaborators = collaborators.filter(u =>
-      !oibsJoined.has(u['oib']) && filterByName(u.first_name, u.last_name)
+      !oibsJoined.has(u['oib']) && filterUser(u.first_name, u.last_name, collabRole, u.email)
     )
     if (sortName !== undefined)
       filteredCollaborators = _.orderBy(filteredCollaborators, [u => u.first_name?.toLowerCase(), u => u.last_name?.toLowerCase()], [sortName ? 'desc' : 'asc', sortName ? 'desc' : 'asc'])
@@ -205,6 +218,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     if (collabEmails.indexOf(email) === -1)
       foreignInvites.push(email)
     })
+
+    let filteredForeignInvites = foreignInvites.filter(email =>
+      filterUser(null, null, foreignCollabRole, email)
+    )
 
     return (
       <>
@@ -303,8 +320,30 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         style={{fontSize: '0.83rem'}}
                       />
                     </td>
-                    <td className="p-2 align-middle text-center"></td>
-                    <td className="p-2 align-middle text-center"></td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchRole}
+                        onChange={(e) => setSearchRole(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-croris-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchEmail}
+                        onChange={(e) => setSearchEmail(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-croris-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
                     <td className="p-2 align-middle text-center"></td>
                     <td className="p-2 align-middle text-center"></td>
                     {
@@ -645,10 +684,11 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         ))
                   }
                   {
-                    foreignInvites.length > 0 && foreignInvites.map((email, i) => (
+                    filteredForeignInvites.length > 0 && filteredForeignInvites.map((email, i) => (
                       <tr key={`row-${i + 100}`}>
                         <td className="p-3 align-middle text-center">
-                          { (showLead ? 1 : 0) + filteredJoined.length + filteredCollaborators.length + i + 1 }
+                          { (showLead ? 1 : 0) + filteredJoined.length + filteredCollaborators.length + i + 1}
+
                         </td>
                         <td className="p-3 align-middle text-center">
                           { '\u2212' }
