@@ -290,6 +290,8 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     return match
   }
 
+  const showLead = filterByName(lead['user'].first_name, lead['user'].last_name)
+
   let filteredJoined = alreadyJoined.filter(u => filterByName(u['user'].first_name, u['user'].last_name))
   if (sortName !== undefined)
     filteredJoined = _.orderBy(filteredJoined, [u => u['user'].first_name?.toLowerCase(), u => u['user'].last_name?.toLowerCase()], [sortName ? 'desc' : 'asc', sortName ? 'desc' : 'asc'])
@@ -301,6 +303,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
           <Table responsive hover className="shadow-sm bg-white">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr>
+                <th className="fw-normal" style={{width: '52px'}}>
+                  #
+                </th>
                 <th className="fw-normal" style={{cursor: 'pointer'}}
                   onClick={() => setSortName(prev => prev === undefined ? true : !prev)}
                 >
@@ -356,6 +361,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
               <>
                 <tr>
                   <td className="p-2 align-middle text-center">
+                    <FontAwesomeIcon icon={ faSearch } />
+                  </td>
+                  <td className="p-2 align-middle text-center">
                     <Input
                       value={searchFirstName}
                       onChange={(e) => setSearchFirstName(e.target.value)}
@@ -379,9 +387,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       style={{fontSize: '0.83rem'}}
                     />
                   </td>
-                  <td className="p-2 align-middle text-center">
-                    <FontAwesomeIcon icon={ faSearch } />
-                  </td>
+                  <td className="p-2 align-middle text-center"></td>
                   <td className="p-2 align-middle text-center"></td>
                   <td className="p-2 align-middle text-center"></td>
                   {
@@ -389,81 +395,98 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     <td className="p-2 align-middle text-center"></td>
                   }
                 </tr>
-                <tr>
-                  <td className={
-                    amILead
-                    ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                    : "p-3 align-middle text-center"
-                  }>
-                    { lead['user'].first_name }
-                  </td>
-                  <td className={
-                    amILead
-                    ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                    : "p-3 align-middle text-center"
-                  }>
-                    { lead['user'].last_name }
-                  </td>
-                  <td className={
-                    amILead
-                    ? "align-middle text-center fst-italic border-bottom border-secondary"
-                    : "align-middle text-center"
-                  }>
-                    <FormattedMessage
-                      defaultMessage="Voditelj"
-                      description="users-table-general-leader"
-                    />
-                  </td>
-                  <td className={
-                    amILead
-                    ? "align-middle text-center fst-italic border-bottom border-secondary"
-                    : "align-middle text-center"
+                {
+                  showLead &&
+                  <tr>
+                    <td className={
+                      amILead
+                      ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                      : "p-3 align-middle text-center"
                     }>
-                    { lead['user'].person_mail }
-                  </td>
-                  <td className={
-                    amILead
-                    ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                    : "align-middle text-center text-success"
-                  }>
-                    <div className="position-relative">
-                      <FormattedMessage
-                        defaultMessage="Da"
-                        description="users-table-general-isadded"
-                      />
-                      {
-                        lead['user'].sshkeys &&
-                          <div id={`Tooltip-key-${999}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
-                            <FontAwesomeIcon icon={faKey}/>
-                            <Tooltip
-                              placement='top'
-                              isOpen={isOpened(lead['user'].person_mail)}
-                              target={`Tooltip-key-${999}`}
-                              toggle={() => showTooltip(lead['user'].person_mail)}
-                            >
-                              <FormattedMessage
-                                defaultMessage="Dodan javni ključ"
-                                description="users-table-general-keyadd"
-                              />
-                            </Tooltip>
-                          </div>
-                      }
-                    </div>
-                  </td>
-                  {
-                    amILead &&
+                      1
+                    </td>
+                    <td className={
+                      amILead
+                      ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                      : "p-3 align-middle text-center"
+                    }>
+                      { lead['user'].first_name }
+                    </td>
+                    <td className={
+                      amILead
+                      ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                      : "p-3 align-middle text-center"
+                    }>
+                      { lead['user'].last_name }
+                    </td>
                     <td className={
                       amILead
                       ? "align-middle text-center fst-italic border-bottom border-secondary"
                       : "align-middle text-center"
                     }>
-                      {'\u2212'}
+                      <FormattedMessage
+                        defaultMessage="Voditelj"
+                        description="users-table-general-leader"
+                      />
                     </td>
-                  }
-                </tr>
+                    <td className={
+                      amILead
+                      ? "align-middle text-center fst-italic border-bottom border-secondary"
+                      : "align-middle text-center"
+                      }>
+                      { lead['user'].person_mail }
+                    </td>
+                    <td className={
+                      amILead
+                      ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                      : "align-middle text-center text-success"
+                    }>
+                      <div className="position-relative">
+                        <FormattedMessage
+                          defaultMessage="Da"
+                          description="users-table-general-isadded"
+                        />
+                        {
+                          lead['user'].sshkeys &&
+                            <div id={`Tooltip-key-${999}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
+                              <FontAwesomeIcon icon={faKey}/>
+                              <Tooltip
+                                placement='top'
+                                isOpen={isOpened(lead['user'].person_mail)}
+                                target={`Tooltip-key-${999}`}
+                                toggle={() => showTooltip(lead['user'].person_mail)}
+                              >
+                                <FormattedMessage
+                                  defaultMessage="Dodan javni ključ"
+                                  description="users-table-general-keyadd"
+                                />
+                              </Tooltip>
+                            </div>
+                        }
+                      </div>
+                    </td>
+                    {
+                      amILead &&
+                      <td className={
+                        amILead
+                        ? "align-middle text-center fst-italic border-bottom border-secondary"
+                        : "align-middle text-center"
+                      }>
+                        {'\u2212'}
+                      </td>
+                    }
+                  </tr>
+                }
                 {
                   filteredJoined.length > 0 && filteredJoined.map((user, i) => (
                     <tr key={`row-${i}`}>
+                      <td className={
+                        user['user']['person_oib'] === userDetails.person_oib
+                        ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                        : "p-3 align-middle text-center"
+                      }>
+                        { (showLead ? 1 : 0) + i + 1 }
+                      </td>
                       <td className={
                         user['user']['person_oib'] === userDetails.person_oib
                         ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
@@ -553,6 +576,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                 {
                   invites?.length > 0 && invites.map((user, i) => (
                     <tr key={`row-${i + 100}`}>
+                      <td className="p-3 align-middle text-center">
+                        { (showLead ? 1 : 0) + filteredJoined.length + i + 1 }
+                      </td>
                       <td className="p-3 align-middle text-center">
                         { '\u2212' }
                       </td>
