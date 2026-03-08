@@ -463,6 +463,10 @@
     "defaultMessage": "Sustav CroRIS",
     "description": "userinfo-croris-title"
   },
+  "9lD1Du": {
+    "defaultMessage": "Traži",
+    "description": "users-table-general-search-placeholder"
+  },
   "9ne3G2": {
     "defaultMessage": "voditelj",
     "description": "userschange-badge-lead"
@@ -1570,6 +1574,10 @@
   "aiSJvp": {
     "defaultMessage": "Detalji zahtjeva",
     "description": "popover-requestinfo"
+  },
+  "aoG78P": {
+    "defaultMessage": "Traži",
+    "description": "users-table-croris-search-placeholder"
   },
   "bAhHuU": {
     "defaultMessage": "Zahtjev \"Izrada rada\" se odnosi na izradu završnih, diplomskih i doktorskih radova i podnosi ga mentor. Po odobrenju zahtjeva, mentor poziva studenta ili doktoranda na projekt.",
