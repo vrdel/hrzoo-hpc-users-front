@@ -275,7 +275,7 @@ const PublicKeys = () => {
                                 </InputGroup>
                               </Col>
                               <Col className="d-flex align-self-center align-content-center">
-                                <Button size="sm" className="ms-3" color="success"
+                                <Button size="sm" className="ms-3" variant="success"
                                   onClick={(e) => copyToClipboard(
                                     e, key.public_key,
                                     intl.formatMessage({
@@ -312,7 +312,7 @@ const PublicKeys = () => {
           </Row>
           <Row className="mb-5 mt-5">
             <Col className="d-flex justify-content-center">
-              <Button size="lg" color="success" onClick={() => {
+              <Button size="lg" variant="success" onClick={() => {
                   navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}
@@ -396,7 +396,7 @@ const PublicKeys = () => {
           </Row>
           <Row className="mb-2 mt-3">
             <Col className="d-flex justify-content-center">
-              <Button size="lg" color="success" onClick={() => {
+              <Button size="lg" variant="success" onClick={() => {
                   navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}

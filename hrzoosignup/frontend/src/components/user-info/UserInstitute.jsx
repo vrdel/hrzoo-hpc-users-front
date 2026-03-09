@@ -14,12 +14,12 @@ const InstituteTableInfo = ({userDetails}) => {
     <React.Fragment>
       <Row>
         <Col className="mt-4 ms-3" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+          <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Imenik"
               description="userins-directory"
             />
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
       <Row>

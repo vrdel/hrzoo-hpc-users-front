@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields, { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Label, Row, Button, Form, FormGroup, Input, Table } from 'reactstrap';
+import { Col, Row, Button, Form, Table } from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject, deleteProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -649,12 +649,11 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['extend']}
+              variant={!requestState['extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'extend'))
               }}
-              color="success"
             />
           </Col>
         :
@@ -670,12 +669,11 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve-expire']}
+                variant={!requestState['approve-expire'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve-expire'))
                 }}
-                color="success"
               />
             </Col>
           :
@@ -690,12 +688,11 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve']}
+                variant={!requestState['approve'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve'))
                 }}
-                color="success"
               />
             </Col>
       }
@@ -712,12 +709,11 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['submit-extend']}
+              variant={!requestState['submit-extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'submit-extend'))
               }}
-              color="success"
             />
           </Col>
       }
@@ -731,13 +727,13 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
           />
         </p>
         <Button
-          outline={!requestState['expire']}
+          variant={!requestState['expire'] ? "outline-success" : "success"}
           style={{height: '30px', width: '30px'}}
           onClick={() => {
             setCommentDisabled(true)
             setRequestState(ToggleState(requestState, 'expire'))
           }}
-          color="success"/>
+        />
       </Col>
     </>
   )
@@ -763,12 +759,11 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['extend']}
+              variant={!requestState['extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'extend'))
               }}
-              color="success"
             />
           </Col>
         :
@@ -784,12 +779,11 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve-expire']}
+                variant={!requestState['approve-expire'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve-expire'))
                 }}
-                color="success"
               />
             </Col>
           :
@@ -804,12 +798,11 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve']}
+                variant={!requestState['approve'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve'))
                 }}
-                color="success"
               />
             </Col>
       }
@@ -826,12 +819,11 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['submit-extend']}
+              variant={!requestState['submit-extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'submit-extend'))
               }}
-              color="success"
             />
           </Col>
         :
@@ -846,12 +838,11 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['submit']}
+              variant={!requestState['submit'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'submit'))
               }}
-              color="success"
             />
           </Col>
       }
@@ -865,13 +856,13 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           />
         </p>
         <Button
-          outline={!requestState['deny']}
+          variant={!requestState['deny'] ? "outline-success" : "success"}
           style={{height: '30px', width: '30px'}}
           onClick={() => {
             setCommentDisabled(false)
             setRequestState(ToggleState(requestState, 'deny'))
           }}
-          color="success"/>
+        />
       </Col>
       <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <Expire/>{' '}
@@ -883,13 +874,13 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           />
         </p>
         <Button
-          outline={!requestState['expire']}
+          variant={!requestState['expire'] ? "outline-success" : "success"}
           style={{height: '30px', width: '30px'}}
           onClick={() => {
             setCommentDisabled(true)
             setRequestState(ToggleState(requestState, 'expire'))
           }}
-          color="success"/>
+        />
       </Col>
     </>
   )
@@ -961,7 +952,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       </Row>
       <Row className="d-flex flex-row justify-content-end">
         <Col md={{size: 6}} lg={{size: 5}} xl={{size: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 mt-3 justify-content-center">
-          <Button color="danger" className="me-lg-1 me-md-1 me-sm-1 me-1" onClick={() => {
+          <Button variant="danger" className="me-lg-1 me-md-1 me-sm-1 me-1" onClick={() => {
             modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
             modalProps.setModalTitle(intl.formatMessage({
               defaultMessage: 'Brisanje korisničkog zahtjeva',
@@ -987,7 +978,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                   })
             }
           </Button>
-          <Button color="danger"
+          <Button variant="danger"
             className="me-lg-1 me-md-3 me-sm-3"
             onClick={() => setDisabledFields(!disabledFields)}
             active={!disabledFields}
@@ -1010,10 +1001,10 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       </Row>
       <Row>
         <Col className="text-left" md={{size: 10}}>
-          <Label
+          <Form.Label
             htmlFor="projectTitle"
             aria-label="projectTitle">
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
       <Row style={{'height': '10px'}}/>
@@ -1111,7 +1102,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       <Row className="mt-4">
         <Col style={{width: '150px'}} md={{size: 1}}/>
         <Col md={{size: 8}}>
-          <Label
+          <Form.Label
             htmlFor="staff_requestResourceType"
             aria-label="staff_requestResourceType"
             className="fw-bold mt-3 fs-5 text-right form-label">
@@ -1119,7 +1110,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               defaultMessage="Dodijeljeni tip resursa:"
               description="managereq-change-resource-given"
             />
-          </Label>
+          </Form.Label>
           <Controller
             name="staff_requestResourceType"
             control={control}
@@ -1149,7 +1140,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           <Row className="mt-3">
             <Col style={{width: '150px'}} md={{size: 1}}/>
             <Col md={{size: 10}}>
-              <Label
+              <Form.Label
                 htmlFor="staff_comment"
                 className="fw-bold mt-3 fs-5 form-label"
                 aria-label="staff_comment">
@@ -1161,7 +1152,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                     i: (chunks) => <i>{chunks}</i>
                   }}
                 />
-              </Label>
+              </Form.Label>
               <Controller
                 name="staff_comment"
                 control={control}
@@ -1186,28 +1177,26 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
           <Row className="mt-3">
             <Col style={{width: '150px'}} md={{size: 1}}/>
             <Col md={{size: 9}}>
-              <FormGroup switch>
-                <Controller
-                  name="staff_emailSend"
-                  control={control}
-                  render={({field}) =>
-                    <Input
-                      {...field}
-                      type="switch"
-                      role="switch"
-                      disabled={sendEmailDisabled}
-                      checked={disabledFields ? getValues('staff_emailSend') : false}
-                      className="form-control fw-bold fst-italic"
-                    />
-                  }
-                />
-                <Label className="fw-bold fst-italic" check>
-                  <FormattedMessage
-                    defaultMessage="Šalji email voditelju"
-                    description="managereq-change-email-manager"
+              <Controller
+                name="staff_emailSend"
+                control={control}
+                render={({field}) =>
+                  <Form.Check
+                    {...field}
+                    type="switch"
+                    role="switch"
+                    disabled={sendEmailDisabled}
+                    checked={disabledFields ? getValues('staff_emailSend') : false}
+                    className="fw-bold fst-italic"
+                    label={
+                      <FormattedMessage
+                        defaultMessage="Šalji email voditelju"
+                        description="managereq-change-email-manager"
+                      />
+                    }
                   />
-                </Label>
-              </FormGroup>
+                }
+              />
             </Col>
           </Row>
           <Row style={{'height': '100px'}}/>
@@ -1255,7 +1244,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       }
       <Row className="mt-5 mb-5 text-center">
         <Col>
-          <Button disabled={!disabledFields} size="lg" color="success"
+          <Button disabled={!disabledFields} size="lg" variant="success"
             id="submit-button" type="submit">
             <FontAwesomeIcon icon={faSave}/>{' '}
             <FormattedMessage
