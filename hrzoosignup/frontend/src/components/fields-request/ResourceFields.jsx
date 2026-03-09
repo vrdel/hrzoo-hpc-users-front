@@ -36,7 +36,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               defaultMessage="Broj virtualnih poslužitelja:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Controller
               name="CLOUDnVM"
               aria-label="CLOUDnVM"
@@ -50,7 +50,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <Form.ControlGroupText>
+            <InputGroup.Text>
               VM
             </InputGroup.Text>
             <ErrorMessage
@@ -74,7 +74,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Controller
               name="CLOUDnSlotsCPU"
               aria-label="CLOUDnSlotsCPU"
@@ -88,7 +88,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <Form.ControlGroupText>
+            <InputGroup.Text>
               CPU
             </InputGroup.Text>
             <ErrorMessage
@@ -112,7 +112,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               defaultMessage="Ukupna količina radne memorije (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Controller
               name="CLOUDnRAM"
               aria-label="CLOUDnRAM"
@@ -126,7 +126,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <Form.ControlGroupText>
+            <InputGroup.Text>
               RAM
             </InputGroup.Text>
             <ErrorMessage
@@ -150,7 +150,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Controller
               name="CLOUDnRAMVM"
               aria-label="CLOUDnRAMVM"
@@ -164,7 +164,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <Form.ControlGroupText>
+            <InputGroup.Text>
               RAM
             </InputGroup.Text>
             <ErrorMessage
@@ -188,7 +188,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Controller
               name="CLOUDnDiskGB"
               aria-label="CLOUDnDiskGB"
@@ -202,7 +202,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <Form.ControlGroupText>
+            <InputGroup.Text>
               Disk
             </InputGroup.Text>
             <ErrorMessage
@@ -228,7 +228,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Controller
               name="CLOUDnFastDiskGB"
               aria-label="CLOUDnFastDiskGB"
@@ -242,7 +242,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <Form.ControlGroupText>
+            <InputGroup.Text>
               Disk
             </InputGroup.Text>
             <ErrorMessage
@@ -266,7 +266,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               defaultMessage=" Broj javnih IPv4 adresa:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Controller
               name="CLOUDnIPs"
               aria-label="CLOUDnIPs"
@@ -280,7 +280,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <Form.ControlGroupText>
+            <InputGroup.Text>
               IP
             </InputGroup.Text>
             <ErrorMessage
@@ -318,7 +318,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
           />
         </Form.Label>
-        <Form.ControlGroup>
+        <InputGroup>
           <Controller
             name="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
@@ -332,7 +332,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               />
             }
           />
-          <Form.ControlGroupText>
+          <InputGroup.Text>
             CPU
           </InputGroup.Text>
           <ErrorMessage
@@ -356,7 +356,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             defaultMessage="Prosječan broj grafičkih procesora po poslu:"
           />
         </Form.Label>
-        <Form.ControlGroup>
+        <InputGroup>
           <Controller
             name="HPCnSlotsGPU"
             aria-label="HPCnSlotsGPU"
@@ -370,7 +370,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               />
             }
           />
-          <Form.ControlGroupText>
+          <InputGroup.Text>
             GPU
           </InputGroup.Text>
           <ErrorMessage
@@ -394,7 +394,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             defaultMessage="Prosječna količina radne memorije po poslu (GB):"
           />
         </Form.Label>
-        <Form.ControlGroup>
+        <InputGroup>
           <Controller
             name="HPCnRAM"
             aria-label="HPCnRAM"
@@ -408,7 +408,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               />
             }
           />
-          <Form.ControlGroupText>
+          <InputGroup.Text>
             RAM
           </InputGroup.Text>
           <ErrorMessage
@@ -432,7 +432,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
           />
         </Form.Label>
-        <Form.ControlGroup>
+        <InputGroup>
           <Controller
             name="HPCnTempGB"
             aria-label="HPCnTempGB"
@@ -446,7 +446,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               />
             }
           />
-          <Form.ControlGroupText>
+          <InputGroup.Text>
             Temp
           </InputGroup.Text>
           <ErrorMessage
@@ -470,7 +470,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
             defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
           />
         </Form.Label>
-        <Form.ControlGroup>
+        <InputGroup>
           <Controller
             name="HPCnDiskGB"
             aria-label="HPCnDiskGB"
@@ -484,7 +484,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
               />
             }
           />
-          <Form.ControlGroupText>
+          <InputGroup.Text>
             Disk
           </InputGroup.Text>
           <ErrorMessage

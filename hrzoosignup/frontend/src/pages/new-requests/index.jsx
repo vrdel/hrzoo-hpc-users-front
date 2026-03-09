@@ -159,7 +159,7 @@ const NewRequestIndex = () => {
                     disabled={true}
                     style={{maxWidth: '64%'}}
                   />
-                  <Form.ControlGroup style={{maxWidth: '30%'}}>
+                  <InputGroup style={{maxWidth: '30%'}}>
                     <Form.Control
                       className={`ms-1 form-control text-center`}
                       disabled={true}
@@ -169,7 +169,7 @@ const NewRequestIndex = () => {
                       }) }
                       type="number"
                     />
-                    <Form.ControlGroup.Text>
+                    <InputGroup.Text>
                       %
                     </InputGroup.Text>
                   </InputGroup>
@@ -197,7 +197,7 @@ const NewRequestIndex = () => {
                         }) }
                         style={{maxWidth: '64%'}}
                       />
-                      <Form.ControlGroup style={{maxWidth: '30%'}}>
+                      <InputGroup style={{maxWidth: '30%'}}>
                         <Form.Control
                           className={`ms-1 form-control text-center`}
                           placeholder={ intl.formatMessage({
@@ -207,7 +207,7 @@ const NewRequestIndex = () => {
                           type="number"
                           disabled={true}
                         />
-                        <Form.ControlGroup.Text>
+                        <InputGroup.Text>
                           %
                         </InputGroup.Text>
                       </InputGroup>
@@ -282,13 +282,13 @@ const NewRequestIndex = () => {
               defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               CPU
             </InputGroup.Text>
           </InputGroup>
@@ -303,13 +303,13 @@ const NewRequestIndex = () => {
               defaultMessage="Prosječan broj grafičkih procesora po poslu:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               GPU
             </InputGroup.Text>
           </InputGroup>
@@ -324,13 +324,13 @@ const NewRequestIndex = () => {
               defaultMessage="Prosječna količina radne memorije po poslu (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               RAM
             </InputGroup.Text>
           </InputGroup>
@@ -345,13 +345,13 @@ const NewRequestIndex = () => {
               defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               Temp
             </InputGroup.Text>
           </InputGroup>
@@ -366,13 +366,13 @@ const NewRequestIndex = () => {
               defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               Disk
             </InputGroup.Text>
           </InputGroup>
@@ -393,13 +393,13 @@ const NewRequestIndex = () => {
               defaultMessage="Broj virtualnih poslužitelja:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               VM
             </InputGroup.Text>
           </InputGroup>
@@ -414,13 +414,13 @@ const NewRequestIndex = () => {
               defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               CPU
             </InputGroup.Text>
           </InputGroup>
@@ -435,13 +435,13 @@ const NewRequestIndex = () => {
               defaultMessage="Ukupna količina radne memorije (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               RAM
             </InputGroup.Text>
           </InputGroup>
@@ -456,13 +456,13 @@ const NewRequestIndex = () => {
               defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               RAM
             </InputGroup.Text>
           </InputGroup>
@@ -477,13 +477,13 @@ const NewRequestIndex = () => {
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               Disk
             </InputGroup.Text>
           </InputGroup>
@@ -500,13 +500,13 @@ const NewRequestIndex = () => {
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               className="form-control text-center"
               disabled={true}
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               Disk
             </InputGroup.Text>
           </InputGroup>
@@ -521,13 +521,13 @@ const NewRequestIndex = () => {
               defaultMessage=" Broj javnih IPv4 adresa:"
             />
           </Form.Label>
-          <Form.ControlGroup>
+          <InputGroup>
             <Form.Control
               disabled={true}
               className="form-control text-center"
               type="number"
             />
-            <Form.ControlGroup.Text>
+            <InputGroup.Text>
               IP
             </InputGroup.Text>
           </InputGroup>
