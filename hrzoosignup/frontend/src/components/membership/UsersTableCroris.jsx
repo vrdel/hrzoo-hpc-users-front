@@ -293,7 +293,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         <FontAwesomeIcon icon={ faSearch } />
                       </td>
                       <td className="p-2 align-middle text-center">
-                        <Input
+                        <Form.Control
                           value={searchFirstName}
                           onChange={(e) => setSearchFirstName(e.target.value)}
                           placeholder={intl.formatMessage({
@@ -305,7 +305,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         />
                       </td>
                       <td className="p-2 align-middle text-center">
-                        <Input
+                        <Form.Control
                           value={searchLastName}
                           onChange={(e) => setSearchLastName(e.target.value)}
                           placeholder={intl.formatMessage({
@@ -319,7 +319,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       <td className="p-2 align-middle text-center">
                       </td>
                       <td className="p-2 align-middle text-center">
-                        <Input
+                        <Form.Control
                           value={searchEmail}
                           onChange={(e) => setSearchEmail(e.target.value)}
                           placeholder={intl.formatMessage({
@@ -436,17 +436,18 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 user['user'].sshkeys &&
                                   <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
                                     <FontAwesomeIcon icon={faKey}/>
-                                    <Tooltip
+                                    <Overlay
                                       placement='top'
-                                      isOpen={isOpened(user['user'].person_mail)}
-                                      target={`Tooltip-key-${i + 1000}`}
-                                      toggle={() => showTooltip(user['user'].person_mail)}
+                                      show={isOpened(user['user'].person_mail)}
+                                      target={document.getElementById(`Tooltip-key-${i + 1000}`)}
                                     >
-                                      <FormattedMessage
-                                        defaultMessage="Dodan javni ključ"
-                                        description="users-table-croris-keyadd"
-                                      />
-                                    </Tooltip>
+                                      {(props) => <Tooltip {...props}>
+                                        <FormattedMessage
+                                          defaultMessage="Dodan javni ključ"
+                                          description="users-table-croris-keyadd"
+                                        />
+                                      </Tooltip>}
+                                    </Overlay>
                                   </div>
                               }
                             </div>
@@ -461,7 +462,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                               {
                                 isLeadEntry
                                 ? '\u2212'
-                                : <Input
+                                : <Form.Check
                                     type="checkbox"
                                     className="bg-danger border border-danger ms-1"
                                     checked={checkJoined[alreadyJoined.indexOf(user)] === true}
@@ -556,20 +557,21 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                         className="text-success fa-lg"
                                         icon={faEnvelope}
                                       />
-                                      <Tooltip
+                                      <Overlay
                                         placement='top'
-                                        isOpen={isOpened(user.email)}
-                                        target={'Tooltip-' + i + 100}
-                                        toggle={() => showTooltip(user.email)}
+                                        show={isOpened(user.email)}
+                                        target={document.getElementById('Tooltip-' + i + 100)}
                                       >
-                                        <FormattedMessage
-                                          defaultMessage="Aktivna pozivnica poslana na email"
-                                          description="users-table-croris-invitesent"
-                                        />
-                                      </Tooltip>
+                                        {(props) => <Tooltip {...props}>
+                                          <FormattedMessage
+                                            defaultMessage="Aktivna pozivnica poslana na email"
+                                            description="users-table-croris-invitesent"
+                                          />
+                                        </Tooltip>}
+                                      </Overlay>
                                       <div className="position-absolute top-0 ms-4 start-50 translate-middle">
                                         <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
-                                          color="light"
+                                          variant="light"
                                           onClick={() => onInviteDelete(user)}
                                         >
                                           <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
@@ -621,20 +623,21 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         <td className="align-middle text-center">
                           <div className="position-relative">
                             <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope}/>
-                            <Tooltip
+                            <Overlay
                               placement='top'
-                              isOpen={isOpened(email)}
-                              target={`Tooltip-${i + 100}`}
-                              toggle={() => showTooltip(email)}
+                              show={isOpened(email)}
+                              target={document.getElementById(`Tooltip-${i + 100}`)}
                             >
-                              <FormattedMessage
-                                defaultMessage="Aktivna pozivnica poslana na email"
-                                description="users-table-general-invitesent"
-                              />
-                            </Tooltip>
+                              {(props) => <Tooltip {...props}>
+                                <FormattedMessage
+                                  defaultMessage="Aktivna pozivnica poslana na email"
+                                  description="users-table-general-invitesent"
+                                />
+                              </Tooltip>}
+                            </Overlay>
                             <div className="position-absolute top-0 ms-4 start-50 translate-middle">
                               <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0"
-                                color="light"
+                                variant="light"
                                 onClick={() => onInviteDelete(
                                   {
                                     email
@@ -668,7 +671,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                   <Row>
                     <Col className="d-flex justify-content-center flex-column flex-lg-row align-items-center">
                       <Button
-                        color="danger"
+                        variant="danger"
                         active={!_.some(checkJoined, (value) => value === true)}
                         onClick={() => onUsersCheckout()} className="me-2"
                       >
@@ -678,14 +681,14 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-collabsignoff"
                         />
                       </Button>
-                      <Button disabled={collabNoEmail} active={isOpen} color="primary" className="ms-0 ms-md-2 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle}>
+                      <Button disabled={collabNoEmail} active={isOpen} variant="primary" className="ms-0 ms-md-2 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi CroRIS suradnike"
                           description="users-table-croris-croris-collabcall"
                         />
                       </Button>
-                      <Button active={isOpen2} color="info" className="ms-0 ms-md-3 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle2}>
+                      <Button active={isOpen2} variant="info" className="ms-0 ms-md-3 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle2}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi strane suradnike"
@@ -696,15 +699,15 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                   </Row>
                   <Row className="mt-4">
                     <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
-                      <Collapse isOpen={isOpen && missingCollab.length !== 0} style={{width: '80%'}}>
+                      <Collapse in={isOpen && missingCollab.length !== 0} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
-                          <CardTitle>
+                          <Card.Title>
                             <FormattedMessage
                               defaultMessage="Odaberi email adrese suradnika iz sustava CroRIS koje želiš pozvati na projekt"
                               description="users-table-croris-cardtitle-1"
                             />
-                          </CardTitle>
-                          <CardBody className="mb-4">
+                          </Card.Title>
+                          <Card.Body className="mb-4">
                             <Controller
                               name="collaboratorEmails"
                               control={control}
@@ -732,7 +735,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                               }
                             />
                             <div className="d-flex align-items-center justify-content-center">
-                              <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                              <Button className="mt-4 mb-1" variant="success" id="submit-button" type="submit">
                                 <FontAwesomeIcon icon={faPaperPlane}/>{' '}
                                 <FormattedMessage
                                   defaultMessage="Pošalji poveznice za prijavu"
@@ -740,18 +743,18 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 />
                               </Button>
                             </div>
-                          </CardBody>
+                          </Card.Body>
                         </Card>
                       </Collapse>
-                      <Collapse isOpen={isOpen2} style={{width: '80%'}}>
+                      <Collapse in={isOpen2} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
-                          <CardTitle>
+                          <Card.Title>
                             <FormattedMessage
                               defaultMessage="Upiši email adrese stranih suradnika koje želiš pozvati na projekt"
                               description="users-table-croris-cardtitle-2"
                             />
-                          </CardTitle>
-                          <CardBody className="mb-4">
+                          </Card.Title>
+                          <Card.Body className="mb-4">
                             <Controller
                               name="foreignCollaboratorEmails"
                               control={control}
@@ -769,7 +772,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                               }
                             />
                             <div className="d-flex align-items-center justify-content-center">
-                              <Button className="mt-4 mb-1" color="success" id="submit-button" type="submit">
+                              <Button className="mt-4 mb-1" variant="success" id="submit-button" type="submit">
                                 <FontAwesomeIcon icon={faPaperPlane}/>{' '}
                                 <FormattedMessage
                                   defaultMessage="Pošalji poveznice za prijavu"
@@ -777,7 +780,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 />
                               </Button>
                             </div>
-                          </CardBody>
+                          </Card.Body>
                         </Card>
                       </Collapse>
                     </Col>

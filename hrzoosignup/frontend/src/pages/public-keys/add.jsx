@@ -5,11 +5,8 @@ import {
   Row,
   Button,
   InputGroup,
-  Input,
-  Label,
   Form,
-  FormFeedback
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addSshKey } from 'Api/sshkeys';
@@ -143,19 +140,19 @@ const NewPublicKey = () => {
         </Row>
         <Row>
           <Col className="mt-4" sm={{size: 3, offset: 1}}>
-            <Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+            <Form.Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
               <FormattedMessage
                 defaultMessage="Ime ključa"
                 description="publickeys-list-keyname"
               />
-            </Label>
+            </Form.Label>
             <InputGroup>
               <Controller
                 name="name"
                 control={control}
                 rules={{required: true}}
                 render={ ({field}) =>
-                  <Input
+                  <Form.Control
                     {...field}
                     placeholder="moj-laptop"
                     className={`form-control shadow-sm fs-5 ${errors && errors.name && "is-invalid"}`}
@@ -166,9 +163,9 @@ const NewPublicKey = () => {
                 errors={errors}
                 name="name"
                 render={({ message }) =>
-                  <FormFeedback className="end-0">
+                  <Form.Control.Feedback type="invalid" className="end-0">
                     { message }
-                  </FormFeedback>
+                  </Form.Control.Feedback>
                 }
               />
             </InputGroup>
@@ -182,22 +179,22 @@ const NewPublicKey = () => {
           </Col>
           <Col className="ms-4 g-0" sm={{size: 7}}>
             <div className="d-flex justify-content-between">
-              <Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
+              <Form.Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
                 <FormattedMessage
                   defaultMessage="Javni ključ"
                   description="publickeys-add-keycontent"
                 />
-              </Label>
-              <Input
+              </Form.Label>
+              <Form.Control
                 type='file'
                 id="fileInput"
                 className="d-none"
-                innerRef={refFileInput}
+                ref={refFileInput}
                 onChange={(e) => {
                   uploadKeyFile(e)
                 }}
               />
-              <Button color="success" className="mt-3 mb-2 me-5 me-sm-0 me-md-0 me-xl-0" onClick={() => refFileInput.current.click()}>
+              <Button variant="success" className="mt-3 mb-2 me-5 me-sm-0 me-md-0 me-xl-0" onClick={() => refFileInput.current.click()}>
                 <FontAwesomeIcon icon={faFile}/>{' '}
                 <FormattedMessage
                   defaultMessage="Učitaj"
@@ -226,9 +223,9 @@ const NewPublicKey = () => {
                 errors={errors}
                 name="public_key"
                 render={({ message }) =>
-                  <FormFeedback className="end-0">
+                  <Form.Control.Feedback type="invalid" className="end-0">
                     { message }
-                  </FormFeedback>
+                  </Form.Control.Feedback>
                 }
               />
             </InputGroup>
@@ -252,7 +249,7 @@ const NewPublicKey = () => {
         </Row>
         <Row className='mt-5 mb-5'>
           <Col className="text-center">
-            <Button size="lg" className="mt-3" color="success" type="submit">
+            <Button size="lg" className="mt-3" variant="success" type="submit">
               <FontAwesomeIcon icon={faPlus}/>{' '}
               <FormattedMessage
                 defaultMessage="Dodaj"

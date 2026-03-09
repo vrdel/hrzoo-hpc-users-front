@@ -11,12 +11,9 @@ import {
   Badge,
   Button,
   Col,
-  FormFeedback,
   Form,
-  Input,
-  Label,
   Row,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFile,
@@ -46,7 +43,7 @@ const ExtractUsers = ({projectUsers}) => {
   return (
     projectUsers.map((user, i) =>
       <React.Fragment key={`wrap-project-users-${i}`}>
-        <Badge color="secondary" className="fs-6 mb-2 fw-normal" key={`project-users-${i}`}>
+        <Badge bg="secondary" className="fs-6 mb-2 fw-normal" key={`project-users-${i}`}>
           { user.first_name }
           {' '}
           { user.last_name }
@@ -492,7 +489,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
                   <Button
                     disabled={userDetails.person_type === 'foreign'}
                     size="lg"
-                    color="success"
+                    variant="success"
                     id="submit-button"
                     type="submit"
                   >
@@ -520,24 +517,24 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
     <>
       <Row>
         <Col className="text-left" md={{size: 10}}>
-          <Label
+          <Form.Label
             htmlFor="projectTitle"
             aria-label="projectTitle">
             <FormattedMessage
               description="researchselected-projecttitle"
               defaultMessage="Naziv:"
             />
-          </Label>
+          </Form.Label>
         </Col>
         <Col className="text-left" md={{size: 2}}>
-          <Label
+          <Form.Label
             htmlFor="projectIdentifier"
             aria-label="projectIdentifier">
             <FormattedMessage
               description="researchselected-projectid"
               defaultMessage="Šifra:"
             />
-          </Label>
+          </Form.Label>
         </Col>
         <div className="w-100"/>
         <Col md={{size: 10}}>
@@ -555,7 +552,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
           <div className="p-2 fs-5">
             {
               project.identifier ?
-                <Badge color="secondary" className="fw-normal">
+                <Badge bg="secondary" className="fw-normal">
                   { project.identifier }
                 </Badge>
               :
@@ -566,7 +563,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
       </Row>
       <Row className="mt-3">
         <Col md={{size: 4}}>
-          <Label
+          <Form.Label
             htmlFor="projectTime"
             aria-label="projectTime"
             className="mr-1">
@@ -574,10 +571,10 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
               description="researchselected-usageperiod"
               defaultMessage="Period korištenja:"
             />
-          </Label>
+          </Form.Label>
         </Col>
         <Col md={{size: 8}}>
-          <Label
+          <Form.Label
             htmlFor="projectTime"
             aria-label="projectTime"
             className="mr-1">
@@ -585,11 +582,11 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
               description="researchselected-users"
               defaultMessage="Osobe:"
             />
-          </Label>
+          </Form.Label>
         </Col>
         <div className="w-100"/>
         <Col md={{size: 4}}>
-          <Input
+          <Form.Control
             disabled={true}
             className="p-2 fs-5 font-monospace"
             defaultValue={`${project.start} − ${ project.end }`}
@@ -597,7 +594,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
         </Col>
         <Col md={{size: 8}}>
           <div className="p-2">
-            <Badge color="dark" className="fs-6 mb-2 fw-normal">
+            <Badge bg="dark" className="fs-6 mb-2 fw-normal">
               { person_info.first_name }
               {' '}
               { person_info.last_name }
@@ -609,7 +606,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
       </Row>
       <Row className="mt-3">
         <Col md={{size: 12}}>
-          <Label
+          <Form.Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
             <FormattedMessage
@@ -617,7 +614,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
               defaultMessage="Obrazloženje:"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
           <Controller
             name="requestExplain"
             control={control}
@@ -637,9 +634,9 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             errors={errors}
             name="requestExplain"
             render={({ message }) =>
-              <FormFeedback className="end-0">
+              <Form.Control.Feedback type="invalid" className="end-0">
                 { message }
-              </FormFeedback>
+              </Form.Control.Feedback>
             }
           />
         </Col>
@@ -659,7 +656,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
     <Row className="mt-4">
       <Row>
         <Col md={{size: 4, offset: 1}} sm={{size: 10}} lg={{size: 10, offset: 1}}  xl={{size: 10, offset: 1}} xxl={{size: 10, offset: 1}}>
-          <Label
+          <Form.Label
             htmlFor="requestUsesAI"
             aria-label="requestUsesAI"
             className="mr-2 text-right form-label">
@@ -667,7 +664,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
               description="requestusesai-description"
               defaultMessage="Projekt koristi tehnologije umjetne inteligencije:"
             />
-          </Label>
+          </Form.Label>
           <span className="ms-1 fw-bold text-danger">*</span>
         </Col>
       </Row>
@@ -700,9 +697,9 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
             errors={errors}
             name="requestUsesAI"
             render={({ message }) =>
-              <FormFeedback className="end-0">
+              <Form.Control.Feedback type="invalid" className="end-0">
                 { message }
-              </FormFeedback>
+              </Form.Control.Feedback>
             }
           />
         </Col>
