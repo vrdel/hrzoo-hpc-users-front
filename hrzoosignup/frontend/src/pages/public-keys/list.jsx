@@ -6,9 +6,8 @@ import {
   Collapse,
   Button,
   InputGroup,
-  InputGroupText,
   Placeholder
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchMySshKeys, deleteSshKey } from 'Api/sshkeys';
@@ -240,10 +239,10 @@ const PublicKeys = () => {
                           { key.public_key.split(' ')[0] }
                         </td>
                         <td className="align-middle text-center">
-                          <Button size="sm" color="primary" onClick={() => showKey(key.name)}>
+                          <Button size="sm" variant="primary" onClick={() => showKey(key.name)}>
                             <FontAwesomeIcon icon={faArrowDown} />
                           </Button>
-                          <Button size="sm" className="ms-lg-2 mt-lg-0 mt-sm-1" color="danger" onClick={() => {
+                          <Button size="sm" className="ms-lg-2 mt-lg-0 mt-sm-1" variant="danger" onClick={() => {
                             setAreYouSureModal(!areYouSureModal)
                             setModalTitle("Brisanje javnog ključa")
                             setModalMsg("Da li ste sigurni da želite obrisati javni ključ?")
@@ -256,16 +255,16 @@ const PublicKeys = () => {
                       </tr>
                       <tr>
                         <td  className="p-0 m-0" colSpan="4">
-                          <Collapse className="m-2 p-2" isOpen={isShowed(key.name)}>
+                          <Collapse className="m-2 p-2" in={isShowed(key.name)}>
                             <Row>
                               <Col sm={{size: 11}}>
                                 <InputGroup>
-                                  <InputGroupText>
+                                  <InputGroup.Text>
                                     <FormattedMessage
                                       defaultMessage="Javni ključ:"
                                       description="publickeys-list-keycontent"
                                     />
-                                  </InputGroupText>
+                                  </InputGroup.Text>
                                   <textarea
                                     className="font-monospace form-control"
                                     rows="5"

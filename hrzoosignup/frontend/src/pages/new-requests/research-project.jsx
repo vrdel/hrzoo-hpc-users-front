@@ -3,12 +3,10 @@ import {
   Button,
   Badge,
   Card,
-  CardHeader,
-  CardBody,
   Spinner,
   Row,
   Col,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import { fetchCroRISMe } from 'Api/croris';
@@ -65,11 +63,11 @@ const ResearchProjectRequest = () => {
                 <Card className={isAlreadySubmitted(project.croris_id)
                   ? `ms-3 mb-3 bg-secondary` : `ms-3 mb-4 bg-success`}
                   key={`card-${i}`}>
-                  <CardHeader className="d-flex fs-5 text-white justify-content-between align-items-center">
+                  <Card.Header className="d-flex fs-5 text-white justify-content-between align-items-center">
                     { project.title }
-                    { isAlreadySubmitted(project.croris_id) && <Badge className="fs-5" color="success">prijavljen</Badge>}
-                  </CardHeader>
-                  <CardBody className={isAlreadySubmitted(project.croris_id) ? "mb-1 bg-light": "mb-1 bg-white"}>
+                    { isAlreadySubmitted(project.croris_id) && <Badge className="fs-5" bg="success">prijavljen</Badge>}
+                  </Card.Header>
+                  <Card.Body className={isAlreadySubmitted(project.croris_id) ? "mb-1 bg-light": "mb-1 bg-white"}>
                     <Row>
                       <GeneralInfo project={project} isSubmitted={isAlreadySubmitted(project.croris_id)} />
                       <div className="w-100"></div>
@@ -87,7 +85,7 @@ const ResearchProjectRequest = () => {
                           <Row className="p-2 text-center">
                             <Col>
                               <Button
-                                color="success"
+                                variant="success"
                                 className="ms-3"
                                 onClick={() => {
                                   navigate(`/ui/new-request/research-project/${project.croris_id}`)
@@ -102,7 +100,7 @@ const ResearchProjectRequest = () => {
                           </Row>
                         : ''
                     }
-                  </CardBody>
+                  </Card.Body>
                 </Card>
               </Col>
             </Row>
@@ -117,16 +115,17 @@ const ResearchProjectRequest = () => {
         <Row className="mb-4">
           <Col>
             <Card className="ms-3 mb-4 bg-success">
-              <CardHeader className="d-flex fs-5 text-white justify-content-between align-items-center">
+              <Card.Header className="d-flex fs-5 text-white justify-content-between align-items-center">
                 <FormattedMessage
                   defaultMessage="Istraživački projekt"
                   description="researchproj-cardtitle"
                 />
-              </CardHeader>
-              <CardBody className="mb-1 bg-white">
+              </Card.Header>
+              <Card.Body className="mb-1 bg-white">
                 <Row>
                   <Col className="d-flex justify-content-center align-items-center p-5">
                     <Spinner
+                      animation="border"
                       style={{
                         height: '25rem',
                         width: '25rem',
@@ -136,7 +135,7 @@ const ResearchProjectRequest = () => {
                     />
                   </Col>
                 </Row>
-              </CardBody>
+              </Card.Body>
             </Card>
           </Col>
         </Row>

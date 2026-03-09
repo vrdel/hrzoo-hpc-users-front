@@ -6,9 +6,8 @@ import {
   Collapse,
   Button,
   InputGroup,
-  InputGroupText,
   Spinner
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -85,23 +84,23 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
                     { key.public_key.split(' ')[0] }
                   </td>
                   <td className="align-middle text-center">
-                    <Button size="sm" color="primary" onClick={() => showKey(key.name)}>
+                    <Button size="sm" variant="primary" onClick={() => showKey(key.name)}>
                       <FontAwesomeIcon icon={faArrowDown} />
                     </Button>
                   </td>
                 </tr>
                 <tr>
                   <td  className="p-0 m-0" colSpan="4">
-                    <Collapse className="m-2 p-2" isOpen={isShowed(key.name)}>
+                    <Collapse className="m-2 p-2" in={isShowed(key.name)}>
                       <Row>
                         <Col sm={{size: 11}}>
                           <InputGroup>
-                            <InputGroupText>
+                            <InputGroup.Text>
                               <FormattedMessage
                                 defaultMessage="Javni ključ:"
                                 description="tableuserkeys-label"
                               />
-                            </InputGroupText>
+                            </InputGroup.Text>
                             <textarea
                               className="font-monospace form-control"
                               rows="5"
@@ -112,7 +111,7 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
                           </InputGroup>
                         </Col>
                         <Col className="d-flex align-self-center align-content-center">
-                          <Button size="sm" className="ms-3" color="success"
+                          <Button size="sm" className="ms-3" variant="success"
                             onClick={(e) => copyToClipboard(
                               e, key.public_key,
                               intl.formatMessage({
@@ -151,6 +150,7 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
                 <tr key="4">
                   <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-5">
                     <Spinner
+                      animation="border"
                       style={{
                         height: '3rem',
                         width: '3rem',
