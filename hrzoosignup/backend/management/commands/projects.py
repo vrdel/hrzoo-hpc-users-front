@@ -62,6 +62,7 @@ class Command(BaseCommand):
         table.add_column("Identifier")
         table.add_column("Type")
         table.add_column("Active")
+        table.add_column("Users")
 
         match = list()
         only_projects = options.get('onlyprojects', None)
@@ -130,7 +131,10 @@ class Command(BaseCommand):
             i = 1
             for m in match:
                 # user_projects = UserProject.objects.filter(user=m)
-                table.add_row(str(i), str(m.name), str(m.identifier), str(m.project_type.name), str(m.is_active))
+                users = ', '.join(
+                    [user.username for user in m.users.all()]
+                )
+                table.add_row(str(i), str(m.name), str(m.identifier), str(m.project_type.name), str(m.is_active), users)
                 i += 1
 
             if table.row_count:
