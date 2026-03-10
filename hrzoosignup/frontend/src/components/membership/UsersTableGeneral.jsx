@@ -13,8 +13,10 @@ import {
   faKey,
   faPaperPlane,
   faPlus,
+  faSearch,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+
 import { extractUsers } from 'Utils/invites-extracts';
 import { fetchUsers, fetchUsersInactive } from "Api/users"
 import { useQuery } from "@tanstack/react-query";
@@ -37,6 +39,12 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const refFileForeignCollaboratorsInput = useRef(null)
   const intl = useIntl()
   const { isOpen: isOpened, toggleIndex: showTooltip } = useOpenedIndexMap()
+
+  const [searchFirstName, setSearchFirstName] = useState('')
+  const [searchLastName, setSearchLastName] = useState('')
+  const [searchRole, setSearchRole] = useState('')
+  const [searchEmail, setSearchEmail] = useState('')
+
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -275,6 +283,43 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
     reader.readAsText(event.target.files[0])
   }
 
+  const filterUser = (firstName, lastName, role, email) => {
+    let match = true
+    if (searchFirstName)
+      match = match && firstName?.toLowerCase().includes(searchFirstName.toLowerCase())
+    if (searchLastName)
+      match = match && lastName?.toLowerCase().includes(searchLastName.toLowerCase())
+    if (searchRole)
+      match = match && role?.toLowerCase().includes(searchRole.toLowerCase())
+    if (searchEmail)
+      match = match && email?.toLowerCase().includes(searchEmail.toLowerCase())
+    return match
+  }
+
+  const leadRole = intl.formatMessage({ defaultMessage: "Voditelj", description: "users-table-general-leader" })
+  const collabRole = intl.formatMessage({ defaultMessage: "Suradnik", description: "users-table-general-collaborator" })
+  const foreignCollabRole = intl.formatMessage({ defaultMessage: "Strani suradnik", description: "users-table-general-collaborator-foreign" })
+
+  const showLead = filterUser(lead['user'].first_name, lead['user'].last_name, leadRole, lead['user'].person_mail)
+
+  let filteredJoined = alreadyJoined.filter(u => {
+    const role = u['user'].person_type === 'foreign' ? foreignCollabRole : collabRole
+    return filterUser(u['user'].first_name, u['user'].last_name, role, u['user'].person_mail)
+  })
+
+  let allMembers = []
+  if (showLead)
+    allMembers.push(lead)
+  allMembers = allMembers.concat(filteredJoined)
+
+
+  const filteredInvites = invites?.filter(user => {
+    const role = user.invtype === 'foreign' ? foreignCollabRole : collabRole
+    return filterUser(null, null, role, user.email)
+  }) || []
+
+  const totalUsers = 1 + alreadyJoined.length + (invites?.length || 0)
+
   return (
     <>
       <Row className={amILead ? 'mt-4 ms-1 ps-0 pe-0 me-1 mb-2 ' : 'mt-4 ms-1 me-1 mb-5'}>
@@ -282,6 +327,9 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
           <Table responsive hover className="shadow-sm bg-white">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr>
+                <th className="fw-normal" style={{width: '52px'}}>
+                  #
+                </th>
                 <th className="fw-normal">
                   <FormattedMessage
                     defaultMessage="Ime"
@@ -325,170 +373,186 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
             </thead>
             <tbody>
               <>
-                <tr>
-                  <td className={
-                    amILead
-                    ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                    : "p-3 align-middle text-center"
-                  }>
-                    { lead['user'].first_name }
-                  </td>
-                  <td className={
-                    amILead
-                    ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                    : "p-3 align-middle text-center"
-                  }>
-                    { lead['user'].last_name }
-                  </td>
-                  <td className={
-                    amILead
-                    ? "align-middle text-center fst-italic border-bottom border-secondary"
-                    : "align-middle text-center"
-                  }>
-                    <FormattedMessage
-                      defaultMessage="Voditelj"
-                      description="users-table-general-leader"
-                    />
-                  </td>
-                  <td className={
-                    amILead
-                    ? "align-middle text-center fst-italic border-bottom border-secondary"
-                    : "align-middle text-center"
-                    }>
-                    { lead['user'].person_mail }
-                  </td>
-                  <td className={
-                    amILead
-                    ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                    : "align-middle text-center text-success"
-                  }>
-                    <div className="position-relative">
-                      <FormattedMessage
-                        defaultMessage="Da"
-                        description="users-table-general-isadded"
-                      />
-                      {
-                        lead['user'].sshkeys &&
-                          <div id={`Tooltip-key-${999}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
-                            <FontAwesomeIcon icon={faKey}/>
-                            <Tooltip
-                              placement='top'
-                              isOpen={isOpened(lead['user'].person_mail)}
-                              target={`Tooltip-key-${999}`}
-                              toggle={() => showTooltip(lead['user'].person_mail)}
-                            >
-                              <FormattedMessage
-                                defaultMessage="Dodan javni ključ"
-                                description="users-table-general-keyadd"
-                              />
-                            </Tooltip>
-                          </div>
-                      }
-                    </div>
-                  </td>
-                  {
-                    amILead &&
-                    <td className={
-                      amILead
-                      ? "align-middle text-center fst-italic border-bottom border-secondary"
-                      : "align-middle text-center"
-                    }>
-                      {'\u2212'}
-                    </td>
-                  }
-                </tr>
                 {
-                  alreadyJoined.length > 0 && alreadyJoined.map((user, i) => (
-                    <tr key={`row-${i}`}>
-                      <td className={
-                        user['user']['person_oib'] === userDetails.person_oib
-                        ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                        : "p-3 align-middle text-center"
-                      }>
-                        { user['user'].first_name }
-                      </td>
-                      <td className={
-                        user['user']['person_oib'] === userDetails.person_oib
-                        ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                        : "p-3 align-middle text-center"
-                      }>
-                        { user['user'].last_name }
-                      </td>
-                      <td className={
-                        user['user']['person_oib'] === userDetails.person_oib
-                        ? "align-middle text-center fst-italic border-bottom border-secondary"
-                        : "align-middle text-center"
-                      }>
-                        {
-                          (user['user'].person_type === 'foreign') ?
-                            <FormattedMessage
-                              defaultMessage="Strani suradnik"
-                              description="users-table-general-collaborator-foreign"
-                            />
-                          :
-                            <FormattedMessage
-                              defaultMessage="Suradnik"
-                              description="users-table-general-collaborator"
-                            />
-                        }
-                      </td>
-                      <td className={
-                        user['user']['person_oib'] === userDetails.person_oib
-                        ? "align-middle text-center fst-italic border-bottom border-secondary"
-                        : "align-middle text-center"
-                      }>
-                        { user['user'].person_mail }
-                      </td>
-                      <td className={
-                        user['user']['person_oib'] === userDetails.person_oib
-                        ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                        : "align-middle text-center text-success"
-                      }>
-                        <div className="position-relative">
-                          <FormattedMessage
-                            defaultMessage="Da"
-                            description="users-table-general-isadded"
-                          />
-                          {
-                            user['user'].sshkeys &&
-                              <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
-                                <FontAwesomeIcon icon={faKey}/>
-                                <Tooltip
-                                  placement='top'
-                                  isOpen={isOpened(user['user'].person_mail)}
-                                  target={`Tooltip-key-${i + 1000}`}
-                                  toggle={() => showTooltip(user['user'].person_mail)}
-                                >
-                                  <FormattedMessage
-                                    defaultMessage="Dodan javni ključ"
-                                    description="users-table-general-keyadd"
-                                  />
-                                </Tooltip>
-                              </div>
-                          }
-                        </div>
-                      </td>
-                      {
-                        amILead &&
+                  totalUsers > 5 &&
+                  <tr>
+                    <td className="p-2 align-middle text-center">
+                      <FontAwesomeIcon icon={ faSearch } />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchFirstName}
+                        onChange={(e) => setSearchFirstName(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchLastName}
+                        onChange={(e) => setSearchLastName(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchRole}
+                        onChange={(e) => setSearchRole(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center">
+                      <Input
+                        value={searchEmail}
+                        onChange={(e) => setSearchEmail(e.target.value)}
+                        placeholder={intl.formatMessage({
+                          defaultMessage: "Traži",
+                          description: "users-table-general-search-placeholder"
+                        })}
+                        className="form-control"
+                        style={{fontSize: '0.83rem'}}
+                      />
+                    </td>
+                    <td className="p-2 align-middle text-center"></td>
+                    {
+                      amILead &&
+                      <td className="p-2 align-middle text-center"></td>
+                    }
+                  </tr>
+                }
+                {
+                  allMembers.length > 0 && allMembers.map((user, i) => {
+                    const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
+                      && user['role']?.name === 'lead'
+                    const isMe = user['user']['person_oib'] === userDetails.person_oib
+                    return (
+                      <tr key={`row-${i}`}>
                         <td className={
-                          user['user']['person_oib'] === userDetails.person_oib
+                          isMe
+                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                          : "p-3 align-middle text-center"
+                        }>
+                          { i + 1 }
+                        </td>
+                        <td className={
+                          isMe
+                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                          : "p-3 align-middle text-center"
+                        }>
+                          { user['user'].first_name }
+                        </td>
+                        <td className={
+                          isMe
+                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
+                          : "p-3 align-middle text-center"
+                        }>
+                          { user['user'].last_name }
+                        </td>
+                        <td className={
+                          isMe
+                          ? "align-middle text-center fst-italic border-bottom border-secondary"
+                          : "align-middle text-center"
+                        }>
+                          {
+                            isLeadEntry
+                            ?
+                              <FormattedMessage
+                                defaultMessage="Voditelj"
+                                description="users-table-general-leader"
+                              />
+                            :
+                              (user['user'].person_type === 'foreign')
+                              ?
+                                <FormattedMessage
+                                  defaultMessage="Strani suradnik"
+                                  description="users-table-general-collaborator-foreign"
+                                />
+                              :
+                                <FormattedMessage
+                                  defaultMessage="Suradnik"
+                                  description="users-table-general-collaborator"
+                                />
+                          }
+                        </td>
+                        <td className={
+                          isMe
+                          ? "align-middle text-center fst-italic border-bottom border-secondary"
+                          : "align-middle text-center"
+                        }>
+                          { user['user'].person_mail }
+                        </td>
+                        <td className={
+                          isMe
                           ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
                           : "align-middle text-center text-success"
                         }>
-                          <Input
-                            type="checkbox"
-                            className="bg-danger border border-danger ms-1"
-                            checked={checkJoined[i] === true}
-                            onChange={() => onChangeCheckOut(i)}
-                          />
+                          <div className="position-relative">
+                            <FormattedMessage
+                              defaultMessage="Da"
+                              description="users-table-general-isadded"
+                            />
+                            {
+                              user['user'].sshkeys &&
+                                <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
+                                  <FontAwesomeIcon icon={faKey}/>
+                                  <Tooltip
+                                    placement='top'
+                                    isOpen={isOpened(user['user'].person_mail)}
+                                    target={`Tooltip-key-${i + 1000}`}
+                                    toggle={() => showTooltip(user['user'].person_mail)}
+                                  >
+                                    <FormattedMessage
+                                      defaultMessage="Dodan javni ključ"
+                                      description="users-table-general-keyadd"
+                                    />
+                                  </Tooltip>
+                                </div>
+                            }
+                          </div>
                         </td>
-                      }
-                    </tr>
-                  ))
+                        {
+                          amILead &&
+                          <td className={
+                            isMe
+                            ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
+                            : "align-middle text-center text-success"
+                          }>
+                            {
+                              isLeadEntry
+                              ? '\u2212'
+                              : <Input
+                                  type="checkbox"
+                                  className="bg-danger border border-danger ms-1"
+                                  checked={checkJoined[alreadyJoined.indexOf(user)] === true}
+                                  onChange={() => onChangeCheckOut(alreadyJoined.indexOf(user))}
+                                />
+                            }
+                          </td>
+                        }
+                      </tr>
+                    )
+                  })
                 }
                 {
-                  invites?.length > 0 && invites.map((user, i) => (
+                  filteredInvites.length > 0 && filteredInvites.map((user, i) => (
                     <tr key={`row-${i + 100}`}>
+                      <td className="p-3 align-middle text-center">
+                        { allMembers.length + i + 1 }
+                      </td>
                       <td className="p-3 align-middle text-center">
                         { '\u2212' }
                       </td>

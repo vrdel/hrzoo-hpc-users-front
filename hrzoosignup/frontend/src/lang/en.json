@@ -463,6 +463,10 @@
     "defaultMessage": "CroRIS system",
     "description": "userinfo-croris-title"
   },
+  "9lD1Du": {
+    "defaultMessage": "Search",
+    "description": "users-table-general-search-placeholder"
+  },
   "9ne3G2": {
     "defaultMessage": "manager",
     "description": "userschange-badge-lead"
@@ -1570,6 +1574,10 @@
   "aiSJvp": {
     "defaultMessage": "Request details",
     "description": "popover-requestinfo"
+  },
+  "aoG78P": {
+    "defaultMessage": "Search",
+    "description": "users-table-croris-search-placeholder"
   },
   "bAhHuU": {
     "defaultMessage": "Request \"Thesis project\" pertains to production of bachelor's, master's, and doctoral theses and is submitted by mentor. Upon approval of the request, the mentor invites student or doctoral candidate to project.",
