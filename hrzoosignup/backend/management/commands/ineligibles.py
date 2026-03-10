@@ -34,6 +34,7 @@ class Command(BaseCommand):
         parser_users = subparsers.add_parser("users", help="Show users")
         parser_projects = subparsers.add_parser("projects", help="Show projects")
         parser_projects.add_argument('--type', dest="project_type", type=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)", nargs="+")
+        parser_projects.add_argument('--to-be-expired', dest='tobeexpired', type=int, required=False, help="Show only projects whose date_end falls within specified number of days from today")
 
     def _ineligible_users(self, options):
         users = ineligible_users(options.get('enddate'),
@@ -101,6 +102,15 @@ class Command(BaseCommand):
                                        options.get('graceperiod'),
                                        options.get('project_type', None))
         self.end_date = parse_enddate(options.get('enddate'))
+
+        to_be_expired_days = options.get('tobeexpired', None)
+        if to_be_expired_days is not None:
+            today = date.today()
+            deadline = today + datetime.timedelta(days=to_be_expired_days)
+            projects = [p for p in projects if today <= p.date_end <= deadline]
+
+        import pdb; pdb.set_trace()
+
 
         table = Table(
             title="Ineligible projects",
