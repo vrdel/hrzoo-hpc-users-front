@@ -232,7 +232,8 @@ class Usage:
                             set(tags).intersection(
                                 set(RESOURCES_TAGS_MAPPING[self.resource])
                             )
-                        ) > 0 and record["end_time"].date() <= project_end:
+                        ) > 0 and record["end_time"].date() <= project_end \
+                                and user_project.project.state.name not in ['submit', 'deny']:
                             project = user_project.project
                             break
 
