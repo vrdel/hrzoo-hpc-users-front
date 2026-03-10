@@ -225,14 +225,14 @@ class Usage:
                     for user_project in user_projects:
                         tags = [
                             item["value"] for item in
-                            user_project.project.resources_type
+                            user_project.project.staff_resources_type
                         ]
-
+                        project_end = user_project.project.bogus_end or user_project.project.date_end
                         if len(
                             set(tags).intersection(
                                 set(RESOURCES_TAGS_MAPPING[self.resource])
                             )
-                        ) > 0:
+                        ) > 0 and record["end_time"].date() <= project_end:
                             project = user_project.project
                             break
 
