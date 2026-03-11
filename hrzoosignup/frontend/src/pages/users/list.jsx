@@ -281,7 +281,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
           <Table responsive hover className="shadow-sm">
             <thead id="hzsi-thead" className="align-middle text-center text-white">
               <tr>
-                <th className="fw-normal"  style={{width: '52px'}}>
+                <th className="fw-normal" style={{width: '52px'}}>
                   #
                 </th>
                 <th className="fw-normal" style={{minWidth: '306px', cursor: 'pointer'}}
