@@ -436,7 +436,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         <br/>
                         { convertToEuropean(project.date_end) }
                       </td>
-                      <td className="align-middle text-center">
+                      <td className="align-middle text-center position-relative">
                         <LeadUserBadge
                           index={index}
                           project={project}
@@ -469,6 +469,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                             </Badge>
                           )
                         }
+                        <span className="position-absolute badge rounded-pill bg-danger fw-normal" style={{bottom: 0, right: 0}}>
+                          { project.userproject_set.length }
+                          <span className="visually-hidden">broj korisnika</span>
+                        </span>
                       </td>
                     </tr>
                   )
