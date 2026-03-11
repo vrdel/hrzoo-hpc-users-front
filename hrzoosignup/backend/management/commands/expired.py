@@ -26,10 +26,10 @@ class Command(BaseCommand):
         parser.add_argument('--grace-period', dest='graceperiod', type=int, default=180, required=False)
         parser.add_argument('--end-date', dest='enddate', type=str, default=date.today(), required=False)
         parser.add_argument('--export-csv', dest='csvfile', type=str, default=None, required=False)
+        parser.add_argument('--to-be-expired', dest='tobeexpired', type=int, required=False, help="Show only approved projects whose date_end falls within specified number of days from today")
         parser_projects = subparsers.add_parser("projects", help="Show projects")
         _ = subparsers.add_parser("users", help="Show users")
         parser_projects.add_argument('--type', dest="project_type", type=str, required=False, help="Project type (research-croris, thesis, practical, internal, srce-workshop)", nargs="+")
-        parser_projects.add_argument('--to-be-expired', dest='tobeexpired', type=int, required=False, help="Show only approved projects whose date_end falls within specified number of days from today")
 
     def _expired_users(self, options):
         users = expired_users(options.get('enddate'),
