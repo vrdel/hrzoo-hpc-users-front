@@ -607,10 +607,6 @@
     "defaultMessage": "Ethnology and Anthropology",
     "description": "science-field-58"
   },
-  "C5xc0q": {
-    "defaultMessage": "Active projects registered in CroRIS system that user participates in",
-    "description": "userinfo-croris-tablefoot-userview"
-  },
   "C6FjhE": {
     "defaultMessage": "Yes",
     "description": "modal-buttonyes"
@@ -974,6 +970,10 @@
   "KT0hUG": {
     "defaultMessage": "Demography",
     "description": "science-field-47"
+  },
+  "KgK9kr": {
+    "defaultMessage": "Active and verified projects registered in CroRIS system that you are participating in",
+    "description": "userinfo-croris-tablefoot-meview"
   },
   "KkxjH3": {
     "defaultMessage": "Role",
@@ -2179,10 +2179,6 @@
     "defaultMessage": "Adding public key",
     "description": "publickeys-add-modaltitle"
   },
-  "r9kEbs": {
-    "defaultMessage": "Active projects registered in CroRIS system that you are participating in",
-    "description": "userinfo-croris-tablefoot-meview"
-  },
   "rTMyro": {
     "defaultMessage": "Type",
     "description": "tableuserkeys-type"
@@ -2414,6 +2410,10 @@
   "z0ojJn": {
     "defaultMessage": "Foreign user",
     "description": "statusinfo-tooltipglobe-1"
+  },
+  "z5XDNl": {
+    "defaultMessage": "Active and verified projects registered in CroRIS system that user participates in",
+    "description": "userinfo-croris-tablefoot-userview"
   },
   "z8K573": {
     "defaultMessage": "Name and assigned resources",
