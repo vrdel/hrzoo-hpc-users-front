@@ -162,12 +162,21 @@ const NewRequest = () => {
                 && status === 'success'
                 && croRisData?.data?.person_info?.lead_status !== true) {
                 toast.error(
-                  <span className="font-monospace text-dark">
+                  <div className="font-monospace text-dark">
                     <FormattedMessage
                       defaultMessage="Nemate projekata prijavljenih u sustavu CroRIS"
                       description="newrequest-no-researchproject"
                     />
-                  </span>, {
+                    <br/><br/>
+                    <FormattedMessage
+                      defaultMessage="<b>Napomena:</b> Projekti <m>moraju biti verificirani</m> u sustavu CroRIS"
+                      description="newrequest-no-researchproject-remark"
+                      values={{
+                        b: (chunks) => <b>{chunks}</b>,
+                        m: (chunks) => <mark>{chunks}</mark>
+                      }}
+                    />
+                  </div>, {
                     toastId: 'newreq-no-croris',
                     autoClose: 2500,
                   }

@@ -264,7 +264,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       description="users-table-croris-email"
                     />
                   </th>
-                  <th className="fw-normal">
+                  <th className="fw-normal" style={{minWidth: '180px'}}>
                     <FormattedMessage
                       defaultMessage="CroRIS registracija"
                       description="users-table-croris-crorisreg"

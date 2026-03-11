@@ -113,12 +113,12 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
             {
               changeView ?
                 intl.formatMessage({
-                  defaultMessage: "Aktivni projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
+                  defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
                   description: "userinfo-croris-tablefoot-userview"
                 })
               :
                 intl.formatMessage({
-                  defaultMessage: "Aktivni projekti registrirani u sustavu CroRIS na kojima sudjelujete",
+                  defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima sudjelujete",
                   description: "userinfo-croris-tablefoot-meview"
                 })
             }
