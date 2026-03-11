@@ -124,21 +124,27 @@ class Command(BaseCommand):
             box=box.ASCII,
             show_lines=True,
         )
+        days_column = 'Days left' if to_be_expired_days is not None else 'Overextend'
+
         table.add_column("#")
         table.add_column("Name")
         table.add_column("Identifier")
         table.add_column("Type")
         table.add_column("End")
-        table.add_column("Overextend")
+        table.add_column(days_column)
         table.add_column("Users")
 
         i = 1
+        today = date.today()
         for project in projects:
-            overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
+            if to_be_expired_days is not None:
+                days_value = (project.date_end - today).days
+            else:
+                days_value = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
             users = ', '.join(
                 [user.username for user in project.users.all()]
             )
-            table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.project_type.name}', f'{project.date_end}', f'{overextend}', f'{users}')
+            table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.project_type.name}', f'{project.date_end}', f'{days_value}', f'{users}')
             i += 1
 
         if table.row_count:
@@ -148,12 +154,15 @@ class Command(BaseCommand):
         if options['csvfile']:
             try:
                 with open(options['csvfile'], 'w', newline='') as csvfile:
-                    fieldnames = ['#', 'Name', 'Identifier', 'Type', 'End', 'Overextend', 'Users']
+                    fieldnames = ['#', 'Name', 'Identifier', 'Type', 'End', days_column, 'Users']
                     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
                     writer.writeheader()
                     i = 1
                     for project in projects:
-                        overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
+                        if to_be_expired_days is not None:
+                            days_value = (project.date_end - today).days
+                        else:
+                            days_value = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
                         users = ', '.join(
                             [user.username for user in project.users.all()]
                         )
@@ -163,7 +172,7 @@ class Command(BaseCommand):
                             'Identifier': project.identifier,
                             'Type': project.project_type.name,
                             'End': project.date_end,
-                            'Overextend': overextend,
+                            days_column: days_value,
                             'Users': users
                         })
                         i += 1
