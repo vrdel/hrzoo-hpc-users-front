@@ -1363,6 +1363,10 @@
     "defaultMessage": "Šifra:",
     "description": "generalproject-identifier"
   },
+  "UESoUG": {
+    "defaultMessage": "<b>Napomena:</b> Projekti <m>moraju biti verificirani</m> u sustavu CroRIS",
+    "description": "newrequest-no-researchproject-remark"
+  },
   "UKD/0e": {
     "defaultMessage": "Korisničko ime i AAI oznaka",
     "description": "userlist-column-header-3-1"

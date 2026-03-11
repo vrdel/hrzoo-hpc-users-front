@@ -1363,6 +1363,10 @@
     "defaultMessage": "Identifier:",
     "description": "generalproject-identifier"
   },
+  "UESoUG": {
+		"defaultMessage": "<b>Note:</b> Projects <m>must be validated</m> in the CroRIS information system",
+    "description": "newrequest-no-researchproject-remark"
+  },
   "UKD/0e": {
     "defaultMessage": "Username and AAI identifier",
     "description": "userlist-column-header-3-1"
