@@ -143,6 +143,10 @@ class Command(BaseCommand):
                 f'in parallel with {num_workers} workers...'
             )
 
+            from django.db import connections
+            for conn in connections.all():
+                conn.close()
+
             total_inserted = 0
 
             with ProcessPoolExecutor(max_workers=num_workers) as executor:

@@ -81,7 +81,7 @@ class Command(BaseCommand):
         call_command(
             'dumpdata',
             '--natural-foreign',
-            '--exclude', *excludes_with_usage,
+            exclude=excludes_with_usage,
             stdout=out,
             verbosity=options['verbosity'],
         )
@@ -106,6 +106,10 @@ class Command(BaseCommand):
                     chunk_size = total_count
 
                 offsets = list(range(0, total_count, chunk_size))
+
+                from django.db import connections
+                for conn in connections.all():
+                    conn.close()
 
                 for idx in range(len(offsets)):
                     tmp = tempfile.NamedTemporaryFile(
