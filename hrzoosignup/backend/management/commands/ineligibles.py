@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.db.utils import IntegrityError
 from django.utils import timezone
+from django.db.models import Q
 from datetime import date
 
 from backend.models import Project, UserProject, Role
@@ -98,19 +99,24 @@ class Command(BaseCommand):
                 raise SystemExit(1)
 
     def _ineligible_projects(self, options):
-        projects = ineligible_projects(options.get('enddate'),
-                                       options.get('graceperiod'),
-                                       options.get('project_type', None))
-        self.end_date = parse_enddate(options.get('enddate'))
-
         to_be_expired_days = options.get('tobeexpired', None)
         if to_be_expired_days is not None:
             today = date.today()
             deadline = today + datetime.timedelta(days=to_be_expired_days)
-            projects = [p for p in projects if today <= p.date_end <= deadline]
-
-        import pdb; pdb.set_trace()
-
+            self.end_date = deadline
+            query = Q(state__name='approve') & Q(date_end__gte=today) & Q(date_end__lte=deadline)
+            target_project_types = options.get('project_type', None)
+            if target_project_types:
+                type_query = Q()
+                for pt in target_project_types:
+                    type_query |= Q(project_type__name__contains=pt)
+                query &= type_query
+            projects = Project.objects.filter(query).distinct()
+        else:
+            projects = ineligible_projects(options.get('enddate'),
+                                           options.get('graceperiod'),
+                                           options.get('project_type', None))
+            self.end_date = parse_enddate(options.get('enddate'))
 
         table = Table(
             title="Ineligible projects",
