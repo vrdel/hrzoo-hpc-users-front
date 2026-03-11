@@ -3,33 +3,36 @@ import os
 import tempfile
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from datetime import datetime
 
 import django
-from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
-from django.db import connections, connection
+from django.db import connection
 
 
 RESOURCE_USAGE_MODEL = 'backend.resourceusage'
 BATCH_SIZE = 5000
 
 
-def _bulk_insert_chunk(chunk, db_settings):
+def _bulk_insert_from_file(tmp_path):
     """
     Worker function that runs in a separate process.
-    Each worker sets up its own Django and DB connection.
+    Reads ResourceUsage records from a temp JSON file and bulk inserts them.
     """
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hrzoosignup.settings')
     django.setup()
 
     from backend.models import ResourceUsage
+    from django.db import connections as worker_connections
 
-    objects = []
+    with open(tmp_path, 'r') as f:
+        chunk = json.load(f)
+
+    total = 0
+    batch = []
     for entry in chunk:
         fields = entry['fields']
-        objects.append(ResourceUsage(
+        batch.append(ResourceUsage(
             pk=entry['pk'],
             user_id=fields.get('user'),
             project_id=fields['project'],
@@ -37,14 +40,19 @@ def _bulk_insert_chunk(chunk, db_settings):
             end_time=fields.get('end_time'),
             accounting_record=fields.get('accounting_record'),
         ))
+        if len(batch) >= BATCH_SIZE:
+            ResourceUsage.objects.bulk_create(batch, batch_size=BATCH_SIZE, ignore_conflicts=True)
+            total += len(batch)
+            batch = []
 
-    ResourceUsage.objects.bulk_create(objects, batch_size=BATCH_SIZE, ignore_conflicts=True)
+    if batch:
+        ResourceUsage.objects.bulk_create(batch, batch_size=BATCH_SIZE, ignore_conflicts=True)
+        total += len(batch)
 
-    from django.db import connections as worker_connections
     for conn in worker_connections.all():
         conn.close()
 
-    return len(objects)
+    return total
 
 
 class Command(BaseCommand):
@@ -60,81 +68,111 @@ class Command(BaseCommand):
         num_workers = options['workers']
 
         self.stdout.write(f'Loading fixture: {fixture_path}')
+        start_time = time.time()
 
+        other_tmp = tempfile.NamedTemporaryFile(
+            mode='w', suffix='.json', delete=False, prefix='fastload_other_'
+        )
+        chunk_tmp_files = []
+        current_chunk = []
+        chunk_records_per_file = 0
+        resource_usage_count = 0
+        other_count = 0
+
+        self.stdout.write('Splitting fixture into chunks...')
         with open(fixture_path, 'r') as f:
             all_data = json.load(f)
 
-        resource_usage_records = []
-        other_records = []
+        total_usage = sum(1 for entry in all_data if entry.get('model') == RESOURCE_USAGE_MODEL)
+        chunk_target_size = max(total_usage // num_workers, 1) if total_usage > 0 else 1
 
+        other_records = []
         for entry in all_data:
             if entry.get('model') == RESOURCE_USAGE_MODEL:
-                resource_usage_records.append(entry)
+                current_chunk.append(entry)
+                resource_usage_count += 1
+                if len(current_chunk) >= chunk_target_size:
+                    tmp = tempfile.NamedTemporaryFile(
+                        mode='w', suffix='.json', delete=False,
+                        prefix=f'fastload_chunk{len(chunk_tmp_files)}_'
+                    )
+                    json.dump(current_chunk, tmp)
+                    tmp.close()
+                    chunk_tmp_files.append(tmp.name)
+                    current_chunk = []
             else:
                 other_records.append(entry)
+                other_count += 1
 
-        self.stdout.write(f'Total records: {len(all_data)}')
-        self.stdout.write(f'  ResourceUsage records: {len(resource_usage_records)}')
-        self.stdout.write(f'  Other records: {len(other_records)}')
+        if current_chunk:
+            tmp = tempfile.NamedTemporaryFile(
+                mode='w', suffix='.json', delete=False,
+                prefix=f'fastload_chunk{len(chunk_tmp_files)}_'
+            )
+            json.dump(current_chunk, tmp)
+            tmp.close()
+            chunk_tmp_files.append(tmp.name)
+            current_chunk = []
+
+        del all_data
+
+        self.stdout.write(f'  ResourceUsage records: {resource_usage_count} (in {len(chunk_tmp_files)} chunks)')
+        self.stdout.write(f'  Other records: {other_count}')
 
         if other_records:
             self.stdout.write('Loading non-ResourceUsage data with loaddata...')
-            with tempfile.NamedTemporaryFile(
-                mode='w', suffix='.json', delete=False, prefix='fastload_other_'
-            ) as tmp:
-                json.dump(other_records, tmp)
-                tmp_path = tmp.name
+            json.dump(other_records, other_tmp)
+            other_tmp_path = other_tmp.name
+            other_tmp.close()
+            del other_records
 
             try:
-                call_command('loaddata', tmp_path, verbosity=options['verbosity'])
+                call_command('loaddata', other_tmp_path, verbosity=options['verbosity'])
                 self.stdout.write(self.style.SUCCESS(
-                    f'Loaded {len(other_records)} non-ResourceUsage records'
+                    f'Loaded {other_count} non-ResourceUsage records'
                 ))
             finally:
-                os.unlink(tmp_path)
+                os.unlink(other_tmp_path)
+        else:
+            other_tmp.close()
+            os.unlink(other_tmp.name)
 
-        if resource_usage_records:
+        if chunk_tmp_files:
             self.stdout.write(
-                f'Loading {len(resource_usage_records)} ResourceUsage records '
+                f'Loading {resource_usage_count} ResourceUsage records '
                 f'in parallel with {num_workers} workers...'
             )
-            start_time = time.time()
 
-            chunk_size = len(resource_usage_records) // num_workers
-            if chunk_size == 0:
-                chunk_size = len(resource_usage_records)
-            chunks = [
-                resource_usage_records[i:i + chunk_size]
-                for i in range(0, len(resource_usage_records), chunk_size)
-            ]
-
-            db_settings = settings.DATABASES['default']
             total_inserted = 0
 
             with ProcessPoolExecutor(max_workers=num_workers) as executor:
                 futures = {
-                    executor.submit(_bulk_insert_chunk, chunk, db_settings): idx
-                    for idx, chunk in enumerate(chunks)
+                    executor.submit(_bulk_insert_from_file, tmp_path): idx
+                    for idx, tmp_path in enumerate(chunk_tmp_files)
                 }
                 for future in as_completed(futures):
                     chunk_idx = futures[future]
                     try:
                         count = future.result()
                         total_inserted += count
-                        self.stdout.write(f'  Worker chunk {chunk_idx + 1}/{len(chunks)} done: {count} records')
+                        self.stdout.write(f'  Worker chunk {chunk_idx + 1}/{len(chunk_tmp_files)} done: {count} records')
                     except Exception as exc:
                         self.stderr.write(self.style.ERROR(
-                            f'  Worker chunk {chunk_idx + 1}/{len(chunks)} failed: {exc}'
+                            f'  Worker chunk {chunk_idx + 1}/{len(chunk_tmp_files)} failed: {exc}'
                         ))
 
-            elapsed = time.time() - start_time
+            for tmp_path in chunk_tmp_files:
+                os.unlink(tmp_path)
+
+            elapsed_usage = time.time() - start_time
             self.stdout.write(self.style.SUCCESS(
-                f'Loaded {total_inserted} ResourceUsage records in {elapsed:.1f}s'
+                f'Loaded {total_inserted} ResourceUsage records in {elapsed_usage:.1f}s'
             ))
 
             self._reset_sequence()
 
-        self.stdout.write(self.style.SUCCESS('Done'))
+        elapsed = time.time() - start_time
+        self.stdout.write(self.style.SUCCESS(f'Done in {elapsed:.1f}s'))
 
     def _reset_sequence(self):
         """Reset the primary key sequence for backend_resourceusage after bulk insert."""

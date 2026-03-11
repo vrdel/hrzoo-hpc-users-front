@@ -1,5 +1,6 @@
 import json
 import os
+import tempfile
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
@@ -8,14 +9,12 @@ from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
 RESOURCE_USAGE_MODEL = 'backend.resourceusage'
-RESOURCE_USAGE_APP_LABEL = 'backend'
-RESOURCE_USAGE_MODEL_NAME = 'resourceusage'
 
 
-def _dump_chunk(offset, limit, db_settings):
+def _dump_chunk_to_file(offset, limit, tmp_path):
     """
     Worker function that runs in a separate process.
-    Fetches a slice of ResourceUsage and returns serialized entries.
+    Fetches a slice of ResourceUsage and writes it to a temp file.
     """
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'hrzoosignup.settings')
     django.setup()
@@ -24,24 +23,34 @@ def _dump_chunk(offset, limit, db_settings):
     from django.db import connections as worker_connections
 
     qs = ResourceUsage.objects.order_by('pk')[offset:offset + limit]
-    records = []
-    for obj in qs.iterator(chunk_size=5000):
-        records.append({
-            'model': RESOURCE_USAGE_MODEL,
-            'pk': obj.pk,
-            'fields': {
-                'user': obj.user_id,
-                'project': obj.project_id,
-                'resource_name': obj.resource_name,
-                'end_time': obj.end_time.isoformat() if obj.end_time else None,
-                'accounting_record': obj.accounting_record,
+    count = 0
+
+    with open(tmp_path, 'w') as f:
+        f.write('[')
+        first = True
+        for obj in qs.iterator(chunk_size=5000):
+            record = {
+                'model': RESOURCE_USAGE_MODEL,
+                'pk': obj.pk,
+                'fields': {
+                    'user': obj.user_id,
+                    'project': obj.project_id,
+                    'resource_name': obj.resource_name,
+                    'end_time': obj.end_time.isoformat() if obj.end_time else None,
+                    'accounting_record': obj.accounting_record,
+                }
             }
-        })
+            if not first:
+                f.write(',')
+            json.dump(record, f, ensure_ascii=False)
+            first = False
+            count += 1
+        f.write(']')
 
     for conn in worker_connections.all():
         conn.close()
 
-    return records
+    return count
 
 
 class Command(BaseCommand):
@@ -80,16 +89,16 @@ class Command(BaseCommand):
         self.stdout.write(f'  Dumped {len(other_records)} non-ResourceUsage records')
 
         skip_usage = RESOURCE_USAGE_MODEL in excludes
-        resource_usage_records = []
+        chunk_tmp_files = []
+        total_usage_count = 0
 
         if not skip_usage:
-            self.stdout.write(
-                f'Dumping ResourceUsage records in parallel with {num_workers} workers...'
-            )
-
             from backend.models import ResourceUsage
             total_count = ResourceUsage.objects.count()
-            self.stdout.write(f'  Total ResourceUsage records: {total_count}')
+            self.stdout.write(
+                f'Dumping {total_count} ResourceUsage records '
+                f'in parallel with {num_workers} workers...'
+            )
 
             if total_count > 0:
                 chunk_size = total_count // num_workers
@@ -98,36 +107,68 @@ class Command(BaseCommand):
 
                 offsets = list(range(0, total_count, chunk_size))
 
-                from django.conf import settings
-                db_settings = settings.DATABASES['default']
+                for idx in range(len(offsets)):
+                    tmp = tempfile.NamedTemporaryFile(
+                        delete=False, suffix='.json', prefix=f'fastdump_chunk{idx}_'
+                    )
+                    tmp.close()
+                    chunk_tmp_files.append(tmp.name)
 
                 with ProcessPoolExecutor(max_workers=num_workers) as executor:
                     futures = {
-                        executor.submit(_dump_chunk, offset, chunk_size, db_settings): idx
+                        executor.submit(
+                            _dump_chunk_to_file, offset, chunk_size, chunk_tmp_files[idx]
+                        ): idx
                         for idx, offset in enumerate(offsets)
                     }
                     for future in as_completed(futures):
                         chunk_idx = futures[future]
                         try:
-                            chunk_records = future.result()
-                            resource_usage_records.extend(chunk_records)
+                            count = future.result()
+                            total_usage_count += count
                             self.stdout.write(
                                 f'  Worker chunk {chunk_idx + 1}/{len(offsets)} done: '
-                                f'{len(chunk_records)} records'
+                                f'{count} records'
                             )
                         except Exception as exc:
                             self.stderr.write(self.style.ERROR(
                                 f'  Worker chunk {chunk_idx + 1}/{len(offsets)} failed: {exc}'
                             ))
 
-        all_records = other_records + resource_usage_records
+        self.stdout.write(f'Writing output to {output_path}...')
+        with open(output_path, 'w') as out_f:
+            out_f.write('[')
 
-        self.stdout.write(f'Writing {len(all_records)} total records to {output_path}...')
-        with open(output_path, 'w') as f:
-            json.dump(all_records, f, indent=indent, ensure_ascii=False)
+            if indent:
+                for i, record in enumerate(other_records):
+                    if i > 0:
+                        out_f.write(',')
+                    out_f.write('\n')
+                    json.dump(record, out_f, indent=indent, ensure_ascii=False)
+            else:
+                for i, record in enumerate(other_records):
+                    if i > 0:
+                        out_f.write(',')
+                    json.dump(record, out_f, ensure_ascii=False)
+
+            has_other = len(other_records) > 0
+
+            for tmp_path in chunk_tmp_files:
+                with open(tmp_path, 'r') as chunk_f:
+                    content = chunk_f.read().strip()
+                    if content == '[]':
+                        continue
+                    inner = content[1:-1]
+                    if has_other:
+                        out_f.write(',')
+                    out_f.write(inner)
+                    has_other = True
+                os.unlink(tmp_path)
+
+            out_f.write(']')
 
         elapsed = time.time() - start_time
         self.stdout.write(self.style.SUCCESS(
-            f'Done: {len(other_records)} other + {len(resource_usage_records)} ResourceUsage '
+            f'Done: {len(other_records)} other + {total_usage_count} ResourceUsage '
             f'records in {elapsed:.1f}s'
         ))
