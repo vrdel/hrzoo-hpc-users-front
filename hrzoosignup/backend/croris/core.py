@@ -147,7 +147,6 @@ class CroRISCore(object):
                 coros.append(self._fetch_data(projects['href']))
 
             self.projects_lead_info = await asyncio.gather(*coros,
-                                                           loop=self.loop,
                                                            return_exceptions=True)
             exc_raised, exc = contains_exception(self.projects_lead_info)
             if exc_raised:
@@ -192,7 +191,6 @@ class CroRISCore(object):
                     return
 
             self.projects_associate_info_apidata = await asyncio.gather(*coros,
-                                                                        loop=self.loop,
                                                                         return_exceptions=True)
 
             exc_raised, exc = contains_exception(self.projects_associate_info_apidata)
@@ -236,7 +234,7 @@ class CroRISCore(object):
 
         for pid in self.projects_associate_ids:
             coros.append(self._fetch_data(settings.API_PROJECT.replace("{projectId}", str(pid))))
-        fetched_projects = await asyncio.gather(*coros, loop=self.loop,
+        fetched_projects = await asyncio.gather(*coros,
                                                 return_exceptions=True)
 
         exc_raised, exc = contains_exception(fetched_projects)
@@ -278,7 +276,7 @@ class CroRISCore(object):
         for pid in self.projects_lead_ids:
             coros.append(self._fetch_data(settings.API_PERSONPROJECT.replace("{projectId}", str(pid))))
 
-        project_users = await asyncio.gather(*coros, loop=self.loop,
+        project_users = await asyncio.gather(*coros,
                                              return_exceptions=True)
 
         exc_raised, exc = contains_exception(project_users)
