@@ -1,4 +1,4 @@
-from distutils.sysconfig import get_python_lib
+import sysconfig
 from configparser import ConfigParser
 
 import saml2
@@ -38,7 +38,7 @@ def get_saml_config(request):
                              saml2.BINDING_HTTP_REDIRECT),
                         ],
                     },
-                    'attribute_map_dir': '{}/saml2/edugain/attributemaps/'.format(get_python_lib()),
+                    'attribute_map_dir': '{}/saml2/edugain/attributemaps/'.format(sysconfig.get_paths()['purelib']),
                 },
             },
             'key_file': settings.HOST_KEY,  # private part
@@ -71,7 +71,7 @@ def get_saml_config(request):
                              saml2.BINDING_HTTP_REDIRECT),
                         ],
                     },
-                    'attribute_map_dir': '{}/saml2/attributemaps/'.format(get_python_lib()),
+                    'attribute_map_dir': '{}/saml2/attributemaps/'.format(sysconfig.get_paths()['purelib']),
                 },
             },
             'key_file': settings.HOST_KEY,  # private part
