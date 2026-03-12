@@ -469,7 +469,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                             </Badge>
                           )
                         }
-                        <span className="position-absolute badge rounded-pill bg-secondary fw-normal" style={{bottom: 0, right: 0}}>
+                        <span className="position-absolute badge rounded-pill text-dark bg-success-subtle fw-normal" style={{bottom: 0, right: 0}}>
                           { project.userproject_set.length }
                           <span className="visually-hidden">broj korisnika</span>
                         </span>
