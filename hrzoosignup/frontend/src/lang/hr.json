@@ -599,10 +599,6 @@
     "defaultMessage": "Ime, prezime i email",
     "description": "userslist-column-header-1"
   },
-  "BzHbow": {
-    "defaultMessage": "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
-    "description": "userinfo-croris-tablefoot-userview-no"
-  },
   "C/eBnN": {
     "defaultMessage": "Etnologija i antropologija",
     "description": "science-field-58"
@@ -1030,6 +1026,10 @@
   "LquO75": {
     "defaultMessage": "Da",
     "description": "requestusesai-label-yes"
+  },
+  "Lrfqz2": {
+    "defaultMessage": "Nema aktivnih i verificiranih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
+    "description": "userinfo-croris-tablefoot-userview-no"
   },
   "M8y/Pt": {
     "defaultMessage": "Projekt nije aktivan pa nije moguće odjavljivati suradnike",
@@ -1815,10 +1815,6 @@
     "defaultMessage": "Registrirani ste kao voditelj na istraživačkim projektima u sustavu CroRIS. Posjetite stranicu \"Moji podaci\" za više detalja.",
     "description": "newrequest-reason-alreadylead"
   },
-  "hDbgbW": {
-    "defaultMessage": "Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete",
-    "description": "userinfo-croris-tablefoot-meview-no"
-  },
   "hJ2xID": {
     "defaultMessage": "Učitaj",
     "description": "publickeys-add-load"
@@ -2346,6 +2342,10 @@
   "xGaESM": {
     "defaultMessage": "Greška prilikom kopiranja korisničke oznake u međuspremnik",
     "description": "userins-clipboard-fail"
+  },
+  "xN4mHo": {
+    "defaultMessage": "Nema aktivnih i verificiranih projekata u sustavu CroRIS na kojima sudjelujete",
+    "description": "userinfo-croris-tablefoot-meview-no"
   },
   "xRLsQA": {
     "defaultMessage": "Podnesen",

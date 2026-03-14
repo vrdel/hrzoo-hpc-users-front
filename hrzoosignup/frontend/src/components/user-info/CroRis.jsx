@@ -147,12 +147,12 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                   {
                     changeView ?
                       intl.formatMessage({
-                        defaultMessage: "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
+                        defaultMessage: "Nema aktivnih i verificiranih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
                         description: "userinfo-croris-tablefoot-userview-no"
                       })
                     :
                       intl.formatMessage({
-                        defaultMessage: "Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete",
+                        defaultMessage: "Nema aktivnih i verificiranih projekata u sustavu CroRIS na kojima sudjelujete",
                         description: "userinfo-croris-tablefoot-meview-no"
                       })
                   }
