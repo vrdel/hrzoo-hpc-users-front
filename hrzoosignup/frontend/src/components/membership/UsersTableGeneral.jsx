@@ -42,7 +42,6 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
   const [searchFirstName, setSearchFirstName] = useState('')
   const [searchLastName, setSearchLastName] = useState('')
-  const [searchRole, setSearchRole] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
 
 
@@ -289,8 +288,6 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
       match = match && firstName?.toLowerCase().includes(searchFirstName.toLowerCase())
     if (searchLastName)
       match = match && lastName?.toLowerCase().includes(searchLastName.toLowerCase())
-    if (searchRole)
-      match = match && role?.toLowerCase().includes(searchRole.toLowerCase())
     if (searchEmail)
       match = match && email?.toLowerCase().includes(searchEmail.toLowerCase())
     return match
@@ -404,16 +401,6 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       />
                     </td>
                     <td className="p-2 align-middle text-center">
-                      <Input
-                        value={searchRole}
-                        onChange={(e) => setSearchRole(e.target.value)}
-                        placeholder={intl.formatMessage({
-                          defaultMessage: "Traži",
-                          description: "users-table-general-search-placeholder"
-                        })}
-                        className="form-control"
-                        style={{fontSize: '0.83rem'}}
-                      />
                     </td>
                     <td className="p-2 align-middle text-center">
                       <Input
