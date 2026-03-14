@@ -26,7 +26,7 @@ docker run \
 -v $WORKDIR/etc/:$VENV/etc/hrzoosignup/ \
 -v $WORKDIR/hrzoosignup/frontend:/home/user/frontend \
 -v $WORKDIR/hrzoosignup/static:$VENV/share/hrzoosignup/static \
--v $WORKDIR/hrzoosignup:$VENV/lib64/python3.9/site-packages/hrzoosignup \
+-v $WORKDIR/hrzoosignup:$VENV/lib64/python3.12/site-packages/hrzoosignup \
 -h docker-hzsiweb \
 --net host \
 --name hzsi-web \

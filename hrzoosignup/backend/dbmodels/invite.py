@@ -14,10 +14,7 @@ import datetime
 
 from .project import Project
 
-try:
-    from django.urls import reverse
-except ImportError:
-    from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 def is_foreign_invite(target_email, request):
@@ -46,7 +43,9 @@ class CustomInvitation(AbstractBaseInvitation):
     invtype = models.CharField(_('Invitation type'), max_length=16, blank=True)
 
     class Meta:
-        unique_together = ['project', 'email']
+        constraints = [
+            models.UniqueConstraint(fields=['project', 'email'], name='unique_project_email'),
+        ]
 
     @classmethod
     def create(cls, email, inviter=None, **kwargs):

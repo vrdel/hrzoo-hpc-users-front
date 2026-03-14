@@ -21,8 +21,8 @@ RUN dnf -y install epel-release && \
       python3-devel \
       python3-pip \
       python3-setuptools \
-      python39 \
-      python39-mod_wsgi \
+      python3.12 \
+      python3.12-mod_wsgi \
       rpmdevtools \
       rsync \
       sudo \
@@ -46,18 +46,18 @@ RUN echo -e "user ALL=(ALL) NOPASSWD: ALL\nDefaults env_keep += \"HOME\"" >> /et
 COPY collectstatic.sh run-django-server.sh run-frontdev-server.sh syncsite.sh safety.sh /home/user
 USER user
 WORKDIR /home/user
-RUN sudo python3.9 -m venv /opt/poetry-tool/
+RUN sudo python3.12 -m venv /opt/poetry-tool/
 RUN sudo sh -c '\
   . /opt/poetry-tool/bin/activate \
   && pip install -U pip \
-  && pip install -U setuptools==69.2.0 \
+  && pip install -U setuptools \
   && pip install -U poetry==2.*'
 RUN sudo ln -s /opt/poetry-tool/bin/poetry /usr/local/bin/
-RUN sudo python3.9 -m venv /opt/hrzoo-signup
+RUN sudo python3.12 -m venv /opt/hrzoo-signup
 RUN sudo sh -c '\
   . /opt/hrzoo-signup/bin/activate \
   && pip install -U pip'
-RUN python3.9 -m venv /home/user/pgcli-venv
+RUN python3.12 -m venv /home/user/pgcli-venv
 RUN sh -c '\
   . /home/user/pgcli-venv/bin/activate \
   && pip install -U pip \

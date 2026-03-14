@@ -14,4 +14,6 @@ class UserProject(models.Model):
     )
 
     class Meta:
-        unique_together = ['user', 'project', 'role']
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'project', 'role'], name='unique_user_project_role'),
+        ]

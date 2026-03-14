@@ -37,4 +37,6 @@ class SSHPublicKey(models.Model):
     )
 
     class Meta:
-        unique_together = ('user', 'fingerprint')
+        constraints = [
+            models.UniqueConstraint(fields=['user', 'fingerprint'], name='unique_user_fingerprint'),
+        ]

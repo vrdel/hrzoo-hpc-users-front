@@ -37,7 +37,7 @@ services:
       - ./safety.sh:/home/user/safety.sh
       - ./memcache.ini:/etc/supervisord.d/memcache.ini
       - ../etc/:$VENV/etc/hrzoosignup
-      - ../hrzoosignup/:$VENV/lib/python3.9/site-packages/hrzoosignup
+      - ../hrzoosignup/:$VENV/lib/python3.12/site-packages/hrzoosignup
       - ../hrzoosignup/frontend/:/home/user/frontend
       - ../hrzoosignup/static/:$VENV/share/hrzoosignup/static
     networks:

@@ -2,7 +2,7 @@
 
 IFS=" "
 suffix=""
-DJINVIT_MAILTEMP_DIR="/opt/hrzoo-signup/lib64/python3.9/site-packages/invitations/templates/invitations/email"
+DJINVIT_MAILTEMP_DIR="/opt/hrzoo-signup/lib64/python3.12/site-packages/invitations/templates/invitations/email"
 CHOWN_USER="apache"
 
 usage()

@@ -1,7 +1,5 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from django.core.cache import cache
@@ -9,7 +7,6 @@ from django.contrib.auth import get_user_model
 
 import asyncio
 import json
-import datetime
 import logging
 
 from backend.croris.core import CroRISCore
