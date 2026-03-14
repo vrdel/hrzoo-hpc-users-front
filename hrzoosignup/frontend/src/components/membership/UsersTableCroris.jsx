@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Col, Collapse, Row, Card, CardTitle, CardBody,
-  Table, Button, Form, Tooltip, Input } from 'reactstrap';
+  Table, Button, Form, Tooltip, Input } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { CustomReactSelect, CustomCreatableSelect } from 'Components/CustomReactSelect';
