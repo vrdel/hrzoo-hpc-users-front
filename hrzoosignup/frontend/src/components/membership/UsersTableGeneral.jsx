@@ -524,12 +524,15 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                             {
                               isLeadEntry
                               ? '\u2212'
-                              : <Form.Check
-                                  type="checkbox"
-                                  className="bg-danger border border-danger ms-1"
-                                  checked={checkJoined[alreadyJoined.indexOf(user)] === true}
-                                  onChange={() => onChangeCheckOut(alreadyJoined.indexOf(user))}
-                                />
+                              :
+                                <>
+                                  <Form.Check>
+                                    <Form.Check.Input type="checkbox" className="bg-danger"
+                                      checked={checkJoined[alreadyJoined.indexOf(user)] === true}
+                                      onChange={() => onChangeCheckOut(alreadyJoined.indexOf(user))}
+                                    />
+                                  </Form.Check>
+                                </>
                             }
                           </td>
                         }
