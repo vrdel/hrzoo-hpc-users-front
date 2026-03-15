@@ -465,7 +465,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 :
                                   <>
                                     <Form.Check>
-                                      <Form.Check.Input type="checkbox" className="bg-danger"
+                                      <Form.Check.Input type="checkbox" className="bg-danger border border-danger ms-1"
                                         checked={checkJoined[alreadyJoined.indexOf(user)] === true}
                                         onChange={() => onChangeCheckOut(alreadyJoined.indexOf(user))}
                                       />
