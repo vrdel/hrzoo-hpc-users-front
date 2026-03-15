@@ -107,22 +107,22 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
               }
             </tbody>
           </Table>
-        </Col>
-        <Col className="fst-italic d-flex justify-content-center align-items-center">
-          <small>
-            {
-              changeView ?
-                intl.formatMessage({
-                  defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
-                  description: "userinfo-croris-tablefoot-userview"
-                })
-              :
-                intl.formatMessage({
-                  defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima sudjelujete",
-                  description: "userinfo-croris-tablefoot-meview"
-                })
-            }
-          </small>
+          <div className="fst-italic d-flex justify-content-center mt-2">
+            <small>
+              {
+                changeView ?
+                  intl.formatMessage({
+                    defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
+                    description: "userinfo-croris-tablefoot-userview"
+                  })
+                :
+                  intl.formatMessage({
+                    defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima sudjelujete",
+                    description: "userinfo-croris-tablefoot-meview"
+                  })
+              }
+            </small>
+          </div>
         </Col>
       </>
     )
