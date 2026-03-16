@@ -97,7 +97,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
 
   if (userDetails && userDetails.first_name && userDetails.person_username)
     return (
-      <React.Fragment>
+      <div className="overflow-hidden">
         <Row>
           <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{span:3}}>
             <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
@@ -231,7 +231,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
               </Col>
             </Row>
         }
-      </React.Fragment>
+      </div>
     )
   else
     return null

@@ -190,7 +190,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
           </Form.Label>
         </Col>
       </Row>
-      <Row>
+      <Row className="overflow-hidden">
         <Col className="ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
@@ -284,7 +284,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
           </Table>
         </Col>
       </Row>
-      <Row>
+      <Row className="overflow-hidden">
         <Col className="ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
