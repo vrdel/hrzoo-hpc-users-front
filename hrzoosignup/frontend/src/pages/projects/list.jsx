@@ -44,6 +44,7 @@ const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
       id={`pop-lead-${index}-${targetUser.id}`}
       className="fw-normal ms-1 text-decoration-underline"
       style={{cursor: 'pointer'}}
+      onClick={() => showPopover(`${index}-${targetUser.id}`)}
     >
       {`${targetUser.first_name} ${targetUser.last_name}`}
       <Overlay
@@ -457,6 +458,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               id={`pop-collab-${index}-${collab.user.id}`}
                               className="fw-normal ms-1 text-decoration-underline"
                               style={{cursor: 'pointer'}}
+                              onClick={() => togglePopover(`${index}-${collab.user.id}`)}
                             >
                               {`${collab.user.first_name} ${collab.user.last_name}`}
                               <Overlay
