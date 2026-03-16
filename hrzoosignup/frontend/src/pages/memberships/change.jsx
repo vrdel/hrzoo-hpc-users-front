@@ -37,7 +37,7 @@ import _ from "lodash";
 export const BriefSummary = ({project, isSubmitted}) => {
   return (
     <>
-      <Col md={{size: 12}}>
+      <Col md={{span: 12}}>
         <Form.Label
           htmlFor="projectSummary"
           aria-label="projectSummary"
@@ -45,7 +45,7 @@ export const BriefSummary = ({project, isSubmitted}) => {
           Opis:
         </Form.Label>
       </Col>
-      <Col md={{size: 12}} className="mb-3">
+      <Col md={{span: 12}} className="mb-3">
         <textarea
           id="projectSummary"
           className="form-control fst-italic"
@@ -69,7 +69,7 @@ const BriefProjectInfo = ({project}) => {
 
   return (
     <>
-      <Col className="ms-4 text-left" md={{size: 1}} >
+      <Col className="ms-4 text-left" md={{span: 1}} >
         <FormattedMessage
           defaultMessage="Stanje:"
           description="memberships-project-state"
@@ -87,7 +87,7 @@ const BriefProjectInfo = ({project}) => {
           {(props) => <Tooltip {...props}>{ StateStringUser(project.state.name) }</Tooltip>}
         </Overlay>
       </Col>
-      <Col md={{size: 3}} className="ms-4 ms-sm-4 ms-md-0">
+      <Col md={{span: 3}} className="ms-4 ms-sm-4 ms-md-0">
         <Form.Label
           htmlFor="projectTime"
           aria-label="projectTime"
@@ -101,7 +101,7 @@ const BriefProjectInfo = ({project}) => {
           { convertToEuropean(project.date_start) } &minus; { convertToEuropean(project.date_end) }
         </div>
       </Col>
-      <Col md={{size: 2}} className="ms-4 ms-sm-4 ms-md-0">
+      <Col md={{span: 2}} className="ms-4 ms-sm-4 ms-md-0">
         <Form.Label
           htmlFor="projectTime"
           aria-label="projectTime"
@@ -115,7 +115,7 @@ const BriefProjectInfo = ({project}) => {
           { convertToEuropean(project.date_changed) }
         </div>
       </Col>
-      <Col md={{size: 1}} className="ms-4 ms-sm-4 ms-md-0">
+      <Col md={{span: 1}} className="ms-4 ms-sm-4 ms-md-0">
         <Form.Label
           htmlFor="projectType"
           aria-label="projectType"
@@ -151,7 +151,7 @@ const BriefProjectInfo = ({project}) => {
           }
         </span>
       </Col>
-      <Col md={{size: 4}} className="ms-4 ms-sm-4 ms-md-0 me-0">
+      <Col md={{span: 4}} className="ms-4 ms-sm-4 ms-md-0 me-0">
         <Form.Label
           htmlFor="projectType"
           aria-label="projectType"

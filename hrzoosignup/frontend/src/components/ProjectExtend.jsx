@@ -111,7 +111,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
           </Modal.Header>
           <Modal.Body>
             <Row className="mt-3 mb-5">
-              <Col className="d-flex flex-column justify-content-end"  md={{size: 10, offset: 1}}>
+              <Col className="d-flex flex-column justify-content-end"  md={{span: 10, offset: 1}}>
                 <Form.Label
                   htmlFor="projectName"
                   aria-label="projectName">
@@ -139,7 +139,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
               </Col>
             </Row>
             <Row className="mt-3">
-              <Col className="d-flex flex-column justify-content-end" md={{size: 4, offset: 2}}>
+              <Col className="d-flex flex-column justify-content-end" md={{span: 4, offset: 2}}>
                 <Form.Label
                   htmlFor="currentDateEnd"
                   aria-label="currentDateEnd">
@@ -159,7 +159,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
                   />
                 </span>
               </Col>
-              <Col className="d-flex flex-column justify-content-end" md={{size: 4}}>
+              <Col className="d-flex flex-column justify-content-end" md={{span: 4}}>
                 <Form.Label
                   htmlFor="currentDateEnd"
                   aria-label="currentDateEnd">
@@ -202,7 +202,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
               </Col>
             </Row>
             <Row className="mt-5 mb-5">
-              <Col md={{size: 10, offset: 1}}>
+              <Col md={{span: 10, offset: 1}}>
                 <Form.Label
                   htmlFor="requestExplain"
                   aria-label="requestExplain">
@@ -262,7 +262,7 @@ export const ProjectExtend = ({isOpen, toggle, project}) => {
 
 export const ProjectExtendTable = ({projectsExtends, myView=true}) => {
   let colTitle = "ps-2 pe-2 mt-4 pt-1 pb-3 fw-bold fs-5 ms-4"
-  let tableSize = { size: 12 }
+  let tableSize = { span: 12 }
   let rowTable = "ms-5 me-5"
 
   if (!myView) {

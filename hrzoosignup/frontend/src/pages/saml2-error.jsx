@@ -91,9 +91,9 @@ const Saml2Error = ({sessionData}) => {
   return (
     <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
       <Row>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
-        <Col lg={{size: 6}} md={{size: 8}}>
+        <Col lg={{span: 6}} md={{span: 8}}>
           <Row className="m-lg-4 p-lg-4 m-md-3 p-md-3 m-sm-1 p-sm-1"/>
           <Card className="shadow-lg" style={{minWidth: '550px'}}>
             <Card.Header
@@ -135,7 +135,7 @@ const Saml2Error = ({sessionData}) => {
             </Card.Footer>
           </Card>
         </Col>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
       </Row>
     </Container>

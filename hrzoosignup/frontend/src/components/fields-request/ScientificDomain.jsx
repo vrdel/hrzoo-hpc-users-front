@@ -59,13 +59,13 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
           {
             controlledFieldsDomain.map((item, index) => (
               <React.Fragment key={index}>
-                <Col className="mb-3" sm={{size: 12}} md={{size: 10}} lg={{size: 10}} xl={{size: 5}}>
+                <Col className="mb-3" sm={{span: 12}} md={{span: 10}} lg={{span: 10}} xl={{span: 5}}>
                   <ScientificDomain control={control} index={index}
                     item={item} remove={domain_remove} fieldsDisabled={fieldsDisabled} />
                 </Col>
                 {
                   index === controlledFieldsDomain.length - 1 &&
-                    <Col sm={{size: 11, offset: 1}} md={{size: 6, offset: 3}} lg={{size: 6, offset: 3}} xl={{size: 3, offset: 1}}>
+                    <Col sm={{span: 11, offset: 1}} md={{span: 6, offset: 3}} lg={{span: 6, offset: 3}} xl={{span: 3, offset: 1}}>
                       <AddNewScientificDomain append={domain_append} fieldsDisabled={fieldsDisabled} />
                     </Col>
                 }

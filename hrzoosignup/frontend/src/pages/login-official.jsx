@@ -45,9 +45,9 @@ const LoginOfficial = ({sessionData=undefined}) => {
   return (
     <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
       <Row>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
-        <Col lg={{size: 6}} md={{size: 8}}>
+        <Col lg={{span: 6}} md={{span: 8}}>
           <Row className="m-lg-3 p-lg-3 m-md-2 p-md-2 m-sm-1 p-sm-1"/>
           <Card className="shadow-lg">
             <Card.Header
@@ -100,7 +100,7 @@ const LoginOfficial = ({sessionData=undefined}) => {
             </Card.Footer>
           </Card>
         </Col>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
       </Row>
     </Container>

@@ -249,7 +249,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                 </td>
                 <td className="p-2 align-middle text-center" style={{ fontSize: "0.83rem" }}>
                   <Row className="g-0 d-flex align-items-center">
-                    <Col sm={{size: 7}}>
+                    <Col sm={{span: 7}}>
                       <Controller
                         name="searchNameIdentifiterInstitute"
                         control={ control }
@@ -265,7 +265,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                         }
                       />
                     </Col>
-                    <Col sm={{size: 5}} className="ps-1">
+                    <Col sm={{span: 5}} className="ps-1">
                       <Controller
                         name="searchResourceTypes"
                         control={ control }

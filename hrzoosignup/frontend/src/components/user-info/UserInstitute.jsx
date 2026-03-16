@@ -13,7 +13,7 @@ const InstituteTableInfo = ({userDetails}) => {
   return (
     <React.Fragment>
       <Row>
-        <Col className="mt-4 ms-3" sm={{size:3}}>
+        <Col className="mt-4 ms-3" sm={{span:3}}>
           <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Imenik"
@@ -23,7 +23,7 @@ const InstituteTableInfo = ({userDetails}) => {
         </Col>
       </Row>
       <Row>
-        <Col className="mt-3 ms-4" md={{size: 11}}>
+        <Col className="mt-3 ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -128,7 +128,7 @@ const InstituteTableInfo = ({userDetails}) => {
         </Col>
       </Row>
       <Row>
-        <Col className="ms-4" md={{size: 11}}>
+        <Col className="ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>

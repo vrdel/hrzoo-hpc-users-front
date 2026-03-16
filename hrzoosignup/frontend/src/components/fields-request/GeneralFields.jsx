@@ -48,7 +48,7 @@ const GeneralProjectUsers = ({projectInfo}) => {
 
   return (
     <Row>
-      <Col md={{offset: 1, size: 10}}>
+      <Col md={{offset: 1, span: 10}}>
         {
           projectInfo.userproject_set.map((user, index) =>
             user.role.name === 'lead' &&
@@ -151,7 +151,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
   if (manageProject)
     return (
       <Row>
-        <Col md={{offset: 1, size: 10}}>
+        <Col md={{offset: 1, span: 10}}>
           {
             projectInfo.userproject_set.map((user, index) =>
               user.role.name === 'lead' &&
@@ -233,7 +233,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
   else
     return (
       <Row>
-        <Col md={{offset: 1, size: 10}}>
+        <Col md={{offset: 1, span: 10}}>
           {
             projectInfo.userproject_set.map((user, i) =>
               user.role.name === 'lead' &&
@@ -305,7 +305,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
         </Col>
       </Row>
       <Row>
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
@@ -343,7 +343,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Form.Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
@@ -381,7 +381,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col className="d-flex flex-column justify-content-end" md={{size: 4, offset: 1}}>
+        <Col className="d-flex flex-column justify-content-end" md={{span: 4, offset: 1}}>
           <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
@@ -463,7 +463,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             }
           </span>
         </Col>
-        <Col className="d-flex flex-column mt-3" md={{size: 4}}>
+        <Col className="d-flex flex-column mt-3" md={{span: 4}}>
           <Form.Label
             htmlFor="requestInstitute"
             aria-label="requestInstitute">
@@ -546,7 +546,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
         }
         <Row className="mt-4">
           <Row>
-            <Col md={{size: 4, offset: 1}} sm={{size: 10}} lg={{size: 10, offset: 1}}  xl={{size: 10, offset: 1}} xxl={{size: 10, offset: 1}}>
+            <Col md={{span: 4, offset: 1}} sm={{span: 10}} lg={{span: 10, offset: 1}}  xl={{span: 10, offset: 1}} xxl={{span: 10, offset: 1}}>
               <Form.Label
                 htmlFor="requestUsesAI"
                 aria-label="requestUsesAI"
@@ -560,7 +560,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             </Col>
           </Row>
           <Row>
-            <Col md={{size: 1, offset: 1}} lg={{offset: 1, size: 2}} xs={{size: 6}} sm={{size: 6}}>
+            <Col md={{span: 1, offset: 1}} lg={{offset: 1, span: 2}} xs={{span: 6}} sm={{span: 6}}>
               <Controller
                 name="requestUsesAI"
                 rules={{required: true}}
@@ -626,7 +626,7 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-1 mb-4">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Controller
             name="requestSummary"
             control={control}
@@ -655,14 +655,14 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row>
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <a href={`https://www.croris.hr/projekti/projekt/${crorisId}`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
             https://www.croris.hr/projekti/projekt/{crorisId}
           </a>
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{offset: 1, size: 11}}>
+        <Col md={{offset: 1, span: 11}}>
           <FormattedMessage
             defaultMessage="Financijer:"
             description="croris-description-financier"

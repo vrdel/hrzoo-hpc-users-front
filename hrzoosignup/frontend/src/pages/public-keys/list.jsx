@@ -171,7 +171,7 @@ const PublicKeys = () => {
           </Row>
 
           <Row className="mt-3 mb-3">
-            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, span: 10}}>
               <FormattedMessage
                 defaultMessage="Nemate prijavljenih sudjelovanja na odobrenim projektima"
                 description="publickeys-list-emptynotallowed"
@@ -257,7 +257,7 @@ const PublicKeys = () => {
                         <td  className="p-0 m-0" colSpan="4">
                           <Collapse className="m-2 p-2" in={isShowed(key.name)}>
                             <Row>
-                              <Col sm={{size: 11}}>
+                              <Col sm={{span: 11}}>
                                 <InputGroup>
                                   <InputGroup.Text>
                                     <FormattedMessage

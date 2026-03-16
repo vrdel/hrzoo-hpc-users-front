@@ -701,7 +701,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     </Col>
                   </Row>
                   <Row className="mt-4">
-                    <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
+                    <Col md={{span: 8, offset: 2}} className="d-flex justify-content-center">
                       <Collapse in={isOpen && missingCollab.length !== 0} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <Card.Title>

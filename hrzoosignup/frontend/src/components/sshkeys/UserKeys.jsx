@@ -93,7 +93,7 @@ export const TableUserKeys = ({sshKeys, statusSshKeys}) => {
                   <td  className="p-0 m-0" colSpan="4">
                     <Collapse className="m-2 p-2" in={isShowed(key.name)}>
                       <Row>
-                        <Col sm={{size: 11}}>
+                        <Col sm={{span: 11}}>
                           <InputGroup>
                             <InputGroup.Text>
                               <FormattedMessage

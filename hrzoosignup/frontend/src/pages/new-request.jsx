@@ -66,7 +66,7 @@ const NewRequest = () => {
         <PageTitle pageTitle={pageTitle}/>
       </Row>
       <Row className="mb-2 ms-2 mt-4">
-        <Col md={{size: 12}} lg={{size: 9}} className="d-lg-inline-flex d-md-inline-flex d-flex-sm-column d-flex-xs-column align-items-center">
+        <Col md={{span: 12}} lg={{span: 9}} className="d-lg-inline-flex d-md-inline-flex d-flex-sm-column d-flex-xs-column align-items-center">
           <Form.Label
             htmlFor="requestType"
             className="ps-2 pe-2 mt-1 pt-1 pb-1 text-white"
@@ -246,7 +246,7 @@ const NewRequest = () => {
             />
           </Button>
         </Col>
-        <Col className="d-md-block" lg={{size: 3}}>
+        <Col className="d-md-block" lg={{span: 3}}>
         </Col>
       </Row>
       <Row>

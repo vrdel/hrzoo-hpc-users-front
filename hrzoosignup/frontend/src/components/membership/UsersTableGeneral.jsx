@@ -658,18 +658,18 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
+                  <Col md={{span: 8, offset: 2}} className="d-flex justify-content-center">
                     <Collapse in={isOpen} style={{width: '80%'}}>
                       <Card className="ps-4 pe-4 pt-4">
                         <Card.Title>
                           <Row className="no-gutters">
-                            <Col md={{ size: 10 }}>
+                            <Col md={{ span: 10 }}>
                               <FormattedMessage
                                 defaultMessage="Upišite email adrese suradnika koje želite pozvati na projekt ili učitajte iz datoteke"
                                 description="users-table-general-cardtitle-1"
                               />
                             </Col>
-                            <Col md={{ size: 2 }} className="text-center p-0">
+                            <Col md={{ span: 2 }} className="text-center p-0">
                               <Form.Control
                                 type='file'
                                 id="fileInput"
@@ -723,13 +723,13 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         <Card className="ps-4 pe-4 pt-4">
                           <Card.Title>
                             <Row className="no-gutters">
-                              <Col md={{ size: 10 }}>
+                              <Col md={{ span: 10 }}>
                                 <FormattedMessage
                                   defaultMessage="Upišite email adrese stranih suradnika koje želite pozvati na projekt ili učitajte datoteku"
                                   description="users-table-general-cardtitle-3"
                                 />
                               </Col>
-                              <Col md={{ size: 2 }} className="text-center p-0">
+                              <Col md={{ span: 2 }} className="text-center p-0">
                                 <Form.Control
                                   type='file'
                                   id="fileInput"
@@ -784,7 +784,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   (project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop')
                   && (userDetails.is_staff || userDetails.is_superuser) &&
                   <Row className="mt-4">
-                    <Col md={{size: 8, offset: 2}} className="d-flex justify-content-center">
+                    <Col md={{span: 8, offset: 2}} className="d-flex justify-content-center">
                       <Collapse in={isOpen2} style={{width: '80%'}}>
                         <Card className="ps-4 pe-4 pt-4">
                           <Card.Title>

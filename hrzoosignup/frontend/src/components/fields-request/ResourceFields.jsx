@@ -26,7 +26,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
           <Form.Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
@@ -64,7 +64,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
@@ -102,7 +102,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
@@ -140,7 +140,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
@@ -178,7 +178,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
@@ -218,7 +218,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{offset: 1, span: 2}}>
           <Form.Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
@@ -256,7 +256,7 @@ export const CloudFields = ({fieldsDisabled=false}) => {
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
@@ -308,7 +308,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
       <Col className="fs-4 mb-3" md={{offset: 1}}>
         HPC
       </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
+      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
         <Form.Label
           htmlFor="HPCnSlotsCPU"
           aria-label="HPCnSlotsCPU"
@@ -346,7 +346,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
         <Form.Label
           htmlFor="HPCnSlotsGPU"
           aria-label="HPCnSlotsGPU"
@@ -384,7 +384,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
         <Form.Label
           htmlFor="HPCnRAM"
           aria-label="HPCnRAM"
@@ -422,7 +422,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+      <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
         <Form.Label
           htmlFor="HPCnTempGB"
           aria-label="HPCnTempGB"
@@ -460,7 +460,7 @@ export const HpcFields = ({fieldsDisabled=false}) => {
           />
         </InputGroup>
       </Col>
-      <Col  className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+      <Col  className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
         <Form.Label
           htmlFor="HPCnDiskGB"
           aria-label="HPCnDiskGB"
@@ -522,7 +522,7 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-2">
-        <Col md={{size: 7, offset: 1}}>
+        <Col md={{span: 7, offset: 1}}>
           <Form.Label
             htmlFor="requestResourceType"
             aria-label="requestResourceType"

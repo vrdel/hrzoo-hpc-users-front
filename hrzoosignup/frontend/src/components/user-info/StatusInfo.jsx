@@ -99,7 +99,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
     return (
       <React.Fragment>
         <Row>
-          <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{size:3}}>
+          <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{span:3}}>
             <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
               <FormattedMessage description="statusinfo" defaultMessage="Status" />
             </Form.Label>

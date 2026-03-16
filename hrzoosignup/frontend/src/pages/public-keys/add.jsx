@@ -139,7 +139,7 @@ const NewPublicKey = () => {
         <Row style={{minHeight: '60px'}}>
         </Row>
         <Row>
-          <Col className="mt-4" sm={{size: 3, offset: 1}}>
+          <Col className="mt-4" sm={{span: 3, offset: 1}}>
             <Form.Label for="name" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
               <FormattedMessage
                 defaultMessage="Ime ključa"
@@ -177,7 +177,7 @@ const NewPublicKey = () => {
               </Col>
             </Row>
           </Col>
-          <Col className="ms-4 g-0" sm={{size: 7}}>
+          <Col className="ms-4 g-0" sm={{span: 7}}>
             <div className="d-flex justify-content-between">
               <Form.Label className="mt-4 fs-5 ps-2 pe-2 pt-1 pb-1 text-white" style={{backgroundColor: "#b04c46"}} for="public_key">
                 <FormattedMessage
@@ -230,7 +230,7 @@ const NewPublicKey = () => {
               />
             </InputGroup>
             <Row className="g-0 mt-1 me-2 me-sm-2 me-md-2 me-xl-2">
-              <Col md={{size: 12}} sm={{size: 12}} xl={{size: 12}}  >
+              <Col md={{span: 12}} sm={{span: 12}} xl={{span: 12}}  >
                 <small className="fst-italic">
                   <span className="fw-bold">
                     <FormattedMessage

@@ -39,7 +39,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
   if ((leadData && leadData.length > 0) || (associateData && associateData.length > 0))
     return (
       <>
-        <Col md={{size: 12}}>
+        <Col md={{span: 12}}>
           <Table responsive hover className="shadow-sm">
             <CrorisTableHead />
             <tbody>
@@ -129,7 +129,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
   else
     return (
       <>
-        <Col md={{size: 12}}>
+        <Col md={{span: 12}}>
           <Table responsive hover className="shadow-sm">
             <CrorisTableHead />
             <tbody>
@@ -181,7 +181,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
   return (
     <>
       <Row>
-        <Col className="mt-4 ms-3" sm={{size:3}}>
+        <Col className="mt-4 ms-3" sm={{span:3}}>
           <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Sustav CroRIS"
@@ -191,7 +191,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
         </Col>
       </Row>
       <Row>
-        <Col className="ms-4" md={{size: 11}}>
+        <Col className="ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -285,7 +285,7 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
         </Col>
       </Row>
       <Row>
-        <Col className="ms-4" md={{size: 11}}>
+        <Col className="ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -334,7 +334,7 @@ export const EmptyCroRis = ({changeView=false, spinner=false}) => {
   return (
     <>
       <Row>
-        <Col className="mt-4 ms-3" sm={{size:3}}>
+        <Col className="mt-4 ms-3" sm={{span:3}}>
           <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Sustav CroRIS"
@@ -344,7 +344,7 @@ export const EmptyCroRis = ({changeView=false, spinner=false}) => {
         </Col>
       </Row>
       <Row className="mt-3 mb-3">
-        <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3" style={{height: '300px'}} md={{offset: 1, size: 10}}>
+        <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3" style={{height: '300px'}} md={{offset: 1, span: 10}}>
           {
             spinner ?
               <Spinner

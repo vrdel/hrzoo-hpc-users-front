@@ -471,7 +471,7 @@ const ResearchProjectRequestSelected = ({projectType}) => {
               </Col>
             </Row>
             <Row>
-              <Col md={{size: 10, offset: 1}}>
+              <Col md={{span: 10, offset: 1}}>
                 <GeneralInfo
                   project={projectTarget}
                   person_info={person_info}
@@ -516,7 +516,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
   return (
     <>
       <Row>
-        <Col className="text-left" md={{size: 10}}>
+        <Col className="text-left" md={{span: 10}}>
           <Form.Label
             htmlFor="projectTitle"
             aria-label="projectTitle">
@@ -526,7 +526,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             />
           </Form.Label>
         </Col>
-        <Col className="text-left" md={{size: 2}}>
+        <Col className="text-left" md={{span: 2}}>
           <Form.Label
             htmlFor="projectIdentifier"
             aria-label="projectIdentifier">
@@ -537,7 +537,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
           </Form.Label>
         </Col>
         <div className="w-100"/>
-        <Col md={{size: 10}}>
+        <Col md={{span: 10}}>
           <textarea
             id="requestName"
             aria-label="requestName"
@@ -548,7 +548,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             rows="2"
           />
         </Col>
-        <Col md={{size: 2}}>
+        <Col md={{span: 2}}>
           <div className="p-2 fs-5">
             {
               project.identifier ?
@@ -562,7 +562,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 4}}>
+        <Col md={{span: 4}}>
           <Form.Label
             htmlFor="projectTime"
             aria-label="projectTime"
@@ -573,7 +573,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
             />
           </Form.Label>
         </Col>
-        <Col md={{size: 8}}>
+        <Col md={{span: 8}}>
           <Form.Label
             htmlFor="projectTime"
             aria-label="projectTime"
@@ -585,14 +585,14 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
           </Form.Label>
         </Col>
         <div className="w-100"/>
-        <Col md={{size: 4}}>
+        <Col md={{span: 4}}>
           <Form.Control
             disabled={true}
             className="p-2 fs-5 font-monospace"
             defaultValue={`${project.start} − ${ project.end }`}
           />
         </Col>
-        <Col md={{size: 8}}>
+        <Col md={{span: 8}}>
           <div className="p-2">
             <Badge bg="dark" className="fs-6 mb-2 fw-normal">
               { person_info.first_name }
@@ -605,7 +605,7 @@ const GeneralInfo = ({project, person_info, projectsLeadUsers}) => {
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 12}}>
+        <Col md={{span: 12}}>
           <Form.Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
@@ -655,7 +655,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
   return (
     <Row className="mt-4">
       <Row>
-        <Col md={{size: 4, offset: 1}} sm={{size: 10}} lg={{size: 10, offset: 1}}  xl={{size: 10, offset: 1}} xxl={{size: 10, offset: 1}}>
+        <Col md={{span: 4, offset: 1}} sm={{span: 10}} lg={{span: 10, offset: 1}}  xl={{span: 10, offset: 1}} xxl={{span: 10, offset: 1}}>
           <Form.Label
             htmlFor="requestUsesAI"
             aria-label="requestUsesAI"
@@ -669,7 +669,7 @@ const RequestUsesAI = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row>
-        <Col md={{size: 1, offset: 1}} lg={{offset: 1, size: 2}} xs={{size: 6}} sm={{size: 6}}>
+        <Col md={{span: 1, offset: 1}} lg={{offset: 1, span: 2}} xs={{span: 6}} sm={{span: 6}}>
           <Controller
             name="requestUsesAI"
             rules={{required: true}}

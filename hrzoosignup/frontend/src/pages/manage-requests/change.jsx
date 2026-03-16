@@ -98,7 +98,7 @@ const LeadBasicInfo = ({leadInfo}) => {
         </Col>
       </Row>
       <Row className="gx-0">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -190,7 +190,7 @@ const LeadBasicInfo = ({leadInfo}) => {
         </Col>
       </Row>
       <Row className="gx-0">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -632,13 +632,13 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
     <>
       {
         (currentState === 'submit-extend' || initialProjectState === 'submit-extend') ?
-          <Col md={{size: 2}}/>
+          <Col md={{span: 2}}/>
         :
-          <Col md={{size: 3}}/>
+          <Col md={{span: 3}}/>
       }
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
-          <Col md={{size: 2}}>
+          <Col md={{span: 2}}>
             <Extend/>
             <br/>
             <p className="fs-5">
@@ -658,7 +658,7 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
           </Col>
         :
           currentState == 'approve-expire' ?
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <ApproveExpire/>
               <br/>
               <p className="fs-5">
@@ -677,7 +677,7 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
               />
             </Col>
           :
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <Approve/>{' '}
               <br/>
               <p className="fs-5">
@@ -698,7 +698,7 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
       }
       {
         (currentState === 'submit-extend' || initialProjectState === 'submit-extend') &&
-          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+          <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
             <Submit/>{' '}
             <br/>
             <p className="fs-5">
@@ -717,7 +717,7 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
             />
           </Col>
       }
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+      <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <Expire/>{' '}
         <br/>
         <p className="fs-5">
@@ -745,10 +745,10 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
 
   return (
     <>
-      <Col md={{size: 1}}/>
+      <Col md={{span: 1}}/>
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
-          <Col md={{size: 2}}>
+          <Col md={{span: 2}}>
             <Extend/>
             <br/>
             <p className="fs-5">
@@ -768,7 +768,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           </Col>
         :
           currentState == 'approve-expire' ?
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <ApproveExpire/>
               <br/>
               <p className="fs-5">
@@ -787,7 +787,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
               />
             </Col>
           :
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <Approve/>{' '}
               <br/>
               <p className="fs-5">
@@ -808,7 +808,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
       }
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
-          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+          <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
             <Submit/>{' '}
             <br/>
             <p className="fs-5">
@@ -827,7 +827,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             />
           </Col>
         :
-          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+          <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
             <Submit/>{' '}
             <br/>
             <p className="fs-5">
@@ -846,7 +846,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             />
           </Col>
       }
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+      <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <Deny/>{' '}
         <br/>
         <p className="fs-5">
@@ -864,7 +864,7 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           }}
         />
       </Col>
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+      <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <Expire/>{' '}
         <br/>
         <p className="fs-5">
@@ -933,7 +933,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   return (
     <>
       <Row>
-        <Col md={{size: 12}} className="me-0">
+        <Col md={{span: 12}} className="me-0">
           <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
             {
               manageProject ?
@@ -951,7 +951,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
       </Row>
       <Row className="d-flex flex-row justify-content-end">
-        <Col md={{size: 6}} lg={{size: 5}} xl={{size: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 mt-3 justify-content-center">
+        <Col md={{span: 6}} lg={{span: 5}} xl={{span: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 mt-3 justify-content-center">
           <Button variant="danger" className="me-lg-1 me-md-1 me-sm-1 me-1" onClick={() => {
             modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
             modalProps.setModalTitle(intl.formatMessage({
@@ -1000,7 +1000,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
       </Row>
       <Row>
-        <Col className="text-left" md={{size: 10}}>
+        <Col className="text-left" md={{span: 10}}>
           <Form.Label
             htmlFor="projectTitle"
             aria-label="projectTitle">
@@ -1009,9 +1009,9 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       </Row>
       <Row style={{'height': '10px'}}/>
       <Row>
-        <Col md={{size: 1}}>
+        <Col md={{span: 1}}>
         </Col>
-        <Col md={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
+        <Col md={{offset: 2, span: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
           <span >
             {
               manageProject
@@ -1031,7 +1031,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       </Row>
       <Row style={{'height': '30px'}}/>
       <Row className="mt-2 mb-5 text-center">
-        <Col md={{size: 1}}>
+        <Col md={{span: 1}}>
         </Col>
         {
           manageProject ?
@@ -1094,14 +1094,14 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       {
         (requestState['extend'] || requestState['submit-extend']) && projectsExtends &&
         <Row className="ms-1 mt-3">
-          <Col md={{size: 10, offset: 1}}>
+          <Col md={{span: 10, offset: 1}}>
             <ProjectExtendTable projectsExtends={projectsExtends} myView={false} />
           </Col>
         </Row>
       }
       <Row className="mt-4">
-        <Col style={{width: '150px'}} md={{size: 1}}/>
-        <Col md={{size: 8}}>
+        <Col style={{width: '150px'}} md={{span: 1}}/>
+        <Col md={{span: 8}}>
           <Form.Label
             htmlFor="staff_requestResourceType"
             aria-label="staff_requestResourceType"
@@ -1138,8 +1138,8 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         !manageProject &&
         <>
           <Row className="mt-3">
-            <Col style={{width: '150px'}} md={{size: 1}}/>
-            <Col md={{size: 10}}>
+            <Col style={{width: '150px'}} md={{span: 1}}/>
+            <Col md={{span: 10}}>
               <Form.Label
                 htmlFor="staff_comment"
                 className="fw-bold mt-3 fs-5 form-label"
@@ -1175,8 +1175,8 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             </Col>
           </Row>
           <Row className="mt-3">
-            <Col style={{width: '150px'}} md={{size: 1}}/>
-            <Col md={{size: 9}}>
+            <Col style={{width: '150px'}} md={{span: 1}}/>
+            <Col md={{span: 9}}>
               <Controller
                 name="staff_emailSend"
                 control={control}
@@ -1204,7 +1204,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       }
       <Row style={{'height': '50px'}}/>
       <Row className="justify-content-end fst-italic">
-        <Col md={{size: 4}} className="fs-6 mt-3">
+        <Col md={{span: 4}} className="fs-6 mt-3">
           <span className="fw-bold">
             <FormattedMessage
               defaultMessage="Obradio:"
@@ -1229,7 +1229,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       {
         changedBy &&
         <Row className="justify-content-end fst-italic">
-          <Col md={{size: 4}} className="fs-6 mt-1">
+          <Col md={{span: 4}} className="fs-6 mt-1">
             <span className="fw-bold">
               <FormattedMessage
                 defaultMessage="Promijenio:"

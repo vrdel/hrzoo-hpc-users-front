@@ -35,7 +35,7 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
@@ -56,7 +56,7 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Form.Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
@@ -77,7 +77,7 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 5, offset: 1}}>
+        <Col md={{span: 5, offset: 1}}>
           <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
@@ -88,7 +88,7 @@ const NewRequestIndex = () => {
             <span className="ms-1 fw-bold text-danger">*</span>
           </Form.Label>
         </Col>
-        <Col md={{size: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
+        <Col md={{span: 10, offset: 1}} style={{whiteSpace: 'nowrap'}}>
           <DatePicker
             locale="hr-HR"
             required={true}
@@ -106,7 +106,7 @@ const NewRequestIndex = () => {
       </Row>
       <Row className="mt-4">
         <Row>
-          <Col md={{size: 4, offset: 1}} sm={{size: 10}} lg={{size: 10, offset: 1}}  xl={{size: 10, offset: 1}} xxl={{size: 10, offset: 1}}>
+          <Col md={{span: 4, offset: 1}} sm={{span: 10}} lg={{span: 10, offset: 1}}  xl={{span: 10, offset: 1}} xxl={{span: 10, offset: 1}}>
             <Form.Label
               htmlFor="requestUsesAI"
               aria-label="requestUsesAI"
@@ -120,7 +120,7 @@ const NewRequestIndex = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={{size: 1, offset: 1}} lg={{offset: 1, size: 2}} xs={{size: 6}} sm={{size: 6}}>
+          <Col md={{span: 1, offset: 1}} lg={{offset: 1, span: 2}} xs={{span: 6}} sm={{span: 6}}>
             <Form.Control
               aria-label="requestUsesAI"
               disabled={true}
@@ -146,7 +146,7 @@ const NewRequestIndex = () => {
             <span className="ms-1 fw-bold text-danger">*</span>
           </Form.Label>
           <Row>
-            <Col className="mb-3" sm={{size: 12}} md={{size: 10}} lg={{size: 10}} xl={{size: 5}}>
+            <Col className="mb-3" sm={{span: 12}} md={{span: 10}} lg={{span: 10}} xl={{span: 5}}>
               <Card>
                 <Card.Header className="d-inline-flex align-items-center">
                   <Form.Control
@@ -250,7 +250,7 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 3, offset: 1}}>
+        <Col md={{span: 3, offset: 1}}>
           <Form.Label
             htmlFor="requestResourceType"
             aria-label="requestResourceType"
@@ -272,7 +272,7 @@ const NewRequestIndex = () => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           HPC
         </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
           <Form.Label
             htmlFor="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
@@ -293,7 +293,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="HPCnSlotsGPU"
             aria-label="HPCnSlotsGPU"
@@ -314,7 +314,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="HPCnRAM"
             aria-label="HPCnRAM"
@@ -335,7 +335,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="HPCnTempGB"
             aria-label="HPCnTempGB"
@@ -356,7 +356,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="HPCnDiskGB"
             aria-label="HPCnDiskGB"
@@ -383,7 +383,7 @@ const NewRequestIndex = () => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
           <Form.Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
@@ -404,7 +404,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
@@ -425,7 +425,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
@@ -446,7 +446,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
@@ -467,7 +467,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
@@ -490,7 +490,7 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{offset: 1, size: 2}}>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{offset: 1, span: 2}}>
           <Form.Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
@@ -511,7 +511,7 @@ const NewRequestIndex = () => {
             </InputGroup.Text>
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
           <Form.Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
