@@ -627,7 +627,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         description="users-table-general-collabsignoff"
                       />
                     </Button>
-                    <Button variant="primary" active={isOpen} onClick={toggle} className="ms-0 ms-md-2 mt-sm-2 mt-md-0">
+                    <Button variant="primary" active={isOpen} onClick={toggle} className="ms-0 ms-md-2 mt-2 mt-md-0">
                       <FontAwesomeIcon icon={faArrowDown}/>{' '}
                       <FormattedMessage
                         defaultMessage="Pozovi suradnike"
@@ -636,7 +636,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     </Button>
                     {
                       (project.project_type['name'] === 'practical') &&
-                      <Button active={isOpen3} variant="info" className="ms-0 ms-md-3 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle3}>
+                      <Button active={isOpen3} variant="info" className="ms-0 ms-md-3 mt-2 mt-md-0" onClick={toggle3}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi strane suradnike"
@@ -647,7 +647,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     {
                       (project.project_type['name'] === 'internal' || project.project_type['name'] === 'srce-workshop')
                       && (userDetails.is_staff || userDetails.is_superuser) &&
-                      <Button variant="success" active={isOpen2} onClick={toggle2} className="ms-0 ms-md-3 mt-sm-2 mt-md-0">
+                      <Button variant="success" active={isOpen2} onClick={toggle2} className="ms-0 ms-md-3 mt-2 mt-md-0">
                         <FontAwesomeIcon icon={faPlus}/>{' '}
                         <FormattedMessage
                           defaultMessage="Dodaj suradnike"

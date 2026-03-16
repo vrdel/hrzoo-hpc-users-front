@@ -684,14 +684,14 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-collabsignoff"
                         />
                       </Button>
-                      <Button disabled={collabNoEmail} active={isOpen} variant="primary" className="ms-0 ms-md-2 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle}>
+                      <Button disabled={collabNoEmail} active={isOpen} variant="primary" className="ms-0 ms-lg-2 mt-2 mt-lg-0" onClick={toggle}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi CroRIS suradnike"
                           description="users-table-croris-croris-collabcall"
                         />
                       </Button>
-                      <Button active={isOpen2} variant="info" className="ms-0 ms-md-3 mt-sm-2 mt-md-2 mt-lg-0" onClick={toggle2}>
+                      <Button active={isOpen2} variant="info" className="ms-0 ms-lg-3 mt-2 mt-lg-0" onClick={toggle2}>
                         <FontAwesomeIcon icon={faArrowDown}/>{' '}
                         <FormattedMessage
                           defaultMessage="Pozovi strane suradnike"
