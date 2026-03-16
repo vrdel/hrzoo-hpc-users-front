@@ -348,8 +348,8 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
                     className="mr-1"
                     checked={ subsetProjects.indexOf(project) >= 0 }
                     onClick={ () => onSelect(project) }
+                    label={ project }
                   />
-                  <Form.Label className="ml-1">&nbsp; { project }</Form.Label>
                   <MiniButton
                     color="light"
                     onClick={(e) => copyToClipboard(
@@ -981,8 +981,8 @@ export const ProjectUsersAccounting = () => {
                 className="mr-2"
                 checked={ subsetUsers.indexOf(user) >= 0 }
                 onClick={ () => onUserSelect(user) }
+                label={ user }
               />
-              <Form.Label>&nbsp; { user }</Form.Label>
             </Dropdown.Item>
           )
         }
