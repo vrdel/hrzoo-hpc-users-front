@@ -103,7 +103,7 @@ const Navigation = () => {
       <Nav.Item key='project-accounting' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/project-accounting'
         >
           <FormattedMessage
@@ -115,7 +115,7 @@ const Navigation = () => {
       <Nav.Item key='project-users-accounting' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link active rounded-top text-white" : "nav-link text-dark"}
           to='/ui/project-users-accounting'
         >
           <FormattedMessage
@@ -127,7 +127,7 @@ const Navigation = () => {
       <Nav.Item key="personal-accounting" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link active rounded-top text-white" : "nav-link text-dark"}
           to='/ui/my-accounting'
         >
           <FormattedMessage
@@ -260,7 +260,7 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
       className="me-2"
       onToggle={ () => setIsOpenYear(!isOpenYear) }
     >
-      <Dropdown.Toggle>
+      <Dropdown.Toggle variant="secondary">
         <FormattedMessage
           description="myaccounting-year-dropdown"
           defaultMessage="Godine"
@@ -329,7 +329,7 @@ const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSe
       className="me-2"
       onToggle={ () => setIsOpen(!isOpen) }
     >
-      <Dropdown.Toggle>
+      <Dropdown.Toggle variant="secondary">
         { projectsButtonText }
       </Dropdown.Toggle>
       <Dropdown.Menu>
@@ -912,7 +912,7 @@ export const ProjectUsersAccounting = () => {
       className="ml-2"
       onToggle={ () => setIsOpen(!isOpen) }
     >
-      <Dropdown.Toggle>
+      <Dropdown.Toggle variant="secondary">
         { projectsButtonText }
       </Dropdown.Toggle>
       <Dropdown.Menu>
@@ -969,7 +969,7 @@ export const ProjectUsersAccounting = () => {
       onToggle={ () => setIsOpenUsers(!isOpenUsers) }
       hidden={ listUsers[selectedProject].length == 0 }
     >
-      <Dropdown.Toggle>
+      <Dropdown.Toggle variant="secondary">
         { usersButtonText }
       </Dropdown.Toggle>
       <Dropdown.Menu>
