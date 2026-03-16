@@ -76,7 +76,7 @@ const Navigation = () => {
             <br/>
             <span onClick ={() => setPopoverOpen(!popoverOpen)} ref={popoverTarget}>
               <Badge href="#" className="text-dark" bg="light"
-                style={{fontSize: '100%', textDecoration: 'none'}}>
+                style={{fontSize: '100%', textDecoration: 'none', cursor: 'pointer'}}>
                 <strong>{userDetails?.first_name}</strong>
               </Badge>
             </span>
