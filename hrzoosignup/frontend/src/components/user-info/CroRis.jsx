@@ -4,7 +4,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import {FormattedMessage} from 'react-intl';
-import { Col, Badge, Placeholder, Row, Table, Label, Spinner } from 'reactstrap';
+import { Col, Badge, Placeholder, Row, Table, Form, Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl'
 
 
@@ -39,7 +39,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
   if ((leadData && leadData.length > 0) || (associateData && associateData.length > 0))
     return (
       <>
-        <Col md={{size: 12}}>
+        <Col md={{span: 12}}>
           <Table responsive hover className="shadow-sm">
             <CrorisTableHead />
             <tbody>
@@ -61,7 +61,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                       </Row>
                     </td>
                     <td className="p-3 align-middle text-center">
-                      <Badge className="fs-6 fw-normal" color="success">
+                      <Badge className="fs-6 fw-normal" bg="success">
                         <FormattedMessage
                           defaultMessage="voditelj"
                           description="userinfo-croris-badgelead"
@@ -92,7 +92,7 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                       </Row>
                     </td>
                     <td className="p-3 align-middle text-center">
-                      <Badge className="fs-6 fw-normal" color="primary">
+                      <Badge className="fs-6 fw-normal" bg="primary">
                         <FormattedMessage
                           defaultMessage="suradnik"
                           description="userinfo-croris-badgecollab"
@@ -107,29 +107,29 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
               }
             </tbody>
           </Table>
-        </Col>
-        <Col className="fst-italic d-flex justify-content-center align-items-center">
-          <small>
-            {
-              changeView ?
-                intl.formatMessage({
-                  defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
-                  description: "userinfo-croris-tablefoot-userview"
-                })
-              :
-                intl.formatMessage({
-                  defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima sudjelujete",
-                  description: "userinfo-croris-tablefoot-meview"
-                })
-            }
-          </small>
+          <div className="fst-italic d-flex justify-content-center mt-2">
+            <small>
+              {
+                changeView ?
+                  intl.formatMessage({
+                    defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima korisnik sudjeluje",
+                    description: "userinfo-croris-tablefoot-userview"
+                  })
+                :
+                  intl.formatMessage({
+                    defaultMessage: "Aktivni i verificirani projekti registrirani u sustavu CroRIS na kojima sudjelujete",
+                    description: "userinfo-croris-tablefoot-meview"
+                  })
+              }
+            </small>
+          </div>
         </Col>
       </>
     )
   else
     return (
       <>
-        <Col md={{size: 12}}>
+        <Col md={{span: 12}}>
           <Table responsive hover className="shadow-sm">
             <CrorisTableHead />
             <tbody>
@@ -147,12 +147,12 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                   {
                     changeView ?
                       intl.formatMessage({
-                        defaultMessage: "Nema aktivnih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
+                        defaultMessage: "Nema aktivnih i verificiranih projekata u sustavu CroRIS na kojima korisnik sudjeluje",
                         description: "userinfo-croris-tablefoot-userview-no"
                       })
                     :
                       intl.formatMessage({
-                        defaultMessage: "Nema aktivnih projekata u sustavu CroRIS na kojima sudjelujete",
+                        defaultMessage: "Nema aktivnih i verificiranih projekata u sustavu CroRIS na kojima sudjelujete",
                         description: "userinfo-croris-tablefoot-meview-no"
                       })
                   }
@@ -181,17 +181,17 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
   return (
     <>
       <Row>
-        <Col className="mt-4 ms-3" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+        <Col className="mt-4 ms-3" sm={{span:3}}>
+          <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Sustav CroRIS"
               description="userinfo-croris-title"
             />
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
-      <Row>
-        <Col className="ms-4" md={{size: 11}}>
+      <Row className="overflow-hidden">
+        <Col className="ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -284,8 +284,8 @@ export const CroRisInfo = ({croRisProjects, changeView=false}) => {
           </Table>
         </Col>
       </Row>
-      <Row>
-        <Col className="ms-4" md={{size: 11}}>
+      <Row className="overflow-hidden">
+        <Col className="ms-4" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -334,20 +334,21 @@ export const EmptyCroRis = ({changeView=false, spinner=false}) => {
   return (
     <>
       <Row>
-        <Col className="mt-4 ms-3" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+        <Col className="mt-4 ms-3" sm={{span:3}}>
+          <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Sustav CroRIS"
               description="userinfo-croris-title"
             />
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
       <Row className="mt-3 mb-3">
-        <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3" style={{height: '300px'}} md={{offset: 1, size: 10}}>
+        <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3" style={{height: '300px'}} md={{offset: 1, span: 10}}>
           {
             spinner ?
               <Spinner
+                animation="border"
                 style={{
                   height: '15rem',
                   width: '15rem',

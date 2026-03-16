@@ -2,17 +2,12 @@ import React from 'react'
 import { CustomReactSelect } from 'Components/CustomReactSelect';
 import {
   Card,
-  CardHeader,
-  CardBody,
   Col,
   Button,
-  Input,
-  FormFeedback,
+  Form,
   InputGroup,
-  InputGroupText,
-  Label,
   Row,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimes,
@@ -50,7 +45,7 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
   return (
     <Row className="mt-3 d-flex g-0">
       <Col md={{offset: 1}}>
-        <Label
+        <Form.Label
           htmlFor="scientificDomain"
           aria-label="scientificDomain"
           className="mt-2 text-right form-label">
@@ -59,18 +54,18 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
             description="scientific-domain-title"
           />
           <span className="ms-1 fw-bold text-danger">*</span>
-        </Label>
+        </Form.Label>
         <Row>
           {
             controlledFieldsDomain.map((item, index) => (
               <React.Fragment key={index}>
-                <Col className="mb-3" sm={{size: 12}} md={{size: 10}} lg={{size: 10}} xl={{size: 5}}>
+                <Col className="mb-3" sm={{span: 12}} md={{span: 10}} lg={{span: 10}} xl={{span: 5}}>
                   <ScientificDomain control={control} index={index}
                     item={item} remove={domain_remove} fieldsDisabled={fieldsDisabled} />
                 </Col>
                 {
                   index === controlledFieldsDomain.length - 1 &&
-                    <Col sm={{size: 11, offset: 1}} md={{size: 6, offset: 3}} lg={{size: 6, offset: 3}} xl={{size: 3, offset: 1}}>
+                    <Col sm={{span: 11, offset: 1}} md={{span: 6, offset: 3}} lg={{span: 6, offset: 3}} xl={{span: 3, offset: 1}}>
                       <AddNewScientificDomain append={domain_append} fieldsDisabled={fieldsDisabled} />
                     </Col>
                 }
@@ -86,7 +81,7 @@ const BaseNewScientificDomain = ({fieldsDisabled=false}) => {
 
 const AddNewScientificDomain = ({fieldsDisabled, append}) => {
   return (
-    <Button disabled={fieldsDisabled} outline color="success" onClick={() =>
+    <Button disabled={fieldsDisabled} variant="outline-success" onClick={() =>
       append({
       'name': '',
       'percent': '',
@@ -119,7 +114,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
 
   return (
     <Card key={domain_item.id}>
-      <CardHeader className="d-inline-flex align-items-center">
+      <Card.Header className="d-inline-flex align-items-center">
         <Controller
           name={`scientificDomain.${domain_index}.name`}
           control={control}
@@ -148,9 +143,9 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
           errors={errors}
           name={`scientificDomain.${domain_index}.name`}
           render={({ message }) =>
-            <FormFeedback className="end-0">
+            <Form.Control.Feedback type="invalid" className="end-0">
               { message }
-            </FormFeedback>
+            </Form.Control.Feedback>
           }
         />
         <InputGroup style={{minWidth: '30%'}}>
@@ -160,7 +155,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
             control={control}
             rules={{required: true}}
             render={ ({field}) =>
-              <Input
+              <Form.Control
                 {...field}
                 className={`ms-1 form-control text-center ${errors && errors.scientificDomain
                   && errors.scientificDomain[domain_index]
@@ -177,13 +172,13 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
               />
             }
           />
-          <InputGroupText>
+          <InputGroup.Text>
             %
-          </InputGroupText>
+          </InputGroup.Text>
         </InputGroup>
         <Button
           size="sm"
-          color="danger"
+          variant="danger"
           type="button"
           disabled={fieldsDisabled}
           className="ms-1 text-center"
@@ -191,8 +186,8 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
         >
           <FontAwesomeIcon icon={faTimes}/>
         </Button>
-      </CardHeader>
-      <CardBody >
+      </Card.Header>
+      <Card.Body>
         {
           fields_scientificfields.map((field_item, field_index) => (
             <Row key={field_item.id} className="g-0 mb-2" >
@@ -205,7 +200,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                     control={control}
                     rules={{required: true}}
                     render={ ({field}) =>
-                      <Input
+                      <Form.Control
                         {...field}
                         className={`ms-1 form-control text-center ${errors && errors.scientificDomain
                           && errors.scientificDomain[domain_index]
@@ -224,15 +219,15 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                       />
                     }
                   />
-                  <InputGroupText>
+                  <InputGroup.Text>
                     %
-                  </InputGroupText>
+                  </InputGroup.Text>
                 </InputGroup>
                 {
                   field_index > 0 ?
                     <Button
                       size="sm"
-                      color="danger"
+                      variant="danger"
                       className="ms-1"
                       disabled={fieldsDisabled}
                       type="button"
@@ -243,7 +238,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
                   :
                     <Button
                       size="sm"
-                      color="white"
+                      variant="white"
                       className="ms-1 border-white"
                       disabled={true}
                       type="button"
@@ -257,7 +252,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
         }
         <Row className="g-0">
           <Col className="text-center">
-            <Button disabled={fieldsDisabled} className="mt-3" size="sm" outline color="success" onClick={() =>
+            <Button disabled={fieldsDisabled} className="mt-3" size="sm" variant="outline-success" onClick={() =>
               field_append({'name': '', 'percent': ''})}>
               <FontAwesomeIcon icon={faPlus}/>{' '}
               <FormattedMessage
@@ -267,7 +262,7 @@ const ScientificDomain = ({fieldsDisabled=false, index: domain_index, item: doma
             </Button>
           </Col>
         </Row>
-      </CardBody>
+      </Card.Body>
     </Card>
   )
 }

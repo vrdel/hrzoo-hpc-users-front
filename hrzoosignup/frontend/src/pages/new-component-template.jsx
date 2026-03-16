@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SharedData } from 'Pages/root';
-import { Col, Row } from 'reactstrap';
+import { Col, Row } from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 
 

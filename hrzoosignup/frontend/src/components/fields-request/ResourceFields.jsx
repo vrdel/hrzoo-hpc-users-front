@@ -4,13 +4,10 @@ import { SharedData } from 'Pages/root';
 import { AuthContext } from 'Components/AuthContextProvider';
 import {
   Col,
-  Input,
-  FormFeedback,
+  Form,
   InputGroup,
-  InputGroupText,
-  Label,
   Row,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { ErrorMessage } from '@hookform/error-message';
 import {
   Controller,
@@ -29,8 +26,10 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
-          <Label
+      </Row>
+      <Row>
+        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
+          <Form.Label
             htmlFor="CLOUDnVM"
             aria-label="CLOUDnVM"
             className="mr-2 form-label text-center">
@@ -38,14 +37,14 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               description="cloudfields-nvm"
               defaultMessage="Broj virtualnih poslužitelja:"
             />
-          </Label>
+          </Form.Label>
           <InputGroup>
             <Controller
               name="CLOUDnVM"
               aria-label="CLOUDnVM"
               control={control}
               render={ ({field}) =>
-                <Input
+                <Form.Control
                   {...field}
                   disabled={fieldsDisabled}
                   className={`form-control text-center ${errors && errors.CLOUDnVM ? "is-invalid" : ''}`}
@@ -53,22 +52,22 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <InputGroupText>
+            <InputGroup.Text>
               VM
-            </InputGroupText>
+            </InputGroup.Text>
             <ErrorMessage
               errors={errors}
               name="CLOUDnVM"
               render={({ message }) =>
-                <FormFeedback className="end-0">
+                <Form.Control.Feedback type="invalid" className="end-0">
                   { message }
-                </FormFeedback>
+                </Form.Control.Feedback>
               }
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
-          <Label
+        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
             htmlFor="CLOUDnSlotsCPU"
             aria-label="CLOUDnSlotsCPU"
             className="mr-2 form-label text-center">
@@ -76,14 +75,14 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               description="cloudfields-vcpu"
               defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
             />
-          </Label>
+          </Form.Label>
           <InputGroup>
             <Controller
               name="CLOUDnSlotsCPU"
               aria-label="CLOUDnSlotsCPU"
               control={control}
               render={ ({field}) =>
-                <Input
+                <Form.Control
                   {...field}
                   className={`form-control text-center ${errors && errors.CLOUDnSlotsCPU ? "is-invalid" : ''}`}
                   disabled={fieldsDisabled}
@@ -91,22 +90,22 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <InputGroupText>
+            <InputGroup.Text>
               CPU
-            </InputGroupText>
+            </InputGroup.Text>
             <ErrorMessage
               errors={errors}
               name="CLOUDnSlotsCPU"
               render={({ message }) =>
-                <FormFeedback className="end-0">
+                <Form.Control.Feedback type="invalid" className="end-0">
                   { message }
-                </FormFeedback>
+                </Form.Control.Feedback>
               }
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{size: 3}} lg={{size: 2}}>
-          <Label
+        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
             htmlFor="CLOUDnRAM"
             aria-label="CLOUDnRAM"
             className="mr-2 form-label text-center">
@@ -114,14 +113,14 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               description="cloudfields-nram"
               defaultMessage="Ukupna količina radne memorije (GB):"
             />
-          </Label>
+          </Form.Label>
           <InputGroup>
             <Controller
               name="CLOUDnRAM"
               aria-label="CLOUDnRAM"
               control={control}
               render={ ({field}) =>
-                <Input
+                <Form.Control
                   {...field}
                   disabled={fieldsDisabled}
                   className={`form-control text-center ${errors && errors.CLOUDnRAM ? "is-invalid" : ''}`}
@@ -129,22 +128,22 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <InputGroupText>
+            <InputGroup.Text>
               RAM
-            </InputGroupText>
+            </InputGroup.Text>
             <ErrorMessage
               errors={errors}
               name="CLOUDnRAM"
               render={({ message }) =>
-                <FormFeedback className="end-0">
+                <Form.Control.Feedback type="invalid" className="end-0">
                   { message }
-                </FormFeedback>
+                </Form.Control.Feedback>
               }
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
             htmlFor="CLOUDnRAMVM"
             aria-label="CLOUDnRAMVM"
             className="mr-2 form-label text-center">
@@ -152,14 +151,14 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               description="cloudfields-nramvm"
               defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
             />
-          </Label>
+          </Form.Label>
           <InputGroup>
             <Controller
               name="CLOUDnRAMVM"
               aria-label="CLOUDnRAMVM"
               control={control}
               render={ ({field}) =>
-                <Input
+                <Form.Control
                   {...field}
                   className={`form-control text-center ${errors && errors.CLOUDnRAMVM ? "is-invalid" : ''}`}
                   disabled={fieldsDisabled}
@@ -167,22 +166,22 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <InputGroupText>
+            <InputGroup.Text>
               RAM
-            </InputGroupText>
+            </InputGroup.Text>
             <ErrorMessage
               errors={errors}
               name="CLOUDnRAMVM"
               render={({ message }) =>
-                <FormFeedback className="end-0">
+                <Form.Control.Feedback type="invalid" className="end-0">
                   { message }
-                </FormFeedback>
+                </Form.Control.Feedback>
               }
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
             htmlFor="CLOUDnDiskGB"
             aria-label="CLOUDnDiskGB"
             className="mr-2 form-label text-center">
@@ -190,14 +189,14 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               description="cloudfields-ndiskgb"
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
             />
-          </Label>
+          </Form.Label>
           <InputGroup>
             <Controller
               name="CLOUDnDiskGB"
               aria-label="CLOUDnDiskGB"
               control={control}
               render={ ({field}) =>
-                <Input
+                <Form.Control
                   {...field}
                   disabled={fieldsDisabled}
                   className={`form-control text-center ${errors && errors.CLOUDnDiskGB ? "is-invalid" : ''}`}
@@ -205,24 +204,24 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <InputGroupText>
+            <InputGroup.Text>
               Disk
-            </InputGroupText>
+            </InputGroup.Text>
             <ErrorMessage
               errors={errors}
               name="CLOUDnDiskGB"
               render={({ message }) =>
-                <FormFeedback className="end-0">
+                <Form.Control.Feedback type="invalid" className="end-0">
                   { message }
-                </FormFeedback>
+                </Form.Control.Feedback>
               }
             />
           </InputGroup>
         </Col>
       </Row>
       <Row className="mt-5">
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{offset: 1, size: 2}}>
-          <Label
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{offset: 1, span: 2}}>
+          <Form.Label
             htmlFor="CLOUDnFastDiskGB"
             aria-label="CLOUDnFastDiskGB"
             className="mr-2 form-label text-center">
@@ -230,14 +229,14 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               description="cloudfields-nfastdiskgb"
               defaultMessage="Ukupna količina prostora za virtualne poslužitelje na brzom spremištu (GB):"
             />
-          </Label>
+          </Form.Label>
           <InputGroup>
             <Controller
               name="CLOUDnFastDiskGB"
               aria-label="CLOUDnFastDiskGB"
               control={control}
               render={ ({field}) =>
-                <Input
+                <Form.Control
                   {...field}
                   className={`form-control text-center ${errors && errors.CLOUDnFastDiskGB ? "is-invalid" : ''}`}
                   disabled={fieldsDisabled}
@@ -245,22 +244,22 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <InputGroupText>
+            <InputGroup.Text>
               Disk
-            </InputGroupText>
+            </InputGroup.Text>
             <ErrorMessage
               errors={errors}
               name="CLOUDnFastDiskGB"
               render={({ message }) =>
-                <FormFeedback className="end-0">
+                <Form.Control.Feedback type="invalid" className="end-0">
                   { message }
-                </FormFeedback>
+                </Form.Control.Feedback>
               }
             />
           </InputGroup>
         </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-          <Label
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
             htmlFor="CLOUDnIPs"
             aria-label="CLOUDnIPs"
             className="mr-2 form-label text-center">
@@ -268,14 +267,14 @@ export const CloudFields = ({fieldsDisabled=false}) => {
               description="cloudfields-nips"
               defaultMessage=" Broj javnih IPv4 adresa:"
             />
-          </Label>
+          </Form.Label>
           <InputGroup>
             <Controller
               name="CLOUDnIPs"
               aria-label="CLOUDnIPs"
               control={control}
               render={ ({field}) =>
-                <Input
+                <Form.Control
                   {...field}
                   disabled={fieldsDisabled}
                   className={`form-control text-center ${errors && errors.CLOUDnIPs ? "is-invalid" : ''}`}
@@ -283,16 +282,16 @@ export const CloudFields = ({fieldsDisabled=false}) => {
                 />
               }
             />
-            <InputGroupText>
+            <InputGroup.Text>
               IP
-            </InputGroupText>
+            </InputGroup.Text>
             <ErrorMessage
               errors={errors}
               name="CLOUDnIPs"
               render={({ message }) =>
-                <FormFeedback className="end-0">
+                <Form.Control.Feedback type="invalid" className="end-0">
                   { message }
-                </FormFeedback>
+                </Form.Control.Feedback>
               }
             />
           </InputGroup>
@@ -307,201 +306,205 @@ export const HpcFields = ({fieldsDisabled=false}) => {
   const { control, formState: {errors} } = useFormContext();
 
   return (
-    <Row>
-      <Col className="fs-4 mb-3" md={{offset: 1}}>
-        HPC
-      </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, size: 3}} lg={{offset: 1, size: 2}}>
-        <Label
-          htmlFor="HPCnSlotsCPU"
-          aria-label="HPCnSlotsCPU"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-ncpu"
-            defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
-          />
-        </Label>
-        <InputGroup>
-          <Controller
-            name="HPCnSlotsCPU"
+    <>
+      <Row>
+        <Col className="fs-4 mb-3" md={{offset: 1}}>
+          HPC
+        </Col>
+      </Row>
+      <Row>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
+          <Form.Label
+            htmlFor="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
-            control={control}
-            render={ ({field}) =>
-              <Input
-                {...field}
-                disabled={fieldsDisabled}
-                className={`form-control text-center ${errors && errors.HPCnSlotsCPU ? "is-invalid" : ''}`}
-                type="number"
-              />
-            }
-          />
-          <InputGroupText>
-            CPU
-          </InputGroupText>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnSlotsCPU"
-            render={({ message }) =>
-              <FormFeedback className="end-0">
-                { message }
-              </FormFeedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-        <Label
-          htmlFor="HPCnSlotsGPU"
-          aria-label="HPCnSlotsGPU"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-ngpu"
-            defaultMessage="Prosječan broj grafičkih procesora po poslu:"
-          />
-        </Label>
-        <InputGroup>
-          <Controller
-            name="HPCnSlotsGPU"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-ncpu"
+              defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnSlotsCPU"
+              aria-label="HPCnSlotsCPU"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  disabled={fieldsDisabled}
+                  className={`form-control text-center ${errors && errors.HPCnSlotsCPU ? "is-invalid" : ''}`}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              CPU
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnSlotsCPU"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnSlotsGPU"
             aria-label="HPCnSlotsGPU"
-            control={control}
-            render={ ({field}) =>
-              <Input
-                {...field}
-                className={`form-control text-center ${errors && errors.HPCnSlotsGPU ? "is-invalid" : ''}`}
-                disabled={fieldsDisabled}
-                type="number"
-              />
-            }
-          />
-          <InputGroupText>
-            GPU
-          </InputGroupText>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnSlotsGPU"
-            render={({ message }) =>
-              <FormFeedback className="end-0">
-                { message }
-              </FormFeedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-        <Label
-          htmlFor="HPCnRAM"
-          aria-label="HPCnRAM"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-ram"
-            defaultMessage="Prosječna količina radne memorije po poslu (GB):"
-          />
-        </Label>
-        <InputGroup>
-          <Controller
-            name="HPCnRAM"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-ngpu"
+              defaultMessage="Prosječan broj grafičkih procesora po poslu:"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnSlotsGPU"
+              aria-label="HPCnSlotsGPU"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  className={`form-control text-center ${errors && errors.HPCnSlotsGPU ? "is-invalid" : ''}`}
+                  disabled={fieldsDisabled}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              GPU
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnSlotsGPU"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnRAM"
             aria-label="HPCnRAM"
-            control={control}
-            render={ ({field}) =>
-              <Input
-                {...field}
-                disabled={fieldsDisabled}
-                className={`form-control text-center ${errors && errors.HPCnRAM ? "is-invalid" : ''}`}
-                type="number"
-              />
-            }
-          />
-          <InputGroupText>
-            RAM
-          </InputGroupText>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnRAM"
-            render={({ message }) =>
-              <FormFeedback className="end-0">
-                { message }
-              </FormFeedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-        <Label
-          htmlFor="HPCnTempGB"
-          aria-label="HPCnTempGB"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-temp"
-            defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
-          />
-        </Label>
-        <InputGroup>
-          <Controller
-            name="HPCnTempGB"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-ram"
+              defaultMessage="Prosječna količina radne memorije po poslu (GB):"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnRAM"
+              aria-label="HPCnRAM"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  disabled={fieldsDisabled}
+                  className={`form-control text-center ${errors && errors.HPCnRAM ? "is-invalid" : ''}`}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              RAM
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnRAM"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnTempGB"
             aria-label="HPCnTempGB"
-            control={control}
-            render={ ({field}) =>
-              <Input
-                {...field}
-                className={`form-control text-center ${errors && errors.HPCnTempGB ? "is-invalid" : ''}`}
-                disabled={fieldsDisabled}
-                type="number"
-              />
-            }
-          />
-          <InputGroupText>
-            Temp
-          </InputGroupText>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnTempGB"
-            render={({ message }) =>
-              <FormFeedback className="end-0">
-                { message }
-              </FormFeedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col  className="d-flex flex-column justify-content-end mt-sm-3" md={{size: 3}} lg={{size: 2}}>
-        <Label
-          htmlFor="HPCnDiskGB"
-          aria-label="HPCnDiskGB"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-disk"
-            defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
-          />
-        </Label>
-        <InputGroup>
-          <Controller
-            name="HPCnDiskGB"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-temp"
+              defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnTempGB"
+              aria-label="HPCnTempGB"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  className={`form-control text-center ${errors && errors.HPCnTempGB ? "is-invalid" : ''}`}
+                  disabled={fieldsDisabled}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              Temp
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnTempGB"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col  className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnDiskGB"
             aria-label="HPCnDiskGB"
-            control={control}
-            render={ ({field}) =>
-              <Input
-                {...field}
-                disabled={fieldsDisabled}
-                className={`form-control text-center ${errors && errors.HPCnDiskGB ? "is-invalid" : ''}`}
-                type="number"
-              />
-            }
-          />
-          <InputGroupText>
-            Disk
-          </InputGroupText>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnDiskGB"
-            render={({ message }) =>
-              <FormFeedback className="end-0">
-                { message }
-              </FormFeedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-    </Row>
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-disk"
+              defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnDiskGB"
+              aria-label="HPCnDiskGB"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  disabled={fieldsDisabled}
+                  className={`form-control text-center ${errors && errors.HPCnDiskGB ? "is-invalid" : ''}`}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              Disk
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnDiskGB"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+      </Row>
+    </>
   )
 }
 
@@ -525,8 +528,8 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-2">
-        <Col md={{size: 7, offset: 1}}>
-          <Label
+        <Col md={{span: 7, offset: 1}}>
+          <Form.Label
             htmlFor="requestResourceType"
             aria-label="requestResourceType"
             className="mr-2 text-right form-label">
@@ -534,7 +537,7 @@ export const ResourceFields = ({fieldsDisabled=false}) => {
               description="resourcefields-type"
               defaultMessage="Tip resursa:"
             />
-          </Label>
+          </Form.Label>
           <Controller
             name="requestResourceType"
             control={control}

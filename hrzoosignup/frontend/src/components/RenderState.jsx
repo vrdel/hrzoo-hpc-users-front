@@ -1,6 +1,6 @@
 import React from 'react';
 import { findTrueState } from '../utils/reqstate';
-import { Col } from 'reactstrap';
+import { Col } from 'react-bootstrap';
 import {
   Approve,
   ApproveExpire,
@@ -18,7 +18,7 @@ export const RenderStateIcon = ({reqState}) => {
 
   if (targetState === 'approve') {
     return(
-      <Col md={{size: 2}} className="d-flex flex-column align-items-center">
+      <Col md={{span: 2}} className="d-flex flex-column align-items-center">
         <Approve />
         <br/>
         <p className="fs-5 mt-1 fw-normal">
@@ -32,7 +32,7 @@ export const RenderStateIcon = ({reqState}) => {
   }
   else if (targetState === 'submit') {
     return(
-      <Col md={{size: 2}} className="d-flex flex-column align-items-center">
+      <Col md={{span: 2}} className="d-flex flex-column align-items-center">
         <Submit />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
@@ -45,7 +45,7 @@ export const RenderStateIcon = ({reqState}) => {
   }
   else if (targetState === 'extend') {
     return(
-      <Col md={{size: 2}} className="d-flex flex-column align-items-center">
+      <Col md={{span: 2}} className="d-flex flex-column align-items-center">
         <Extend />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
@@ -58,7 +58,7 @@ export const RenderStateIcon = ({reqState}) => {
   }
   else if (targetState === 'deny') {
     return(
-      <Col md={{size: 2}} className="d-flex flex-column align-items-center">
+      <Col md={{span: 2}} className="d-flex flex-column align-items-center">
         <Deny />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
@@ -71,7 +71,7 @@ export const RenderStateIcon = ({reqState}) => {
   }
   else if (targetState === 'expire') {
     return(
-      <Col md={{size: 2}} className="d-flex flex-column align-items-center">
+      <Col md={{span: 2}} className="d-flex flex-column align-items-center">
         <Expire />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage
@@ -84,7 +84,7 @@ export const RenderStateIcon = ({reqState}) => {
   }
   else if (targetState === 'approve-expire') {
     return(
-      <Col md={{size: 2}} className="d-flex flex-column align-items-center">
+      <Col md={{span: 2}} className="d-flex flex-column align-items-center">
         <ApproveExpire />
         <p className="fs-5 mt-1 text-nowrap fw-normal">
           <FormattedMessage
@@ -97,7 +97,7 @@ export const RenderStateIcon = ({reqState}) => {
   }
   else if (targetState === 'submit-extend') {
     return(
-      <Col md={{size: 2}} className="d-flex flex-column align-items-center">
+      <Col md={{span: 2}} className="d-flex flex-column align-items-center">
         <SubmitExtend />
         <p className="fs-5 mt-1 fw-normal">
           <FormattedMessage

@@ -3,12 +3,11 @@ import {
   Col,
   Row,
   Card,
-  CardHeader,
-  CardBody,
-  Label,
   Badge,
+  Overlay,
   Tooltip
-} from 'reactstrap';
+} from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 import { PageTitle } from 'Components/PageTitle';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchNrProjects } from 'Api/projects';
@@ -38,15 +37,15 @@ import _ from "lodash";
 export const BriefSummary = ({project, isSubmitted}) => {
   return (
     <>
-      <Col md={{size: 12}}>
-        <Label
+      <Col md={{span: 12}}>
+        <Form.Label
           htmlFor="projectSummary"
           aria-label="projectSummary"
           className="mr-1 mt-2 form-label">
           Opis:
-        </Label>
+        </Form.Label>
       </Col>
-      <Col md={{size: 12}} className="mb-3">
+      <Col md={{span: 12}} className="mb-3">
         <textarea
           id="projectSummary"
           className="form-control fst-italic"
@@ -70,7 +69,7 @@ const BriefProjectInfo = ({project}) => {
 
   return (
     <>
-      <Col className="ms-4 text-left" md={{size: 1}} >
+      <Col className="ms-4 text-left" md={{span: 1}} >
         <FormattedMessage
           defaultMessage="Stanje:"
           description="memberships-project-state"
@@ -80,17 +79,16 @@ const BriefProjectInfo = ({project}) => {
             StateIcons(project.state.name)
           }
         </div>
-        <Tooltip
+        <Overlay
           placement='bottom'
-          isOpen={isOpen(project.identifier)}
-          target={'Tooltip-' + project.identifier.replace(/\/| |\.|:/g, '-')}
-          toggle={() => toggleIndex(project.identifier)}
+          show={isOpen(project.identifier)}
+          target={document.getElementById('Tooltip-' + project.identifier.replace(/\/| |\.|:/g, '-'))}
         >
-          { StateStringUser(project.state.name) }
-        </Tooltip>
+          {(props) => <Tooltip {...props}>{ StateStringUser(project.state.name) }</Tooltip>}
+        </Overlay>
       </Col>
-      <Col md={{size: 3}} className="ms-4 ms-sm-4 ms-md-0">
-        <Label
+      <Col md={{span: 3}} className="ms-4 ms-sm-4 ms-md-0">
+        <Form.Label
           htmlFor="projectTime"
           aria-label="projectTime"
           className="mr-1">
@@ -98,13 +96,13 @@ const BriefProjectInfo = ({project}) => {
             defaultMessage="Trajanje:"
             description="memberships-project-duration"
           />
-        </Label>
+        </Form.Label>
         <div className="p-2 fs-5 font-monospace">
           { convertToEuropean(project.date_start) } &minus; { convertToEuropean(project.date_end) }
         </div>
       </Col>
-      <Col md={{size: 2}} className="ms-4 ms-sm-4 ms-md-0">
-        <Label
+      <Col md={{span: 2}} className="ms-4 ms-sm-4 ms-md-0">
+        <Form.Label
           htmlFor="projectTime"
           aria-label="projectTime"
           className="mr-1">
@@ -112,13 +110,13 @@ const BriefProjectInfo = ({project}) => {
             defaultMessage="Odobren:"
             description="memberships-project-approved"
           />
-        </Label>
+        </Form.Label>
         <div className="p-2 fs-5 font-monospace">
           { convertToEuropean(project.date_changed) }
         </div>
       </Col>
-      <Col md={{size: 1}} className="ms-4 ms-sm-4 ms-md-0">
-        <Label
+      <Col md={{span: 1}} className="ms-4 ms-sm-4 ms-md-0">
+        <Form.Label
           htmlFor="projectType"
           aria-label="projectType"
           className="mr-1">
@@ -126,7 +124,7 @@ const BriefProjectInfo = ({project}) => {
             defaultMessage="Tip:"
             description="memberships-project-type"
           />
-        </Label>
+        </Form.Label>
         <br/>
         <span className={`badge fw-normal position-relative ${TypeColor(project.project_type.name)}`} >
           { TypeString(project.project_type.name) }
@@ -153,8 +151,8 @@ const BriefProjectInfo = ({project}) => {
           }
         </span>
       </Col>
-      <Col md={{size: 4}} className="ms-4 ms-sm-4 ms-md-0 me-0">
-        <Label
+      <Col md={{span: 4}} className="ms-4 ms-sm-4 ms-md-0 me-0">
+        <Form.Label
           htmlFor="projectType"
           aria-label="projectType"
           className="mr-1">
@@ -162,7 +160,7 @@ const BriefProjectInfo = ({project}) => {
             defaultMessage="Resursi:"
             description="memberships-project-resources"
           />
-        </Label>
+        </Form.Label>
         <br/>
         {
           project.staff_resources_type.map((rtype, i) =>
@@ -471,12 +469,12 @@ const MembershipsChange = () => {
           <Row className="mb-5" key={`row-${projId}`}>
             <Col key={`col-${projId}`}>
               <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${projId}`}>
-                <CardHeader className="d-flex align-items-center flex-column flex-md-row justify-content-between">
+                <Card.Header className="d-flex align-items-center flex-column flex-md-row justify-content-between">
                   <span className="fs-5 fw-bold text-dark flex-grow-1">
                     { project?.name }
                   </span>
                   <span className="d-flex justify-content-center flex-row">
-                    <Badge color={"secondary fw-normal"}>
+                    <Badge bg={"secondary fw-normal"}>
                       { project.identifier }
                     </Badge>
                     <MiniButton
@@ -497,8 +495,8 @@ const MembershipsChange = () => {
                       <FontAwesomeIcon size="xs" icon={faCopy} />
                     </MiniButton>
                   </span>
-                </CardHeader>
-                <CardBody className="mb-1 bg-light p-0 m-0">
+                </Card.Header>
+                <Card.Body className="mb-1 bg-light p-0 m-0">
                   <Row>
                     {
                       // <BriefSummary project={project}/>
@@ -524,7 +522,7 @@ const MembershipsChange = () => {
                   <Row className='mt-2'>
                     <BriefProjectInfo project={project} />
                   </Row>
-                </CardBody>
+                </Card.Body>
               </Card>
             </Col>
           </Row>
@@ -543,15 +541,15 @@ const MembershipsChange = () => {
         <Row className="mb-5">
           <Col>
             <Card className="ms-3 bg-light me-3 shadow-sm">
-              <CardHeader className="d-flex justify-content-between">
+              <Card.Header className="d-flex justify-content-between">
                 <span className="fs-5 fw-bold text-dark">
                   <FormattedMessage
                     defaultMessage="Ime projekta"
                     description="memberships-project-name"
                   />
                 </span>
-              </CardHeader>
-              <CardBody className="mb-1 bg-light p-0 m-0">
+              </Card.Header>
+              <Card.Body className="mb-1 bg-light p-0 m-0">
                 <EmptyTableSpinner colSpan={6} rowClass="ms-2 me-2 mb-2">
                   <thead id="hzsi-thead" className="align-middle text-center text-white">
                     <tr>
@@ -610,7 +608,7 @@ const MembershipsChange = () => {
                     'project_type': Object({'name': 'research-croris'})
                   }} />
                 </Row>
-              </CardBody>
+              </Card.Body>
             </Card>
           </Col>
         </Row>

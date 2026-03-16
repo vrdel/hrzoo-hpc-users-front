@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import {
   Nav,
-  NavItem,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { useNavigate, NavLink, useMatch } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -35,10 +34,10 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
 
   return (
     <>
-      <NavItem key='my-requests' className='ms-3 mt-1'>
+      <Nav.Item key='my-requests' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/my-requests'>
           <FontAwesomeIcon icon={faBook} />{' '}
           <FormattedMessage
@@ -46,11 +45,11 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
             defaultMessage="Moji zahtjevi"
           />
         </NavLink>
-      </NavItem>
-      <NavItem key='new-request' className='mt-1'>
+      </Nav.Item>
+      <Nav.Item key='new-request' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/new-request'>
           <FontAwesomeIcon icon={faFileSignature} />{' '}
           <FormattedMessage
@@ -58,11 +57,11 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
             defaultMessage="Novi zahtjev"
           />
         </NavLink>
-      </NavItem>
-      <NavItem key='memberships' className='mt-1'>
+      </Nav.Item>
+      <Nav.Item key='memberships' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/memberships'>
           <FontAwesomeIcon icon={faUsers} />{' '}
           <FormattedMessage
@@ -70,11 +69,11 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
             defaultMessage="Članstva"
           />
         </NavLink>
-      </NavItem>
-      <NavItem key='public-keys' className='mt-1'>
+      </Nav.Item>
+      <Nav.Item key='public-keys' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/public-keys'>
           <FontAwesomeIcon icon={faKey} />{' '}
           <FormattedMessage
@@ -82,17 +81,17 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
             defaultMessage="Javni ključevi"
           />
         </NavLink>
-      </NavItem>
+      </Nav.Item>
       {
         enableAccounting &&
-          <NavItem key='accounting' className='mt-1'>
+          <Nav.Item key='accounting' className='mt-1'>
             <NavLink
               style={accountingProjectMatch ||
                 accountingUsersMatch ||
                 accountingMyMatch ? {'backgroundColor': activeBgColor} : {}}
               className={accountingProjectMatch ||
                 accountingUsersMatch ||
-                accountingMyMatch ? "nav-link active text-white" : "nav-link text-dark"}
+                accountingMyMatch ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
               to={`/ui/${isLead ? "project" : "my"}-accounting`}
             >
               <FontAwesomeIcon icon={ faChartBar } />{' '}
@@ -101,12 +100,12 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
                 defaultMessage="Iskorištenje resursa"
               />
             </NavLink>
-          </NavItem>
+          </Nav.Item>
       }
-      <NavItem key='my-info' className={isAdmin ? 'mt-1 ms-xs-0 ms-sm-0 ms-md-auto ms-xl-auto' : 'mt-1 ms-auto me-3 me-xs-0 ms-xs-0'}>
+      <Nav.Item key='my-info' className={isAdmin ? 'mt-1 ms-xs-0 ms-sm-0 ms-md-auto ms-xl-auto' : 'mt-1 ms-auto me-3 me-xs-0 ms-xs-0'}>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/my-info'>
           <FontAwesomeIcon icon={faCircleInfo} />{' '}
           <FormattedMessage
@@ -114,7 +113,7 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
             defaultMessage="Moji podaci"
           />
         </NavLink>
-      </NavItem>
+      </Nav.Item>
     </>
   )
 }
@@ -123,10 +122,10 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
 const NavigationLinksAdmin = ({activeBgColor}) => {
   return (
     <>
-      <NavItem key='requests' className='ms-3 mt-1'>
+      <Nav.Item key='requests' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/requests'>
           <FontAwesomeIcon icon={faStamp} />{' '}
           <FormattedMessage
@@ -134,11 +133,11 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
             defaultMessage="Zahtjevi"
           />
         </NavLink>
-      </NavItem>
-      <NavItem key="projects" className="mt-1">
+      </Nav.Item>
+      <Nav.Item key="projects" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/projects'
         >
           <FontAwesomeIcon icon={faCertificate} />{" "}
@@ -147,11 +146,11 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
             defaultMessage="Projekti"
           />
         </NavLink>
-      </NavItem>
-      <NavItem key="users" className="mt-1">
+      </Nav.Item>
+      <Nav.Item key="users" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/users'
         >
           <FontAwesomeIcon icon={faUsers} />{" "}
@@ -160,7 +159,7 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
             defaultMessage="Korisnici"
           />
         </NavLink>
-      </NavItem>
+      </Nav.Item>
     </>
   )
 }
@@ -173,13 +172,13 @@ const NavigationLinks = ({userMode, setUserMode}) => {
   const isLead = userDetails && "userproject_set" in userDetails && userDetails.userproject_set.map(item => item.role.name).includes("lead")
 
   return (
-    <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex sticky-top">
+    <Nav variant="tabs" id="hzsi-navlinks" className="border shadow-sm rounded d-flex sticky-top">
       {
         (userDetails.is_staff || userDetails.is_superuser) && !userMode
         ?
           <>
             <NavigationLinksAdmin activeBgColor={activeBgColor} />
-            <NavItem className='d-flex flex-column ms-3 me-3 justify-content-center ms-xs-0 ms-sm-3 ms-md-auto ms-xl-auto mt-sm-1 mt-xl-0 mt-md-1'>
+            <Nav.Item className='d-flex flex-column ms-3 me-3 justify-content-center ms-xs-0 ms-sm-3 ms-md-auto ms-xl-auto mt-sm-1 mt-xl-0 mt-md-1'>
               <span className='d-flex align-items-center badge danger rounded-pill'
                 size="sm"
                 style={{cursor: 'pointer'}}
@@ -194,7 +193,7 @@ const NavigationLinks = ({userMode, setUserMode}) => {
                   admin
                 </div>
               </span>
-            </NavItem>
+            </Nav.Item>
           </>
         :
           <>
@@ -207,7 +206,7 @@ const NavigationLinks = ({userMode, setUserMode}) => {
             {
               (userDetails.is_staff || userDetails.is_superuser)
               &&
-                <NavItem className='d-flex flex-column ms-3 me-3 mt-sm-1 mt-xl-0 mt-md-1 justify-content-center'>
+                <Nav.Item className='d-flex flex-column ms-3 me-3 mt-sm-1 mt-xl-0 mt-md-1 justify-content-center'>
                   <span className="d-flex align-items-center badge success rounded-pill"
                     size="sm"
                     id="badge-user"
@@ -222,7 +221,7 @@ const NavigationLinks = ({userMode, setUserMode}) => {
                       user
                     </div>
                   </span>
-                </NavItem>
+                </Nav.Item>
             }
           </>
       }

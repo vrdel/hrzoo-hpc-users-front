@@ -5,10 +5,7 @@ import {
   Row,
   Col,
   Card,
-  CardHeader,
-  CardBody,
-  CardFooter
-} from 'reactstrap';
+} from 'react-bootstrap';
 import 'Styles/login-official.css';
 import { useParams } from 'react-router';
 import { FormattedMessage } from 'react-intl';
@@ -21,7 +18,7 @@ import { useIntl } from 'react-intl'
 
 const AlertRegular= () =>
   <>
-    <Alert color="danger">
+    <Alert variant="danger">
       <p className="fs-4 mb-4 text-center">
         <FormattedMessage
           defaultMessage="Autentikacija s <b>eduGAIN AAI@EduHR</b> <mark>nije dozvoljena</mark>. Molimo nastavite dalje s <b>regularnom AAI@EduHR</b> autentikacijom."
@@ -44,7 +41,7 @@ const AlertRegular= () =>
 
 const AlertEduGainAttrs = ({sessionData}) =>
   <>
-    <Alert color="danger" className="fs-4 text-center">
+    <Alert variant="danger" className="fs-4 text-center">
       <FormattedMessage
         defaultMessage="Autentikacija eduGAIN-om nije uspjela"
         description="saml2-not-allowed-alertedugainattrs-1"
@@ -69,7 +66,7 @@ const AlertEduGainAttrs = ({sessionData}) =>
 
 
 const AlertMultiple = () =>
-  <Alert color="danger">
+  <Alert variant="danger">
     <p className="fs-4 mb-4 text-center">
       <FormattedMessage
         defaultMessage="Autentikacija eduGAIN-om nije uspjela."
@@ -94,12 +91,12 @@ const Saml2Error = ({sessionData}) => {
   return (
     <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
       <Row>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
-        <Col lg={{size: 6}} md={{size: 8}}>
+        <Col lg={{span: 6}} md={{span: 8}}>
           <Row className="m-lg-4 p-lg-4 m-md-3 p-md-3 m-sm-1 p-sm-1"/>
           <Card className="shadow-lg" style={{minWidth: '550px'}}>
-            <CardHeader
+            <Card.Header
               id='hzsi-loginheader'
               className="p-3 d-flex flex-row align-items-center justify-content-center"
             >
@@ -117,8 +114,8 @@ const Saml2Error = ({sessionData}) => {
                     </a>
                 }
               </span>
-            </CardHeader>
-            <CardBody className="pt-5 pb-5">
+            </Card.Header>
+            <Card.Body className="pt-5 pb-5">
               {
                 multipleUsersError ?
                   <AlertMultiple />
@@ -128,17 +125,17 @@ const Saml2Error = ({sessionData}) => {
                   :
                     <AlertRegular />
               }
-            </CardBody>
-            <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+            </Card.Body>
+            <Card.Footer className="bg-transparent d-flex align-items-center justify-content-center">
               <Row className="m-1">
                 <Col>
                   <LanguageButtonLogin locale={locale} setLocale={setLocale}/>
                 </Col>
               </Row>
-            </CardFooter>
+            </Card.Footer>
           </Card>
         </Col>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
       </Row>
     </Container>

@@ -3,7 +3,7 @@ import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Table, Label } from 'reactstrap';
+import { Col, Row, Table, Form } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 
@@ -13,17 +13,17 @@ const InstituteTableInfo = ({userDetails}) => {
   return (
     <React.Fragment>
       <Row>
-        <Col className="mt-4 ms-3" sm={{size:3}}>
-          <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+        <Col className="mt-4 ms-3" sm={{span:3}}>
+          <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
             <FormattedMessage
               defaultMessage="Imenik"
               description="userins-directory"
             />
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
-      <Row>
-        <Col className="mt-3 ms-4" md={{size: 11}}>
+      <Row className="overflow-hidden">
+        <Col className="mt-3 ms-4 ms-sm-0" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -127,8 +127,8 @@ const InstituteTableInfo = ({userDetails}) => {
           </Table>
         </Col>
       </Row>
-      <Row>
-        <Col className="ms-4" md={{size: 11}}>
+      <Row className="overflow-hidden">
+        <Col className="ms-4 ms-sm-0" md={{span: 11}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>

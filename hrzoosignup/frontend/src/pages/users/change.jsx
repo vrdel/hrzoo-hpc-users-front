@@ -2,7 +2,7 @@ import React from 'react';
 import { fetchSpecificUser } from "Api/users";
 import { fetchCroRISUser } from "Api/croris";
 import { useQuery } from "@tanstack/react-query";
-import { Row, Col, Table, Badge } from 'reactstrap';
+import { Row, Col, Table, Badge } from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import StatusInfo from 'Components/user-info/StatusInfo';
 import InstituteTableInfo from 'Components/user-info/UserInstitute';
@@ -106,7 +106,7 @@ const UserProjectsTable = ({projects}) => {
                   <td className="align-middle text-center">
                     <Row className="g-0 d-flex justify-content-center align-items-center">
                       <Col className="d-flex justify-content-center align-items-center align-self-center">
-                        <Badge color="secondary" className="fw-normal">
+                        <Badge bg="secondary" className="fw-normal">
                           { pro.project.identifier }
                         </Badge>
                         <MiniButton
@@ -198,14 +198,14 @@ const UserProjectsTable = ({projects}) => {
                   <td className="align-middle text-center">
                     {
                       pro.role.name === 'lead' ?
-                        <Badge className="fw-normal" color="success">
+                        <Badge className="fw-normal" bg="success">
                           <FormattedMessage
                             defaultMessage="voditelj"
                             description="userschange-badge-lead"
                           />
                         </Badge>
                       :
-                        <Badge className="fw-normal" color="primary">
+                        <Badge className="fw-normal" bg="primary">
                           <FormattedMessage
                             defaultMessage="suradnik"
                             description="userschange-badge-collab"

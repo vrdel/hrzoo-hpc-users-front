@@ -2,8 +2,8 @@ import React from 'react'
 import {
   Badge,
   Col,
-  Label,
-} from 'reactstrap';
+  Form,
+} from 'react-bootstrap';
 import { TypeString, TypeColor } from 'Config/map-projecttypes';
 import { FormattedMessage } from 'react-intl';
 import _ from "lodash";
@@ -13,7 +13,7 @@ const ExtractUsers = ({projectUsers}) => {
   return (
     projectUsers.map((user, i) =>
       <React.Fragment key={`wrap-project-users-${i}`}>
-        <Badge color="secondary" className="fs-6 mb-2 fw-normal" key={`project-users-${i}`}>
+        <Badge bg="secondary" className="fs-6 mb-2 fw-normal" key={`project-users-${i}`}>
           { user.first_name }
           {' '}
           { user.last_name }
@@ -35,14 +35,14 @@ export const GeneralInfo = ({project, isSubmitted}) => {
 
   return (
     <>
-      <Col className="text-left fw-bold" md={{size: 2}}>
+      <Col className="text-left fw-bold" md={{span: 2}}>
         <FormattedMessage
           defaultMessage="Šifra:"
           description="generalproject-identifier"
         />
       </Col>
-      <Col md={{size: 3}}>
-        <Label
+      <Col md={{span: 3}}>
+        <Form.Label
           htmlFor="projectTime"
           aria-label="projectTime"
           className="mr-1 fw-bold">
@@ -50,10 +50,10 @@ export const GeneralInfo = ({project, isSubmitted}) => {
             defaultMessage="Trajanje:"
             description="generalproject-duration"
           />
-        </Label>
+        </Form.Label>
       </Col>
-      <Col md={{size: 3}}>
-        <Label
+      <Col md={{span: 3}}>
+        <Form.Label
           htmlFor="projectType"
           aria-label="projectType"
           className="mr-1 fw-bold">
@@ -61,10 +61,10 @@ export const GeneralInfo = ({project, isSubmitted}) => {
             defaultMessage="Vrsta:"
             description="generalproject-type"
           />
-        </Label>
+        </Form.Label>
       </Col>
-      <Col md={{size: 4}}>
-        <Label
+      <Col md={{span: 4}}>
+        <Form.Label
           htmlFor="projectInstitution"
           aria-label="projectInstitution"
           className="mr-1 fw-bold">
@@ -72,16 +72,16 @@ export const GeneralInfo = ({project, isSubmitted}) => {
             defaultMessage="Ustanova:"
             description="generalproject-institute"
           />
-        </Label>
+        </Form.Label>
       </Col>
 
       <div className="w-100"></div>
 
-      <Col md={{size: 2}}>
+      <Col md={{span: 2}}>
         <div className="p-2 fs-5">
           {
             project.identifier ?
-              <Badge color={isSubmitted ? "secondary" : "primary"} className="fw-normal">
+              <Badge bg={isSubmitted ? "secondary" : "primary"} className="fw-normal">
                 { project.identifier }
               </Badge>
             :
@@ -89,19 +89,19 @@ export const GeneralInfo = ({project, isSubmitted}) => {
           }
         </div>
       </Col>
-      <Col md={{size: 3}}>
+      <Col md={{span: 3}}>
         <div className="p-2 fs-5 font-monospace">
           { project.start } &minus; { project.end }
         </div>
       </Col>
-      <Col md={{size: 3}}>
+      <Col md={{span: 3}}>
         <div className="p-2 fs-5">
-          <Badge color={isSubmitted ? "secondary" : "dark"} className="fw-normal">
+          <Badge bg={isSubmitted ? "secondary" : "dark"} className="fw-normal">
             {project.type}
           </Badge>
         </div>
       </Col>
-      <Col md={{size: 4}}>
+      <Col md={{span: 4}}>
         <div className="p-2">
           <span className="fst-italic">
             <Badge className="bg-secondary-subtle fw-normal text-dark fs-6">
@@ -120,8 +120,8 @@ export const GeneralInfo = ({project, isSubmitted}) => {
 export const Persons = ({project, person_info, projectsLeadUsers}) => {
   return (
     <>
-      <Col md={{size: 12}}>
-        <Label
+      <Col md={{span: 12}}>
+        <Form.Label
           htmlFor="projectPersons"
           aria-label="projectPersons"
           className="mr-1 form-label fw-bold">
@@ -129,12 +129,12 @@ export const Persons = ({project, person_info, projectsLeadUsers}) => {
             defaultMessage="Osobe:"
             description="generalproject-persons"
           />
-        </Label>
+        </Form.Label>
       </Col>
 
-      <Col md={{size: 12}}>
+      <Col md={{span: 12}}>
         <div className="p-2">
-          <Badge color="dark" className="fs-6 mb-2 fw-normal">
+          <Badge bg="dark" className="fs-6 mb-2 fw-normal">
             { person_info.first_name }
             {' '}
             { person_info.last_name }
@@ -151,8 +151,8 @@ export const Persons = ({project, person_info, projectsLeadUsers}) => {
 export const Finance = ({project}) => {
   return (
     <>
-      <Col md={{size: 12}}>
-        <Label
+      <Col md={{span: 12}}>
+        <Form.Label
           htmlFor="projectFinance"
           aria-label="projectFinance"
           className="mr-1 mt-3 form-label fw-bold">
@@ -160,9 +160,9 @@ export const Finance = ({project}) => {
             defaultMessage="Financijer:"
             description="generalproject-finance"
           />
-        </Label>
+        </Form.Label>
       </Col>
-      <Col md={{size: 12}} className="mb-2">
+      <Col md={{span: 12}} className="mb-2">
         <div className="p-2">
           {
             project.finance.length > 1
@@ -191,8 +191,8 @@ export const Finance = ({project}) => {
 export const CrorisUrl = ({project}) => {
   return (
     <>
-      <Col md={{size: 12}}>
-        <Label
+      <Col md={{span: 12}}>
+        <Form.Label
           htmlFor="projectCrorisUrl"
           aria-label="projectCrorisUrl"
           className="mr-1 mt-3 form-label fw-bold">
@@ -200,9 +200,9 @@ export const CrorisUrl = ({project}) => {
             defaultMessage="CroRIS poveznica:"
             description="generalproject-crorislink"
           />
-        </Label>
+        </Form.Label>
       </Col>
-      <Col md={{size: 10}}>
+      <Col md={{span: 10}}>
         <a href={`https://www.croris.hr/projekti/projekt/${project.croris_id}`} className="ps-2" target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
           https://www.croris.hr/projekti/projekt/{project.croris_id}
         </a>
@@ -215,8 +215,8 @@ export const CrorisUrl = ({project}) => {
 export const Summary = ({project, isSubmitted}) => {
   return (
     <>
-      <Col md={{size: 12}}>
-        <Label
+      <Col md={{span: 12}}>
+        <Form.Label
           htmlFor="projectSummary"
           aria-label="projectSummary"
           className="mr-1 mt-2 form-label fw-bold">
@@ -224,9 +224,9 @@ export const Summary = ({project, isSubmitted}) => {
             defaultMessage="Opis:"
             description="generalproject-description"
           />
-        </Label>
+        </Form.Label>
       </Col>
-      <Col md={{size: 12}} className="mb-3">
+      <Col md={{span: 12}} className="mb-3">
         <textarea
           id="projectSummary"
           className="form-control fst-italic"

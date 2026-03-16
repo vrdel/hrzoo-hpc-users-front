@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Row, Form, Button} from 'reactstrap';
+import { Col, Row, Form, Button} from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation } from '@tanstack/react-query';
@@ -254,7 +254,7 @@ export const MyRequestChange = () => {
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
                 <Row>
-                  <Col md={{size: 9}} className="mt-4 me-0">
+                  <Col md={{span: 9}} className="mt-4 me-0">
                     <span className="ps-2 pe-2 pt-1 pb-1 fs-5 text-white ms-4 mb-4 mt-3" style={{backgroundColor: "#b04c46"}}>
                       <FormattedMessage
                         defaultMessage="Obrada"
@@ -264,7 +264,7 @@ export const MyRequestChange = () => {
                   </Col>
                 </Row>
                 <Row className="mt-4">
-                  <Col md={{size: 4}} lg={{size: 2}} className="d-flex flex-column offset-md-0 offset-lg-1 align-items-center ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                  <Col md={{span: 4}} lg={{span: 2}} className="d-flex flex-column offset-md-0 offset-lg-1 align-items-center ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
                       <FormattedMessage
                         defaultMessage="Stanje zahtjeva:"
@@ -276,7 +276,7 @@ export const MyRequestChange = () => {
                       nrProject.state.name === "approve-expire" &&
                         <Button
                           className="mt-4"
-                          color="warning"
+                          variant="warning"
                           onClick={() => {
                             setProjectExtend(true)
                             setTargetProjectExtend(nrProject)
@@ -289,7 +289,7 @@ export const MyRequestChange = () => {
                         </Button>
                     }
                   </Col>
-                  <Col sm={{size: 10}} md={{size: 6}} lg={{size: 3}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                  <Col sm={{span: 10}} md={{span: 6}} lg={{span: 3}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
                       <FormattedMessage
                         defaultMessage="Dodijeljeni tip resursa:"
@@ -310,7 +310,7 @@ export const MyRequestChange = () => {
                       activeReadOnlyResourceTypeMultiValue={true}
                     />
                   </Col>
-                  <Col md={{size: 3}} lg={{size: 2}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                  <Col md={{span: 3}} lg={{span: 2}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
                       <FormattedMessage
                         defaultMessage="Vrijeme:"
@@ -332,7 +332,7 @@ export const MyRequestChange = () => {
                       }
                     </p>
                   </Col>
-                  <Col sm={{size: 11}} md={{size: 8}} lg={{size: 4}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
+                  <Col sm={{span: 11}} md={{span: 8}} lg={{span: 4}} className="d-flex flex-column ps-2 pe-2 mt-4 pt-1 pb-3 mb-3 fw-bold fs-5 ms-4">
                     <span className="mb-5">
                       <FormattedMessage
                         defaultMessage="Komentar:"

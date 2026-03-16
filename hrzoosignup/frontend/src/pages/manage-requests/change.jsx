@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { RequestHorizontalRulerRed } from 'Components/RequestHorizontalRuler';
 import GeneralFields, { CroRisDescription } from 'Components/fields-request/GeneralFields';
 import { SharedData } from '../root';
-import { Col, Label, Row, Button, Form, FormGroup, Input, Table } from 'reactstrap';
+import { Col, Row, Button, Form, Table } from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { fetchNrSpecificProject, changeProject, deleteProject, fetchExtendSpecificProject } from 'Api/projects';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
@@ -98,7 +98,7 @@ const LeadBasicInfo = ({leadInfo}) => {
         </Col>
       </Row>
       <Row className="gx-0">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -190,7 +190,7 @@ const LeadBasicInfo = ({leadInfo}) => {
         </Col>
       </Row>
       <Row className="gx-0">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -632,13 +632,13 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
     <>
       {
         (currentState === 'submit-extend' || initialProjectState === 'submit-extend') ?
-          <Col md={{size: 2}}/>
+          <Col md={{span: 2}}/>
         :
-          <Col md={{size: 3}}/>
+          <Col md={{span: 3}}/>
       }
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
-          <Col md={{size: 2}}>
+          <Col md={{span: 2}}>
             <Extend/>
             <br/>
             <p className="fs-5">
@@ -649,17 +649,16 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['extend']}
+              variant={!requestState['extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'extend'))
               }}
-              color="success"
             />
           </Col>
         :
           currentState == 'approve-expire' ?
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <ApproveExpire/>
               <br/>
               <p className="fs-5">
@@ -670,16 +669,15 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve-expire']}
+                variant={!requestState['approve-expire'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve-expire'))
                 }}
-                color="success"
               />
             </Col>
           :
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <Approve/>{' '}
               <br/>
               <p className="fs-5">
@@ -690,18 +688,17 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve']}
+                variant={!requestState['approve'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve'))
                 }}
-                color="success"
               />
             </Col>
       }
       {
         (currentState === 'submit-extend' || initialProjectState === 'submit-extend') &&
-          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+          <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
             <Submit/>{' '}
             <br/>
             <p className="fs-5">
@@ -712,16 +709,15 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['submit-extend']}
+              variant={!requestState['submit-extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'submit-extend'))
               }}
-              color="success"
             />
           </Col>
       }
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+      <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <Expire/>{' '}
         <br/>
         <p className="fs-5">
@@ -731,13 +727,13 @@ const ProjectState = ({requestState, setCommentDisabled, setRequestState, initia
           />
         </p>
         <Button
-          outline={!requestState['expire']}
+          variant={!requestState['expire'] ? "outline-success" : "success"}
           style={{height: '30px', width: '30px'}}
           onClick={() => {
             setCommentDisabled(true)
             setRequestState(ToggleState(requestState, 'expire'))
           }}
-          color="success"/>
+        />
       </Col>
     </>
   )
@@ -749,10 +745,10 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
 
   return (
     <>
-      <Col md={{size: 1}}/>
+      <Col md={{span: 1}}/>
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
-          <Col md={{size: 2}}>
+          <Col md={{span: 2}}>
             <Extend/>
             <br/>
             <p className="fs-5">
@@ -763,17 +759,16 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['extend']}
+              variant={!requestState['extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'extend'))
               }}
-              color="success"
             />
           </Col>
         :
           currentState == 'approve-expire' ?
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <ApproveExpire/>
               <br/>
               <p className="fs-5">
@@ -784,16 +779,15 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve-expire']}
+                variant={!requestState['approve-expire'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve-expire'))
                 }}
-                color="success"
               />
             </Col>
           :
-            <Col md={{size: 2}}>
+            <Col md={{span: 2}}>
               <Approve/>{' '}
               <br/>
               <p className="fs-5">
@@ -804,18 +798,17 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
               </p>
               <Button
                 style={{height: '30px', width: '30px'}}
-                outline={!requestState['approve']}
+                variant={!requestState['approve'] ? "outline-success" : "success"}
                 onClick={() => {
                   setCommentDisabled(true)
                   setRequestState(ToggleState(requestState, 'approve'))
                 }}
-                color="success"
               />
             </Col>
       }
       {
         (currentState == 'submit-extend' || currentState == 'extend') ?
-          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+          <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
             <Submit/>{' '}
             <br/>
             <p className="fs-5">
@@ -826,16 +819,15 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['submit-extend']}
+              variant={!requestState['submit-extend'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'submit-extend'))
               }}
-              color="success"
             />
           </Col>
         :
-          <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+          <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
             <Submit/>{' '}
             <br/>
             <p className="fs-5">
@@ -846,16 +838,15 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
             </p>
             <Button
               style={{height: '30px', width: '30px'}}
-              outline={!requestState['submit']}
+              variant={!requestState['submit'] ? "outline-success" : "success"}
               onClick={() => {
                 setCommentDisabled(true)
                 setRequestState(ToggleState(requestState, 'submit'))
               }}
-              color="success"
             />
           </Col>
       }
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+      <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <Deny/>{' '}
         <br/>
         <p className="fs-5">
@@ -865,15 +856,15 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           />
         </p>
         <Button
-          outline={!requestState['deny']}
+          variant={!requestState['deny'] ? "outline-success" : "success"}
           style={{height: '30px', width: '30px'}}
           onClick={() => {
             setCommentDisabled(false)
             setRequestState(ToggleState(requestState, 'deny'))
           }}
-          color="success"/>
+        />
       </Col>
-      <Col md={{size: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
+      <Col md={{span: 2}} className="mt-sm-4 mt-lg-0 mt-md-0 mt-4">
         <Expire/>{' '}
         <br/>
         <p className="fs-5">
@@ -883,13 +874,13 @@ const RequestState = ({requestState, setCommentDisabled, setRequestState}) => {
           />
         </p>
         <Button
-          outline={!requestState['expire']}
+          variant={!requestState['expire'] ? "outline-success" : "success"}
           style={{height: '30px', width: '30px'}}
           onClick={() => {
             setCommentDisabled(true)
             setRequestState(ToggleState(requestState, 'expire'))
           }}
-          color="success"/>
+        />
       </Col>
     </>
   )
@@ -942,7 +933,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
   return (
     <>
       <Row>
-        <Col md={{size: 12}} className="me-0">
+        <Col md={{span: 12}} className="me-0">
           <span className="ps-2 pe-2 pt-1 pb-1 text-white fs-3 ms-4 mb-4 mt-4" style={{backgroundColor: "#b04c46"}}>
             {
               manageProject ?
@@ -960,8 +951,8 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
       </Row>
       <Row className="d-flex flex-row justify-content-end">
-        <Col md={{size: 6}} lg={{size: 5}} xl={{size: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 mt-3 justify-content-center">
-          <Button color="danger" className="me-lg-1 me-md-1 me-sm-1 me-1" onClick={() => {
+        <Col md={{span: 6}} lg={{span: 5}} xl={{span: 3}} className="d-flex flex-row mt-md-3 mt-sm-3 ms-sm-4 mt-lg-0 mt-3 justify-content-center">
+          <Button variant="danger" className="me-lg-1 me-md-1 me-sm-1 me-1" onClick={() => {
             modalProps.setAreYouSureModal(!modalProps.areYouSureModal)
             modalProps.setModalTitle(intl.formatMessage({
               defaultMessage: 'Brisanje korisničkog zahtjeva',
@@ -987,7 +978,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                   })
             }
           </Button>
-          <Button color="danger"
+          <Button variant="danger"
             className="me-lg-1 me-md-3 me-sm-3"
             onClick={() => setDisabledFields(!disabledFields)}
             active={!disabledFields}
@@ -1009,18 +1000,18 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         </Col>
       </Row>
       <Row>
-        <Col className="text-left" md={{size: 10}}>
-          <Label
+        <Col className="text-left" md={{span: 10}}>
+          <Form.Label
             htmlFor="projectTitle"
             aria-label="projectTitle">
-          </Label>
+          </Form.Label>
         </Col>
       </Row>
       <Row style={{'height': '10px'}}/>
       <Row>
-        <Col md={{size: 1}}>
+        <Col md={{span: 1}}>
         </Col>
-        <Col md={{offset: 2, size: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
+        <Col md={{offset: 2, span: 8}} className="ps-2 pe-2 pt-1 pb-3 mb-3 fw-bold fs-5 ms-5">
           <span >
             {
               manageProject
@@ -1040,7 +1031,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       </Row>
       <Row style={{'height': '30px'}}/>
       <Row className="mt-2 mb-5 text-center">
-        <Col md={{size: 1}}>
+        <Col md={{span: 1}}>
         </Col>
         {
           manageProject ?
@@ -1103,15 +1094,15 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       {
         (requestState['extend'] || requestState['submit-extend']) && projectsExtends &&
         <Row className="ms-1 mt-3">
-          <Col md={{size: 10, offset: 1}}>
+          <Col md={{span: 10, offset: 1}}>
             <ProjectExtendTable projectsExtends={projectsExtends} myView={false} />
           </Col>
         </Row>
       }
       <Row className="mt-4">
-        <Col style={{width: '150px'}} md={{size: 1}}/>
-        <Col md={{size: 8}}>
-          <Label
+        <Col style={{width: '150px'}} md={{span: 1}}/>
+        <Col md={{span: 8}}>
+          <Form.Label
             htmlFor="staff_requestResourceType"
             aria-label="staff_requestResourceType"
             className="fw-bold mt-3 fs-5 text-right form-label">
@@ -1119,7 +1110,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
               defaultMessage="Dodijeljeni tip resursa:"
               description="managereq-change-resource-given"
             />
-          </Label>
+          </Form.Label>
           <Controller
             name="staff_requestResourceType"
             control={control}
@@ -1147,9 +1138,9 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
         !manageProject &&
         <>
           <Row className="mt-3">
-            <Col style={{width: '150px'}} md={{size: 1}}/>
-            <Col md={{size: 10}}>
-              <Label
+            <Col style={{width: '150px'}} md={{span: 1}}/>
+            <Col md={{span: 10}}>
+              <Form.Label
                 htmlFor="staff_comment"
                 className="fw-bold mt-3 fs-5 form-label"
                 aria-label="staff_comment">
@@ -1161,7 +1152,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
                     i: (chunks) => <i>{chunks}</i>
                   }}
                 />
-              </Label>
+              </Form.Label>
               <Controller
                 name="staff_comment"
                 control={control}
@@ -1184,30 +1175,28 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
             </Col>
           </Row>
           <Row className="mt-3">
-            <Col style={{width: '150px'}} md={{size: 1}}/>
-            <Col md={{size: 9}}>
-              <FormGroup switch>
-                <Controller
-                  name="staff_emailSend"
-                  control={control}
-                  render={({field}) =>
-                    <Input
-                      {...field}
-                      type="switch"
-                      role="switch"
-                      disabled={sendEmailDisabled}
-                      checked={disabledFields ? getValues('staff_emailSend') : false}
-                      className="form-control fw-bold fst-italic"
-                    />
-                  }
-                />
-                <Label className="fw-bold fst-italic" check>
-                  <FormattedMessage
-                    defaultMessage="Šalji email voditelju"
-                    description="managereq-change-email-manager"
+            <Col style={{width: '150px'}} md={{span: 1}}/>
+            <Col md={{span: 9}}>
+              <Controller
+                name="staff_emailSend"
+                control={control}
+                render={({field}) =>
+                  <Form.Check
+                    {...field}
+                    type="switch"
+                    role="switch"
+                    disabled={sendEmailDisabled}
+                    checked={disabledFields ? getValues('staff_emailSend') : false}
+                    className="fw-bold fst-italic"
+                    label={
+                      <FormattedMessage
+                        defaultMessage="Šalji email voditelju"
+                        description="managereq-change-email-manager"
+                      />
+                    }
                   />
-                </Label>
-              </FormGroup>
+                }
+              />
             </Col>
           </Row>
           <Row style={{'height': '100px'}}/>
@@ -1215,7 +1204,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       }
       <Row style={{'height': '50px'}}/>
       <Row className="justify-content-end fst-italic">
-        <Col md={{size: 4}} className="fs-6 mt-3">
+        <Col md={{span: 4}} className="fs-6 mt-3">
           <span className="fw-bold">
             <FormattedMessage
               defaultMessage="Obradio:"
@@ -1240,7 +1229,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       {
         changedBy &&
         <Row className="justify-content-end fst-italic">
-          <Col md={{size: 4}} className="fs-6 mt-1">
+          <Col md={{span: 4}} className="fs-6 mt-1">
             <span className="fw-bold">
               <FormattedMessage
                 defaultMessage="Promijenio:"
@@ -1255,7 +1244,7 @@ const ProcessRequest = ({disabledFields, setDisabledFields, requestState,
       }
       <Row className="mt-5 mb-5 text-center">
         <Col>
-          <Button disabled={!disabledFields} size="lg" color="success"
+          <Button disabled={!disabledFields} size="lg" variant="success"
             id="submit-button" type="submit">
             <FontAwesomeIcon icon={faSave}/>{' '}
             <FormattedMessage

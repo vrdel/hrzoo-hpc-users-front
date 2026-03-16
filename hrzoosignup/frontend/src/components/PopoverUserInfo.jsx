@@ -1,7 +1,7 @@
 import React from "react";
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { MiniButton } from 'Components/MiniButton';
-import { Badge, Col, Row, PopoverHeader, PopoverBody } from "reactstrap";
+import { Badge, Col, Popover, Row } from "react-bootstrap";
 import { useQuery } from "@tanstack/react-query";
 import { fetchSpecificUser } from "Api/users";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -19,7 +19,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
   if (status === 'success' && userData) {
     return (
       <>
-        <PopoverHeader className="d-flex align-items-center font-monospace justify-content-between">
+        <Popover.Header className="d-flex align-items-center font-monospace justify-content-between">
           <span className="d-flex flex-row align-items-center">
             { userName }
             <MiniButton
@@ -46,8 +46,8 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
             :
               <FontAwesomeIcon color="#777777" icon={ faGlobe } />
           }
-        </PopoverHeader>
-        <PopoverBody>
+        </Popover.Header>
+        <Popover.Body>
           <Row>
             <Col className="fw-bold">
               <FormattedMessage
@@ -74,7 +74,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
               </Row>
               <Row>
                 <Col className="d-flex font-monospace align-items-center ms-2 me-2 fs-6">
-                  <Badge color="success">
+                  <Badge bg="success">
                     { userData.person_username }
                   </Badge>
                   <MiniButton
@@ -160,7 +160,7 @@ const PopoverUserInfo = ({rhfId, userName, showPopover}) => {
               </a>
             </Col>
           </Row>
-        </PopoverBody>
+        </Popover.Body>
       </>
     )
   }

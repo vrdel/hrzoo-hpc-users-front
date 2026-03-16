@@ -4,10 +4,7 @@ import {
   Container,
   Row,
   Card,
-  CardHeader,
-  CardFooter,
-  CardBody,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import {
   defaultAuthnRedirect,
   defaultAuthnRedirectStaff,
@@ -48,12 +45,12 @@ const LoginOfficial = ({sessionData=undefined}) => {
   return (
     <Container fluid className={`image-background-${locale} d-flex justify-content-center`} style={{minHeight: '100vh'}}>
       <Row>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
-        <Col lg={{size: 6}} md={{size: 8}}>
+        <Col lg={{span: 6}} md={{span: 8}}>
           <Row className="m-lg-3 p-lg-3 m-md-2 p-md-2 m-sm-1 p-sm-1"/>
           <Card className="shadow-lg">
-            <CardHeader
+            <Card.Header
               id='hzsi-loginheader'
               className="p-3 d-flex flex-row align-items-center justify-content-center"
             >
@@ -69,8 +66,8 @@ const LoginOfficial = ({sessionData=undefined}) => {
                     <img src={SrceLogoHeadEn} id="srcelogoen" alt="SRCE Logo EN" style={{ width: 410, height: "auto" }} />
                   </a>
               }
-            </CardHeader>
-            <CardBody className="pt-5 pb-2 mb-4">
+            </Card.Header>
+            <Card.Body className="pt-5 pb-2 mb-4">
               <p className="fs-4 mb-4 text-center">
                 <FormattedMessage
                   description="loginofficial-termsstring"
@@ -93,17 +90,17 @@ const LoginOfficial = ({sessionData=undefined}) => {
                 :
                   ''
               }
-            </CardBody>
-            <CardFooter className="bg-transparent d-flex align-items-center justify-content-center">
+            </Card.Body>
+            <Card.Footer className="bg-transparent d-flex align-items-center justify-content-center">
               <Row className="m-1">
                 <Col>
                   <LanguageButtonLogin locale={locale} setLocale={setLocale} />
                 </Col>
               </Row>
-            </CardFooter>
+            </Card.Footer>
           </Card>
         </Col>
-        <Col lg={{size: 3}} md={{size: 2}} sm={{size: 1}}>
+        <Col lg={{span: 3}} md={{span: 2}} sm={{span: 1}}>
         </Col>
       </Row>
     </Container>

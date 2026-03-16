@@ -5,13 +5,12 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Badge,
   Col,
-  Input,
+  Form,
+  Overlay,
   Popover,
-  PopoverBody,
-  PopoverHeader,
   Row,
   Table,
-} from "reactstrap";
+} from "react-bootstrap";
 import { PageTitle } from 'Components/PageTitle';
 import { MiniButton } from 'Components/MiniButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -50,18 +49,18 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
 
     return (
       <>
-        <PopoverHeader className="d-flex align-items-center justify-content-between">
+        <Popover.Header className="d-flex align-items-center justify-content-between">
           <span className="me-5 d-flex align-items-center">
             {
               StateIcons(projectData.state.name, true)
             }
-            <Badge key={rhfId} color="secondary" className="ms-2 fw-normal">
+            <Badge key={rhfId} bg="secondary" className="ms-2 fw-normal">
               {projectData.identifier}
             </Badge>
           </span>
           <ProjectTypeBadge projectInfo={projectData} />
-        </PopoverHeader>
-        <PopoverBody>
+        </Popover.Header>
+        <Popover.Body>
           <Row>
             <Col className="fw-bold">
               <FormattedMessage
@@ -115,7 +114,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
           </Row>
           <Row>
             <Col className="ms-2 me-2">
-              <Badge color="dark" className="fw-normal ms-1">
+              <Badge bg="dark" className="fw-normal ms-1">
                 { leader }
               </Badge>
             </Col>
@@ -135,7 +134,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
                   <Col className="ms-2 me-2">
                     {
                       collaborators.map((collab, cid) =>
-                        <Badge key={cid} color="secondary" className="fw-normal ms-1">
+                        <Badge key={cid} bg="secondary" className="fw-normal ms-1">
                           { collab }
                         </Badge>
                       )
@@ -170,7 +169,7 @@ const PopoverProjectInfo = ({rhfId, projId, showPopover}) => {
               </a>
             </Col>
           </Row>
-        </PopoverBody>
+        </Popover.Body>
       </>
     )
   }
@@ -368,7 +367,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     name="searchName"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder={intl.formatMessage({
                           defaultMessage: "Traži",
@@ -385,7 +384,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     name="searchInstitution"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder={intl.formatMessage({
                           defaultMessage: "Traži",
@@ -402,7 +401,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     name="searchEmail"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder={intl.formatMessage({
                           defaultMessage: "Traži",
@@ -419,7 +418,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     name="searchJoined"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         className="form-control"
                         placeholder={intl.formatMessage({
@@ -436,7 +435,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                     name="searchProject"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder={intl.formatMessage({
                           defaultMessage: "Traži",
@@ -567,22 +566,26 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                 <Col className="d-flex justify-content-center align-items-center align-self-center">
                                   <Badge key={pid}
                                     id={`pop-${user.id}-${pid}`}
-                                    color={ `${proj.role === "lead" ? "dark" : "secondary"}` }
+                                    bg={ `${proj.role === "lead" ? "dark" : "secondary"}` }
                                     className="d-inline-block fw-normal ms-1 text-decoration-underline"
                                     style={{cursor: 'pointer', whiteSpace: 'normal'}}
                                     onClick={() => togglePopover(`${user.id}-${pid}`)}
                                   >
                                     { proj.identifier }
                                   </Badge>
-                                  <Popover
+                                  <Overlay
                                     placement="left"
-                                    isOpen={isOpen(`${user.id}-${pid}`)}
-                                    target={`pop-${user.id}-${pid}`}
-                                    toggle={() => togglePopover(`${user.id}-${pid}`)
-                                    }
+                                    show={isOpen(`${user.id}-${pid}`)}
+                                    target={document.getElementById(`pop-${user.id}-${pid}`)}
+                                    rootClose
+                                    onHide={() => togglePopover(`${user.id}-${pid}`)}
                                   >
-                                    <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} showPopover={togglePopover} />
-                                  </Popover>
+                                    {(props) => (
+                                      <Popover {...props}>
+                                        <PopoverProjectInfo rhfId={`${user.id}-${pid}`} projId={proj.identifier} showPopover={togglePopover} />
+                                      </Popover>
+                                    )}
+                                  </Overlay>
                                   <MiniButton
                                     color="light"
                                     onClick={(e) => copyToClipboard(

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col } from 'reactstrap';
+import { Col } from 'react-bootstrap';
 
 export const PageTitle = ({pageTitle, isEditing=false, intl=undefined, children}) => {
   if (isEditing && pageTitle && intl) {

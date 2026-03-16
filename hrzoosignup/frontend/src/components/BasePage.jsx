@@ -1,5 +1,5 @@
 import React, { useState, useEffect,  useContext } from 'react'
-import { Row, Col, Container } from 'reactstrap'
+import { Row, Col, Container } from 'react-bootstrap'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Navigation from 'Components/Navigation';

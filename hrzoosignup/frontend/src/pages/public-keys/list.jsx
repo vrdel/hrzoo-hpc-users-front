@@ -6,9 +6,8 @@ import {
   Collapse,
   Button,
   InputGroup,
-  InputGroupText,
   Placeholder
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { PageTitle } from 'Components/PageTitle';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchMySshKeys, deleteSshKey } from 'Api/sshkeys';
@@ -172,7 +171,7 @@ const PublicKeys = () => {
           </Row>
 
           <Row className="mt-3 mb-3">
-            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+            <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, span: 10}}>
               <FormattedMessage
                 defaultMessage="Nemate prijavljenih sudjelovanja na odobrenim projektima"
                 description="publickeys-list-emptynotallowed"
@@ -240,10 +239,10 @@ const PublicKeys = () => {
                           { key.public_key.split(' ')[0] }
                         </td>
                         <td className="align-middle text-center">
-                          <Button size="sm" color="primary" onClick={() => showKey(key.name)}>
+                          <Button size="sm" variant="primary" onClick={() => showKey(key.name)}>
                             <FontAwesomeIcon icon={faArrowDown} />
                           </Button>
-                          <Button size="sm" className="ms-lg-2 mt-lg-0 mt-sm-1" color="danger" onClick={() => {
+                          <Button size="sm" className="ms-lg-2 mt-lg-0 mt-sm-1" variant="danger" onClick={() => {
                             setAreYouSureModal(!areYouSureModal)
                             setModalTitle("Brisanje javnog ključa")
                             setModalMsg("Da li ste sigurni da želite obrisati javni ključ?")
@@ -256,16 +255,16 @@ const PublicKeys = () => {
                       </tr>
                       <tr>
                         <td  className="p-0 m-0" colSpan="4">
-                          <Collapse className="m-2 p-2" isOpen={isShowed(key.name)}>
+                          <Collapse className="m-2 p-2" in={isShowed(key.name)}>
                             <Row>
-                              <Col sm={{size: 11}}>
+                              <Col sm={{span: 11}}>
                                 <InputGroup>
-                                  <InputGroupText>
+                                  <InputGroup.Text>
                                     <FormattedMessage
                                       defaultMessage="Javni ključ:"
                                       description="publickeys-list-keycontent"
                                     />
-                                  </InputGroupText>
+                                  </InputGroup.Text>
                                   <textarea
                                     className="font-monospace form-control"
                                     rows="5"
@@ -276,7 +275,7 @@ const PublicKeys = () => {
                                 </InputGroup>
                               </Col>
                               <Col className="d-flex align-self-center align-content-center">
-                                <Button size="sm" className="ms-3" color="success"
+                                <Button size="sm" className="ms-3" variant="success"
                                   onClick={(e) => copyToClipboard(
                                     e, key.public_key,
                                     intl.formatMessage({
@@ -313,7 +312,7 @@ const PublicKeys = () => {
           </Row>
           <Row className="mb-5 mt-5">
             <Col className="d-flex justify-content-center">
-              <Button size="lg" color="success" onClick={() => {
+              <Button size="lg" variant="success" onClick={() => {
                   navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}
@@ -397,7 +396,7 @@ const PublicKeys = () => {
           </Row>
           <Row className="mb-2 mt-3">
             <Col className="d-flex justify-content-center">
-              <Button size="lg" color="success" onClick={() => {
+              <Button size="lg" variant="success" onClick={() => {
                   navigate('new')
               }}>
                 <FontAwesomeIcon icon={faKey}/>{' '}

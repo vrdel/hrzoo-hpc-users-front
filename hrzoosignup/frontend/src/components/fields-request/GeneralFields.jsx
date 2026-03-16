@@ -6,11 +6,11 @@ import {
 import {
   Col,
   Badge,
-  FormFeedback,
-  Label,
+  Form,
   Row,
+  Overlay,
   Popover
-} from 'reactstrap';
+} from 'react-bootstrap';
 import { ErrorMessage } from '@hookform/error-message';
 import DatePicker from 'react-date-picker';
 import BaseNewScientificDomain from 'Components/fields-request/ScientificDomain';
@@ -48,12 +48,12 @@ const GeneralProjectUsers = ({projectInfo}) => {
 
   return (
     <Row>
-      <Col md={{offset: 1, size: 10}}>
+      <Col md={{offset: 1, span: 10}}>
         {
           projectInfo.userproject_set.map((user, index) =>
             user.role.name === 'lead' &&
             <Badge
-              color="dark"
+              bg="dark"
               className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
               style={{cursor: 'pointer'}}
               key={`project-users-${index}`}
@@ -62,20 +62,25 @@ const GeneralProjectUsers = ({projectInfo}) => {
               {
                 user['user']['first_name'] + ' ' + user['user']['last_name']
               }
-              <Popover
+              <Overlay
                 placement="top"
-                isOpen={isOpened(`${index}-${user.user.id}`)}
-                target={`pop-lead-${index}-${user.user.id}`}
-                toggle={() => {
+                show={isOpened(`${index}-${user.user.id}`)}
+                target={document.getElementById(`pop-lead-${index}-${user.user.id}`)}
+                rootClose
+                onHide={() => {
                   showPopover(`${index}-${user.user.id}`)
                 }}
               >
-                <PopoverUserInfo
-                  rhfId={`${index}-${user.user.id}`}
-                  userName={user.user.username}
-                  showPopover={showPopover}
-                />
-              </Popover>
+                {(props) => (
+                  <Popover {...props}>
+                    <PopoverUserInfo
+                      rhfId={`${index}-${user.user.id}`}
+                      userName={user.user.username}
+                      showPopover={showPopover}
+                    />
+                  </Popover>
+                )}
+              </Overlay>
             </Badge>
           )
         }
@@ -85,7 +90,7 @@ const GeneralProjectUsers = ({projectInfo}) => {
             user.role.name === 'collaborator' &&
             <React.Fragment key={`wrap-project-users-${index}`}>
               <Badge
-                color="secondary"
+                bg="secondary"
                 className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
                 style={{cursor: 'pointer'}}
                 key={`project-users-${index}`}
@@ -94,20 +99,25 @@ const GeneralProjectUsers = ({projectInfo}) => {
                 {
                   user['user']['first_name'] + ' ' + user['user']['last_name']
                 }
-                <Popover
+                <Overlay
                   placement="top"
-                  isOpen={isOpened(`${index}-${user.user.id}`)}
-                  target={`pop-collab-${index}-${user.user.id}`}
-                  toggle={() => {
+                  show={isOpened(`${index}-${user.user.id}`)}
+                  target={document.getElementById(`pop-collab-${index}-${user.user.id}`)}
+                  rootClose
+                  onHide={() => {
                     showPopover(`${index}-${user.user.id}`)
                   }}
                 >
-                  <PopoverUserInfo
-                    rhfId={`${index}-${user.user.id}`}
-                    userName={user.user.username}
-                    showPopover={showPopover}
-                  />
-                </Popover>
+                  {(props) => (
+                    <Popover {...props}>
+                      <PopoverUserInfo
+                        rhfId={`${index}-${user.user.id}`}
+                        userName={user.user.username}
+                        showPopover={showPopover}
+                      />
+                    </Popover>
+                  )}
+                </Overlay>
               </Badge>
               {'  '}
             </React.Fragment>
@@ -141,12 +151,12 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
   if (manageProject)
     return (
       <Row>
-        <Col md={{offset: 1, size: 10}}>
+        <Col md={{offset: 1, span: 10}}>
           {
             projectInfo.userproject_set.map((user, index) =>
               user.role.name === 'lead' &&
               <Badge
-                color="dark"
+                bg="dark"
                 className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
                 key={`project-users-${index}`}
                 style={{cursor: 'pointer'}}
@@ -155,20 +165,25 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
                 {
                   user['user']['first_name'] + ' ' + user['user']['last_name']
                 }
-                <Popover
+                <Overlay
                   placement="top"
-                  isOpen={isOpened(`${index}-${user.user.id}`)}
-                  target={`pop-lead-${index}-${user.user.id}`}
-                  toggle={() => {
+                  show={isOpened(`${index}-${user.user.id}`)}
+                  target={document.getElementById(`pop-lead-${index}-${user.user.id}`)}
+                  rootClose
+                  onHide={() => {
                     showPopover(`${index}-${user.user.id}`)
                   }}
                 >
-                  <PopoverUserInfo
-                    rhfId={`${index}-${user.user.id}`}
-                    userName={user.user.username}
-                    showPopover={showPopover}
-                  />
-                </Popover>
+                  {(props) => (
+                    <Popover {...props}>
+                      <PopoverUserInfo
+                        rhfId={`${index}-${user.user.id}`}
+                        userName={user.user.username}
+                        showPopover={showPopover}
+                      />
+                    </Popover>
+                  )}
+                </Overlay>
               </Badge>
             )
           }
@@ -178,7 +193,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
               user.role.name === 'collaborator' &&
               <React.Fragment key={`wrap-project-users-${index}`}>
                 <Badge
-                  color="secondary"
+                  bg="secondary"
                   className="fs-6 mt-2 mb-1 fw-normal text-decoration-underline"
                   key={`project-users-${index}`}
                   style={{cursor: 'pointer'}}
@@ -188,20 +203,25 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
                     user &&
                     user['user']['first_name'] + ' ' + user['user']['last_name']
                   }
-                  <Popover
+                  <Overlay
                     placement="top"
-                    isOpen={isOpened(`${index}-${user.user.id}`)}
-                    target={`pop-collab-${index}-${user.user.id}`}
-                    toggle={() => {
+                    show={isOpened(`${index}-${user.user.id}`)}
+                    target={document.getElementById(`pop-collab-${index}-${user.user.id}`)}
+                    rootClose
+                    onHide={() => {
                       showPopover(`${index}-${user.user.id}`)
                     }}
                   >
-                    <PopoverUserInfo
-                      rhfId={`${index}-${user.user.id}`}
-                      userName={user.user.username}
-                      showPopover={showPopover}
-                    />
-                  </Popover>
+                    {(props) => (
+                      <Popover {...props}>
+                        <PopoverUserInfo
+                          rhfId={`${index}-${user.user.id}`}
+                          userName={user.user.username}
+                          showPopover={showPopover}
+                        />
+                      </Popover>
+                    )}
+                  </Overlay>
                 </Badge>
                 {'  '}
               </React.Fragment>
@@ -213,11 +233,11 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
   else
     return (
       <Row>
-        <Col md={{offset: 1, size: 10}}>
+        <Col md={{offset: 1, span: 10}}>
           {
             projectInfo.userproject_set.map((user, i) =>
               user.role.name === 'lead' &&
-              <Badge color="dark" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+              <Badge bg="dark" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
                 {
                   user['user']['first_name'] + ' ' + user['user']['last_name']
                 }
@@ -228,7 +248,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
           {
             projectInfo.croris_collaborators.map((user, i) =>
               <React.Fragment key={`wrap-project-users-${i}`}>
-                <Badge color="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
+                <Badge bg="secondary" className="fs-6 mt-2 mb-1 fw-normal" key={`project-users-${i}`}>
                   {
                     user &&
                     user['first_name'] + ' ' + user['last_name']
@@ -285,8 +305,8 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
         </Col>
       </Row>
       <Row>
-        <Col md={{size: 10, offset: 1}}>
-          <Label
+        <Col md={{span: 10, offset: 1}}>
+          <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
             <FormattedMessage
@@ -294,7 +314,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
               defaultMessage="Naziv:"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
           <Controller
             name="requestName"
             control={control}
@@ -315,16 +335,16 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             errors={errors}
             name="requestName"
             render={({ message }) =>
-              <FormFeedback className="end-0">
+              <Form.Control.Feedback type="invalid" className="end-0">
                 { message }
-              </FormFeedback>
+              </Form.Control.Feedback>
             }
           />
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{size: 10, offset: 1}}>
-          <Label
+        <Col md={{span: 10, offset: 1}}>
+          <Form.Label
             htmlFor="requestExplain"
             aria-label="requestExplain">
             <FormattedMessage
@@ -332,7 +352,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
               defaultMessage="Obrazloženje:"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
           <Controller
             name="requestExplain"
             control={control}
@@ -353,16 +373,16 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             errors={errors}
             name="requestExplain"
             render={({ message }) =>
-              <FormFeedback className="end-0">
+              <Form.Control.Feedback type="invalid" className="end-0">
                 { message }
-              </FormFeedback>
+              </Form.Control.Feedback>
             }
           />
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col className="d-flex flex-column justify-content-end" md={{size: 4, offset: 1}}>
-          <Label
+        <Col className="d-flex flex-column justify-content-end" md={{span: 4, offset: 1}}>
+          <Form.Label
             htmlFor="requestName"
             aria-label="requestName">
             <FormattedMessage
@@ -370,7 +390,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
               defaultMessage="Period korištenja:"
             />
             <span className="ms-1 fw-bold text-danger">*</span>
-          </Label>
+          </Form.Label>
           <span>
             <Controller
               name="startDate"
@@ -443,15 +463,15 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
             }
           </span>
         </Col>
-        <Col className="d-flex flex-column mt-3" md={{size: 4}}>
-          <Label
+        <Col className="d-flex flex-column mt-3" md={{span: 4}}>
+          <Form.Label
             htmlFor="requestInstitute"
             aria-label="requestInstitute">
             <FormattedMessage
               description="generalfields-leadinstitution"
               defaultMessage="Institucija nositelj:"
             />
-          </Label>
+          </Form.Label>
           <span className="fst-italic">
             <Badge
               className="d-inline-block bg-secondary-subtle fw-normal text-dark fs-6 me-2 mt-sm-3"
@@ -468,7 +488,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
           projectInfo.identifier &&
             <Col className="mt-3 d-flex flex-column justify-content-start align-items-start">
               <span className="mb-3 d-flex justify-content-center flex-row">
-                <Badge color={"secondary fw-normal"}>
+                <Badge bg="secondary" className="fw-normal">
                   { projectInfo.identifier }
                 </Badge>
                 <MiniButton
@@ -526,8 +546,8 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
         }
         <Row className="mt-4">
           <Row>
-            <Col md={{size: 4, offset: 1}} sm={{size: 10}} lg={{size: 10, offset: 1}}  xl={{size: 10, offset: 1}} xxl={{size: 10, offset: 1}}>
-              <Label
+            <Col md={{span: 4, offset: 1}} sm={{span: 10}} lg={{span: 10, offset: 1}}  xl={{span: 10, offset: 1}} xxl={{span: 10, offset: 1}}>
+              <Form.Label
                 htmlFor="requestUsesAI"
                 aria-label="requestUsesAI"
                 className="mr-2 text-right form-label">
@@ -535,12 +555,12 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                   description="requestusesai-description"
                   defaultMessage="Projekt koristi tehnologije umjetne inteligencije:"
                 />
-              </Label>
+              </Form.Label>
               <span className="ms-1 fw-bold text-danger">*</span>
             </Col>
           </Row>
           <Row>
-            <Col md={{size: 1, offset: 1}} lg={{offset: 1, size: 2}} xs={{size: 6}} sm={{size: 6}}>
+            <Col md={{span: 1, offset: 1}} lg={{offset: 1, span: 2}} xs={{span: 6}} sm={{span: 6}}>
               <Controller
                 name="requestUsesAI"
                 rules={{required: true}}
@@ -568,9 +588,9 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                 errors={errors}
                 name="requestUsesAI"
                 render={({ message }) =>
-                  <FormFeedback className="end-0">
+                  <Form.Control.Feedback type="invalid" className="end-0">
                     { message }
-                  </FormFeedback>
+                  </Form.Control.Feedback>
                 }
               />
             </Col>
@@ -606,7 +626,7 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
         </Col>
       </Row>
       <Row className="mt-1 mb-4">
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <Controller
             name="requestSummary"
             control={control}
@@ -627,22 +647,22 @@ export const CroRisDescription = ({fieldsDisabled=false}) => {
             errors={errors}
             name="requestExplain"
             render={({ message }) =>
-              <FormFeedback className="end-0">
+              <Form.Control.Feedback type="invalid" className="end-0">
                 { message }
-              </FormFeedback>
+              </Form.Control.Feedback>
             }
           />
         </Col>
       </Row>
       <Row>
-        <Col md={{size: 10, offset: 1}}>
+        <Col md={{span: 10, offset: 1}}>
           <a href={`https://www.croris.hr/projekti/projekt/${crorisId}`} target="_blank" style={{'textDecoration': 'none'}} rel="noopener noreferrer">
             https://www.croris.hr/projekti/projekt/{crorisId}
           </a>
         </Col>
       </Row>
       <Row className="mt-3">
-        <Col md={{offset: 1, size: 11}}>
+        <Col md={{offset: 1, span: 11}}>
           <FormattedMessage
             defaultMessage="Financijer:"
             description="croris-description-financier"

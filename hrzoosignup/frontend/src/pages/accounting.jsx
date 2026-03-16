@@ -9,20 +9,16 @@ import {
 import {
   Button,
   ButtonGroup,
-  Input,
   Col,
   Row,
-  Label,
   Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  DropdownToggle,
   Nav,
-  NavItem,
-  CardBody,
   Spinner,
-  UncontrolledTooltip
-} from "reactstrap";
+  Form,
+  Card,
+  OverlayTrigger,
+  Tooltip as BsTooltip
+} from "react-bootstrap";
 import { useNavigate, NavLink } from 'react-router';
 import { PageTitle } from 'Components/PageTitle';
 import { XAxis, YAxis, CartesianGrid, Bar, BarChart, Tooltip } from 'recharts';
@@ -104,10 +100,10 @@ const Navigation = () => {
 
   return (
     <Nav tabs id="hzsi-navlinks" className="d-flex sticky-top">
-      <NavItem key='project-accounting' className='ms-3 mt-1'>
+      <Nav.Item key='project-accounting' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/project-accounting'
         >
           <FormattedMessage
@@ -115,11 +111,11 @@ const Navigation = () => {
             defaultMessage="Voditelj - projekti"
           />
         </NavLink>
-      </NavItem>
-      <NavItem key='project-users-accounting' className='ms-3 mt-1'>
+      </Nav.Item>
+      <Nav.Item key='project-users-accounting' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link active rounded-top text-white" : "nav-link text-dark"}
           to='/ui/project-users-accounting'
         >
           <FormattedMessage
@@ -127,11 +123,11 @@ const Navigation = () => {
             defaultMessage="Voditelj - korisnici"
           />
         </NavLink>
-      </NavItem>
-      <NavItem key="personal-accounting" className="mt-1">
+      </Nav.Item>
+      <Nav.Item key="personal-accounting" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link active rounded-top text-white" : "nav-link text-dark"}
           to='/ui/my-accounting'
         >
           <FormattedMessage
@@ -139,7 +135,7 @@ const Navigation = () => {
             defaultMessage="Osobna potrošnja"
           />
         </NavLink>
-      </NavItem>
+      </Nav.Item>
     </Nav>
   )
 }
@@ -260,20 +256,20 @@ const filterTime = ( data, selectedYear, useDefaultTimeRange ) => {
 const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setSelectedYear, useDefaultTimeRange, setUseDefaultTimeRange }) => {
   return (
     <Dropdown
-      isOpen={ isOpenYear }
+      show={ isOpenYear }
       className="me-2"
-      toggle={ () => setIsOpenYear(!isOpenYear) }
+      onToggle={ () => setIsOpenYear(!isOpenYear) }
     >
-      <DropdownToggle caret>
+      <Dropdown.Toggle variant="secondary">
         <FormattedMessage
           description="myaccounting-year-dropdown"
           defaultMessage="Godine"
         />
-      </DropdownToggle>
-      <DropdownMenu>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
         {
           years.map((year) =>
-            <DropdownItem
+            <Dropdown.Item
               key={ year }
               onClick={ () => {
                 setSelectedYear(year)
@@ -285,17 +281,16 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
               }}
             >
               { year }
-            </DropdownItem>
+            </Dropdown.Item>
           )
         }
-        <DropdownItem
+        <Dropdown.Item
           key="default"
           onClick={ () => {
             setSelectedYear(undefined)
             setUseDefaultTimeRange(true)
             setIsOpenYear(!isOpenYear)
           }}
-          toggle={ false }
           style={{
             backgroundColor: useDefaultTimeRange ? "#e8e9ea" : "white"
           }}
@@ -304,15 +299,14 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
             description="myaccounting-year-default"
             defaultMessage="Prikaži zadnjih 12 mjeseci"
           />
-        </DropdownItem>
-        <DropdownItem
+        </Dropdown.Item>
+        <Dropdown.Item
           key="show-all"
           onClick={ () => {
             setSelectedYear(undefined)
             setUseDefaultTimeRange(false)
             setIsOpenYear(!isOpenYear)
           }}
-          toggle={ false }
           style={{
             backgroundColor: !selectedYear && !useDefaultTimeRange ? "#e8e9ea" : "white"
           }}
@@ -321,8 +315,8 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
             description="myaccounting-year-showall"
             defaultMessage="Prikaži sve"
           />
-        </DropdownItem>
-      </DropdownMenu>
+        </Dropdown.Item>
+      </Dropdown.Menu>
     </Dropdown>
   )
 }
@@ -331,56 +325,54 @@ const SelectYearButton = ({ years, isOpenYear, setIsOpenYear, selectedYear, setS
 const SelectProjectButton = ({ projects, subsetProjects, isOpen, setIsOpen, onSelect, intl, projectsMapping }) => {
   return (
     <Dropdown
-      isOpen={ isOpen }
+      show={ isOpen }
       className="me-2"
-      toggle={ () => setIsOpen(!isOpen) }
+      onToggle={ () => setIsOpen(!isOpen) }
     >
-      <DropdownToggle caret>
+      <Dropdown.Toggle variant="secondary">
         { projectsButtonText }
-      </DropdownToggle>
-      <DropdownMenu>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
         {
           projects.map((project, index) =>
-            <DropdownItem
+            <Dropdown.Item
               key={ project }
-              toggle={ false }
             >
-              <span id={ `tooltip-${index}` } className="d-flex justify-content-left flex-row">
-                <Input
-                  type="checkbox"
-                  className="mr-1"
-                  checked={ subsetProjects.indexOf(project) >= 0 }
-                  onClick={ () => onSelect(project) }
-                />
-                <Label className="ml-1" check>&nbsp; { project }</Label>
-                <MiniButton
-                  color="light"
-                  onClick={(e) => copyToClipboard(
-                    e, project,
-                    intl.formatMessage({
-                      defaultMessage: "Šifra projekta kopirana u međuspremnik",
-                      description: "memberships-clipboard-ok"
-                    }),
-                    intl.formatMessage({
-                      defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
-                      description: "memberships-clipboard-fail"
-                    }),
-                    "id-request"
-                  )}
-                >
-                  <FontAwesomeIcon size="xs" icon={faCopy} />
-                </MiniButton>
-              </span>
-              <UncontrolledTooltip
+              <OverlayTrigger
                 placement="left"
-                target={ `tooltip-${index}` }
+                overlay={<BsTooltip>{ projectsMapping[project] }</BsTooltip>}
               >
-                { projectsMapping[project] }
-              </UncontrolledTooltip>
-            </DropdownItem>
+                <span className="d-flex justify-content-left flex-row">
+                  <Form.Check
+                    type="checkbox"
+                    className="mr-1"
+                    checked={ subsetProjects.indexOf(project) >= 0 }
+                    onClick={ () => onSelect(project) }
+                    label={ project }
+                  />
+                  <MiniButton
+                    color="light"
+                    onClick={(e) => copyToClipboard(
+                      e, project,
+                      intl.formatMessage({
+                        defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                        description: "memberships-clipboard-ok"
+                      }),
+                      intl.formatMessage({
+                        defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                        description: "memberships-clipboard-fail"
+                      }),
+                      "id-request"
+                    )}
+                  >
+                    <FontAwesomeIcon size="xs" icon={faCopy} />
+                  </MiniButton>
+                </span>
+              </OverlayTrigger>
+            </Dropdown.Item>
           )
         }
-      </DropdownMenu>
+      </Dropdown.Menu>
     </Dropdown>
   )
 }
@@ -392,15 +384,16 @@ const AccountingSpinner = ({ pageTitle }) => (
     {
       IsLead() &&
         <Row className="mb-3">
-          <Col md={ 6 }>
+          <Col md={ 6 } className="border-bottom border-opacity-25">
             <Navigation />
           </Col>
         </Row>
     }
-    <CardBody className="mb-1 bg-white">
+    <Card.Body className="mb-1 bg-white">
       <Row>
         <Col className="d-flex justify-content-center align-items-center p-5">
           <Spinner
+            animation="border"
             style={{
               height: '25rem',
               width: '25rem',
@@ -410,7 +403,7 @@ const AccountingSpinner = ({ pageTitle }) => (
           />
         </Col>
       </Row>
-    </CardBody>
+    </Card.Body>
   </>
 )
 
@@ -677,13 +670,13 @@ export const MyAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                 </Row>
             }
             <Row className="mt-3 mb-3">
-              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, span: 10}}>
                 <FormattedMessage
                   description="myaccounting-emptygraphs"
                   defaultMessage="Nema zabilježenog iskorištenja resursa"
@@ -701,7 +694,7 @@ export const MyAccounting = () => {
                   className="d-flex align-items-center justify-content-between"
                 >
                   <Button
-                    color="secondary"
+                    variant="secondary"
                     className="me-2 rounded"
                     onClick={ () => setShowCumulative(!showCumulative) }
                   >
@@ -733,7 +726,7 @@ export const MyAccounting = () => {
             {
               IsLead() &&
               <Row className="mb-3">
-                <Col md={ 6 }>
+                <Col md={ 6 } className="border-bottom border-opacity-25">
                   <Navigation />
                 </Col>
               </Row>
@@ -915,18 +908,18 @@ export const ProjectUsersAccounting = () => {
 
   const ProjectButton = () => (
     <Dropdown
-      isOpen={ isOpen }
+      show={ isOpen }
       className="ml-2"
-      toggle={ () => setIsOpen(!isOpen) }
+      onToggle={ () => setIsOpen(!isOpen) }
     >
-      <DropdownToggle caret>
+      <Dropdown.Toggle variant="secondary">
         { projectsButtonText }
-      </DropdownToggle>
-      <DropdownMenu>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
         {
           listProjects.map((proj, index) =>
             <>
-              <DropdownItem
+              <Dropdown.Item
                 key={ proj }
                 onClick={ () => {
                   setSelectedProject(proj)
@@ -936,65 +929,64 @@ export const ProjectUsersAccounting = () => {
                   backgroundColor: proj == selectedProject ? "#e8e9ea" : "white"
                 }}
               >
-                <span id={`tooltip-${index}`} className="d-flex justify-content-left align-items-middle">
-                  { proj }
-                  <MiniButton
-                    color="light"
-                    onClick={(e) => copyToClipboard(
-                      e, proj,
-                      intl.formatMessage({
-                        defaultMessage: "Šifra projekta kopirana u međuspremnik",
-                        description: "memberships-clipboard-ok"
-                      }),
-                      intl.formatMessage({
-                        defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
-                        description: "memberships-clipboard-fail"
-                      }),
-                      "id-request"
-                    )}
-                  >
-                    <FontAwesomeIcon size="xs" icon={faCopy} />
-                  </MiniButton>
-                </span>
-                <UncontrolledTooltip
+                <OverlayTrigger
                   placement="left"
-                  target={ `tooltip-${index}` }
+                  overlay={<BsTooltip>{ projectsMapping[proj] }</BsTooltip>}
                 >
-                  { projectsMapping[proj] }
-                </UncontrolledTooltip>
-              </DropdownItem>
+                  <span className="d-flex justify-content-left align-items-middle">
+                    { proj }
+                    <MiniButton
+                      color="light"
+                      onClick={(e) => copyToClipboard(
+                        e, proj,
+                        intl.formatMessage({
+                          defaultMessage: "Šifra projekta kopirana u međuspremnik",
+                          description: "memberships-clipboard-ok"
+                        }),
+                        intl.formatMessage({
+                          defaultMessage: "Greška prilikom kopiranja šifre projekta u međuspremnik",
+                          description: "memberships-clipboard-fail"
+                        }),
+                        "id-request"
+                      )}
+                    >
+                      <FontAwesomeIcon size="xs" icon={faCopy} />
+                    </MiniButton>
+                  </span>
+                </OverlayTrigger>
+              </Dropdown.Item>
             </>
           )
         }
-      </DropdownMenu>
+      </Dropdown.Menu>
     </Dropdown>
   )
 
   const UsersButton = () => (
     <Dropdown
-      isOpen={ isOpenUsers }
+      show={ isOpenUsers }
       className="me-2 rounded"
-      toggle={ () => setIsOpenUsers(!isOpenUsers) }
+      onToggle={ () => setIsOpenUsers(!isOpenUsers) }
       hidden={ listUsers[selectedProject].length == 0 }
     >
-      <DropdownToggle caret>
+      <Dropdown.Toggle variant="secondary">
         { usersButtonText }
-      </DropdownToggle>
-      <DropdownMenu>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
         {
           listUsers[selectedProject].map((user) =>
-            <DropdownItem key={ user } toggle={ false }>
-              <Input
+            <Dropdown.Item key={ user }>
+              <Form.Check
                 type="checkbox"
                 className="mr-2"
                 checked={ subsetUsers.indexOf(user) >= 0 }
                 onClick={ () => onUserSelect(user) }
+                label={ user }
               />
-              <Label check>&nbsp; { user }</Label>
-            </DropdownItem>
+            </Dropdown.Item>
           )
         }
-      </DropdownMenu>
+      </Dropdown.Menu>
     </Dropdown>
 
   )
@@ -1098,19 +1090,19 @@ export const ProjectUsersAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                   {
                     selectedProject &&
-                      <Col md={ 6 }>
+                      <Col md={ 6 } className="border-bottom border-opacity-25">
                         { projectsMapping[selectedProject] }
                       </Col>
                   }
                 </Row>
             }
             <Row className="mt-3 mb-3">
-              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, span: 10}}>
                 <FormattedMessage
                   description="myaccounting-emptygraphs"
                   defaultMessage="Nema zabilježenog iskorištenja resursa"
@@ -1129,7 +1121,7 @@ export const ProjectUsersAccounting = () => {
                   className="d-flex align-items-center justify-content-between"
                 >
                   <Button
-                    color="secondary"
+                    variant="secondary"
                     className="me-2 rounded"
                     onClick={ () => setShowCumulative(!showCumulative) }
                   >
@@ -1152,7 +1144,7 @@ export const ProjectUsersAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                   <Col md={ 2 }></Col>
@@ -1416,7 +1408,7 @@ export const ProjectAccounting = () => {
                   className="d-flex align-items-center justify-content-between"
                 >
                   <Button
-                    color="secondary"
+                    variant="secondary"
                     className="me-2 rounded"
                     onClick={ () => setShowCumulative(!showCumulative) }
                   >
@@ -1448,13 +1440,13 @@ export const ProjectAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                 </Row>
             }
             <Row className="mt-3 mb-3">
-              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, size: 10}}>
+              <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, span: 10}}>
                 <FormattedMessage
                   description="myaccounting-emptygraphs"
                   defaultMessage="Nema zabilježenog iskorištenja resursa"
@@ -1473,7 +1465,7 @@ export const ProjectAccounting = () => {
                   className="d-flex align-items-center justify-content-between"
                 >
                   <Button
-                    color="secondary"
+                    variant="secondary"
                     className="me-2 rounded"
                     onClick={ () => setShowCumulative(!showCumulative) }
                   >
@@ -1505,7 +1497,7 @@ export const ProjectAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                 </Row>

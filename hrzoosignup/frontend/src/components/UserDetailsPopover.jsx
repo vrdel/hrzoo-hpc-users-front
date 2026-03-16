@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Badge } from 'reactstrap';
+import { Badge } from 'react-bootstrap';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { faCheckCircle, faStopCircle, faHome, faGlobe} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -14,11 +14,11 @@ const UserDetailsPopover = () => {
       <div className="text-center">
         {
           userDetails.is_staff || userDetails.is_superuser ?
-            <Badge color="danger" className="mb-1 mt-1" pill>
+            <Badge bg="danger" className="mb-1 mt-1" pill>
               Admin
             </Badge>
           :
-            <Badge color="success" className="mb-1 mt-1" pill>
+            <Badge bg="success" className="mb-1 mt-1" pill>
               <FormattedMessage
                 defaultMessage="Korisnik"
                 description="userdetails-popover-user"

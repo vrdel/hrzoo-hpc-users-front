@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Badge, Row, Table, Label, Tooltip, Button } from 'reactstrap';
+import { Col, Badge, Row, Table, Form, Overlay, Tooltip, Button } from 'react-bootstrap';
 import { faCheckCircle, faStopCircle, faCopy, faHome, faGlobe} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyToClipboard } from 'Utils/copy-clipboard';
@@ -97,63 +97,75 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
 
   if (userDetails && userDetails.first_name && userDetails.person_username)
     return (
-      <React.Fragment>
+      <div className="overflow-hidden">
         <Row>
-          <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{size:3}}>
-            <Label for="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
+          <Col className="d-flex flex-row mt-4 ms-3 align-items-center" sm={{span:3}}>
+            <Form.Label htmlFor="dir" className="fs-5 text-white ps-2 pe-2 pt-1 pb-1" style={{backgroundColor: "#b04c46"}}>
               <FormattedMessage description="statusinfo" defaultMessage="Status" />
-            </Label>
+            </Form.Label>
             <div className="fs-5 ps-2 d-flex align-items-center">
               {
                 userDetails.status ?
                   <React.Fragment>
                     <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
-                    <Tooltip
+                    <Overlay
                       placement='right'
-                      isOpen={isOpen(userDetails.first_name)}
-                      target={'Tooltip-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => toggleIndex(userDetails.first_name)}
+                      show={isOpen(userDetails.first_name)}
+                      target={document.getElementById('Tooltip-' + userDetails.first_name.replace(/ /g, '-'))}
                     >
-                      <TooltipMsgActive myInfo={myInfo} />
-                    </Tooltip>
+                      {(props) => (
+                        <Tooltip {...props}>
+                          <TooltipMsgActive myInfo={myInfo} />
+                        </Tooltip>
+                      )}
+                    </Overlay>
                   </React.Fragment>
                 :
                   <React.Fragment>
                     <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
-                    <Tooltip
+                    <Overlay
                       placement='bottom'
-                      isOpen={isOpen(userDetails.first_name)}
-                      target={'Tooltip-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => toggleIndex(userDetails.first_name)}
+                      show={isOpen(userDetails.first_name)}
+                      target={document.getElementById('Tooltip-' + userDetails.first_name.replace(/ /g, '-'))}
                     >
-                      <TooltipMsgInactive myInfo={myInfo} />
-                    </Tooltip>
+                      {(props) => (
+                        <Tooltip {...props}>
+                          <TooltipMsgInactive myInfo={myInfo} />
+                        </Tooltip>
+                      )}
+                    </Overlay>
                   </React.Fragment>
               }
               {
                 userDetails.person_type === 'local'?
                   <React.Fragment>
                     <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faHome } />
-                    <Tooltip
+                    <Overlay
                       placement='right'
-                      isOpen={isOpen(`${userDetails.first_name}-type`)}
-                      target={'Tooltip-type-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => toggleIndex(`${userDetails.first_name}-type`)}
+                      show={isOpen(`${userDetails.first_name}-type`)}
+                      target={document.getElementById('Tooltip-type-' + userDetails.first_name.replace(/ /g, '-'))}
                     >
-                      <TooltipMsgLocal />
-                    </Tooltip>
+                      {(props) => (
+                        <Tooltip {...props}>
+                          <TooltipMsgLocal />
+                        </Tooltip>
+                      )}
+                    </Overlay>
                   </React.Fragment>
                 :
                   <React.Fragment>
                     <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faGlobe } />
-                    <Tooltip
+                    <Overlay
                       placement='right'
-                      isOpen={isOpen(`${userDetails.first_name}-type`)}
-                      target={'Tooltip-type-' + userDetails.first_name.replace(/ /g, '-')}
-                      toggle={() => toggleIndex(`${userDetails.first_name}-type`)}
+                      show={isOpen(`${userDetails.first_name}-type`)}
+                      target={document.getElementById('Tooltip-type-' + userDetails.first_name.replace(/ /g, '-'))}
                     >
-                      <TooltipMsgGlobe />
-                    </Tooltip>
+                      {(props) => (
+                        <Tooltip {...props}>
+                          <TooltipMsgGlobe />
+                        </Tooltip>
+                      )}
+                    </Overlay>
                   </React.Fragment>
               }
             </div>
@@ -175,24 +187,27 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                     <tr>
                       <td>
                         <div className="d-flex align-items-center">
-                          <Badge color="success" className="fs-5" id={`Tooltip-${userDetails.person_username}`}>
+                          <Badge bg="success" className="fs-5" id={`Tooltip-${userDetails.person_username}`}>
                             {userDetails.person_username}
-                            <Tooltip
-                              placement='right'
-                              isOpen={isOpen(userDetails.person_username)}
-                              target={'Tooltip-' + userDetails.person_username}
-                              toggle={() => toggleIndex(userDetails.person_username)}
-                            >
-                              <FormattedMessage
-                                description="statusinfo-tooltip"
-                                defaultMessage="Dodijeljeno
-                                  korisničko ime za pristup resursima"
-                              />
-                            </Tooltip>
                           </Badge>
+                          <Overlay
+                            placement='right'
+                            show={isOpen(userDetails.person_username)}
+                            target={document.getElementById('Tooltip-' + userDetails.person_username)}
+                          >
+                            {(props) => (
+                              <Tooltip {...props}>
+                                <FormattedMessage
+                                  description="statusinfo-tooltip"
+                                  defaultMessage="Dodijeljeno
+                                    korisničko ime za pristup resursima"
+                                />
+                              </Tooltip>
+                            )}
+                          </Overlay>
                           <Button
                             className="ms-1"
-                            color="light"
+                            variant="light"
                             onClick={(e) => copyToClipboard(
                               e, userDetails.person_username,
                               intl.formatMessage({
@@ -216,7 +231,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
               </Col>
             </Row>
         }
-      </React.Fragment>
+      </div>
     )
   else
     return null

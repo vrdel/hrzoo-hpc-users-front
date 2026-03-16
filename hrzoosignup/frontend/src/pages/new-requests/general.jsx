@@ -7,7 +7,7 @@ import {
   Col,
   Form,
   Row,
-} from 'reactstrap';
+} from 'react-bootstrap';
 import {
   useForm,
   FormProvider,
@@ -434,7 +434,7 @@ export const GeneralRequest = ({projectType, schemaResolve=undefined}) => {
               <Button
                 disabled={userDetails.person_type === 'foreign'}
                 size="lg"
-                color="success"
+                variant="success"
                 id="submit-button"
                 type="submit"
               >

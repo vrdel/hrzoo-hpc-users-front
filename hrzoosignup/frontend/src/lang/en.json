@@ -599,10 +599,6 @@
     "defaultMessage": "First, last name and email",
     "description": "userslist-column-header-1"
   },
-  "BzHbow": {
-    "defaultMessage": "There are no active projects in CroRIS system in which user participates",
-    "description": "userinfo-croris-tablefoot-userview-no"
-  },
   "C/eBnN": {
     "defaultMessage": "Ethnology and Anthropology",
     "description": "science-field-58"
@@ -1030,6 +1026,10 @@
   "LquO75": {
     "defaultMessage": "Yes",
     "description": "requestusesai-label-yes"
+  },
+  "Lrfqz2": {
+    "defaultMessage": "There are no active and verified projects in CroRIS system in which user participates",
+    "description": "userinfo-croris-tablefoot-userview-no"
   },
   "M8y/Pt": {
     "defaultMessage": "Project is not active, therefore it is not possible to unregister collaborators",
@@ -1815,10 +1815,6 @@
     "defaultMessage": "You are registered as principal investigator on research projects in CroRIS system. Please visit \"My info\" page for more details.",
     "description": "newrequest-reason-alreadylead"
   },
-  "hDbgbW": {
-    "defaultMessage": "There are no active projects in CroRIS system that you are participating in",
-    "description": "userinfo-croris-tablefoot-meview-no"
-  },
   "hJ2xID": {
     "defaultMessage": "Upload",
     "description": "publickeys-add-load"
@@ -2346,6 +2342,10 @@
   "xGaESM": {
     "defaultMessage": "Error while copying user's identifier to clipboard",
     "description": "userins-clipboard-fail"
+  },
+  "xN4mHo": {
+    "defaultMessage": "There are no active and verified projects in CroRIS system that you are participating in",
+    "description": "userinfo-croris-tablefoot-meview-no"
   },
   "xRLsQA": {
     "defaultMessage": "Submitted",

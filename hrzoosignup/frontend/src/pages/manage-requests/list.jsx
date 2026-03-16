@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row, Table, Tooltip, Input } from 'reactstrap';
+import { Col, Row, Table, Tooltip, Overlay, Form } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router';
 import { PageTitle } from 'Components/PageTitle';
 import { StateIcons, StateString } from 'Config/map-states';
@@ -216,13 +216,12 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
                     name="searchNameIdentifierInstitute"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder= {intl.formatMessage({
                           defaultMessage: "Traži",
                           description: "managereq-placeholder-search"
                         })}
-                        className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
                     }
@@ -233,13 +232,12 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
                     name="searchLead"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder= {intl.formatMessage({
                           defaultMessage: "Traži",
                           description: "managereq-placeholder-search"
                         })}
-                        className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
                     }
@@ -269,13 +267,12 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
                     name="searchDate"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder= {intl.formatMessage({
                           defaultMessage: "Traži",
                           description: "managereq-placeholder-search"
                         })}
-                        className="form-control"
                         style={{fontSize: '0.83rem'}}
                       />
                     }
@@ -290,16 +287,22 @@ const ManageRequestsTable = ({ data, projectsExtends, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { calcIndex(index) }
                       </td>
-                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
+                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}
+                        onClick={() => showTooltip(project.identifier)}
+                        onMouseEnter={() => showTooltip(project.identifier)}
+                        onMouseLeave={() => showTooltip(project.identifier)}>
                         { StateIcons(project.state.name) }
-                        <Tooltip
+                        <Overlay
                           placement='top'
-                          isOpen={isOpenedTooltip(project.identifier)}
-                          target={'Tooltip-' + index}
-                          toggle={() => showTooltip(project.identifier)}
+                          show={isOpenedTooltip(project.identifier)}
+                          target={document.getElementById('Tooltip-' + index)}
                         >
-                          { StateString(project.state.name) }
-                        </Tooltip>
+                          {(props) => (
+                            <Tooltip {...props}>
+                              { StateString(project.state.name) }
+                            </Tooltip>
+                          )}
+                        </Overlay>
                       </td>
                       <td className="align-middle text-center fs-6 font-monospace">
                         { convertToEuropean(project.date_submitted) }
