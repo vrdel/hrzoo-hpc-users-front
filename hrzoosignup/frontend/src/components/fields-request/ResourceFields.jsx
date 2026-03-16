@@ -304,201 +304,205 @@ export const HpcFields = ({fieldsDisabled=false}) => {
   const { control, formState: {errors} } = useFormContext();
 
   return (
-    <Row>
-      <Col className="fs-4 mb-3" md={{offset: 1}}>
-        HPC
-      </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
-        <Form.Label
-          htmlFor="HPCnSlotsCPU"
-          aria-label="HPCnSlotsCPU"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-ncpu"
-            defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
-          />
-        </Form.Label>
-        <InputGroup>
-          <Controller
-            name="HPCnSlotsCPU"
+    <>
+      <Row>
+        <Col className="fs-4 mb-3" md={{offset: 1}}>
+          HPC
+        </Col>
+      </Row>
+      <Row>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
+          <Form.Label
+            htmlFor="HPCnSlotsCPU"
             aria-label="HPCnSlotsCPU"
-            control={control}
-            render={ ({field}) =>
-              <Form.Control
-                {...field}
-                disabled={fieldsDisabled}
-                className={`form-control text-center ${errors && errors.HPCnSlotsCPU ? "is-invalid" : ''}`}
-                type="number"
-              />
-            }
-          />
-          <InputGroup.Text>
-            CPU
-          </InputGroup.Text>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnSlotsCPU"
-            render={({ message }) =>
-              <Form.Control.Feedback type="invalid" className="end-0">
-                { message }
-              </Form.Control.Feedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-        <Form.Label
-          htmlFor="HPCnSlotsGPU"
-          aria-label="HPCnSlotsGPU"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-ngpu"
-            defaultMessage="Prosječan broj grafičkih procesora po poslu:"
-          />
-        </Form.Label>
-        <InputGroup>
-          <Controller
-            name="HPCnSlotsGPU"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-ncpu"
+              defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnSlotsCPU"
+              aria-label="HPCnSlotsCPU"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  disabled={fieldsDisabled}
+                  className={`form-control text-center ${errors && errors.HPCnSlotsCPU ? "is-invalid" : ''}`}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              CPU
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnSlotsCPU"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnSlotsGPU"
             aria-label="HPCnSlotsGPU"
-            control={control}
-            render={ ({field}) =>
-              <Form.Control
-                {...field}
-                className={`form-control text-center ${errors && errors.HPCnSlotsGPU ? "is-invalid" : ''}`}
-                disabled={fieldsDisabled}
-                type="number"
-              />
-            }
-          />
-          <InputGroup.Text>
-            GPU
-          </InputGroup.Text>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnSlotsGPU"
-            render={({ message }) =>
-              <Form.Control.Feedback type="invalid" className="end-0">
-                { message }
-              </Form.Control.Feedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-        <Form.Label
-          htmlFor="HPCnRAM"
-          aria-label="HPCnRAM"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-ram"
-            defaultMessage="Prosječna količina radne memorije po poslu (GB):"
-          />
-        </Form.Label>
-        <InputGroup>
-          <Controller
-            name="HPCnRAM"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-ngpu"
+              defaultMessage="Prosječan broj grafičkih procesora po poslu:"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnSlotsGPU"
+              aria-label="HPCnSlotsGPU"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  className={`form-control text-center ${errors && errors.HPCnSlotsGPU ? "is-invalid" : ''}`}
+                  disabled={fieldsDisabled}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              GPU
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnSlotsGPU"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnRAM"
             aria-label="HPCnRAM"
-            control={control}
-            render={ ({field}) =>
-              <Form.Control
-                {...field}
-                disabled={fieldsDisabled}
-                className={`form-control text-center ${errors && errors.HPCnRAM ? "is-invalid" : ''}`}
-                type="number"
-              />
-            }
-          />
-          <InputGroup.Text>
-            RAM
-          </InputGroup.Text>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnRAM"
-            render={({ message }) =>
-              <Form.Control.Feedback type="invalid" className="end-0">
-                { message }
-              </Form.Control.Feedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-        <Form.Label
-          htmlFor="HPCnTempGB"
-          aria-label="HPCnTempGB"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-temp"
-            defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
-          />
-        </Form.Label>
-        <InputGroup>
-          <Controller
-            name="HPCnTempGB"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-ram"
+              defaultMessage="Prosječna količina radne memorije po poslu (GB):"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnRAM"
+              aria-label="HPCnRAM"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  disabled={fieldsDisabled}
+                  className={`form-control text-center ${errors && errors.HPCnRAM ? "is-invalid" : ''}`}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              RAM
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnRAM"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnTempGB"
             aria-label="HPCnTempGB"
-            control={control}
-            render={ ({field}) =>
-              <Form.Control
-                {...field}
-                className={`form-control text-center ${errors && errors.HPCnTempGB ? "is-invalid" : ''}`}
-                disabled={fieldsDisabled}
-                type="number"
-              />
-            }
-          />
-          <InputGroup.Text>
-            Temp
-          </InputGroup.Text>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnTempGB"
-            render={({ message }) =>
-              <Form.Control.Feedback type="invalid" className="end-0">
-                { message }
-              </Form.Control.Feedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-      <Col  className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-        <Form.Label
-          htmlFor="HPCnDiskGB"
-          aria-label="HPCnDiskGB"
-          className="mr-2 form-label text-center">
-          <FormattedMessage
-            description="resourcefields-disk"
-            defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
-          />
-        </Form.Label>
-        <InputGroup>
-          <Controller
-            name="HPCnDiskGB"
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-temp"
+              defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnTempGB"
+              aria-label="HPCnTempGB"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  className={`form-control text-center ${errors && errors.HPCnTempGB ? "is-invalid" : ''}`}
+                  disabled={fieldsDisabled}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              Temp
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnTempGB"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+        <Col  className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+          <Form.Label
+            htmlFor="HPCnDiskGB"
             aria-label="HPCnDiskGB"
-            control={control}
-            render={ ({field}) =>
-              <Form.Control
-                {...field}
-                disabled={fieldsDisabled}
-                className={`form-control text-center ${errors && errors.HPCnDiskGB ? "is-invalid" : ''}`}
-                type="number"
-              />
-            }
-          />
-          <InputGroup.Text>
-            Disk
-          </InputGroup.Text>
-          <ErrorMessage
-            errors={errors}
-            name="HPCnDiskGB"
-            render={({ message }) =>
-              <Form.Control.Feedback type="invalid" className="end-0">
-                { message }
-              </Form.Control.Feedback>
-            }
-          />
-        </InputGroup>
-      </Col>
-    </Row>
+            className="mr-2 form-label text-center">
+            <FormattedMessage
+              description="resourcefields-disk"
+              defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
+            />
+          </Form.Label>
+          <InputGroup>
+            <Controller
+              name="HPCnDiskGB"
+              aria-label="HPCnDiskGB"
+              control={control}
+              render={ ({field}) =>
+                <Form.Control
+                  {...field}
+                  disabled={fieldsDisabled}
+                  className={`form-control text-center ${errors && errors.HPCnDiskGB ? "is-invalid" : ''}`}
+                  type="number"
+                />
+              }
+            />
+            <InputGroup.Text>
+              Disk
+            </InputGroup.Text>
+            <ErrorMessage
+              errors={errors}
+              name="HPCnDiskGB"
+              render={({ message }) =>
+                <Form.Control.Feedback type="invalid" className="end-0">
+                  { message }
+                </Form.Control.Feedback>
+              }
+            />
+          </InputGroup>
+        </Col>
+      </Row>
+    </>
   )
 }
 
