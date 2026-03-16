@@ -268,227 +268,235 @@ const NewRequestIndex = () => {
         </Col>
       </Row>
       <Row style={{height: '50px'}}/>
-      <Row>
-        <Col className="fs-4 mb-3" md={{offset: 1}}>
-          HPC
-        </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
-          <Form.Label
-            htmlFor="HPCnSlotsCPU"
-            aria-label="HPCnSlotsCPU"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="resourcefields-ncpu"
-              defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              disabled={true}
-              className="form-control text-center"
-              type="number"
-            />
-            <InputGroup.Text>
-              CPU
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="HPCnSlotsGPU"
-            aria-label="HPCnSlotsGPU"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="resourcefields-ngpu"
-              defaultMessage="Prosječan broj grafičkih procesora po poslu:"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              className="form-control text-center"
-              disabled={true}
-              type="number"
-            />
-            <InputGroup.Text>
-              GPU
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="HPCnRAM"
-            aria-label="HPCnRAM"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="resourcefields-ram"
-              defaultMessage="Prosječna količina radne memorije po poslu (GB):"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              className="form-control text-center"
-              disabled={true}
-              type="number"
-            />
-            <InputGroup.Text>
-              RAM
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="HPCnTempGB"
-            aria-label="HPCnTempGB"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="resourcefields-temp"
-              defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              className="form-control text-center"
-              disabled={true}
-              type="number"
-            />
-            <InputGroup.Text>
-              Temp
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="HPCnDiskGB"
-            aria-label="HPCnDiskGB"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="resourcefields-disk"
-              defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              className="form-control text-center"
-              disabled={true}
-              type="number"
-            />
-            <InputGroup.Text>
-              Disk
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-      </Row>
+      <React.Fragment>
+        <Row>
+          <Col className="fs-4 mb-3" md={{offset: 1}}>
+            HPC
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
+            <Form.Label
+              htmlFor="HPCnSlotsCPU"
+              aria-label="HPCnSlotsCPU"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="resourcefields-ncpu"
+                defaultMessage="Prosječan broj procesorskih jezgri po poslu:"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                disabled={true}
+                className="form-control text-center"
+                type="number"
+              />
+              <InputGroup.Text>
+                CPU
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="HPCnSlotsGPU"
+              aria-label="HPCnSlotsGPU"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="resourcefields-ngpu"
+                defaultMessage="Prosječan broj grafičkih procesora po poslu:"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                className="form-control text-center"
+                disabled={true}
+                type="number"
+              />
+              <InputGroup.Text>
+                GPU
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="HPCnRAM"
+              aria-label="HPCnRAM"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="resourcefields-ram"
+                defaultMessage="Prosječna količina radne memorije po poslu (GB):"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                className="form-control text-center"
+                disabled={true}
+                type="number"
+              />
+              <InputGroup.Text>
+                RAM
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="HPCnTempGB"
+              aria-label="HPCnTempGB"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="resourcefields-temp"
+                defaultMessage="Prosječna količina privremenog prostora po poslu (GB):"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                className="form-control text-center"
+                disabled={true}
+                type="number"
+              />
+              <InputGroup.Text>
+                Temp
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="HPCnDiskGB"
+              aria-label="HPCnDiskGB"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="resourcefields-disk"
+                defaultMessage="Ukupna količina spremišnog prostora potrebna za projekt (GB):"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                className="form-control text-center"
+                disabled={true}
+                type="number"
+              />
+              <InputGroup.Text>
+                Disk
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+        </Row>
+      </React.Fragment>
       <Row style={{height: '50px'}}/>
-      <Row>
-        <Col className="fs-4 mb-3" md={{offset: 1}}>
-          CLOUD
-        </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
-          <Form.Label
-            htmlFor="CLOUDnVM"
-            aria-label="CLOUDnVM"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="cloudfields-nvm"
-              defaultMessage="Broj virtualnih poslužitelja:"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              disabled={true}
-              className="form-control text-center"
-              type="number"
-            />
-            <InputGroup.Text>
-              VM
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="CLOUDnSlotsCPU"
-            aria-label="CLOUDnSlotsCPU"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="cloudfields-vcpu"
-              defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              disabled={true}
-              className="form-control text-center"
-              type="number"
-            />
-            <InputGroup.Text>
-              CPU
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="CLOUDnRAM"
-            aria-label="CLOUDnRAM"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="cloudfields-nram"
-              defaultMessage="Ukupna količina radne memorije (GB):"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              disabled={true}
-              className="form-control text-center"
-              type="number"
-            />
-            <InputGroup.Text>
-              RAM
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="CLOUDnRAMVM"
-            aria-label="CLOUDnRAMVM"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="cloudfields-nramvm"
-              defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              disabled={true}
-              className="form-control text-center"
-              type="number"
-            />
-            <InputGroup.Text>
-              RAM
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-        <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
-          <Form.Label
-            htmlFor="CLOUDnDiskGB"
-            aria-label="CLOUDnDiskGB"
-            className="mr-2 form-label text-center">
-            <FormattedMessage
-              description="cloudfields-ndiskgb"
-              defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
-            />
-          </Form.Label>
-          <InputGroup>
-            <Form.Control
-              disabled={true}
-              className="form-control text-center"
-              type="number"
-            />
-            <InputGroup.Text>
-              Disk
-            </InputGroup.Text>
-          </InputGroup>
-        </Col>
-      </Row>
+      <React.Fragment>
+        <Row>
+          <Col className="fs-4 mb-3" md={{offset: 1}}>
+            CLOUD
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex flex-column justify-content-end" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
+            <Form.Label
+              htmlFor="CLOUDnVM"
+              aria-label="CLOUDnVM"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="cloudfields-nvm"
+                defaultMessage="Broj virtualnih poslužitelja:"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                disabled={true}
+                className="form-control text-center"
+                type="number"
+              />
+              <InputGroup.Text>
+                VM
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="CLOUDnSlotsCPU"
+              aria-label="CLOUDnSlotsCPU"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="cloudfields-vcpu"
+                defaultMessage="Ukupna količina virtualnih procesorskih jezgara:"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                disabled={true}
+                className="form-control text-center"
+                type="number"
+              />
+              <InputGroup.Text>
+                CPU
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="CLOUDnRAM"
+              aria-label="CLOUDnRAM"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="cloudfields-nram"
+                defaultMessage="Ukupna količina radne memorije (GB):"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                disabled={true}
+                className="form-control text-center"
+                type="number"
+              />
+              <InputGroup.Text>
+                RAM
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="CLOUDnRAMVM"
+              aria-label="CLOUDnRAMVM"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="cloudfields-nramvm"
+                defaultMessage="Maksimalna količina radne memorije po poslužitelju (GB):"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                disabled={true}
+                className="form-control text-center"
+                type="number"
+              />
+              <InputGroup.Text>
+                RAM
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+          <Col className="d-flex flex-column justify-content-end offset-lg-0 mt-sm-3" md={{span: 3}} lg={{span: 2}}>
+            <Form.Label
+              htmlFor="CLOUDnDiskGB"
+              aria-label="CLOUDnDiskGB"
+              className="mr-2 form-label text-center">
+              <FormattedMessage
+                description="cloudfields-ndiskgb"
+                defaultMessage="Ukupna količina prostora za virtualne poslužitelje na standardnom spremištu (GB):"
+              />
+            </Form.Label>
+            <InputGroup>
+              <Form.Control
+                disabled={true}
+                className="form-control text-center"
+                type="number"
+              />
+              <InputGroup.Text>
+                Disk
+              </InputGroup.Text>
+            </InputGroup>
+          </Col>
+        </Row>
+      </React.Fragment>
       <Row className="mt-5">
         <Col className="d-flex flex-column justify-content-end offset-md-1 offset-lg-0 mt-sm-3" md={{span: 3}} lg={{offset: 1, span: 2}}>
           <Form.Label
