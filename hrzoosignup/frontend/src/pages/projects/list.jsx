@@ -314,7 +314,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     name="searchDate"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder={intl.formatMessage({
                           defaultMessage: "Traži",
@@ -331,7 +331,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                     name="searchUsers"
                     control={ control }
                     render={ ({ field }) =>
-                      <Input
+                      <Form.Control
                         { ...field }
                         placeholder={intl.formatMessage({
                           defaultMessage: "Traži",
