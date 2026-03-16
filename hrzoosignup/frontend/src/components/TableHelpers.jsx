@@ -3,7 +3,8 @@ import {
   Row,
   Col,
   Pagination,
-  Placeholder
+  Placeholder,
+  Form
  } from "react-bootstrap"
 
 
@@ -349,7 +350,7 @@ export const HZSIPagination = ({
   return (
     <Row className="g-0">
       <Col className="d-flex flex-column flex-md-row align-items-center justify-content-center">
-        <Pagination className="mt-2">
+        <Pagination className="mt-3">
           <Pagination.First aria-label="First" disabled={pageIndex === 0} onClick={() => setPageIndex(0)} />
           <Pagination.Prev aria-label="Previous" disabled={pageIndex === 0} onClick={() => setPageIndex(pageIndex - 1)} />
           {
@@ -362,26 +363,23 @@ export const HZSIPagination = ({
           <Pagination.Next aria-label="Next" disabled={pageIndex === pageCount - 1} onClick={() => setPageIndex(pageIndex + 1)} />
           <Pagination.Last aria-label="Last" disabled={pageIndex === pageCount - 1} onClick={() => setPageIndex(pageCount - 1)} />
         </Pagination>
-        <Pagination className="mt-0 mt-md-2">
-          <Pagination.Item>
-            <select
-              style={{width: '180px'}}
-              className="ms-1 form-control form-select text-primary"
-              aria-label={`Broj ${resource_name}`}
-              value={pageSize}
-              onChange={e => {
-                setPageSize(Number(e.target.value))
-                setPageIndex(Math.trunc(start / e.target.value))
-              }}
-            >
-              {choices.map(pageSize => (
-                <option label={`${pageSize} ${resource_name}`} key={pageSize} value={pageSize}>
-                  {pageSize} {resource_name}
-                </option>
-              ))}
-            </select>
-          </Pagination.Item>
-        </Pagination>
+        <Pagination.Item>
+          <Form.Select
+            className="ms-1 text-primary"
+            aria-label={`Broj ${resource_name}`}
+            value={pageSize}
+            onChange={e => {
+              setPageSize(Number(e.target.value))
+              setPageIndex(Math.trunc(start / e.target.value))
+            }}
+          >
+            {choices.map(pageSize => (
+              <option label={`${pageSize} ${resource_name}`} key={pageSize} value={pageSize}>
+                {pageSize} {resource_name}
+              </option>
+            ))}
+          </Form.Select>
+        </Pagination.Item>
       </Col>
     </Row>
   )
