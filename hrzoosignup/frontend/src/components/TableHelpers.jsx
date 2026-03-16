@@ -347,39 +347,58 @@ export const HZSIPagination = ({
   choices,
   resource_name
 }) => {
+  const maxVisible = 8
+  const half = Math.floor(maxVisible / 2)
+
+  let startPage = Math.max(0, pageIndex - half)
+  let endPage = Math.min(pageCount - 1, startPage + maxVisible - 1)
+  if (endPage - startPage < maxVisible - 1) {
+    startPage = Math.max(0, endPage - maxVisible + 1)
+  }
+
+  const pages = []
+  if (startPage > 0) {
+    pages.push(<Pagination.Item key={0} onClick={() => setPageIndex(0)}>1</Pagination.Item>)
+    if (startPage > 1) pages.push(<Pagination.Ellipsis key="start-ellipsis" disabled />)
+  }
+  for (let i = startPage; i <= endPage; i++) {
+    pages.push(
+      <Pagination.Item active={pageIndex === i} key={i} onClick={() => setPageIndex(i)}>
+        { i + 1 }
+      </Pagination.Item>
+    )
+  }
+  if (endPage < pageCount - 1) {
+    if (endPage < pageCount - 2) pages.push(<Pagination.Ellipsis key="end-ellipsis" disabled />)
+    pages.push(<Pagination.Item key={pageCount - 1} onClick={() => setPageIndex(pageCount - 1)}>{pageCount}</Pagination.Item>)
+  }
+
   return (
     <Row className="g-0">
-      <Col className="d-flex flex-column flex-md-row align-items-center justify-content-center">
-        <Pagination className="mt-3">
+      <Col className="d-flex flex-column flex-md-row align-items-center justify-content-center flex-wrap">
+        <Pagination className="mt-md-2 mt-xl-0 md-sm-2 mt-sm-2 mb-0 flex-wrap">
           <Pagination.First aria-label="First" disabled={pageIndex === 0} onClick={() => setPageIndex(0)} />
           <Pagination.Prev aria-label="Previous" disabled={pageIndex === 0} onClick={() => setPageIndex(pageIndex - 1)} />
-          {
-            [...Array(pageCount)].map((e, i) =>
-              <Pagination.Item active={pageIndex === i ? true : false} key={i} onClick={() => setPageIndex(i)}>
-                { i + 1 }
-              </Pagination.Item>
-            )
-          }
+          { pages }
           <Pagination.Next aria-label="Next" disabled={pageIndex === pageCount - 1} onClick={() => setPageIndex(pageIndex + 1)} />
           <Pagination.Last aria-label="Last" disabled={pageIndex === pageCount - 1} onClick={() => setPageIndex(pageCount - 1)} />
         </Pagination>
-        <Pagination.Item>
-          <Form.Select
-            className="ms-1 text-primary"
-            aria-label={`Broj ${resource_name}`}
-            value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value))
-              setPageIndex(Math.trunc(start / e.target.value))
-            }}
-          >
-            {choices.map(pageSize => (
-              <option label={`${pageSize} ${resource_name}`} key={pageSize} value={pageSize}>
-                {pageSize} {resource_name}
-              </option>
-            ))}
-          </Form.Select>
-        </Pagination.Item>
+        <Form.Select
+          className="ms-md-2 mt-3 mt-md-2 mt-xl-0 text-primary"
+          style={{width: 'auto'}}
+          aria-label={`Broj ${resource_name}`}
+          value={pageSize}
+          onChange={e => {
+            setPageSize(Number(e.target.value))
+            setPageIndex(Math.trunc(start / e.target.value))
+          }}
+        >
+          {choices.map(pageSize => (
+            <option label={`${pageSize} ${resource_name}`} key={pageSize} value={pageSize}>
+              {pageSize} {resource_name}
+            </option>
+          ))}
+        </Form.Select>
       </Col>
     </Row>
   )
