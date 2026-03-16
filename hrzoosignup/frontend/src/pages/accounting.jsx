@@ -154,7 +154,7 @@ const Legend = ({ entities, subset, mapping}) => {
   return (
     <Row className="mt-3">
       <Col md={3}></Col>
-      <Col md={6} className="d-flex align-items-center justify-content-center">
+      <Col md={6} className="d-flex align-items-center justify-content-center border-bottom border-opacity-25">
         <div>
           {
             subset.length > 0 ?
@@ -384,7 +384,7 @@ const AccountingSpinner = ({ pageTitle }) => (
     {
       IsLead() &&
         <Row className="mb-3">
-          <Col md={ 6 }>
+          <Col md={ 6 } className="border-bottom border-opacity-25">
             <Navigation />
           </Col>
         </Row>
@@ -670,7 +670,7 @@ export const MyAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                 </Row>
@@ -726,7 +726,7 @@ export const MyAccounting = () => {
             {
               IsLead() &&
               <Row className="mb-3">
-                <Col md={ 6 }>
+                <Col md={ 6 } className="border-bottom border-opacity-25">
                   <Navigation />
                 </Col>
               </Row>
@@ -1090,12 +1090,12 @@ export const ProjectUsersAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                   {
                     selectedProject &&
-                      <Col md={ 6 }>
+                      <Col md={ 6 } className="border-bottom border-opacity-25">
                         { projectsMapping[selectedProject] }
                       </Col>
                   }
@@ -1144,7 +1144,7 @@ export const ProjectUsersAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                   <Col md={ 2 }></Col>
@@ -1440,7 +1440,7 @@ export const ProjectAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                 </Row>
@@ -1497,7 +1497,7 @@ export const ProjectAccounting = () => {
             {
               IsLead() &&
                 <Row className="mb-3">
-                  <Col md={ 6 }>
+                  <Col md={ 6 } className="border-bottom border-opacity-25">
                     <Navigation />
                   </Col>
                 </Row>
