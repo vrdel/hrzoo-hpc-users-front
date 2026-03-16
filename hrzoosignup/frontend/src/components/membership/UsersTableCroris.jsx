@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Col, Collapse, Row, Card, CardTitle, CardBody,
-  Table, Button, Form, Tooltip, Input } from 'react-bootstrap';
+import { Col, Collapse, Row, Card,
+  Table, Button, Form, Overlay, Tooltip } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
 import { AuthContext } from 'Components/AuthContextProvider';
 import { CustomReactSelect, CustomCreatableSelect } from 'Components/CustomReactSelect';
@@ -344,33 +344,17 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         && user['role']?.name === 'lead'
                       const isMe = user['user']['person_oib'] === userDetails.person_oib
                       return (
-                        <tr key={`row-${i}`}>
-                          <td className={
-                            isMe
-                            ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                            : "p-3 align-middle text-center"
-                          }>
+                        <tr key={`row-${i}`} className={isMe ? (isLeadEntry ? "table-success fst-italic" : "table-warning fst-italic") : ""}>
+                          <td className="p-3 align-middle text-center">
                             { i + 1 }
                           </td>
-                          <td className={
-                            isMe
-                            ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                            : "p-3 align-middle text-center"
-                          }>
+                          <td className="p-3 align-middle text-center">
                             { user['user'].first_name }
                           </td>
-                          <td className={
-                            isMe
-                            ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                            : "p-3 align-middle text-center"
-                          }>
+                          <td className="p-3 align-middle text-center">
                             { user['user'].last_name }
                           </td>
-                          <td className={
-                            isMe
-                            ? "align-middle text-center fst-italic border-bottom border-secondary"
-                            : "align-middle text-center"
-                          }>
+                          <td className="align-middle text-center">
                             {
                               isLeadEntry
                               ?
@@ -392,18 +376,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                   />
                             }
                           </td>
-                          <td className={
-                            isMe
-                            ? "align-middle text-center fst-italic border-bottom border-secondary"
-                            : "align-middle text-center"
-                          }>
+                          <td className="align-middle text-center">
                             { extractEmails(user['user'].person_mail) }
                           </td>
-                          <td className={
-                            isMe
-                            ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                            : "align-middle text-center text-success"
-                          }>
+                          <td className="align-middle text-center text-success">
                             {
                               isLeadEntry || user['user']['person_type'] === 'local'
                               ?
@@ -422,11 +398,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                 </span>
                             }
                           </td>
-                          <td className={
-                            isMe
-                            ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                            : "align-middle text-center text-success"
-                          }>
+                          <td className="align-middle text-center text-success">
                             <div className="position-relative">
                               <FormattedMessage
                                 defaultMessage="Da"
@@ -454,11 +426,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           </td>
                           {
                             amILead &&
-                            <td className={
-                              isMe
-                              ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                              : "align-middle text-center text-success"
-                            }>
+                            <td className="align-middle text-center text-success">
                               {
                                 isLeadEntry
                                 ? '\u2212'

@@ -429,33 +429,17 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       && user['role']?.name === 'lead'
                     const isMe = user['user']['person_oib'] === userDetails.person_oib
                     return (
-                      <tr key={`row-${i}`}>
-                        <td className={
-                          isMe
-                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                          : "p-3 align-middle text-center"
-                        }>
+                      <tr key={`row-${i}`} className={isMe ? (isLeadEntry ? "table-success fst-italic" : "table-warning fst-italic") : ""}>
+                        <td className="p-3 align-middle text-center">
                           { i + 1 }
                         </td>
-                        <td className={
-                          isMe
-                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                          : "p-3 align-middle text-center"
-                        }>
+                        <td className="p-3 align-middle text-center">
                           { user['user'].first_name }
                         </td>
-                        <td className={
-                          isMe
-                          ? "p-3 align-middle text-center fst-italic border-bottom border-secondary"
-                          : "p-3 align-middle text-center"
-                        }>
+                        <td className="p-3 align-middle text-center">
                           { user['user'].last_name }
                         </td>
-                        <td className={
-                          isMe
-                          ? "align-middle text-center fst-italic border-bottom border-secondary"
-                          : "align-middle text-center"
-                        }>
+                        <td className="align-middle text-center">
                           {
                             isLeadEntry
                             ?
@@ -477,18 +461,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                                 />
                           }
                         </td>
-                        <td className={
-                          isMe
-                          ? "align-middle text-center fst-italic border-bottom border-secondary"
-                          : "align-middle text-center"
-                        }>
+                        <td className="align-middle text-center">
                           { user['user'].person_mail }
                         </td>
-                        <td className={
-                          isMe
-                          ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                          : "align-middle text-center text-success"
-                        }>
+                        <td className="align-middle text-center text-success">
                           <div className="position-relative">
                             <FormattedMessage
                               defaultMessage="Da"
@@ -516,11 +492,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                         </td>
                         {
                           amILead &&
-                          <td className={
-                            isMe
-                            ? "align-middle text-center text-success fst-italic border-bottom border-secondary"
-                            : "align-middle text-center text-success"
-                          }>
+                          <td className="align-middle text-center text-success">
                             {
                               isLeadEntry
                               ? '\u2212'
