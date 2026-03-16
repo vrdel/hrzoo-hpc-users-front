@@ -37,7 +37,7 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
       <Nav.Item key='my-requests' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/my-requests'>
           <FontAwesomeIcon icon={faBook} />{' '}
           <FormattedMessage
@@ -49,7 +49,7 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
       <Nav.Item key='new-request' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/new-request'>
           <FontAwesomeIcon icon={faFileSignature} />{' '}
           <FormattedMessage
@@ -61,7 +61,7 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
       <Nav.Item key='memberships' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/memberships'>
           <FontAwesomeIcon icon={faUsers} />{' '}
           <FormattedMessage
@@ -73,7 +73,7 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
       <Nav.Item key='public-keys' className='mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/public-keys'>
           <FontAwesomeIcon icon={faKey} />{' '}
           <FormattedMessage
@@ -91,7 +91,7 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
                 accountingMyMatch ? {'backgroundColor': activeBgColor} : {}}
               className={accountingProjectMatch ||
                 accountingUsersMatch ||
-                accountingMyMatch ? "nav-link active text-white" : "nav-link text-dark"}
+                accountingMyMatch ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
               to={`/ui/${isLead ? "project" : "my"}-accounting`}
             >
               <FontAwesomeIcon icon={ faChartBar } />{' '}
@@ -105,7 +105,7 @@ const NavigationLinksUser = ({isAdmin, isLead, enableAccounting, activeBgColor})
       <Nav.Item key='my-info' className={isAdmin ? 'mt-1 ms-xs-0 ms-sm-0 ms-md-auto ms-xl-auto' : 'mt-1 ms-auto me-3 me-xs-0 ms-xs-0'}>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/my-info'>
           <FontAwesomeIcon icon={faCircleInfo} />{' '}
           <FormattedMessage
@@ -125,7 +125,7 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
       <Nav.Item key='requests' className='ms-3 mt-1'>
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/requests'>
           <FontAwesomeIcon icon={faStamp} />{' '}
           <FormattedMessage
@@ -137,7 +137,7 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
       <Nav.Item key="projects" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/projects'
         >
           <FontAwesomeIcon icon={faCertificate} />{" "}
@@ -150,7 +150,7 @@ const NavigationLinksAdmin = ({activeBgColor}) => {
       <Nav.Item key="users" className="mt-1">
         <NavLink
           style={({isActive}) => isActive ? {'backgroundColor': activeBgColor} : {}}
-          className={({isActive}) => isActive ? "nav-link active text-white" : "nav-link text-dark"}
+          className={({isActive}) => isActive ? "nav-link rounded-top active text-white" : "nav-link text-dark"}
           to='/ui/users'
         >
           <FontAwesomeIcon icon={faUsers} />{" "}
