@@ -26,6 +26,8 @@ export const CloudFields = ({fieldsDisabled=false}) => {
         <Col className="fs-4 mb-3" md={{offset: 1}}>
           CLOUD
         </Col>
+      </Row>
+      <Row>
         <Col className="d-flex flex-column justify-content-end" md={{offset: 1, span: 3}} lg={{offset: 1, span: 2}}>
           <Form.Label
             htmlFor="CLOUDnVM"
