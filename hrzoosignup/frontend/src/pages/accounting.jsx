@@ -154,7 +154,7 @@ const Legend = ({ entities, subset, mapping}) => {
   return (
     <Row className="mt-3">
       <Col md={3}></Col>
-      <Col md={6} className="d-flex align-items-center justify-content-center border-bottom border-opacity-25">
+      <Col md={6} className="d-flex align-items-center justify-content-center">
         <div>
           {
             subset.length > 0 ?
