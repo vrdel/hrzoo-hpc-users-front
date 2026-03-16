@@ -172,7 +172,7 @@ const NavigationLinks = ({userMode, setUserMode}) => {
   const isLead = userDetails && "userproject_set" in userDetails && userDetails.userproject_set.map(item => item.role.name).includes("lead")
 
   return (
-    <Nav tabs id="hzsi-navlinks" className="border-start border-end rounded d-flex sticky-top">
+    <Nav tabs id="hzsi-navlinks" className="border shadow-sm rounded d-flex sticky-top">
       {
         (userDetails.is_staff || userDetails.is_superuser) && !userMode
         ?
