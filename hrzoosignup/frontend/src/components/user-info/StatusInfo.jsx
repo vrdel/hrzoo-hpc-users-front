@@ -93,7 +93,7 @@ const TooltipMsgInactive = ({myInfo}) => {
 
 const StatusInfo = ({myInfo=true, userDetails}) => {
   const intl = useIntl()
-  const { isOpen, toggleIndex } = useOpenedIndexMap()
+  const { isOpen, openIndex, closeIndex } = useOpenedIndexMap()
 
   if (userDetails && userDetails.first_name && userDetails.person_username)
     return (
@@ -107,7 +107,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
               {
                 userDetails.status ?
                   <React.Fragment>
-                    <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } />
+                    <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#198754" icon={ faCheckCircle } onMouseEnter={() => openIndex(userDetails.first_name)} onMouseLeave={() => closeIndex(userDetails.first_name)} />
                     <Overlay
                       placement='right'
                       show={isOpen(userDetails.first_name)}
@@ -122,7 +122,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                   </React.Fragment>
                 :
                   <React.Fragment>
-                    <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } />
+                    <FontAwesomeIcon id={`Tooltip-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-3 fa-2x me-3" color="#DC3545" icon={ faStopCircle } onMouseEnter={() => openIndex(userDetails.first_name)} onMouseLeave={() => closeIndex(userDetails.first_name)} />
                     <Overlay
                       placement='bottom'
                       show={isOpen(userDetails.first_name)}
@@ -139,7 +139,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
               {
                 userDetails.person_type === 'local'?
                   <React.Fragment>
-                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faHome } />
+                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faHome } onMouseEnter={() => openIndex(`${userDetails.first_name}-type`)} onMouseLeave={() => closeIndex(`${userDetails.first_name}-type`)} />
                     <Overlay
                       placement='right'
                       show={isOpen(`${userDetails.first_name}-type`)}
@@ -154,7 +154,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                   </React.Fragment>
                 :
                   <React.Fragment>
-                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faGlobe } />
+                    <FontAwesomeIcon id={`Tooltip-type-${userDetails.first_name.replace(/ /g, '-')}`} className="ms-2 fa-2x me-2" color="#777777" icon={ faGlobe } onMouseEnter={() => openIndex(`${userDetails.first_name}-type`)} onMouseLeave={() => closeIndex(`${userDetails.first_name}-type`)} />
                     <Overlay
                       placement='right'
                       show={isOpen(`${userDetails.first_name}-type`)}
@@ -187,7 +187,7 @@ const StatusInfo = ({myInfo=true, userDetails}) => {
                     <tr>
                       <td>
                         <div className="d-flex align-items-center">
-                          <Badge bg="success" className="fs-5" id={`Tooltip-${userDetails.person_username}`}>
+                          <Badge bg="success" className="fs-5" id={`Tooltip-${userDetails.person_username}`} onMouseEnter={() => openIndex(userDetails.person_username)} onMouseLeave={() => closeIndex(userDetails.person_username)}>
                             {userDetails.person_username}
                           </Badge>
                           <Overlay
