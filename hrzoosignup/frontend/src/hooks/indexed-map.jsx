@@ -13,6 +13,16 @@ export function useOpenedIndexMap() {
     }))
   }, [])
 
+  const openIndex = useCallback((id) => {
+    if (!id) return
+    setOpened(prev => ({ ...prev, [id]: true }))
+  }, [])
+
+  const closeIndex = useCallback((id) => {
+    if (!id) return
+    setOpened(prev => ({ ...prev, [id]: false }))
+  }, [])
+
   const isOpen = useCallback(
     (id) => !!opened[id],
     [opened]
@@ -21,5 +31,7 @@ export function useOpenedIndexMap() {
   return {
     isOpen,
     toggleIndex,
+    openIndex,
+    closeIndex,
   }
 }
