@@ -10,3 +10,4 @@ from backend.dbmodels.resource_usage import ResourceUsage
 from backend.dbmodels.sshkey import SSHPublicKey, validate_ssh_public_key
 from backend.dbmodels.user import User, Role
 from backend.dbmodels.userproject import UserProject
+from backend.dbmodels.userproject_history import UserProjectHistory
