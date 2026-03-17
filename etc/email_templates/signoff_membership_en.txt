@@ -1,0 +1,7 @@
+Removed from project
+
+Dear,
+
+You have been removed from the project "$project_name" by the project lead.
+
+$signature

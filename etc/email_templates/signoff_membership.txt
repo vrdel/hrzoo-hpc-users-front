@@ -1,0 +1,7 @@
+Odjava s projekta
+
+Poštovani/a,
+
+odjavljeni ste s projekta "$project_name" od strane voditelja projekta.
+
+$signature

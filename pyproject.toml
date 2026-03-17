@@ -117,6 +117,8 @@ hrzoosignup = "hrzoosignup/"
   "etc/email_templates/deny_project.txt",
   "etc/email_templates/deny_project_en.txt",
   "etc/email_templates/new_project.txt",
+  "etc/email_templates/signoff_membership.txt",
+  "etc/email_templates/signoff_membership_en.txt",
 ]
 "etc/logrotate.d/" = [
 	"logrotate/logcrons", "logrotate/logdashboard",

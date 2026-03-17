@@ -131,6 +131,8 @@ try:
     EMAIL_TEMPLATE_APPROVE_MEMBERSHIP = config.get('EMAIL', 'TemplateApproveMembership')
     EMAIL_TEMPLATE_APPROVE_MEMBERSHIP_EN = config.get('EMAIL', 'TemplateApproveMembershipEn')
     EMAIL_TEMPLATE_ADD_SSHKEY = config.get('EMAIL', 'TemplateAddSshkey')
+    EMAIL_TEMPLATE_SIGNOFF_MEMBERSHIP = config.get('EMAIL', 'TemplateSignoffMembership')
+    EMAIL_TEMPLATE_SIGNOFF_MEMBERSHIP_EN = config.get('EMAIL', 'TemplateSignoffMembershipEn')
 
 except NoSectionError as e:
     print(e)
