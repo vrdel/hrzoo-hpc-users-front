@@ -1,24 +1,17 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
+
+from backend.email.loader import render_and_send
 
 
 def email_add_sshkey(user):
-    subject = "Dodan novi javni ključ"
-
-    body = \
-f"""\
-Poštovani/a,
-
-korisnik {user.first_name} {user.last_name}, {user.username} je dodao novi SSH javni ključ.
-
-{settings.EMAILSIGNATURE}
-"""
-
-    em = EmailMessage(\
-        subject,
-        body,
-        settings.EMAILFROM,
-        settings.EMAILUS
+    return render_and_send(
+        settings.EMAIL_TEMPLATE_ADD_SSHKEY,
+        {
+            'user_first_name': user.first_name,
+            'user_last_name': user.last_name,
+            'username': user.username,
+            'signature': settings.EMAILSIGNATURE,
+        },
+        from_addr=settings.EMAILFROM,
+        to=settings.EMAILUS,
     )
-
-    return em.send(fail_silently=True)

@@ -1,157 +1,79 @@
 from django.conf import settings
-from django.core.mail import EmailMessage
+
+from backend.email.loader import render_and_send
+
+
+PROJECT_TYPE_MAP = {
+    'thesis': "nove izrade rada",
+    'practical': "nove praktične nastave",
+    'research-croris': "novog istraživačkog projekta",
+    'research-institutional': "novog institucijskog projekta",
+    'internal': "novog internog projekta",
+    'srce-workshop': "nove Srce radionice",
+}
 
 
 def email_approve_project(to, name, prtype):
-    subject = 'Zahtjev odobren'
-
-    body = \
-f"""\
-Poštovani/a,
-
-vaš zahtjev za korištenje usluge Napredno računanje "{name}" je prihvaćen.
-
-{settings.EMAILSIGNATURE}
-"""
-
-    em = EmailMessage(\
-        subject,
-        body,
-        settings.EMAILFROM,
-        [to],
-        settings.EMAILUS)
-
-    return em.send(fail_silently=True)
+    return render_and_send(
+        settings.EMAIL_TEMPLATE_APPROVE_PROJECT,
+        {'name': name, 'signature': settings.EMAILSIGNATURE},
+        from_addr=settings.EMAILFROM,
+        to=[to],
+        bcc=settings.EMAILUS,
+    )
 
 
 def email_deny_project(to, name, prtype, comment):
-    project_type_subject = 'Zahtjev nije odobren'
-
-    body = \
-f"""\
-Poštovani/a,
-
-vaš zahtjev za korištenje usluge Napredno računanje "{name}" je odbačen
-s obrazloženjem:
-
-{comment}
-
-{settings.EMAILSIGNATURE}
-"""
-
-    em = EmailMessage(\
-        project_type_subject,
-        body,
-        settings.EMAILFROM,
-        [to],
-        settings.EMAILUS)
-
-    return em.send(fail_silently=True)
+    return render_and_send(
+        settings.EMAIL_TEMPLATE_DENY_PROJECT,
+        {'name': name, 'comment': comment, 'signature': settings.EMAILSIGNATURE},
+        from_addr=settings.EMAILFROM,
+        to=[to],
+        bcc=settings.EMAILUS,
+    )
 
 
 def email_new_project(name, lead, prtype, prident):
-    project_type_subject = ''
-    if prtype.name == 'thesis':
-        project_type_subject = "nove izrade rada"
-    elif prtype.name == 'practical':
-        project_type_subject = "nove praktične nastave"
-    elif prtype.name == 'research-croris':
-        project_type_subject = "novog istraživačkog projekta"
-    elif prtype.name == 'research-institutional':
-        project_type_subject = "novog institucijskog projekta"
-    elif prtype.name == 'internal':
-        project_type_subject = "novog internog projekta"
-    elif prtype.name == 'srce-workshop':
-        project_type_subject = "nove Srce radionice"
-
-    body = \
-f"""\
-Poštovani/a,
-
-prijavljen je novi projekt na usluzi Napredno računanje.
-
-Naziv: {name}
-
-Voditelj: {lead.first_name} {lead.last_name}
-
-Pogledaj prijavu: https://computing.srce.hr/ui/requests/{prident}
-
-{settings.EMAILSIGNATURE}
-"""
-
-    em = EmailMessage(\
-        'Prijava ' + project_type_subject,
-        body,
-        settings.EMAILFROM,
-        settings.EMAILUS)
-
-    return em.send(fail_silently=True)
+    project_type_label = PROJECT_TYPE_MAP.get(prtype.name, '')
+    return render_and_send(
+        settings.EMAIL_TEMPLATE_NEW_PROJECT,
+        {
+            'name': name,
+            'lead_first_name': lead.first_name,
+            'lead_last_name': lead.last_name,
+            'prident': prident,
+            'project_type_label': project_type_label,
+            'signature': settings.EMAILSIGNATURE,
+        },
+        from_addr=settings.EMAILFROM,
+        to=settings.EMAILUS,
+    )
 
 
 def email_approve_project_en(to, name, prtype):
-    subject = 'Request approved'
-
-    body = \
-f"""\
-Dear,
-
-Your request to use the Advanced Computing service "{name}" has been accepted.
-
-{settings.EMAILSIGNATUREEN}
-"""
-
-    em = EmailMessage(\
-        subject,
-        body,
-        settings.EMAILFROMEN,
-        [to],
-        settings.EMAILUS)
-
-    return em.send(fail_silently=True)
+    return render_and_send(
+        settings.EMAIL_TEMPLATE_APPROVE_PROJECT_EN,
+        {'name': name, 'signature': settings.EMAILSIGNATUREEN},
+        from_addr=settings.EMAILFROMEN,
+        to=[to],
+        bcc=settings.EMAILUS,
+    )
 
 
 def email_deny_project_en(to, name, prtype, comment):
-    project_type_subject = 'Request denied'
-
-    body = \
-f"""\
-Dear,
-
-Your request to use the Advanced Computing service "{name}" has been rejected with the
-following explanation:
-
-{comment}
-
-{settings.EMAILSIGNATUREEN}
-"""
-
-    em = EmailMessage(\
-        project_type_subject,
-        body,
-        settings.EMAILFROMEN,
-        [to],
-        settings.EMAILUS)
-
-    return em.send(fail_silently=True)
+    return render_and_send(
+        settings.EMAIL_TEMPLATE_DENY_PROJECT_EN,
+        {'name': name, 'comment': comment, 'signature': settings.EMAILSIGNATUREEN},
+        from_addr=settings.EMAILFROMEN,
+        to=[to],
+        bcc=settings.EMAILUS,
+    )
 
 
 def email_auto_approve_project(name):
-    subject = "Merlin zahtjev odobren"
-
-    body = \
-        f"""\
-Poštovani/a,
-
-zahtjev za korištenje usluge Napredno računanje "{name}" je automatski prihvaćen.
-
-{settings.EMAILSIGNATURE}
-"""
-
-    em = EmailMessage(
-        subject,
-        body,
-        settings.EMAILFROM,
-        settings.EMAILUS
+    return render_and_send(
+        settings.EMAIL_TEMPLATE_AUTO_APPROVE_PROJECT,
+        {'name': name, 'signature': settings.EMAILSIGNATURE},
+        from_addr=settings.EMAILFROM,
+        to=settings.EMAILUS,
     )
-
-    return em.send(fail_silently=True)
