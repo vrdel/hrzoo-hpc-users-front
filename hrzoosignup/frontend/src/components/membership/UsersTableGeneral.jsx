@@ -37,7 +37,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const refFileCollaboratorsInput = useRef(null)
   const refFileForeignCollaboratorsInput = useRef(null)
   const intl = useIntl()
-  const { isOpen: isOpened, toggleIndex: showTooltip } = useOpenedIndexMap()
+  const { isOpen: isOpened, openIndex: showTooltip, closeIndex: hideTooltip } = useOpenedIndexMap()
 
   const [searchFirstName, setSearchFirstName] = useState('')
   const [searchLastName, setSearchLastName] = useState('')
@@ -472,7 +472,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                             />
                             {
                               user['user'].sshkeys &&
-                                <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
+                                <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
                                   <FontAwesomeIcon icon={faKey}/>
                                   <Overlay
                                     placement='top'
@@ -543,7 +543,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       </td>
                       <td className="align-middle text-center">
                         <div className="position-relative">
-                          <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope}/>
+                          <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope} onMouseEnter={() => showTooltip(user.email)} onMouseLeave={() => hideTooltip(user.email)}/>
                           <Overlay
                             placement='top'
                             show={isOpened(user.email)}

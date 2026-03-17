@@ -33,7 +33,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
   const intl = useIntl()
-  const { isOpen: isOpened, toggleIndex: showTooltip } = useOpenedIndexMap()
+  const { isOpen: isOpened, openIndex: showTooltip, closeIndex: hideTooltip } = useOpenedIndexMap()
 
   const [searchFirstName, setSearchFirstName] = useState('')
   const [searchLastName, setSearchLastName] = useState('')
@@ -406,7 +406,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                               />
                               {
                                 user['user'].sshkeys &&
-                                  <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle">
+                                  <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
                                     <FontAwesomeIcon icon={faKey}/>
                                     <Overlay
                                       placement='top'
@@ -527,6 +527,8 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                         id={'Tooltip-' + i + 100}
                                         className="text-success fa-lg"
                                         icon={faEnvelope}
+                                        onMouseEnter={() => showTooltip(user.email)}
+                                        onMouseLeave={() => hideTooltip(user.email)}
                                       />
                                       <Overlay
                                         placement='top'
@@ -593,7 +595,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         </td>
                         <td className="align-middle text-center">
                           <div className="position-relative">
-                            <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope}/>
+                            <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope} onMouseEnter={() => showTooltip(email)} onMouseLeave={() => hideTooltip(email)}/>
                             <Overlay
                               placement='top'
                               show={isOpened(email)}
