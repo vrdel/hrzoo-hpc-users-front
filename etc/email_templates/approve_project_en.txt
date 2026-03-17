@@ -1,0 +1,7 @@
+Request approved
+
+Dear,
+
+Your request to use the Advanced Computing service "$name" has been accepted.
+
+$signature

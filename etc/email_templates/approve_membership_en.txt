@@ -1,0 +1,8 @@
+User Registration Successful
+
+Dear,
+
+The collaborator $collab_first_name $collab_last_name has confirmed registration for the project
+"$name".
+
+$signature

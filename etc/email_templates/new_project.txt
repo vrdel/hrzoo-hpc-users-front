@@ -1,0 +1,13 @@
+Prijava $project_type_label
+
+Poštovani/a,
+
+prijavljen je novi projekt na usluzi Napredno računanje.
+
+Naziv: $name
+
+Voditelj: $lead_first_name $lead_last_name
+
+Pogledaj prijavu: https://computing.srce.hr/ui/requests/$prident
+
+$signature

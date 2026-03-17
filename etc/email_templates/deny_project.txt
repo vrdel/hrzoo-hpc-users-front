@@ -1,0 +1,10 @@
+Zahtjev nije odobren
+
+Poštovani/a,
+
+vaš zahtjev za korištenje usluge Napredno računanje "$name" je odbačen
+s obrazloženjem:
+
+$comment
+
+$signature

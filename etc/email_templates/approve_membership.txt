@@ -1,0 +1,8 @@
+Prijava korisnika uspješna
+
+Poštovani/a,
+
+suradnik $collab_first_name $collab_last_name je potvrdio prijavu na projekt
+"$name".
+
+$signature
