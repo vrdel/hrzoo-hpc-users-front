@@ -472,12 +472,12 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                             />
                             {
                               user['user'].sshkeys &&
-                                <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
+                                <div id={`Tooltip-key-${project.id}-${i}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
                                   <FontAwesomeIcon icon={faKey}/>
                                   <Overlay
                                     placement='top'
                                     show={isOpened(user['user'].person_mail)}
-                                    target={document.getElementById(`Tooltip-key-${i + 1000}`)}
+                                    target={document.getElementById(`Tooltip-key-${project.id}-${i}`)}
                                   >
                                     {(props) => <Tooltip {...props}>
                                       <FormattedMessage
@@ -543,11 +543,11 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                       </td>
                       <td className="align-middle text-center">
                         <div className="position-relative">
-                          <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope} onMouseEnter={() => showTooltip(user.email)} onMouseLeave={() => hideTooltip(user.email)}/>
+                          <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-inv-${project.id}-${i}`} icon={faEnvelope} onMouseEnter={() => showTooltip(user.email)} onMouseLeave={() => hideTooltip(user.email)}/>
                           <Overlay
                             placement='top'
                             show={isOpened(user.email)}
-                            target={document.getElementById(`Tooltip-${i + 100}`)}
+                            target={document.getElementById(`Tooltip-inv-${project.id}-${i}`)}
                           >
                             {(props) => <Tooltip {...props}>
                               <FormattedMessage
