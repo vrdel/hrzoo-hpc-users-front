@@ -406,12 +406,12 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                               />
                               {
                                 user['user'].sshkeys &&
-                                  <div id={`Tooltip-key-${i + 1000}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
+                                  <div id={`Tooltip-key-${project.id}-${i}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
                                     <FontAwesomeIcon icon={faKey}/>
                                     <Overlay
                                       placement='top'
                                       show={isOpened(user['user'].person_mail)}
-                                      target={document.getElementById(`Tooltip-key-${i + 1000}`)}
+                                      target={document.getElementById(`Tooltip-key-${project.id}-${i}`)}
                                     >
                                       {(props) => <Tooltip {...props}>
                                         <FormattedMessage
@@ -524,7 +524,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                   ?
                                     <div className="position-relative">
                                       <FontAwesomeIcon
-                                        id={'Tooltip-' + i + 100}
+                                        id={`Tooltip-inv-${project.id}-${i}`}
                                         className="text-success fa-lg"
                                         icon={faEnvelope}
                                         onMouseEnter={() => showTooltip(user.email)}
@@ -533,7 +533,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                                       <Overlay
                                         placement='top'
                                         show={isOpened(user.email)}
-                                        target={document.getElementById('Tooltip-' + i + 100)}
+                                        target={document.getElementById(`Tooltip-inv-${project.id}-${i}`)}
                                       >
                                         {(props) => <Tooltip {...props}>
                                           <FormattedMessage
@@ -595,11 +595,11 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         </td>
                         <td className="align-middle text-center">
                           <div className="position-relative">
-                            <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-${i + 100}`} icon={faEnvelope} onMouseEnter={() => showTooltip(email)} onMouseLeave={() => hideTooltip(email)}/>
+                            <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-finv-${project.id}-${i}`} icon={faEnvelope} onMouseEnter={() => showTooltip(email)} onMouseLeave={() => hideTooltip(email)}/>
                             <Overlay
                               placement='top'
                               show={isOpened(email)}
-                              target={document.getElementById(`Tooltip-${i + 100}`)}
+                              target={document.getElementById(`Tooltip-finv-${project.id}-${i}`)}
                             >
                               {(props) => <Tooltip {...props}>
                                 <FormattedMessage
