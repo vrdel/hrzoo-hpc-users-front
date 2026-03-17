@@ -44,7 +44,6 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const [searchRole, setSearchRole] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
 
-
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
     if (project.is_active)

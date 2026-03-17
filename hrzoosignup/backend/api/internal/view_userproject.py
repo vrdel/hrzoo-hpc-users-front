@@ -124,9 +124,9 @@ class UsersProjects(APIView):
 
                 if settings.EMAIL_SEND and up.user.person_mail:
                     if up.user.person_type == 'foreign':
-                        email_signoff_membership_en(up.user.person_mail, target_project.name)
+                        email_signoff_membership_en(up.user.person_mail, target_project.name, request.user)
                     else:
-                        email_signoff_membership(up.user.person_mail, target_project.name)
+                        email_signoff_membership(up.user.person_mail, target_project.name, request.user)
 
             userproject_obj.delete()
             msg = {

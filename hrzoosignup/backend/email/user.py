@@ -33,11 +33,13 @@ def email_approve_membership_en(to, name, collab):
     )
 
 
-def email_signoff_membership(to, project_name):
+def email_signoff_membership(to, project_name, lead):
     return render_and_send(
         settings.EMAIL_TEMPLATE_SIGNOFF_MEMBERSHIP,
         {
             'project_name': project_name,
+            'first_name': lead.first_name,
+            'last_name': lead.last_name,
             'signature': settings.EMAILSIGNATURE,
         },
         from_addr=settings.EMAILFROM,
@@ -46,11 +48,13 @@ def email_signoff_membership(to, project_name):
     )
 
 
-def email_signoff_membership_en(to, project_name):
+def email_signoff_membership_en(to, project_name, lead):
     return render_and_send(
         settings.EMAIL_TEMPLATE_SIGNOFF_MEMBERSHIP_EN,
         {
             'project_name': project_name,
+            'first_name': lead.first_name,
+            'last_name': lead.last_name,
             'signature': settings.EMAILSIGNATUREEN,
         },
         from_addr=settings.EMAILFROMEN,
