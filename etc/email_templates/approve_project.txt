@@ -1,0 +1,7 @@
+Zahtjev odobren
+
+Poštovani/a,
+
+vaš zahtjev za korištenje usluge Napredno računanje "$name" je prihvaćen.
+
+$signature

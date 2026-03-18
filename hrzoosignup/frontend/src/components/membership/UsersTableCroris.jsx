@@ -155,7 +155,6 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     setEmailInvites(invites)
   }, [invites])
 
-
   const filterUser = (firstName, lastName, role, email) => {
     let match = true
     if (searchFirstName)

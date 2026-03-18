@@ -1,0 +1,10 @@
+Request denied
+
+Dear,
+
+Your request to use the Advanced Computing service "$name" has been rejected with the
+following explanation:
+
+$comment
+
+$signature

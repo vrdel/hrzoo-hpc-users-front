@@ -1,7 +1,10 @@
 from backend import serializers
 from backend import models
 
+from backend.email.user import email_signoff_membership, email_signoff_membership_en
+
 from django.core.cache import cache
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
@@ -99,6 +102,31 @@ class UsersProjects(APIView):
                 }
                 logger.error(err_response)
                 return Response(err_response, status=err_status)
+
+            now = timezone.make_aware(datetime.datetime.now())
+            target_project = models.Project.objects.get(id=kwargs['projiddb'])
+
+            for up in userproject_obj:
+                models.UserProjectHistory.objects.create(
+                    user=up.user,
+                    project=up.project,
+                    role=up.role.name,
+                    date_joined=up.date_joined,
+                    date_left=now,
+                    removed_by=request.user,
+                    user_username=up.user.username,
+                    user_first_name=up.user.first_name,
+                    user_last_name=up.user.last_name,
+                    user_mail=up.user.person_mail,
+                    project_name=target_project.name,
+                    project_identifier=target_project.identifier,
+                )
+
+                if settings.EMAIL_SEND and up.user.person_mail:
+                    if up.user.person_type == 'foreign':
+                        email_signoff_membership_en(up.user.person_mail, target_project.name, request.user)
+                    else:
+                        email_signoff_membership(up.user.person_mail, target_project.name, request.user)
 
             userproject_obj.delete()
             msg = {

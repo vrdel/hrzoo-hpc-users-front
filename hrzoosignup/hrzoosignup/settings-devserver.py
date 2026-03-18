@@ -122,6 +122,17 @@ try:
     EMAILTLS = config.getboolean('EMAIL', 'TLS')
     EMAILSSL = config.getboolean('EMAIL', 'SSL')
     EMAILTIMEOUT = config.getint('EMAIL', 'TIMEOUT')
+    EMAIL_TEMPLATE_APPROVE_PROJECT = config.get('EMAIL', 'TemplateApproveProject')
+    EMAIL_TEMPLATE_APPROVE_PROJECT_EN = config.get('EMAIL', 'TemplateApproveProjectEn')
+    EMAIL_TEMPLATE_DENY_PROJECT = config.get('EMAIL', 'TemplateDenyProject')
+    EMAIL_TEMPLATE_DENY_PROJECT_EN = config.get('EMAIL', 'TemplateDenyProjectEn')
+    EMAIL_TEMPLATE_NEW_PROJECT = config.get('EMAIL', 'TemplateNewProject')
+    EMAIL_TEMPLATE_AUTO_APPROVE_PROJECT = config.get('EMAIL', 'TemplateAutoApproveProject')
+    EMAIL_TEMPLATE_APPROVE_MEMBERSHIP = config.get('EMAIL', 'TemplateApproveMembership')
+    EMAIL_TEMPLATE_APPROVE_MEMBERSHIP_EN = config.get('EMAIL', 'TemplateApproveMembershipEn')
+    EMAIL_TEMPLATE_ADD_SSHKEY = config.get('EMAIL', 'TemplateAddSshkey')
+    EMAIL_TEMPLATE_SIGNOFF_MEMBERSHIP = config.get('EMAIL', 'TemplateSignoffMembership')
+    EMAIL_TEMPLATE_SIGNOFF_MEMBERSHIP_EN = config.get('EMAIL', 'TemplateSignoffMembershipEn')
 
 except NoSectionError as e:
     print(e)

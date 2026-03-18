@@ -107,6 +107,19 @@ hrzoosignup = "hrzoosignup/"
 	"etc/signature",
 	"etc/signature_en",
 ]
+"etc/hrzoosignup/email_templates" = [
+  "etc/email_templates/add_sshkey.txt",
+  "etc/email_templates/approve_membership.txt",
+  "etc/email_templates/approve_membership_en.txt",
+  "etc/email_templates/approve_project.txt",
+  "etc/email_templates/approve_project_en.txt",
+  "etc/email_templates/auto_approve_project.txt",
+  "etc/email_templates/deny_project.txt",
+  "etc/email_templates/deny_project_en.txt",
+  "etc/email_templates/new_project.txt",
+  "etc/email_templates/signoff_membership.txt",
+  "etc/email_templates/signoff_membership_en.txt",
+]
 "etc/logrotate.d/" = [
 	"logrotate/logcrons", "logrotate/logdashboard",
 	"logrotate/logsaml2", "logrotate/logtasks",

@@ -1,0 +1,7 @@
+Merlin zahtjev odobren
+
+Poštovani/a,
+
+zahtjev za korištenje usluge Napredno računanje "$name" je automatski prihvaćen.
+
+$signature

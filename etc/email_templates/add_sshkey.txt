@@ -1,0 +1,7 @@
+Dodan novi javni ključ
+
+Poštovani/a,
+
+korisnik $user_first_name $user_last_name, $username je dodao novi SSH javni ključ.
+
+$signature
