@@ -59,8 +59,25 @@ class UsersInfoInactive(APIView):
             users_noproject, users_inactiveprojects = list(), list()
             for user in users:
                 userprojects = models.UserProject.objects.filter(user=user)
-                if not userprojects:
-                    ssh_keys = len(models.SSHPublicKey.objects.filter(user=user))
+                history_projects = models.UserProjectHistory.objects.filter(user=user)
+
+                projects_list = [{
+                    "identifier": userproject.project.identifier,
+                    "state": userproject.project.state.name,
+                    "role": userproject.role.name,
+                    "type": userproject.project.project_type.name
+                } for userproject in userprojects]
+
+                projects_list += [{
+                    "identifier": hp.project_identifier,
+                    "state": hp.project.state.name if hp.project and hp.project.state else "",
+                    "role": hp.role,
+                    "type": hp.project.project_type.name if hp.project and hp.project.project_type else "",
+                } for hp in history_projects]
+
+                ssh_keys = len(models.SSHPublicKey.objects.filter(user=user))
+
+                if not projects_list:
                     users_noproject.append({
                         "username": user.username,
                         "first_name": user.first_name,
@@ -74,7 +91,6 @@ class UsersInfoInactive(APIView):
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
                 else:
-                    ssh_keys = len(models.SSHPublicKey.objects.filter(user=user))
                     users_inactiveprojects.append({
                         "username": user.username,
                         "first_name": user.first_name,
@@ -83,12 +99,7 @@ class UsersInfoInactive(APIView):
                         "person_mail": user.person_mail,
                         "ssh_key": ssh_keys > 0,
                         "n_ssh_key": ssh_keys,
-                        "projects": [{
-                            "identifier": userproject.project.identifier,
-                            "state": userproject.project.state.name,
-                            "role": userproject.role.name,
-                            "type": userproject.project.project_type.name
-                        } for userproject in userprojects],
+                        "projects": projects_list,
                         "date_joined":
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
