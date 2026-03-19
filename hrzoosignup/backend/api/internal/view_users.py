@@ -70,10 +70,9 @@ class UsersInfoInactive(APIView):
 
                 projects_list += [{
                     "identifier": hp.project_identifier,
-                    "state": "left",
+                    "state": hp.project.state.name if hp.project and hp.project.state else "",
                     "role": hp.role,
-                    "type": "",
-                    "date_left": hp.date_left.strftime("%Y-%m-%d %H:%M:%S") if hp.date_left else ""
+                    "type": hp.project.project_type.name if hp.project and hp.project.project_type else "",
                 } for hp in history_projects]
 
                 ssh_keys = len(models.SSHPublicKey.objects.filter(user=user))
