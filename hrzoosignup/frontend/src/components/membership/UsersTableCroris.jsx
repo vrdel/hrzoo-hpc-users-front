@@ -188,11 +188,11 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   allMembers = allMembers.concat(filteredJoined)
 
   if (sortFirstName !== undefined)
-    allMembers = _.orderBy(allMembers, [u => u['user'].first_name?.toLowerCase() ?? ''], [sortFirstName ? 'desc' : 'asc'])
+    allMembers = _.orderBy(allMembers, [u => u['user'].first_name?.toLowerCase() ?? ''], [sortFirstName ? 'asc' : 'desc'])
   if (sortLastName !== undefined)
-    allMembers = _.orderBy(allMembers, [u => u['user'].last_name?.toLowerCase() ?? ''], [sortLastName ? 'desc' : 'asc'])
+    allMembers = _.orderBy(allMembers, [u => u['user'].last_name?.toLowerCase() ?? ''], [sortLastName ? 'asc' : 'desc'])
   if (sortEmail !== undefined)
-    allMembers = _.orderBy(allMembers, [u => u['user'].person_mail?.toLowerCase() ?? ''], [sortEmail ? 'desc' : 'asc'])
+    allMembers = _.orderBy(allMembers, [u => u['user'].person_mail?.toLowerCase() ?? ''], [sortEmail ? 'asc' : 'desc'])
 
 
   if (emailInvites !== undefined) {
@@ -256,7 +256,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-firstname"
                         />
                       </span>
-                      { SortArrow(sortFirstName) }
+                      { SortArrow(sortFirstName !== undefined ? !sortFirstName : undefined) }
                     </span>
                   </th>
                   <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortLastName(!sortLastName); setSortFirstName(undefined); setSortEmail(undefined) }}>
@@ -267,7 +267,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-lastname"
                         />
                       </span>
-                      { SortArrow(sortLastName) }
+                      { SortArrow(sortLastName !== undefined ? !sortLastName : undefined) }
                     </span>
                   </th>
                   <th className="fw-normal">
@@ -284,7 +284,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                           description="users-table-croris-email"
                         />
                       </span>
-                      { SortArrow(sortEmail) }
+                      { SortArrow(sortEmail !== undefined ? !sortEmail : undefined) }
                     </span>
                   </th>
                   <th className="fw-normal" style={{minWidth: '180px'}}>
