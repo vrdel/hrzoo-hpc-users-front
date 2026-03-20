@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 import { FormattedMessage } from 'react-intl';
 import { useIntl } from 'react-intl'
 import { useOpenedIndexMap } from 'Hooks/indexed-map'
+import { SortArrow } from 'Components/TableHelpers';
 import _ from 'lodash';
 
 
@@ -38,6 +39,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const [searchFirstName, setSearchFirstName] = useState('')
   const [searchLastName, setSearchLastName] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
+
+  const [sortFirstName, setSortFirstName] = useState(undefined)
+  const [sortLastName, setSortLastName] = useState(undefined)
+  const [sortEmail, setSortEmail] = useState(undefined)
 
 
   const [isOpen, setIsOpen] = useState(false);
@@ -182,6 +187,13 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     allMembers.push(lead)
   allMembers = allMembers.concat(filteredJoined)
 
+  if (sortFirstName !== undefined)
+    allMembers = _.orderBy(allMembers, [u => u['user'].first_name?.toLowerCase() ?? ''], [sortFirstName ? 'desc' : 'asc'])
+  if (sortLastName !== undefined)
+    allMembers = _.orderBy(allMembers, [u => u['user'].last_name?.toLowerCase() ?? ''], [sortLastName ? 'desc' : 'asc'])
+  if (sortEmail !== undefined)
+    allMembers = _.orderBy(allMembers, [u => u['user'].person_mail?.toLowerCase() ?? ''], [sortEmail ? 'desc' : 'asc'])
+
 
   if (emailInvites !== undefined) {
     let email_invites = emailInvites.map(i => i.email)
@@ -236,17 +248,27 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                   <th className="fw-normal" style={{width: '52px'}}>
                     #
                   </th>
-                  <th className="fw-normal">
-                    <FormattedMessage
-                      defaultMessage="Ime"
-                      description="users-table-croris-firstname"
-                    />
+                  <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortFirstName(!sortFirstName); setSortLastName(undefined); setSortEmail(undefined) }}>
+                    <span className="d-flex">
+                      <span className="flex-grow-1">
+                        <FormattedMessage
+                          defaultMessage="Ime"
+                          description="users-table-croris-firstname"
+                        />
+                      </span>
+                      { SortArrow(sortFirstName) }
+                    </span>
                   </th>
-                  <th className="fw-normal">
-                    <FormattedMessage
-                      defaultMessage="Prezime"
-                      description="users-table-croris-lastname"
-                    />
+                  <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortLastName(!sortLastName); setSortFirstName(undefined); setSortEmail(undefined) }}>
+                    <span className="d-flex">
+                      <span className="flex-grow-1">
+                        <FormattedMessage
+                          defaultMessage="Prezime"
+                          description="users-table-croris-lastname"
+                        />
+                      </span>
+                      { SortArrow(sortLastName) }
+                    </span>
                   </th>
                   <th className="fw-normal">
                     <FormattedMessage
@@ -254,11 +276,16 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       description="users-table-croris-role"
                     />
                   </th>
-                  <th className="fw-normal">
-                    <FormattedMessage
-                      defaultMessage="Email"
-                      description="users-table-croris-email"
-                    />
+                  <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortEmail(!sortEmail); setSortFirstName(undefined); setSortLastName(undefined) }}>
+                    <span className="d-flex">
+                      <span className="flex-grow-1">
+                        <FormattedMessage
+                          defaultMessage="Email"
+                          description="users-table-croris-email"
+                        />
+                      </span>
+                      { SortArrow(sortEmail) }
+                    </span>
                   </th>
                   <th className="fw-normal" style={{minWidth: '180px'}}>
                     <FormattedMessage
