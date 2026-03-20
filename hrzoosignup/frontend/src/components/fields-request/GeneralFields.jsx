@@ -161,6 +161,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
                 key={`project-users-${index}`}
                 style={{cursor: 'pointer'}}
                 id={`pop-lead-${index}-${user.user.id}`}
+                onClick={() => showPopover(`${index}-${user.user.id}`)}
               >
                 {
                   user['user']['first_name'] + ' ' + user['user']['last_name']
@@ -198,6 +199,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
                   key={`project-users-${index}`}
                   style={{cursor: 'pointer'}}
                   id={`pop-collab-${index}-${user.user.id}`}
+                  onClick={() => showPopover(`${index}-${user.user.id}`)}
                 >
                   {
                     user &&
