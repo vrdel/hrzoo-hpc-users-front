@@ -219,6 +219,13 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
       filterUser(u.first_name, u.last_name, collabRole, u.email)
     )
 
+    if (sortFirstName !== undefined)
+      filteredCollaborators = _.orderBy(filteredCollaborators, [u => u.first_name?.toLowerCase() ?? ''], [sortFirstName ? 'asc' : 'desc'])
+    if (sortLastName !== undefined)
+      filteredCollaborators = _.orderBy(filteredCollaborators, [u => u.last_name?.toLowerCase() ?? ''], [sortLastName ? 'asc' : 'desc'])
+    if (sortEmail !== undefined)
+      filteredCollaborators = _.orderBy(filteredCollaborators, [u => u.email?.toLowerCase() ?? ''], [sortEmail ? 'asc' : 'desc'])
+
 
     let collabNoEmail = true
     for (var collab of missingCollab)
