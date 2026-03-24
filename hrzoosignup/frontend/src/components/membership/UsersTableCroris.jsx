@@ -242,10 +242,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
           <Col>
             <div
               ref={tableContainerRef}
-              style={totalUsers >= 15 ? { height: '600px', overflow: 'auto' } : undefined}
+              style={allTableRows.length >= 15 ? { height: '600px', overflow: 'auto' } : undefined}
             >
-            <Table responsive={totalUsers < 15} hover className="shadow-sm bg-white m-0">
-              <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= 15 ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
+            <Table responsive={allTableRows.length < 15} hover className="shadow-sm bg-white m-0">
+              <thead id="hzsi-thead" className="align-middle text-center text-white" style={allTableRows.length >= 15 ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
                 <tr>
                   <th className="fw-normal" style={{width: '52px'}}>
                     #
@@ -352,7 +352,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     </tr>
                   }
                   {
-                    totalUsers >= 15 &&
+                    allTableRows.length >= 15 &&
                     <>
                       {paddingTop > 0 && <tr><td colSpan={amILead ? 8 : 7} style={{height: paddingTop, padding: 0, border: 0}} /></tr>}
                       {virtualItems.map(virtualRow => {
@@ -500,7 +500,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     </>
                   }
                   {
-                    totalUsers < 15 && allMembers.length > 0 && allMembers.map((user, i) => {
+                    allTableRows.length < 15 && allMembers.length > 0 && allMembers.map((user, i) => {
                       const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
                         && user['role']?.name === 'lead'
                       const isMe = user['user']['person_oib'] === userDetails.person_oib
@@ -608,7 +608,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     })
                   }
                   {
-                    totalUsers < 15 && filteredCollaborators.length > 0 && filteredCollaborators.map((user, i) =>
+                    allTableRows.length < 15 && filteredCollaborators.length > 0 && filteredCollaborators.map((user, i) =>
                         (
                           <tr key={`row-${i + 100}`}>
                             <td className="p-3 align-middle text-center">
@@ -731,7 +731,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         ))
                   }
                   {
-                    totalUsers < 15 && filteredForeignInvites.length > 0 && filteredForeignInvites.map((email, i) => (
+                    allTableRows.length < 15 && filteredForeignInvites.length > 0 && filteredForeignInvites.map((email, i) => (
                       <tr key={`row-${i + 100}`}>
                         <td className="p-3 align-middle text-center">
                           { allMembers.length + filteredCollaborators.length + i + 1 }
