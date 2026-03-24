@@ -354,10 +354,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
         <Col>
           <div
             ref={tableContainerRef}
-            style={allTableRows.length >= 15 ? { height: '600px', overflow: 'auto' } : undefined}
+            style={totalUsers >= 15 ? { height: allTableRows.length >= 15 ? '600px' : 'auto', overflow: 'auto' } : undefined}
           >
-          <Table responsive={allTableRows.length < 15} hover className="shadow-sm bg-white">
-            <thead id="hzsi-thead" className="align-middle text-center text-white" style={allTableRows.length >= 15 ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
+          <Table responsive={totalUsers < 15} hover className="shadow-sm bg-white">
+            <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= 15 ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
               <tr>
                 <th className="fw-normal" style={{width: '52px'}}>
                   #
@@ -472,7 +472,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </tr>
                 }
                 {
-                  allTableRows.length >= 15 &&
+                  totalUsers >= 15 && allTableRows.length >= 15 &&
                   <>
                     {paddingTop > 0 && <tr><td colSpan={amILead ? 7 : 6} style={{height: paddingTop, padding: 0, border: 0}} /></tr>}
                     {virtualItems.map(virtualRow => {
@@ -552,7 +552,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </>
                 }
                 {
-                  allTableRows.length < 15 && allMembers.length > 0 && allMembers.map((user, i) => {
+                  (totalUsers < 15 || allTableRows.length < 15) && allMembers.length > 0 && allMembers.map((user, i) => {
                     const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
                       && user['role']?.name === 'lead'
                     const isMe = user['user']['person_oib'] === userDetails.person_oib
@@ -641,7 +641,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   })
                 }
                 {
-                  allTableRows.length < 15 && filteredInvites.length > 0 && filteredInvites.map((user, i) => (
+                  (totalUsers < 15 || allTableRows.length < 15) && filteredInvites.length > 0 && filteredInvites.map((user, i) => (
                     <tr key={`row-${i + 100}`}>
                       <td className="p-3 align-middle text-center">
                         { allMembers.length + i + 1 }
