@@ -24,6 +24,7 @@ import { FormattedMessage } from 'react-intl';
 import { useIntl } from 'react-intl'
 import { useOpenedIndexMap } from 'Hooks/indexed-map'
 import { SortArrow } from 'Components/TableHelpers';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import _ from 'lodash';
 
 
@@ -37,6 +38,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const [ foreignCollaboratorEmailFile, setForeignCollaboratorEmailFile ] = useState(undefined)
   const refFileCollaboratorsInput = useRef(null)
   const refFileForeignCollaboratorsInput = useRef(null)
+  const tableContainerRef = useRef(null)
   const intl = useIntl()
   const { isOpen: isOpened, openIndex: showTooltip, closeIndex: hideTooltip } = useOpenedIndexMap()
 
@@ -330,12 +332,32 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
 
   const totalUsers = 1 + alreadyJoined.length + (invites?.length || 0)
 
+  const allTableRows = [
+    ...allMembers.map(u => ({ type: 'member', data: u })),
+    ...filteredInvites.map(u => ({ type: 'invite', data: u }))
+  ]
+  const rowVirtualizer = useVirtualizer({
+    count: allTableRows.length,
+    getScrollElement: () => tableContainerRef.current,
+    estimateSize: () => 53,
+    overscan: 5,
+  })
+  const virtualItems = rowVirtualizer.getVirtualItems()
+  const paddingTop = virtualItems[0]?.start ?? 0
+  const paddingBottom = virtualItems.length > 0
+    ? rowVirtualizer.getTotalSize() - virtualItems[virtualItems.length - 1].end
+    : 0
+
   return (
     <>
       <Row className={amILead ? 'mt-4 ms-1 ps-0 pe-0 me-1 mb-2 ' : 'mt-4 ms-1 me-1 mb-5'}>
         <Col>
-          <Table responsive hover className="shadow-sm bg-white">
-            <thead id="hzsi-thead" className="align-middle text-center text-white">
+          <div
+            ref={tableContainerRef}
+            style={totalUsers >= 15 ? { height: '600px', overflow: 'auto' } : undefined}
+          >
+          <Table responsive={totalUsers < 15} hover className="shadow-sm bg-white">
+            <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= 15 ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
               <tr>
                 <th className="fw-normal" style={{width: '52px'}}>
                   #
@@ -450,7 +472,87 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </tr>
                 }
                 {
-                  allMembers.length > 0 && allMembers.map((user, i) => {
+                  totalUsers >= 15 &&
+                  <>
+                    {paddingTop > 0 && <tr><td colSpan={amILead ? 7 : 6} style={{height: paddingTop, padding: 0, border: 0}} /></tr>}
+                    {virtualItems.map(virtualRow => {
+                      const row = allTableRows[virtualRow.index]
+                      if (row.type === 'member') {
+                        const user = row.data
+                        const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
+                          && user['role']?.name === 'lead'
+                        const isMe = user['user']['person_oib'] === userDetails.person_oib
+                        return (
+                          <tr key={virtualRow.key} className={isMe ? (isLeadEntry ? "table-success fst-italic" : "table-warning fst-italic") : ""}>
+                            <td className="p-3 align-middle text-center">{ virtualRow.index + 1 }</td>
+                            <td className="p-3 align-middle text-center">{ user['user'].first_name }</td>
+                            <td className="p-3 align-middle text-center">{ user['user'].last_name }</td>
+                            <td className="align-middle text-center">
+                              {
+                                isLeadEntry
+                                ? <FormattedMessage defaultMessage="Voditelj" description="users-table-general-leader" />
+                                : (user['user'].person_type === 'foreign')
+                                  ? <FormattedMessage defaultMessage="Strani suradnik" description="users-table-general-collaborator-foreign" />
+                                  : <FormattedMessage defaultMessage="Suradnik" description="users-table-general-collaborator" />
+                              }
+                            </td>
+                            <td className="align-middle text-center">{ user['user'].person_mail }</td>
+                            <td className="align-middle text-center text-success">
+                              <div className="position-relative">
+                                <FormattedMessage defaultMessage="Da" description="users-table-general-isadded" />
+                                {
+                                  user['user'].sshkeys &&
+                                  <div id={`Tooltip-key-${project.id}-${virtualRow.index}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
+                                    <FontAwesomeIcon icon={faKey}/>
+                                    <Overlay placement='top' show={isOpened(user['user'].person_mail)} target={document.getElementById(`Tooltip-key-${project.id}-${virtualRow.index}`)}>
+                                      {(props) => <Tooltip {...props}><FormattedMessage defaultMessage="Dodan javni ključ" description="users-table-general-keyadd" /></Tooltip>}
+                                    </Overlay>
+                                  </div>
+                                }
+                              </div>
+                            </td>
+                            {amILead && <td className="align-middle text-center text-success">
+                              {isLeadEntry ? '\u2212' : <Form.Check><Form.Check.Input type="checkbox" className="bg-danger border border-danger ms-1" checked={checkJoined[alreadyJoined.indexOf(user)] === true} onChange={() => onChangeCheckOut(alreadyJoined.indexOf(user))} /></Form.Check>}
+                            </td>}
+                          </tr>
+                        )
+                      } else {
+                        const user = row.data
+                        return (
+                          <tr key={virtualRow.key}>
+                            <td className="p-3 align-middle text-center">{ virtualRow.index + 1 }</td>
+                            <td className="p-3 align-middle text-center">{ '\u2212' }</td>
+                            <td className="p-3 align-middle text-center">{ '\u2212' }</td>
+                            <td className="align-middle text-center">
+                              {(user.invtype === 'foreign')
+                                ? <FormattedMessage defaultMessage="Strani suradnik" description="users-table-general-collaborator-foreign" />
+                                : <FormattedMessage defaultMessage="Suradnik" description="users-table-general-collaborator" />
+                              }
+                            </td>
+                            <td className="align-middle text-center">{ user.email }</td>
+                            <td className="align-middle text-center">
+                              <div className="position-relative">
+                                <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-inv-${project.id}-${virtualRow.index}`} icon={faEnvelope} onMouseEnter={() => showTooltip(user.email)} onMouseLeave={() => hideTooltip(user.email)}/>
+                                <Overlay placement='top' show={isOpened(user.email)} target={document.getElementById(`Tooltip-inv-${project.id}-${virtualRow.index}`)}>
+                                  {(props) => <Tooltip {...props}><FormattedMessage defaultMessage="Aktivna pozivnica poslana na email" description="users-table-general-invitesent" /></Tooltip>}
+                                </Overlay>
+                                <div className="position-absolute top-0 ms-4 start-50 translate-middle">
+                                  <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0" variant="light" onClick={() => onInviteDelete(user)}>
+                                    <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
+                                  </Button>
+                                </div>
+                              </div>
+                            </td>
+                            {amILead && <td className="align-middle text-center">{'\u2212'}</td>}
+                          </tr>
+                        )
+                      }
+                    })}
+                    {paddingBottom > 0 && <tr><td colSpan={amILead ? 7 : 6} style={{height: paddingBottom, padding: 0, border: 0}} /></tr>}
+                  </>
+                }
+                {
+                  totalUsers < 15 && allMembers.length > 0 && allMembers.map((user, i) => {
                     const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
                       && user['role']?.name === 'lead'
                     const isMe = user['user']['person_oib'] === userDetails.person_oib
@@ -539,7 +641,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   })
                 }
                 {
-                  filteredInvites.length > 0 && filteredInvites.map((user, i) => (
+                  totalUsers < 15 && filteredInvites.length > 0 && filteredInvites.map((user, i) => (
                     <tr key={`row-${i + 100}`}>
                       <td className="p-3 align-middle text-center">
                         { allMembers.length + i + 1 }
@@ -604,6 +706,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
               </>
             </tbody>
           </Table>
+          </div>
         </Col>
       </Row>
       {
