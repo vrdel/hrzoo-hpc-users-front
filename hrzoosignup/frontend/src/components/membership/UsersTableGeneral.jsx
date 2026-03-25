@@ -31,7 +31,8 @@ import _ from 'lodash';
 export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const lead = extractUsers(project.userproject_set, 'lead')[0]
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
-  const { userDetails } = useContext(AuthContext);
+  const { userDetails, backendConfig } = useContext(AuthContext);
+  const virtualScrollRows = backendConfig?.virtual_scroll_rows ?? 15
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
   const [collaboratorsEmailFile, setCollaboratorsEmailFile] = useState(undefined)
@@ -354,10 +355,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
         <Col>
           <div
             ref={tableContainerRef}
-            style={totalUsers >= 15 ? { height: allTableRows.length >= 15 ? '600px' : 'auto', overflow: 'auto' } : undefined}
+            style={totalUsers >= virtualScrollRows ? { height: allTableRows.length >= virtualScrollRows ? '600px' : 'auto', overflow: 'auto' } : undefined}
           >
-          <Table responsive={totalUsers < 15} hover className="shadow-sm bg-white">
-            <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= 15 ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
+          <Table responsive={totalUsers < virtualScrollRows} hover className="shadow-sm bg-white">
+            <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
               <tr>
                 <th className="fw-normal" style={{width: '52px'}}>
                   #
@@ -472,7 +473,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </tr>
                 }
                 {
-                  totalUsers >= 15 && allTableRows.length >= 15 &&
+                  totalUsers >= virtualScrollRows && allTableRows.length >= virtualScrollRows &&
                   <>
                     {paddingTop > 0 && <tr><td colSpan={amILead ? 7 : 6} style={{height: paddingTop, padding: 0, border: 0}} /></tr>}
                     {virtualItems.map(virtualRow => {
@@ -552,7 +553,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   </>
                 }
                 {
-                  (totalUsers < 15 || allTableRows.length < 15) && allMembers.length > 0 && allMembers.map((user, i) => {
+                  (totalUsers < virtualScrollRows || allTableRows.length < virtualScrollRows) && allMembers.length > 0 && allMembers.map((user, i) => {
                     const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
                       && user['role']?.name === 'lead'
                     const isMe = user['user']['person_oib'] === userDetails.person_oib
@@ -641,7 +642,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                   })
                 }
                 {
-                  (totalUsers < 15 || allTableRows.length < 15) && filteredInvites.length > 0 && filteredInvites.map((user, i) => (
+                  (totalUsers < virtualScrollRows || allTableRows.length < virtualScrollRows) && filteredInvites.length > 0 && filteredInvites.map((user, i) => (
                     <tr key={`row-${i + 100}`}>
                       <td className="p-3 align-middle text-center">
                         { allMembers.length + i + 1 }
