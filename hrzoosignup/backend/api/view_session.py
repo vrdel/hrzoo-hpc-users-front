@@ -29,7 +29,8 @@ class IsSessionActive(APIView):
                         "grace_months": settings.GRACE_MONTHS,
                         "extend_warning_days": settings.EXTEND_WARNING_DAYS,
                         "edugainattrs": settings.SAML_EDUGAINATTRS,
-                        "virtual_scroll_rows": settings.VIRTUAL_SCROLL_ROWS
+                        "virtual_scroll_rows": settings.VIRTUAL_SCROLL_ROWS,
+                        "virtual_scroll_height": settings.VIRTUAL_SCROLL_HEIGHT
                     }
                 },
                 status=status.HTTP_200_OK
@@ -52,7 +53,8 @@ class IsSessionActive(APIView):
                         "grace_months": settings.GRACE_MONTHS,
                         "extend_warning_days": settings.EXTEND_WARNING_DAYS,
                         "edugainattrs": settings.SAML_EDUGAINATTRS,
-                        "virtual_scroll_rows": settings.VIRTUAL_SCROLL_ROWS
+                        "virtual_scroll_rows": settings.VIRTUAL_SCROLL_ROWS,
+                        "virtual_scroll_height": settings.VIRTUAL_SCROLL_HEIGHT
                     }
                 },
                 status=status.HTTP_200_OK)

@@ -26,6 +26,7 @@ import _ from 'lodash';
 export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const { userDetails, backendConfig } = useContext(AuthContext);
   const virtualScrollRows = backendConfig?.virtual_scroll_rows ?? 15
+  const virtualScrollHeight = backendConfig?.virtual_scroll_height ?? 600
   const [emailInvites, setEmailInvites] = useState(undefined)
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
@@ -243,7 +244,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
           <Col>
             <div
               ref={tableContainerRef}
-              style={totalUsers >= virtualScrollRows ? { height: allTableRows.length >= virtualScrollRows ? '600px' : 'auto', overflow: 'auto' } : undefined}
+              style={totalUsers >= virtualScrollRows ? { height: allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto' } : undefined}
             >
             <Table responsive={totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0">
               <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>

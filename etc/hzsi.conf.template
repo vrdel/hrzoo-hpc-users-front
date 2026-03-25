@@ -10,6 +10,7 @@ RealmMap = %(VENV)s/etc/hrzoosignup/realm_map.json
 ExtendWarningDays = 30
 GracePeriodMonths = 6
 VirtualScrollRows = 15
+VirtualScrollHeight = 600
 
 [CONNECTION]
 Timeout = 15

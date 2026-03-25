@@ -33,6 +33,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
   const alreadyJoined = extractUsers(project.userproject_set, 'collaborator')
   const { userDetails, backendConfig } = useContext(AuthContext);
   const virtualScrollRows = backendConfig?.virtual_scroll_rows ?? 15
+  const virtualScrollHeight = backendConfig?.virtual_scroll_height ?? 600
   const amILead = lead['user']['person_oib'] === userDetails.person_oib
   const [checkJoined, setCheckJoined] = useState(Array(alreadyJoined.length))
   const [collaboratorsEmailFile, setCollaboratorsEmailFile] = useState(undefined)
@@ -355,7 +356,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
         <Col>
           <div
             ref={tableContainerRef}
-            style={totalUsers >= virtualScrollRows ? { height: allTableRows.length >= virtualScrollRows ? '600px' : 'auto', overflow: 'auto' } : undefined}
+            style={totalUsers >= virtualScrollRows ? { height: allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto' } : undefined}
           >
           <Table responsive={totalUsers < virtualScrollRows} hover className="shadow-sm bg-white">
             <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>

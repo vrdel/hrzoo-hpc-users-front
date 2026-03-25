@@ -41,6 +41,7 @@ try:
     EXTEND_WARNING_DAYS = config.getint('GENERAL', 'ExtendWarningDays')
     GRACE_MONTHS = config.getint('GENERAL', 'GracePeriodMonths')
     VIRTUAL_SCROLL_ROWS = config.getint('GENERAL', 'VirtualScrollRows')
+    VIRTUAL_SCROLL_HEIGHT = config.getint('GENERAL', 'VirtualScrollHeight')
 
     ALLOWED_HOSTS = config.get('SECURITY', 'AllowedHosts')
     HOST_CERT = config.get('SECURITY', 'HostCert')
