@@ -40,6 +40,7 @@ try:
     PROJECT_IDENTIFIER_MAP = config.get('GENERAL', 'IdentifierMap')
     EXTEND_WARNING_DAYS = config.getint('GENERAL', 'ExtendWarningDays')
     GRACE_MONTHS = config.getint('GENERAL', 'GracePeriodMonths')
+    VIRTUAL_SCROLL = config.getboolean('GENERAL', 'VirtualScroll')
     VIRTUAL_SCROLL_ROWS = config.getint('GENERAL', 'VirtualScrollRows')
     VIRTUAL_SCROLL_HEIGHT = config.getint('GENERAL', 'VirtualScrollHeight')
 

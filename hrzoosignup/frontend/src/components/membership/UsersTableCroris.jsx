@@ -25,6 +25,7 @@ import _ from 'lodash';
 
 export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const { userDetails, backendConfig } = useContext(AuthContext);
+  const virtualScroll = backendConfig?.virtual_scroll ?? false
   const virtualScrollRows = backendConfig?.virtual_scroll_rows ?? 15
   const virtualScrollHeight = backendConfig?.virtual_scroll_height ?? 600
   const [emailInvites, setEmailInvites] = useState(undefined)
@@ -244,10 +245,10 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
           <Col>
             <div
               ref={tableContainerRef}
-              style={totalUsers >= virtualScrollRows ? { height: allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto' } : undefined}
+              style={virtualScroll && totalUsers >= virtualScrollRows ? { height: virtualScroll && allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto' } : undefined}
             >
-            <Table responsive={totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0">
-              <thead id="hzsi-thead" className="align-middle text-center text-white" style={totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
+            <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0">
+              <thead id="hzsi-thead" className="align-middle text-center text-white" style={virtualScroll && totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
                 <tr>
                   <th className="fw-normal" style={{width: '52px'}}>
                     #
@@ -354,7 +355,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     </tr>
                   }
                   {
-                    totalUsers >= virtualScrollRows && allTableRows.length >= virtualScrollRows &&
+                    virtualScroll && totalUsers >= virtualScrollRows && virtualScroll && allTableRows.length >= virtualScrollRows &&
                     <>
                       {paddingTop > 0 && <tr><td colSpan={amILead ? 8 : 7} style={{height: paddingTop, padding: 0, border: 0}} /></tr>}
                       {virtualItems.map(virtualRow => {
@@ -502,7 +503,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     </>
                   }
                   {
-                    (totalUsers < virtualScrollRows || allTableRows.length < virtualScrollRows) && allMembers.length > 0 && allMembers.map((user, i) => {
+                    (!virtualScroll || totalUsers < virtualScrollRows || !virtualScroll || allTableRows.length < virtualScrollRows) && allMembers.length > 0 && allMembers.map((user, i) => {
                       const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
                         && user['role']?.name === 'lead'
                       const isMe = user['user']['person_oib'] === userDetails.person_oib
@@ -610,7 +611,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     })
                   }
                   {
-                    (totalUsers < virtualScrollRows || allTableRows.length < virtualScrollRows) && filteredCollaborators.length > 0 && filteredCollaborators.map((user, i) =>
+                    (!virtualScroll || totalUsers < virtualScrollRows || !virtualScroll || allTableRows.length < virtualScrollRows) && filteredCollaborators.length > 0 && filteredCollaborators.map((user, i) =>
                         (
                           <tr key={`row-${i + 100}`}>
                             <td className="p-3 align-middle text-center">
@@ -733,7 +734,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         ))
                   }
                   {
-                    (totalUsers < virtualScrollRows || allTableRows.length < virtualScrollRows) && filteredForeignInvites.length > 0 && filteredForeignInvites.map((email, i) => (
+                    (!virtualScroll || totalUsers < virtualScrollRows || !virtualScroll || allTableRows.length < virtualScrollRows) && filteredForeignInvites.length > 0 && filteredForeignInvites.map((email, i) => (
                       <tr key={`row-${i + 100}`}>
                         <td className="p-3 align-middle text-center">
                           { allMembers.length + filteredCollaborators.length + i + 1 }
