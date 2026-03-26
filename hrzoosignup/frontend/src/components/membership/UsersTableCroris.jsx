@@ -247,7 +247,20 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
               ref={tableContainerRef}
               style={virtualScroll && totalUsers >= virtualScrollRows ? { height: virtualScroll && allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto' } : undefined}
             >
-            <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0">
+            <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0" style={virtualScroll && totalUsers >= virtualScrollRows ? { tableLayout: 'fixed', width: '100%' } : undefined}>
+              {
+                virtualScroll && totalUsers >= virtualScrollRows &&
+                <colgroup>
+                  <col style={{width: '70px'}} />
+                  <col style={{width: '12%'}} />
+                  <col style={{width: '12%'}} />
+                  <col style={{width: '12%'}} />
+                  <col />
+                  <col style={{width: '180px'}} />
+                  <col style={{width: '100px'}} />
+                  { amILead && <col style={{width: '80px'}} /> }
+                </colgroup>
+              }
               <thead id="hzsi-thead" className="align-middle text-center text-white" style={virtualScroll && totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
                 <tr>
                   <th className="fw-normal" style={{width: '52px'}}>
