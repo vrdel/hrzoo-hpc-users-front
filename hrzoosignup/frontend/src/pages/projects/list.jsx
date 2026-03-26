@@ -75,7 +75,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
   const intl = useIntl()
   const { isOpen: isOpenPopover, toggleIndex: togglePopover } = useOpenedIndexMap()
-  const { isOpen: isOpenedTooltip, toggleIndex: showTooltip } = useOpenedIndexMap()
+  const { isOpen: isOpenedTooltip, openIndex: showTooltip, closeIndex: hideTooltip } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -352,7 +352,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { calcIndex(index) }
                       </td>
-                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
+                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}
+                        onMouseEnter={() => showTooltip(project.identifier)}
+                        onMouseLeave={() => hideTooltip(project.identifier)}
+                      >
                         { StateIcons(project.state.name) }
                         <Overlay
                           placement='top'
