@@ -58,7 +58,7 @@ const GeneralProjectUsers = ({projectInfo}) => {
               style={{cursor: 'pointer'}}
               key={`project-users-${index}`}
               id={`pop-lead-${index}-${user.user.id}`}
-              onClick={() => showPopover(`${index}-${user.user.id}`)}
+              onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); showPopover(`${index}-${user.user.id}`) }}
             >
               {
                 user['user']['first_name'] + ' ' + user['user']['last_name']
@@ -96,7 +96,7 @@ const GeneralProjectUsers = ({projectInfo}) => {
                 style={{cursor: 'pointer'}}
                 key={`project-users-${index}`}
                 id={`pop-collab-${index}-${user.user.id}`}
-                onClick={() => showPopover(`${index}-${user.user.id}`)}
+                onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); showPopover(`${index}-${user.user.id}`) }}
               >
                 {
                   user['user']['first_name'] + ' ' + user['user']['last_name']
@@ -163,7 +163,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
                 key={`project-users-${index}`}
                 style={{cursor: 'pointer'}}
                 id={`pop-lead-${index}-${user.user.id}`}
-                onClick={() => showPopover(`${index}-${user.user.id}`)}
+                onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); showPopover(`${index}-${user.user.id}`) }}
               >
                 {
                   user['user']['first_name'] + ' ' + user['user']['last_name']
@@ -201,7 +201,7 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
                   key={`project-users-${index}`}
                   style={{cursor: 'pointer'}}
                   id={`pop-collab-${index}-${user.user.id}`}
-                  onClick={() => showPopover(`${index}-${user.user.id}`)}
+                  onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); showPopover(`${index}-${user.user.id}`) }}
                 >
                   {
                     user &&
