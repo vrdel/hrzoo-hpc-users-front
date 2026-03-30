@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { Col, Collapse, Row, Card,
   Table, Button, Form, Overlay, Tooltip } from 'react-bootstrap';
 import { useForm, Controller } from 'react-hook-form';
@@ -23,7 +24,10 @@ import _ from 'lodash';
 
 
 export const UsersTableCroris = ({project, invites, onSubmit}) => {
-  const { userDetails } = useContext(AuthContext);
+  const { userDetails, backendConfig } = useContext(AuthContext);
+  const virtualScroll = backendConfig?.virtual_scroll ?? false
+  const virtualScrollRows = backendConfig?.virtual_scroll_rows ?? 15
+  const virtualScrollHeight = backendConfig?.virtual_scroll_height ?? 600
   const [emailInvites, setEmailInvites] = useState(undefined)
   const collaborators = project['croris_collaborators']
   const lead = extractUsers(project.userproject_set, 'lead')[0]
@@ -38,7 +42,6 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
   const [searchFirstName, setSearchFirstName] = useState('')
   const [searchLastName, setSearchLastName] = useState('')
   const [searchEmail, setSearchEmail] = useState('')
-
 
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => {
@@ -182,6 +185,36 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
     allMembers.push(lead)
   allMembers = allMembers.concat(filteredJoined)
 
+  const email_invites_outer = emailInvites?.map(i => i.email) ?? []
+  const notJoinedCollaborators = collaborators.filter(u => !oibsJoined.has(u['oib']))
+  const filteredCollaborators = notJoinedCollaborators.filter(u =>
+    filterUser(u.first_name, u.last_name, collabRole, u.email)
+  )
+  const collabEmails = collaborators.map(user => user.email)
+  const foreignInvites = email_invites_outer.filter(email => collabEmails.indexOf(email) === -1)
+  const filteredForeignInvites = foreignInvites.filter(email =>
+    filterUser(null, null, foreignCollabRole, email)
+  )
+  const totalUsers = 1 + alreadyJoined.length + notJoinedCollaborators.length + foreignInvites.length
+
+  const allTableRows = [
+    ...allMembers.map(u => ({ type: 'member', data: u })),
+    ...filteredCollaborators.map(u => ({ type: 'collab', data: u })),
+    ...filteredForeignInvites.map(email => ({ type: 'finvite', data: email }))
+  ]
+
+  const tableContainerRef = useRef(null)
+  const rowVirtualizer = useVirtualizer({
+    count: allTableRows.length,
+    getScrollElement: () => tableContainerRef.current,
+    estimateSize: () => 53,
+    overscan: 5,
+  })
+  const virtualItems = rowVirtualizer.getVirtualItems()
+  const paddingTop = virtualItems[0]?.start ?? 0
+  const paddingBottom = virtualItems.length > 0
+    ? rowVirtualizer.getTotalSize() - virtualItems[virtualItems.length - 1].end
+    : 0
 
   if (emailInvites !== undefined) {
     let email_invites = emailInvites.map(i => i.email)
@@ -201,37 +234,31 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
       }
     })
 
-    const notJoinedCollaborators = collaborators.filter(u => !oibsJoined.has(u['oib']))
-
-    let filteredCollaborators = notJoinedCollaborators.filter(u =>
-      filterUser(u.first_name, u.last_name, collabRole, u.email)
-    )
-
-
     let collabNoEmail = true
     for (var collab of missingCollab)
       if (collab['email'])
         collabNoEmail = false
 
-    let foreignInvites = new Array()
-    let collabEmails = collaborators.map(user => user.email)
-    email_invites.forEach((email) => {
-    if (collabEmails.indexOf(email) === -1)
-      foreignInvites.push(email)
-    })
-
-    let filteredForeignInvites = foreignInvites.filter(email =>
-      filterUser(null, null, foreignCollabRole, email)
-    )
-
-    const totalUsers = 1 + alreadyJoined.length + notJoinedCollaborators.length + foreignInvites.length
-
     return (
       <>
         <Row className={amILead ? 'mt-4 ms-0 me-0 mb-2 p-0' : 'p-0 mt-4 ms-0 me-0 mb-5'}>
           <Col>
-            <Table responsive hover className="shadow-sm bg-white m-0">
-              <thead id="hzsi-thead" className="align-middle text-center text-white">
+            <div
+              ref={tableContainerRef}
+              style={virtualScroll && totalUsers >= virtualScrollRows ? { height: virtualScroll && allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto' } : undefined}
+            >
+            <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0" style={{ tableLayout: 'fixed', width: '100%' }}>
+              <colgroup>
+                <col style={{width: '70px'}} />
+                <col style={{width: '12%'}} />
+                <col style={{width: '12%'}} />
+                <col style={{width: '12%'}} />
+                <col />
+                <col style={{width: '180px'}} />
+                <col style={{width: '100px'}} />
+                { amILead && <col style={{width: '80px'}} /> }
+              </colgroup>
+              <thead id="hzsi-thead" className="align-middle text-center text-white" style={virtualScroll && totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
                 <tr>
                   <th className="fw-normal" style={{width: '52px'}}>
                     #
@@ -338,7 +365,155 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     </tr>
                   }
                   {
-                    allMembers.length > 0 && allMembers.map((user, i) => {
+                    virtualScroll && totalUsers >= virtualScrollRows && virtualScroll && allTableRows.length >= virtualScrollRows &&
+                    <>
+                      {paddingTop > 0 && <tr><td colSpan={amILead ? 8 : 7} style={{height: paddingTop, padding: 0, border: 0}} /></tr>}
+                      {virtualItems.map(virtualRow => {
+                        const row = allTableRows[virtualRow.index]
+                        if (row.type === 'member') {
+                          const user = row.data
+                          const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
+                            && user['role']?.name === 'lead'
+                          const isMe = user['user']['person_oib'] === userDetails.person_oib
+                          return (
+                            <tr key={virtualRow.key} className={isMe ? (isLeadEntry ? "table-success fst-italic" : "table-warning fst-italic") : ""}>
+                              <td className="p-3 align-middle text-center">{ virtualRow.index + 1 }</td>
+                              <td className="p-3 align-middle text-center">{ user['user'].first_name }</td>
+                              <td className="p-3 align-middle text-center">{ user['user'].last_name }</td>
+                              <td className="align-middle text-center">
+                                {
+                                  isLeadEntry
+                                  ?
+                                    <FormattedMessage defaultMessage="Voditelj" description="users-table-croris-lead" />
+                                  :
+                                    user['user']['person_type'] === 'local'
+                                    ?
+                                      <FormattedMessage defaultMessage="Suradnik" description="users-table-croris-collaborator" />
+                                    :
+                                      <FormattedMessage defaultMessage="Strani suradnik" description="users-table-general-collaborator-foreign" />
+                                }
+                              </td>
+                              <td className="align-middle text-center">{ extractEmails(user['user'].person_mail) }</td>
+                              <td className="align-middle text-center text-success">
+                                {
+                                  isLeadEntry || user['user']['person_type'] === 'local'
+                                  ?
+                                    <span className="text-success"><FormattedMessage defaultMessage="Da" description="users-table-croris-yes" /></span>
+                                  :
+                                    <span className="text-danger"><FormattedMessage defaultMessage="Ne" description="users-table-croris-no" /></span>
+                                }
+                              </td>
+                              <td className="align-middle text-center text-success">
+                                <div className="position-relative">
+                                  <FormattedMessage defaultMessage="Da" description="users-table-croris-yes" />
+                                  {
+                                    user['user'].sshkeys &&
+                                      <div id={`Tooltip-key-${project.id}-${virtualRow.index}`} className="text-success position-absolute top-0 ms-4 start-50 translate-middle" onMouseEnter={() => showTooltip(user['user'].person_mail)} onMouseLeave={() => hideTooltip(user['user'].person_mail)}>
+                                        <FontAwesomeIcon icon={faKey}/>
+                                        <Overlay placement='top' show={isOpened(user['user'].person_mail)} target={document.getElementById(`Tooltip-key-${project.id}-${virtualRow.index}`)}>
+                                          {(props) => <Tooltip {...props}><FormattedMessage defaultMessage="Dodan javni ključ" description="users-table-croris-keyadd" /></Tooltip>}
+                                        </Overlay>
+                                      </div>
+                                  }
+                                </div>
+                              </td>
+                              {
+                                amILead &&
+                                <td className="align-middle text-center text-success">
+                                  {
+                                    isLeadEntry
+                                    ? '\u2212'
+                                    :
+                                      <Form.Check>
+                                        <Form.Check.Input type="checkbox" className="bg-danger border border-danger ms-1"
+                                          checked={checkJoined[alreadyJoined.indexOf(user)] === true}
+                                          onChange={() => onChangeCheckOut(alreadyJoined.indexOf(user))}
+                                        />
+                                      </Form.Check>
+                                  }
+                                </td>
+                              }
+                            </tr>
+                          )
+                        } else if (row.type === 'collab') {
+                          const user = row.data
+                          return (
+                            <tr key={virtualRow.key}>
+                              <td className="p-3 align-middle text-center">{ virtualRow.index + 1 }</td>
+                              <td className="p-3 align-middle text-center">{ user.first_name }</td>
+                              <td className="p-3 align-middle text-center">{ user.last_name }</td>
+                              <td className="align-middle text-center">
+                                <FormattedMessage defaultMessage="Suradnik" description="users-table-croris-collaborator" />
+                              </td>
+                              <td className="align-middle text-center">
+                                { user.email ? extractEmails(user.email) : '\u2212' }
+                              </td>
+                              <td className="align-middle text-center">
+                                {
+                                  user.email
+                                    ?
+                                      <span className="text-success"><FormattedMessage defaultMessage="Da" description="users-table-croris-yes" /></span>
+                                    :
+                                      <span className="text-danger"><FormattedMessage defaultMessage="Ne" description="users-table-croris-no" /></span>
+                                }
+                              </td>
+                              <td className="align-middle text-center">
+                                {
+                                  emailInInvites(user.email, email_invites)
+                                    ?
+                                      <div className="position-relative">
+                                        <FontAwesomeIcon id={`Tooltip-inv-${project.id}-${virtualRow.index}`} className="text-success fa-lg" icon={faEnvelope} onMouseEnter={() => showTooltip(user.email)} onMouseLeave={() => hideTooltip(user.email)}/>
+                                        <Overlay placement='top' show={isOpened(user.email)} target={document.getElementById(`Tooltip-inv-${project.id}-${virtualRow.index}`)}>
+                                          {(props) => <Tooltip {...props}><FormattedMessage defaultMessage="Aktivna pozivnica poslana na email" description="users-table-croris-invitesent" /></Tooltip>}
+                                        </Overlay>
+                                        <div className="position-absolute top-0 ms-4 start-50 translate-middle">
+                                          <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0" variant="light" onClick={() => onInviteDelete(user)}>
+                                            <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
+                                          </Button>
+                                        </div>
+                                      </div>
+                                    :
+                                      <span className="text-danger"><FormattedMessage defaultMessage="Ne" description="users-table-croris-no" /></span>
+                                }
+                              </td>
+                              { amILead && <td className="align-middle text-center">{'\u2212'}</td> }
+                            </tr>
+                          )
+                        } else {
+                          const email = row.data
+                          return (
+                            <tr key={virtualRow.key}>
+                              <td className="p-3 align-middle text-center">{ virtualRow.index + 1 }</td>
+                              <td className="p-3 align-middle text-center">{ '\u2212' }</td>
+                              <td className="p-3 align-middle text-center">{ '\u2212' }</td>
+                              <td className="align-middle text-center">
+                                <FormattedMessage defaultMessage="Strani suradnik" description="users-table-general-collaborator-foreign" />
+                              </td>
+                              <td className="align-middle text-center">{ email }</td>
+                              <td className="align-middle text-center">{'\u2212'}</td>
+                              <td className="align-middle text-center">
+                                <div className="position-relative">
+                                  <FontAwesomeIcon className="text-success fa-lg" id={`Tooltip-finv-${project.id}-${virtualRow.index}`} icon={faEnvelope} onMouseEnter={() => showTooltip(email)} onMouseLeave={() => hideTooltip(email)}/>
+                                  <Overlay placement='top' show={isOpened(email)} target={document.getElementById(`Tooltip-finv-${project.id}-${virtualRow.index}`)}>
+                                    {(props) => <Tooltip {...props}><FormattedMessage defaultMessage="Aktivna pozivnica poslana na email" description="users-table-general-invitesent" /></Tooltip>}
+                                  </Overlay>
+                                  <div className="position-absolute top-0 ms-4 start-50 translate-middle">
+                                    <Button className="d-flex align-items-center justify-content-center ms-1 ps-1 pe-1 pt-0 pb-0 mt-0" variant="light" onClick={() => onInviteDelete({ email })}>
+                                      <FontAwesomeIcon color="#DC3545" icon={faXmark}/>
+                                    </Button>
+                                  </div>
+                                </div>
+                              </td>
+                              { amILead && <td className="align-middle text-center">{'\u2212'}</td> }
+                            </tr>
+                          )
+                        }
+                      })}
+                      {paddingBottom > 0 && <tr><td colSpan={amILead ? 8 : 7} style={{height: paddingBottom, padding: 0, border: 0}} /></tr>}
+                    </>
+                  }
+                  {
+                    (!virtualScroll || totalUsers < virtualScrollRows || !virtualScroll || allTableRows.length < virtualScrollRows) && allMembers.length > 0 && allMembers.map((user, i) => {
                       const isLeadEntry = user['user']['person_oib'] === lead['user']['person_oib']
                         && user['role']?.name === 'lead'
                       const isMe = user['user']['person_oib'] === userDetails.person_oib
@@ -446,7 +621,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                     })
                   }
                   {
-                    filteredCollaborators.length > 0 && filteredCollaborators.map((user, i) =>
+                    (!virtualScroll || totalUsers < virtualScrollRows || !virtualScroll || allTableRows.length < virtualScrollRows) && filteredCollaborators.length > 0 && filteredCollaborators.map((user, i) =>
                         (
                           <tr key={`row-${i + 100}`}>
                             <td className="p-3 align-middle text-center">
@@ -569,7 +744,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                         ))
                   }
                   {
-                    filteredForeignInvites.length > 0 && filteredForeignInvites.map((email, i) => (
+                    (!virtualScroll || totalUsers < virtualScrollRows || !virtualScroll || allTableRows.length < virtualScrollRows) && filteredForeignInvites.length > 0 && filteredForeignInvites.map((email, i) => (
                       <tr key={`row-${i + 100}`}>
                         <td className="p-3 align-middle text-center">
                           { allMembers.length + filteredCollaborators.length + i + 1 }
@@ -633,6 +808,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                 </>
               </tbody>
             </Table>
+            </div>
           </Col>
         </Row>
         {

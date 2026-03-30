@@ -569,7 +569,7 @@ const UsersListTable = ({ data, pageTitle, activeList=false }) => {
                                     bg={ `${proj.role === "lead" ? "dark" : "secondary"}` }
                                     className="d-inline-block fw-normal ms-1 text-decoration-underline"
                                     style={{cursor: 'pointer', whiteSpace: 'normal'}}
-                                    onClick={() => togglePopover(`${user.id}-${pid}`)}
+                                    onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); togglePopover(`${user.id}-${pid}`) }}
                                   >
                                     { proj.identifier }
                                   </Badge>

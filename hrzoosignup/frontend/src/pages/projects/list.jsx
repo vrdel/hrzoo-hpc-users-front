@@ -44,7 +44,7 @@ const LeadUserBadge = ({index, project, isOpened, showPopover}) => {
       id={`pop-lead-${index}-${targetUser.id}`}
       className="fw-normal ms-1 text-decoration-underline"
       style={{cursor: 'pointer'}}
-      onClick={() => showPopover(`${index}-${targetUser.id}`)}
+      onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); showPopover(`${index}-${targetUser.id}`) }}
     >
       {`${targetUser.first_name} ${targetUser.last_name}`}
       <Overlay
@@ -75,7 +75,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
   const { ResourceTypesToSelectAdmin } = useContext(SharedData)
   const intl = useIntl()
   const { isOpen: isOpenPopover, toggleIndex: togglePopover } = useOpenedIndexMap()
-  const { isOpen: isOpenedTooltip, toggleIndex: showTooltip } = useOpenedIndexMap()
+  const { isOpen: isOpenedTooltip, openIndex: showTooltip, closeIndex: hideTooltip } = useOpenedIndexMap()
 
   const { control, setValue } = useForm({
     defaultValues: {
@@ -352,7 +352,10 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                       <td className="p-3 align-middle text-center">
                         { calcIndex(index) }
                       </td>
-                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}>
+                      <td className="p-3 align-middle text-center" id={'Tooltip-' + index}
+                        onMouseEnter={() => showTooltip(project.identifier)}
+                        onMouseLeave={() => hideTooltip(project.identifier)}
+                      >
                         { StateIcons(project.state.name) }
                         <Overlay
                           placement='top'
@@ -458,7 +461,7 @@ const ProjectsListForm = ({ data, pageTitle }) => {
                               id={`pop-collab-${index}-${collab.user.id}`}
                               className="fw-normal ms-1 text-decoration-underline"
                               style={{cursor: 'pointer'}}
-                              onClick={() => togglePopover(`${index}-${collab.user.id}`)}
+                              onClick={(e) => { e.nativeEvent.stopImmediatePropagation(); togglePopover(`${index}-${collab.user.id}`) }}
                             >
                               {`${collab.user.first_name} ${collab.user.last_name}`}
                               <Overlay
