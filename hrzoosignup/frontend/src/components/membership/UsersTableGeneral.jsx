@@ -357,7 +357,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
         <Col>
           <div
             ref={tableContainerRef}
-            style={virtualScroll && totalUsers >= virtualScrollRows ? { height: virtualScroll && allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto' } : undefined}
+            style={virtualScroll && totalUsers >= virtualScrollRows ? { height: virtualScroll && allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto', resize: 'vertical' } : undefined}
           >
           <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white" style={{ tableLayout: 'fixed', width: '100%' }}>
             <colgroup>
