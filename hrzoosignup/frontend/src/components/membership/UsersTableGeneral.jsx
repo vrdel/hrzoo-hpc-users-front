@@ -361,19 +361,10 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
               ? { borderRadius: '0.375rem', height: allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto', resize: 'vertical' }
               : { borderRadius: '0.375rem', overflow: 'hidden' }}
           >
-          <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white" style={{ tableLayout: 'fixed', width: '100%' }}>
-            <colgroup>
-              <col style={{width: '70px'}} />
-              <col style={{width: '14%'}} />
-              <col style={{width: '14%'}} />
-              <col style={{width: '12%'}} />
-              <col />
-              <col style={{width: '100px'}} />
-              { amILead && <col style={{width: '80px'}} /> }
-            </colgroup>
+          <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white" style={{ width: '100%' }}>
             <thead id="hzsi-thead" className="align-middle text-center text-white" style={virtualScroll && totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
               <tr>
-                <th className="fw-normal" style={{width: '52px'}}>
+                <th className="fw-normal">
                   #
                 </th>
                 <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortFirstName(!sortFirstName); setSortLastName(undefined); setSortEmail(undefined) }}>
