@@ -489,7 +489,7 @@ const Memberships = ({inactive=false}) => {
             projectsApproved.map((project, i) => {
               const projectLead = extractUsers(project.userproject_set, 'lead')[0]
               const amIProjectLead = projectLead?.['user']?.['person_oib'] === userDetails?.person_oib
-              const cardBg = amIProjectLead ? 'rgba(25, 135, 84, 0.1)' : 'rgba(255, 193, 7, 0.1)'
+              const cardBg = amIProjectLead ? 'rgba(25, 135, 84, 0.05)' : 'rgba(255, 193, 7, 0.05)'
               const cardHeaderBgClass = amIProjectLead ? 'bg-success-subtle' : 'bg-warning-subtle'
               return <React.Fragment key={`projects-${i}`}>
                 <Row className="mb-5" key={`row-${i}`}>
