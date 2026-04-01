@@ -24,6 +24,7 @@ import { UsersTableGeneral } from 'Components/membership/UsersTableGeneral';
 import { StateIcons, StateStringUser } from "Config/map-states";
 import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
+import { extractUsers } from 'Utils/invites-extracts';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useIntl } from 'react-intl'
 import { faCopy} from "@fortawesome/free-solid-svg-icons";
@@ -190,7 +191,7 @@ const Memberships = ({inactive=false}) => {
   const [modalMsg, setModalMsg] = useState(undefined)
   const [onYesCall, setOnYesCall] = useState(undefined)
   const [onYesCallArg, setOnYesCallArg] = useState(undefined)
-  const { csrfToken } = useContext(AuthContext);
+  const { csrfToken, userDetails } = useContext(AuthContext);
   const intl = useIntl()
 
   const queryClient = useQueryClient();
@@ -485,12 +486,16 @@ const Memberships = ({inactive=false}) => {
           onYes={onYesCallback} />
         {
           projectsApproved.length > 0 ?
-            projectsApproved.map((project, i) =>
-              <React.Fragment key={`projects-${i}`}>
+            projectsApproved.map((project, i) => {
+              const projectLead = extractUsers(project.userproject_set, 'lead')[0]
+              const amIProjectLead = projectLead?.['user']?.['person_oib'] === userDetails?.person_oib
+              const cardBg = amIProjectLead ? 'rgba(25, 135, 84, 0.05)' : 'rgba(255, 193, 7, 0.05)'
+              const cardHeaderBgClass = amIProjectLead ? 'bg-success-subtle' : 'bg-warning-subtle'
+              return <React.Fragment key={`projects-${i}`}>
                 <Row className="mb-5" key={`row-${i}`}>
                   <Col key={`col-${i}`}>
-                    <Card className="ms-3 bg-light me-3 shadow-sm" key={`card-${i}`}>
-                      <Card.Header className="d-flex align-items-center flex-column flex-md-row justify-content-between">
+                    <Card className="ms-3 me-3 shadow-sm" style={{backgroundColor: cardBg}} key={`card-${i}`}>
+                      <Card.Header className={`d-flex align-items-center flex-column flex-md-row justify-content-between ${cardHeaderBgClass}`}>
                         <span className="fs-5 fw-bold text-dark flex-grow-1">
                           { project?.name }
                         </span>
@@ -517,7 +522,7 @@ const Memberships = ({inactive=false}) => {
                           </MiniButton>
                         </span>
                       </Card.Header>
-                      <Card.Body className="mb-1 bg-light p-0 m-0">
+                      <Card.Body className="mb-1 p-0 m-0">
                         {
                           project.project_type.name === 'research-croris' ?
                             <UsersTableCroris project={project}
@@ -549,7 +554,7 @@ const Memberships = ({inactive=false}) => {
                 </Row>
                 <Row style={{height: '100px'}}/>
               </React.Fragment>
-            )
+            })
           :
             <Row className="mt-3 mb-3">
               <Col className="d-flex align-items-center justify-content-center shadow-sm bg-light border border-danger rounded text-muted text-center p-3 fs-3" style={{height: '400px'}} md={{offset: 1, span: 10}}>
