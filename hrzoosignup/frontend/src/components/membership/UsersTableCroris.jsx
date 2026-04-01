@@ -255,13 +255,13 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                   <th className="fw-normal">
                     #
                   </th>
-                  <th className="fw-normal">
+                  <th className="fw-normal" style={{width: '15%'}}>
                     <FormattedMessage
                       defaultMessage="Ime"
                       description="users-table-croris-firstname"
                     />
                   </th>
-                  <th className="fw-normal">
+                  <th className="fw-normal" style={{width: '15%'}}>
                     <FormattedMessage
                       defaultMessage="Prezime"
                       description="users-table-croris-lastname"
@@ -273,7 +273,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       description="users-table-croris-role"
                     />
                   </th>
-                  <th className="fw-normal">
+                  <th className="fw-normal" style={{width: '40%'}}>
                     <FormattedMessage
                       defaultMessage="Email"
                       description="users-table-croris-email"

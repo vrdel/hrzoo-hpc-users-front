@@ -367,7 +367,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                 <th className="fw-normal">
                   #
                 </th>
-                <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortFirstName(!sortFirstName); setSortLastName(undefined); setSortEmail(undefined) }}>
+                <th className="fw-normal" style={{cursor: 'pointer', width: '15%'}} onClick={() => { setSortFirstName(!sortFirstName); setSortLastName(undefined); setSortEmail(undefined) }}>
                   <span className="d-flex">
                     <span className="flex-grow-1">
                       <FormattedMessage
@@ -378,7 +378,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     { SortArrow(sortFirstName !== undefined ? !sortFirstName : undefined) }
                   </span>
                 </th>
-                <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortLastName(!sortLastName); setSortFirstName(undefined); setSortEmail(undefined) }}>
+                <th className="fw-normal" style={{cursor: 'pointer', width: '15%'}} onClick={() => { setSortLastName(!sortLastName); setSortFirstName(undefined); setSortEmail(undefined) }}>
                   <span className="d-flex">
                     <span className="flex-grow-1">
                       <FormattedMessage
@@ -395,7 +395,7 @@ export const UsersTableGeneral = ({project, invites, onSubmit}) => {
                     description="users-table-general-role"
                   />
                 </th>
-                <th className="fw-normal" style={{cursor: 'pointer'}} onClick={() => { setSortEmail(!sortEmail); setSortFirstName(undefined); setSortLastName(undefined) }}>
+                <th className="fw-normal" style={{cursor: 'pointer', width: '40%'}} onClick={() => { setSortEmail(!sortEmail); setSortFirstName(undefined); setSortLastName(undefined) }}>
                   <span className="d-flex">
                     <span className="flex-grow-1">
                       <FormattedMessage
