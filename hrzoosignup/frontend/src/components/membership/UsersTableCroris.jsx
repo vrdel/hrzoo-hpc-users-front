@@ -249,29 +249,19 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                 ? { borderRadius: '0.375rem', height: allTableRows.length >= virtualScrollRows ? `${virtualScrollHeight}px` : 'auto', overflow: 'auto', resize: 'vertical' }
                 : { borderRadius: '0.375rem', overflow: 'hidden' }}
             >
-            <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0" style={{ tableLayout: 'fixed', width: '100%' }}>
-              <colgroup>
-                <col style={{width: '70px'}} />
-                <col style={{width: '12%'}} />
-                <col style={{width: '12%'}} />
-                <col style={{width: '12%'}} />
-                <col />
-                <col style={{width: '180px'}} />
-                <col style={{width: '100px'}} />
-                { amILead && <col style={{width: '80px'}} /> }
-              </colgroup>
+            <Table responsive={!virtualScroll || totalUsers < virtualScrollRows} hover className="shadow-sm bg-white m-0" style={{ width: '100%' }}>
               <thead id="hzsi-thead" className="align-middle text-center text-white" style={virtualScroll && totalUsers >= virtualScrollRows ? { position: 'sticky', top: 0, zIndex: 1 } : undefined}>
                 <tr>
-                  <th className="fw-normal" style={{width: '52px'}}>
+                  <th className="fw-normal">
                     #
                   </th>
-                  <th className="fw-normal">
+                  <th className="fw-normal" style={{width: '15%'}}>
                     <FormattedMessage
                       defaultMessage="Ime"
                       description="users-table-croris-firstname"
                     />
                   </th>
-                  <th className="fw-normal">
+                  <th className="fw-normal" style={{width: '15%'}}>
                     <FormattedMessage
                       defaultMessage="Prezime"
                       description="users-table-croris-lastname"
@@ -283,7 +273,7 @@ export const UsersTableCroris = ({project, invites, onSubmit}) => {
                       description="users-table-croris-role"
                     />
                   </th>
-                  <th className="fw-normal">
+                  <th className="fw-normal" style={{width: '40%'}}>
                     <FormattedMessage
                       defaultMessage="Email"
                       description="users-table-croris-email"
