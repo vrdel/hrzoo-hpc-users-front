@@ -490,11 +490,12 @@ const Memberships = ({inactive=false}) => {
               const projectLead = extractUsers(project.userproject_set, 'lead')[0]
               const amIProjectLead = projectLead?.['user']?.['person_oib'] === userDetails?.person_oib
               const cardBg = amIProjectLead ? 'rgba(25, 135, 84, 0.1)' : 'rgba(255, 193, 7, 0.1)'
+              const cardHeaderBgClass = amIProjectLead ? 'bg-success-subtle' : 'bg-warning-subtle'
               return <React.Fragment key={`projects-${i}`}>
                 <Row className="mb-5" key={`row-${i}`}>
                   <Col key={`col-${i}`}>
                     <Card className="ms-3 me-3 shadow-sm" style={{backgroundColor: cardBg}} key={`card-${i}`}>
-                      <Card.Header className="d-flex align-items-center flex-column flex-md-row justify-content-between">
+                      <Card.Header className={`d-flex align-items-center flex-column flex-md-row justify-content-between ${cardHeaderBgClass}`}>
                         <span className="fs-5 fw-bold text-dark flex-grow-1">
                           { project?.name }
                         </span>
