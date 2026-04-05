@@ -3,7 +3,7 @@ import {
   Button,
 } from 'react-bootstrap';
 import Cookies from 'js-cookie';
-import "flag-icons/css/flag-icons.min.css";
+import "Styles/flag-icons-subset.scss";
 
 
 export const LanguageButtonLogin = ({locale, setLocale, small=false}) => {
