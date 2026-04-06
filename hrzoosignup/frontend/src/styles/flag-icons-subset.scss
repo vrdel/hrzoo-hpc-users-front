@@ -1,0 +1,4 @@
+@use "flag-icons/sass/flag-icons" with (
+  $flag-icons-included-countries: ("hr", "gb"),
+  $flag-icons-path: "../../node_modules/flag-icons/flags"
+);
