@@ -289,20 +289,25 @@ class Command(BaseCommand):
         only_unique = options.get('onlyunique', None)
 
         if only_projects:
-            with only_projects.open() as fp:
-                target_projects = fp.readlines()
+            only_projects_path = pathlib.Path(only_projects)
+            if only_projects_path.is_file():
+                with only_projects_path.open() as fp:
+                    target_projects = [(line.strip(), 'name') for line in fp.readlines() if line.strip()]
+            else:
+                target_projects = [(ident.strip(), 'identifier') for ident in only_projects.split(',') if ident.strip()]
             seen_projects = set()
             seen_users = set()
-            for project in target_projects:
+            for project, field in target_projects:
+                project_q = Q(**{field: project})
                 if list_by_year:
                     year = int(list_by_year)
                     start_date = datetime.date(year, 1, 1)
                     end_date = datetime.date(year, 12, 31)
-                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"]) \
+                    query = project_q & ~Q(state__name__in=["submit", "deny"]) \
                             & (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) \
                             & Q(date_approved__lte=end_date)
                 else:
-                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
+                    query = project_q & ~Q(state__name__in=["submit", "deny"])
                 found_projects = Project.objects.filter(query)
                 for target_project in found_projects:
                     if target_project.id in seen_projects:
@@ -517,7 +522,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--person-type', dest='person_type', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--only-username', dest='onlyusername', action='store_true', required=False, help="List only username field (AAI UID)")
-        parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
+        parser_list.add_argument('--only-projects', dest='onlyprojects', type=str, required=False, help="List only users on projects listed in file (project name per line) or comma-separated project identifiers")
         parser_list.add_argument('--only-unique', dest='onlyunique', action='store_true', required=False, help="List only unique users on projects listed in file")
 
     def handle(self, *args, **options):
