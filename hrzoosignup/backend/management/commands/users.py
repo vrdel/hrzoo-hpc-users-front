@@ -219,6 +219,14 @@ class Command(BaseCommand):
                 any_changed = True
                 self.stdout.write('Set person_type for user {} to {}'.format(user.username, options['person_type']))
 
+            if options['status'] != None:
+                user.status = bool(options['status'])
+                any_changed = True
+                if user.status:
+                    self.stdout.write('Activate user {}'.format(user.username))
+                else:
+                    self.stdout.write('Deactivate user {}'.format(user.username))
+
             if options['person_type_manual_set'] != None:
                 new = bool(options['person_type_manual_set'])
                 user.person_type_manual_set = new
@@ -486,6 +494,8 @@ class Command(BaseCommand):
                                    help='SSH key')
         parser_update.add_argument('--staff', dest='staff', default=None,
                                    type=int, required=False, help='User as staff')
+        parser_update.add_argument('--status', dest='status', default=None,
+                                   type=int, required=False, help='User active status')
         parser_update.add_argument('--email', dest='email', type=str, default='',
                                    required=False, help='Email of the user')
         parser_update.add_argument('--oib', dest='oib', type=str, default='',
