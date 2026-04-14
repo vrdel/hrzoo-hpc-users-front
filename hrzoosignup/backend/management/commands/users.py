@@ -154,6 +154,9 @@ class Command(BaseCommand):
                         date_joined=timezone.make_aware(datetime.datetime.now())
                     )
                     user.status = True
+                    if not user.person_username:
+                        user.person_username = gen_username(user.first_name, user.last_name)
+                        self.stdout.write('Generated person_username {} for user {}'.format(user.person_username, user.username))
                     self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
                     any_changed = True
 
@@ -219,6 +222,14 @@ class Command(BaseCommand):
                 any_changed = True
                 self.stdout.write('Set person_type for user {} to {}'.format(user.username, options['person_type']))
 
+            if options['status'] != None:
+                user.status = bool(options['status'])
+                any_changed = True
+                if user.status:
+                    self.stdout.write('Activate user {}'.format(user.username))
+                else:
+                    self.stdout.write('Deactivate user {}'.format(user.username))
+
             if options['person_type_manual_set'] != None:
                 new = bool(options['person_type_manual_set'])
                 user.person_type_manual_set = new
@@ -279,22 +290,31 @@ class Command(BaseCommand):
         list_by_year = options.get('target_year', None)
         only_projects = options.get('onlyprojects', None)
         only_unique = options.get('onlyunique', None)
+        filter_status = options.get('filter_status', None)
+        filter_first = options.get('first', None)
+        filter_last = options.get('last', None)
+        inactive_on_active = options.get('inactive_on_active', None)
 
         if only_projects:
-            with only_projects.open() as fp:
-                target_projects = fp.readlines()
+            only_projects_path = pathlib.Path(only_projects)
+            if only_projects_path.is_file():
+                with only_projects_path.open() as fp:
+                    target_projects = [(line.strip(), 'name') for line in fp.readlines() if line.strip()]
+            else:
+                target_projects = [(ident.strip(), 'identifier') for ident in only_projects.split(',') if ident.strip()]
             seen_projects = set()
             seen_users = set()
-            for project in target_projects:
+            for project, field in target_projects:
+                project_q = Q(**{field: project})
                 if list_by_year:
                     year = int(list_by_year)
                     start_date = datetime.date(year, 1, 1)
                     end_date = datetime.date(year, 12, 31)
-                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"]) \
+                    query = project_q & ~Q(state__name__in=["submit", "deny"]) \
                             & (Q(date_end__gte=start_date) | Q(bogus_end__gte=start_date)) \
                             & Q(date_approved__lte=end_date)
                 else:
-                    query = Q(name=project.strip()) & ~Q(state__name__in=["submit", "deny"])
+                    query = project_q & ~Q(state__name__in=["submit", "deny"])
                 found_projects = Project.objects.filter(query)
                 for target_project in found_projects:
                     if target_project.id in seen_projects:
@@ -345,6 +365,22 @@ class Command(BaseCommand):
                                         pr.users.all()
                                         if user.person_institution not in ["", "Nepoznato"]]
                     match += users_in_project
+        elif inactive_on_active:
+            today = datetime.date.today()
+            query = ~Q(state__name__in=["submit", "deny"]) \
+                    & Q(date_approved__lte=today) \
+                    & (Q(date_end__gte=today) | Q(bogus_end__gte=today))
+            active_projects = Project.objects.filter(query)
+            seen_users = set()
+            for target_project in active_projects:
+                for user in target_project.users.all():
+                    if user.status:
+                        continue
+                    if user.id in seen_users:
+                        continue
+                    seen_users.add(user.id)
+                    match.append(user)
+
         elif search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username
@@ -360,6 +396,18 @@ class Command(BaseCommand):
             )
         else:
             match = self.user_model.objects.all()
+
+        if filter_status is not None:
+            wanted = bool(filter_status)
+            match = [user for user in match if user.status == wanted]
+
+        if filter_first:
+            needle = ' '.join(filter_first).lower()
+            match = [user for user in match if needle in (user.first_name or '').lower()]
+
+        if filter_last:
+            needle = ' '.join(filter_last).lower()
+            match = [user for user in match if needle in (user.last_name or '').lower()]
 
         onlyusername = bool(options['onlyusername'])
         if onlyusername:
@@ -486,6 +534,8 @@ class Command(BaseCommand):
                                    help='SSH key')
         parser_update.add_argument('--staff', dest='staff', default=None,
                                    type=int, required=False, help='User as staff')
+        parser_update.add_argument('--status', dest='status', default=None,
+                                   type=int, required=False, help='User active status')
         parser_update.add_argument('--email', dest='email', type=str, default='',
                                    required=False, help='Email of the user')
         parser_update.add_argument('--oib', dest='oib', type=str, default='',
@@ -507,8 +557,12 @@ class Command(BaseCommand):
         parser_list.add_argument('--person-type', dest='person_type', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--year', dest='target_year', type=str, required=False, help="User is local or foreign")
         parser_list.add_argument('--only-username', dest='onlyusername', action='store_true', required=False, help="List only username field (AAI UID)")
-        parser_list.add_argument('--only-projects', dest='onlyprojects', type=pathlib.Path, required=False, help="List only users on projects listed in file (project name per line)")
+        parser_list.add_argument('--only-projects', dest='onlyprojects', type=str, required=False, help="List only users on projects listed in file (project name per line) or comma-separated project identifiers")
         parser_list.add_argument('--only-unique', dest='onlyunique', action='store_true', required=False, help="List only unique users on projects listed in file")
+        parser_list.add_argument('--filter-status', dest='filter_status', type=int, default=None, required=False, help="Filter users by status flag (0 inactive, 1 active)")
+        parser_list.add_argument('--first', dest='first', nargs='+', required=False, help="Filter users by case-insensitive substring match on first name")
+        parser_list.add_argument('--last', dest='last', nargs='+', required=False, help="Filter users by case-insensitive substring match on last name")
+        parser_list.add_argument('--inactive-on-active-projects', dest='inactive_on_active', action='store_true', required=False, help="List users assigned to currently active projects but whose status is False")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':

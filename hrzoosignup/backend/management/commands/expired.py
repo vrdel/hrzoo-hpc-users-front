@@ -134,6 +134,7 @@ class Command(BaseCommand):
                     writer.writeheader()
                     i = 1
                     for project in projects:
+                        since_expire = self.end_date - project.date_end
                         users = ', '.join(
                             [user.username for user in project.users.all()]
                         )
