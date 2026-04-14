@@ -154,6 +154,9 @@ class Command(BaseCommand):
                         date_joined=timezone.make_aware(datetime.datetime.now())
                     )
                     user.status = True
+                    if not user.person_username:
+                        user.person_username = gen_username(user.first_name, user.last_name)
+                        self.stdout.write('Generated person_username {} for user {}'.format(user.person_username, user.username))
                     self.stdout.write('User {} assigned to project {}'.format(user.username, project.identifier))
                     any_changed = True
 
