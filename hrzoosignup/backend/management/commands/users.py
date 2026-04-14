@@ -290,6 +290,7 @@ class Command(BaseCommand):
         filter_status = options.get('filter_status', None)
         filter_first = options.get('first', None)
         filter_last = options.get('last', None)
+        inactive_on_active = options.get('inactive_on_active', None)
 
         if only_projects:
             only_projects_path = pathlib.Path(only_projects)
@@ -361,6 +362,22 @@ class Command(BaseCommand):
                                         pr.users.all()
                                         if user.person_institution not in ["", "Nepoznato"]]
                     match += users_in_project
+        elif inactive_on_active:
+            today = datetime.date.today()
+            query = ~Q(state__name__in=["submit", "deny"]) \
+                    & Q(date_approved__lte=today) \
+                    & (Q(date_end__gte=today) | Q(bogus_end__gte=today))
+            active_projects = Project.objects.filter(query)
+            seen_users = set()
+            for target_project in active_projects:
+                for user in target_project.users.all():
+                    if user.status:
+                        continue
+                    if user.id in seen_users:
+                        continue
+                    seen_users.add(user.id)
+                    match.append(user)
+
         elif search_username:
             match = self.user_model.objects.filter(
                 username__icontains=search_username
@@ -542,6 +559,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--filter-status', dest='filter_status', type=int, default=None, required=False, help="Filter users by status flag (0 inactive, 1 active)")
         parser_list.add_argument('--first', dest='first', nargs='+', required=False, help="Filter users by case-insensitive substring match on first name")
         parser_list.add_argument('--last', dest='last', nargs='+', required=False, help="Filter users by case-insensitive substring match on last name")
+        parser_list.add_argument('--inactive-on-active-projects', dest='inactive_on_active', action='store_true', required=False, help="List users assigned to currently active projects but whose status is False")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
