@@ -86,7 +86,8 @@ hrzoosignup = "hrzoosignup/"
 ]
 "etc/cron.d" = [
   "cron/hzsi-clearexpiredinvitations", "cron/hzsi-clearsessions",
-  "cron/hzsi-flaginactiveusers", "cron/hzsi-mailinglist",
+  "cron/hzsi-flaginactiveusers", "cron/hzsi-flagactiveusers",
+  "cron/hzsi-mailinglist",
   "cron/hzsi-resetprojectcounter", "cron/hzsi-dashboard-send",
   "cron/hzsi-cache-usage", "cron/hzsi-bogusenddate", "cron/hzsi-portfelj-send",
   "cron/hzsi-croris-institutions-sync", "cron/hzsi-croris-institution-set",
