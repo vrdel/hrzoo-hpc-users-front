@@ -287,6 +287,9 @@ class Command(BaseCommand):
         list_by_year = options.get('target_year', None)
         only_projects = options.get('onlyprojects', None)
         only_unique = options.get('onlyunique', None)
+        filter_status = options.get('filter_status', None)
+        filter_first = options.get('first', None)
+        filter_last = options.get('last', None)
 
         if only_projects:
             only_projects_path = pathlib.Path(only_projects)
@@ -373,6 +376,18 @@ class Command(BaseCommand):
             )
         else:
             match = self.user_model.objects.all()
+
+        if filter_status is not None:
+            wanted = bool(filter_status)
+            match = [user for user in match if user.status == wanted]
+
+        if filter_first:
+            needle = ' '.join(filter_first).lower()
+            match = [user for user in match if needle in (user.first_name or '').lower()]
+
+        if filter_last:
+            needle = ' '.join(filter_last).lower()
+            match = [user for user in match if needle in (user.last_name or '').lower()]
 
         onlyusername = bool(options['onlyusername'])
         if onlyusername:
@@ -524,6 +539,9 @@ class Command(BaseCommand):
         parser_list.add_argument('--only-username', dest='onlyusername', action='store_true', required=False, help="List only username field (AAI UID)")
         parser_list.add_argument('--only-projects', dest='onlyprojects', type=str, required=False, help="List only users on projects listed in file (project name per line) or comma-separated project identifiers")
         parser_list.add_argument('--only-unique', dest='onlyunique', action='store_true', required=False, help="List only unique users on projects listed in file")
+        parser_list.add_argument('--filter-status', dest='filter_status', type=int, default=None, required=False, help="Filter users by status flag (0 inactive, 1 active)")
+        parser_list.add_argument('--first', dest='first', nargs='+', required=False, help="Filter users by case-insensitive substring match on first name")
+        parser_list.add_argument('--last', dest='last', nargs='+', required=False, help="Filter users by case-insensitive substring match on last name")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
