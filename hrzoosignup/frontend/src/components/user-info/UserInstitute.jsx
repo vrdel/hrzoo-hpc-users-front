@@ -22,8 +22,8 @@ const InstituteTableInfo = ({userDetails}) => {
           </Form.Label>
         </Col>
       </Row>
-      <Row className="overflow-hidden">
-        <Col className="mt-3 ms-4 ms-sm-0" md={{span: 11}}>
+      <Row className="overflow-hidden ms-2 me-3">
+        <Col className="mt-3" md={{span: 12}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>
@@ -127,8 +127,8 @@ const InstituteTableInfo = ({userDetails}) => {
           </Table>
         </Col>
       </Row>
-      <Row className="overflow-hidden">
-        <Col className="ms-4 ms-sm-0" md={{span: 11}}>
+      <Row className="overflow-hidden ms-2 me-3">
+        <Col md={{span: 12}}>
           <Table borderless responsive className="text-left">
             <thead>
               <tr>

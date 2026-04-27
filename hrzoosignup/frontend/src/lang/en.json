@@ -1679,6 +1679,10 @@
     "defaultMessage": "Inactive {br} User is not signed into any active project",
     "description": "statusinfo-tooltipinactive-2"
   },
+  "dRlHsM": {
+    "defaultMessage": "Project has been registered on Advanced computing service",
+    "description": "userinfo-croris-approved-yes"
+  },
   "dUFVR+": {
     "defaultMessage": "New request on behalf of research project",
     "description": "linktitle-newrequest-research"
@@ -1830,6 +1834,10 @@
   "hVSxeA": {
     "defaultMessage": "Last name",
     "description": "users-table-general-lastname"
+  },
+  "he5Olr": {
+    "defaultMessage": "Project has not been registered in Advanced computing service",
+    "description": "userinfo-croris-approved-no"
   },
   "hgnZAv": {
     "defaultMessage": "Are you sure you want to cancel the invitation?",
@@ -2124,7 +2132,7 @@
     "description": "science-field-2"
   },
   "pcpWXf": {
-    "defaultMessage": "Submitted",
+    "defaultMessage": "Registered",
     "description": "userinfo-croris-approved"
   },
   "po6NY6": {
