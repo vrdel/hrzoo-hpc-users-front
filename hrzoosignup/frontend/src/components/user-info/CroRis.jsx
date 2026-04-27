@@ -4,7 +4,7 @@ import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faCopy, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import {FormattedMessage} from 'react-intl';
-import { Col, Badge, Placeholder, Row, Table, Form, Spinner } from 'react-bootstrap';
+import { Col, Badge, OverlayTrigger, Placeholder, Row, Table, Tooltip, Form, Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl'
 
 
@@ -53,11 +53,29 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                 leadData && leadData.map((project, index) =>
                   <tr key={index}>
                     <td className="p-3 align-middle text-center">
-                      {
-                        project['is_approved']
-                        ? <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
-                        : <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }}/>
-                      }
+                      <OverlayTrigger
+                        placement="bottom"
+                        overlay={
+                          <Tooltip>
+                            { project['is_approved']
+                              ? intl.formatMessage({
+                                  defaultMessage: "Projekt je prijavljen na usluzi",
+                                  description: "userinfo-croris-approved-yes"
+                                })
+                              : intl.formatMessage({
+                                  defaultMessage: "Projekt nije prijavljen na usluzi",
+                                  description: "userinfo-croris-approved-no"
+                                })
+                            }
+                          </Tooltip>
+                        }
+                      >
+                        {
+                          project['is_approved']
+                          ? <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                          : <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }}/>
+                        }
+                      </OverlayTrigger>
                     </td>
                     <td className="p-3 fw-bold align-middle text-center">
                       <Row className="mt-1">
@@ -91,11 +109,29 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                 associateData && associateData.map((project, index) =>
                   <tr key={index}>
                     <td className="p-3 align-middle text-center">
-                      {
-                        project['is_approved']
-                        ? <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
-                        : <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }}/>
-                      }
+                      <OverlayTrigger
+                        placement="bottom"
+                        overlay={
+                          <Tooltip>
+                            { project['is_approved']
+                              ? intl.formatMessage({
+                                  defaultMessage: "Projekt je prijavljen na usluzi",
+                                  description: "userinfo-croris-approved-yes"
+                                })
+                              : intl.formatMessage({
+                                  defaultMessage: "Projekt nije prijavljen na usluzi",
+                                  description: "userinfo-croris-approved-no"
+                                })
+                            }
+                          </Tooltip>
+                        }
+                      >
+                        {
+                          project['is_approved']
+                          ? <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                          : <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }}/>
+                        }
+                      </OverlayTrigger>
                     </td>
                     <td className="p-3 fw-bold align-middle text-center">
                       <Row>
