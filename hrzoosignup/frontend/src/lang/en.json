@@ -1559,6 +1559,10 @@
     "defaultMessage": "Research",
     "description": "tablehelpers-optiontypes-2"
   },
+  "a8CMnv": {
+    "defaultMessage": "Project has been registered on the service",
+    "description": "userinfo-croris-approved-yes"
+  },
   "aAbUGj": {
     "defaultMessage": "Login with regular AAI@EduHR account",
     "description": "saml2-not-allowed-button-label-regular"
@@ -2119,6 +2123,10 @@
     "defaultMessage": "Physics",
     "description": "science-field-2"
   },
+  "pcpWXf": {
+    "defaultMessage": "Submitted",
+    "description": "userinfo-croris-approved"
+  },
   "po6NY6": {
     "defaultMessage": "User's email copied to clipboard",
     "description": "popover-emailuser-copy-ok"
@@ -2354,6 +2362,10 @@
   "xcGRIN": {
     "defaultMessage": "Assigned resource type:",
     "description": "manreq-change-request-resources"
+  },
+  "xwuNFh": {
+    "defaultMessage": "Project has not been registered on the service",
+    "description": "userinfo-croris-approved-no"
   },
   "xzEckc": {
     "defaultMessage": "Chemistry",

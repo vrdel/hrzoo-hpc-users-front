@@ -1559,6 +1559,10 @@
     "defaultMessage": "Istraživački",
     "description": "tablehelpers-optiontypes-2"
   },
+  "a8CMnv": {
+    "defaultMessage": "Projekt je prijavljen na usluzi",
+    "description": "userinfo-croris-approved-yes"
+  },
   "aAbUGj": {
     "defaultMessage": "Prijava s regularnim AAI@EduHR",
     "description": "saml2-not-allowed-button-label-regular"
@@ -2119,6 +2123,10 @@
     "defaultMessage": "Fizika",
     "description": "science-field-2"
   },
+  "pcpWXf": {
+    "defaultMessage": "Prijavljen",
+    "description": "userinfo-croris-approved"
+  },
   "po6NY6": {
     "defaultMessage": "Email korisnika kopiran u međuspremnik",
     "description": "popover-emailuser-copy-ok"
@@ -2354,6 +2362,10 @@
   "xcGRIN": {
     "defaultMessage": "Dodijeljeni tip resursa:",
     "description": "manreq-change-request-resources"
+  },
+  "xwuNFh": {
+    "defaultMessage": "Projekt nije prijavljen na usluzi",
+    "description": "userinfo-croris-approved-no"
   },
   "xzEckc": {
     "defaultMessage": "Kemija",
