@@ -59,11 +59,11 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                           <Tooltip>
                             { project['is_approved']
                               ? intl.formatMessage({
-                                  defaultMessage: "Projekt je prijavljen na usluzi",
+                                  defaultMessage: "Projekt je prijavljen na usluzi Napredno računanje",
                                   description: "userinfo-croris-approved-yes"
                                 })
                               : intl.formatMessage({
-                                  defaultMessage: "Projekt nije prijavljen na usluzi",
+                                  defaultMessage: "Projekt nije prijavljen na usluzi Napredno računanje",
                                   description: "userinfo-croris-approved-no"
                                 })
                             }
@@ -115,11 +115,11 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
                           <Tooltip>
                             { project['is_approved']
                               ? intl.formatMessage({
-                                  defaultMessage: "Projekt je prijavljen na usluzi",
+                                  defaultMessage: "Projekt je prijavljen na usluzi Napredno računanje",
                                   description: "userinfo-croris-approved-yes"
                                 })
                               : intl.formatMessage({
-                                  defaultMessage: "Projekt nije prijavljen na usluzi",
+                                  defaultMessage: "Projekt nije prijavljen na usluzi Napredno računanje",
                                   description: "userinfo-croris-approved-no"
                                 })
                             }
