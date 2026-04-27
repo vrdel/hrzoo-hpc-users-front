@@ -10,6 +10,7 @@ import json
 import logging
 
 from backend.croris.core import CroRISCore
+from backend.models import Project
 
 from aiohttp import client_exceptions, http_exceptions
 
@@ -44,6 +45,22 @@ class CroRISInfo(APIView):
                 user.croris_mail = croris.person_info.get('email', '')
                 user.croris_mbz = croris.person_info.get('mbz', '')
                 user.save()
+
+                all_croris_ids = [
+                    p['croris_id'] for p in
+                    croris.projects_lead_info + croris.projects_associate_info
+                    if p.get('croris_id')
+                ]
+                approved_croris_ids = set(
+                    Project.objects.filter(
+                        croris_id__in=all_croris_ids,
+                        state__name='approve'
+                    ).values_list('croris_id', flat=True)
+                )
+                for project in croris.projects_lead_info:
+                    project['is_approved'] = project.get('croris_id') in approved_croris_ids
+                for project in croris.projects_associate_info:
+                    project['is_approved'] = project.get('croris_id') in approved_croris_ids
 
                 if not target_oib:
                     # frontend is calling every 15 min

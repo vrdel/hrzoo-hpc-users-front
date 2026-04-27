@@ -2,7 +2,7 @@ import React from 'react';
 import { MiniButton } from 'Components/MiniButton';
 import { copyToClipboard } from 'Utils/copy-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faCopy, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import {FormattedMessage} from 'react-intl';
 import { Col, Badge, Placeholder, Row, Table, Form, Spinner } from 'react-bootstrap';
 import { useIntl } from 'react-intl'
@@ -14,6 +14,12 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
   const CrorisTableHead = () => (
     <thead id="hzsi-thead" className="align-middle text-center text-white">
       <tr>
+        <th className="fw-normal">
+          <FormattedMessage
+            defaultMessage="Prijavljen"
+            description="userinfo-croris-approved"
+          />
+        </th>
         <th className="fw-normal">
           <FormattedMessage
             defaultMessage="Naziv projekta i CroRIS poveznica"
@@ -46,6 +52,13 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
               {
                 leadData && leadData.map((project, index) =>
                   <tr key={index}>
+                    <td className="p-3 align-middle text-center">
+                      {
+                        project['is_approved']
+                        ? <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                        : <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }}/>
+                      }
+                    </td>
                     <td className="p-3 fw-bold align-middle text-center">
                       <Row className="mt-1">
                         <Col>
@@ -77,6 +90,13 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
               {
                 associateData && associateData.map((project, index) =>
                   <tr key={index}>
+                    <td className="p-3 align-middle text-center">
+                      {
+                        project['is_approved']
+                        ? <FontAwesomeIcon size="xl" icon={faCheckCircle} style={{ color: "#339900" }}/>
+                        : <FontAwesomeIcon size="xl" icon={faTimesCircle} style={{ color: "#CC0000" }}/>
+                      }
+                    </td>
                     <td className="p-3 fw-bold align-middle text-center">
                       <Row>
                         <Col>
@@ -136,14 +156,14 @@ const TableCrorisProjects = ({leadData, associateData, changeView=false}) => {
               {
                 [...Array(1)].map((_, i) => (
                   <tr key={i}>
-                    <td colSpan="4" className="m-0 p-0 bg-light border-0">
+                    <td colSpan="5" className="m-0 p-0 bg-light border-0">
                       <Placeholder size="lg" xs={12} style={{height: '20px', backgroundColor: "rgba(255, 255, 255, 0)"}}/>
                     </td>
                   </tr>
                 ))
               }
               <tr key="4">
-                <td colSpan="4" className="table-light border-0 text-muted text-center p-3 fs-3">
+                <td colSpan="5" className="table-light border-0 text-muted text-center p-3 fs-3">
                   {
                     changeView ?
                       intl.formatMessage({
