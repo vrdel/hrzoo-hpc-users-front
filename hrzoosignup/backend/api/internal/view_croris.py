@@ -54,7 +54,7 @@ class CroRISInfo(APIView):
                 approved_croris_ids = set(
                     Project.objects.filter(
                         croris_id__in=all_croris_ids,
-                        state__name='approve'
+                        state__name__in=('submit', 'approve')
                     ).values_list('croris_id', flat=True)
                 )
                 for project in croris.projects_lead_info:
