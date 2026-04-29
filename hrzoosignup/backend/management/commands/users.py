@@ -409,6 +409,9 @@ class Command(BaseCommand):
             needle = ' '.join(filter_last).lower()
             match = [user for user in match if needle in (user.last_name or '').lower()]
 
+        if options.get('list_password'):
+            match = [user for user in match if user.has_usable_password()]
+
         onlyusername = bool(options['onlyusername'])
         if onlyusername:
             for user in match:
@@ -563,6 +566,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--first', dest='first', nargs='+', required=False, help="Filter users by case-insensitive substring match on first name")
         parser_list.add_argument('--last', dest='last', nargs='+', required=False, help="Filter users by case-insensitive substring match on last name")
         parser_list.add_argument('--inactive-on-active-projects', dest='inactive_on_active', action='store_true', required=False, help="List users assigned to currently active projects but whose status is False")
+        parser_list.add_argument('--list-password', dest='list_password', action='store_true', required=False, help="List all users that have a usable password set")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':

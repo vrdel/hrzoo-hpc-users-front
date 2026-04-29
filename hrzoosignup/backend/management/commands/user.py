@@ -24,26 +24,11 @@ class Command(BaseCommand):
         parser.add_argument('--password', type=str, dest='password', help='Password of user')
         parser.add_argument('--unusable-password', action='store_true',
                 dest='unusablepassword', help='Unusable password for user')
-        parser.add_argument('--list-password', action='store_true',
-                            dest='list_password',
-                            help='List all users that have a usable password set')
         parser.add_argument('--permissions-config', action='store_true',
                             default=False, dest='permissions_config',
                             help='Pick usernames and permissions from default config')
 
     def handle(self, *args, **options):
-        if options['list_password']:
-            users_with_password = [
-                user for user in self.user_model.objects.all()
-                if user.has_usable_password()
-            ]
-            if users_with_password:
-                for user in users_with_password:
-                    self.stdout.write(user.username)
-            else:
-                self.stdout.write(self.style.NOTICE('No users with usable password'))
-            return
-
         if options['permissions_config']:
             staff_users_db = self.user_model.objects.filter(is_staff=1)
 
