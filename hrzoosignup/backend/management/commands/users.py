@@ -130,27 +130,44 @@ class Command(BaseCommand):
 
     def _user_update(self, options):
         if options.get('unusable_password_set'):
-            if not options.get('project'):
-                self.stdout.write(self.style.ERROR('--unusable-password-set requires --project'))
-                raise SystemExit(1)
-            try:
-                project = Project.objects.get(identifier=options['project'])
-            except Project.DoesNotExist:
-                self.stdout.write(self.style.ERROR('Project {} does not exist'.format(options['project'])))
-                raise SystemExit(1)
-            any_reset = False
-            for user in project.users.all():
+            if options.get('username'):
+                try:
+                    user = self.user_model.objects.get(username=options['username'])
+                except self.user_model.DoesNotExist:
+                    self.stdout.write(self.style.ERROR('User {} does not exist'.format(options['username'])))
+                    raise SystemExit(1)
                 if user.has_usable_password():
                     user.set_unusable_password()
                     user.save()
-                    any_reset = True
                     self.stdout.write(self.style.NOTICE(
                         'Set unusable password for {}'.format(user.username)
                     ))
-            if not any_reset:
-                self.stdout.write(self.style.NOTICE(
-                    'No users with usable password on project {}'.format(options['project'])
-                ))
+                else:
+                    self.stdout.write(self.style.NOTICE(
+                        'User {} does not have a usable password'.format(user.username)
+                    ))
+            elif options.get('project'):
+                try:
+                    project = Project.objects.get(identifier=options['project'])
+                except Project.DoesNotExist:
+                    self.stdout.write(self.style.ERROR('Project {} does not exist'.format(options['project'])))
+                    raise SystemExit(1)
+                any_reset = False
+                for user in project.users.all():
+                    if user.has_usable_password():
+                        user.set_unusable_password()
+                        user.save()
+                        any_reset = True
+                        self.stdout.write(self.style.NOTICE(
+                            'Set unusable password for {}'.format(user.username)
+                        ))
+                if not any_reset:
+                    self.stdout.write(self.style.NOTICE(
+                        'No users with usable password on project {}'.format(options['project'])
+                    ))
+            else:
+                self.stdout.write(self.style.ERROR('--unusable-password-set requires --project or --username'))
+                raise SystemExit(1)
             return
 
         if not options.get('username'):
@@ -437,7 +454,7 @@ class Command(BaseCommand):
             needle = ' '.join(filter_last).lower()
             match = [user for user in match if needle in (user.last_name or '').lower()]
 
-        if options.get('list_password'):
+        if options.get('filter_password'):
             match = [user for user in match if user.has_usable_password()]
 
         onlyusername = bool(options['onlyusername'])
@@ -597,7 +614,7 @@ class Command(BaseCommand):
         parser_list.add_argument('--first', dest='first', nargs='+', required=False, help="Filter users by case-insensitive substring match on first name")
         parser_list.add_argument('--last', dest='last', nargs='+', required=False, help="Filter users by case-insensitive substring match on last name")
         parser_list.add_argument('--inactive-on-active-projects', dest='inactive_on_active', action='store_true', required=False, help="List users assigned to currently active projects but whose status is False")
-        parser_list.add_argument('--list-password', dest='list_password', action='store_true', required=False, help="List all users that have a usable password set")
+        parser_list.add_argument('--password', dest='filter_password', action='store_true', required=False, help="List all users that have a usable password set")
 
     def handle(self, *args, **options):
         if options['command'] == 'delete':
