@@ -129,6 +129,34 @@ class Command(BaseCommand):
         user.save()
 
     def _user_update(self, options):
+        if options.get('unusable_password_set'):
+            if not options.get('project'):
+                self.stdout.write(self.style.ERROR('--unusable-password-set requires --project'))
+                raise SystemExit(1)
+            try:
+                project = Project.objects.get(identifier=options['project'])
+            except Project.DoesNotExist:
+                self.stdout.write(self.style.ERROR('Project {} does not exist'.format(options['project'])))
+                raise SystemExit(1)
+            any_reset = False
+            for user in project.users.all():
+                if user.has_usable_password():
+                    user.set_unusable_password()
+                    user.save()
+                    any_reset = True
+                    self.stdout.write(self.style.NOTICE(
+                        'Set unusable password for {}'.format(user.username)
+                    ))
+            if not any_reset:
+                self.stdout.write(self.style.NOTICE(
+                    'No users with usable password on project {}'.format(options['project'])
+                ))
+            return
+
+        if not options.get('username'):
+            self.stdout.write(self.style.ERROR('--username is required'))
+            raise SystemExit(1)
+
         users = self.user_model.objects.filter(
             username__icontains=options['username'],
         )
@@ -527,7 +555,10 @@ class Command(BaseCommand):
 
         parser_update = subparsers.add_parser("update", help="Update user based on passed metadata")
         parser_update.add_argument('--username', dest='username', type=str,
-                                   required=True, help='Username pattern of users')
+                                   required=False, help='Username pattern of users')
+        parser_update.add_argument('--unusable-password-set', dest='unusable_password_set',
+                                   action='store_true', default=False,
+                                   help='Set unusable password for all project users that have a usable password (requires --project)')
         parser_update.add_argument('--project', dest='project', type=str, default='',
                                    required=False, help='Project identifier that user will be assigned to')
         parser_update.add_argument('--key-name', dest='keyname', type=str, nargs='+',
