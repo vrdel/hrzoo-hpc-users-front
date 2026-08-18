@@ -63,12 +63,19 @@ class Command(BaseCommand):
                 for project in response:
                     try:
                         project = json.loads(project)
+                        if not project:
+                            self.stdout.write(self.style.WARNING(f'Project data extraction failed'))
+                            continue
 
                         projects_dates[project.get('id')] = {
                             'start': project.get('pocetak'),
                             'end': project.get('kraj')
                         }
                     except TypeError as exc:
+                        self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
+                        continue
+
+                    except json.decoder.JSONDecodeError as exc:
                         self.stdout.write(self.style.WARNING(f'Project data extraction failed: {repr(exc)} - {repr(project)}'))
                         continue
 
