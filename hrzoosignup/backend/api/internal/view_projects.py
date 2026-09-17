@@ -228,7 +228,8 @@ class ProjectsResearch(APIView):
         try:
             project_dup = models.Project.objects.get(identifier=request.data['identifier'])
             if project_dup:
-                pass
+                all_project_dup = models.Project.objects.filter(croris_identifier=request.data['identifier'])
+                request.data['identifier'] = '{}-NRC{}'.format(request.data['identifier'], len(all_project_dup))
 
         except models.Project.DoesNotExist as exc:
             pass
