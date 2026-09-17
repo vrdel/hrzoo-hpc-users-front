@@ -160,6 +160,7 @@ class ProjectsResearch(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+
         try:
             models.Project.objects.get(croris_id=request.data['croris_id'])
             already_submitted = {
@@ -223,7 +224,18 @@ class ProjectsResearch(APIView):
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
         request.data['project_type'] = type_obj.pk
 
+        # inspect if project with identifier already submitted
+        try:
+            project_dup = models.Project.objects.get(identifier=request.data['identifier'])
+            if project_dup:
+                all_project_dup = models.Project.objects.filter(croris_identifier=request.data['identifier'])
+                request.data['identifier'] = '{}-NRC{}'.format(request.data['identifier'], len(all_project_dup))
+
+        except models.Project.DoesNotExist as exc:
+            pass
+
         serializer = ProjectSerializer(data=request.data)
+
         if serializer.is_valid():
             serializer.save()
             project_ins = serializer.instance
