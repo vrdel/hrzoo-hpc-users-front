@@ -8,6 +8,7 @@ from backend.serializers_internal import InvitesSerializer
 from backend.utils.gen_username import gen_username
 from django.conf import settings
 from django.core.cache import cache
+from backend import cache_invalidation
 from django.db import IntegrityError
 from django.utils import timezone
 from invitations.utils import get_invitation_model
@@ -191,10 +192,7 @@ class Invites(APIView):
                         }
                     }
                     logger.info(msg)
-                    cache.delete("ext-users-projects")
-                    cache.delete("usersinfoinactive-get")
-                    cache.delete("usersinfo-get")
-                    cache.delete("projects-get-all")
+                    cache_invalidation.membership_changed()
                     return Response(msg, status=status.HTTP_201_CREATED)
 
                 elif (proj_type.name == 'research-croris'):
@@ -220,10 +218,7 @@ class Invites(APIView):
                             }
                         }
                         logger.info(msg)
-                        cache.delete("ext-users-projects")
-                        cache.delete("usersinfoinactive-get")
-                        cache.delete("usersinfo-get")
-                        cache.delete("projects-get-all")
+                        cache_invalidation.membership_changed()
                         return Response(msg, status=status.HTTP_201_CREATED)
 
                     else:
@@ -314,10 +309,7 @@ class Invites(APIView):
                         }
                     }
                     logger.info(msg)
-                    cache.delete("ext-users-projects")
-                    cache.delete("usersinfoinactive-get")
-                    cache.delete("usersinfo-get")
-                    cache.delete("projects-get-all")
+                    cache_invalidation.membership_changed()
                     return Response(msg, status=status.HTTP_201_CREATED)
 
                 else:
@@ -340,10 +332,7 @@ class Invites(APIView):
                         }
                     }
                     logger.info(msg)
-                    cache.delete("ext-users-projects")
-                    cache.delete("usersinfoinactive-get")
-                    cache.delete("usersinfo-get")
-                    cache.delete("projects-get-all")
+                    cache_invalidation.membership_changed()
                     return Response(msg, status=status.HTTP_201_CREATED)
 
         except requests.exceptions.HTTPError as ex:
