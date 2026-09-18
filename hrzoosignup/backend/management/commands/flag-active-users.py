@@ -1,7 +1,7 @@
 import logging
 
 from django.contrib.auth import get_user_model
-from django.core.cache import cache
+from backend import cache_invalidation
 from django.core.management.base import BaseCommand
 
 from backend.utils.gen_username import gen_username
@@ -67,9 +67,6 @@ class Command(BaseCommand):
                     ))
 
         if any_changed:
-            cache.delete("usersinfoinactive-get")
-            cache.delete("usersinfo-get")
-            cache.delete("ext-users-projects")
-            cache.delete('projects-get-all')
+            cache_invalidation.user_changed()
         else:
             self.stdout.write(self.style.NOTICE('No changes'))

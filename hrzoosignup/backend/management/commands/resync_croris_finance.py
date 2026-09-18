@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.cache import cache
+from backend import cache_invalidation
 from django.core.management.base import BaseCommand
 
 from backend.models import Project
@@ -118,9 +118,6 @@ class Command(BaseCommand):
         any_changed_project = self._fix_project_financiers(options, projects_financiers)
 
         if any_changed_project:
-            cache.delete("usersinfoinactive-get")
-            cache.delete("usersinfo-get")
-            cache.delete("ext-users-projects")
-            cache.delete('projects-get-all')
+            cache_invalidation.project_changed()
         else:
             self.stdout.write('No changes')

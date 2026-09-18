@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Permission
 from django.conf import settings
-from django.core.cache import cache
+from backend import cache_invalidation
 
 import random
 
@@ -44,9 +44,6 @@ class Command(BaseCommand):
                     self.stdout.write(f'User {user.username} would be set person_type=local ')
 
         if any_changed:
-            cache.delete("usersinfoinactive-get")
-            cache.delete("usersinfo-get")
-            cache.delete("ext-users-projects")
-            cache.delete('projects-get-all')
+            cache_invalidation.user_changed()
         else:
             self.stdout.write('No changes')

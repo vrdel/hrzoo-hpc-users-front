@@ -1,6 +1,6 @@
 import logging
 
-from django.core.cache import cache
+from backend import cache_invalidation
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -50,10 +50,7 @@ class Command(BaseCommand):
                 logger.info(msg)
 
             if options.get('confirmed_yes'):
-                cache.delete("projects-get-all")
-                cache.delete("ext-users-projects")
-                cache.delete("usersinfo-get")
-                cache.delete("usersinfoinactive-get")
+                cache_invalidation.project_calendar_changed()
                 self.stdout.write(self.style.NOTICE("Cache invalidated"))
                 if options.get('cron'):
                     logger.info("Cache invalidated")
