@@ -19,7 +19,7 @@ class UsersInfoOps(APIView):
         if request.user.is_staff or request.user.is_superuser:
             extract_users = []
             ret_data = cache.get('usersinfo-ops-get')
-            if ret_data:
+            if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
             users = get_user_model().objects.filter(is_staff=True)
@@ -51,7 +51,7 @@ class UsersInfoInactive(APIView):
     def get(self, request):
         if request.user.is_staff or request.user.is_superuser:
             ret_data = cache.get('usersinfoinactive-get')
-            if ret_data:
+            if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
             users = models.User.objects.filter(status=False)
@@ -128,7 +128,7 @@ class UsersInfo(APIView):
     def get(self, request):
         if request.user.is_staff or request.user.is_superuser:
             ret_data = cache.get('usersinfo-get')
-            if ret_data:
+            if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
             users = get_user_model().objects.all()
@@ -171,7 +171,7 @@ class UsersInfo(APIView):
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
 
-                cache.set('usersinfo-get', resp_users, None)
+            cache.set('usersinfo-get', resp_users, None)
 
             return Response(resp_users, status=status.HTTP_200_OK)
 

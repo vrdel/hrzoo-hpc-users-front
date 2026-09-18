@@ -15,7 +15,7 @@ class SshKeysAPI(APIView):
 
     def get(self, request):
         ret_data = cache.get('ext-sshkeys')
-        if ret_data:
+        if ret_data is not None:
             return Response(ret_data, status=status.HTTP_200_OK)
 
         serializer = serializers.SshKeysSerializer(
