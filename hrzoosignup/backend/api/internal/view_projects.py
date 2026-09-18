@@ -8,6 +8,7 @@ from backend.serializers_internal import ProjectSerializer, ProjectSerializerGet
 from backend.utils.gen_username import gen_username
 from django.conf import settings
 from django.core.cache import cache
+from backend import cache_invalidation
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -140,8 +141,7 @@ class ProjectsGeneral(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
-            cache.delete('projects-get-all')
-            cache.delete("ext-users-projects")
+            cache_invalidation.project_changed()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -178,7 +178,7 @@ class ProjectsResearch(APIView):
         # data
 
         oib = request.user.person_oib
-        croris_data = cache.get('{oib}_croris')
+        croris_data = cache.get(f'{oib}_croris')
         if croris_data:
             lead_status = croris_data['person_info']['lead_status']
             if not lead_status:
@@ -251,8 +251,7 @@ class ProjectsResearch(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
-            cache.delete('projects-get-all')
-            cache.delete("ext-users-projects")
+            cache_invalidation.project_changed()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
@@ -366,7 +365,7 @@ class Projects(APIView):
                     }
                     pe_obj.approved = True
                     pe_obj.save()
-                    cache.delete('projectsextends-get-all')
+                    cache_invalidation.project_extension_changed()
                 except models.ProjectExtend.DoesNotExist:
                     err_response = {
                         'status': {
@@ -424,10 +423,7 @@ class Projects(APIView):
                     )
                     p_obj.staff_comment = sc
                     sc.save()
-                cache.delete("ext-users-projects")
-                cache.delete('projects-get-all')
-                cache.delete("usersinfoinactive-get")
-                cache.delete("usersinfo-get")
+                cache_invalidation.project_changed()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             else:
@@ -443,7 +439,7 @@ class Projects(APIView):
 
                 if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
                     ret_data = cache.get('projects-get-all')
-                    if ret_data:
+                    if ret_data is not None:
                         return Response(ret_data, status=status.HTTP_200_OK)
                     else:
                         serializer = ProjectSerializerGet(models.Project.objects.all().order_by('-date_submitted'), many=True)
@@ -500,8 +496,7 @@ class Projects(APIView):
                     proj = models.Project.objects.get(identifier=req_id)
                     models.UserProject.objects.filter(project=proj).delete()
                     proj.delete()
-                    cache.delete("ext-users-projects")
-                    cache.delete('projects-get-all')
+                    cache_invalidation.project_extension_changed()
                     return Response(status=status.HTTP_204_NO_CONTENT)
                 else:
                     err_response = {

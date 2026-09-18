@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 
 from django.conf import settings
 from django.core.cache import cache
+from backend import cache_invalidation
 from django.utils import timezone
 
 from dateutil.relativedelta import relativedelta
@@ -66,9 +67,7 @@ class ProjectExtend(APIView):
                 p_obj = up_obj.project
                 p_obj.state = state_extend
                 p_obj.save()
-                cache.delete("ext-users-projects")
-                cache.delete('projects-get-all')
-                cache.delete('projectsextends-get-all')
+                cache_invalidation.project_extension_changed()
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -103,7 +102,7 @@ class ProjectExtend(APIView):
         else:
             if request.user.is_staff or request.user.is_superuser:
                 ret_data = cache.get('projectsextends-get-all')
-                if ret_data:
+                if ret_data is not None:
                     return Response(ret_data, status=status.HTTP_200_OK)
             if request.user.is_staff or request.user.is_superuser:
                 ups_obj = models.UserProject.objects.filter(role__name='lead')
