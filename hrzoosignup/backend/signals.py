@@ -18,7 +18,7 @@ def generate_username(sender, instance, created, **kwargs):
         instance.user.person_username = new_username
         logger.info(f"Generated username {new_username} for {instance.user.username}")
         instance.user.save()
-        cache_invalidation.user_changed(using=kwargs.get('using'))
+        cache_invalidation.user_changed()
 
 
 # post_save.connect(generate_username, sender=UserProject)
@@ -28,6 +28,6 @@ def generate_username(sender, instance, created, **kwargs):
           dispatch_uid='backend.invalidate_user_saved')
 @receiver(post_delete, sender=settings.AUTH_USER_MODEL,
           dispatch_uid='backend.invalidate_user_deleted')
-def invalidate_user_responses(sender, instance, using, **kwargs):
+def invalidate_user_responses(sender, instance, **kwargs):
     # Includes staff command/admin edits and authentication profile updates.
-    cache_invalidation.user_changed(using=using)
+    cache_invalidation.user_changed()

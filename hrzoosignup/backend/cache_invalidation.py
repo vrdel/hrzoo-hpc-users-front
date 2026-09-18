@@ -23,31 +23,31 @@ USER_ENTRIES = tuple(dict.fromkeys(
 ))
 
 
-def _invalidate(keys, using=None):
+def _invalidate(keys):
     keys = tuple(dict.fromkeys(keys))
-    transaction.on_commit(partial(cache.delete_many, keys), using=using)
+    transaction.on_commit(partial(cache.delete_many, keys))
 
 
-def user_changed(using=None):
-    _invalidate(USER_ENTRIES, using=using)
+def user_changed():
+    _invalidate(USER_ENTRIES)
 
 
-def membership_changed(using=None):
-    _invalidate(MEMBERSHIP_ENTRIES, using=using)
+def membership_changed():
+    _invalidate(MEMBERSHIP_ENTRIES)
 
 
-def ssh_key_changed(using=None):
-    _invalidate(SSH_KEY_ENTRIES, using=using)
+def ssh_key_changed():
+    _invalidate(SSH_KEY_ENTRIES)
 
 
-def project_changed(using=None):
-    _invalidate(MEMBERSHIP_ENTRIES, using=using)
+def project_changed():
+    _invalidate(MEMBERSHIP_ENTRIES)
 
 
-def project_extension_changed(using=None):
+def project_extension_changed():
     # Applying or deleting an extension can also change project state/dates.
-    _invalidate(MEMBERSHIP_ENTRIES + ('projectsextends-get-all',), using=using)
+    _invalidate(MEMBERSHIP_ENTRIES + ('projectsextends-get-all',))
 
 
-def project_calendar_changed(using=None):
-    project_changed(using=using)
+def project_calendar_changed():
+    project_changed()
