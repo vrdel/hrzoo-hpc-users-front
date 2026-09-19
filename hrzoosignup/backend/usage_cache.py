@@ -1,13 +1,10 @@
-"""Usage cache keys use the login username, as do the accounting builders."""
+"""Compatibility key builders; usage is keyed by login username."""
+from backend.caching.entries import USER_USAGE, PROJECT_USER_USAGE
 
 
 def user_usage_key(username):
-    if not username:
-        raise ValueError('A username is required for a usage cache key')
-    return f'usage_{username}'
+    return USER_USAGE.key(account=username)
 
 
 def project_user_usage_key(username):
-    if not username:
-        raise ValueError('A username is required for a usage cache key')
-    return f'project_user_usage_{username}'
+    return PROJECT_USER_USAGE.key(account=username)

@@ -3,8 +3,7 @@ import logging
 from backend import models
 from backend.api.internal.view_accounting import usage4user, \
     usage4project_per_user, _is_user_lead
-from backend.usage_cache import project_user_usage_key, user_usage_key
-from django.core.cache import cache
+from backend.caching import entries, store
 from django.core.management.base import BaseCommand
 
 logger = logging.getLogger("hrzoosignup.crons")
@@ -23,17 +22,17 @@ class Command(BaseCommand):
             for user in models.User.objects.all().iterator():
                 # Replace even empty results; compute each expensive value once.
                 # Do not delete first: readers can use the old value while warming.
-                cache.set(user_usage_key(user.username),
-                          usage4user(user.username), timeout=None)
+                store.set(entries.USER_USAGE, usage4user(user.username),
+                          account=user.username)
 
                 if _is_user_lead(user):
-                    cache.set(project_user_usage_key(user.username),
-                              usage4project_per_user(user.username))
+                    store.set(entries.PROJECT_USER_USAGE,
+                              usage4project_per_user(user.username), account=user.username)
                 else:
-                    cache.delete(project_user_usage_key(user.username))
+                    store.delete(entries.PROJECT_USER_USAGE, account=user.username)
 
                 # ProjectUsage computes live data; retire its unused warm entry.
-                cache.delete(f"project_usage_{user.username}")
+                store.delete(entries.LEGACY_PROJECT_USAGE, account=user.username)
 
         except Exception as e:
             logger.error(f"Error caching user data: {str(e)}")

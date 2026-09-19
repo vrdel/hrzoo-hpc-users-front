@@ -5,9 +5,8 @@ import math
 import pandas as pd
 from backend import models
 from backend.utils.accounting import get_users_in_project
-from backend.usage_cache import project_user_usage_key, user_usage_key
 from dateutil.relativedelta import relativedelta
-from django.core.cache import cache
+from backend.caching import entries, store
 from django.db.models import Q
 from django.utils import timezone
 from rest_framework import status
@@ -414,7 +413,7 @@ class ResourceUsage(APIView):
     def get(self, request):
         user = request.user
 
-        cached_data = cache.get(user_usage_key(user.username))
+        cached_data = store.get(entries.USER_USAGE, account=user.username)
 
         if cached_data is not None:
             return Response(data=cached_data, status=status.HTTP_200_OK)
@@ -469,9 +468,7 @@ class ProjectUsagePerUser(APIView):
             return Response(err_response, status=err_status)
 
         else:
-            cached_data = cache.get(
-                project_user_usage_key(user.username)
-            )
+            cached_data = store.get(entries.PROJECT_USER_USAGE, account=user.username)
 
             if cached_data is not None:
                 return Response(data=cached_data, status=status.HTTP_200_OK)
