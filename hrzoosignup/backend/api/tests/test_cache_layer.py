@@ -15,6 +15,7 @@ from backend.api.internal.view_projects import Projects
 @override_settings(CACHES={'default': {
     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     'LOCATION': 'cache-layer-tests',
+    'KEY_PREFIX': 'hzsi',
 }})
 class CacheLayerTests(TransactionTestCase):
     def setUp(self):
@@ -55,7 +56,9 @@ class CacheLayerTests(TransactionTestCase):
         for params in ({}, {'account': ''}, {'account': None}, {'wrong': 'user'}):
             with self.assertRaises(ValueError):
                 entries.USER_USAGE.key(**params)
-        self.assertEqual(entries.USER_USAGE.key(account='user'), 'usage_user')
+        self.assertEqual(entries.USER_USAGE.key(account='user'), 'usage:user:user')
+        self.assertEqual(cache.make_key(entries.USER_USAGE.key(account='user')),
+                         'hzsi:1:usage:user:user')
         for account in ('a' * 300, 'line\nbreak', 'space name'):
             key = entries.USER_USAGE.key(account=account)
             self.assertLess(len(key), 200)

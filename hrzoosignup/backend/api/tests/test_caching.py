@@ -16,7 +16,7 @@ from backend.usage_cache import project_user_usage_key, user_usage_key
 
 @override_settings(CACHES={
     'default': {'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                'LOCATION': 'caching-regressions'},
+                'KEY_PREFIX': 'hzsi', 'LOCATION': 'caching-regressions'},
 }, EMAIL_SEND=False)
 class CacheRegressionTests(SimpleTestCase):
     databases = {'default'}
@@ -30,20 +30,20 @@ class CacheRegressionTests(SimpleTestCase):
         self.request = SimpleNamespace(user=self.user)
 
     def test_invalidation_waits_for_outer_commit(self):
-        cache.set('projects-get-all', ['old'])
+        cache.set('projects:all', ['old'])
         with transaction.atomic():
             with transaction.atomic():
                 cache_invalidation.membership_changed()
-            self.assertEqual(cache.get('projects-get-all'), ['old'])
-        self.assertIsNone(cache.get('projects-get-all'))
+            self.assertEqual(cache.get('projects:all'), ['old'])
+        self.assertIsNone(cache.get('projects:all'))
 
     def test_rollback_preserves_cached_response(self):
-        cache.set('projects-get-all', ['old'])
+        cache.set('projects:all', ['old'])
         with self.assertRaises(ValueError):
             with transaction.atomic():
                 cache_invalidation.ssh_key_changed()
                 raise ValueError('rollback')
-        self.assertEqual(cache.get('projects-get-all'), ['old'])
+        self.assertEqual(cache.get('projects:all'), ['old'])
 
     def test_user_signals_invalidate_staff_and_embedded_user_responses(self):
         for signal in (post_save, post_delete):
@@ -63,14 +63,14 @@ class CacheRegressionTests(SimpleTestCase):
                 invalidate()
                 for key in cache_invalidation.MEMBERSHIP_ENTRIES:
                     self.assertIsNone(cache.get(key))
-        cache.set('projectsextends-get-all', ['old'])
+        cache.set('projects:extensions', ['old'])
         cache_invalidation.project_extension_changed()
-        self.assertIsNone(cache.get('projectsextends-get-all'))
+        self.assertIsNone(cache.get('projects:extensions'))
 
     def test_research_submission_uses_the_persons_croris_snapshot(self):
         self.user.person_oib = '12345678901'
         self.request.data = {'croris_id': 1}
-        cache.set('12345678901_croris', {'person_info': {'lead_status': False}})
+        cache.set('croris:person:12345678901', {'person_info': {'lead_status': False}})
         with patch.object(models.Project.objects, 'get',
                           side_effect=models.Project.DoesNotExist):
             response = view_projects.ProjectsResearch().post(self.request)
@@ -80,17 +80,17 @@ class CacheRegressionTests(SimpleTestCase):
 
     def test_ssh_deletion_invalidates_embedded_project_users(self):
         self.request.data = {'name': 'key'}
-        cache.set('projects-get-all', ['old'])
+        cache.set('projects:all', ['old'])
         with patch.object(view_sshkeys.SSHPublicKey.objects, 'filter') as keys:
             response = view_sshkeys.SshKeys().delete(self.request)
         keys.return_value.get.return_value.delete.assert_called_once()
         self.assertEqual(response.status_code, 204)
-        self.assertIsNone(cache.get('projects-get-all'))
+        self.assertIsNone(cache.get('projects:all'))
 
     def test_partial_membership_batch_invalidates_successful_writes(self):
         self.request.data = [{'value': 'one'}, {'value': 'two'}]
         user = SimpleNamespace(username='one', person_oib='123')
-        cache.set('projects-get-all', ['old'])
+        cache.set('projects:all', ['old'])
         with patch.object(view_userproject, 'get_user_model') as user_model, \
                 patch.object(models.Project.objects, 'get'), \
                 patch.object(models.Role.objects, 'get'), \
@@ -101,23 +101,23 @@ class CacheRegressionTests(SimpleTestCase):
                 self.request, projiddb=1)
         self.assertEqual(response.status_code, 400)
         membership.return_value.save.assert_called_once()
-        self.assertIsNone(cache.get('projects-get-all'))
+        self.assertIsNone(cache.get('projects:all'))
 
     def test_project_command_invalidates_after_saving(self):
-        cache.set('projects-get-all', ['old'])
+        cache.set('projects:all', ['old'])
         project = Mock(identifier='project-1')
         project.save.side_effect = lambda: self.assertEqual(
-            cache.get('projects-get-all'), ['old'])
+            cache.get('projects:all'), ['old'])
         with patch.object(models.Project.objects, 'get', return_value=project), \
                 patch.object(models.State.objects, 'get'):
             command = projects.Command()
             command.stdout = Mock()
             command._project_update({'identifier': 'project-1', 'state': 'approve'})
         project.save.assert_called_once()
-        self.assertIsNone(cache.get('projects-get-all'))
+        self.assertIsNone(cache.get('projects:all'))
 
     def test_command_membership_removal_invalidates_before_exit(self):
-        cache.set('projects-get-all', ['old'])
+        cache.set('projects:all', ['old'])
         command = users.Command()
         command.stdout = Mock()
         with patch.object(models.User.objects, 'get', return_value=self.user), \
@@ -127,12 +127,12 @@ class CacheRegressionTests(SimpleTestCase):
                                       'keyname': None, 'project': 'project-1'})
         self.assertEqual(exited.exception.code, 0)
         membership.return_value.delete.assert_called_once()
-        self.assertIsNone(cache.get('projects-get-all'))
+        self.assertIsNone(cache.get('projects:all'))
 
     def test_empty_user_lists_are_cache_hits(self):
-        for view, key in ((view_users.UsersInfo, 'usersinfo-get'),
-                          (view_users.UsersInfoOps, 'usersinfo-ops-get'),
-                          (view_users.UsersInfoInactive, 'usersinfoinactive-get')):
+        for view, key in ((view_users.UsersInfo, 'users:active'),
+                          (view_users.UsersInfoOps, 'users:staff'),
+                          (view_users.UsersInfoInactive, 'users:inactive')):
             with self.subTest(view=view):
                 cache.set(key, [])
                 with patch.object(view_users, 'get_user_model') as model, \
@@ -150,17 +150,17 @@ class CacheRegressionTests(SimpleTestCase):
             memberships.side_effect = [[], RuntimeError('builder failed')]
             with self.assertRaises(RuntimeError):
                 view_users.UsersInfo().get(self.request)
-        self.assertIsNone(cache.get('usersinfo-get'))
+        self.assertIsNone(cache.get('users:active'))
 
     def test_zero_users_stores_a_complete_empty_response(self):
         with patch.object(view_users, 'get_user_model') as user_model, \
                 patch.object(models.Role.objects, 'get'):
             user_model.return_value.objects.all.return_value = []
             self.assertEqual(view_users.UsersInfo().get(self.request).data, [])
-        self.assertEqual(cache.get('usersinfo-get'), [])
+        self.assertEqual(cache.get('users:active'), [])
 
     def test_cached_staff_list_does_not_bypass_permission_check(self):
-        cache.set('usersinfo-ops-get', ['private'])
+        cache.set('users:staff', ['private'])
         self.user.is_staff = False
         self.assertEqual(view_users.UsersInfoOps().get(self.request).status_code, 401)
 

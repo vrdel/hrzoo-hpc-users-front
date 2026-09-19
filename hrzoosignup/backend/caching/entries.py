@@ -1,4 +1,4 @@
-"""Storage policy. Preserve legacy keys and TTLs during the worker migration."""
+"""Storage policy. Django KEY_PREFIX supplies the application namespace."""
 from dataclasses import dataclass
 from hashlib import sha256
 
@@ -24,15 +24,15 @@ class Entry:
         return key
 
 
-USERS = Entry('users', 'usersinfo-get', None)
-INACTIVE_USERS = Entry('inactive_users', 'usersinfoinactive-get', 15 * 60)
-STAFF_USERS = Entry('staff_users', 'usersinfo-ops-get', None)
-PROJECTS = Entry('projects', 'projects-get-all', None)
-PROJECT_EXTENSIONS = Entry('project_extensions', 'projectsextends-get-all', None)
-EXTERNAL_MEMBERSHIPS = Entry('external_memberships', 'ext-users-projects', None)
-EXTERNAL_SSH_KEYS = Entry('external_ssh_keys', 'ext-sshkeys', None)
-CRORIS_PERSON = Entry('croris_person', '{oib}_croris', 20 * 60, 'oib')
-USER_USAGE = Entry('user_usage', 'usage_{account}', None, 'account')
-PROJECT_USER_USAGE = Entry('project_user_usage', 'project_user_usage_{account}', DEFAULT_TIMEOUT, 'account')
+USERS = Entry('users', 'users:active', None)
+INACTIVE_USERS = Entry('inactive_users', 'users:inactive', 15 * 60)
+STAFF_USERS = Entry('staff_users', 'users:staff', None)
+PROJECTS = Entry('projects', 'projects:all', None)
+PROJECT_EXTENSIONS = Entry('project_extensions', 'projects:extensions', None)
+EXTERNAL_MEMBERSHIPS = Entry('external_memberships', 'external:memberships', None)
+EXTERNAL_SSH_KEYS = Entry('external_ssh_keys', 'external:ssh-keys', None)
+CRORIS_PERSON = Entry('croris_person', 'croris:person:{oib}', 20 * 60, 'oib')
+USER_USAGE = Entry('user_usage', 'usage:user:{account}', None, 'account')
+PROJECT_USER_USAGE = Entry('project_user_usage', 'usage:leader:per-user:{account}', DEFAULT_TIMEOUT, 'account')
 # Cleanup only: ProjectUsage computes live data and no longer warms this entry.
 LEGACY_PROJECT_USAGE = Entry('legacy_project_usage', 'project_usage_{account}', DEFAULT_TIMEOUT, 'account')
