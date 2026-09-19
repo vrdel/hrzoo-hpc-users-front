@@ -25,7 +25,7 @@ class Entry:
 
 
 USERS = Entry('users', 'users:active', None)
-INACTIVE_USERS = Entry('inactive_users', 'users:inactive', 15 * 60)
+INACTIVE_USERS = Entry('inactive_users', 'users:inactive', None)
 STAFF_USERS = Entry('staff_users', 'users:staff', None)
 PROJECTS = Entry('projects', 'projects:all', None)
 PROJECT_EXTENSIONS = Entry('project_extensions', 'projects:extensions', None)
