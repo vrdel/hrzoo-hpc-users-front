@@ -23,6 +23,7 @@ def _bulk_insert_from_file(tmp_path):
     django.setup()
 
     from backend.models import ResourceUsage
+    from backend.caching import invalidation
     from django.db import connections as worker_connections
 
     with open(tmp_path, 'r') as f:
@@ -42,11 +43,13 @@ def _bulk_insert_from_file(tmp_path):
         ))
         if len(batch) >= BATCH_SIZE:
             ResourceUsage.objects.bulk_create(batch, batch_size=BATCH_SIZE, ignore_conflicts=True)
+            invalidation.usage_records_changed(batch)
             total += len(batch)
             batch = []
 
     if batch:
         ResourceUsage.objects.bulk_create(batch, batch_size=BATCH_SIZE, ignore_conflicts=True)
+        invalidation.usage_records_changed(batch)
         total += len(batch)
 
     for conn in worker_connections.all():
