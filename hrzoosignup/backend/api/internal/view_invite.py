@@ -7,7 +7,7 @@ from backend.email import user as useremail
 from backend.serializers_internal import InvitesSerializer
 from backend.utils.gen_username import gen_username
 from django.conf import settings
-from django.core.cache import cache
+from backend.caching import entries, store
 from backend import cache_invalidation
 from django.db import IntegrityError
 from django.utils import timezone
@@ -392,7 +392,7 @@ class Invites(APIView):
                 emails = [col['value'] for col in request.data['collaboratorEmails']]
                 foreign_emails = [col['value'] for col in request.data['foreignCollaboratorEmails']]
                 myoib = request.user.person_oib
-                cached = cache.get(f'{myoib}_croris')
+                cached = store.get(entries.CRORIS_PERSON, oib=myoib) if myoib else None
                 if not cached and emails:
                     msg = {
                         'status': {
