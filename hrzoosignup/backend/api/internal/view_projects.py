@@ -7,7 +7,7 @@ from backend.email import project
 from backend.serializers_internal import ProjectSerializer, ProjectSerializerGet
 from backend.utils.gen_username import gen_username
 from django.conf import settings
-from django.core.cache import cache
+from backend.caching import entries, store
 from backend import cache_invalidation
 from django.utils import timezone
 from rest_framework import status
@@ -91,7 +91,7 @@ class ProjectsGeneral(APIView):
                 return Response(err_response, status=err_status)
 
             oib = request.user.person_oib
-            croris_data = cache.get(f'{oib}_croris')
+            croris_data = store.get(entries.CRORIS_PERSON, oib=oib) if oib else None
             if croris_data:
                 mbz = croris_data['person_info'].get('mbz', None)
                 projects_lead = croris_data.get('projects_lead_info', None)
@@ -178,7 +178,7 @@ class ProjectsResearch(APIView):
         # data
 
         oib = request.user.person_oib
-        croris_data = cache.get(f'{oib}_croris')
+        croris_data = store.get(entries.CRORIS_PERSON, oib=oib) if oib else None
         if croris_data:
             lead_status = croris_data['person_info']['lead_status']
             if not lead_status:
@@ -438,12 +438,12 @@ class Projects(APIView):
                 req_type = kwargs.get('specific')
 
                 if req_type == 'all' and (request.user.is_staff or request.user.is_superuser):
-                    ret_data = cache.get('projects-get-all')
+                    ret_data = store.get(entries.PROJECTS)
                     if ret_data is not None:
                         return Response(ret_data, status=status.HTTP_200_OK)
                     else:
                         serializer = ProjectSerializerGet(models.Project.objects.all().order_by('-date_submitted'), many=True)
-                        cache.set('projects-get-all', serializer.data, None)
+                        store.set(entries.PROJECTS, serializer.data)
                     return Response(serializer.data, status=status.HTTP_200_OK)
                 else:
                     serializer = ProjectSerializerGet(models.Project.objects.get(identifier=req_type))
@@ -470,7 +470,7 @@ class Projects(APIView):
         # sync data for CroRIS projects that might have been updated
         # since submission
         oib = request.user.person_oib
-        croris_data = cache.get(f'{oib}_croris')
+        croris_data = store.get(entries.CRORIS_PERSON, oib=oib) if oib else None
         if croris_data:
             lead_projects_users = croris_data['projects_lead_users']
             lead_info = croris_data['projects_lead_info']
@@ -605,7 +605,7 @@ class CanSubmitInstituteProject(APIView):
             return Response(deny_resp, status=status.HTTP_200_OK)
 
         oib = request.user.person_oib
-        croris_data = cache.get(f'{oib}_croris')
+        croris_data = store.get(entries.CRORIS_PERSON, oib=oib) if oib else None
 
         if croris_data:
             mbz = croris_data['person_info'].get('mbz', None)
