@@ -2,7 +2,7 @@ from backend import models
 from backend.serializers_internal import UserSerializerFiltered
 
 from django.contrib.auth import get_user_model
-from django.core.cache import cache
+from backend.caching import entries, store
 
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -18,7 +18,7 @@ class UsersInfoOps(APIView):
     def get(self, request):
         if request.user.is_staff or request.user.is_superuser:
             extract_users = []
-            ret_data = cache.get('usersinfo-ops-get')
+            ret_data = store.get(entries.STAFF_USERS)
             if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
@@ -31,7 +31,7 @@ class UsersInfoOps(APIView):
                         'username': user.username
                     }
                 )
-            cache.set('usersinfo-ops-get', extract_users, None)
+            store.set(entries.STAFF_USERS, extract_users)
             return Response(extract_users, status=status.HTTP_200_OK)
 
         else:
@@ -50,7 +50,7 @@ class UsersInfoInactive(APIView):
 
     def get(self, request):
         if request.user.is_staff or request.user.is_superuser:
-            ret_data = cache.get('usersinfoinactive-get')
+            ret_data = store.get(entries.INACTIVE_USERS)
             if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
@@ -104,9 +104,8 @@ class UsersInfoInactive(APIView):
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
 
-            cache.set('usersinfoinactive-get',
-                      users_noproject + users_inactiveprojects,
-                      60 * 15)
+            store.set(entries.INACTIVE_USERS,
+                      users_noproject + users_inactiveprojects)
 
             return Response(users_noproject + users_inactiveprojects,
                             status=status.HTTP_200_OK)
@@ -127,7 +126,7 @@ class UsersInfo(APIView):
 
     def get(self, request):
         if request.user.is_staff or request.user.is_superuser:
-            ret_data = cache.get('usersinfo-get')
+            ret_data = store.get(entries.USERS)
             if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
@@ -171,7 +170,7 @@ class UsersInfo(APIView):
                             user.date_joined.strftime("%Y-%m-%d %H:%M:%S")
                     })
 
-            cache.set('usersinfo-get', resp_users, None)
+            store.set(entries.USERS, resp_users)
 
             return Response(resp_users, status=status.HTTP_200_OK)
 
