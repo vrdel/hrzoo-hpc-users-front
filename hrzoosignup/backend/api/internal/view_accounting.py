@@ -413,15 +413,9 @@ class ResourceUsage(APIView):
     def get(self, request):
         user = request.user
 
-        cached_data = store.get(entries.USER_USAGE, account=user.username)
-
-        if cached_data is not None:
-            return Response(data=cached_data, status=status.HTTP_200_OK)
-
-        else:
-            output = usage4user(user.username)
-
-            return Response(data=output, status=status.HTTP_200_OK)
+        data = store.remember(entries.USER_USAGE,
+                              lambda: usage4user(user.username), account=user.username)
+        return Response(data=data, status=status.HTTP_200_OK)
 
 
 class ProjectUsage(APIView):
@@ -468,13 +462,6 @@ class ProjectUsagePerUser(APIView):
             return Response(err_response, status=err_status)
 
         else:
-            cached_data = store.get(entries.PROJECT_USER_USAGE, account=user.username)
-
-            if cached_data is not None:
-                return Response(data=cached_data, status=status.HTTP_200_OK)
-
-            else:
-                return Response(
-                    usage4project_per_user(user.username),
-                    status=status.HTTP_200_OK
-                )
+            data = store.remember(entries.PROJECT_USER_USAGE,
+                                  lambda: usage4project_per_user(user.username), account=user.username)
+            return Response(data=data, status=status.HTTP_200_OK)

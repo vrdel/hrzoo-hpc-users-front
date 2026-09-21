@@ -10,6 +10,7 @@ from backend import models
 from backend.caching import entries, invalidation, store
 from backend.api.internal.view_croris import CroRISInfo, with_current_approvals
 from backend.api.internal.view_projects import Projects
+from backend.api.internal import view_accounting
 
 
 @override_settings(CACHES={'default': {
@@ -115,6 +116,48 @@ class CacheLayerTests(TransactionTestCase):
         for account in (user.username, leader.username):
             self.assertIsNone(store.get(entries.USER_USAGE, account=account))
             self.assertIsNone(store.get(entries.PROJECT_USER_USAGE, account=account))
+
+    def test_usage_requests_share_fills_and_rebuild_after_invalidation(self):
+        user = self.user()
+        other = self.user('other')
+        project = self.project()
+        cases = (
+            (view_accounting.ResourceUsage, 'usage4user', entries.USER_USAGE),
+            (view_accounting.ProjectUsagePerUser, 'usage4project_per_user', entries.PROJECT_USER_USAGE),
+        )
+        for view, builder, entry in cases:
+            for result in ({}, {'usage': 42}):
+                with self.subTest(view=view.__name__, result=result):
+                    cache.clear()
+                    with patch.object(view_accounting, builder, return_value=result) as compute, \
+                            patch.object(view_accounting, '_is_user_lead', return_value=True):
+                        for _ in range(2):
+                            request = SimpleNamespace(user=models.User.objects.get(pk=user.pk))
+                            self.assertEqual(view().get(request).data, result)
+                        compute.assert_called_once_with(user.username)
+                        self.assertEqual(store.get(entry, account=user.username), result)
+                        view().get(SimpleNamespace(user=other))
+                        self.assertEqual(compute.call_count, 2)
+                        # A real usage write evicts this user's cached response.
+                        models.ResourceUsage.objects.create(user=user, project=project)
+                        self.assertIsNone(store.get(entry, account=user.username))
+                        self.assertEqual(view().get(request).data, result)
+                        self.assertEqual(compute.call_count, 3)
+
+    def test_cached_leader_usage_still_requires_current_leadership(self):
+        user = self.user()
+        project = self.project()
+        role = models.Role.objects.create(name='lead')
+        membership = models.UserProject.objects.create(user=user, project=project, role=role)
+        for entry in (entries.PROJECT_USER_USAGE,):
+            store.set(entry, {'private': True}, account=user.username)
+        membership.delete()
+        for entry in (entries.PROJECT_USER_USAGE,):
+            self.assertIsNone(store.get(entry, account=user.username))
+            # Even a stale cache entry cannot bypass the permission check.
+            store.set(entry, {'private': True}, account=user.username)
+        for view in (view_accounting.ProjectUsagePerUser,):
+            self.assertEqual(view().get(SimpleNamespace(user=user)).status_code, 401)
 
     def test_admin_project_bulk_deletion_evicts_cascaded_data(self):
         user = self.user()
