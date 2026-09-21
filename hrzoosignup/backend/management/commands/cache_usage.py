@@ -7,7 +7,7 @@ from backend.caching import entries, store
 from django.core.management.base import BaseCommand
 from django.db.models import Exists, OuterRef
 
-logger = logging.getLogger("hrzoosignup.crons")
+logger = logging.getLogger("backend.caching.warmer")
 
 
 class Command(BaseCommand):

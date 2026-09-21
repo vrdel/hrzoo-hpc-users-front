@@ -484,6 +484,12 @@ LOGGING = {
             'filename': '{}var/log/tasks.log'.format(VENV),
             'formatter': 'verbose',
         },
+        'file_cache': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': '{}var/log/cache.log'.format(VENV),
+            'formatter': 'verbose',
+        },
         'file_saml2': {
             'level': 'DEBUG',
             'class': 'logging.handlers.WatchedFileHandler',
@@ -525,9 +531,9 @@ LOGGING = {
             'propagate': True,
         },
         'backend.caching': {
-            'handlers': ['file_tasks'],
+            'handlers': ['file_cache'],
             'level': 'DEBUG',
-            'propagate': True,
+            'propagate': False,
         },
         'hrzoosignup.saml2': {
             'handlers': ['file_saml2'],

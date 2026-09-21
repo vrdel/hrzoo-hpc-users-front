@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from backend.models import Project
 
-logger = logging.getLogger("hrzoosignup.crons")
+logger = logging.getLogger("backend.caching.calendar")
 
 
 class Command(BaseCommand):

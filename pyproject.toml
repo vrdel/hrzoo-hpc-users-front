@@ -126,7 +126,7 @@ hrzoosignup = "hrzoosignup/"
 "etc/logrotate.d/" = [
 	"logrotate/logcrons", "logrotate/logdashboard",
 	"logrotate/logsaml2", "logrotate/logtasks",
-	"logrotate/logviews", "logrotate/logerror"
+	"logrotate/logviews", "logrotate/logerror", "logrotate/logcache"
 ]
 "share/static/" = ["hrzoosignup/static/hzsi-favicon.ico"]
 "share/static/reactbundle" = ["hrzoosignup/static/reactbundle/*"]
