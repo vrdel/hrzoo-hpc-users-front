@@ -139,6 +139,34 @@ class CacheLayerTests(TransactionTestCase):
             user.save()
             self.assertEqual(cache.get_many(keys), {})
 
+    def test_reading_unchanged_croris_project_preserves_shared_caches(self):
+        user = self.user()
+        user.person_oib = '123'
+        user.save()
+        project = self.project()
+        project.croris_id = 12
+        project.project_type = models.ProjectType.objects.create(name='research-croris')
+        project.state = models.State.objects.create(name='approve')
+        project.save()
+        role = models.Role.objects.create(name='lead')
+        models.UserProject.objects.create(user=user, project=project, role=role)
+        collaborators = [{'name': 'Collaborator'}]
+        store.set(entries.CRORIS_PERSON, {
+            'projects_lead_users': {12: collaborators}, 'projects_lead_info': [],
+        }, oib=user.person_oib)
+        request = SimpleNamespace(user=user)
+        keys = self.warm_user_caches(user)
+        self.assertEqual(Projects().get(request).status_code, 200)
+        project.refresh_from_db()
+        self.assertEqual(project.croris_collaborators, collaborators)
+        self.assertEqual(cache.get_many(keys), {
+            entries.EXTERNAL_SSH_KEYS.key(): ['warm'], entries.STAFF_USERS.key(): ['warm'],
+        })
+
+        keys = self.warm_user_caches(user)
+        self.assertEqual(Projects().get(request).status_code, 200)
+        self.assertEqual(cache.get_many(keys), {key: ['warm'] for key in keys})
+
     def test_membership_changes_refresh_project_response_and_usage(self):
         user = self.user()
         project = self.project()

@@ -33,6 +33,8 @@ def invalidate_user_responses(sender, instance, **kwargs):
     if (kwargs.get('signal') is post_save
             and not getattr(instance, '_cache_user_changed', True)):
         return
+    logger.debug('Cache invalidation triggered: model=User event=%s',
+                 'save' if kwargs.get('signal') is post_save else 'delete')
     cache_invalidation.user_changed()
 
 
@@ -88,7 +90,12 @@ def _user_cache_changed(instance, update_fields, using):
     if not fields:
         return False
     previous = models.User.objects.using(using).filter(pk=instance.pk).values(*fields).first()
-    return previous is None or any(previous[field] != getattr(instance, field) for field in fields)
+    changed = fields if previous is None else [
+        field for field in fields if previous[field] != getattr(instance, field)]
+    if changed:
+        # Field names only: no identifiers, profile values, or credentials.
+        logger.debug('Cache-relevant user fields changed: %s', ','.join(sorted(changed)))
+    return bool(changed)
 
 
 def capture_cache_dependents(sender, instance, **kwargs):
@@ -105,6 +112,7 @@ def capture_cache_dependents(sender, instance, **kwargs):
             or _user_cache_changed(instance, kwargs.get('update_fields'), kwargs.get('using'))
         )
         if not instance._cache_user_changed:
+            logger.debug('Cache invalidation skipped: model=User unchanged profile or authentication-only save')
             return
     accounts = _affected_accounts(sender, instance)
     if (kwargs.get('signal') is pre_save and instance.pk
@@ -119,9 +127,13 @@ def invalidate_model_responses(sender, instance, **kwargs):
     event = _MODEL_EVENTS[sender]
     # User aggregate responses are already covered by the receiver above.
     if event is not None and sender is not models.User:
+        logger.debug('Cache invalidation triggered: model=%s event=%s', sender.__name__,
+                     'save' if kwargs.get('signal') is post_save else 'delete')
         event()
     accounts = getattr(instance, '_cache_usage_accounts', ())
     if accounts:
+        logger.debug('Usage cache invalidation triggered: model=%s accounts=%d',
+                     sender.__name__, len(accounts))
         cache_invalidation.usage_changed(accounts)
 
 

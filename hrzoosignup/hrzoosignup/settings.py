@@ -521,6 +521,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'backend.caching': {
+            'handlers': ['file_tasks'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
         'hrzoosignup.saml2': {
             'handlers': ['file_saml2'],
             'level': 'DEBUG',

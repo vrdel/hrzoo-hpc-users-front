@@ -479,8 +479,10 @@ class Projects(APIView):
                 # plinfo = [project for project in lead_info if project['croris_id'] == pl.croris_id]
                 # pl.date_end = datetime.datetime.strptime(plinfo['end'], '%d.%m.%Y')
                 try:
-                    pl.croris_collaborators = lead_projects_users[pl.croris_id]
-                    pl.save()
+                    collaborators = lead_projects_users[pl.croris_id]
+                    if pl.croris_collaborators != collaborators:
+                        pl.croris_collaborators = collaborators
+                        pl.save(update_fields=['croris_collaborators'])
                 except (KeyError, IndexError) as exc:
                     logger.warn('{} - found project data (CroRIS ID={}) in database, but not in memcache'.format(request.user.username, pl.croris_id))
 
