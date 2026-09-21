@@ -2,7 +2,7 @@ import logging
 
 from backend import models
 from backend.api.internal.view_accounting import usage4user, \
-    usage4project_per_user, _is_user_lead
+    usage4project_per_user, usage4project, _is_user_lead
 from backend.caching import entries, store
 from django.core.management.base import BaseCommand
 
@@ -28,11 +28,13 @@ class Command(BaseCommand):
                 if _is_user_lead(user):
                     store.set(entries.PROJECT_USER_USAGE,
                               usage4project_per_user(user.username), account=user.username)
+                    store.set(entries.PROJECT_USAGE,
+                              usage4project(user.username), account=user.username)
                 else:
                     store.delete(entries.PROJECT_USER_USAGE, account=user.username)
                     store.delete(entries.PROJECT_USAGE, account=user.username)
 
-                # Project totals are filled on demand under the new usage key.
+                # Remove the retired project-usage key.
                 store.delete(entries.LEGACY_PROJECT_USAGE, account=user.username)
 
         except Exception as e:

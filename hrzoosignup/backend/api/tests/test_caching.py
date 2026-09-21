@@ -7,6 +7,7 @@ from django.db.models.signals import post_delete, post_save
 from django.test import SimpleTestCase, override_settings
 
 from backend import cache_invalidation, models
+from backend.caching import entries
 from backend.api.internal import (
     view_accounting, view_projects, view_sshkeys, view_userproject, view_users,
 )
@@ -167,23 +168,30 @@ class CacheRegressionTests(SimpleTestCase):
     def test_usage_warmer_uses_login_identity_and_replaces_empty_results(self):
         cache.set(user_usage_key(self.user.username), {'old': 1})
         cache.set(project_user_usage_key(self.user.username), {'old': 1})
+        cache.set(entries.PROJECT_USAGE.key(account=self.user.username), {'old': 1})
         with patch.object(cache_usage.models.User.objects, 'all') as users, \
                 patch.object(cache_usage, 'usage4user', return_value={}) as personal, \
                 patch.object(cache_usage, 'usage4project_per_user', return_value={}) as project, \
+                patch.object(cache_usage, 'usage4project', return_value={}) as totals, \
                 patch.object(cache_usage, '_is_user_lead', return_value=True):
             users.return_value.iterator.return_value = [self.user]
             cache_usage.Command().handle()
         personal.assert_called_once_with(self.user.username)
         project.assert_called_once_with(self.user.username)
+        totals.assert_called_once_with(self.user.username)
         self.assertEqual(cache.get(user_usage_key(self.user.username)), {})
         self.assertEqual(cache.get(project_user_usage_key(self.user.username)), {})
+        self.assertEqual(cache.get(entries.PROJECT_USAGE.key(account=self.user.username)), {})
         with patch.object(view_accounting, 'usage4user') as personal, \
                 patch.object(view_accounting, 'usage4project_per_user') as project, \
+                patch.object(view_accounting, 'usage4project') as totals, \
                 patch.object(view_accounting, '_is_user_lead', return_value=True):
             self.assertEqual(view_accounting.ResourceUsage().get(self.request).data, {})
             self.assertEqual(view_accounting.ProjectUsagePerUser().get(self.request).data, {})
+            self.assertEqual(view_accounting.ProjectUsage().get(self.request).data, {})
         personal.assert_not_called()
         project.assert_not_called()
+        totals.assert_not_called()
 
     def test_former_leader_cache_is_removed_and_permissions_are_live(self):
         cache.set(project_user_usage_key(self.user.username), {'private': 1})
