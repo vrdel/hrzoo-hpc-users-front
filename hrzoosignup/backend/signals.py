@@ -30,6 +30,9 @@ def generate_username(sender, instance, created, **kwargs):
           dispatch_uid='backend.invalidate_user_deleted')
 def invalidate_user_responses(sender, instance, **kwargs):
     # Includes staff command/admin edits and authentication profile updates.
+    if (kwargs.get('signal') is post_save
+            and not getattr(instance, '_cache_user_changed', True)):
+        return
     cache_invalidation.user_changed()
 
 
@@ -72,9 +75,37 @@ def _affected_accounts(sender, instance):
         user_ids=(instance.user_id,), project_ids=(instance.project_id,))
 
 
+def _user_cache_changed(instance, update_fields, using):
+    if instance._state.adding:
+        return True
+    # These authentication fields are not part of any shared cached response.
+    # last_login remains live in the uncached session/user-detail responses.
+    fields = [field.attname for field in instance._meta.concrete_fields
+              if not field.primary_key and field.name not in {'last_login', 'password'}
+              and field.attname not in instance.get_deferred_fields()
+              and (update_fields is None or field.name in update_fields
+                   or field.attname in update_fields)]
+    if not fields:
+        return False
+    previous = models.User.objects.using(using).filter(pk=instance.pk).values(*fields).first()
+    return previous is None or any(previous[field] != getattr(instance, field) for field in fields)
+
+
 def capture_cache_dependents(sender, instance, **kwargs):
+    # Instances can be saved repeatedly and later deleted; never reuse the
+    # dependency snapshot or change decision from an earlier save.
+    instance._cache_usage_accounts = ()
+    if sender is models.User:
+        instance._cache_user_changed = True
     if kwargs.get('raw'):
         return
+    if sender is models.User:
+        instance._cache_user_changed = (
+            kwargs.get('signal') is not pre_save
+            or _user_cache_changed(instance, kwargs.get('update_fields'), kwargs.get('using'))
+        )
+        if not instance._cache_user_changed:
+            return
     accounts = _affected_accounts(sender, instance)
     if (kwargs.get('signal') is pre_save and instance.pk
             and sender in (models.User, models.UserProject, models.ResourceUsage)):

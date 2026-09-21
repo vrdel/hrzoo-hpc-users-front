@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 from django.contrib.admin import ModelAdmin, AdminSite
 from django.core.cache import cache
 from django.db import transaction
-from django.test import TransactionTestCase, override_settings
+from django.test import Client, TransactionTestCase, override_settings
 
 from backend import models
 from backend.caching import entries, invalidation, store
@@ -85,6 +85,59 @@ class CacheLayerTests(TransactionTestCase):
             self.assertEqual(cache.get(entries.USER_USAGE.key(account='old')), ['stale'])
         for account in ('old', 'new'):
             self.assertIsNone(store.get(entries.USER_USAGE, account=account))
+
+    def warm_user_caches(self, user):
+        keys = list(invalidation.USER_ENTRIES) + [
+            entry.key(account=user.username) for entry in
+            (entries.USER_USAGE, entries.PROJECT_USER_USAGE, entries.PROJECT_USAGE)]
+        cache.set_many({key: ['warm'] for key in keys})
+        return keys
+
+    def test_separate_login_sessions_preserve_shared_caches(self):
+        user = self.user()
+        keys = self.warm_user_caches(user)
+        clients = [Client(), Client()]
+        for client in clients:
+            client.force_login(models.User.objects.get(pk=user.pk),
+                               backend='django.contrib.auth.backends.ModelBackend')
+            self.assertEqual(cache.get_many(keys), {key: ['warm'] for key in keys})
+        self.assertNotEqual(clients[0].session.session_key, clients[1].session.session_key)
+        user.refresh_from_db()
+        self.assertIsNotNone(user.last_login)
+
+    def test_unchanged_profile_and_authentication_saves_preserve_caches(self):
+        from django.utils import timezone
+        user = self.user()
+        # A previous real update must not leave dependency state on the instance.
+        user.first_name = 'Updated'
+        user.save()
+        keys = self.warm_user_caches(user)
+        user.save()  # SAML can force a save without changing profile attributes.
+        user.last_login = timezone.now()
+        user.save()
+        user.set_password('new-test-password')
+        user.save(update_fields=['password'])
+        self.assertEqual(cache.get_many(keys), {key: ['warm'] for key in keys})
+        # Deletion after an unchanged save still invalidates all dependent data.
+        user.delete()
+        self.assertEqual(cache.get_many(keys), {})
+
+    def test_only_persisted_profile_changes_invalidate_caches(self):
+        from django.utils import timezone
+        user = self.user()
+        keys = self.warm_user_caches(user)
+        user.first_name = 'Not yet saved'
+        user.last_login = timezone.now()
+        user.save(update_fields=['last_login'])
+        self.assertEqual(cache.get_many(keys), {key: ['warm'] for key in keys})
+        user.save(update_fields=['first_name'])
+        self.assertEqual(cache.get_many(keys), {})
+        for field in ('person_institution', 'is_staff', 'is_active'):
+            keys = self.warm_user_caches(user)
+            setattr(user, field, 'New institute' if field == 'person_institution'
+                    else not getattr(user, field))
+            user.save()
+            self.assertEqual(cache.get_many(keys), {})
 
     def test_membership_changes_refresh_project_response_and_usage(self):
         user = self.user()
