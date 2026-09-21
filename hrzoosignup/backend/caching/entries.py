@@ -34,5 +34,6 @@ EXTERNAL_SSH_KEYS = Entry('external_ssh_keys', 'external:ssh-keys', None)
 CRORIS_PERSON = Entry('croris_person', 'croris:person:{oib}', 20 * 60, 'oib')
 USER_USAGE = Entry('user_usage', 'usage:user:{account}', None, 'account')
 PROJECT_USER_USAGE = Entry('project_user_usage', 'usage:leader:per-user:{account}', DEFAULT_TIMEOUT, 'account')
-# Cleanup only: ProjectUsage computes live data and no longer warms this entry.
+PROJECT_USAGE = Entry('project_usage', 'usage:leader:projects:{account}', DEFAULT_TIMEOUT, 'account')
+# Cleanup only: retired project-usage key.
 LEGACY_PROJECT_USAGE = Entry('legacy_project_usage', 'project_usage_{account}', DEFAULT_TIMEOUT, 'account')

@@ -438,7 +438,8 @@ class ProjectUsage(APIView):
 
         else:
             return Response(
-                data=usage4project(user.username),
+                data=store.remember(entries.PROJECT_USAGE,
+                                    lambda: usage4project(user.username), account=user.username),
                 status=status.HTTP_200_OK
             )
 

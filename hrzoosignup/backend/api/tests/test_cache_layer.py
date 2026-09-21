@@ -109,6 +109,7 @@ class CacheLayerTests(TransactionTestCase):
         for account in (user.username, leader.username):
             store.set(entries.USER_USAGE, ['old'], account=account)
             store.set(entries.PROJECT_USER_USAGE, ['old'], account=account)
+            store.set(entries.PROJECT_USAGE, ['old'], account=account)
         records = [models.ResourceUsage(user=user, project=project)]
         with transaction.atomic():
             models.ResourceUsage.objects.bulk_create(records)
@@ -116,6 +117,7 @@ class CacheLayerTests(TransactionTestCase):
         for account in (user.username, leader.username):
             self.assertIsNone(store.get(entries.USER_USAGE, account=account))
             self.assertIsNone(store.get(entries.PROJECT_USER_USAGE, account=account))
+            self.assertIsNone(store.get(entries.PROJECT_USAGE, account=account))
 
     def test_usage_requests_share_fills_and_rebuild_after_invalidation(self):
         user = self.user()
@@ -124,6 +126,7 @@ class CacheLayerTests(TransactionTestCase):
         cases = (
             (view_accounting.ResourceUsage, 'usage4user', entries.USER_USAGE),
             (view_accounting.ProjectUsagePerUser, 'usage4project_per_user', entries.PROJECT_USER_USAGE),
+            (view_accounting.ProjectUsage, 'usage4project', entries.PROJECT_USAGE),
         )
         for view, builder, entry in cases:
             for result in ({}, {'usage': 42}):
@@ -149,14 +152,14 @@ class CacheLayerTests(TransactionTestCase):
         project = self.project()
         role = models.Role.objects.create(name='lead')
         membership = models.UserProject.objects.create(user=user, project=project, role=role)
-        for entry in (entries.PROJECT_USER_USAGE,):
+        for entry in (entries.PROJECT_USAGE, entries.PROJECT_USER_USAGE):
             store.set(entry, {'private': True}, account=user.username)
         membership.delete()
-        for entry in (entries.PROJECT_USER_USAGE,):
+        for entry in (entries.PROJECT_USAGE, entries.PROJECT_USER_USAGE):
             self.assertIsNone(store.get(entry, account=user.username))
             # Even a stale cache entry cannot bypass the permission check.
             store.set(entry, {'private': True}, account=user.username)
-        for view in (view_accounting.ProjectUsagePerUser,):
+        for view in (view_accounting.ProjectUsage, view_accounting.ProjectUsagePerUser):
             self.assertEqual(view().get(SimpleNamespace(user=user)).status_code, 401)
 
     def test_admin_project_bulk_deletion_evicts_cascaded_data(self):

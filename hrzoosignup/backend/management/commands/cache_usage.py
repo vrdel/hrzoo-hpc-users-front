@@ -30,8 +30,9 @@ class Command(BaseCommand):
                               usage4project_per_user(user.username), account=user.username)
                 else:
                     store.delete(entries.PROJECT_USER_USAGE, account=user.username)
+                    store.delete(entries.PROJECT_USAGE, account=user.username)
 
-                # ProjectUsage computes live data; retire its unused warm entry.
+                # Project totals are filled on demand under the new usage key.
                 store.delete(entries.LEGACY_PROJECT_USAGE, account=user.username)
 
         except Exception as e:
