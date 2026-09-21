@@ -141,9 +141,13 @@ class SAML2Backend(Saml2Backend):
             hreduorgoib = attributes.get('hrEduOrgOIB', '')
             if hreduorgoib:
                 instit_croris = CrorisInstitutions.objects.filter(oib=hreduorgoib[0])
-                if instit_croris and user.person_institution != instit_croris[0].name_short:
-                    user.person_institution = instit_croris[0].name_short
-                    force_save = True
+                if instit_croris:
+                    # A matching OIB is authoritative even when the stored
+                    # institution already matches. Do not alternate between
+                    # its canonical name and an email/SAML fallback on login.
+                    if user.person_institution != instit_croris[0].name_short:
+                        user.person_institution = instit_croris[0].name_short
+                        force_save = True
                 else:
                     try:
                         if isinstance(user.person_mail, list):
@@ -152,8 +156,9 @@ class SAML2Backend(Saml2Backend):
                             user_email = user.person_mail
                         user_email_domain = user_email.split('@')[1]
                         found = CrorisInstitutions.objects.get(contact_web__contains=user_email_domain)
-                        user.person_institution = found.name_short
-                        force_save = True
+                        if user.person_institution != found.name_short:
+                            user.person_institution = found.name_short
+                            force_save = True
 
                     except (CrorisInstitutions.DoesNotExist, CrorisInstitutions.MultipleObjectsReturned):
                         if user.person_institution != attributes['o'][0]:
@@ -164,13 +169,11 @@ class SAML2Backend(Saml2Backend):
                         pass
 
         if not user.person_type_manual_set:
-            if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH):
-                user.person_type = 'foreign'
-                logger.debug('Setting foreign person_type')
-                force_save = True
-            else:
-                user.person_type = 'local'
-                logger.debug('Setting local person_type')
+            person_type = ('foreign' if self.idp_entityid.startswith(settings.SAML_EDUGAINIDPMATCH)
+                           else 'local')
+            if user.person_type != person_type:
+                user.person_type = person_type
+                logger.debug('Setting %s person_type', person_type)
                 force_save = True
 
         return super()._update_user(user, attributes, attribute_mapping, force_save)
