@@ -191,8 +191,23 @@ class CacheLayerTests(TransactionTestCase):
             snapshot.projects_lead_users = {}
             snapshot.projects_associate_info = []
             snapshot.projects_associate_ids = []
+            store.set(entries.PROJECTS, ['old'])
             self.assertEqual(CroRISInfo().get(request).status_code, 200)
-            self.assertEqual(CroRISInfo().get(request).status_code, 200)
+            user.refresh_from_db()
+            self.assertEqual(user.croris_first_name, 'Remote')
+            self.assertIsNone(store.get(entries.PROJECTS))
+
+            # Another tab reads the same snapshot without evicting warmed data.
+            for entry in (entries.USERS, entries.PROJECTS, entries.PROJECT_EXTENSIONS):
+                store.set(entry, ['warm'])
+            store.set(entries.USER_USAGE, ['warm'], account=user.username)
+            store.set(entries.PROJECT_USER_USAGE, ['warm'], account=user.username)
+            second_request = SimpleNamespace(user=models.User.objects.get(pk=user.pk))
+            self.assertEqual(CroRISInfo().get(second_request).status_code, 200)
+            for entry in (entries.USERS, entries.PROJECTS, entries.PROJECT_EXTENSIONS):
+                self.assertEqual(store.get(entry), ['warm'])
+            self.assertEqual(store.get(entries.USER_USAGE, account=user.username), ['warm'])
+            self.assertEqual(store.get(entries.PROJECT_USER_USAGE, account=user.username), ['warm'])
             snapshot.fetch.assert_called_once_with()
         self.assertNotIn('is_approved', store.get(entries.CRORIS_PERSON, oib='123')['projects_lead_info'][0])
 

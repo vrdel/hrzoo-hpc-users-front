@@ -66,10 +66,18 @@ class CroRISInfo(APIView):
                 snapshot = store.remember(entries.CRORIS_PERSON, fetch_snapshot, oib=oib)
                 if not target_oib:
                     user = get_user_model().objects.get(id=request.user.id)
+                    changed_fields = []
                     for field, remote in (('first_name', 'first_name'), ('last_name', 'last_name'),
                                           ('mail', 'email'), ('mbz', 'mbz')):
-                        setattr(user, f'croris_{field}', snapshot['person_info'].get(remote, ''))
-                    user.save()
+                        field = f'croris_{field}'
+                        value = snapshot['person_info'].get(remote, '')
+                        if getattr(user, field) != value:
+                            setattr(user, field, value)
+                            changed_fields.append(field)
+                    # Each tab reads this profile; unchanged reads must not
+                    # trigger save signals that evict shared response caches.
+                    if changed_fields:
+                        user.save(update_fields=changed_fields)
                 data = with_current_approvals(snapshot)
 
                 return Response({
