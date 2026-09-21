@@ -41,8 +41,6 @@ class Command(BaseCommand):
                     store.delete(entries.PROJECT_USER_USAGE, account=user.username)
                     store.delete(entries.PROJECT_USAGE, account=user.username)
 
-                # Remove the retired project-usage key.
-                store.delete(entries.LEGACY_PROJECT_USAGE, account=user.username)
                 user_count += 1
 
         except Exception as e:
