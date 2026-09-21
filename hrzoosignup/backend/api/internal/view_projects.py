@@ -8,7 +8,7 @@ from backend.serializers_internal import ProjectSerializer, ProjectSerializerGet
 from backend.utils.gen_username import gen_username
 from django.conf import settings
 from backend.caching import entries, store
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -141,7 +141,7 @@ class ProjectsGeneral(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
-            cache_invalidation.project_changed()
+            invalidation.project_changed()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         else:
@@ -251,7 +251,7 @@ class ProjectsResearch(APIView):
                                           project_ins.project_type,
                                           project_ins.identifier)
 
-            cache_invalidation.project_changed()
+            invalidation.project_changed()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             err_status = status.HTTP_400_BAD_REQUEST
@@ -365,7 +365,7 @@ class Projects(APIView):
                     }
                     pe_obj.approved = True
                     pe_obj.save()
-                    cache_invalidation.project_extension_changed()
+                    invalidation.project_extension_changed()
                 except models.ProjectExtend.DoesNotExist:
                     err_response = {
                         'status': {
@@ -423,7 +423,7 @@ class Projects(APIView):
                     )
                     p_obj.staff_comment = sc
                     sc.save()
-                cache_invalidation.project_changed()
+                invalidation.project_changed()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 
             else:
@@ -498,7 +498,7 @@ class Projects(APIView):
                     proj = models.Project.objects.get(identifier=req_id)
                     models.UserProject.objects.filter(project=proj).delete()
                     proj.delete()
-                    cache_invalidation.project_extension_changed()
+                    invalidation.project_extension_changed()
                     return Response(status=status.HTTP_204_NO_CONTENT)
                 else:
                     err_response = {

@@ -3,7 +3,7 @@ from backend import models
 
 from backend.email.user import email_signoff_membership, email_signoff_membership_en
 
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -56,7 +56,7 @@ class UsersProjectsInternal(APIView):
                     date_joined=timezone.make_aware(datetime.datetime.now())
                 )
                 up_obj.save()
-                cache_invalidation.membership_changed()
+                invalidation.membership_changed()
                 msg = {
                     'status': {
                         'code': status.HTTP_200_OK,
@@ -126,7 +126,7 @@ class UsersProjects(APIView):
                         email_signoff_membership(up.user.person_mail, target_project.name, request.user)
 
             userproject_obj.delete()
-            cache_invalidation.membership_changed()
+            invalidation.membership_changed()
             msg = {
                 'status': {
                     'code': status.HTTP_200_OK,

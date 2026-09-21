@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
-from backend import cache_invalidation
+from backend.caching import invalidation
 from backend.utils.gen_username import gen_username
 from backend.models import UserProject
 
@@ -43,6 +43,6 @@ class Command(BaseCommand):
                     self.stdout.write(f'Username {new_username} would be generated for {user.username}')
 
         if any_changed:
-            cache_invalidation.user_changed()
+            invalidation.user_changed()
         else:
             self.stdout.write('No changes')

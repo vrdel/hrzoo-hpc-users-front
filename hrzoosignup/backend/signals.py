@@ -1,5 +1,6 @@
 from .models import UserProject
-from backend import cache_invalidation, models
+from backend import models
+from backend.caching import invalidation
 from backend.utils.gen_username import gen_username
 from django.conf import settings
 from django.db.models.signals import post_delete, post_save, pre_delete, pre_save
@@ -19,7 +20,7 @@ def generate_username(sender, instance, created, **kwargs):
         instance.user.person_username = new_username
         logger.info(f"Generated username {new_username} for {instance.user.username}")
         instance.user.save()
-        cache_invalidation.user_changed()
+        invalidation.user_changed()
 
 
 # post_save.connect(generate_username, sender=UserProject)
@@ -36,22 +37,22 @@ def invalidate_user_responses(sender, instance, **kwargs):
         return
     cache_logger.debug('Cache invalidation triggered: model=User event=%s',
                  'save' if kwargs.get('signal') is post_save else 'delete')
-    cache_invalidation.user_changed()
+    invalidation.user_changed()
 
 
 # Cover ordinary saves, admin writes, cascades, and legacy commands through the
 # same domain API. Bulk inserts/updates still require explicit invalidation.
 _MODEL_EVENTS = {
-    models.User: cache_invalidation.user_changed,
-    models.Project: cache_invalidation.project_extension_changed,
-    models.UserProject: cache_invalidation.membership_changed,
-    models.UserProjectHistory: cache_invalidation.membership_history_changed,
-    models.SSHPublicKey: cache_invalidation.ssh_key_changed,
-    models.ProjectExtend: cache_invalidation.project_extension_changed,
-    models.StaffComment: cache_invalidation.staff_comment_changed,
-    models.Role: cache_invalidation.user_changed,
-    models.State: cache_invalidation.project_extension_changed,
-    models.ProjectType: cache_invalidation.project_extension_changed,
+    models.User: invalidation.user_changed,
+    models.Project: invalidation.project_extension_changed,
+    models.UserProject: invalidation.membership_changed,
+    models.UserProjectHistory: invalidation.membership_history_changed,
+    models.SSHPublicKey: invalidation.ssh_key_changed,
+    models.ProjectExtend: invalidation.project_extension_changed,
+    models.StaffComment: invalidation.staff_comment_changed,
+    models.Role: invalidation.user_changed,
+    models.State: invalidation.project_extension_changed,
+    models.ProjectType: invalidation.project_extension_changed,
     models.ResourceUsage: None,
 }
 _USAGE_MODELS = (models.User, models.Project, models.UserProject,
@@ -70,11 +71,11 @@ def _affected_accounts(sender, instance):
             user_id=instance.pk).values_list('project_id', flat=True))
         project_ids.update(models.ResourceUsage.objects.filter(
             user_id=instance.pk).values_list('project_id', flat=True))
-        return (instance.username,) + cache_invalidation.usage_accounts(
+        return (instance.username,) + invalidation.usage_accounts(
             user_ids=(instance.pk,), project_ids=project_ids)
     if sender is models.Project:
-        return cache_invalidation.usage_accounts(project_ids=(instance.pk,))
-    return cache_invalidation.usage_accounts(
+        return invalidation.usage_accounts(project_ids=(instance.pk,))
+    return invalidation.usage_accounts(
         user_ids=(instance.user_id,), project_ids=(instance.project_id,))
 
 
@@ -135,7 +136,7 @@ def invalidate_model_responses(sender, instance, **kwargs):
     if accounts:
         cache_logger.debug('Usage cache invalidation triggered: model=%s accounts=%d',
                      sender.__name__, len(accounts))
-        cache_invalidation.usage_changed(accounts)
+        invalidation.usage_changed(accounts)
 
 
 for model in _MODEL_EVENTS:

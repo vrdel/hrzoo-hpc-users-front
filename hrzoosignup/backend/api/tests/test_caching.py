@@ -6,7 +6,8 @@ from django.db import transaction
 from django.db.models.signals import post_delete, post_save
 from django.test import SimpleTestCase, override_settings
 
-from backend import cache_invalidation, models
+from backend import models
+from backend.caching import invalidation
 from backend.caching import entries
 from backend.api.internal import (
     view_accounting, view_projects, view_sshkeys, view_userproject, view_users,
@@ -34,7 +35,7 @@ class CacheRegressionTests(SimpleTestCase):
         cache.set('projects:all', ['old'])
         with transaction.atomic():
             with transaction.atomic():
-                cache_invalidation.membership_changed()
+                invalidation.membership_changed()
             self.assertEqual(cache.get('projects:all'), ['old'])
         self.assertIsNone(cache.get('projects:all'))
 
@@ -42,30 +43,30 @@ class CacheRegressionTests(SimpleTestCase):
         cache.set('projects:all', ['old'])
         with self.assertRaises(ValueError):
             with transaction.atomic():
-                cache_invalidation.ssh_key_changed()
+                invalidation.ssh_key_changed()
                 raise ValueError('rollback')
         self.assertEqual(cache.get('projects:all'), ['old'])
 
     def test_user_signals_invalidate_staff_and_embedded_user_responses(self):
         for signal in (post_save, post_delete):
             with self.subTest(signal=signal):
-                cache.set_many({key: ['old'] for key in cache_invalidation.USER_ENTRIES})
+                cache.set_many({key: ['old'] for key in invalidation.USER_ENTRIES})
                 signal.send(sender=models.User, instance=self.user,
                             using='default', raw=False, created=False)
-                for key in cache_invalidation.USER_ENTRIES:
+                for key in invalidation.USER_ENTRIES:
                     self.assertIsNone(cache.get(key))
 
     def test_project_extension_and_calendar_dependencies(self):
-        for invalidate in (cache_invalidation.project_changed,
-                           cache_invalidation.project_extension_changed,
-                           cache_invalidation.project_calendar_changed):
+        for invalidate in (invalidation.project_changed,
+                           invalidation.project_extension_changed,
+                           invalidation.project_calendar_changed):
             with self.subTest(invalidate=invalidate):
-                cache.set_many({key: ['old'] for key in cache_invalidation.MEMBERSHIP_ENTRIES})
+                cache.set_many({key: ['old'] for key in invalidation.MEMBERSHIP_ENTRIES})
                 invalidate()
-                for key in cache_invalidation.MEMBERSHIP_ENTRIES:
+                for key in invalidation.MEMBERSHIP_ENTRIES:
                     self.assertIsNone(cache.get(key))
         cache.set('projects:extensions', ['old'])
-        cache_invalidation.project_extension_changed()
+        invalidation.project_extension_changed()
         self.assertIsNone(cache.get('projects:extensions'))
 
     def test_research_submission_uses_the_persons_croris_snapshot(self):

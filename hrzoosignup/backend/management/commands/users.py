@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.core.management.base import BaseCommand
 from django.db.utils import IntegrityError
 from django.utils import timezone
@@ -62,7 +62,7 @@ class Command(BaseCommand):
                 person_type_manual_set=bool(options['person_type_manual_set']),
             )
             self.stdout.write('Created user {}'.format(user.username))
-            cache_invalidation.user_changed()
+            invalidation.user_changed()
 
         except IntegrityError as exc:
             self.stdout.write(self.style.ERROR('Error creating user'))
@@ -85,7 +85,7 @@ class Command(BaseCommand):
                 serializer.save()
                 self.stdout.write('Added key {} for the user {}'.format(
                     serializer.data['fingerprint'], user.username))
-                cache_invalidation.ssh_key_changed()
+                invalidation.ssh_key_changed()
             else:
                 self.stdout.write(self.style.ERROR('Error adding key for the user'))
                 self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
@@ -105,7 +105,7 @@ class Command(BaseCommand):
                     user.person_username = gen_username(' '.join(options['first']), ' '.join(options['last']))
                 user.save()
                 self.stdout.write('User {} with person_username {} assigned to project {}'.format(user.username, user.person_username, project.identifier))
-                cache_invalidation.membership_changed()
+                invalidation.membership_changed()
 
             except IntegrityError as exc:
                 self.stdout.write(self.style.ERROR('Error assigning user {} to project {}'.format(user.username, project.identifier)))
@@ -230,7 +230,7 @@ class Command(BaseCommand):
                     any_changed = True
                     self.stdout.write('Added key {} for the user {}'.format(
                         serializer.data['fingerprint'], user.username))
-                    cache_invalidation.ssh_key_changed()
+                    invalidation.ssh_key_changed()
                 else:
                     self.stdout.write(self.style.ERROR('Error adding key for the user'))
                     self.stdout.write(self.style.NOTICE(repr(serializer.errors)))
@@ -297,7 +297,7 @@ class Command(BaseCommand):
 
             user.save()
             if any_changed:
-                cache_invalidation.user_changed()
+                invalidation.user_changed()
 
     def _user_list(self, options):
         table = Table(
@@ -484,7 +484,7 @@ class Command(BaseCommand):
                 if sshkey:
                     sshkey.delete()
                     self.stdout.write('Deleted key {} user {}'.format(sshkey.fingerprint, user.username))
-                    cache_invalidation.ssh_key_changed()
+                    invalidation.ssh_key_changed()
                     raise SystemExit(0)
 
             # if project specified, unsign user from it
@@ -495,7 +495,7 @@ class Command(BaseCommand):
                         user=user
                     )
                     userproject.delete()
-                    cache_invalidation.membership_changed()
+                    invalidation.membership_changed()
                     self.stdout.write('Removed user {} from project {}'.format(user.username, options['project']))
                     raise SystemExit(0)
 
@@ -505,7 +505,7 @@ class Command(BaseCommand):
                     raise SystemExit(1)
             else:
                 user.delete()
-                cache_invalidation.user_changed()
+                invalidation.user_changed()
                 self.stdout.write('Deleted user {}'.format(user.username))
 
         except SSHPublicKey.DoesNotExist as exc:
