@@ -1,10 +1,17 @@
 import datetime
 from types import SimpleNamespace
+from unittest.mock import patch
 
 import pandas as pd
-from django.test import SimpleTestCase
+from django.core.cache import cache
+from django.test import SimpleTestCase, TestCase, override_settings
 
+from backend import models
 from backend.api.internal import view_accounting as accounting
+from backend.caching import entries
+from backend.management.commands.cache_usage import Command
+
+from .test_utils import create_mock_db
 
 
 class UsageAggregationTests(SimpleTestCase):
@@ -64,3 +71,45 @@ class UsageAggregationTests(SimpleTestCase):
         per_user = accounting._generate_usage(df, dates, users, per_user=True)
         self.assertNotIn('cloud', per_user)
         self.assertEqual(per_user['supek']['monthly']['cpuh'][0]['Same Name'], 3)
+
+
+@override_settings(CACHES={'default': {
+    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    'LOCATION': 'usage-performance-tests',
+}})
+class UsageQueryTests(TestCase):
+    def setUp(self):
+        create_mock_db()
+        cache.clear()
+        self.addCleanup(cache.clear)
+        self.user = models.User.objects.get(person_username='adent')
+        self.today = datetime.datetime(2024, 8, 22, tzinfo=datetime.timezone.utc)
+
+    def test_combined_leader_calculation_reuses_records_and_members(self):
+        with patch.object(accounting, 'date_today', return_value=self.today):
+            expected = (accounting.usage4project_per_user(self.user.username),
+                        accounting.usage4project(self.user.username))
+            with self.assertNumQueries(3):
+                actual = accounting.usage4leader(self.user.username)
+        self.assertEqual(actual, expected)
+        self.assertTrue(actual[0])
+        self.assertTrue(actual[1])
+
+    def test_personal_usage_fetches_values_and_mapping_once(self):
+        with patch.object(accounting, 'date_today', return_value=self.today), self.assertNumQueries(2):
+            self.assertTrue(accounting.usage4user(self.user.username))
+
+    def test_warmer_classifies_leaders_in_one_query(self):
+        leaders = set(models.UserProject.objects.filter(role__name='lead')
+                      .values_list('user__username', flat=True))
+        users = set(models.User.objects.values_list('username', flat=True))
+        with patch('backend.management.commands.cache_usage.usage4user', return_value={}) as personal, \
+                patch('backend.management.commands.cache_usage.usage4leader', return_value=({}, {})) as leader, \
+                patch('backend.management.commands.cache_usage.store.set') as store_set, \
+                self.assertNumQueries(1):
+            Command().handle()
+        self.assertEqual({call.args[0] for call in personal.call_args_list}, users)
+        self.assertEqual({call.args[0] for call in leader.call_args_list}, leaders)
+        self.assertEqual(leader.call_count, len(leaders))
+        self.assertEqual(sum(call.args[0] == entries.PROJECT_USAGE
+                             for call in store_set.call_args_list), len(leaders))

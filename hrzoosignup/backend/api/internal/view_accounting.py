@@ -5,10 +5,8 @@ import math
 import numpy as np
 import pandas as pd
 from backend import models
-from backend.utils.accounting import get_users_in_project
 from dateutil.relativedelta import relativedelta
 from backend.caching import entries, store
-from django.db.models import Q
 from django.utils import timezone
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -44,10 +42,7 @@ def diff_months(date1, date2):
 
 
 def _is_user_lead(user):
-    return len(models.UserProject.objects.filter(
-        user=user,
-        role=models.Role.objects.get(name="lead")
-    )) > 0
+    return models.UserProject.objects.filter(user=user, role__name="lead").exists()
 
 
 def _is_usage_empty(usage):
@@ -137,149 +132,99 @@ def _generate_usage(df, dates, iterable=None, per_user=False):
     return output
 
 
+_USAGE_COLUMNS = {
+    "project__identifier": "project",
+    "project__date_end": "project_end",
+    "project__bogus_end": "bogus_end",
+    "project__date_start": "project_start",
+    "user__person_username": "user",
+    "resource_name": "resource",
+    "end_time": "end_time",
+    "accounting_record__cpuh": "cpuh",
+    "accounting_record__gpuh": "gpuh",
+    "accounting_record__jupyter_cpu_h": "jupyter_cpuh",
+    "accounting_record__jupyter_gpu_h": "jupyter_gpuh",
+}
+
+
+def _usage_frame(records):
+    # Fetch projected values once, without first loading complete model objects.
+    return pd.DataFrame.from_records(
+        records.values(*_USAGE_COLUMNS).iterator(chunk_size=2000),
+        columns=list(_USAGE_COLUMNS),
+    ).rename(columns=_USAGE_COLUMNS)
+
+
 def _project_info(records):
-    output = dict()
-    if len(records) > 0:
-        df = pd.DataFrame.from_records(
-            records.values(
-                "project__identifier",
-                "project__date_end",
-                "project__bogus_end",
-                "project__date_start",
-                "resource_name",
-                "end_time",
-                "accounting_record__cpuh",
-                "accounting_record__gpuh",
-                "accounting_record__jupyter_cpu_h",
-                "accounting_record__jupyter_gpu_h"
-            )
-        )
-
-        df = df.rename(columns={
-            "project__identifier": "project",
-            "project__date_end": "project_end",
-            "project__bogus_end": "bogus_end",
-            "project__date_start": "project_start",
-            "resource_name": "resource",
-            "accounting_record__cpuh": "cpuh",
-            "accounting_record__gpuh": "gpuh",
-            "accounting_record__jupyter_cpu_h": "jupyter_cpuh",
-            "accounting_record__jupyter_gpu_h": "jupyter_gpuh"
-        })
-
-        output = _generate_usage(df=df, dates=_get_dates(df))
-
-    return output
+    df = _usage_frame(records)
+    return _generate_usage(df, _get_dates(df)) if not df.empty else {}
 
 
 def usage4user(username):
-    projects = [
-        item.project for item in models.UserProject.objects.filter(
-            user=models.User.objects.get(username=username)
-        )
-    ]
-
-    records = models.ResourceUsage.objects.filter(
-        user=models.User.objects.get(username=username)
-    )
+    records = models.ResourceUsage.objects.filter(user__username=username)
     output = _project_info(records)
-
-    projects_mapping = dict()
-    for project in projects:
-        projects_mapping.update({project.identifier: project.name})
-
-    if projects_mapping and output:
-        output.update({"projects_mapping": projects_mapping})
-
+    if output:
+        projects_mapping = dict(models.UserProject.objects.filter(
+            user__username=username
+        ).values_list("project__identifier", "project__name"))
+        if projects_mapping:
+            output["projects_mapping"] = projects_mapping
     return output
 
 
-def _leader_records(lead_username):
-    projects = [
-        item.project for item in models.UserProject.objects.filter(
-            user=models.User.objects.get(username=lead_username),
-            role=models.Role.objects.get(name="lead")
-        )
-    ]
-
+def _leader_records(lead_username, include_users=False):
+    memberships = models.UserProject.objects.filter(
+        user__username=lead_username, role__name="lead"
+    ).select_related("project")
+    if include_users:
+        memberships = memberships.prefetch_related("project__users")
+    projects = [item.project for item in memberships]
     records = models.ResourceUsage.objects.filter(
-        Q(project__in=projects) & ~Q(resource_name="jupyter")
-    )
-
+        project__in=projects
+    ).exclude(resource_name="jupyter")
     return projects, records
 
 
-def usage4project_per_user(lead_username):
-    projects, records = _leader_records(lead_username)
-
-    output = dict()
-    if len(records) > 0:
-        df = pd.DataFrame.from_records(
-            records.values(
-                "project__identifier",
-                "project__date_end",
-                "project__bogus_end",
-                "project__date_start",
-                "user__person_username",
-                "resource_name",
-                "end_time",
-                "accounting_record__cpuh",
-                "accounting_record__gpuh",
-                "accounting_record__jupyter_cpu_h",
-                "accounting_record__jupyter_gpu_h"
-            )
+def _per_user_project_info(projects, df):
+    output = {}
+    if df.empty:
+        return output
+    dates = _get_dates(df)
+    for project in projects:
+        users = [user for user in project.users.all()
+                 if user.person_institution not in ("", "Nepoznato")]
+        project_usage = _generate_usage(
+            df=df[df["project"] == project.identifier], dates=dates,
+            iterable=users, per_user=True,
         )
+        if project_usage:
+            output[project.identifier] = project_usage
+    return _with_project_names(output, projects)
 
-        df = df.rename(columns={
-            "project__identifier": "project",
-            "project__date_end": "project_end",
-            "project__bogus_end": "bogus_end",
-            "project__date_start": "project_start",
-            "user__person_username": "user",
-            "resource_name": "resource",
-            "accounting_record__cpuh": "cpuh",
-            "accounting_record__gpuh": "gpuh",
-            "accounting_record__jupyter_cpu_h": "jupyter_cpuh",
-            "accounting_record__jupyter_gpu_h": "jupyter_gpuh"
-        })
 
-        dates = _get_dates(df)
-        projects_mapping = dict()
-        for project in projects:
-            projects_mapping.update({project.identifier: project.name})
-            users = get_users_in_project(project_identifier=project.identifier)
-
-            df_project = df[df["project"] == project.identifier]
-
-            project_usage = _generate_usage(
-                df=df_project,
-                dates=dates,
-                iterable=users,
-                per_user=True
-            )
-
-            if project_usage:
-                output.update({project.identifier: project_usage})
-
-        if projects_mapping and output:
-            output.update({"projects_mapping": projects_mapping})
-
+def _with_project_names(output, projects):
+    if output and projects:
+        output["projects_mapping"] = {project.identifier: project.name for project in projects}
     return output
+
+
+def usage4project_per_user(lead_username):
+    projects, records = _leader_records(lead_username, include_users=True)
+    return _per_user_project_info(projects, _usage_frame(records))
 
 
 def usage4project(lead_username):
     projects, records = _leader_records(lead_username)
+    return _with_project_names(_project_info(records), projects)
 
-    output = _project_info(records)
 
-    projects_mapping = dict()
-    for project in projects:
-        projects_mapping.update({project.identifier: project.name})
-
-    if projects_mapping and output:
-        output.update({"projects_mapping": projects_mapping})
-
-    return output
+def usage4leader(lead_username):
+    """Build both leader responses from one database read and dataframe."""
+    projects, records = _leader_records(lead_username, include_users=True)
+    df = _usage_frame(records)
+    per_user = _per_user_project_info(projects, df)
+    totals = _generate_usage(df, _get_dates(df)) if not df.empty else {}
+    return per_user, _with_project_names(totals, projects)
 
 
 class ResourceUsage(APIView):

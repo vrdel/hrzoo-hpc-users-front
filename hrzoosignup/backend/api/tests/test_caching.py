@@ -166,19 +166,17 @@ class CacheRegressionTests(SimpleTestCase):
         self.assertEqual(view_users.UsersInfoOps().get(self.request).status_code, 401)
 
     def test_usage_warmer_uses_login_identity_and_replaces_empty_results(self):
+        self.user.usage_lead = True
         cache.set(user_usage_key(self.user.username), {'old': 1})
         cache.set(project_user_usage_key(self.user.username), {'old': 1})
         cache.set(entries.PROJECT_USAGE.key(account=self.user.username), {'old': 1})
-        with patch.object(cache_usage.models.User.objects, 'all') as users, \
+        with patch.object(cache_usage.models.User.objects, 'only') as users, \
                 patch.object(cache_usage, 'usage4user', return_value={}) as personal, \
-                patch.object(cache_usage, 'usage4project_per_user', return_value={}) as project, \
-                patch.object(cache_usage, 'usage4project', return_value={}) as totals, \
-                patch.object(cache_usage, '_is_user_lead', return_value=True):
-            users.return_value.iterator.return_value = [self.user]
+                patch.object(cache_usage, 'usage4leader', return_value=({}, {})) as leader:
+            users.return_value.annotate.return_value.iterator.return_value = [self.user]
             cache_usage.Command().handle()
         personal.assert_called_once_with(self.user.username)
-        project.assert_called_once_with(self.user.username)
-        totals.assert_called_once_with(self.user.username)
+        leader.assert_called_once_with(self.user.username)
         self.assertEqual(cache.get(user_usage_key(self.user.username)), {})
         self.assertEqual(cache.get(project_user_usage_key(self.user.username)), {})
         self.assertEqual(cache.get(entries.PROJECT_USAGE.key(account=self.user.username)), {})
@@ -194,14 +192,16 @@ class CacheRegressionTests(SimpleTestCase):
         totals.assert_not_called()
 
     def test_former_leader_cache_is_removed_and_permissions_are_live(self):
+        self.user.usage_lead = False
         cache.set(project_user_usage_key(self.user.username), {'private': 1})
         with patch.object(view_accounting, '_is_user_lead', return_value=False):
             self.assertEqual(view_accounting.ProjectUsagePerUser().get(self.request).status_code, 401)
-        with patch.object(cache_usage.models.User.objects, 'all') as users, \
+        with patch.object(cache_usage.models.User.objects, 'only') as users, \
                 patch.object(cache_usage, 'usage4user', return_value={}), \
-                patch.object(cache_usage, '_is_user_lead', return_value=False):
-            users.return_value.iterator.return_value = [self.user]
+                patch.object(cache_usage, 'usage4leader') as leader:
+            users.return_value.annotate.return_value.iterator.return_value = [self.user]
             cache_usage.Command().handle()
+        leader.assert_not_called()
         self.assertIsNone(cache.get(project_user_usage_key(self.user.username)))
 
     def test_usage_keys_require_an_account(self):
