@@ -2,6 +2,7 @@ import calendar
 import datetime
 import math
 
+import numpy as np
 import pandas as pd
 from backend import models
 from backend.utils.accounting import get_users_in_project
@@ -75,189 +76,64 @@ def _get_dates(df):
 
 
 def _generate_usage(df, dates, iterable=None, per_user=False):
-    def _update_dict(resource_dict, df_in, value, key):
-        puh = float(df_in[value].sum(axis=0))
-
-        if puh > 1:
-            return resource_dict.update({key: math.floor(puh)})
-
-    def _choose_end_date(rsrc):
-        if "bogus_end" in rsrc and rsrc["bogus_end"]:
-            return rsrc["bogus_end"]
-
-        else:
-            return rsrc["project_end"]
-
-    output = dict()
-    df_copy = df.copy()
-    del df
-    df_copy["project_end"] = df_copy.apply(
-        lambda row: _choose_end_date(row), axis=1
+    """Partition once, then sum only each chart series instead of filtering
+    whole dataframes for every resource/month/user combination.
+    """
+    output = {}
+    if df.empty:
+        return output
+    df = df.copy()
+    df["project_end"] = df["bogus_end"].where(
+        df["bogus_end"].notna(), df["project_end"]
     )
-    resources = df_copy["resource"].unique()
-    for resource in resources:
-        cpuh_cumulative = list()
-        gpuh_cumulative = list()
-        cpuh_monthly = list()
-        gpuh_monthly = list()
-        df_resource = df_copy[df_copy["resource"] == resource]
-
-        for date in dates:
-            month_start = date
-            year = date.year
-            month = date.month
-            month_end = datetime.date(
-                year, month, calendar.monthrange(year, month)[1]
-            )
-            df_cumulative = df_resource[
-                (df_resource["end_time"].dt.date <= month_end) *
-                (df_resource["project_end"] >= month_start) *
-                (df_resource["project_start"] <= month_end)
-            ]
-
-            df_monthly = df_resource[
-                (df_resource["end_time"].dt.date <= month_end) *
-                (df_resource["project_end"] >= month_start) *
-                (df_resource["project_start"] <= month_end) *
-                (df_resource["end_time"].dt.date >= month_start)
-            ]
-
-            if not per_user:
-                active_projects_in_month = df_resource[
-                    (df_resource["project_end"] >= month_start) *
-                    (df_resource["project_start"] <= month_end)
-                ]
-
-                iterable = active_projects_in_month["project"].unique()
-
-            cpu_cumulative = dict()
-            gpu_cumulative = dict()
-            cpu_monthly = dict()
-            gpu_monthly = dict()
-            if "month" not in cpu_cumulative:
-                cpu_cumulative.update({"month": f"{month:02d}/{year}"})
-
-            if "month" not in gpu_cumulative:
-                gpu_cumulative.update(
-                    {"month": f"{month:02d}/{year}"}
-                )
-
-            if "month" not in cpu_monthly:
-                cpu_monthly.update({"month": f"{month:02d}/{year}"})
-
-            if "month" not in gpu_monthly:
-                gpu_monthly.update({"month": f"{month:02d}/{year}"})
-
-            for item in iterable:
-                cpuh_key = "cpuh"
-                gpuh_key = "gpuh"
-                if per_user:
-                    item_key = f"{item.first_name} {item.last_name}"
-                    df_cumulative_per_item = df_cumulative[
-                        df_cumulative["user"] == item.person_username
-                    ]
-                    df_monthly_per_item = df_monthly[
-                        df_monthly["user"] == item.person_username
-                    ]
-
-                else:
-                    item_key = item
-                    df_cumulative_per_item = df_cumulative[
-                        df_cumulative["project"] == item
-                    ]
-                    df_monthly_per_item = df_monthly[
-                        df_monthly["project"] == item
-                    ]
-
-                    if resource == "jupyter":
-                        cpuh_key = "jupyter_cpuh"
-                        gpuh_key = "jupyter_gpuh"
-
-                if not (resource == "cloud" and per_user):
-                    _update_dict(
-                        resource_dict=cpu_cumulative,
-                        df_in=df_cumulative_per_item,
-                        value=cpuh_key,
-                        key=item_key
-                    )
-                    _update_dict(
-                        resource_dict=gpu_cumulative,
-                        df_in=df_cumulative_per_item,
-                        value=gpuh_key,
-                        key=item_key
-                    )
-                    _update_dict(
-                        resource_dict=cpu_monthly,
-                        df_in=df_monthly_per_item,
-                        value=cpuh_key,
-                        key=item_key
-                    )
-                    _update_dict(
-                        resource_dict=gpu_monthly,
-                        df_in=df_monthly_per_item,
-                        value=gpuh_key,
-                        key=item_key
-                    )
-
-            if cpu_cumulative:
-                cpuh_cumulative.append(cpu_cumulative)
-
-            if gpu_cumulative:
-                gpuh_cumulative.append(gpu_cumulative)
-
-            if cpu_monthly:
-                cpuh_monthly.append(cpu_monthly)
-
-            if gpu_monthly:
-                gpuh_monthly.append(gpu_monthly)
-
-        if resource == "padobran":
-            if not _is_usage_empty(cpuh_monthly):
-                output.update({
-                    resource: {
-                        "cumulative": {
-                            "cpuh": cpuh_cumulative
-                        },
-                        "monthly": {
-                            "cpuh": cpuh_monthly
-                        }
-                    }
-                })
-
-        else:
-            if not _is_usage_empty(cpuh_monthly):
-                output.update({
-                    resource: {
-                        "cumulative": {
-                            "cpuh": cpuh_cumulative
-                        },
-                        "monthly": {
-                            "cpuh": cpuh_monthly
-                        }
-                    }
-                })
-
-            if not _is_usage_empty(gpuh_monthly):
-                if resource in output:
-                    output[resource]["cumulative"].update({
-                        "gpuh": gpuh_cumulative
-                    })
-                    output[resource]["monthly"].update({
-                        "gpuh": gpuh_monthly
-                    })
-
-                else:
-                    output.update({
-                        resource: {
-                            "cumulative": {
-                                "gpuh": gpuh_cumulative
-                            },
-                            "monthly": {
-                                "gpuh": gpuh_monthly
-                            }
-                        }
-                    })
-
+    df["end_date"] = df["end_time"].dt.date
+    months = [(date, datetime.date(date.year, date.month,
+                                  calendar.monthrange(date.year, date.month)[1]))
+              for date in dates]
+    for resource, resource_df in df.groupby("resource", sort=False):
+        if per_user and resource == "cloud":
+            continue
+        series = {kind: [{"month": f"{start.month:02d}/{start.year}"}
+                         for start, _ in months]
+                  for kind in ("cpu_cumulative", "gpu_cumulative", "cpu_monthly", "gpu_monthly")}
+        group_key = "user" if per_user else "project"
+        groups = dict(tuple(resource_df.groupby(group_key, sort=False)))
+        items = [(user.person_username, f"{user.first_name} {user.last_name}")
+                 for user in iterable] if per_user else [(key, key) for key in groups]
+        cpu_key, gpu_key = (("jupyter_cpuh", "jupyter_gpuh")
+                            if resource == "jupyter" and not per_user else ("cpuh", "gpuh"))
+        for key, label in items:
+            group = groups.get(key)
+            if group is None:
+                continue
+            # Keep pandas sum semantics (nulls, fractions, and >1 threshold).
+            cpu, gpu = group[cpu_key].to_numpy(), group[gpu_key].to_numpy()
+            ended = pd.to_datetime(group["end_date"]).to_numpy(dtype="datetime64[D]")
+            starts = pd.to_datetime(group["project_start"]).to_numpy(dtype="datetime64[D]")
+            ends = pd.to_datetime(group["project_end"]).to_numpy(dtype="datetime64[D]")
+            for index, (start, end) in enumerate(months):
+                start, end = np.datetime64(start), np.datetime64(end)
+                cumulative = (ended <= end) & (ends >= start) & (starts <= end)
+                monthly = cumulative & (ended >= start)
+                for name, values, mask in (
+                    ("cpu_cumulative", cpu, cumulative),
+                    ("gpu_cumulative", gpu, cumulative),
+                    ("cpu_monthly", cpu, monthly),
+                    ("gpu_monthly", gpu, monthly),
+                ):
+                    selected = values[mask]
+                    total = float(np.nansum(selected) if values.dtype.kind in "biuf"
+                                  else pd.Series(selected).sum())
+                    if total > 1:
+                        series[name][index][label] = math.floor(total)
+        for metric, prefix in (("cpuh", "cpu"), ("gpuh", "gpu")):
+            if resource == "padobran" and metric == "gpuh":
+                continue
+            monthly = series[f"{prefix}_monthly"]
+            if not _is_usage_empty(monthly):
+                chart = output.setdefault(resource, {"cumulative": {}, "monthly": {}})
+                chart["cumulative"][metric] = series[f"{prefix}_cumulative"]
+                chart["monthly"][metric] = monthly
     return output
 
 
