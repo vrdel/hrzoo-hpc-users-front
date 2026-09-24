@@ -31,6 +31,9 @@ def generate_username(sender, instance, created, **kwargs):
 @receiver(post_delete, sender=settings.AUTH_USER_MODEL,
           dispatch_uid='backend.invalidate_user_deleted')
 def invalidate_user_responses(sender, instance, **kwargs):
+    # Fixture imports run offline and must not contact the cache.
+    if kwargs.get('raw'):
+        return
     # Includes staff command/admin edits and authentication profile updates.
     if (kwargs.get('signal') is post_save
             and not getattr(instance, '_cache_user_changed', True)):
@@ -126,6 +129,9 @@ def capture_cache_dependents(sender, instance, **kwargs):
 
 
 def invalidate_model_responses(sender, instance, **kwargs):
+    # loaddata (including fastloaddata's ordinary records) uses raw saves.
+    if kwargs.get('raw'):
+        return
     event = _MODEL_EVENTS[sender]
     # User aggregate responses are already covered by the receiver above.
     if event is not None and sender is not models.User:

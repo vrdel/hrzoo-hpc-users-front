@@ -1,8 +1,11 @@
+from io import StringIO
+from tempfile import TemporaryDirectory
 from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 from django.contrib.admin import ModelAdmin, AdminSite
 from django.core.cache import cache
+from django.core.management import call_command
 from django.db import transaction
 from django.test import Client, TransactionTestCase, override_settings
 
@@ -30,6 +33,21 @@ class CacheLayerTests(TransactionTestCase):
     def project(self):
         return models.Project.objects.create(identifier='project', name='Before',
                                               is_active=True)
+
+    def test_fixture_dump_and_load_do_not_invalidate_caches(self):
+        user = self.user()
+        self.project()
+        keys = self.warm_user_caches(user)
+        with TemporaryDirectory() as directory, \
+                patch.object(store, 'delete_keys') as delete_keys, \
+                patch.object(invalidation, 'usage_accounts') as usage_accounts:
+            fixture = f'{directory}/fixture.json'
+            call_command('dumpdata', 'backend.User', 'backend.Project',
+                         output=fixture, stdout=StringIO())
+            call_command('loaddata', fixture, stdout=StringIO())
+            delete_keys.assert_not_called()
+            usage_accounts.assert_not_called()
+        self.assertEqual(cache.get_many(keys), {key: ['warm'] for key in keys})
 
     def test_empty_values_and_none_are_hits(self):
         for value in ([], {}, None):
