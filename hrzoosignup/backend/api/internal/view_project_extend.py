@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from django.conf import settings
-from django.core.cache import cache
+from backend.caching import entries, store
 from backend import cache_invalidation
 from django.utils import timezone
 
@@ -101,7 +101,7 @@ class ProjectExtend(APIView):
                 return Response(list(), status=status.HTTP_200_OK)
         else:
             if request.user.is_staff or request.user.is_superuser:
-                ret_data = cache.get('projectsextends-get-all')
+                ret_data = store.get(entries.PROJECT_EXTENSIONS)
                 if ret_data is not None:
                     return Response(ret_data, status=status.HTTP_200_OK)
             if request.user.is_staff or request.user.is_superuser:
@@ -110,10 +110,7 @@ class ProjectExtend(APIView):
                 ups_obj = models.UserProject.objects.filter(user=request.user, role__name='lead')
             interested_projects = ups_obj.values_list('project', flat=True)
             pes_obj = models.ProjectExtend.objects.filter(project__in=interested_projects)
-            if pes_obj:
-                serializer = ProjectExtendSerializer(pes_obj, many=True)
-                if request.user.is_staff or request.user.is_superuser:
-                    cache.set('projectsextends-get-all', serializer.data, None)
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(list(), status=status.HTTP_200_OK)
+            serializer = ProjectExtendSerializer(pes_obj, many=True)
+            if request.user.is_staff or request.user.is_superuser:
+                store.set(entries.PROJECT_EXTENSIONS, serializer.data)
+            return Response(serializer.data, status=status.HTTP_200_OK)

@@ -1,7 +1,7 @@
 from backend import models
 from backend import serializers
 from backend.dbmodels.apikey import HRZOOHasAPIKey
-from django.core.cache import cache
+from backend.caching import entries, store
 from django.db.models import Q
 from rest_framework import status
 from rest_framework.response import Response
@@ -22,7 +22,7 @@ class UserProjectAPI(APIView):
 
         if tags:
             tags = tags.split(',')
-            cached_data = cache.get('ext-users-projects')
+            cached_data = store.get(entries.EXTERNAL_MEMBERSHIPS)
 
             if cached_data is not None:
                 for tag in tags:
@@ -56,7 +56,7 @@ class UserProjectAPI(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
         else:
-            ret_data = cache.get('ext-users-projects')
+            ret_data = store.get(entries.EXTERNAL_MEMBERSHIPS)
             if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
@@ -64,6 +64,6 @@ class UserProjectAPI(APIView):
             db_interested = models.UserProject.objects.filter(query)
 
             serializer = serializers.UserProjectSerializer(db_interested, many=True)
-            cache.set('ext-users-projects', serializer.data, None)
+            store.set(entries.EXTERNAL_MEMBERSHIPS, serializer.data)
 
             return Response(serializer.data, status=status.HTTP_200_OK)

@@ -54,6 +54,7 @@ classifiers = [
 packages = [
     'hrzoosignup',
     'hrzoosignup.backend',
+    'hrzoosignup.backend.caching',
     'hrzoosignup.backend.api',
     'hrzoosignup.backend.api.internal',
     'hrzoosignup.backend.auth',

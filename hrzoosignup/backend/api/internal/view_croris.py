@@ -2,8 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from django.core.cache import cache
+from backend.caching import entries, store
 from django.contrib.auth import get_user_model
+
+from copy import deepcopy
 
 import asyncio
 import json
@@ -15,6 +17,19 @@ from backend.models import Project
 from aiohttp import client_exceptions, http_exceptions
 
 logger = logging.getLogger('hrzoosignup.views')
+
+
+def with_current_approvals(snapshot):
+    # Do not modify the remote snapshot (or legacy snapshots with derived flags).
+    data = deepcopy(snapshot)
+    projects = data['projects_lead_info'] + data['projects_associate_info']
+    ids = [project['croris_id'] for project in projects if project.get('croris_id')]
+    approved = set(Project.objects.filter(
+        croris_id__in=ids, state__name__in=('submit', 'approve')
+    ).values_list('croris_id', flat=True))
+    for project in projects:
+        project['is_approved'] = project.get('croris_id') in approved
+    return data
 
 
 class CroRISInfo(APIView):
@@ -37,50 +52,36 @@ class CroRISInfo(APIView):
 
         try:
             if oib:
-                croris = CroRISCore(oib)
-                croris.fetch()
-                user = get_user_model().objects.get(id=self.request.user.id)
-                user.croris_first_name = croris.person_info.get('first_name', '')
-                user.croris_last_name = croris.person_info.get('last_name', '')
-                user.croris_mail = croris.person_info.get('email', '')
-                user.croris_mbz = croris.person_info.get('mbz', '')
-                user.save()
-
-                all_croris_ids = [
-                    p['croris_id'] for p in
-                    croris.projects_lead_info + croris.projects_associate_info
-                    if p.get('croris_id')
-                ]
-                approved_croris_ids = set(
-                    Project.objects.filter(
-                        croris_id__in=all_croris_ids,
-                        state__name__in=('submit', 'approve')
-                    ).values_list('croris_id', flat=True)
-                )
-                for project in croris.projects_lead_info:
-                    project['is_approved'] = project.get('croris_id') in approved_croris_ids
-                for project in croris.projects_associate_info:
-                    project['is_approved'] = project.get('croris_id') in approved_croris_ids
-
-                if not target_oib:
-                    # frontend is calling every 15 min
-                    # we set here eviction after 20 min
-                    cache.set(f'{oib}_croris', {
-                              'person_info': croris.person_info,
-                              'projects_lead_info': croris.projects_lead_info,
-                              'projects_lead_users': croris.projects_lead_users,
-                              'projects_associate_info': croris.projects_associate_info,
-                              'projects_associate_ids': croris.projects_associate_ids},
-                              20 * 60)
-
-                return Response({
-                    'data': {
+                def fetch_snapshot():
+                    croris = CroRISCore(oib)
+                    croris.fetch()
+                    return {
                         'person_info': croris.person_info,
                         'projects_lead_info': croris.projects_lead_info,
                         'projects_lead_users': croris.projects_lead_users,
                         'projects_associate_info': croris.projects_associate_info,
                         'projects_associate_ids': croris.projects_associate_ids,
-                    },
+                    }
+
+                snapshot = store.remember(entries.CRORIS_PERSON, fetch_snapshot, oib=oib)
+                if not target_oib:
+                    user = get_user_model().objects.get(id=request.user.id)
+                    changed_fields = []
+                    for field, remote in (('first_name', 'first_name'), ('last_name', 'last_name'),
+                                          ('mail', 'email'), ('mbz', 'mbz')):
+                        field = f'croris_{field}'
+                        value = snapshot['person_info'].get(remote, '')
+                        if getattr(user, field) != value:
+                            setattr(user, field, value)
+                            changed_fields.append(field)
+                    # Each tab reads this profile; unchanged reads must not
+                    # trigger save signals that evict shared response caches.
+                    if changed_fields:
+                        user.save(update_fields=changed_fields)
+                data = with_current_approvals(snapshot)
+
+                return Response({
+                    'data': data,
                     'status': {
                         'code': status.HTTP_200_OK,
                         'message': 'Successfully fetched the data from CroRIS'
