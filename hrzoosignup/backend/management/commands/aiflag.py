@@ -1,4 +1,4 @@
-from django.core.cache import cache
+from backend import cache_invalidation
 from django.core.management.base import BaseCommand
 
 from backend.models import Project
@@ -51,8 +51,7 @@ class Command(BaseCommand):
                 raise SystemExit(1)
 
         if any_changed:
-            cache.delete("ext-users-projects")
-            cache.delete("projects-get-all")
+            cache_invalidation.project_changed()
 
     def add_arguments(self, parser):
         super(Command, self).add_arguments(parser)

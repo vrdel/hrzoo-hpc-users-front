@@ -1,4 +1,4 @@
-from django.core.cache import cache
+from backend import cache_invalidation
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
@@ -35,8 +35,6 @@ class Command(BaseCommand):
                 state = State.objects.get(name=options['state'])
                 project.state = state
                 self.stdout.write('Project {} state updated to {}'.format(project.identifier, state.name))
-                cache.delete("ext-users-projects")
-                cache.delete('projects-get-all')
 
             except Project.DoesNotExist as exc:
                 self.stdout.write(self.style.ERROR('Project does not exist'))
@@ -49,6 +47,7 @@ class Command(BaseCommand):
                 raise SystemExit(1)
 
         project.save()
+        cache_invalidation.project_changed()
 
     def _project_list(self, options):
         table = Table(

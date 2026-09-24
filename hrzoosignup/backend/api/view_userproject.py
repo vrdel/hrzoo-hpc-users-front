@@ -24,7 +24,7 @@ class UserProjectAPI(APIView):
             tags = tags.split(',')
             cached_data = cache.get('ext-users-projects')
 
-            if cached_data:
+            if cached_data is not None:
                 for tag in tags:
                     for up in cached_data:
                         if (tag in up['project']['staff_resources_type']):
@@ -57,7 +57,7 @@ class UserProjectAPI(APIView):
 
         else:
             ret_data = cache.get('ext-users-projects')
-            if ret_data:
+            if ret_data is not None:
                 return Response(ret_data, status=status.HTTP_200_OK)
 
             query = Q(project__is_active=True, project__date_start__lte=datetime.datetime.now().date()) | Q(project__is_active=True, project__project_type__name='srce-workshop')
