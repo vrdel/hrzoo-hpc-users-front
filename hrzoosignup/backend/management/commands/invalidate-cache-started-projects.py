@@ -1,12 +1,12 @@
 import logging
 
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from backend.models import Project
 
-logger = logging.getLogger("hrzoosignup.crons")
+logger = logging.getLogger("backend.caching.calendar")
 
 
 class Command(BaseCommand):
@@ -50,7 +50,7 @@ class Command(BaseCommand):
                 logger.info(msg)
 
             if options.get('confirmed_yes'):
-                cache_invalidation.project_calendar_changed()
+                invalidation.project_calendar_changed()
                 self.stdout.write(self.style.NOTICE("Cache invalidated"))
                 if options.get('cron'):
                     logger.info("Cache invalidated")

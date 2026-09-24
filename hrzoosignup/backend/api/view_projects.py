@@ -6,7 +6,7 @@ from backend import serializers as backend_serializers
 from backend.dbmodels.apikey import MerlinHasAPIKey
 from backend.email.project import email_auto_approve_project
 from django.conf import settings
-from backend import cache_invalidation
+from backend.caching import invalidation
 from drf_spectacular.utils import extend_schema, OpenApiExample, OpenApiResponse
 from rest_framework import serializers
 from rest_framework import status
@@ -135,7 +135,7 @@ class NewProjectsAPI(APIView):
                     )
                     if settings.EMAIL_SEND:
                         email_auto_approve_project(name=request.data["name"])
-                    cache_invalidation.project_changed()
+                    invalidation.project_changed()
 
                 except IndexError:
                     status_code = status.HTTP_404_NOT_FOUND

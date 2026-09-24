@@ -2,8 +2,6 @@
 from dataclasses import dataclass
 from hashlib import sha256
 
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
-
 
 @dataclass(frozen=True)
 class Entry:
@@ -35,5 +33,3 @@ CRORIS_PERSON = Entry('croris_person', 'croris:person:{oib}', 20 * 60, 'oib')
 USER_USAGE = Entry('user_usage', 'usage:user:{account}', None, 'account')
 PROJECT_USER_USAGE = Entry('project_user_usage', 'usage:leader:per-user:{account}', None, 'account')
 PROJECT_USAGE = Entry('project_usage', 'usage:leader:projects:{account}', None, 'account')
-# Cleanup only: retired project-usage key.
-LEGACY_PROJECT_USAGE = Entry('legacy_project_usage', 'project_usage_{account}', DEFAULT_TIMEOUT, 'account')

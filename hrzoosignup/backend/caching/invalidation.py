@@ -72,8 +72,7 @@ def usage_changed(accounts):
     # Resolve iterables before commit, including old usernames before deletion.
     _invalidate(entry.key(account=account)
                 for account in tuple(dict.fromkeys(accounts)) if account
-                for entry in (entries.USER_USAGE, entries.PROJECT_USER_USAGE, entries.PROJECT_USAGE,
-                              entries.LEGACY_PROJECT_USAGE))
+                for entry in (entries.USER_USAGE, entries.PROJECT_USER_USAGE, entries.PROJECT_USAGE))
 
 
 def usage_accounts(user_ids=(), project_ids=()):

@@ -1,7 +1,7 @@
 import logging
 
 from django.contrib.auth import get_user_model
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.core.management.base import BaseCommand
 
 logger = logging.getLogger("hrzoosignup.crons")
@@ -60,6 +60,6 @@ class Command(BaseCommand):
                     ))
 
         if any_changed:
-            cache_invalidation.user_changed()
+            invalidation.user_changed()
         else:
             self.stdout.write(self.style.NOTICE('No changes'))

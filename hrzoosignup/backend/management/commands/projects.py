@@ -1,4 +1,4 @@
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
@@ -47,7 +47,7 @@ class Command(BaseCommand):
                 raise SystemExit(1)
 
         project.save()
-        cache_invalidation.project_changed()
+        invalidation.project_changed()
 
     def _project_list(self, options):
         table = Table(

@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 
 from django.conf import settings
 from backend.caching import entries, store
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.utils import timezone
 
 from dateutil.relativedelta import relativedelta
@@ -67,7 +67,7 @@ class ProjectExtend(APIView):
                 p_obj = up_obj.project
                 p_obj.state = state_extend
                 p_obj.save()
-                cache_invalidation.project_extension_changed()
+                invalidation.project_extension_changed()
 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
 

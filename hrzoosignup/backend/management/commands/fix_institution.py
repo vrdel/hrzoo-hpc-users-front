@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from backend import cache_invalidation
+from backend.caching import invalidation
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
@@ -385,6 +385,6 @@ class Command(BaseCommand):
             self._set_realm_institutions(options)
 
         if any_changed_user or any_changed_project:
-            cache_invalidation.user_changed()
+            invalidation.user_changed()
         else:
             self.stdout.write('No changes')
