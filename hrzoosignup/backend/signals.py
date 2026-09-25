@@ -81,7 +81,7 @@ def _affected_accounts(sender, instance):
         user_ids=(instance.user_id,), project_ids=(instance.project_id,))
 
 
-def _user_cache_changed(instance, update_fields, using):
+def _user_cache_changed(instance, update_fields):
     if instance._state.adding:
         return True
     # These authentication fields are not part of any shared cached response.
@@ -93,7 +93,7 @@ def _user_cache_changed(instance, update_fields, using):
                    or field.attname in update_fields)]
     if not fields:
         return False
-    previous = models.User.objects.using(using).filter(pk=instance.pk).values(*fields).first()
+    previous = models.User.objects.filter(pk=instance.pk).values(*fields).first()
     changed = fields if previous is None else [
         field for field in fields if previous[field] != getattr(instance, field)]
     if changed:
@@ -111,7 +111,7 @@ def capture_cache_dependents(sender, instance, **kwargs):
     if sender is models.User:
         instance._cache_user_changed = (
             kwargs.get('signal') is not pre_save
-            or _user_cache_changed(instance, kwargs.get('update_fields'), kwargs.get('using'))
+            or _user_cache_changed(instance, kwargs.get('update_fields'))
         )
         if not instance._cache_user_changed:
             cache_logger.debug('Cache invalidation skipped: model=User unchanged profile or authentication-only save')
