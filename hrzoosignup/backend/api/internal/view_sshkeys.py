@@ -6,7 +6,6 @@ from backend.email import sshkey as keyemail
 from backend.models import SSHPublicKey
 from backend.serializers_internal import SshKeysSerializer
 from django.conf import settings
-from backend.caching import invalidation
 from django.db import IntegrityError
 from rest_framework import status
 from rest_framework.authentication import SessionAuthentication
@@ -50,7 +49,6 @@ class SshKeys(APIView):
         user_keys = SSHPublicKey.objects.filter(user=request.user.pk)
         user_key = user_keys.get(name=key_name)
         user_key.delete()
-        invalidation.ssh_key_changed()
         ok_response = {
             'status': {
                 'code': status.HTTP_204_NO_CONTENT,
@@ -82,7 +80,6 @@ class SshKeys(APIView):
         if serializer.is_valid():
             try:
                 serializer.save()
-                invalidation.ssh_key_changed()
                 if settings.EMAIL_SEND:
                     keyemail.email_add_sshkey(request.user)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
