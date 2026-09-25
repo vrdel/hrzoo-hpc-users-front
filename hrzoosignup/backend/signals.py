@@ -20,7 +20,6 @@ def generate_username(sender, instance, created, **kwargs):
         instance.user.person_username = new_username
         logger.info(f"Generated username {new_username} for {instance.user.username}")
         instance.user.save()
-        invalidation.user_changed()
 
 
 # post_save.connect(generate_username, sender=UserProject)
@@ -46,7 +45,7 @@ def invalidate_user_responses(sender, instance, **kwargs):
 # Cover ordinary saves, admin writes, cascades, and legacy commands through the
 # same domain API. Bulk inserts/updates still require explicit invalidation.
 _MODEL_EVENTS = {
-    models.User: invalidation.user_changed,
+    models.User: None,  # Aggregate invalidation uses the dedicated receiver above.
     models.Project: invalidation.project_extension_changed,
     models.UserProject: invalidation.membership_changed,
     models.UserProjectHistory: invalidation.membership_history_changed,
@@ -107,8 +106,6 @@ def capture_cache_dependents(sender, instance, **kwargs):
     # Instances can be saved repeatedly and later deleted; never reuse the
     # dependency snapshot or change decision from an earlier save.
     instance._cache_usage_accounts = ()
-    if sender is models.User:
-        instance._cache_user_changed = True
     if kwargs.get('raw'):
         return
     if sender is models.User:
@@ -134,14 +131,15 @@ def invalidate_model_responses(sender, instance, **kwargs):
         return
     event = _MODEL_EVENTS[sender]
     # User aggregate responses are already covered by the receiver above.
-    if event is not None and sender is not models.User:
-        cache_logger.debug('Cache invalidation triggered: model=%s event=%s', sender.__name__,
-                     'save' if kwargs.get('signal') is post_save else 'delete')
+    if event is not None:
+        cache_logger.debug('Cache invalidation triggered: model=%s event=%s',
+                           sender.__name__, 'save' if kwargs.get('signal') is
+                           post_save else 'delete')
         event()
     accounts = getattr(instance, '_cache_usage_accounts', ())
     if accounts:
         cache_logger.debug('Usage cache invalidation triggered: model=%s accounts=%d',
-                     sender.__name__, len(accounts))
+                           sender.__name__, len(accounts))
         invalidation.usage_changed(accounts)
 
 

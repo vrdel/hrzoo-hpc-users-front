@@ -26,7 +26,8 @@ USER_ENTRIES = tuple(dict.fromkeys(
 
 
 def _invalidate(keys):
-    keys = tuple(dict.fromkeys(keys))
+    # Snapshot lazy iterables now; store.delete_keys deduplicates at commit.
+    keys = tuple(keys)
     if keys:
         transaction.on_commit(partial(store.delete_keys, keys))
 
@@ -71,7 +72,7 @@ def staff_comment_changed():
 def usage_changed(accounts):
     # Resolve iterables before commit, including old usernames before deletion.
     _invalidate(entry.key(account=account)
-                for account in tuple(dict.fromkeys(accounts)) if account
+                for account in dict.fromkeys(accounts) if account
                 for entry in (entries.USER_USAGE, entries.PROJECT_USER_USAGE, entries.PROJECT_USAGE))
 
 
