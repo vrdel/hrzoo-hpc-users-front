@@ -109,21 +109,24 @@ def capture_cache_dependents(sender, instance, **kwargs):
     instance._cache_usage_accounts = ()
     if kwargs.get('raw'):
         return
+
     if sender is models.User:
-        instance._cache_user_changed = (
-            kwargs.get('signal') is not pre_save
-            or _user_cache_changed(instance, kwargs.get('update_fields'))
-        )
+        instance._cache_user_changed = kwargs.get('signal') is not pre_save
+        if not instance._cache_user_changed:
+            instance._cache_user_changed = _user_cache_changed(
+                instance, kwargs.get('update_fields'))
         if not instance._cache_user_changed:
             cache_logger.debug('Cache invalidation skipped: model=User unchanged profile or authentication-only save')
             return
-    accounts = _affected_accounts(sender, instance)
+
+    accounts = set()
     if (kwargs.get('signal') is pre_save and instance.pk
             and sender in (models.User, models.UserProject, models.ResourceUsage)):
         previous = sender.objects.filter(pk=instance.pk).first()
         if previous is not None:
-            accounts += _affected_accounts(sender, previous)
-    instance._cache_usage_accounts = tuple(set(accounts))
+            accounts.update(_affected_accounts(sender, previous))
+    accounts.update(_affected_accounts(sender, instance))
+    instance._cache_usage_accounts = tuple(accounts)
 
 
 def invalidate_model_responses(sender, instance, **kwargs):
