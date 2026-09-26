@@ -57,28 +57,26 @@ _MODEL_EVENTS = {
     models.ProjectType: invalidation.project_extension_changed,
     models.ResourceUsage: None,
 }
-_USAGE_MODELS = (models.User, models.Project, models.UserProject,
-                 models.ResourceUsage, models.Role, models.State, models.ProjectType)
 
 
 def _affected_accounts(sender, instance):
-    if sender not in _USAGE_MODELS:
-        return ()
     if sender in (models.Role, models.State, models.ProjectType):
         return tuple(models.User.objects.values_list('username', flat=True))
     if sender is models.User:
         if instance.pk is None:
             return (instance.username,)
-        project_ids = set(models.UserProject.objects.filter(
-            user_id=instance.pk).values_list('project_id', flat=True))
-        project_ids.update(models.ResourceUsage.objects.filter(
-            user_id=instance.pk).values_list('project_id', flat=True))
+        project_ids = set()
+        for model in (models.UserProject, models.ResourceUsage):
+            project_ids.update(model.objects.filter(
+                user_id=instance.pk).values_list('project_id', flat=True))
         return (instance.username,) + invalidation.usage_accounts(
             user_ids=(instance.pk,), project_ids=project_ids)
     if sender is models.Project:
         return invalidation.usage_accounts(project_ids=(instance.pk,))
-    return invalidation.usage_accounts(
-        user_ids=(instance.user_id,), project_ids=(instance.project_id,))
+    if sender in (models.UserProject, models.ResourceUsage):
+        return invalidation.usage_accounts(
+            user_ids=(instance.user_id,), project_ids=(instance.project_id,))
+    return ()
 
 
 def _user_cache_changed(instance, update_fields):
@@ -86,16 +84,19 @@ def _user_cache_changed(instance, update_fields):
         return True
     # These authentication fields are not part of any shared cached response.
     # last_login remains live in the uncached session/user-detail responses.
-    fields = [field.attname for field in instance._meta.concrete_fields
-              if not field.primary_key and field.name not in {'last_login', 'password'}
-              and field.attname not in instance.get_deferred_fields()
-              and (update_fields is None or field.name in update_fields
-                   or field.attname in update_fields)]
+    excluded = instance.get_deferred_fields() | {'last_login', 'password'}
+    fields = []
+    for field in instance._meta.concrete_fields:
+        if field.primary_key or field.attname in excluded:
+            continue
+        if update_fields is not None and not {field.name, field.attname}.intersection(update_fields):
+            continue
+        fields.append(field.attname)
     if not fields:
         return False
     previous = models.User.objects.filter(pk=instance.pk).values(*fields).first()
-    changed = fields if previous is None else [
-        field for field in fields if previous[field] != getattr(instance, field)]
+    changed = [field for field in fields
+               if previous is None or previous[field] != getattr(instance, field)]
     if changed:
         # Field names only: no identifiers, profile values, or credentials.
         cache_logger.debug('Cache-relevant user fields changed: %s', ','.join(sorted(changed)))
