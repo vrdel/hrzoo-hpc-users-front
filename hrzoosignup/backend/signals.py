@@ -55,7 +55,6 @@ _MODEL_EVENTS = {
     models.Role: invalidation.user_changed,
     models.State: invalidation.project_extension_changed,
     models.ProjectType: invalidation.project_extension_changed,
-    models.ResourceUsage: None,
 }
 
 
@@ -73,7 +72,7 @@ def _affected_accounts(sender, instance):
             user_ids=(instance.pk,), project_ids=project_ids)
     if sender is models.Project:
         return invalidation.usage_accounts(project_ids=(instance.pk,))
-    if sender in (models.UserProject, models.ResourceUsage):
+    if sender is models.UserProject:
         return invalidation.usage_accounts(
             user_ids=(instance.user_id,), project_ids=(instance.project_id,))
     return ()
@@ -121,7 +120,7 @@ def capture_cache_dependents(sender, instance, **kwargs):
 
     accounts = set()
     if (kwargs.get('signal') is pre_save and instance.pk
-            and sender in (models.User, models.UserProject, models.ResourceUsage)):
+            and sender in (models.User, models.UserProject)):
         previous = sender.objects.filter(pk=instance.pk).first()
         if previous is not None:
             accounts.update(_affected_accounts(sender, previous))
