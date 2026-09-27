@@ -20,7 +20,6 @@ def generate_username(sender, instance, created, **kwargs):
         instance.user.person_username = new_username
         logger.info(f"Generated username {new_username} for {instance.user.username}")
         instance.user.save()
-        invalidation.user_changed()
 
 
 # post_save.connect(generate_username, sender=UserProject)
@@ -46,7 +45,7 @@ def invalidate_user_responses(sender, instance, **kwargs):
 # Cover ordinary saves, admin writes, cascades, and legacy commands through the
 # same domain API. Bulk inserts/updates still require explicit invalidation.
 _MODEL_EVENTS = {
-    models.User: invalidation.user_changed,
+    models.User: None,  # Aggregate invalidation uses the dedicated receiver above.
     models.Project: invalidation.project_extension_changed,
     models.UserProject: invalidation.membership_changed,
     models.UserProjectHistory: invalidation.membership_history_changed,
@@ -56,47 +55,47 @@ _MODEL_EVENTS = {
     models.Role: invalidation.user_changed,
     models.State: invalidation.project_extension_changed,
     models.ProjectType: invalidation.project_extension_changed,
-    models.ResourceUsage: None,
 }
-_USAGE_MODELS = (models.User, models.Project, models.UserProject,
-                 models.ResourceUsage, models.Role, models.State, models.ProjectType)
 
 
 def _affected_accounts(sender, instance):
-    if sender not in _USAGE_MODELS:
-        return ()
     if sender in (models.Role, models.State, models.ProjectType):
         return tuple(models.User.objects.values_list('username', flat=True))
     if sender is models.User:
         if instance.pk is None:
             return (instance.username,)
-        project_ids = set(models.UserProject.objects.filter(
-            user_id=instance.pk).values_list('project_id', flat=True))
-        project_ids.update(models.ResourceUsage.objects.filter(
-            user_id=instance.pk).values_list('project_id', flat=True))
+        project_ids = set()
+        for model in (models.UserProject, models.ResourceUsage):
+            project_ids.update(model.objects.filter(
+                user_id=instance.pk).values_list('project_id', flat=True))
         return (instance.username,) + invalidation.usage_accounts(
             user_ids=(instance.pk,), project_ids=project_ids)
     if sender is models.Project:
         return invalidation.usage_accounts(project_ids=(instance.pk,))
-    return invalidation.usage_accounts(
-        user_ids=(instance.user_id,), project_ids=(instance.project_id,))
+    if sender is models.UserProject:
+        return invalidation.usage_accounts(
+            user_ids=(instance.user_id,), project_ids=(instance.project_id,))
+    return ()
 
 
-def _user_cache_changed(instance, update_fields, using):
+def _user_cache_changed(instance, update_fields):
     if instance._state.adding:
         return True
     # These authentication fields are not part of any shared cached response.
     # last_login remains live in the uncached session/user-detail responses.
-    fields = [field.attname for field in instance._meta.concrete_fields
-              if not field.primary_key and field.name not in {'last_login', 'password'}
-              and field.attname not in instance.get_deferred_fields()
-              and (update_fields is None or field.name in update_fields
-                   or field.attname in update_fields)]
+    excluded = instance.get_deferred_fields() | {'last_login', 'password'}
+    fields = []
+    for field in instance._meta.concrete_fields:
+        if field.primary_key or field.attname in excluded:
+            continue
+        if update_fields is not None and not {field.name, field.attname}.intersection(update_fields):
+            continue
+        fields.append(field.attname)
     if not fields:
         return False
-    previous = models.User.objects.using(using).filter(pk=instance.pk).values(*fields).first()
-    changed = fields if previous is None else [
-        field for field in fields if previous[field] != getattr(instance, field)]
+    previous = models.User.objects.filter(pk=instance.pk).values(*fields).first()
+    changed = [field for field in fields
+               if previous is None or previous[field] != getattr(instance, field)]
     if changed:
         # Field names only: no identifiers, profile values, or credentials.
         cache_logger.debug('Cache-relevant user fields changed: %s', ','.join(sorted(changed)))
@@ -107,25 +106,26 @@ def capture_cache_dependents(sender, instance, **kwargs):
     # Instances can be saved repeatedly and later deleted; never reuse the
     # dependency snapshot or change decision from an earlier save.
     instance._cache_usage_accounts = ()
-    if sender is models.User:
-        instance._cache_user_changed = True
     if kwargs.get('raw'):
         return
+
     if sender is models.User:
-        instance._cache_user_changed = (
-            kwargs.get('signal') is not pre_save
-            or _user_cache_changed(instance, kwargs.get('update_fields'), kwargs.get('using'))
-        )
+        instance._cache_user_changed = kwargs.get('signal') is not pre_save
+        if not instance._cache_user_changed:
+            instance._cache_user_changed = _user_cache_changed(
+                instance, kwargs.get('update_fields'))
         if not instance._cache_user_changed:
             cache_logger.debug('Cache invalidation skipped: model=User unchanged profile or authentication-only save')
             return
-    accounts = _affected_accounts(sender, instance)
+
+    accounts = set()
     if (kwargs.get('signal') is pre_save and instance.pk
-            and sender in (models.User, models.UserProject, models.ResourceUsage)):
+            and sender in (models.User, models.UserProject)):
         previous = sender.objects.filter(pk=instance.pk).first()
         if previous is not None:
-            accounts += _affected_accounts(sender, previous)
-    instance._cache_usage_accounts = tuple(set(accounts))
+            accounts.update(_affected_accounts(sender, previous))
+    accounts.update(_affected_accounts(sender, instance))
+    instance._cache_usage_accounts = tuple(accounts)
 
 
 def invalidate_model_responses(sender, instance, **kwargs):
@@ -134,14 +134,15 @@ def invalidate_model_responses(sender, instance, **kwargs):
         return
     event = _MODEL_EVENTS[sender]
     # User aggregate responses are already covered by the receiver above.
-    if event is not None and sender is not models.User:
-        cache_logger.debug('Cache invalidation triggered: model=%s event=%s', sender.__name__,
-                     'save' if kwargs.get('signal') is post_save else 'delete')
+    if event is not None:
+        cache_logger.debug('Cache invalidation triggered: model=%s event=%s',
+                           sender.__name__, 'save' if kwargs.get('signal') is
+                           post_save else 'delete')
         event()
     accounts = getattr(instance, '_cache_usage_accounts', ())
     if accounts:
         cache_logger.debug('Usage cache invalidation triggered: model=%s accounts=%d',
-                     sender.__name__, len(accounts))
+                           sender.__name__, len(accounts))
         invalidation.usage_changed(accounts)
 
 

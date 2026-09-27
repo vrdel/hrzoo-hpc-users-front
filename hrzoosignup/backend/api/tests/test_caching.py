@@ -10,7 +10,7 @@ from backend import models
 from backend.caching import invalidation
 from backend.caching import entries
 from backend.api.internal import (
-    view_accounting, view_projects, view_sshkeys, view_userproject, view_users,
+    view_accounting, view_projects, view_users,
 )
 from backend.management.commands import cache_usage, projects, users
 from backend.usage_cache import project_user_usage_key, user_usage_key
@@ -79,31 +79,6 @@ class CacheRegressionTests(SimpleTestCase):
         self.assertEqual(response.status_code, 401)
         self.assertEqual(response.data['status']['message'],
                          'Not registered leader of any project in CroRIS')
-
-    def test_ssh_deletion_invalidates_embedded_project_users(self):
-        self.request.data = {'name': 'key'}
-        cache.set('projects:all', ['old'])
-        with patch.object(view_sshkeys.SSHPublicKey.objects, 'filter') as keys:
-            response = view_sshkeys.SshKeys().delete(self.request)
-        keys.return_value.get.return_value.delete.assert_called_once()
-        self.assertEqual(response.status_code, 204)
-        self.assertIsNone(cache.get('projects:all'))
-
-    def test_partial_membership_batch_invalidates_successful_writes(self):
-        self.request.data = [{'value': 'one'}, {'value': 'two'}]
-        user = SimpleNamespace(username='one', person_oib='123')
-        cache.set('projects:all', ['old'])
-        with patch.object(view_userproject, 'get_user_model') as user_model, \
-                patch.object(models.Project.objects, 'get'), \
-                patch.object(models.Role.objects, 'get'), \
-                patch.object(models, 'UserProject') as membership:
-            user_model.return_value.objects.filter.return_value = [user, user]
-            membership.objects.filter.side_effect = [[], [Mock()]]
-            response = view_userproject.UsersProjectsInternal().post(
-                self.request, projiddb=1)
-        self.assertEqual(response.status_code, 400)
-        membership.return_value.save.assert_called_once()
-        self.assertIsNone(cache.get('projects:all'))
 
     def test_project_command_invalidates_after_saving(self):
         cache.set('projects:all', ['old'])

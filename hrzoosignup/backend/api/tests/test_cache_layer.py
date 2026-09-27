@@ -313,6 +313,95 @@ class CacheLayerTests(TransactionTestCase):
         user.save()
         self.assertEqual(UsersInfoOps().get(request).data[0]['first_name'], 'Updated')
 
+    def test_ssh_view_deletion_invalidates_once_after_commit(self):
+        from backend.api.internal.view_sshkeys import SshKeys
+        user = self.user()
+        key = models.SSHPublicKey.objects.create(user=user, name='key', public_key='ssh-rsa test')
+        cache.set_many({key: ['old'] for key in invalidation.SSH_KEY_ENTRIES})
+        request = SimpleNamespace(user=user, data={'name': 'key'})
+        with patch.object(store, 'delete_keys', wraps=store.delete_keys) as delete_keys:
+            with transaction.atomic():
+                response = SshKeys().delete(request)
+                delete_keys.assert_not_called()
+                self.assertEqual(cache.get(entries.PROJECTS.key()), ['old'])
+            delete_keys.assert_called_once()
+        self.assertEqual(response.status_code, 204)
+        self.assertFalse(models.SSHPublicKey.objects.filter(pk=key.pk).exists())
+        self.assertEqual(cache.get_many(invalidation.SSH_KEY_ENTRIES), {})
+
+    def test_partial_membership_batch_invalidates_successful_writes(self):
+        from backend.api.internal import view_userproject
+        user = self.user('one')
+        project = self.project()
+        models.Role.objects.create(name='collaborator')
+        request = SimpleNamespace(user=user, data=[{'value': 'one'}])
+        store.set(entries.PROJECTS, ['old'])
+        # Repeat the same user to trigger failure after one real successful save.
+        with patch.object(view_userproject, 'get_user_model') as user_model, \
+                patch.object(store, 'delete_keys', wraps=store.delete_keys) as delete_keys:
+            user_model.return_value.objects.filter.return_value = [user, user]
+            response = view_userproject.UsersProjectsInternal().post(request, projiddb=project.pk)
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(models.UserProject.objects.filter(user=user, project=project).count(), 1)
+        self.assertIsNone(store.get(entries.PROJECTS))
+        aggregate_deletions = [call for call in delete_keys.call_args_list
+                               if entries.PROJECTS.key() in call.args[0]]
+        self.assertEqual(len(aggregate_deletions), 1)
+
+    @override_settings(EMAIL_SEND=False)
+    def test_membership_view_removal_invalidates_related_caches(self):
+        from backend.api.internal.view_userproject import UsersProjects
+        from django.utils import timezone
+        leader, member = self.user('leader'), self.user('member')
+        project = self.project()
+        lead = models.Role.objects.create(name='lead')
+        collaborator = models.Role.objects.create(name='collaborator')
+        models.UserProject.objects.create(user=leader, project=project, role=lead)
+        membership = models.UserProject.objects.create(
+            user=member, project=project, role=collaborator, date_joined=timezone.now())
+        self.warm_user_caches(member)
+        request = SimpleNamespace(user=leader, data=[member.pk])
+        view = UsersProjects()
+        view.request = request
+        with patch.object(store, 'delete_keys', wraps=store.delete_keys) as delete_keys:
+            response = view.post(request, projiddb=project.pk)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(models.UserProject.objects.filter(pk=membership.pk).exists())
+        self.assertTrue(models.UserProjectHistory.objects.filter(user=member, project=project).exists())
+        for key in (*invalidation.MEMBERSHIP_ENTRIES, entries.USER_USAGE.key(account=member.username)):
+            self.assertIsNone(cache.get(key))
+        aggregate_deletions = [call for call in delete_keys.call_args_list
+                               if entries.PROJECTS.key() in call.args[0]]
+        self.assertEqual(len(aggregate_deletions), 1)
+
+    @override_settings(GRACE_MONTHS=3)
+    def test_extension_view_invalidates_for_each_real_write(self):
+        from backend.api.internal.view_project_extend import ProjectExtend
+        from datetime import date
+        user = self.user()
+        project = self.project()
+        project.date_end = date(2026, 9, 30)
+        project.state = models.State.objects.create(name='approve-expire')
+        project.save()
+        submitted = models.State.objects.create(name='submit-extend')
+        lead = models.Role.objects.create(name='lead')
+        models.UserProject.objects.create(user=user, project=project, role=lead)
+        store.set(entries.PROJECTS, ['old'])
+        store.set(entries.PROJECT_EXTENSIONS, ['old'])
+        request = SimpleNamespace(user=user, data={'date_end': '2026-10-30', 'reason': 'More time'})
+        with patch.object(store, 'delete_keys', wraps=store.delete_keys) as delete_keys:
+            response = ProjectExtend().post(request, projid=project.identifier)
+        self.assertEqual(response.status_code, 201)
+        project.refresh_from_db()
+        self.assertEqual(project.state, submitted)
+        self.assertTrue(models.ProjectExtend.objects.filter(project=project).exists())
+        self.assertIsNone(store.get(entries.PROJECTS))
+        self.assertIsNone(store.get(entries.PROJECT_EXTENSIONS))
+        aggregate_deletions = [call for call in delete_keys.call_args_list
+                               if entries.PROJECTS.key() in call.args[0]]
+        # One extension insert and one project save, with no extra view invalidation.
+        self.assertEqual(len(aggregate_deletions), 2)
+
     def test_reference_data_and_comment_changes_invalidate_projects(self):
         project = self.project()
         for model, fields in ((models.Role, {'name': 'lead'}),
