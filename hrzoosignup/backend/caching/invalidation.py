@@ -89,11 +89,3 @@ def usage_accounts(user_ids=(), project_ids=()):
     return tuple(models.User.objects.filter(
         Q(pk__in=tuple(user_ids)) | Q(pk__in=members) | Q(pk__in=resource_users)
     ).values_list('username', flat=True))
-
-
-def usage_records_changed(records):
-    records = tuple(records)
-    usage_changed(usage_accounts(
-        user_ids={record.user_id for record in records if record.user_id},
-        project_ids={record.project_id for record in records},
-    ))

@@ -199,25 +199,6 @@ class CacheLayerTests(TransactionTestCase):
         self.assertEqual(after[0]['users'][0]['username'], user.username)
         self.assertIsNone(store.get(entries.PROJECT_USER_USAGE, account=user.username))
 
-    def test_bulk_usage_insert_invalidates_member_and_leader(self):
-        user = self.user()
-        leader = self.user('leader')
-        project = self.project()
-        role = models.Role.objects.create(name='lead')
-        models.UserProject.objects.create(user=leader, project=project, role=role)
-        for account in (user.username, leader.username):
-            store.set(entries.USER_USAGE, ['old'], account=account)
-            store.set(entries.PROJECT_USER_USAGE, ['old'], account=account)
-            store.set(entries.PROJECT_USAGE, ['old'], account=account)
-        records = [models.ResourceUsage(user=user, project=project)]
-        with transaction.atomic():
-            models.ResourceUsage.objects.bulk_create(records)
-            invalidation.usage_records_changed(records)
-        for account in (user.username, leader.username):
-            self.assertIsNone(store.get(entries.USER_USAGE, account=account))
-            self.assertIsNone(store.get(entries.PROJECT_USER_USAGE, account=account))
-            self.assertIsNone(store.get(entries.PROJECT_USAGE, account=account))
-
     def test_usage_requests_share_fills_and_rebuild_after_invalidation(self):
         user = self.user()
         other = self.user('other')
