@@ -1,4 +1,3 @@
-from backend.caching import invalidation
 import copy
 import datetime
 import json
@@ -251,4 +250,3 @@ class Usage:
                     )
 
             models.ResourceUsage.objects.bulk_create(model_instances)
-            invalidation.usage_records_changed(model_instances)
