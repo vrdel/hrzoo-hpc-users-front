@@ -598,6 +598,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
                 <GeneralFields fieldsDisabled={disabledFields}
                   projectInfo={nrProject} manageProject={manageProject}
                   isResearch={nrProject.project_type['name'] === 'research-croris'}
+                  allowExtendedStartDate={userDetails?.is_staff || userDetails?.is_superuser}
                   allowExtendedEndDate={userDetails?.is_staff || userDetails?.is_superuser}
                 />
                 <ResourceFields fieldsDisabled={disabledFields} />
