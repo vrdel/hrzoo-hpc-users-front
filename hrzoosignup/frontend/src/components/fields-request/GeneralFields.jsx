@@ -269,7 +269,8 @@ const CrorisProjectUsers = ({projectInfo, manageProject=false}) => {
 
 
 const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
-  isResearch=false, manageProject=false, isInstitute=false}) => {
+  isResearch=false, manageProject=false, isInstitute=false,
+  allowExtendedStartDate=false, allowExtendedEndDate=false}) => {
   const { control, setValue, getValues, formState: {errors} } = useFormContext();
   let disabledRemain = fieldsDisabled
   const [endDate, setEndDate] = useState('')
@@ -405,7 +406,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                   locale={locale === 'hr' ? 'hr-HR' : 'en-US'}
                   forwardedRef={field.ref}
                   disabled={disabledRemain}
-                  maxDate={new Date(2027, 1)}
+                  maxDate={allowExtendedStartDate ? undefined : new Date(2027, 1)}
                   onChange={(value) => {
                     if (value) {
                       value.setHours(23)
@@ -448,7 +449,7 @@ const GeneralFields = ({fieldsDisabled=false, projectInfo=false,
                         else
                           setValue('endDate', '')
                       }}
-                      maxDate={new Date(2027, 1)}
+                      maxDate={allowExtendedEndDate ? undefined : new Date(2027, 1)}
                       locale={locale === 'hr' ? 'hr-HR' : 'en-US'}
                       value={field.value}
                       className={`ms-0 ms-md-0 ms-xl-0 ms-xxl-3 ms-sm-3 ${errors && errors.endDate ? "is-invalid" : ''}`}
