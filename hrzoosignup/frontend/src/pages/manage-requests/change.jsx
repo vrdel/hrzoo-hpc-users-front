@@ -243,7 +243,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
   const { projId } = useParams()
   const [disabledFields, setDisabledFields] = useState(true)
   const [requestState, setRequestState] = useState(undefined)
-  const { csrfToken } = useContext(AuthContext)
+  const { csrfToken, userDetails } = useContext(AuthContext)
   const intl = useIntl()
   const { locale } = useContext(IntlContext)
 
@@ -598,6 +598,7 @@ export const ManageRequestsChange = ({manageProject=false}) => {
                 <GeneralFields fieldsDisabled={disabledFields}
                   projectInfo={nrProject} manageProject={manageProject}
                   isResearch={nrProject.project_type['name'] === 'research-croris'}
+                  allowExtendedEndDate={userDetails?.is_staff || userDetails?.is_superuser}
                 />
                 <ResourceFields fieldsDisabled={disabledFields} />
                 <Row style={{height: '50px'}}>
