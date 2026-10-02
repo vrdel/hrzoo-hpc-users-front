@@ -14,7 +14,7 @@ input:disabled, textarea:disabled {
   --bs-table-bg: #fff0f0;
 }
 
-.staff-change-editing .react-date-picker,
-.staff-change-editing .react-date-picker__wrapper {
+.staff-change-editing .react-date-picker:not(.react-date-picker--disabled),
+.staff-change-editing .react-date-picker:not(.react-date-picker--disabled) .react-date-picker__wrapper {
   background-color: #fff;
 }
