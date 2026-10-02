@@ -24,11 +24,35 @@ from rest_framework.views import APIView
 logger = logging.getLogger('hrzoosignup.views')
 
 
+def _has_dates_beyond_admin_limit(data):
+    limit = datetime.date(2027, 2, 28)
+    for field in ('date_start', 'date_end'):
+        try:
+            requested_date = datetime.date.fromisoformat(data[field])
+        except (KeyError, TypeError, ValueError):
+            continue  # Let the serializer report missing or malformed dates.
+        if requested_date > limit:
+            return True
+    return False
+
+
+def _extended_dates_forbidden(request):
+    return (_has_dates_beyond_admin_limit(request.data)
+            and not (request.user.is_staff or request.user.is_superuser))
+
+
 class ProjectsGeneral(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
+        if _extended_dates_forbidden(request):
+            return Response(
+                {'status': {'code': status.HTTP_403_FORBIDDEN,
+                            'message': 'Only staff and superusers may use project dates after February 2027'}},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         if request.user.person_type == 'foreign':
             err_status = status.HTTP_401_UNAUTHORIZED
             err_response = {
@@ -269,6 +293,13 @@ class Projects(APIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, **kwargs):
+        if _extended_dates_forbidden(request):
+            return Response(
+                {'status': {'code': status.HTTP_403_FORBIDDEN,
+                            'message': 'Only staff and superusers may use project dates after February 2027'}},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         req_type = kwargs.get('specific')
         if (request.user.is_staff or request.user.is_superuser):
             p_obj = models.Project.objects.get(identifier=req_type)
