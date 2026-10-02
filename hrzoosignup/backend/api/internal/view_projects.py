@@ -24,6 +24,26 @@ from rest_framework.views import APIView
 logger = logging.getLogger('hrzoosignup.views')
 
 
+def _has_dates_beyond_admin_limit(data):
+    limit = datetime.date(2027, 2, 28)
+    for field in ('date_start', 'date_end'):
+        try:
+            requested_date = datetime.date.fromisoformat(data[field])
+        except (KeyError, TypeError, ValueError):
+            continue  # Let the serializer report missing or malformed dates.
+        if requested_date > limit:
+            return True
+    return False
+
+
+def _extended_dates_forbidden(request, project_type=None):
+    project_type = project_type or request.data.get('project_type')
+    if project_type in {'research-croris', 'research-institutional'}:
+        return False
+    return (_has_dates_beyond_admin_limit(request.data)
+            and not (request.user.is_staff or request.user.is_superuser))
+
+
 class ProjectsGeneral(APIView):
     authentication_classes = (SessionAuthentication,)
     permission_classes = (IsAuthenticated,)
@@ -46,6 +66,13 @@ class ProjectsGeneral(APIView):
         request.data['date_submitted'] = timezone.now()
 
         type_obj = models.ProjectType.objects.get(name=request.data['project_type'])
+
+        if _extended_dates_forbidden(request, type_obj.name):
+            return Response(
+                {'status': {'code': status.HTTP_403_FORBIDDEN,
+                            'message': 'Only staff and superusers may use project dates after February 2027'}},
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
         # fixed project identifier in format NR-<year>-<month<-<count_posted>
         cobj = models.ProjectCount.objects.get()
@@ -160,7 +187,6 @@ class ProjectsResearch(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
-
         try:
             models.Project.objects.get(croris_id=request.data['croris_id'])
             already_submitted = {
@@ -269,6 +295,13 @@ class Projects(APIView):
     permission_classes = (IsAuthenticated, )
 
     def post(self, request, **kwargs):
+        if _extended_dates_forbidden(request):
+            return Response(
+                {'status': {'code': status.HTTP_403_FORBIDDEN,
+                            'message': 'Only staff and superusers may use project dates after February 2027'}},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         req_type = kwargs.get('specific')
         if (request.user.is_staff or request.user.is_superuser):
             p_obj = models.Project.objects.get(identifier=req_type)
