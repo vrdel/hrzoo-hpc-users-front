@@ -5,3 +5,11 @@ input:disabled, textarea:disabled {
 #scientificDomain-disabled * {
   color: #202020;
 }
+
+.staff-change-editing {
+  background-color: #fff0f0;
+}
+
+.staff-change-editing .table {
+  --bs-table-bg: #fff0f0;
+}
