@@ -13,3 +13,8 @@ input:disabled, textarea:disabled {
 .staff-change-editing .table {
   --bs-table-bg: #fff0f0;
 }
+
+.staff-change-editing .react-date-picker,
+.staff-change-editing .react-date-picker__wrapper {
+  background-color: #fff;
+}
