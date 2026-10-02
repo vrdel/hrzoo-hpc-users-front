@@ -584,26 +584,28 @@ export const ManageRequestsChange = ({manageProject=false}) => {
           <Col>
             <FormProvider {...rhfProps}>
               <Form onSubmit={rhfProps.handleSubmit(onSubmit)} className="needs-validation">
-                <LeadBasicInfo leadInfo={ extractLeaderName(nrProject.userproject_set) } />
-                {
-                  nrProject.project_type.name === 'research-croris' &&
-                    <CroRisDescription fieldsDisabled={
-                      nrProject.project_type['name'] === 'research-croris'
-                        && !disabledFields
-                        ? true
-                        : disabledFields
-                      }
-                    />
-                }
-                <GeneralFields fieldsDisabled={disabledFields}
-                  projectInfo={nrProject} manageProject={manageProject}
-                  isResearch={nrProject.project_type['name'] === 'research-croris'}
-                  allowExtendedStartDate={userDetails?.is_staff || userDetails?.is_superuser}
-                  allowExtendedEndDate={userDetails?.is_staff || userDetails?.is_superuser}
-                />
-                <ResourceFields fieldsDisabled={disabledFields} />
-                <Row style={{height: '50px'}}>
-                </Row>
+                <div className={!disabledFields ? 'staff-change-editing' : ''}>
+                  <LeadBasicInfo leadInfo={ extractLeaderName(nrProject.userproject_set) } />
+                  {
+                    nrProject.project_type.name === 'research-croris' &&
+                      <CroRisDescription fieldsDisabled={
+                        nrProject.project_type['name'] === 'research-croris'
+                          && !disabledFields
+                          ? true
+                          : disabledFields
+                        }
+                      />
+                  }
+                  <GeneralFields fieldsDisabled={disabledFields}
+                    projectInfo={nrProject} manageProject={manageProject}
+                    isResearch={nrProject.project_type['name'] === 'research-croris'}
+                    allowExtendedStartDate={userDetails?.is_staff || userDetails?.is_superuser}
+                    allowExtendedEndDate={userDetails?.is_staff || userDetails?.is_superuser}
+                  />
+                  <ResourceFields fieldsDisabled={disabledFields} />
+                  <Row style={{height: '50px'}}>
+                  </Row>
+                </div>
                 <RequestHorizontalRulerRed />
                 <ProcessRequest
                   disabledFields={disabledFields}
