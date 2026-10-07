@@ -120,7 +120,7 @@ class Command(BaseCommand):
         for project in projects:
             overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
             users = ', '.join(
-                [user.username for user in project.users.all()]
+                [user.person_mail for user in project.users.all()]
             )
             table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.project_type.name}', f'{project.date_end}', f'{overextend}', f'{users}')
             i += 1
@@ -139,7 +139,7 @@ class Command(BaseCommand):
                     for project in projects:
                         overextend = (self.end_date - (project.date_end + datetime.timedelta(days=options['graceperiod']))).days
                         users = ', '.join(
-                            [user.username for user in project.users.all()]
+                            [user.person_mail for user in project.users.all()]
                         )
                         writer.writerow({
                             '#': str(i),

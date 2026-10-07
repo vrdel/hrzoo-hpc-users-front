@@ -71,7 +71,6 @@ class Command(BaseCommand):
                     writer.writeheader()
                     i = 1
                     for user in users:
-
                         projects = ', '.join(
                             ['{} ({} - {})'.format(user_project[0], user_project[1], user_project[2])
                              for user_project in user.project_set.all().values_list('name', 'identifier', 'project_type__name')]
@@ -117,7 +116,7 @@ class Command(BaseCommand):
             since_expire = self.end_date - project.date_end
             if since_expire < datetime.timedelta(days=options['graceperiod']):
                 users = ', '.join(
-                    [user.username for user in project.users.all()]
+                    [user.person_mail for user in project.users.all()]
                 )
                 table.add_row(str(i), f'{project.name}', f'{project.identifier}', f'{project.project_type.name}', f'{project.date_end}', f'{since_expire.days}', f'{users}')
                 i += 1
@@ -136,7 +135,7 @@ class Command(BaseCommand):
                     for project in projects:
                         since_expire = self.end_date - project.date_end
                         users = ', '.join(
-                            [user.username for user in project.users.all()]
+                            [user.person_mail for user in project.users.all()]
                         )
                         writer.writerow({
                             '#': str(i),
@@ -203,7 +202,7 @@ class Command(BaseCommand):
                     for project in projects:
                         days_left = (project.date_end - today).days
                         users = ', '.join(
-                            [user.username for user in project.users.all()]
+                            [user.person_mail for user in project.users.all()]
                         )
                         writer.writerow({
                             '#': str(i),
